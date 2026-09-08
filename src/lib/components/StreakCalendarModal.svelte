@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Flame, Snowflake } from 'lucide-svelte';
 	let {
 		isOpen = false,
 		streak = 0,
@@ -68,10 +69,7 @@
 				<div
 					class="flex items-center gap-1.5 rounded-full bg-secondary-fixed px-3 py-1 font-headline text-xs font-bold text-on-secondary-fixed shadow-sm"
 				>
-					<span
-						class="material-symbols-outlined text-[16px] text-secondary"
-						style="font-variation-settings: 'FILL' 1;">local_fire_department</span
-					>
+					<Flame size={15} strokeWidth={1.75} class="text-secondary" />
 					<span>{streak} Days Active</span>
 				</div>
 			</div>
@@ -97,10 +95,7 @@
 								: ''}"
 						>
 							{#if cell.isActive}
-								<span
-									class="absolute -top-1 -right-1 material-symbols-outlined text-[12px] text-amber-300"
-									style="font-variation-settings: 'FILL' 1;">local_fire_department</span
-								>
+								<Flame size={11} strokeWidth={2} class="absolute -top-1 -right-1 text-amber-300" />
 							{/if}
 							<span>{cell.day}</span>
 						</div>
@@ -116,7 +111,7 @@
 					<div
 						class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-600"
 					>
-						<span class="material-symbols-outlined text-[18px]">ac_unit</span>
+						<Snowflake size={17} strokeWidth={1.75} />
 					</div>
 					<div>
 						<p class="font-headline text-xs font-bold text-on-surface">Streak Freeze Protected</p>

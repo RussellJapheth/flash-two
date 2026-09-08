@@ -13,6 +13,7 @@
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered } from '$lib/utils/srs';
 	import type { DeckSummary, CustomDeck, WordRecord, StreakStats } from '$lib/types';
+	import { Plus, FileUp, Search, FolderOpen, Trash2, Play, X } from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -350,7 +351,7 @@
 				onclick={() => (isCreateModalOpen = true)}
 				class="inline-flex items-center gap-1.5 rounded-full bg-primary-container px-3.5 py-1.5 font-headline text-xs font-bold text-white shadow-sm transition-all hover:bg-primary active:scale-95"
 			>
-				<span class="material-symbols-outlined text-[18px]">add</span>
+					<Plus size={17} strokeWidth={2.5} />
 				<span>Create Deck</span>
 			</button>
 
@@ -360,7 +361,7 @@
 				onclick={() => (isImportModalOpen = true)}
 				class="inline-flex items-center gap-1.5 rounded-full bg-surface-container px-3 py-1.5 font-headline text-xs font-bold text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95"
 			>
-				<span class="material-symbols-outlined text-[18px]">upload_file</span>
+				<FileUp size={17} strokeWidth={2} />
 				<span>Import</span>
 			</button>
 		</div>
@@ -372,9 +373,7 @@
 
 	<!-- Search Input -->
 	<div class="relative">
-		<span class="material-symbols-outlined absolute left-3.5 top-2.5 text-[20px] text-outline">
-			search
-		</span>
+		<Search size={19} strokeWidth={1.75} class="absolute left-3.5 top-2.5 text-outline" />
 		<input
 			type="text"
 			placeholder="Search decks..."
@@ -405,7 +404,7 @@
 			<div
 				class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-surface-container p-8 text-center text-on-surface-variant"
 			>
-				<span class="material-symbols-outlined text-[40px] text-outline mb-2">folder_open</span>
+				<FolderOpen size={38} strokeWidth={1.25} class="text-outline mb-2" />
 				<p class="font-headline text-sm font-bold">No decks found</p>
 				<p class="font-body text-xs mt-1">Try another filter or create a new custom deck.</p>
 			</div>
@@ -458,7 +457,7 @@
 								title="Delete Custom Deck"
 								class="flex h-8 w-8 items-center justify-center rounded-full text-outline hover:bg-red-50 hover:text-red-600 transition-colors"
 							>
-								<span class="material-symbols-outlined text-[18px]">delete</span>
+								<Trash2 size={17} strokeWidth={1.75} />
 							</button>
 						{/if}
 					</div>
@@ -476,7 +475,7 @@
 							href="/deck/{deck.id}/preview"
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-container text-white transition-transform hover:bg-primary active:scale-95"
 						>
-							<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+							<Play size={19} strokeWidth={2} />
 						</a>
 					</div>
 				</div>
@@ -500,7 +499,7 @@
 					onclick={() => (isCreateModalOpen = false)}
 					class="text-outline hover:text-on-surface"
 				>
-					<span class="material-symbols-outlined text-[22px]">close</span>
+					<X size={20} strokeWidth={2} />
 				</button>
 			</div>
 
@@ -644,7 +643,7 @@
 					onclick={() => (isImportModalOpen = false)}
 					class="text-outline hover:text-on-surface"
 				>
-					<span class="material-symbols-outlined text-[22px]">close</span>
+					<X size={20} strokeWidth={2} />
 				</button>
 			</div>
 

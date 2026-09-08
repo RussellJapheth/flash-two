@@ -11,6 +11,7 @@
 	} from '$lib/utils/storage';
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
 	import type { WordRecord, WordProgress, StreakStats } from '$lib/types';
+	import { Brain, BookOpen, Dumbbell, Play } from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -182,7 +183,7 @@
 						? 'border-primary bg-primary-fixed/30 text-primary ring-2 ring-primary/20'
 						: 'border-surface-container bg-surface-container-low text-on-surface-variant'}"
 				>
-					<span class="material-symbols-outlined text-[20px] mb-1">psychology</span>
+					<Brain size={19} strokeWidth={1.75} class="mb-1" />
 					<span class="font-headline text-xs font-bold">Spaced SRS</span>
 					<span class="text-[10px] opacity-75">{dueCount} cards</span>
 				</button>
@@ -195,7 +196,7 @@
 						? 'border-primary bg-primary-fixed/30 text-primary ring-2 ring-primary/20'
 						: 'border-surface-container bg-surface-container-low text-on-surface-variant'}"
 				>
-					<span class="material-symbols-outlined text-[20px] mb-1">style</span>
+					<BookOpen size={19} strokeWidth={1.75} class="mb-1" />
 					<span class="font-headline text-xs font-bold">All Cards</span>
 					<span class="text-[10px] opacity-75">{words.length} cards</span>
 				</button>
@@ -208,7 +209,7 @@
 						? 'border-primary bg-primary-fixed/30 text-primary ring-2 ring-primary/20'
 						: 'border-surface-container bg-surface-container-low text-on-surface-variant'}"
 				>
-					<span class="material-symbols-outlined text-[20px] mb-1">fitness_center</span>
+					<Dumbbell size={19} strokeWidth={1.75} class="mb-1" />
 					<span class="font-headline text-xs font-bold">Difficult</span>
 					<span class="text-[10px] opacity-75">{weakCount} cards</span>
 				</button>
@@ -264,7 +265,7 @@
 		href="/study/{deckId}?mode={studyMode}&limit={cardLimit}&pinyin={showPinyin ? '1' : '0'}"
 		class="flex h-14 w-full items-center justify-center gap-2 rounded-full bg-primary-container font-headline text-base font-bold text-white shadow-lg transition-all hover:bg-primary active:scale-95"
 	>
-		<span class="material-symbols-outlined text-[24px]">play_arrow</span>
+		<Play size={22} strokeWidth={2} />
 		<span>Start Studying Now</span>
 	</a>
 </main>

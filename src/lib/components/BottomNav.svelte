@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { Home, BookOpen, BarChart2, Settings } from 'lucide-svelte';
 
 	const navItems = [
-		{ href: '/', icon: 'home', label: 'Home' },
-		{ href: '/decks', icon: 'style', label: 'Decks' },
-		{ href: '/progress', icon: 'insights', label: 'Progress' },
-		{ href: '/settings', icon: 'settings', label: 'Settings' }
+		{ href: '/', icon: Home, label: 'Home' },
+		{ href: '/decks', icon: BookOpen, label: 'Decks' },
+		{ href: '/progress', icon: BarChart2, label: 'Progress' },
+		{ href: '/settings', icon: Settings, label: 'Settings' }
 	];
 
 	function isActive(href: string): boolean {
@@ -22,6 +23,7 @@
 	<div class="flex items-center justify-around px-2 py-1">
 		{#each navItems as item}
 			{@const active = isActive(item.href)}
+			{@const Icon = item.icon}
 			<a
 				href={item.href}
 				class="flex flex-1 flex-col items-center gap-1 rounded-2xl py-1.5 transition-all {active
@@ -33,12 +35,7 @@
 						? 'bg-primary-fixed text-primary'
 						: 'bg-transparent'}"
 				>
-					<span
-						class="material-symbols-outlined text-[22px]"
-						style={active ? "font-variation-settings: 'FILL' 1;" : ''}
-					>
-						{item.icon}
-					</span>
+					<Icon size={20} strokeWidth={active ? 2.5 : 1.75} />
 				</div>
 				<span class="font-headline text-[11px] font-semibold tracking-tight">
 					{item.label}

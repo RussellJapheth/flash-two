@@ -14,6 +14,7 @@
 	} from '$lib/utils/storage';
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
 	import type { DeckSummary, StreakStats, WordProgress, CustomDeck } from '$lib/types';
+	import { Flame, Brain, Dumbbell, PlayCircle } from 'lucide-svelte';
 
 	let username = $state('Russell');
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
@@ -193,10 +194,7 @@
 				href="/streak"
 				class="flex flex-col items-center justify-center rounded-2xl bg-secondary-fixed/70 border border-secondary-container/30 px-3.5 py-2 text-center transition-transform hover:scale-105 active:scale-95 shadow-sm"
 			>
-				<span
-					class="material-symbols-outlined text-[26px] text-secondary"
-					style="font-variation-settings: 'FILL' 1;">local_fire_department</span
-				>
+				<Flame size={24} strokeWidth={1.75} class="text-secondary" />
 				<span class="font-headline text-sm font-extrabold text-on-secondary-fixed">
 					{streakStats.currentStreak}d
 				</span>
@@ -226,7 +224,7 @@
 				<div
 					class="flex h-9 w-9 items-center justify-center rounded-full bg-primary-container text-white shadow-sm"
 				>
-					<span class="material-symbols-outlined text-[20px]">psychology</span>
+					<Brain size={18} strokeWidth={1.75} />
 				</div>
 				<span class="rounded-full bg-primary-fixed px-2 py-0.5 font-headline text-[11px] font-bold text-primary">
 					SRS Due
@@ -247,7 +245,7 @@
 				<div
 					class="flex h-9 w-9 items-center justify-center rounded-full bg-secondary-container text-white shadow-sm"
 				>
-					<span class="material-symbols-outlined text-[20px]">fitness_center</span>
+					<Dumbbell size={18} strokeWidth={1.75} />
 				</div>
 				<span
 					class="rounded-full bg-secondary-fixed px-2 py-0.5 font-headline text-[11px] font-bold text-on-secondary-fixed"
@@ -293,7 +291,7 @@
 				href="/deck/{recommendedDeck.id}/preview"
 				class="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary-container font-headline text-sm font-bold text-white shadow-md transition-all hover:bg-primary active:scale-95"
 			>
-				<span class="material-symbols-outlined text-[20px]">play_circle</span>
+				<PlayCircle size={18} strokeWidth={2} />
 				<span>Start Session</span>
 			</a>
 		</section>

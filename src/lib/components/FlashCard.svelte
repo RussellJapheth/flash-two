@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { WordRecord } from '$lib/types';
 	import { speakWord, playSound } from '$lib/utils/audio';
+	import { Bookmark, Volume2, Pointer } from 'lucide-svelte';
 
 	let {
 		word,
@@ -88,12 +89,7 @@
 							? 'text-secondary'
 							: 'text-outline hover:text-on-surface'}"
 					>
-						<span
-							class="material-symbols-outlined text-[24px]"
-							style={isSaved ? "font-variation-settings: 'FILL' 1;" : ''}
-						>
-							bookmark
-						</span>
+						<Bookmark size={22} strokeWidth={1.75} class={isSaved ? 'fill-current' : ''} />
 					</button>
 				</div>
 			</div>
@@ -121,14 +117,14 @@
 					onclick={handleAudio}
 					class="mt-6 inline-flex items-center gap-2 rounded-full border border-primary-fixed bg-primary-fixed/40 px-4 py-2 font-headline text-sm font-bold text-primary shadow-sm transition-all hover:bg-primary-fixed hover:shadow active:scale-95"
 				>
-					<span class="material-symbols-outlined text-[20px]">volume_up</span>
+					<Volume2 size={18} strokeWidth={1.75} />
 					<span>Listen</span>
 				</button>
 			</div>
 
 			<!-- Front Footer Hint -->
 			<div class="flex items-center justify-center gap-1.5 text-xs font-medium text-outline">
-				<span class="material-symbols-outlined text-[16px]">touch_app</span>
+				<Pointer size={15} strokeWidth={1.75} />
 				<span>Tap to flip</span>
 			</div>
 		</div>
@@ -158,12 +154,7 @@
 						? 'text-secondary'
 						: 'text-outline hover:text-on-surface'}"
 				>
-					<span
-						class="material-symbols-outlined text-[24px]"
-						style={isSaved ? "font-variation-settings: 'FILL' 1;" : ''}
-					>
-						bookmark
-					</span>
+					<Bookmark size={22} strokeWidth={1.75} class={isSaved ? 'fill-current' : ''} />
 				</button>
 			</div>
 
@@ -192,7 +183,7 @@
 					onclick={handleAudio}
 					class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline"
 				>
-					<span class="material-symbols-outlined text-[18px]">volume_up</span>
+					<Volume2 size={16} strokeWidth={1.75} />
 					<span>Replay Audio</span>
 				</button>
 			</div>

@@ -18,6 +18,7 @@
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { playSound } from '$lib/utils/audio';
 	import type { WordRecord, WordProgress, StudyRating } from '$lib/types';
+	import { X, Award, CheckCheck } from 'lucide-svelte';
 
 	let deckId = $derived(page.params.id || '');
 	let studyMode = $derived((page.url.searchParams.get('mode') as 'srs' | 'all' | 'weak') || 'srs');
@@ -224,7 +225,7 @@
 			aria-label="Exit Study Session"
 			class="flex h-9 w-9 items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
 		>
-			<span class="material-symbols-outlined text-[22px]">close</span>
+			<X size={20} strokeWidth={2} />
 		</button>
 
 		<div class="flex flex-col items-center">
@@ -239,7 +240,7 @@
 		<div
 			class="flex items-center gap-1 rounded-full bg-surface-container px-2.5 py-1 text-xs font-bold text-on-surface-variant"
 		>
-			<span class="material-symbols-outlined text-[14px] text-tertiary-container">done_all</span>
+			<CheckCheck size={13} strokeWidth={2} class="text-tertiary-container" />
 			<span>{sessionAccuracy}%</span>
 		</div>
 	</header>
@@ -268,7 +269,7 @@
 				</div>
 
 				<div class="inline-flex items-center gap-1.5 rounded-full bg-primary-fixed px-3 py-1 font-headline text-xs font-bold text-primary">
-					<span class="material-symbols-outlined text-[14px]">military_tech</span>
+					<Award size={13} strokeWidth={2} />
 					<span>SESSION COMPLETED</span>
 				</div>
 

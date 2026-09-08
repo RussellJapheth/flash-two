@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { playSound } from '$lib/utils/audio';
 	import { onMount } from 'svelte';
+	import { Zap, CheckCircle2, XCircle } from 'lucide-svelte';
 
 	let {
 		isOpen = false,
@@ -63,7 +64,7 @@
 				<div
 					class="inline-flex items-center gap-1.5 rounded-full bg-primary-fixed px-3 py-1 font-headline text-xs font-bold text-primary shadow-sm"
 				>
-					<span class="material-symbols-outlined text-[14px]">bolt</span>
+					<Zap size={13} strokeWidth={2} />
 					<span>{badgeText}</span>
 				</div>
 
@@ -87,11 +88,11 @@
 
 				<div class="grid grid-cols-2 gap-2 pt-2 border-t border-surface-container-high text-xs">
 					<div class="flex items-center gap-1.5 text-emerald-600 font-semibold">
-						<span class="material-symbols-outlined text-[16px]">check_circle</span>
+						<CheckCircle2 size={15} strokeWidth={2} />
 						<span>{stats.correct} Correct</span>
 					</div>
 					<div class="flex items-center gap-1.5 text-rose-600 font-semibold">
-						<span class="material-symbols-outlined text-[16px]">cancel</span>
+						<XCircle size={15} strokeWidth={2} />
 						<span>{stats.wrong} Again</span>
 					</div>
 				</div>

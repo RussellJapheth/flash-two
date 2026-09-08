@@ -1,5 +1,4 @@
 <script lang="ts">
-	import TopHeader from '$lib/components/TopHeader.svelte';
 	import { onMount } from 'svelte';
 	import {
 		getSavedUsername,
@@ -16,11 +15,11 @@
 	import {
 		pullAndMerge,
 		pushData,
-		subscribeSyncStatus,
-		getSyncStatus
+		subscribeSyncStatus
 	} from '$lib/utils/cloud';
 	import { speakWord } from '$lib/utils/audio';
 	import type { SyncStatus, AppBackup, StreakStats } from '$lib/types';
+	import { Globe, Bell, CloudCog, Download, Upload, HelpCircle, Info, BookOpen, ChevronRight } from 'lucide-svelte';
 
 	let username = $state('russell');
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
@@ -36,14 +35,16 @@
 		activeDates: []
 	});
 
+	// Modal / expansion states
 	let isEditingUsername = $state(false);
 	let newUsernameInput = $state('');
+	let isLanguageExpanded = $state(false);
+	let isSyncExpanded = $state(false);
 
 	async function loadSettings() {
 		username = getSavedUsername();
 		newUsernameInput = username;
 		activeLanguage = getSavedLanguage();
-
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
 	}
@@ -64,20 +65,16 @@
 	}
 
 	async function handleManualPush() {
-		syncMessage = 'Pushing local data to JSON Drive...';
+		syncMessage = 'Pushing to cloud…';
 		const success = await pushData(username);
-		syncMessage = success
-			? 'Successfully pushed to JSON Drive!'
-			: 'Failed to push to cloud. Check internet connection.';
+		syncMessage = success ? 'Pushed successfully!' : 'Push failed. Check your connection.';
 		setTimeout(() => (syncMessage = ''), 4000);
 	}
 
 	async function handleManualPull() {
-		syncMessage = 'Pulling latest backup from JSON Drive...';
+		syncMessage = 'Pulling from cloud…';
 		const success = await pullAndMerge(username);
-		syncMessage = success
-			? 'Successfully merged remote data!'
-			: 'Failed to pull. Ensure user exists on cloud.';
+		syncMessage = success ? 'Data merged!' : 'Pull failed. User may not exist in cloud.';
 		setTimeout(() => (syncMessage = ''), 4000);
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
@@ -99,8 +96,7 @@
 			username
 		};
 
-		const jsonStr = JSON.stringify(backup, null, 2);
-		const blob = new Blob([jsonStr], { type: 'application/json' });
+		const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
 		a.href = url;
@@ -119,13 +115,9 @@
 			try {
 				const content = e.target?.result as string;
 				const parsed: AppBackup = JSON.parse(content);
-				if (parsed.progress) {
-					await saveBulkProgress(parsed.progress);
-				}
+				if (parsed.progress) await saveBulkProgress(parsed.progress);
 				if (Array.isArray(parsed.customDecks)) {
-					for (const d of parsed.customDecks) {
-						await saveCustomDeck(d);
-					}
+					for (const d of parsed.customDecks) await saveCustomDeck(d);
 				}
 				if (parsed.username) {
 					setSavedUsername(parsed.username);
@@ -138,7 +130,7 @@
 				alert('Backup imported successfully!');
 				await pushData();
 				await loadSettings();
-			} catch (err) {
+			} catch {
 				alert('Invalid backup JSON file.');
 			}
 		};
@@ -153,6 +145,20 @@
 		}
 	}
 
+	let syncStatusLabel = $derived(
+		syncStatus === 'ok'
+			? 'Synced'
+			: syncStatus === 'syncing'
+				? 'Syncing…'
+				: syncStatus === 'error'
+					? 'Error'
+					: syncStatus === 'pending'
+						? 'Pending'
+						: 'Idle'
+	);
+
+	let languageLabel = $derived(activeLanguage === 'chinese' ? 'Chinese' : 'French');
+
 	onMount(() => {
 		loadSettings();
 		const unsub = subscribeSyncStatus((s) => (syncStatus = s));
@@ -164,202 +170,267 @@
 	<title>Settings — FlashCards</title>
 </svelte:head>
 
-<TopHeader title="Settings" streak={streakStats.currentStreak} />
+<div class="flex min-h-screen flex-col bg-[#F4F5FF]">
+	<!-- Page Header -->
+	<header class="bg-white px-4 pt-5 pb-4">
+		<h1 class="font-sans text-2xl font-bold text-gray-900">Settings</h1>
+	</header>
 
-<main class="flex-1 px-4 pt-3 pb-8 space-y-4">
-	<!-- User Profile Card -->
-	<section
-		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card space-y-3"
-	>
-		<div class="flex items-center justify-between">
-			<div class="flex items-center gap-3">
-				<div
-					class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white font-headline text-lg font-bold uppercase shadow-sm"
-				>
-					{username ? username[0] : 'U'}
+	<main class="flex-1 px-4 pb-10 space-y-4 pt-4">
+		<!-- ── Profile Card ── -->
+		<section class="rounded-3xl bg-white p-5 shadow-sm">
+			<div class="flex items-center justify-between">
+				<div class="flex items-center gap-3.5">
+					<!-- Avatar -->
+					<div
+						class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-xl uppercase shadow-inner"
+					>
+						{username ? username[0] : 'U'}
+					</div>
+					<div>
+						{#if isEditingUsername}
+							<div class="flex items-center gap-2">
+								<input
+									type="text"
+									id="username-input"
+									bind:value={newUsernameInput}
+									class="w-32 rounded-xl border border-gray-200 px-2.5 py-1.5 text-sm font-semibold text-gray-900 focus:border-indigo-500 focus:outline-none"
+								/>
+								<button
+									type="button"
+									onclick={handleSaveUsername}
+									class="rounded-full bg-indigo-600 px-3 py-1.5 text-xs font-bold text-white active:scale-95"
+								>
+									Save
+								</button>
+								<button
+									type="button"
+									onclick={() => (isEditingUsername = false)}
+									class="rounded-full bg-gray-100 px-3 py-1.5 text-xs font-bold text-gray-600"
+								>
+									Cancel
+								</button>
+							</div>
+						{:else}
+							<p class="text-base font-bold text-gray-900 capitalize">{username}</p>
+							<p class="text-xs text-gray-400 mt-0.5">Go further, one card at a time.</p>
+						{/if}
+					</div>
 				</div>
-				<div>
-					{#if isEditingUsername}
-						<div class="flex items-center gap-2">
-							<input
-								type="text"
-								bind:value={newUsernameInput}
-								class="rounded-xl border border-surface-container px-2 py-1 text-xs font-bold text-on-surface focus:border-primary focus:outline-none"
-							/>
-							<button
-								type="button"
-								onclick={handleSaveUsername}
-								class="rounded-full bg-primary px-3 py-1 text-xs font-bold text-white"
-							>
-								Save
-							</button>
-						</div>
-					{:else}
-						<h2 class="font-headline text-lg font-bold text-on-surface capitalize">
-							{username}
-						</h2>
-						<p class="font-body text-xs text-on-surface-variant">
-							JSON Drive Key: <code>users/{username}</code>
-						</p>
-					{/if}
-				</div>
+
+				{#if !isEditingUsername}
+					<button
+						type="button"
+						onclick={() => (isEditingUsername = true)}
+						aria-label="Edit username"
+						class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 active:scale-95 transition-colors"
+					>
+						<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
+					</button>
+				{/if}
 			</div>
+		</section>
 
-			{#if !isEditingUsername}
-				<button
-					type="button"
-					onclick={() => (isEditingUsername = true)}
-					class="rounded-full bg-surface-container px-3 py-1 font-headline text-xs font-bold text-on-surface-variant hover:bg-surface-container-high transition-colors"
-				>
-					Edit
-				</button>
+		<!-- ── Settings Rows ── -->
+		<section class="rounded-3xl bg-white shadow-sm overflow-hidden divide-y divide-gray-100">
+			<!-- Language -->
+			<button
+				type="button"
+				id="settings-language-toggle"
+				onclick={() => (isLanguageExpanded = !isLanguageExpanded)}
+				class="flex w-full items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+			>
+				<div class="flex items-center gap-3.5">
+					<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-red-100 text-red-500">
+						<Globe size={18} strokeWidth={1.75} />
+					</div>
+					<span class="text-sm font-semibold text-gray-800">Language</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<span class="text-sm text-gray-400">{languageLabel}</span>
+					<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300 transition-transform duration-200 {isLanguageExpanded ? 'rotate-90' : ''}" />
+				</div>
+			</button>
+
+			{#if isLanguageExpanded}
+				<div class="px-5 py-3 bg-gray-50 flex gap-2">
+					<button
+						type="button"
+						onclick={() => handleLanguageChange('chinese')}
+						class="flex-1 rounded-full py-2 text-sm font-bold transition-all {activeLanguage ===
+						'chinese'
+							? 'bg-indigo-600 text-white shadow-sm'
+							: 'bg-white text-gray-500 border border-gray-200'}"
+					>
+						Chinese
+					</button>
+					<button
+						type="button"
+						onclick={() => handleLanguageChange('french')}
+						class="flex-1 rounded-full py-2 text-sm font-bold transition-all {activeLanguage ===
+						'french'
+							? 'bg-indigo-600 text-white shadow-sm'
+							: 'bg-white text-gray-500 border border-gray-200'}"
+					>
+						French
+					</button>
+				</div>
 			{/if}
-		</div>
-	</section>
 
-	<!-- Cloud Synchronization Section (JSON Drive) -->
-	<section
-		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card space-y-3"
-	>
-		<div class="flex items-center justify-between">
-			<div class="flex items-center gap-2">
-				<span class="material-symbols-outlined text-[20px] text-primary">cloud_sync</span>
-				<h3 class="font-headline text-sm font-bold text-on-surface">JSON Drive Cloud Sync</h3>
-			</div>
-
-			<span
-				class="rounded-full px-2.5 py-0.5 font-headline text-[11px] font-bold capitalize {syncStatus ===
-				'ok'
-					? 'bg-emerald-50 text-emerald-700'
-					: syncStatus === 'syncing'
-						? 'bg-primary-fixed text-primary animate-pulse'
-						: syncStatus === 'error'
-							? 'bg-rose-50 text-rose-700'
-							: 'bg-surface-container text-on-surface-variant'}"
-			>
-				{syncStatus}
-			</span>
-		</div>
-
-		<p class="font-body text-xs text-on-surface-variant leading-relaxed">
-			Endpoint: <code>https://json-drive.thespot.workers.dev/api/flashcards/</code>
-		</p>
-
-		{#if syncMessage}
-			<p class="text-xs font-semibold text-primary">{syncMessage}</p>
-		{/if}
-
-		<div class="grid grid-cols-2 gap-2 pt-2">
+			<!-- Notification (TTS test) -->
 			<button
 				type="button"
-				onclick={handleManualPush}
-				class="flex h-11 items-center justify-center gap-1.5 rounded-full bg-primary-container font-headline text-xs font-bold text-white shadow-sm hover:bg-primary active:scale-95"
-			>
-				<span class="material-symbols-outlined text-[18px]">cloud_upload</span>
-				<span>Push to Cloud</span>
-			</button>
-
-			<button
-				type="button"
-				onclick={handleManualPull}
-				class="flex h-11 items-center justify-center gap-1.5 rounded-full bg-surface-container font-headline text-xs font-bold text-on-surface hover:bg-surface-container-high active:scale-95"
-			>
-				<span class="material-symbols-outlined text-[18px]">cloud_download</span>
-				<span>Pull & Merge</span>
-			</button>
-		</div>
-	</section>
-
-	<!-- Learning Preferences -->
-	<section
-		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card space-y-4"
-	>
-		<h3 class="font-headline text-sm font-bold text-on-surface">Preferences</h3>
-
-		<!-- Default Language Selection -->
-		<div class="flex items-center justify-between">
-			<div>
-				<p class="font-headline text-xs font-bold text-on-surface">Active Language</p>
-				<p class="text-[11px] text-on-surface-variant">Switch default dashboard packs</p>
-			</div>
-
-			<div class="flex rounded-full bg-surface-container p-0.5 border border-surface-container-high">
-				<button
-					type="button"
-					onclick={() => handleLanguageChange('chinese')}
-					class="rounded-full px-3 py-1 font-headline text-xs font-bold transition-all {activeLanguage ===
-					'chinese'
-						? 'bg-primary-container text-white shadow-sm'
-						: 'text-on-surface-variant'}"
-				>
-					Chinese
-				</button>
-				<button
-					type="button"
-					onclick={() => handleLanguageChange('french')}
-					class="rounded-full px-3 py-1 font-headline text-xs font-bold transition-all {activeLanguage ===
-					'french'
-						? 'bg-primary-container text-white shadow-sm'
-						: 'text-on-surface-variant'}"
-				>
-					French
-				</button>
-			</div>
-		</div>
-
-		<!-- Audio Speech Pronunciation Test -->
-		<div class="flex items-center justify-between pt-2 border-t border-surface-container">
-			<div>
-				<p class="font-headline text-xs font-bold text-on-surface">Speech Pronunciation</p>
-				<p class="text-[11px] text-on-surface-variant">Web Speech Synthesis API</p>
-			</div>
-
-			<button
-				type="button"
+				id="settings-tts-test"
 				onclick={handleTestTTS}
-				class="inline-flex items-center gap-1 rounded-full bg-surface-container px-3 py-1.5 font-headline text-xs font-bold text-primary hover:bg-surface-container-high"
+				class="flex w-full items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors"
 			>
-				<span class="material-symbols-outlined text-[16px]">volume_up</span>
-				<span>Test Voice</span>
+				<div class="flex items-center gap-3.5">
+					<div
+						class="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-100 text-amber-500"
+					>
+						<Bell size={18} strokeWidth={1.75} />
+					</div>
+					<span class="text-sm font-semibold text-gray-800">Pronunciation Test</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<span class="text-sm text-gray-400">Test voice</span>
+					<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
+				</div>
 			</button>
-		</div>
-	</section>
 
-	<!-- Backup & Local Data Management -->
-	<section
-		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card space-y-3"
-	>
-		<h3 class="font-headline text-sm font-bold text-on-surface">Data Backup & Restore</h3>
-
-		<div class="space-y-2">
+			<!-- Cloud Sync toggle row -->
 			<button
 				type="button"
-				onclick={handleExportBackup}
-				class="flex h-11 w-full items-center justify-between rounded-2xl bg-surface-container-low px-4 font-headline text-xs font-bold text-on-surface hover:bg-surface-container transition-colors"
+				id="settings-sync-toggle"
+				onclick={() => (isSyncExpanded = !isSyncExpanded)}
+				class="flex w-full items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
 			>
-				<span class="flex items-center gap-2">
-					<span class="material-symbols-outlined text-[18px] text-primary">download</span>
-					<span>Export Full JSON Backup</span>
-				</span>
-				<span class="material-symbols-outlined text-[18px] text-outline">chevron_right</span>
+				<div class="flex items-center gap-3.5">
+					<div
+						class="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-100 text-indigo-500"
+					>
+						<CloudCog size={18} strokeWidth={1.75} />
+					</div>
+					<span class="text-sm font-semibold text-gray-800">Cloud Sync</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<span
+						class="text-sm {syncStatus === 'ok'
+							? 'text-green-500'
+							: syncStatus === 'error'
+								? 'text-red-400'
+								: 'text-gray-400'}"
+					>
+						{syncStatusLabel}
+					</span>
+					<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300 transition-transform duration-200 {isSyncExpanded ? 'rotate-90' : ''}" />
+				</div>
 			</button>
 
-			<label
-				class="flex h-11 w-full cursor-pointer items-center justify-between rounded-2xl bg-surface-container-low px-4 font-headline text-xs font-bold text-on-surface hover:bg-surface-container transition-colors"
-			>
-				<span class="flex items-center gap-2">
-					<span class="material-symbols-outlined text-[18px] text-primary">upload</span>
-					<span>Restore from JSON File</span>
-				</span>
-				<input type="file" accept=".json" onchange={handleImportFile} class="hidden" />
-				<span class="material-symbols-outlined text-[18px] text-outline">chevron_right</span>
-			</label>
-		</div>
-	</section>
+			{#if isSyncExpanded}
+				<div class="px-5 py-3 bg-gray-50 space-y-2">
+					{#if syncMessage}
+						<p class="text-xs font-semibold text-indigo-600 pb-1">{syncMessage}</p>
+					{/if}
+					<div class="grid grid-cols-2 gap-2">
+						<button
+							type="button"
+							onclick={handleManualPush}
+							class="flex h-10 items-center justify-center gap-1.5 rounded-2xl bg-indigo-600 font-sans text-xs font-bold text-white shadow-sm hover:bg-indigo-700 active:scale-95 transition-all"
+						>
+							<Upload size={14} strokeWidth={2} />
+							Push
+						</button>
+						<button
+							type="button"
+							onclick={handleManualPull}
+							class="flex h-10 items-center justify-center gap-1.5 rounded-2xl bg-white border border-gray-200 font-sans text-xs font-bold text-gray-700 hover:bg-gray-50 active:scale-95 transition-all"
+						>
+							<Download size={14} strokeWidth={2} />
+							Pull & Merge
+						</button>
+					</div>
+				</div>
+			{/if}
 
-	<!-- App & PWA Status Info -->
-	<section class="rounded-3xl bg-surface-container-low p-4 text-center text-xs text-on-surface-variant">
-		<p class="font-headline font-bold text-on-surface">FlashCards App v1.0</p>
-		<p class="text-[11px] mt-0.5">PWA Ready • 100% Offline Capable • SM-2 SRS Engine</p>
-	</section>
-</main>
+			<!-- Export Backup -->
+			<button
+				type="button"
+				id="settings-export-backup"
+				onclick={handleExportBackup}
+				class="flex w-full items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors"
+			>
+				<div class="flex items-center gap-3.5">
+					<div
+						class="flex h-9 w-9 items-center justify-center rounded-xl bg-green-100 text-green-600"
+					>
+						<Download size={18} strokeWidth={1.75} />
+					</div>
+					<span class="text-sm font-semibold text-gray-800">Export Backup</span>
+				</div>
+				<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
+			</button>
+
+			<!-- Import / Restore -->
+			<label
+				id="settings-import-backup"
+				class="flex w-full cursor-pointer items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors"
+			>
+				<div class="flex items-center gap-3.5">
+					<div
+						class="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-100 text-purple-600"
+					>
+						<Upload size={18} strokeWidth={1.75} />
+					</div>
+					<span class="text-sm font-semibold text-gray-800">Restore from File</span>
+				</div>
+				<input type="file" accept=".json" onchange={handleImportFile} class="hidden" />
+				<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
+			</label>
+
+			<!-- Help & Support -->
+			<div class="flex items-center justify-between px-5 py-4">
+				<div class="flex items-center gap-3.5">
+					<div
+						class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-500"
+					>
+						<HelpCircle size={18} strokeWidth={1.75} />
+					</div>
+					<span class="text-sm font-semibold text-gray-800">Help & Support</span>
+				</div>
+				<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
+			</div>
+
+			<!-- About -->
+			<div class="flex items-center justify-between px-5 py-4">
+				<div class="flex items-center gap-3.5">
+					<div
+						class="flex h-9 w-9 items-center justify-center rounded-xl bg-gray-100 text-gray-500"
+					>
+						<Info size={18} strokeWidth={1.75} />
+					</div>
+					<div>
+						<span class="text-sm font-semibold text-gray-800">About FlashCards</span>
+					</div>
+				</div>
+				<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
+			</div>
+		</section>
+
+		<!-- ── Motivational Footer Card ── -->
+		<section class="rounded-3xl bg-white px-5 py-6 shadow-sm text-center space-y-2">
+			<div
+				class="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600"
+			>
+				<BookOpen size={30} strokeWidth={1.5} />
+			</div>
+			<p class="font-bold text-gray-900 text-base">Better every day</p>
+			<p class="text-xs text-gray-400 leading-relaxed">Your future self will thank you.</p>
+
+			<!-- App version -->
+			<p class="text-[11px] text-gray-300 pt-2 font-medium">
+				FlashCards v1.0 · PWA · SM-2 SRS · Offline
+			</p>
+		</section>
+	</main>
+</div>

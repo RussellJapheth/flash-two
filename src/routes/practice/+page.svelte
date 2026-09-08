@@ -17,6 +17,7 @@
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { playSound } from '$lib/utils/audio';
 	import type { WordRecord, WordProgress, StudyRating } from '$lib/types';
+	import { X, Dumbbell, Zap, SmilePlus } from 'lucide-svelte';
 
 	interface PracticeItem {
 		packId: string;
@@ -166,7 +167,7 @@
 			aria-label="Exit Practice Session"
 			class="flex h-9 w-9 items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
 		>
-			<span class="material-symbols-outlined text-[22px]">close</span>
+			<X size={20} strokeWidth={2} />
 		</button>
 
 		<div class="flex flex-col items-center">
@@ -179,7 +180,7 @@
 		<div
 			class="flex items-center gap-1 rounded-full bg-secondary-fixed px-2.5 py-1 text-xs font-bold text-on-secondary-fixed"
 		>
-			<span class="material-symbols-outlined text-[14px]">fitness_center</span>
+			<Dumbbell size={13} strokeWidth={2} />
 			<span>{sessionAccuracy}%</span>
 		</div>
 	</header>
@@ -205,7 +206,7 @@
 				</div>
 
 				<div class="inline-flex items-center gap-1.5 rounded-full bg-secondary-fixed px-3 py-1 font-headline text-xs font-bold text-on-secondary-fixed">
-					<span class="material-symbols-outlined text-[14px]">bolt</span>
+					<Zap size={13} strokeWidth={2} />
 					<span>PRACTICE COMPLETED</span>
 				</div>
 
@@ -258,7 +259,7 @@
 			</div>
 		{:else}
 			<div class="text-center py-12 text-on-surface-variant">
-				<span class="material-symbols-outlined text-[48px] text-emerald-500 mb-2">sentiment_very_satisfied</span>
+				<SmilePlus size={44} strokeWidth={1.25} class="text-emerald-500 mb-2" />
 				<h3 class="font-headline text-lg font-bold text-on-surface">No Weak Words!</h3>
 				<p class="font-body text-xs mt-1">You don't have any troublesome cards recorded yet.</p>
 				<button

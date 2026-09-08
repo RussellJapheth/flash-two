@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 	import { getAllProgress, computeStreakStats, getSavedUsername } from '$lib/utils/storage';
 	import type { StreakStats } from '$lib/types';
+	import { Zap, Flame, Award, Snowflake, Hourglass, Trophy, Calendar } from 'lucide-svelte';
 
 	let username = $state('Russell');
 	let isCalendarOpen = $state(false);
@@ -108,7 +109,7 @@
 			<div
 				class="inline-flex items-center gap-1.5 rounded-full bg-secondary-fixed px-3.5 py-1 font-headline text-xs font-bold text-on-secondary-fixed shadow-sm"
 			>
-				<span class="material-symbols-outlined text-[14px]">bolt</span>
+				<Zap size={13} strokeWidth={2} />
 				<span class="uppercase">{streakStats.tierName}</span>
 			</div>
 
@@ -116,10 +117,7 @@
 				class="mt-2 font-headline text-3xl font-extrabold tracking-tight text-on-surface flex items-center justify-center gap-1.5"
 			>
 				<span>{streakStats.currentStreak} Day Streak!</span>
-				<span
-					class="material-symbols-outlined text-[28px] text-secondary"
-					style="font-variation-settings: 'FILL' 1;">local_fire_department</span
-				>
+				<Flame size={26} strokeWidth={1.75} class="text-secondary" />
 			</h2>
 
 			<p class="mt-1 font-body text-xs text-on-surface-variant max-w-[260px] leading-relaxed">
@@ -131,7 +129,7 @@
 		<div class="mt-5 rounded-2xl bg-surface-container-low p-4 text-left border border-surface-container">
 			<div class="flex justify-between items-center text-xs font-bold text-on-surface mb-2">
 				<span class="flex items-center gap-1">
-					<span class="material-symbols-outlined text-[16px] text-secondary">military_tech</span>
+				<Award size={15} strokeWidth={2} class="text-secondary" />
 					Next Goal: {nextMilestone} Days
 				</span>
 				<span class="text-secondary font-headline">{daysToMilestone} days to go</span>
@@ -155,7 +153,7 @@
 			<div
 				class="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 border border-blue-100"
 			>
-				<span class="material-symbols-outlined text-[24px]">ac_unit</span>
+				<Snowflake size={22} strokeWidth={1.75} />
 			</div>
 			<div>
 				<h3 class="font-headline text-xs font-bold text-on-surface">Streak Freeze Shield</h3>
@@ -201,12 +199,9 @@
 									: 'bg-surface-container text-on-surface-variant'}"
 					>
 						{#if item.isActive}
-							<span
-								class="material-symbols-outlined text-[18px]"
-								style="font-variation-settings: 'FILL' 1;">local_fire_department</span
-							>
+							<Flame size={16} strokeWidth={1.75} />
 						{:else if item.isToday}
-							<span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+							<Hourglass size={14} strokeWidth={1.75} />
 						{:else}
 							<span>&bull;</span>
 						{/if}
@@ -222,7 +217,7 @@
 			class="flex flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4 shadow-card h-28"
 		>
 			<div class="flex h-8 w-8 items-center justify-center rounded-xl bg-secondary-fixed text-secondary">
-				<span class="material-symbols-outlined text-[18px]">emoji_events</span>
+				<Trophy size={17} strokeWidth={1.75} />
 			</div>
 			<div>
 				<p class="font-headline text-[11px] font-bold text-on-surface-variant">Longest Streak</p>
@@ -236,7 +231,7 @@
 			class="flex flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4 shadow-card h-28"
 		>
 			<div class="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-fixed text-primary">
-				<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+				<Calendar size={17} strokeWidth={1.75} />
 			</div>
 			<div>
 				<p class="font-headline text-[11px] font-bold text-on-surface-variant">Total Active Days</p>

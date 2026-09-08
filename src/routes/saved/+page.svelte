@@ -12,6 +12,7 @@
 	import { speakWord } from '$lib/utils/audio';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import type { WordRecord, StreakStats } from '$lib/types';
+	import { BookmarkIcon, Volume2, Bookmark } from 'lucide-svelte';
 
 	interface SavedItem {
 		packId: string;
@@ -107,7 +108,7 @@
 		<div
 			class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-surface-container p-10 text-center text-on-surface-variant"
 		>
-			<span class="material-symbols-outlined text-[44px] text-outline mb-2">bookmark_border</span>
+			<BookmarkIcon size={40} strokeWidth={1.25} class="text-outline mb-2" />
 			<h3 class="font-headline text-base font-bold text-on-surface">No Saved Words Yet</h3>
 			<p class="font-body text-xs mt-1 max-w-xs">
 				Tap the bookmark icon on any flashcard during your study sessions to save difficult terms here.
@@ -127,7 +128,7 @@
 							title="Listen"
 							class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-fixed text-primary hover:bg-primary hover:text-white transition-colors"
 						>
-							<span class="material-symbols-outlined text-[20px]">volume_up</span>
+							<Volume2 size={19} strokeWidth={1.75} />
 						</button>
 
 						<div class="min-w-0 flex-1">
@@ -152,9 +153,7 @@
 						title="Remove bookmark"
 						class="flex h-9 w-9 items-center justify-center rounded-full text-secondary hover:bg-surface-container transition-colors"
 					>
-						<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">
-							bookmark
-						</span>
+						<Bookmark size={20} strokeWidth={1.75} class="fill-current" />
 					</button>
 				</div>
 			{/each}

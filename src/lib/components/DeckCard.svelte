@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { DeckSummary } from '$lib/types';
 	import ProgressBar from './ProgressBar.svelte';
+	import { Play } from 'lucide-svelte';
 
 	let { deck, onSelect = () => {} } = $props<{
 		deck: DeckSummary;
@@ -63,7 +64,7 @@
 			class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-container text-on-primary transition-transform hover:bg-primary active:scale-95"
 			aria-label="Start studying {deck.title}"
 		>
-			<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+			<Play size={18} strokeWidth={2} />
 		</a>
 	</div>
 </div>

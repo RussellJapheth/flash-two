@@ -11,6 +11,7 @@
 	} from '$lib/utils/storage';
 	import { isCardMastered, isCardLearning, isCardDue } from '$lib/utils/srs';
 	import type { WordProgress, StreakStats } from '$lib/types';
+	import { Flag, ShieldCheck, History, Flame, ChevronRight, Bookmark } from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -118,7 +119,7 @@
 				<div
 					class="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100"
 				>
-					<span class="material-symbols-outlined text-[24px]">flag</span>
+					<Flag size={22} strokeWidth={1.75} />
 				</div>
 				<div>
 					<p class="font-headline text-xs font-bold text-on-surface-variant">Overall Mastery</p>
@@ -143,7 +144,7 @@
 			<div
 				class="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-fixed text-primary"
 			>
-				<span class="material-symbols-outlined text-[18px]">verified</span>
+				<ShieldCheck size={17} strokeWidth={1.75} />
 			</div>
 			<div>
 				<p class="font-headline text-[11px] font-bold text-on-surface-variant">Recall Accuracy</p>
@@ -159,7 +160,7 @@
 			<div
 				class="flex h-8 w-8 items-center justify-center rounded-xl bg-secondary-fixed text-secondary"
 			>
-				<span class="material-symbols-outlined text-[18px]">history</span>
+				<History size={17} strokeWidth={1.75} />
 			</div>
 			<div>
 				<p class="font-headline text-[11px] font-bold text-on-surface-variant">Total Reviews</p>
@@ -251,13 +252,10 @@
 			class="flex items-center justify-between rounded-2xl border border-secondary-container/30 bg-secondary-fixed/20 p-3.5 transition-colors hover:bg-secondary-fixed/30"
 		>
 			<div class="flex items-center gap-2">
-				<span
-					class="material-symbols-outlined text-[20px] text-secondary"
-					style="font-variation-settings: 'FILL' 1;">local_fire_department</span
-				>
+				<Flame size={19} strokeWidth={1.75} class="text-secondary" />
 				<span class="font-headline text-xs font-bold text-on-surface">Streak Tier</span>
 			</div>
-			<span class="material-symbols-outlined text-[18px] text-outline">chevron_right</span>
+			<ChevronRight size={17} strokeWidth={2} class="text-outline" />
 		</a>
 
 		<a
@@ -265,10 +263,10 @@
 			class="flex items-center justify-between rounded-2xl border border-surface-container bg-surface-container-lowest p-3.5 transition-colors hover:border-primary/30"
 		>
 			<div class="flex items-center gap-2">
-				<span class="material-symbols-outlined text-[20px] text-primary">bookmark</span>
+				<Bookmark size={19} strokeWidth={1.75} class="text-primary" />
 				<span class="font-headline text-xs font-bold text-on-surface">Saved Words</span>
 			</div>
-			<span class="material-symbols-outlined text-[18px] text-outline">chevron_right</span>
+			<ChevronRight size={17} strokeWidth={2} class="text-outline" />
 		</a>
 	</div>
 </main>

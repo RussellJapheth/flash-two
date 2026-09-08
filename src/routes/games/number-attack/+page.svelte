@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import {
@@ -40,8 +40,8 @@
 	let maxCombo = $state(0);
 	let correctCount = $state(0);
 	let wrongCount = $state(0);
-	let highScore = $state(0);
 	let isNewHighScore = $state(false);
+	let highScore = $derived(getGameHighScore('number-attack', audioMode ? 'audio' : 'visual'));
 
 	// Current Question & Selection Feedback
 	let currentQuestion = $state<NumberAttackQuestion | null>(null);
@@ -54,10 +54,6 @@
 	let gameRoundTimer: ReturnType<typeof setInterval> | null = null;
 	let questionTimer: ReturnType<typeof setInterval> | null = null;
 	let summaryRecord = $state<GameScoreRecord | null>(null);
-
-	onMount(() => {
-		highScore = getGameHighScore('number-attack');
-	});
 
 	onDestroy(() => {
 		cleanupTimers();
@@ -224,10 +220,10 @@
 		const totalAttempts = correctCount + wrongCount;
 		const accuracy = totalAttempts > 0 ? Math.round((correctCount / totalAttempts) * 100) : 0;
 
-		const prevHigh = getGameHighScore('number-attack');
+		const currentMode = audioMode ? 'audio' : 'visual';
+		const prevHigh = getGameHighScore('number-attack', currentMode);
 		if (score > prevHigh && score > 0) {
 			isNewHighScore = true;
-			highScore = score;
 		}
 
 		summaryRecord = await saveGameScore({

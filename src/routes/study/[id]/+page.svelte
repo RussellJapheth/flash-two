@@ -243,12 +243,7 @@
 				isFlipped = false;
 				await updateSavedStatus();
 				const halfwayIndex = Math.floor(cards.length / 2);
-				if (
-					isAutoplay &&
-					!halfwayTriggered &&
-					cards.length >= 4 &&
-					currentIndex === halfwayIndex
-				) {
+				if (isAutoplay && !halfwayTriggered && cards.length >= 4 && currentIndex === halfwayIndex) {
 					halfwayTriggered = true;
 					triggerHalfwayToast();
 				}

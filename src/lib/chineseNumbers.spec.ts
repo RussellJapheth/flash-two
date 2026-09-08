@@ -86,7 +86,7 @@ describe('Chinese Number Converter (Number Attack)', () => {
 		expect(used.size).toBe(50);
 	});
 
-	it('deduplicates leaderboard so each user has only one single best entry', () => {
+	it('deduplicates leaderboard so each user has one entry per mode (visual vs audio)', () => {
 		const rawRecords: GameScoreRecord[] = [
 			{
 				id: '1',
@@ -126,14 +126,48 @@ describe('Chinese Number Converter (Number Attack)', () => {
 				maxCombo: 10,
 				mode: 'visual',
 				playedAt: 2000
+			},
+			{
+				id: '4',
+				username: 'alice',
+				gameId: 'number-attack',
+				gameName: 'Number Attack',
+				score: 950,
+				correct: 10,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 10,
+				mode: 'audio',
+				playedAt: 2500
+			},
+			{
+				id: '5',
+				username: 'alice',
+				gameId: 'number-attack',
+				gameName: 'Number Attack',
+				score: 600,
+				correct: 6,
+				wrong: 2,
+				accuracy: 75,
+				maxCombo: 4,
+				mode: 'audio',
+				playedAt: 1500
 			}
 		];
 
 		const deduplicated = deduplicateUserLeaderboard(rawRecords);
-		expect(deduplicated).toHaveLength(2);
+		// Alice has 1 visual (1200) and 1 audio (950), Bob has 1 visual (800) -> total 3 entries
+		expect(deduplicated).toHaveLength(3);
 		expect(deduplicated[0].username).toBe('alice');
+		expect(deduplicated[0].mode).toBe('visual');
 		expect(deduplicated[0].score).toBe(1200);
-		expect(deduplicated[1].username).toBe('bob');
-		expect(deduplicated[1].score).toBe(800);
+
+		expect(deduplicated[1].username).toBe('alice');
+		expect(deduplicated[1].mode).toBe('audio');
+		expect(deduplicated[1].score).toBe(950);
+
+		expect(deduplicated[2].username).toBe('bob');
+		expect(deduplicated[2].mode).toBe('visual');
+		expect(deduplicated[2].score).toBe(800);
 	});
 });

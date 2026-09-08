@@ -32,7 +32,8 @@ export function deduplicateUserLeaderboard(
 		if (!r || !r.username) continue;
 		if (gameId && r.gameId !== gameId) continue;
 
-		const userKey = r.username.trim().toLowerCase();
+		const mode = r.mode || 'visual';
+		const userKey = `${r.username.trim().toLowerCase()}::${r.gameId || ''}::${mode}`;
 		const existing = userBestMap.get(userKey);
 
 		if (!existing) {
@@ -97,10 +98,11 @@ export function saveLocalGameScore(
 	return newRecord;
 }
 
-export function getGameHighScore(gameId: string): number {
+export function getGameHighScore(gameId: string, mode?: 'visual' | 'audio'): number {
 	const scores = getLocalGameScores(gameId);
-	if (scores.length === 0) return 0;
-	return Math.max(...scores.map((s) => s.score));
+	const filtered = mode ? scores.filter((s) => (s.mode || 'visual') === mode) : scores;
+	if (filtered.length === 0) return 0;
+	return Math.max(...filtered.map((s) => s.score));
 }
 
 // Fetch global leaderboard from /leaderboard endpoint (Only for cloud-synced users, 1 entry per user)

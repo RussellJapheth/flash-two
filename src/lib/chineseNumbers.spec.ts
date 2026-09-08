@@ -6,7 +6,7 @@ import {
 } from './utils/chineseNumbers';
 import { deduplicateUserLeaderboard, type GameScoreRecord } from './utils/gameStorage';
 
-describe('Chinese Number Converter (Number Attack)', () => {
+describe('Chinese Number Converter (Number Rush)', () => {
 	it('converts single digits 0-9 accurately', () => {
 		expect(numberToChinese(0)).toEqual({ value: 0, hanzi: '零', pinyin: 'líng' });
 		expect(numberToChinese(1)).toEqual({ value: 1, hanzi: '一', pinyin: 'yī' });

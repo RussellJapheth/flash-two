@@ -292,7 +292,7 @@
 
 		summaryRecord = await saveGameScore({
 			gameId: 'number-attack',
-			gameName: 'Number Attack',
+			gameName: 'Number Rush',
 			score,
 			correct: correctCount,
 			wrong: wrongCount,
@@ -328,10 +328,10 @@
 <svelte:window onkeydown={handleKeydown} />
 
 <svelte:head>
-	<title>Number Attack (数字突击) — FlashCards</title>
+	<title>Number Rush (数字狂飙) — FlashCards</title>
 </svelte:head>
 
-<TopHeader title="Number Attack" showBack={true} onBack={() => history.back()} />
+<TopHeader title="Number Rush" showBack={true} onBack={() => history.back()} />
 
 <main
 	class="relative flex min-h-[calc(100vh-4rem)] flex-1 flex-col justify-between overflow-hidden px-4 pt-3 pb-8"
@@ -382,12 +382,12 @@
 				</div>
 
 				<h2 class="font-headline text-[1.65rem] font-black tracking-tight text-slate-900">
-					Number Attack
+					Number Rush
 				</h2>
 				<p
 					class="mt-0.5 font-headline text-xs font-extrabold tracking-wider text-amber-500 uppercase"
 				>
-					数字攻击 • MANDARIN SPEED DRILL
+					数字狂飙 • MANDARIN SPEED DRILL
 				</p>
 
 				<p

@@ -19,7 +19,38 @@ const LEADERBOARD_API = 'https://json-drive.thespot.workers.dev/api/flashcards/l
 
 export function isCloudSyncEnabled(): boolean {
 	const user = getSavedUsername();
-	return Boolean(user && user.trim().length > 0);
+	return Boolean(user && user.trim().length > 0 && user.trim().toLowerCase() !== 'guest');
+}
+
+// Migrate any locally stored 'Guest' records to the authenticated cloud username
+export function migrateGuestGameScores(targetUser?: string): number {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return 0;
+	const user = (targetUser || getSavedUsername()).trim();
+	if (!user || user.toLowerCase() === 'guest') return 0;
+
+	try {
+		const raw = localStorage.getItem(GAME_SCORES_KEY);
+		if (!raw) return 0;
+		const list: GameScoreRecord[] = JSON.parse(raw);
+		if (!Array.isArray(list)) return 0;
+
+		let migratedCount = 0;
+		const updated = list.map((record) => {
+			if (record && record.username && record.username.trim().toLowerCase() === 'guest') {
+				migratedCount++;
+				return { ...record, username: user };
+			}
+			return record;
+		});
+
+		if (migratedCount > 0) {
+			localStorage.setItem(GAME_SCORES_KEY, JSON.stringify(updated));
+		}
+		return migratedCount;
+	} catch (e) {
+		console.error('Failed to migrate guest game scores:', e);
+		return 0;
+	}
 }
 
 export function deduplicateUserLeaderboard(
@@ -31,15 +62,18 @@ export function deduplicateUserLeaderboard(
 
 	for (const r of records) {
 		if (!r || !r.username) continue;
+		const trimmedUser = r.username.trim();
+		// Discard empty or unassigned guest records from cloud leaderboard
+		if (!trimmedUser || trimmedUser.toLowerCase() === 'guest') continue;
 		if (gameId && r.gameId !== gameId) continue;
 		const rMode = r.mode || 'visual';
 		if (mode && rMode !== mode) continue;
 
-		const userKey = `${r.username.trim().toLowerCase()}::${r.gameId || ''}::${rMode}`;
+		const userKey = `${trimmedUser.toLowerCase()}::${r.gameId || ''}::${rMode}`;
 		const existing = userBestMap.get(userKey);
 
 		if (!existing) {
-			userBestMap.set(userKey, r);
+			userBestMap.set(userKey, { ...r, username: trimmedUser });
 		} else {
 			// Compare scores: keep higher score (tiebreak: higher accuracy, then newer date)
 			if (
@@ -49,7 +83,7 @@ export function deduplicateUserLeaderboard(
 					r.accuracy === existing.accuracy &&
 					r.playedAt > existing.playedAt)
 			) {
-				userBestMap.set(userKey, r);
+				userBestMap.set(userKey, { ...r, username: trimmedUser });
 			}
 		}
 	}
@@ -60,8 +94,11 @@ export function deduplicateUserLeaderboard(
 }
 
 export function getLocalGameScores(gameId?: string): GameScoreRecord[] {
-	if (typeof window === 'undefined') return [];
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return [];
 	try {
+		if (isCloudSyncEnabled()) {
+			migrateGuestGameScores();
+		}
 		const raw = localStorage.getItem(GAME_SCORES_KEY);
 		if (!raw) return [];
 		const list: GameScoreRecord[] = JSON.parse(raw);
@@ -87,7 +124,7 @@ export function saveLocalGameScore(
 		playedAt: Date.now()
 	};
 
-	if (typeof window === 'undefined') return newRecord;
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return newRecord;
 
 	try {
 		const current = getLocalGameScores();
@@ -105,6 +142,15 @@ export function getGameHighScore(gameId: string, mode?: 'visual' | 'audio'): num
 	const filtered = mode ? scores.filter((s) => (s.mode || 'visual') === mode) : scores;
 	if (filtered.length === 0) return 0;
 	return Math.max(...filtered.map((s) => s.score));
+}
+
+// Merge local scores and remote scores, ensuring only the highest score per user/game/mode is preserved
+export function mergeLeaderboardScores(
+	localScores: GameScoreRecord[],
+	remoteScores: GameScoreRecord[]
+): GameScoreRecord[] {
+	const localBests = deduplicateUserLeaderboard(localScores);
+	return deduplicateUserLeaderboard([...localBests, ...remoteScores]);
 }
 
 // Fetch global leaderboard from /leaderboard endpoint (Only for cloud-synced users, 1 entry per user per game per mode)
@@ -135,11 +181,14 @@ export async function fetchRemoteLeaderboard(
 	return [];
 }
 
-// Synchronize all stored local scores with remote leaderboard (1 entry per user per mode, best score retained)
+// Synchronize all stored local scores with remote leaderboard (devices only send highest scores, best score retained)
 export async function syncPendingGameScores(): Promise<void> {
 	if (typeof window === 'undefined' || !navigator.onLine || !isCloudSyncEnabled()) return;
 	const localScores = getLocalGameScores();
 	if (localScores.length === 0) return;
+
+	const localBests = deduplicateUserLeaderboard(localScores);
+	if (localBests.length === 0) return;
 
 	try {
 		let remoteRecords: GameScoreRecord[] = [];
@@ -153,15 +202,27 @@ export async function syncPendingGameScores(): Promise<void> {
 			}
 		}
 
-		// Ensure 1 entry per user per mode across the leaderboard, retaining highest score across local history + remote
-		const combined = [...localScores, ...remoteRecords];
-		const deduplicated = deduplicateUserLeaderboard(combined);
+		// Retain highest score across local history + remote (1 entry per user per game per mode)
+		const merged = mergeLeaderboardScores(localScores, remoteRecords);
+		const payload = merged.slice(0, 100);
 
-		await fetch(LEADERBOARD_API, {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(deduplicated.slice(0, 100))
-		});
+		// Only push update when local best scores improve or change the remote leaderboard
+		const hasChanges =
+			payload.length !== remoteRecords.length ||
+			payload.some((rec, idx) => {
+				const rem = remoteRecords[idx];
+				return (
+					!rem || rem.id !== rec.id || rem.score !== rec.score || rem.accuracy !== rec.accuracy
+				);
+			});
+
+		if (hasChanges) {
+			await fetch(LEADERBOARD_API, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(payload)
+			});
+		}
 	} catch (err) {
 		console.error('Failed to sync scores to /leaderboard:', err);
 	}

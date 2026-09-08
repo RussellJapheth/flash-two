@@ -4,7 +4,12 @@ import {
 	generateDistractors,
 	generateNumberRushQuestion
 } from './utils/chineseNumbers';
-import { deduplicateUserLeaderboard, type GameScoreRecord } from './utils/gameStorage';
+import {
+	deduplicateUserLeaderboard,
+	mergeLeaderboardScores,
+	migrateGuestGameScores,
+	type GameScoreRecord
+} from './utils/gameStorage';
 
 describe('Chinese Number Converter (Number Rush)', () => {
 	it('converts single digits 0-9 accurately', () => {
@@ -226,5 +231,286 @@ describe('Chinese Number Converter (Number Rush)', () => {
 		expect(result[0].username).toBe('alice');
 		expect(result[0].score).toBe(1500);
 		expect(result[0].id).toBe('local-1');
+	});
+
+	it('ensures devices only send highest scores to leaderboard and merges offline data seamlessly', () => {
+		// Device accumulated multiple offline scores across games and modes
+		const deviceOfflineScores: GameScoreRecord[] = [
+			{
+				id: 'local-attempt-1',
+				username: 'charlie',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 300,
+				correct: 3,
+				wrong: 2,
+				accuracy: 60,
+				maxCombo: 2,
+				mode: 'visual',
+				playedAt: 1000
+			},
+			{
+				id: 'local-attempt-2',
+				username: 'charlie',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 1800, // charlie's visual best
+				correct: 18,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 18,
+				mode: 'visual',
+				playedAt: 2000
+			},
+			{
+				id: 'local-attempt-3',
+				username: 'charlie',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 1100,
+				correct: 11,
+				wrong: 1,
+				accuracy: 91,
+				maxCombo: 10,
+				mode: 'visual',
+				playedAt: 3000
+			},
+			{
+				id: 'local-attempt-audio-1',
+				username: 'charlie',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 950, // charlie's audio best
+				correct: 9,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 9,
+				mode: 'audio',
+				playedAt: 4000
+			}
+		];
+
+		// Remote already had Diana with 1500 and Charlie with an older 500
+		const existingRemoteLeaderboard: GameScoreRecord[] = [
+			{
+				id: 'remote-diana',
+				username: 'diana',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 1500,
+				correct: 15,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 15,
+				mode: 'visual',
+				playedAt: 500
+			},
+			{
+				id: 'remote-charlie-old',
+				username: 'charlie',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 500,
+				correct: 5,
+				wrong: 1,
+				accuracy: 83,
+				maxCombo: 4,
+				mode: 'visual',
+				playedAt: 400
+			}
+		];
+
+		const merged = mergeLeaderboardScores(deviceOfflineScores, existingRemoteLeaderboard);
+
+		// Charlie's visual score updated to 1800 (best of offline runs)
+		// Charlie's audio score added as 950
+		// Diana's visual score preserved as 1500
+		// Exactly 3 entries total (1 per user per mode)
+		expect(merged).toHaveLength(3);
+
+		const visualScores = merged.filter((m) => m.mode === 'visual');
+		expect(visualScores).toHaveLength(2);
+		expect(visualScores[0].username).toBe('charlie');
+		expect(visualScores[0].score).toBe(1800);
+		expect(visualScores[0].id).toBe('local-attempt-2');
+
+		expect(visualScores[1].username).toBe('diana');
+		expect(visualScores[1].score).toBe(1500);
+
+		const audioScores = merged.filter((m) => m.mode === 'audio');
+		expect(audioScores).toHaveLength(1);
+		expect(audioScores[0].username).toBe('charlie');
+		expect(audioScores[0].score).toBe(950);
+	});
+
+	it('retains remote high score if device offline score is lower', () => {
+		const deviceOfflineScores: GameScoreRecord[] = [
+			{
+				id: 'local-low',
+				username: 'elena',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 700,
+				correct: 7,
+				wrong: 2,
+				accuracy: 77,
+				maxCombo: 5,
+				mode: 'visual',
+				playedAt: 5000
+			}
+		];
+
+		const remoteLeaderboard: GameScoreRecord[] = [
+			{
+				id: 'remote-high',
+				username: 'elena',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 2100,
+				correct: 21,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 21,
+				mode: 'visual',
+				playedAt: 2000
+			}
+		];
+
+		const merged = mergeLeaderboardScores(deviceOfflineScores, remoteLeaderboard);
+		expect(merged).toHaveLength(1);
+		expect(merged[0].username).toBe('elena');
+		expect(merged[0].score).toBe(2100);
+		expect(merged[0].id).toBe('remote-high');
+	});
+
+	it('discards "guest" records from leaderboard and purges existing remote "Guest" entries', () => {
+		const deviceScoresWithGuest: GameScoreRecord[] = [
+			{
+				id: 'local-guest-1',
+				username: 'Guest',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 1200,
+				correct: 12,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 12,
+				mode: 'visual',
+				playedAt: 1000
+			},
+			{
+				id: 'local-user-1',
+				username: 'frank',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 1600,
+				correct: 16,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 16,
+				mode: 'visual',
+				playedAt: 2000
+			}
+		];
+
+		const remoteLeaderboardWithGuest: GameScoreRecord[] = [
+			{
+				id: 'remote-guest-old',
+				username: 'guest',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 900,
+				correct: 9,
+				wrong: 1,
+				accuracy: 90,
+				maxCombo: 8,
+				mode: 'visual',
+				playedAt: 500
+			},
+			{
+				id: 'remote-grace',
+				username: 'grace',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 1400,
+				correct: 14,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 14,
+				mode: 'visual',
+				playedAt: 1500
+			}
+		];
+
+		// deduplicateUserLeaderboard excludes any 'guest' / 'Guest'
+		const deduplicated = deduplicateUserLeaderboard(deviceScoresWithGuest);
+		expect(deduplicated).toHaveLength(1);
+		expect(deduplicated[0].username).toBe('frank');
+
+		// mergeLeaderboardScores purges remote guest records
+		const merged = mergeLeaderboardScores(deviceScoresWithGuest, remoteLeaderboardWithGuest);
+		expect(merged).toHaveLength(2);
+		expect(merged.some((r) => r.username.toLowerCase() === 'guest')).toBe(false);
+		expect(merged[0].username).toBe('frank');
+		expect(merged[1].username).toBe('grace');
+	});
+
+	it('migrates local guest game scores when cloud username is assigned', () => {
+		const mockStorage: Record<string, string> = {
+			flashcards_game_scores: JSON.stringify([
+				{
+					id: 'g-1',
+					username: 'Guest',
+					gameId: 'number-rush',
+					gameName: 'Number Rush',
+					score: 1200,
+					correct: 12,
+					wrong: 0,
+					accuracy: 100,
+					maxCombo: 12,
+					mode: 'visual',
+					playedAt: 1000
+				},
+				{
+					id: 'u-1',
+					username: 'alice',
+					gameId: 'number-rush',
+					gameName: 'Number Rush',
+					score: 1500,
+					correct: 15,
+					wrong: 0,
+					accuracy: 100,
+					maxCombo: 15,
+					mode: 'visual',
+					playedAt: 2000
+				}
+			])
+		};
+
+		const origLocalStorage = globalThis.localStorage;
+		globalThis.localStorage = {
+			getItem: (key: string) => mockStorage[key] || null,
+			setItem: (key: string, val: string) => {
+				mockStorage[key] = val;
+			},
+			removeItem: (key: string) => {
+				delete mockStorage[key];
+			},
+			clear: () => {
+				for (const k in mockStorage) delete mockStorage[k];
+			},
+			key: () => null,
+			length: 0
+		} as unknown as Storage;
+
+		try {
+			const count = migrateGuestGameScores('bob');
+			expect(count).toBe(1);
+			const updated = JSON.parse(mockStorage.flashcards_game_scores);
+			expect(updated[0].username).toBe('bob');
+			expect(updated[1].username).toBe('alice');
+		} finally {
+			globalThis.localStorage = origLocalStorage;
+		}
 	});
 });

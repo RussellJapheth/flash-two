@@ -121,6 +121,15 @@
 
 	onMount(() => {
 		loadLeaderboard();
+
+		const handleOnline = () => {
+			loadLeaderboard();
+		};
+		window.addEventListener('online', handleOnline);
+
+		return () => {
+			window.removeEventListener('online', handleOnline);
+		};
 	});
 
 	// Auto-slide carousel cards every 5.5 seconds unless paused

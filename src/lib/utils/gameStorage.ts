@@ -24,16 +24,18 @@ export function isCloudSyncEnabled(): boolean {
 
 export function deduplicateUserLeaderboard(
 	records: GameScoreRecord[],
-	gameId?: string
+	gameId?: string,
+	mode?: 'visual' | 'audio'
 ): GameScoreRecord[] {
 	const userBestMap = new Map<string, GameScoreRecord>();
 
 	for (const r of records) {
 		if (!r || !r.username) continue;
 		if (gameId && r.gameId !== gameId) continue;
+		const rMode = r.mode || 'visual';
+		if (mode && rMode !== mode) continue;
 
-		const mode = r.mode || 'visual';
-		const userKey = `${r.username.trim().toLowerCase()}::${r.gameId || ''}::${mode}`;
+		const userKey = `${r.username.trim().toLowerCase()}::${r.gameId || ''}::${rMode}`;
 		const existing = userBestMap.get(userKey);
 
 		if (!existing) {
@@ -105,10 +107,11 @@ export function getGameHighScore(gameId: string, mode?: 'visual' | 'audio'): num
 	return Math.max(...filtered.map((s) => s.score));
 }
 
-// Fetch global leaderboard from /leaderboard endpoint (Only for cloud-synced users, 1 entry per user)
+// Fetch global leaderboard from /leaderboard endpoint (Only for cloud-synced users, 1 entry per user per game per mode)
 export async function fetchRemoteLeaderboard(
 	gameId?: string,
-	limit = 20
+	mode?: 'visual' | 'audio',
+	limit = 50
 ): Promise<GameScoreRecord[]> {
 	if (typeof window === 'undefined') return [];
 	if (!isCloudSyncEnabled()) return [];
@@ -121,7 +124,7 @@ export async function fetchRemoteLeaderboard(
 		if (response.ok) {
 			const remoteList = await response.json();
 			if (Array.isArray(remoteList)) {
-				const uniqueByUser = deduplicateUserLeaderboard(remoteList, gameId);
+				const uniqueByUser = deduplicateUserLeaderboard(remoteList, gameId, mode);
 				return uniqueByUser.slice(0, limit);
 			}
 		}

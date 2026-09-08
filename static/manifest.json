@@ -1,25 +1,79 @@
 {
+	"id": "/",
 	"name": "FlashCards — Spaced Repetition",
 	"short_name": "FlashCards",
 	"description": "Smart, offline-first spaced repetition flashcard learning app",
 	"start_url": "/",
 	"scope": "/",
 	"display": "standalone",
+	"display_override": ["standalone", "minimal-ui"],
 	"background_color": "#FAF8FF",
 	"theme_color": "#4F46E5",
 	"orientation": "portrait-primary",
+	"lang": "en",
+	"dir": "ltr",
 	"icons": [
 		{
-			"src": "/mascots/flame.png",
+			"src": "/icons/icon-192x192.png",
 			"sizes": "192x192",
 			"type": "image/png",
-			"purpose": "any maskable"
+			"purpose": "any"
 		},
 		{
-			"src": "/mascots/flame.png",
+			"src": "/icons/icon-512x512.png",
 			"sizes": "512x512",
 			"type": "image/png",
-			"purpose": "any maskable"
+			"purpose": "any"
+		},
+		{
+			"src": "/icons/icon-maskable-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "/icons/icon-maskable-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	],
+	"shortcuts": [
+		{
+			"name": "Study Due Cards",
+			"short_name": "Study",
+			"description": "Review flashcards due today",
+			"url": "/study",
+			"icons": [
+				{
+					"src": "/icons/icon-192x192.png",
+					"sizes": "192x192"
+				}
+			]
+		},
+		{
+			"name": "Vocabulary Decks",
+			"short_name": "Decks",
+			"description": "Explore vocabulary decks",
+			"url": "/decks",
+			"icons": [
+				{
+					"src": "/icons/icon-192x192.png",
+					"sizes": "192x192"
+				}
+			]
+		},
+		{
+			"name": "Learning Progress",
+			"short_name": "Progress",
+			"description": "View accuracy, streak, and stats",
+			"url": "/progress",
+			"icons": [
+				{
+					"src": "/icons/icon-192x192.png",
+					"sizes": "192x192"
+				}
+			]
 		}
 	],
 	"categories": ["education", "productivity"]

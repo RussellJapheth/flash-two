@@ -16,28 +16,34 @@
 			page.url.pathname.startsWith('/games/')
 	);
 
-	onMount(async () => {
-		// 1. Preload and cache all vocabulary into IndexedDB for 100% offline availability
-		await initializeOfflinePacks();
+	onMount(() => {
+		let interval: ReturnType<typeof setInterval>;
 
-		// 2. Pull & merge from JSON Drive cloud in background
-		const user = getSavedUsername();
-		if (user) {
-			await pullAndMerge(user);
-		}
+		(async () => {
+			// 1. Preload and cache all vocabulary into IndexedDB for 100% offline availability
+			await initializeOfflinePacks();
 
-		// 3. Poll for new deployments; on detection clear all caches and hard-reload
-		updated.check();
-		const interval = setInterval(async () => {
-			const hasUpdate = await updated.check();
-			if (hasUpdate) {
-				clearInterval(interval);
-				await clearOfflineCache();
-				location.reload();
+			// 2. Pull & merge from JSON Drive cloud in background
+			const user = getSavedUsername();
+			if (user) {
+				await pullAndMerge(user);
 			}
-		}, 60_000);
 
-		return () => clearInterval(interval);
+			// 3. Poll for new deployments; on detection clear all caches and hard-reload
+			updated.check();
+			interval = setInterval(async () => {
+				const hasUpdate = await updated.check();
+				if (hasUpdate) {
+					clearInterval(interval);
+					await clearOfflineCache();
+					location.reload();
+				}
+			}, 60_000);
+		})();
+
+		return () => {
+			if (interval) clearInterval(interval);
+		};
 	});
 </script>
 

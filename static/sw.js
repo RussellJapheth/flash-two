@@ -1,7 +1,13 @@
-const CACHE_NAME = 'flashcards-v1';
+const CACHE_NAME = 'flashcards-v2';
 const STATIC_ASSETS = [
 	'/',
 	'/manifest.json',
+	'/favicon.png',
+	'/icons/icon-192x192.png',
+	'/icons/icon-512x512.png',
+	'/icons/icon-maskable-192x192.png',
+	'/icons/icon-maskable-512x512.png',
+	'/icons/apple-touch-icon-180x180.png',
 	'/mascots/flame.png',
 	'/mascots/owl.png'
 ];

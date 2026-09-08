@@ -526,7 +526,9 @@
 				</div>
 			</div>
 
-			<p class="font-sans text-xs font-bold text-slate-600">
+			<p
+				class="rounded-full border border-white/80 bg-white/85 px-4 py-1.5 font-sans text-xs font-bold text-sky-950 shadow-xs backdrop-blur-md"
+			>
 				{audioMode ? 'Listen carefully and select fast!' : 'Identify the number and tap the match!'}
 			</p>
 		</div>

@@ -1,1 +1,2 @@
-// SSR enabled by default for adapter-netlify
+export const ssr = false;
+export const prerender = false;

@@ -431,6 +431,21 @@ export async function toggleSavedWord(weekId: string, wordNo: number): Promise<b
 	});
 }
 
+export async function saveBulkSavedWords(words: SavedWord[]): Promise<void> {
+	if (typeof window === 'undefined' || !words.length) return;
+	const db = await getDB();
+	return new Promise((resolve, reject) => {
+		const tx = db.transaction('saved_words', 'readwrite');
+		const store = tx.objectStore('saved_words');
+		for (const w of words) {
+			const key = `${w.weekId}:${w.wordNo}`;
+			store.put({ key, ...w });
+		}
+		tx.oncomplete = () => resolve();
+		tx.onerror = () => reject(tx.error);
+	});
+}
+
 // LocalStorage User & Language
 export function getSavedUsername(): string {
 	if (typeof window === 'undefined') return '';

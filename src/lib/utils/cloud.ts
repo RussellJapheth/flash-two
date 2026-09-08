@@ -1,10 +1,11 @@
-import type { AppBackup, WordProgress, SyncStatus } from '$lib/types';
+import type { AppBackup, WordProgress, SyncStatus, CustomDeck, SavedWord } from '$lib/types';
 import {
 	getAllProgress,
 	getAllCustomDecks,
 	getAllSavedWords,
 	saveBulkProgress,
 	saveCustomDeck,
+	saveBulkSavedWords,
 	getSavedUsername,
 	getSavedLanguage
 } from './storage';
@@ -12,6 +13,7 @@ import {
 const API_BASE = 'https://json-drive.thespot.workers.dev/api/flashcards';
 
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+let lastPullTime = 0;
 let currentSyncStatus: SyncStatus = 'idle';
 const listeners = new Set<(status: SyncStatus) => void>();
 
@@ -30,7 +32,7 @@ export function getSyncStatus(): SyncStatus {
 	return currentSyncStatus;
 }
 
-// Deep merge remote data into local state
+// Deep bidirectional merge remote data into local state
 export async function pullAndMerge(username: string): Promise<boolean> {
 	if (typeof window === 'undefined') return false;
 	if (!navigator.onLine) {
@@ -39,6 +41,7 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 	}
 
 	updateStatus('syncing');
+	lastPullTime = Date.now();
 
 	try {
 		const cleanUser = username.trim().toLowerCase();
@@ -59,49 +62,122 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 		}
 
 		const remoteData: AppBackup = await response.json();
+		let localHadNewData = false;
 
-		// Merge Progress
+		// 1. Merge Progress (Word-by-Word deterministic Last-Reviewed-Wins)
 		const localProgress = await getAllProgress();
 		const mergedProgress: Record<string, WordProgress> = { ...localProgress };
 
-		if (remoteData.progress) {
+		if (remoteData.progress && typeof remoteData.progress === 'object') {
 			for (const [key, remoteProg] of Object.entries(remoteData.progress)) {
+				if (!remoteProg || typeof remoteProg !== 'object') continue;
 				const localProg = localProgress[key];
+
 				if (!localProg) {
+					// Word only exists on remote
 					mergedProgress[key] = remoteProg;
 				} else {
-					mergedProgress[key] = {
-						weekId: remoteProg.weekId || localProg.weekId,
-						wordNo: remoteProg.wordNo || localProg.wordNo,
-						correct: Math.max(localProg.correct || 0, remoteProg.correct || 0),
-						wrong: Math.max(localProg.wrong || 0, remoteProg.wrong || 0),
-						lastReviewed: Math.max(localProg.lastReviewed || 0, remoteProg.lastReviewed || 0),
-						dueDate: Math.max(localProg.dueDate || 0, remoteProg.dueDate || 0),
-						interval: Math.max(localProg.interval || 0, remoteProg.interval || 0),
-						reps: Math.max(localProg.reps || 0, remoteProg.reps || 0),
-						lapses: Math.max(localProg.lapses || 0, remoteProg.lapses || 0),
-						easeFactor:
-							(remoteProg.lastReviewed || 0) >= (localProg.lastReviewed || 0)
-								? remoteProg.easeFactor || 2.5
-								: localProg.easeFactor || 2.5
-					};
+					const localLast = localProg.lastReviewed || 0;
+					const remoteLast = remoteProg.lastReviewed || 0;
+
+					if (localLast > remoteLast) {
+						// Local review is strictly newer -> keep local SRS state, flag remote needs update
+						mergedProgress[key] = localProg;
+						localHadNewData = true;
+					} else if (remoteLast > localLast) {
+						// Remote review is strictly newer -> adopt remote SRS state
+						mergedProgress[key] = remoteProg;
+					} else {
+						// Same timestamp: tie-break by highest reps/progress, non-destructive fallback
+						const remoteReps = remoteProg.reps || 0;
+						const localReps = localProg.reps || 0;
+						if (localReps > remoteReps) {
+							mergedProgress[key] = localProg;
+							localHadNewData = true;
+						} else {
+							mergedProgress[key] = remoteProg;
+						}
+					}
 				}
 			}
+
+			// Local words not present on remote -> preserve and sync back
+			for (const localKey of Object.keys(localProgress)) {
+				if (!remoteData.progress[localKey]) {
+					localHadNewData = true;
+				}
+			}
+
 			await saveBulkProgress(mergedProgress);
 		}
 
-		// Merge Custom Decks
+		// 2. Merge Custom Decks
+		const localDecks = await getAllCustomDecks();
+		const localDeckMap = new Map<string, CustomDeck>(localDecks.map((d) => [d.id, d]));
+
 		if (Array.isArray(remoteData.customDecks)) {
-			const localDecks = await getAllCustomDecks();
-			const localIds = new Set(localDecks.map((d) => d.id));
 			for (const remoteDeck of remoteData.customDecks) {
-				if (!localIds.has(remoteDeck.id)) {
+				const localDeck = localDeckMap.get(remoteDeck.id);
+				if (!localDeck) {
 					await saveCustomDeck(remoteDeck);
+				} else {
+					// Keep newer version if remote has more words or is newer
+					const remoteCreated = remoteDeck.createdAt || 0;
+					const localCreated = localDeck.createdAt || 0;
+					if (remoteCreated > localCreated || remoteDeck.words.length > localDeck.words.length) {
+						await saveCustomDeck(remoteDeck);
+					} else if (localCreated > remoteCreated || localDeck.words.length > remoteDeck.words.length) {
+						localHadNewData = true;
+					}
+				}
+			}
+		}
+
+		for (const localDeck of localDecks) {
+			if (!remoteData.customDecks?.some((d) => d.id === localDeck.id)) {
+				localHadNewData = true;
+			}
+		}
+
+		// 3. Merge Saved / Bookmarked Words
+		const localSaved = await getAllSavedWords();
+		const localSavedMap = new Map<string, SavedWord>(
+			localSaved.map((s) => [`${s.weekId}:${s.wordNo}`, s])
+		);
+		const wordsToSave: SavedWord[] = [];
+
+		if (Array.isArray(remoteData.savedWords)) {
+			for (const remoteWord of remoteData.savedWords) {
+				const key = `${remoteWord.weekId}:${remoteWord.wordNo}`;
+				const localWord = localSavedMap.get(key);
+				if (!localWord) {
+					wordsToSave.push(remoteWord);
+				}
+			}
+		}
+
+		if (wordsToSave.length > 0) {
+			await saveBulkSavedWords(wordsToSave);
+		}
+
+		if (Array.isArray(remoteData.savedWords)) {
+			const remoteKeys = new Set(
+				remoteData.savedWords.map((s) => `${s.weekId}:${s.wordNo}`)
+			);
+			for (const [key] of localSavedMap) {
+				if (!remoteKeys.has(key)) {
+					localHadNewData = true;
 				}
 			}
 		}
 
 		updateStatus('ok');
+
+		// 4. Two-way convergence: if local had newer/additional data, push merged state to remote
+		if (localHadNewData) {
+			scheduleDebouncedSync(1000);
+		}
+
 		return true;
 	} catch (err) {
 		console.error('Cloud pull/merge error:', err);
@@ -188,11 +264,33 @@ export function scheduleDebouncedSync(delayMs = 4000) {
 	}, delayMs);
 }
 
-// Handle online reconnection
+// Auto sync when app gains focus or reconnects (throttled to once per 10s)
+function triggerAutoPull() {
+	if (typeof window === 'undefined') return;
+	const user = getSavedUsername();
+	if (!user) return;
+	if (Date.now() - lastPullTime > 10000) {
+		pullAndMerge(user);
+	}
+}
+
+// Handle online reconnection and visibility change
 if (typeof window !== 'undefined') {
 	window.addEventListener('online', () => {
 		if (currentSyncStatus === 'pending' || currentSyncStatus === 'error') {
 			pushData();
+		} else {
+			triggerAutoPull();
 		}
+	});
+
+	window.addEventListener('visibilitychange', () => {
+		if (document.visibilityState === 'visible') {
+			triggerAutoPull();
+		}
+	});
+
+	window.addEventListener('focus', () => {
+		triggerAutoPull();
 	});
 }

@@ -64,7 +64,7 @@
 				handleFlip(e);
 			}
 		}}
-		class="transform-style-3d relative min-h-[380px] w-full cursor-pointer rounded-3xl transition-transform duration-500 sm:min-h-[420px] {isFlipped
+		class="transform-style-3d relative min-h-[380px] w-full cursor-pointer rounded-3xl transition-transform duration-300 sm:min-h-[420px] {isFlipped
 			? 'rotate-y-180'
 			: ''}"
 	>

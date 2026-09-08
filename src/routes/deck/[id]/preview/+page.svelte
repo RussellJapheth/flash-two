@@ -74,7 +74,7 @@
 
 	// Table Search & Filters
 	let tableSearch = $state('');
-	let tableFilter = $state<'all' | 'saved' | 'due' | 'learning' | 'mastered'>('all');
+	let tableFilter = $state<'all' | 'difficult' | 'saved' | 'due' | 'learning' | 'mastered'>('all');
 
 	async function loadDeckData() {
 		const progress = await getAllProgress();
@@ -229,7 +229,10 @@
 
 			const isSaved = savedWordNos.has(w.No);
 			const status = getWordStatus(w.No);
+			const progress = getWordProgress(allProgress, deckId, w.No, deckLanguage);
+			const isDifficult = Boolean(progress && (progress.wrong || 0) > 0);
 
+			if (tableFilter === 'difficult' && !isDifficult) return false;
 			if (tableFilter === 'saved' && !isSaved) return false;
 			if (tableFilter === 'due' && status !== 'due' && status !== 'new') return false;
 			if (tableFilter === 'learning' && status !== 'learning') return false;
@@ -531,6 +534,18 @@
 
 					<button
 						type="button"
+						onclick={() => (tableFilter = 'difficult')}
+						class="flex cursor-pointer items-center gap-1 rounded-full px-3 py-1 font-headline text-[11px] font-bold transition-colors {tableFilter ===
+						'difficult'
+							? 'bg-rose-600 text-white'
+							: 'bg-rose-50 text-rose-700 hover:bg-rose-100'}"
+					>
+						<Dumbbell size={11} strokeWidth={2.5} />
+						<span>Difficult ({weakCount})</span>
+					</button>
+
+					<button
+						type="button"
 						onclick={() => (tableFilter = 'saved')}
 						class="flex cursor-pointer items-center gap-1 rounded-full px-3 py-1 font-headline text-[11px] font-bold transition-colors {tableFilter ===
 						'saved'
@@ -613,6 +628,12 @@
 											: word['French Word'] || ''}
 									{@const isSaved = savedWordNos.has(word.No)}
 									{@const status = getWordStatus(word.No)}
+									{@const progress = getWordProgress(
+										allProgress,
+										deckId,
+										word.No,
+										deckLanguage
+									)}
 									<tr class="transition-colors hover:bg-slate-50/70">
 										<!-- No. -->
 										<td
@@ -665,33 +686,45 @@
 
 										<!-- Status Badge -->
 										<td class="px-3 py-3 text-center">
-											{#if status === 'mastered'}
-												<span
-													class="inline-flex items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50 px-2 py-0.5 font-headline text-[10px] font-bold text-emerald-700"
-												>
-													<CheckCircle2 size={11} strokeWidth={2.5} />
-													<span>Mastered</span>
-												</span>
-											{:else if status === 'learning'}
-												<span
-													class="inline-flex items-center gap-1 rounded-full border border-amber-100 bg-amber-50 px-2 py-0.5 font-headline text-[10px] font-bold text-amber-700"
-												>
-													<Clock size={11} strokeWidth={2.5} />
-													<span>Learning</span>
-												</span>
-											{:else if status === 'due'}
-												<span
-													class="inline-flex items-center gap-1 rounded-full border border-rose-100 bg-rose-50 px-2 py-0.5 font-headline text-[10px] font-bold text-rose-600"
-												>
-													<span>Due</span>
-												</span>
-											{:else}
-												<span
-													class="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-headline text-[10px] font-bold text-slate-500"
-												>
-													New
-												</span>
-											{/if}
+											<div class="flex flex-col items-center justify-center gap-1">
+												{#if status === 'mastered'}
+													<span
+														class="inline-flex items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50 px-2 py-0.5 font-headline text-[10px] font-bold text-emerald-700"
+													>
+														<CheckCircle2 size={11} strokeWidth={2.5} />
+														<span>Mastered</span>
+													</span>
+												{:else if status === 'learning'}
+													<span
+														class="inline-flex items-center gap-1 rounded-full border border-amber-100 bg-amber-50 px-2 py-0.5 font-headline text-[10px] font-bold text-amber-700"
+													>
+														<Clock size={11} strokeWidth={2.5} />
+														<span>Learning</span>
+													</span>
+												{:else if status === 'due'}
+													<span
+														class="inline-flex items-center gap-1 rounded-full border border-rose-100 bg-rose-50 px-2 py-0.5 font-headline text-[10px] font-bold text-rose-600"
+													>
+														<span>Due</span>
+													</span>
+												{:else}
+													<span
+														class="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-headline text-[10px] font-bold text-slate-500"
+													>
+														New
+													</span>
+												{/if}
+
+												{#if progress && (progress.wrong || 0) > 0}
+													<span
+														class="inline-flex items-center gap-0.5 rounded-md bg-rose-50 px-1.5 py-0.5 font-headline text-[9px] font-bold text-rose-600"
+														title="{progress.wrong} lapses recorded"
+													>
+														<Dumbbell size={9} strokeWidth={2.5} />
+														<span>{progress.wrong} {progress.wrong === 1 ? 'lapse' : 'lapses'}</span>
+													</span>
+												{/if}
+											</div>
 										</td>
 
 										<!-- Action buttons -->

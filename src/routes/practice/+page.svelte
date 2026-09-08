@@ -32,6 +32,7 @@
 	let currentIndex = $state(0);
 	let isFlipped = $state(false);
 	let isCurrentSaved = $state(false);
+	let isAdvancing = $state(false);
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
 
 	let sessionCorrect = $state(0);
@@ -101,6 +102,7 @@
 		items = weakItems;
 		currentIndex = 0;
 		isFlipped = false;
+		isAdvancing = false;
 
 		if (items.length > 0) {
 			await updateSavedStatus();
@@ -119,40 +121,50 @@
 	}
 
 	function handleFlipCard() {
+		if (isAdvancing) return;
 		isFlipped = !isFlipped;
 	}
 
 	async function handleRate(rating: StudyRating, customDays?: number) {
-		if (!currentItem) return;
+		if (isAdvancing || !currentItem) return;
+		isAdvancing = true;
 
-		const currentProgress = getWordProgress(
-			allProgress,
-			currentItem.packId,
-			currentItem.word.No,
-			currentItem.language
-		);
-		const updated = calculateNextReview(currentProgress, rating, customDays);
-		updated.weekId = currentItem.packId;
-		updated.wordNo = currentItem.word.No;
+		try {
+			const currentProgress = getWordProgress(
+				allProgress,
+				currentItem.packId,
+				currentItem.word.No,
+				currentItem.language
+			);
+			const updated = calculateNextReview(currentProgress, rating, customDays);
+			updated.weekId = currentItem.packId;
+			updated.wordNo = currentItem.word.No;
 
-		await saveProgress(updated);
-		const key = `${currentItem.packId}:${currentItem.word.No}`;
-		allProgress[key] = updated;
-		scheduleDebouncedSync();
+			await saveProgress(updated);
+			const key = `${currentItem.packId}:${currentItem.word.No}`;
+			allProgress[key] = updated;
+			scheduleDebouncedSync();
 
-		if (rating === 'again') {
-			sessionWrong++;
-		} else {
-			sessionCorrect++;
-		}
+			if (rating === 'again') {
+				sessionWrong++;
+			} else {
+				sessionCorrect++;
+			}
 
-		if (currentIndex + 1 >= items.length) {
-			isSessionFinished = true;
-			playSound('milestone');
-		} else {
-			currentIndex++;
-			isFlipped = false;
-			updateSavedStatus();
+			if (currentIndex + 1 >= items.length) {
+				isSessionFinished = true;
+				playSound('milestone');
+			} else {
+				if (isFlipped) {
+					isFlipped = false;
+					await new Promise((r) => setTimeout(r, 250));
+				}
+				currentIndex++;
+				isFlipped = false;
+				await updateSavedStatus();
+			}
+		} finally {
+			isAdvancing = false;
 		}
 	}
 
@@ -257,9 +269,9 @@
 				/>
 
 				<div
-					class="transition-opacity {isFlipped ? 'opacity-100' : 'pointer-events-none opacity-40'}"
+					class="transition-opacity {isFlipped && !isAdvancing ? 'opacity-100' : 'pointer-events-none opacity-40'}"
 				>
-					<SRSButtons onRate={handleRate} disabled={!isFlipped} progress={currentProgress} />
+					<SRSButtons onRate={handleRate} disabled={!isFlipped || isAdvancing} progress={currentProgress} />
 				</div>
 			</div>
 		{:else}

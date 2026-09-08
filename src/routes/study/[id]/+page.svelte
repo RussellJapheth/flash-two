@@ -46,6 +46,7 @@
 	let currentIndex = $state(0);
 	let isFlipped = $state(false);
 	let isCurrentSaved = $state(false);
+	let isAdvancing = $state(false);
 
 	// Session metrics
 	let sessionCorrect = $state(0);
@@ -149,6 +150,7 @@
 		cards = filtered;
 		currentIndex = 0;
 		isFlipped = false;
+		isAdvancing = false;
 		isSessionFinished = false;
 		sessionCorrect = 0;
 		sessionWrong = 0;
@@ -173,6 +175,7 @@
 	}
 
 	function handleFlipCard() {
+		if (isAdvancing) return;
 		isFlipped = !isFlipped;
 		if (isAutoplay) {
 			runAutoplayStep();
@@ -180,7 +183,7 @@
 	}
 
 	async function handleRate(rating: StudyRating, customDays?: number) {
-		if (!currentWord) return;
+		if (isAdvancing || !currentWord) return;
 
 		const currentProgress = getWordProgress(allProgress, deckId, currentWord.No, deckLanguage);
 		const updated = calculateNextReview(currentProgress, rating, customDays);
@@ -211,28 +214,43 @@
 			return;
 		}
 
-		advanceNextCard();
+		await advanceNextCard();
 	}
 
-	function advanceNextCard() {
-		if (currentIndex + 1 >= cards.length) {
-			if (isAutoplay && autoplayLoop) {
-				currentIndex = 0;
-				isFlipped = false;
-				updateSavedStatus();
-				runAutoplayStep();
+	async function advanceNextCard() {
+		if (isAdvancing) return;
+		isAdvancing = true;
+
+		try {
+			if (currentIndex + 1 >= cards.length) {
+				if (isAutoplay && autoplayLoop) {
+					if (isFlipped) {
+						isFlipped = false;
+						await new Promise((resolve) => setTimeout(resolve, 250));
+					}
+					currentIndex = 0;
+					isFlipped = false;
+					await updateSavedStatus();
+					runAutoplayStep();
+				} else {
+					clearAutoplay();
+					isSessionFinished = true;
+					playSound('milestone');
+				}
 			} else {
-				clearAutoplay();
-				isSessionFinished = true;
-				playSound('milestone');
+				if (isFlipped) {
+					isFlipped = false;
+					await new Promise((resolve) => setTimeout(resolve, 250));
+				}
+				currentIndex++;
+				isFlipped = false;
+				await updateSavedStatus();
+				if (isAutoplay) {
+					runAutoplayStep();
+				}
 			}
-		} else {
-			currentIndex++;
-			isFlipped = false;
-			updateSavedStatus();
-			if (isAutoplay) {
-				runAutoplayStep();
-			}
+		} finally {
+			isAdvancing = false;
 		}
 	}
 
@@ -307,7 +325,7 @@
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (isSessionFinished || showMilestoneModal) return;
+		if (isSessionFinished || showMilestoneModal || isAdvancing) return;
 
 		if (e.key === 'p' || e.key === 'P') {
 			e.preventDefault();
@@ -541,9 +559,9 @@
 
 				<!-- SRS EVALUATION CONTROLS -->
 				<div
-					class="transition-opacity {isFlipped ? 'opacity-100' : 'pointer-events-none opacity-40'}"
+					class="transition-opacity {isFlipped && !isAdvancing ? 'opacity-100' : 'pointer-events-none opacity-40'}"
 				>
-					<SRSButtons onRate={handleRate} disabled={!isFlipped} progress={currentProgress} />
+					<SRSButtons onRate={handleRate} disabled={!isFlipped || isAdvancing} progress={currentProgress} />
 				</div>
 			</div>
 		{:else}

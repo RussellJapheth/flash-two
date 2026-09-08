@@ -32,6 +32,7 @@
 	let currentIndex = $state(0);
 	let isFlipped = $state(false);
 	let isCurrentSaved = $state(false);
+	let isAdvancing = $state(false);
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
 
 	// Session metrics
@@ -69,8 +70,12 @@
 		for (const pack of packs) {
 			for (const word of pack.words) {
 				const p = getWordProgress(progress, pack.id, word.No, activeLanguage);
-				if (isCardDue(p)) {
-					dueItems.push({ packId: pack.id, word, language: activeLanguage });
+				if (!p || isCardDue(p)) {
+					dueItems.push({
+						packId: pack.id,
+						word,
+						language: activeLanguage
+					});
 				}
 			}
 		}
@@ -79,7 +84,7 @@
 		for (const deck of matchingCustom) {
 			for (const word of deck.words) {
 				const p = getWordProgress(progress, deck.id, word.No, deck.language || activeLanguage);
-				if (isCardDue(p)) {
+				if (!p || isCardDue(p)) {
 					dueItems.push({
 						packId: deck.id,
 						word,
@@ -92,6 +97,7 @@
 		items = dueItems;
 		currentIndex = 0;
 		isFlipped = false;
+		isAdvancing = false;
 
 		if (items.length > 0) {
 			await updateSavedStatus();
@@ -110,11 +116,12 @@
 	}
 
 	function handleFlipCard() {
+		if (isAdvancing) return;
 		isFlipped = !isFlipped;
 	}
 
 	async function handleRate(rating: StudyRating, customDays?: number) {
-		if (!currentItem) return;
+		if (isAdvancing || !currentItem) return;
 
 		const currentProgress = getWordProgress(
 			allProgress,
@@ -144,17 +151,28 @@
 			return;
 		}
 
-		advanceNextCard();
+		await advanceNextCard();
 	}
 
-	function advanceNextCard() {
-		if (currentIndex + 1 >= items.length) {
-			isSessionFinished = true;
-			playSound('milestone');
-		} else {
-			currentIndex++;
-			isFlipped = false;
-			updateSavedStatus();
+	async function advanceNextCard() {
+		if (isAdvancing) return;
+		isAdvancing = true;
+
+		try {
+			if (currentIndex + 1 >= items.length) {
+				isSessionFinished = true;
+				playSound('milestone');
+			} else {
+				if (isFlipped) {
+					isFlipped = false;
+					await new Promise((r) => setTimeout(r, 250));
+				}
+				currentIndex++;
+				isFlipped = false;
+				await updateSavedStatus();
+			}
+		} finally {
+			isAdvancing = false;
 		}
 	}
 
@@ -259,9 +277,9 @@
 				/>
 
 				<div
-					class="transition-opacity {isFlipped ? 'opacity-100' : 'pointer-events-none opacity-40'}"
+					class="transition-opacity {isFlipped && !isAdvancing ? 'opacity-100' : 'pointer-events-none opacity-40'}"
 				>
-					<SRSButtons onRate={handleRate} disabled={!isFlipped} progress={currentProgress} />
+					<SRSButtons onRate={handleRate} disabled={!isFlipped || isAdvancing} progress={currentProgress} />
 				</div>
 			</div>
 		{:else}

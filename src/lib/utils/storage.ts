@@ -268,8 +268,8 @@ export async function toggleSavedWord(weekId: string, wordNo: number): Promise<b
 
 // LocalStorage User & Language
 export function getSavedUsername(): string {
-	if (typeof window === 'undefined') return 'russell';
-	return localStorage.getItem('flashcards_user') || 'russell';
+	if (typeof window === 'undefined') return '';
+	return localStorage.getItem('flashcards_user') || '';
 }
 
 export function setSavedUsername(name: string): void {

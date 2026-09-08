@@ -27,7 +27,7 @@
 		ChevronRight
 	} from 'lucide-svelte';
 
-	let username = $state('russell');
+	let username = $state('');
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
 	let syncStatus = $state<SyncStatus>('idle');
 	let syncMessage = $state('');
@@ -61,16 +61,25 @@
 	}
 
 	async function handleSaveUsername() {
-		if (newUsernameInput.trim()) {
-			const clean = newUsernameInput.trim().toLowerCase();
+		const clean = newUsernameInput.trim().toLowerCase();
+		if (clean) {
 			username = clean;
 			setSavedUsername(clean);
 			isEditingUsername = false;
 			await pullAndMerge(clean);
+		} else {
+			setSavedUsername('');
+			username = '';
+			isEditingUsername = false;
 		}
 	}
 
 	async function handleManualPush() {
+		if (!username) {
+			syncMessage = 'Please enter a username above to sync with cloud.';
+			setTimeout(() => (syncMessage = ''), 4000);
+			return;
+		}
 		syncMessage = 'Pushing to cloud…';
 		const success = await pushData(username);
 		syncMessage = success ? 'Pushed successfully!' : 'Push failed. Check your connection.';
@@ -78,6 +87,11 @@
 	}
 
 	async function handleManualPull() {
+		if (!username) {
+			syncMessage = 'Please enter a username above to sync with cloud.';
+			setTimeout(() => (syncMessage = ''), 4000);
+			return;
+		}
 		syncMessage = 'Pulling from cloud…';
 		const success = await pullAndMerge(username);
 		syncMessage = success ? 'Data merged!' : 'Pull failed. User may not exist in cloud.';
@@ -99,14 +113,15 @@
 			customDecks,
 			savedWords,
 			language,
-			username
+			username: username || undefined
 		};
 
 		const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
 		a.href = url;
-		a.download = `flashcards-backup-${username}-${new Date().toISOString().split('T')[0]}.json`;
+		const nameTag = username || 'local';
+		a.download = `flashcards-backup-${nameTag}-${new Date().toISOString().split('T')[0]}.json`;
 		a.click();
 		URL.revokeObjectURL(url);
 	}
@@ -191,7 +206,7 @@
 					<div
 						class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xl font-bold text-indigo-600 uppercase shadow-inner"
 					>
-						{username ? username[0] : 'U'}
+						{username ? username[0] : '👤'}
 					</div>
 					<div>
 						{#if isEditingUsername}
@@ -200,7 +215,8 @@
 									type="text"
 									id="username-input"
 									bind:value={newUsernameInput}
-									class="w-32 rounded-xl border border-gray-200 px-2.5 py-1.5 text-sm font-semibold text-gray-900 focus:border-indigo-500 focus:outline-none"
+									placeholder="Enter username"
+									class="w-36 rounded-xl border border-gray-200 px-2.5 py-1.5 text-sm font-semibold text-gray-900 focus:border-indigo-500 focus:outline-none"
 								/>
 								<button
 									type="button"
@@ -218,8 +234,14 @@
 								</button>
 							</div>
 						{:else}
-							<p class="text-base font-bold text-gray-900 capitalize">{username}</p>
-							<p class="mt-0.5 text-xs text-gray-400">Go further, one card at a time.</p>
+							<p class="text-base font-bold text-gray-900 capitalize">
+								{username || 'Guest Learner'}
+							</p>
+							<p class="mt-0.5 text-xs text-gray-400">
+								{username
+									? 'Cloud profile active'
+									: 'Local data mode • Tap to set cloud profile'}
+							</p>
 						{/if}
 					</div>
 				</div>
@@ -227,11 +249,14 @@
 				{#if !isEditingUsername}
 					<button
 						type="button"
-						onclick={() => (isEditingUsername = true)}
-						aria-label="Edit username"
+						onclick={() => {
+							newUsernameInput = username;
+							isEditingUsername = true;
+						}}
+						aria-label={username ? 'Edit username' : 'Set username'}
 						class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 active:scale-95"
 					>
-						<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
+						<ChevronRight size={18} strokeWidth={1.75} class="text-gray-400" />
 					</button>
 				{/if}
 			</div>

@@ -7,7 +7,7 @@
 	import type { StreakStats } from '$lib/types';
 	import { Zap, Flame, Award, Snowflake, Hourglass, Trophy, Calendar } from 'lucide-svelte';
 
-	let username = $state('Russell');
+	let username = $state('');
 	let isCalendarOpen = $state(false);
 
 	let streakStats = $state<StreakStats>({
@@ -63,7 +63,7 @@
 	});
 
 	async function loadStreakData() {
-		username = getSavedUsername() || 'Russell';
+		username = getSavedUsername();
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
 	}
@@ -121,8 +121,12 @@
 			</h2>
 
 			<p class="font-body mt-1 max-w-[260px] text-xs leading-relaxed text-on-surface-variant">
-				You're on fire, <span class="font-bold text-on-surface capitalize">{username}</span>! Study
-				daily to keep the momentum roaring.
+				{#if username}
+					You're on fire, <span class="font-bold text-on-surface capitalize">{username}</span>! Study
+					daily to keep the momentum roaring.
+				{:else}
+					You're on fire! Study daily to keep the momentum roaring.
+				{/if}
 			</p>
 		</div>
 

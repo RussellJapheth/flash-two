@@ -27,7 +27,7 @@
 		BookOpen
 	} from 'lucide-svelte';
 
-	let username = $state('Russell');
+	let username = $state('');
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -66,7 +66,7 @@
 	});
 
 	async function loadDashboardData() {
-		username = getSavedUsername() || 'Russell';
+		username = getSavedUsername();
 		activeLanguage = getSavedLanguage();
 		recentPackIds = getRecentlyOpenedPackIds();
 
@@ -219,10 +219,10 @@
 		<div class="relative z-10 flex items-start justify-between">
 			<div class="space-y-0.5">
 				<p class="font-body text-xs font-semibold tracking-wider text-slate-500 uppercase">
-					Good day,
+					{username ? 'Good day,' : 'Welcome back,'}
 				</p>
 				<h2 class="font-headline text-2xl font-extrabold tracking-tight text-slate-900 capitalize">
-					{username}! 👋
+					{username ? `${username}! 👋` : 'Learner! 👋'}
 				</h2>
 				<div class="flex items-center gap-1.5 pt-0.5">
 					<span

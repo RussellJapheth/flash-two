@@ -2,8 +2,8 @@
 	import './layout.css';
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import { onMount } from 'svelte';
-	import { page } from '$app/state';
-	import { initializeOfflinePacks, getSavedUsername } from '$lib/utils/storage';
+	import { page, updated } from '$app/state';
+	import { initializeOfflinePacks, getSavedUsername, clearOfflineCache } from '$lib/utils/storage';
 	import { pullAndMerge } from '$lib/utils/cloud';
 
 	let { children } = $props();
@@ -25,6 +25,19 @@
 		if (user) {
 			await pullAndMerge(user);
 		}
+
+		// 3. Poll for new deployments; on detection clear all caches and hard-reload
+		updated.check();
+		const interval = setInterval(async () => {
+			const hasUpdate = await updated.check();
+			if (hasUpdate) {
+				clearInterval(interval);
+				await clearOfflineCache();
+				location.reload();
+			}
+		}, 60_000);
+
+		return () => clearInterval(interval);
 	});
 </script>
 

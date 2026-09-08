@@ -86,4 +86,12 @@ describe('SRS SM-2 Algorithm', () => {
 		expect(isCardMastered(masteredCard)).toBe(true);
 		expect(isCardLearning(masteredCard)).toBe(false);
 	});
+
+	it('loads builtin packs for chinese and french correctly', async () => {
+		const { getBuiltinPacks } = await import('./utils/storage');
+		const chinese = await getBuiltinPacks('chinese');
+		const french = await getBuiltinPacks('french');
+		expect(chinese.length).toBeGreaterThan(0);
+		expect(french.length).toBeGreaterThan(0);
+	});
 });

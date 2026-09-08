@@ -54,14 +54,18 @@
 		} else {
 			// Check Chinese packs then French packs
 			const chPacks = await getBuiltinPacks('chinese');
-			const chMatch = chPacks.find((p) => p.id === deckId);
+			const chMatch = chPacks.find(
+				(p) => p.id === deckId || p.id === `chinese-${deckId}` || p.id.replace('chinese-', '') === deckId
+			);
 			if (chMatch) {
 				foundWords = chMatch.words;
 				title = chMatch.title;
 				lang = 'chinese';
 			} else {
 				const frPacks = await getBuiltinPacks('french');
-				const frMatch = frPacks.find((p) => p.id === deckId);
+				const frMatch = frPacks.find(
+					(p) => p.id === deckId || p.id === `french-${deckId}` || p.id.replace('french-', '') === deckId
+				);
 				if (frMatch) {
 					foundWords = frMatch.words;
 					title = frMatch.title;
@@ -80,7 +84,9 @@
 		let weak = 0;
 
 		for (const w of foundWords) {
-			const p = progress[`${deckId}:${w.No}`];
+			const p =
+				progress[`${deckId}:${w.No}`] ||
+				progress[`${deckId.replace('chinese-', '').replace('french-', '')}:${w.No}`];
 			if (p) {
 				if (isCardMastered(p)) mastered++;
 				else if (isCardLearning(p)) learning++;

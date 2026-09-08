@@ -40,6 +40,9 @@
 	let isSessionFinished = $state(false);
 
 	let currentWord = $derived(cards[currentIndex]);
+	let currentProgress = $derived(
+		currentWord ? allProgress[`${deckId}:${currentWord.No}`] : undefined
+	);
 	let progressCount = $derived(cards.length > 0 ? currentIndex + 1 : 0);
 	let sessionAccuracy = $derived(
 		sessionCorrect + sessionWrong > 0
@@ -65,14 +68,18 @@
 			}
 		} else {
 			const chPacks = await getBuiltinPacks('chinese');
-			const chMatch = chPacks.find((p) => p.id === deckId);
+			const chMatch = chPacks.find(
+				(p) => p.id === deckId || p.id === `chinese-${deckId}` || p.id.replace('chinese-', '') === deckId
+			);
 			if (chMatch) {
 				rawWords = chMatch.words;
 				title = chMatch.title;
 				lang = 'chinese';
 			} else {
 				const frPacks = await getBuiltinPacks('french');
-				const frMatch = frPacks.find((p) => p.id === deckId);
+				const frMatch = frPacks.find(
+					(p) => p.id === deckId || p.id === `french-${deckId}` || p.id.replace('french-', '') === deckId
+				);
 				if (frMatch) {
 					rawWords = frMatch.words;
 					title = frMatch.title;
@@ -88,12 +95,16 @@
 		let filtered: WordRecord[] = [];
 		if (studyMode === 'weak') {
 			filtered = rawWords.filter((w) => {
-				const p = progress[`${deckId}:${w.No}`];
+				const p =
+					progress[`${deckId}:${w.No}`] ||
+					progress[`${deckId.replace('chinese-', '').replace('french-', '')}:${w.No}`];
 				return p && (p.wrong || 0) > 0;
 			});
 		} else if (studyMode === 'srs') {
 			filtered = rawWords.filter((w) => {
-				const p = progress[`${deckId}:${w.No}`];
+				const p =
+					progress[`${deckId}:${w.No}`] ||
+					progress[`${deckId.replace('chinese-', '').replace('french-', '')}:${w.No}`];
 				return !p || isCardDue(p);
 			});
 		} else {
@@ -309,7 +320,7 @@
 
 				<!-- SRS EVALUATION CONTROLS -->
 				<div class="transition-opacity {isFlipped ? 'opacity-100' : 'opacity-40 pointer-events-none'}">
-					<SRSButtons onRate={handleRate} disabled={!isFlipped} />
+					<SRSButtons onRate={handleRate} disabled={!isFlipped} progress={currentProgress} />
 				</div>
 			</div>
 		{:else}

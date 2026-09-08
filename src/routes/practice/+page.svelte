@@ -38,6 +38,9 @@
 	let isSessionFinished = $state(false);
 
 	let currentItem = $derived(items[currentIndex]);
+	let currentProgress = $derived(
+		currentItem ? allProgress[`${currentItem.packId}:${currentItem.word.No}`] : undefined
+	);
 	let progressCount = $derived(items.length > 0 ? currentIndex + 1 : 0);
 	let sessionAccuracy = $derived(
 		sessionCorrect + sessionWrong > 0
@@ -250,7 +253,7 @@
 				/>
 
 				<div class="transition-opacity {isFlipped ? 'opacity-100' : 'opacity-40 pointer-events-none'}">
-					<SRSButtons onRate={handleRate} disabled={!isFlipped} />
+					<SRSButtons onRate={handleRate} disabled={!isFlipped} progress={currentProgress} />
 				</div>
 			</div>
 		{:else}

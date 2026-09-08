@@ -43,18 +43,22 @@
 
 		for (const s of savedWords) {
 			// Find word in built-in Chinese
-			const chPack = chPacks.find((p) => p.id === s.weekId);
+			const chPack = chPacks.find(
+				(p) => p.id === s.weekId || p.id === `chinese-${s.weekId}` || p.id.replace('chinese-', '') === s.weekId
+			);
 			if (chPack) {
 				const word = chPack.words.find((w) => w.No === s.wordNo);
-				if (word) results.push({ packId: s.weekId, word, language: 'chinese', savedAt: s.savedAt });
+				if (word) results.push({ packId: chPack.id, word, language: 'chinese', savedAt: s.savedAt });
 				continue;
 			}
 
 			// Find word in built-in French
-			const frPack = frPacks.find((p) => p.id === s.weekId);
+			const frPack = frPacks.find(
+				(p) => p.id === s.weekId || p.id === `french-${s.weekId}` || p.id.replace('french-', '') === s.weekId
+			);
 			if (frPack) {
 				const word = frPack.words.find((w) => w.No === s.wordNo);
-				if (word) results.push({ packId: s.weekId, word, language: 'french', savedAt: s.savedAt });
+				if (word) results.push({ packId: frPack.id, word, language: 'french', savedAt: s.savedAt });
 				continue;
 			}
 

@@ -10,11 +10,11 @@ const DB_NAME = 'flashcards_db';
 const DB_VERSION = 3;
 
 // Raw imports of JSON vocabulary packs for bundling and instant offline initialization
-const chinesePacks = import.meta.glob<WordRecord[]>('$lib/data/chinese/*.json', {
+const chinesePacks = import.meta.glob<WordRecord[]>('../data/chinese/*.json', {
 	eager: true,
 	import: 'default'
 });
-const frenchPacks = import.meta.glob<WordRecord[]>('$lib/data/french/*.json', {
+const frenchPacks = import.meta.glob<WordRecord[]>('../data/french/*.json', {
 	eager: true,
 	import: 'default'
 });
@@ -99,7 +99,7 @@ export async function getBuiltinPacks(
 		const weekNum = filename.replace('week-', '');
 		const title = `Week ${weekNum} Vocabulary`;
 		results.push({
-			id: filename,
+			id: `${language}-${filename}`,
 			title,
 			words: Array.isArray(words) ? words : []
 		});
@@ -113,7 +113,12 @@ export async function getPackWords(
 	packId: string
 ): Promise<WordRecord[]> {
 	const packs = await getBuiltinPacks(language);
-	const match = packs.find((p) => p.id === packId);
+	const match = packs.find(
+		(p) =>
+			p.id === packId ||
+			p.id === `${language}-${packId}` ||
+			p.id.replace(`${language}-`, '') === packId
+	);
 	return match ? match.words : [];
 }
 

@@ -67,7 +67,9 @@
 			let totalAttempts = 0;
 
 			for (const word of pack.words) {
-				const p = progress[`${pack.id}:${word.No}`];
+				const p =
+					progress[`${pack.id}:${word.No}`] ||
+					progress[`${pack.id.replace('chinese-', '')}:${word.No}`];
 				if (p) {
 					if (isCardMastered(p)) mastered++;
 					else learning++;
@@ -104,7 +106,9 @@
 			let totalAttempts = 0;
 
 			for (const word of pack.words) {
-				const p = progress[`${pack.id}:${word.No}`];
+				const p =
+					progress[`${pack.id}:${word.No}`] ||
+					progress[`${pack.id.replace('french-', '')}:${word.No}`];
 				if (p) {
 					if (isCardMastered(p)) mastered++;
 					else learning++;

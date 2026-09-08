@@ -65,7 +65,8 @@
 
 			for (const word of pack.words) {
 				const key = `${pack.id}:${word.No}`;
-				const p: WordProgress | undefined = progress[key];
+				const legacyKey = `${pack.id.replace(`${activeLanguage}-`, '')}:${word.No}`;
+				const p: WordProgress | undefined = progress[key] || progress[legacyKey];
 				if (p) {
 					if (isCardMastered(p)) mastered++;
 					else if (isCardLearning(p)) learning++;

@@ -4,7 +4,7 @@
 	import { resolve } from '$app/paths';
 	import FlashCard from '$lib/components/FlashCard.svelte';
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
-	import MilestoneModal from '$lib/components/MilestoneModal.svelte';
+	import HalfwayToast from '$lib/components/HalfwayToast.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import {
 		getAllProgress,
@@ -52,7 +52,8 @@
 	let sessionCorrect = $state(0);
 	let sessionWrong = $state(0);
 	let halfwayTriggered = $state(false);
-	let showMilestoneModal = $state(false);
+	let showHalfwayToast = $state(false);
+	let halfwayToastTimer: ReturnType<typeof setTimeout> | undefined;
 	let isSessionFinished = $state(false);
 
 	// Autoplay state & options
@@ -203,15 +204,9 @@
 
 		// Check for halfway milestone
 		const halfwayIndex = Math.floor(cards.length / 2);
-		if (
-			!isAutoplay &&
-			!halfwayTriggered &&
-			cards.length >= 4 &&
-			currentIndex + 1 === halfwayIndex
-		) {
+		if (!halfwayTriggered && cards.length >= 4 && currentIndex + 1 === halfwayIndex) {
 			halfwayTriggered = true;
-			showMilestoneModal = true;
-			return;
+			triggerHalfwayToast();
 		}
 
 		await advanceNextCard();
@@ -245,6 +240,16 @@
 				currentIndex++;
 				isFlipped = false;
 				await updateSavedStatus();
+				const halfwayIndex = Math.floor(cards.length / 2);
+				if (
+					isAutoplay &&
+					!halfwayTriggered &&
+					cards.length >= 4 &&
+					currentIndex === halfwayIndex
+				) {
+					halfwayTriggered = true;
+					triggerHalfwayToast();
+				}
 				if (isAutoplay) {
 					runAutoplayStep();
 				}
@@ -252,6 +257,15 @@
 		} finally {
 			isAdvancing = false;
 		}
+	}
+
+	function triggerHalfwayToast() {
+		playSound('milestone');
+		showHalfwayToast = true;
+		if (halfwayToastTimer) clearTimeout(halfwayToastTimer);
+		halfwayToastTimer = setTimeout(() => {
+			showHalfwayToast = false;
+		}, 3000);
 	}
 
 	// ─── AUTOPLAY ENGINE ────────────────────────────────────────────────────────
@@ -325,7 +339,7 @@
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (isSessionFinished || showMilestoneModal || isAdvancing) return;
+		if (isSessionFinished || isAdvancing) return;
 
 		if (e.key === 'p' || e.key === 'P') {
 			e.preventDefault();
@@ -350,11 +364,13 @@
 		return () => {
 			window.removeEventListener('keydown', handleKeydown);
 			clearAutoplay();
+			if (halfwayToastTimer) clearTimeout(halfwayToastTimer);
 		};
 	});
 
 	onDestroy(() => {
 		clearAutoplay();
+		if (halfwayToastTimer) clearTimeout(halfwayToastTimer);
 	});
 </script>
 
@@ -598,28 +614,10 @@
 	</main>
 </div>
 
-<!-- HALFWAY MILESTONE CELEBRATION MODAL -->
-<MilestoneModal
-	isOpen={showMilestoneModal}
-	title="Halfway There!"
-	subtitle="You're halfway through your cards with {sessionAccuracy}% accuracy. Keep the momentum going!"
-	badgeText="HALFWAY MILESTONE"
+<!-- HALFWAY MILESTONE MOTIVATION TOAST -->
+<HalfwayToast
+	show={showHalfwayToast}
+	title="You're Crushing It!"
+	subtitle="Halfway through this deck • Keep the momentum going!"
 	mascot="/mascots/owl.png"
-	stats={{
-		reviewed: currentIndex + 1,
-		total: cards.length,
-		accuracy: sessionAccuracy,
-		correct: sessionCorrect,
-		wrong: sessionWrong
-	}}
-	primaryActionText="Keep Going"
-	secondaryActionText="Take a Break"
-	onPrimaryAction={() => {
-		showMilestoneModal = false;
-		advanceNextCard();
-	}}
-	onSecondaryAction={() => {
-		showMilestoneModal = false;
-		goto(resolve('/'));
-	}}
 />

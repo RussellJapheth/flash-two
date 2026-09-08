@@ -3,8 +3,8 @@
 	import { resolve } from '$app/paths';
 	import FlashCard from '$lib/components/FlashCard.svelte';
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
-	import MilestoneModal from '$lib/components/MilestoneModal.svelte';
-	import { onMount } from 'svelte';
+	import HalfwayToast from '$lib/components/HalfwayToast.svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import {
 		getAllProgress,
 		getWordProgress,
@@ -39,7 +39,8 @@
 	let sessionCorrect = $state(0);
 	let sessionWrong = $state(0);
 	let halfwayTriggered = $state(false);
-	let showMilestoneModal = $state(false);
+	let showHalfwayToast = $state(false);
+	let halfwayToastTimer: ReturnType<typeof setTimeout> | undefined;
 	let isSessionFinished = $state(false);
 
 	let currentItem = $derived(items[currentIndex]);
@@ -147,11 +148,19 @@
 		const halfwayIndex = Math.floor(items.length / 2);
 		if (!halfwayTriggered && items.length >= 4 && currentIndex + 1 === halfwayIndex) {
 			halfwayTriggered = true;
-			showMilestoneModal = true;
-			return;
+			triggerHalfwayToast();
 		}
 
 		await advanceNextCard();
+	}
+
+	function triggerHalfwayToast() {
+		playSound('milestone');
+		showHalfwayToast = true;
+		if (halfwayToastTimer) clearTimeout(halfwayToastTimer);
+		halfwayToastTimer = setTimeout(() => {
+			showHalfwayToast = false;
+		}, 3000);
 	}
 
 	async function advanceNextCard() {
@@ -178,6 +187,10 @@
 
 	onMount(() => {
 		loadDueCards();
+	});
+
+	onDestroy(() => {
+		if (halfwayToastTimer) clearTimeout(halfwayToastTimer);
 	});
 </script>
 
@@ -307,25 +320,9 @@
 	</main>
 </div>
 
-<MilestoneModal
-	isOpen={showMilestoneModal}
+<HalfwayToast
+	show={showHalfwayToast}
 	title="Halfway Done!"
-	subtitle="You've conquered half your scheduled cards for today!"
-	badgeText="SRS REVIEW MILESTONE"
+	subtitle="Conquered half your scheduled reviews • Keep going!"
 	mascot="/mascots/flame.png"
-	stats={{
-		reviewed: currentIndex + 1,
-		total: items.length,
-		accuracy: sessionAccuracy,
-		correct: sessionCorrect,
-		wrong: sessionWrong
-	}}
-	onPrimaryAction={() => {
-		showMilestoneModal = false;
-		advanceNextCard();
-	}}
-	onSecondaryAction={() => {
-		showMilestoneModal = false;
-		goto(resolve('/'));
-	}}
 />

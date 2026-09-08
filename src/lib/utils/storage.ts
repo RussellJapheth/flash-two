@@ -9,20 +9,14 @@ export interface RawPackData {
 }
 
 // Raw imports of JSON vocabulary packs for bundling and instant offline initialization
-const chinesePacks =
-	typeof import.meta.glob === 'function'
-		? import.meta.glob<WordRecord[] | RawPackData>('../data/chinese/*.json', {
-				eager: true,
-				import: 'default'
-			})
-		: {};
-const frenchPacks =
-	typeof import.meta.glob === 'function'
-		? import.meta.glob<WordRecord[] | RawPackData>('../data/french/*.json', {
-				eager: true,
-				import: 'default'
-			})
-		: {};
+const chinesePacks = import.meta.glob<WordRecord[] | RawPackData>('../data/chinese/*.json', {
+	eager: true,
+	import: 'default'
+});
+const frenchPacks = import.meta.glob<WordRecord[] | RawPackData>('../data/french/*.json', {
+	eager: true,
+	import: 'default'
+});
 
 let dbPromise: Promise<IDBDatabase> | null = null;
 

@@ -91,7 +91,7 @@ The application follows a consistent 4px / 8px incremental scale:
 
 ## 6. Surfaces & Containers
 
-- **Primary Hero Surface**: `bg-gradient-to-br from-indigo-50/70 via-white to-slate-50/50 border border-slate-200/80 rounded-3xl p-5 shadow-card`
+- **Primary Hero Surface**: `bg-white border border-slate-200/80 rounded-3xl p-5 shadow-card relative overflow-hidden` with a subtle landscape backdrop image overlay (`/images/greeting-bg.jpg` at 35% opacity blended with horizontal and vertical white gradient masks) preserving crisp typography and high legibility.
 - **Standard Module Surface**: `bg-white border border-slate-200/90 rounded-3xl p-5 shadow-card`
 - **Interactive List Row**: `bg-white border border-slate-200/80 hover:border-indigo-200 rounded-2xl p-3.5 shadow-card hover:shadow-card-hover`
 - **Urgent Action Surface**: `bg-gradient-to-br from-indigo-600 to-indigo-700 text-white rounded-3xl p-4 shadow-md shadow-indigo-600/15`
@@ -128,7 +128,7 @@ The application follows a consistent 4px / 8px incremental scale:
 ### Top Header (`TopHeader.svelte`)
 
 - **Left**: Brand logo icon (`bg-indigo-600 text-white rounded-xl`) + "FlashCards" title.
-- **Right**: Cloud sync status icon button + Streak motivation chip.
+- **Right**: Cloud sync status icon button (streak motivation is housed prominently in the Greeting Hero card).
 
 ### Bottom Navigation (`BottomNav.svelte`)
 
@@ -145,6 +145,9 @@ The application follows a consistent 4px / 8px incremental scale:
   - Center: Truncated bold title + metadata (`X words • Y mastered • Z% acc`).
   - Integrated micro progress track (`h-1.5 rounded-full bg-slate-100` with `bg-emerald-500` fill).
   - Right: Due badge (`X due` in rose pill) + circular/rounded play chevron button.
+- **Home Dashboard Recent Packs List**:
+  - The dashboard displays the **last 3 recently opened/active packs** for the selected language to keep the home screen focused and scannable.
+  - An explicit "View all X packs in Decks →" action navigates to `/decks` for browsing full libraries.
 
 ---
 

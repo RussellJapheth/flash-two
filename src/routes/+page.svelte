@@ -12,7 +12,8 @@
 		computeStreakStats,
 		getSavedUsername,
 		getSavedLanguage,
-		setSavedLanguage
+		setSavedLanguage,
+		getRecentlyOpenedPackIds
 	} from '$lib/utils/storage';
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
 	import type { DeckSummary, StreakStats, WordProgress } from '$lib/types';
@@ -38,6 +39,7 @@
 	});
 
 	let deckSummaries = $state<DeckSummary[]>([]);
+	let recentPackIds = $state<string[]>([]);
 	let totalDueCount = $state(0);
 	let totalWeakCount = $state(0);
 	let totalMasteredCount = $state(0);
@@ -50,9 +52,23 @@
 		totalCardCount > 0 ? Math.round((totalMasteredCount / totalCardCount) * 100) : 0
 	);
 
+	let displayedRecentDecks = $derived(() => {
+		if (deckSummaries.length === 0) return [];
+		const ordered = [...deckSummaries].sort((a, b) => {
+			const idxA = recentPackIds.indexOf(a.id);
+			const idxB = recentPackIds.indexOf(b.id);
+			if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+			if (idxA !== -1) return -1;
+			if (idxB !== -1) return 1;
+			return 0;
+		});
+		return ordered.slice(0, 3);
+	});
+
 	async function loadDashboardData() {
 		username = getSavedUsername() || 'Russell';
 		activeLanguage = getSavedLanguage();
+		recentPackIds = getRecentlyOpenedPackIds();
 
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
@@ -187,8 +203,19 @@
 <main class="flex-1 space-y-5 px-4 pt-4 pb-8">
 	<!-- 1. GREETING & TODAY'S PROGRESS HERO -->
 	<section
-		class="shadow-card relative overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-indigo-50/70 via-white to-slate-50/50 p-5"
+		class="shadow-card relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-5"
 	>
+		<!-- Mild Scenic Landscape Background Layer -->
+		<div class="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+			<img
+				src="/images/greeting-bg.jpg"
+				alt=""
+				class="h-full w-full object-cover object-right opacity-85"
+			/>
+			<div class="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent"></div>
+			<div class="absolute inset-0 bg-gradient-to-t from-white via-white/30 to-transparent"></div>
+		</div>
+
 		<div class="relative z-10 flex items-start justify-between">
 			<div class="space-y-0.5">
 				<p class="font-body text-xs font-semibold tracking-wider text-slate-500 uppercase">
@@ -199,7 +226,7 @@
 				</h2>
 				<div class="flex items-center gap-1.5 pt-0.5">
 					<span
-						class="inline-flex items-center gap-1 rounded-md bg-indigo-100/80 px-2 py-0.5 text-[11px] font-bold text-indigo-800"
+						class="inline-flex items-center gap-1 rounded-md bg-indigo-100/90 px-2 py-0.5 text-[11px] font-bold text-indigo-800 backdrop-blur-xs"
 					>
 						<Sparkles size={11} strokeWidth={2.5} class="text-indigo-600" />
 						{streakStats.tierName}
@@ -212,7 +239,7 @@
 			<button
 				type="button"
 				onclick={() => (isStreakModalOpen = true)}
-				class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-amber-200/80 bg-white/90 px-3.5 py-2 text-center shadow-xs transition-transform hover:scale-105 active:scale-95"
+				class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-amber-200/80 bg-white/90 px-3.5 py-2 text-center shadow-xs backdrop-blur-xs transition-transform hover:scale-105 active:scale-95"
 			>
 				<Flame size={22} strokeWidth={2.25} class="fill-amber-500/20 text-amber-500" />
 				<span class="font-headline text-xs font-extrabold text-amber-900">
@@ -222,7 +249,7 @@
 		</div>
 
 		<!-- Daily Mastery Progress -->
-		<div class="mt-4 border-t border-slate-200/60 pt-3.5">
+		<div class="relative z-10 mt-4 border-t border-slate-200/60 pt-3.5">
 			<div class="mb-1.5 flex items-center justify-between text-xs">
 				<span class="font-headline font-bold text-slate-700">Today's Progress</span>
 				<div class="flex items-center gap-1.5">
@@ -237,7 +264,7 @@
 				</div>
 			</div>
 			<ProgressBar value={totalMasteredCount} max={totalCardCount} variant="primary" height="h-2" />
-			<p class="mt-2 text-[11px] font-medium text-slate-400">
+			<p class="mt-2 text-[11px] font-medium text-slate-500">
 				{#if totalCardCount - totalMasteredCount > 0}
 					{totalCardCount - totalMasteredCount} words remaining in curriculum
 				{:else}
@@ -382,12 +409,12 @@
 		</div>
 	</section>
 
-	<!-- 4. VOCABULARY PACKS LIBRARY -->
+	<!-- 4. RECENTLY OPENED PACKS -->
 	<section class="space-y-3 pt-1">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center gap-1.5">
 				<BookOpen size={18} strokeWidth={2.25} class="text-indigo-600" />
-				<h3 class="font-headline text-base font-bold text-slate-900">Vocabulary Packs</h3>
+				<h3 class="font-headline text-base font-bold text-slate-900">Recent Packs</h3>
 			</div>
 
 			<!-- Language Toggle Pill -->
@@ -415,9 +442,9 @@
 			</div>
 		</div>
 
-		<!-- Pack Cards List -->
+		<!-- Pack Cards List (Top 3 Recent) -->
 		<div class="space-y-2.5">
-			{#if deckSummaries.length === 0}
+			{#if displayedRecentDecks().length === 0}
 				<div
 					class="rounded-2xl border border-dashed border-slate-200 p-6 text-center text-slate-400"
 				>
@@ -426,11 +453,28 @@
 					</p>
 				</div>
 			{:else}
-				{#each deckSummaries as deck (deck.id)}
-					<DeckCard {deck} />
+				{#each displayedRecentDecks() as deck (deck.id)}
+					<DeckCard {deck} onSelect={() => (recentPackIds = getRecentlyOpenedPackIds())} />
 				{/each}
 			{/if}
 		</div>
+
+		<!-- View All Decks Link -->
+		{#if deckSummaries.length > 3}
+			<div class="pt-1">
+				<a
+					href={resolve('/decks')}
+					class="group flex h-11 w-full items-center justify-center gap-1.5 rounded-2xl border border-slate-200/90 bg-white font-headline text-xs font-bold text-slate-700 shadow-xs transition-all hover:border-indigo-200 hover:bg-slate-50 hover:text-indigo-600 active:scale-[0.99]"
+				>
+					<span>View all {deckSummaries.length} packs in Decks</span>
+					<ArrowRight
+						size={14}
+						strokeWidth={2.25}
+						class="transition-transform group-hover:translate-x-0.5"
+					/>
+				</a>
+			</div>
+		{/if}
 	</section>
 </main>
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { DeckSummary } from '$lib/types';
 	import { resolve } from '$app/paths';
+	import { recordRecentlyOpenedPack } from '$lib/utils/storage';
 	import { Play, Sparkles } from 'lucide-svelte';
 
 	let { deck, onSelect = () => {} } = $props<{
@@ -13,11 +14,16 @@
 	);
 
 	let isFrench = $derived(deck.language === 'french');
+
+	function handleClick() {
+		recordRecentlyOpenedPack(deck.id);
+		onSelect(deck);
+	}
 </script>
 
 <a
 	href={resolve(`/deck/${deck.id}/preview`)}
-	onclick={() => onSelect(deck)}
+	onclick={handleClick}
 	class="group shadow-card hover:shadow-card-hover relative flex cursor-pointer flex-col gap-2.5 rounded-2xl border border-slate-200/80 bg-white p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-200 active:scale-[0.99]"
 >
 	<div class="flex items-center justify-between gap-3">

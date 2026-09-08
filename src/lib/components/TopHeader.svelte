@@ -9,7 +9,6 @@
 		Cloud,
 		CloudCheck,
 		CloudUpload,
-		Flame,
 		Sparkles
 	} from 'lucide-svelte';
 
@@ -96,17 +95,6 @@
 						: ''}"
 		>
 			<SyncIcon size={16} strokeWidth={2} class={syncStatus === 'syncing' ? 'animate-spin' : ''} />
-		</button>
-
-		<!-- Streak Motivation Pill -->
-		<button
-			type="button"
-			onclick={onOpenStreak}
-			class="flex h-8 cursor-pointer items-center gap-1.5 rounded-full border border-amber-200/80 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-900 shadow-xs transition-all hover:bg-amber-100/90 active:scale-95"
-		>
-			<Flame size={15} strokeWidth={2.25} class="fill-amber-500/20 text-amber-500" />
-			<span class="font-headline font-extrabold">{streak}</span>
-			<span class="text-[11px] font-semibold text-amber-800/80">d</span>
 		</button>
 	</div>
 </header>

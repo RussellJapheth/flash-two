@@ -12,8 +12,10 @@
 		getAllCustomDecks,
 		saveProgress,
 		isWordSaved,
-		toggleSavedWord
+		toggleSavedWord,
+		recordRecentlyOpenedPack
 	} from '$lib/utils/storage';
+
 	import { calculateNextReview, isCardDue } from '$lib/utils/srs';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { playSound } from '$lib/utils/audio';
@@ -93,6 +95,9 @@
 
 		deckTitle = title;
 		deckLanguage = lang;
+		if (deckId) {
+			recordRecentlyOpenedPack(deckId);
+		}
 
 		// Filter cards by studyMode
 		let filtered: WordRecord[] = [];

@@ -7,8 +7,10 @@
 		getAllProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
-		computeStreakStats
+		computeStreakStats,
+		recordRecentlyOpenedPack
 	} from '$lib/utils/storage';
+
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
 	import type { WordRecord, WordProgress, StreakStats } from '$lib/types';
 	import { Brain, BookOpen, Dumbbell, Play } from 'lucide-svelte';
@@ -80,6 +82,9 @@
 		words = foundWords;
 		deckTitle = title;
 		deckLanguage = lang;
+		if (deckId) {
+			recordRecentlyOpenedPack(deckId);
+		}
 
 		let mastered = 0;
 		let learning = 0;

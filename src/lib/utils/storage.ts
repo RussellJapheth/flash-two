@@ -290,7 +290,30 @@ export function setSavedLanguage(lang: 'chinese' | 'french'): void {
 	}
 }
 
+export function recordRecentlyOpenedPack(packId: string): void {
+	if (typeof window === 'undefined' || !packId) return;
+	try {
+		const raw = localStorage.getItem('flashcards_recent_packs');
+		const list: string[] = raw ? JSON.parse(raw) : [];
+		const updated = [packId, ...list.filter((id) => id !== packId)].slice(0, 10);
+		localStorage.setItem('flashcards_recent_packs', JSON.stringify(updated));
+	} catch (e) {
+		console.warn('Failed to save recent pack:', e);
+	}
+}
+
+export function getRecentlyOpenedPackIds(): string[] {
+	if (typeof window === 'undefined') return [];
+	try {
+		const raw = localStorage.getItem('flashcards_recent_packs');
+		return raw ? JSON.parse(raw) : [];
+	} catch {
+		return [];
+	}
+}
+
 // Streak Computation
+
 export function computeStreakStats(progress: Record<string, WordProgress>): StreakStats {
 	const datesSet = new Set<string>();
 	let totalReviews = 0;

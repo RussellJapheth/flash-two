@@ -95,6 +95,12 @@
 			}
 		}
 
+		// Shuffle review cards randomly
+		for (let i = dueItems.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[dueItems[i], dueItems[j]] = [dueItems[j], dueItems[i]];
+		}
+
 		items = dueItems;
 		currentIndex = 0;
 		isFlipped = false;

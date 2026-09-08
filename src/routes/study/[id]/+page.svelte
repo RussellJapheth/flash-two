@@ -126,10 +126,6 @@
 				const p = getWordProgress(progress, deckId, w.No, lang);
 				return p && (p.wrong || 0) > 0;
 			});
-			for (let i = filtered.length - 1; i > 0; i--) {
-				const j = Math.floor(Math.random() * (i + 1));
-				[filtered[i], filtered[j]] = [filtered[j], filtered[i]];
-			}
 		} else if (studyMode === 'srs') {
 			filtered = rawWords.filter((w) => {
 				const p = getWordProgress(progress, deckId, w.No, lang);
@@ -141,6 +137,12 @@
 
 		if (filtered.length === 0) {
 			filtered = [...rawWords];
+		}
+
+		// Shuffle cards randomly
+		for (let i = filtered.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[filtered[i], filtered[j]] = [filtered[j], filtered[i]];
 		}
 
 		// Apply card limit if set

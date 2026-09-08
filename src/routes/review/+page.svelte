@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
+		getWordProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
 		saveProgress,
@@ -42,7 +43,9 @@
 
 	let currentItem = $derived(items[currentIndex]);
 	let currentProgress = $derived(
-		currentItem ? allProgress[`${currentItem.packId}:${currentItem.word.No}`] : undefined
+		currentItem
+			? getWordProgress(allProgress, currentItem.packId, currentItem.word.No, currentItem.language)
+			: undefined
 	);
 	let progressCount = $derived(items.length > 0 ? currentIndex + 1 : 0);
 	let sessionAccuracy = $derived(
@@ -65,7 +68,7 @@
 		// Built-in packs
 		for (const pack of packs) {
 			for (const word of pack.words) {
-				const p = progress[`${pack.id}:${word.No}`];
+				const p = getWordProgress(progress, pack.id, word.No, activeLanguage);
 				if (isCardDue(p)) {
 					dueItems.push({ packId: pack.id, word, language: activeLanguage });
 				}
@@ -75,12 +78,12 @@
 		// Custom decks
 		for (const deck of matchingCustom) {
 			for (const word of deck.words) {
-				const p = progress[`${deck.id}:${word.No}`];
+				const p = getWordProgress(progress, deck.id, word.No, deck.language || activeLanguage);
 				if (isCardDue(p)) {
 					dueItems.push({
 						packId: deck.id,
 						word,
-						language: deck.language || activeLanguage
+						language: (deck.language as 'chinese' | 'french') || activeLanguage
 					});
 				}
 			}
@@ -113,13 +116,18 @@
 	async function handleRate(rating: StudyRating, customDays?: number) {
 		if (!currentItem) return;
 
-		const key = `${currentItem.packId}:${currentItem.word.No}`;
-		const currentProgress = allProgress[key];
+		const currentProgress = getWordProgress(
+			allProgress,
+			currentItem.packId,
+			currentItem.word.No,
+			currentItem.language
+		);
 		const updated = calculateNextReview(currentProgress, rating, customDays);
 		updated.weekId = currentItem.packId;
 		updated.wordNo = currentItem.word.No;
 
 		await saveProgress(updated);
+		const key = `${currentItem.packId}:${currentItem.word.No}`;
 		allProgress[key] = updated;
 		scheduleDebouncedSync();
 

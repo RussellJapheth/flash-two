@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { SvelteSet } from 'svelte/reactivity';
 	import TopHeader from '$lib/components/TopHeader.svelte';
@@ -7,6 +8,7 @@
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
+		getWordProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
 		computeStreakStats,
@@ -122,9 +124,7 @@
 
 		savedWordNos.clear();
 		for (const w of foundWords) {
-			const p =
-				progress[`${deckId}:${w.No}`] ||
-				progress[`${deckId.replace('chinese-', '').replace('french-', '')}:${w.No}`];
+			const p = getWordProgress(progress, deckId, w.No, lang);
 			if (p) {
 				if (isCardMastered(p)) mastered++;
 				else if (isCardLearning(p)) learning++;
@@ -155,9 +155,7 @@
 	}
 
 	function getWordStatus(wordNo: number): 'mastered' | 'learning' | 'due' | 'new' {
-		const p =
-			allProgress[`${deckId}:${wordNo}`] ||
-			allProgress[`${deckId.replace('chinese-', '').replace('french-', '')}:${wordNo}`];
+		const p = getWordProgress(allProgress, deckId, wordNo, deckLanguage);
 		if (!p) return 'new';
 		if (isCardMastered(p)) return 'mastered';
 		if (isCardLearning(p)) return 'learning';
@@ -206,7 +204,12 @@
 	<title>{deckTitle} — FlashCards</title>
 </svelte:head>
 
-<TopHeader title="Deck Overview" showBack={true} streak={streakStats.currentStreak} />
+<TopHeader
+	title="Deck Overview"
+	showBack={true}
+	onBack={() => goto(resolve('/'))}
+	streak={streakStats.currentStreak}
+/>
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<!-- Deck Summary Hero -->

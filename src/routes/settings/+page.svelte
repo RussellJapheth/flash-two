@@ -466,8 +466,12 @@
 					<Trash2 size={18} strokeWidth={2} />
 				</div>
 				<div class="text-left">
-					<span class="block font-headline text-sm font-bold text-slate-900">Clear Offline Cache</span>
-					<span class="block font-sans text-xs text-slate-500">Purge cached packs & temporary storage</span>
+					<span class="block font-headline text-sm font-bold text-slate-900"
+						>Clear Offline Cache</span
+					>
+					<span class="block font-sans text-xs text-slate-500"
+						>Purge cached packs & temporary storage</span
+					>
 				</div>
 			</div>
 			<div class="flex items-center gap-2">

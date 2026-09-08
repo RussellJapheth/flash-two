@@ -1,0 +1,40 @@
+{
+	"title": "Daily Life & Travel",
+	"words": [
+		{
+			"French Word": "heureux",
+			"Part of Speech": "Adjective",
+			"English Meaning": "happy",
+			"Example (French)": "Je suis heureux de te voir.",
+			"No": 1
+		},
+		{
+			"French Word": "travail",
+			"Part of Speech": "Noun",
+			"English Meaning": "work / job",
+			"Example (French)": "Son travail est très intéressant.",
+			"No": 2
+		},
+		{
+			"French Word": "parler",
+			"Part of Speech": "Verb",
+			"English Meaning": "to speak",
+			"Example (French)": "Elle parle trois langues.",
+			"No": 3
+		},
+		{
+			"French Word": "monde",
+			"Part of Speech": "Noun",
+			"English Meaning": "world / people",
+			"Example (French)": "Tout le monde est là.",
+			"No": 4
+		},
+		{
+			"French Word": "voyager",
+			"Part of Speech": "Verb",
+			"English Meaning": "to travel",
+			"Example (French)": "Nous voulons voyager cet été.",
+			"No": 5
+		}
+	]
+}

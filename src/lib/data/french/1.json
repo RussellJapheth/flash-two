@@ -1,0 +1,40 @@
+{
+	"title": "Essential Greetings & Basics",
+	"words": [
+		{
+			"French Word": "bonjour",
+			"Part of Speech": "Noun / Interjection",
+			"English Meaning": "hello / good morning",
+			"Example (French)": "Bonjour, comment ça va ?",
+			"No": 1
+		},
+		{
+			"French Word": "merci",
+			"Part of Speech": "Interjection",
+			"English Meaning": "thank you",
+			"Example (French)": "Merci beaucoup pour votre aide.",
+			"No": 2
+		},
+		{
+			"French Word": "ami",
+			"Part of Speech": "Noun",
+			"English Meaning": "friend",
+			"Example (French)": "C'est un bon ami.",
+			"No": 3
+		},
+		{
+			"French Word": "apprendre",
+			"Part of Speech": "Verb",
+			"English Meaning": "to learn",
+			"Example (French)": "J'aime apprendre le français.",
+			"No": 4
+		},
+		{
+			"French Word": "famille",
+			"Part of Speech": "Noun",
+			"English Meaning": "family",
+			"Example (French)": "Je passe du temps avec ma famille.",
+			"No": 5
+		}
+	]
+}

@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
+		getWordProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
 		saveCustomDeck,
@@ -70,9 +71,7 @@
 			let totalAttempts = 0;
 
 			for (const word of pack.words) {
-				const p =
-					progress[`${pack.id}:${word.No}`] ||
-					progress[`${pack.id.replace('chinese-', '')}:${word.No}`];
+				const p = getWordProgress(progress, pack.id, word.No, 'chinese');
 				if (p) {
 					if (isCardMastered(p)) mastered++;
 					else learning++;
@@ -108,9 +107,7 @@
 			let totalAttempts = 0;
 
 			for (const word of pack.words) {
-				const p =
-					progress[`${pack.id}:${word.No}`] ||
-					progress[`${pack.id.replace('french-', '')}:${word.No}`];
+				const p = getWordProgress(progress, pack.id, word.No, 'french');
 				if (p) {
 					if (isCardMastered(p)) mastered++;
 					else learning++;
@@ -146,7 +143,7 @@
 			let totalAttempts = 0;
 
 			for (const word of deck.words) {
-				const p = progress[`${deck.id}:${word.No}`];
+				const p = getWordProgress(progress, deck.id, word.No, deck.language || 'chinese');
 				if (p) {
 					if (isCardMastered(p)) mastered++;
 					else learning++;

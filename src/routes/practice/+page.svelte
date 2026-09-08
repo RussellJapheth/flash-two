@@ -6,6 +6,7 @@
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
+		getWordProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
 		saveProgress,
@@ -39,7 +40,9 @@
 
 	let currentItem = $derived(items[currentIndex]);
 	let currentProgress = $derived(
-		currentItem ? allProgress[`${currentItem.packId}:${currentItem.word.No}`] : undefined
+		currentItem
+			? getWordProgress(allProgress, currentItem.packId, currentItem.word.No, currentItem.language)
+			: undefined
 	);
 	let progressCount = $derived(items.length > 0 ? currentIndex + 1 : 0);
 	let sessionAccuracy = $derived(
@@ -62,7 +65,7 @@
 		// Built-in packs
 		for (const pack of packs) {
 			for (const word of pack.words) {
-				const p = progress[`${pack.id}:${word.No}`];
+				const p = getWordProgress(progress, pack.id, word.No, activeLanguage);
 				if (p && (p.wrong || 0) > 0) {
 					weakItems.push({
 						packId: pack.id,
@@ -77,20 +80,23 @@
 		// Custom decks
 		for (const deck of matchingCustom) {
 			for (const word of deck.words) {
-				const p = progress[`${deck.id}:${word.No}`];
+				const p = getWordProgress(progress, deck.id, word.No, deck.language || activeLanguage);
 				if (p && (p.wrong || 0) > 0) {
 					weakItems.push({
 						packId: deck.id,
 						word,
 						wrongCount: p.wrong,
-						language: deck.language || activeLanguage
+						language: (deck.language as 'chinese' | 'french') || activeLanguage
 					});
 				}
 			}
 		}
 
-		// Sort by highest error count first
-		weakItems.sort((a, b) => b.wrongCount - a.wrongCount);
+		// Shuffle difficult words randomly
+		for (let i = weakItems.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[weakItems[i], weakItems[j]] = [weakItems[j], weakItems[i]];
+		}
 
 		items = weakItems;
 		currentIndex = 0;
@@ -119,13 +125,18 @@
 	async function handleRate(rating: StudyRating, customDays?: number) {
 		if (!currentItem) return;
 
-		const key = `${currentItem.packId}:${currentItem.word.No}`;
-		const currentProgress = allProgress[key];
+		const currentProgress = getWordProgress(
+			allProgress,
+			currentItem.packId,
+			currentItem.word.No,
+			currentItem.language
+		);
 		const updated = calculateNextReview(currentProgress, rating, customDays);
 		updated.weekId = currentItem.packId;
 		updated.wordNo = currentItem.word.No;
 
 		await saveProgress(updated);
+		const key = `${currentItem.packId}:${currentItem.word.No}`;
 		allProgress[key] = updated;
 		scheduleDebouncedSync();
 
@@ -235,15 +246,6 @@
 			</div>
 		{:else if currentItem}
 			<div class="space-y-6">
-				<!-- Card Difficulty Warning Badge -->
-				<div class="flex justify-center">
-					<span
-						class="rounded-full border border-rose-200 bg-rose-50 px-3 py-0.5 font-headline text-[11px] font-bold text-rose-700"
-					>
-						Missed {currentItem.wrongCount} times previously
-					</span>
-				</div>
-
 				<FlashCard
 					word={currentItem.word}
 					language={currentItem.language}

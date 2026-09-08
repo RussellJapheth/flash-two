@@ -87,15 +87,49 @@ describe('SRS SM-2 Algorithm', () => {
 		expect(isCardLearning(masteredCard)).toBe(false);
 	});
 
-	it('loads builtin packs for chinese and french correctly without week labels', async () => {
-		const { getBuiltinPacks } = await import('./utils/storage');
-		const chinese = await getBuiltinPacks('chinese');
-		const french = await getBuiltinPacks('french');
-		expect(chinese.length).toBeGreaterThan(0);
-		expect(french.length).toBeGreaterThan(0);
-		for (const pack of [...chinese, ...french]) {
-			expect(pack.title).toMatch(/^Pack \d+/);
-			expect(pack.title.toLowerCase()).not.toContain('week');
-		}
+	it('resolves word progress for both legacy and language-prefixed keys', async () => {
+		const { getWordProgress } = await import('./utils/storage');
+		const mockProgress: Record<string, WordProgress> = {
+			'week-1:5': {
+				weekId: 'week-1',
+				wordNo: 5,
+				correct: 1,
+				wrong: 3,
+				lastReviewed: 100,
+				dueDate: 100,
+				interval: 1,
+				easeFactor: 2.5
+			},
+			'chinese-pack-2:10': {
+				weekId: 'chinese-pack-2',
+				wordNo: 10,
+				correct: 2,
+				wrong: 1,
+				lastReviewed: 200,
+				dueDate: 200,
+				interval: 2,
+				easeFactor: 2.5
+			}
+		};
+
+		// Resolves legacy key when looking up by prefixed pack id
+		const p1 = getWordProgress(mockProgress, 'chinese-week-1', 5, 'chinese');
+		expect(p1).toBeDefined();
+		expect(p1?.wrong).toBe(3);
+
+		// Resolves direct key
+		const p2 = getWordProgress(mockProgress, 'chinese-pack-2', 10, 'chinese');
+		expect(p2).toBeDefined();
+		expect(p2?.wrong).toBe(1);
+
+		// Resolves legacy lookup for custom or stripped id
+		const p3 = getWordProgress(mockProgress, 'pack-2', 10, 'chinese');
+		expect(p3).toBeDefined();
+		expect(p3?.wrong).toBe(1);
+
+		// Resolves pack-1 lookup when key is week-1
+		const p4 = getWordProgress(mockProgress, 'chinese-pack-1', 5, 'chinese');
+		expect(p4).toBeDefined();
+		expect(p4?.wrong).toBe(3);
 	});
 });

@@ -8,6 +8,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import {
 		getAllProgress,
+		getWordProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
 		saveProgress,
@@ -18,15 +19,15 @@
 
 	import { calculateNextReview, isCardDue } from '$lib/utils/srs';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
-	import { playSound, speakWord } from '$lib/utils/audio';
+	import { playSound, speakWord, stopSpeech } from '$lib/utils/audio';
 	import type { WordRecord, WordProgress, StudyRating } from '$lib/types';
 	import { X, Award, CheckCheck, Play, Pause, RotateCcw, Volume2, VolumeX } from 'lucide-svelte';
 
 	let deckId = $derived(page.params.id || '');
 	let studyMode = $derived((page.url.searchParams.get('mode') as 'srs' | 'all' | 'weak') || 'srs');
-	let cardLimit = $derived(parseInt(page.url.searchParams.get('limit') || '20', 10));
+	let initialAutoplay = $derived(page.url.searchParams.get('autoplay') === 'true');
+	let cardLimit = $derived(parseInt(page.url.searchParams.get('limit') || '0', 10));
 	let showPinyinSetting = $derived(page.url.searchParams.get('pinyin') !== '0');
-	let initialAutoplay = $derived(page.url.searchParams.get('autoplay') === '1');
 
 	let deckTitle = $state('Study Session');
 	let deckLanguage = $state<'chinese' | 'french'>('chinese');
@@ -45,16 +46,12 @@
 
 	// Autoplay state & options
 	let isAutoplay = $state(false);
-	let autoplaySpeed = $state<number>(2.5); // seconds
 	let autoplayAutoSpeak = $state(true);
 	let autoplayLoop = $state(false);
-	let autoplayTimer: ReturnType<typeof setTimeout> | null = null;
-	let autoplayAnimProgress = $state(0);
-	let animInterval: ReturnType<typeof setInterval> | null = null;
 
 	let currentWord = $derived(cards[currentIndex]);
 	let currentProgress = $derived(
-		currentWord ? allProgress[`${deckId}:${currentWord.No}`] : undefined
+		currentWord ? getWordProgress(allProgress, deckId, currentWord.No, deckLanguage) : undefined
 	);
 	let progressCount = $derived(cards.length > 0 ? currentIndex + 1 : 0);
 	let sessionAccuracy = $derived(
@@ -114,16 +111,16 @@
 		let filtered: WordRecord[];
 		if (studyMode === 'weak') {
 			filtered = rawWords.filter((w) => {
-				const p =
-					progress[`${deckId}:${w.No}`] ||
-					progress[`${deckId.replace('chinese-', '').replace('french-', '')}:${w.No}`];
+				const p = getWordProgress(progress, deckId, w.No, lang);
 				return p && (p.wrong || 0) > 0;
 			});
+			for (let i = filtered.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+			}
 		} else if (studyMode === 'srs') {
 			filtered = rawWords.filter((w) => {
-				const p =
-					progress[`${deckId}:${w.No}`] ||
-					progress[`${deckId.replace('chinese-', '').replace('french-', '')}:${w.No}`];
+				const p = getWordProgress(progress, deckId, w.No, lang);
 				return !p || isCardDue(p);
 			});
 		} else {
@@ -168,20 +165,20 @@
 	function handleFlipCard() {
 		isFlipped = !isFlipped;
 		if (isAutoplay) {
-			scheduleAutoplayNextStep();
+			runAutoplayStep();
 		}
 	}
 
 	async function handleRate(rating: StudyRating, customDays?: number) {
 		if (!currentWord) return;
 
-		const key = `${deckId}:${currentWord.No}`;
-		const currentProgress = allProgress[key];
+		const currentProgress = getWordProgress(allProgress, deckId, currentWord.No, deckLanguage);
 		const updated = calculateNextReview(currentProgress, rating, customDays);
 		updated.weekId = deckId;
 		updated.wordNo = currentWord.No;
 
 		await saveProgress(updated);
+		const key = `${deckId}:${currentWord.No}`;
 		allProgress[key] = updated;
 		scheduleDebouncedSync();
 
@@ -213,7 +210,7 @@
 				currentIndex = 0;
 				isFlipped = false;
 				updateSavedStatus();
-				scheduleAutoplayNextStep();
+				runAutoplayStep();
 			} else {
 				clearAutoplay();
 				isSessionFinished = true;
@@ -224,27 +221,22 @@
 			isFlipped = false;
 			updateSavedStatus();
 			if (isAutoplay) {
-				scheduleAutoplayNextStep();
+				runAutoplayStep();
 			}
 		}
 	}
 
 	// ─── AUTOPLAY ENGINE ────────────────────────────────────────────────────────
+	let autoplayStepId = 0;
+
 	function clearAutoplay() {
-		if (autoplayTimer) {
-			clearTimeout(autoplayTimer);
-			autoplayTimer = null;
-		}
-		if (animInterval) {
-			clearInterval(animInterval);
-			animInterval = null;
-		}
-		autoplayAnimProgress = 0;
+		autoplayStepId++;
+		stopSpeech();
 	}
 
 	function startAutoplay() {
 		isAutoplay = true;
-		scheduleAutoplayNextStep();
+		runAutoplayStep();
 	}
 
 	function pauseAutoplay() {
@@ -260,49 +252,47 @@
 		}
 	}
 
-	function scheduleAutoplayNextStep() {
+	async function runAutoplayStep() {
 		clearAutoplay();
 		if (!isAutoplay || isSessionFinished || !currentWord) return;
 
+		const currentStepId = autoplayStepId;
 		const target =
 			deckLanguage === 'chinese'
 				? currentWord['Chinese Word'] || ''
 				: currentWord['French Word'] || '';
-
-		const totalMs = autoplaySpeed * 1000;
-		const startTime = Date.now();
+		const meaning = currentWord['English Meaning'] || '';
 
 		if (!isFlipped) {
-			// Front card: Speak target word automatically if audio enabled
+			// Front card: Speak target word
 			if (autoplayAutoSpeak && target) {
-				speakWord(target, deckLanguage);
+				await speakWord(target, deckLanguage);
+				if (autoplayStepId !== currentStepId || !isAutoplay) return;
+				// Brief pause after reading before flip
+				await new Promise((resolve) => setTimeout(resolve, 400));
+				if (autoplayStepId !== currentStepId || !isAutoplay) return;
+			} else {
+				await new Promise((resolve) => setTimeout(resolve, 1500));
+				if (autoplayStepId !== currentStepId || !isAutoplay) return;
 			}
 
-			// Progress bar animation for front delay
-			animInterval = setInterval(() => {
-				const elapsed = Date.now() - startTime;
-				autoplayAnimProgress = Math.min(100, Math.round((elapsed / totalMs) * 100));
-			}, 50);
-
-			autoplayTimer = setTimeout(() => {
-				clearAutoplay();
-				if (!isAutoplay) return;
-				isFlipped = true;
-				playSound('flip');
-				scheduleAutoplayNextStep();
-			}, totalMs);
+			isFlipped = true;
+			playSound('flip');
+			runAutoplayStep();
 		} else {
-			// Back card: wait delay, then rate 'good' and advance
-			animInterval = setInterval(() => {
-				const elapsed = Date.now() - startTime;
-				autoplayAnimProgress = Math.min(100, Math.round((elapsed / totalMs) * 100));
-			}, 50);
+			// Back card: Speak meaning in English, then move to next card
+			if (autoplayAutoSpeak && meaning) {
+				await speakWord(meaning, 'english');
+				if (autoplayStepId !== currentStepId || !isAutoplay) return;
+				// Brief pause after reading before advancing
+				await new Promise((resolve) => setTimeout(resolve, 500));
+				if (autoplayStepId !== currentStepId || !isAutoplay) return;
+			} else {
+				await new Promise((resolve) => setTimeout(resolve, 1500));
+				if (autoplayStepId !== currentStepId || !isAutoplay) return;
+			}
 
-			autoplayTimer = setTimeout(async () => {
-				clearAutoplay();
-				if (!isAutoplay) return;
-				await handleRate('good');
-			}, totalMs);
+			advanceNextCard();
 		}
 	}
 
@@ -405,13 +395,6 @@
 			class="h-full bg-indigo-600 transition-all duration-300 ease-out"
 			style="width: {cards.length > 0 ? (progressCount / cards.length) * 100 : 0}%"
 		></div>
-		{#if isAutoplay}
-			<!-- Micro animated step countdown bar -->
-			<div
-				class="absolute top-0 bottom-0 left-0 bg-amber-400 opacity-75 transition-all duration-75 ease-linear"
-				style="width: {autoplayAnimProgress}%"
-			></div>
-		{/if}
 	</div>
 
 	<!-- Main Study Arena -->
@@ -498,32 +481,20 @@
 							</p>
 							<p class="font-sans text-[10px] text-slate-500">
 								{isAutoplay
-									? `${autoplaySpeed}s pace • ${autoplayAutoSpeak ? 'Voice on' : 'Voice off'}`
+									? `${autoplayAutoSpeak ? 'Voice paced' : 'Voice muted'}${autoplayLoop ? ' • Loop ON' : ''}`
 									: 'Tap card or spacebar to flip'}
 							</p>
 						</div>
 					</div>
 
 					<div class="flex items-center gap-1">
-						<!-- Autoplay Speed Toggle -->
-						<button
-							type="button"
-							onclick={() => {
-								if (autoplaySpeed === 1.5) autoplaySpeed = 2.5;
-								else if (autoplaySpeed === 2.5) autoplaySpeed = 4;
-								else autoplaySpeed = 1.5;
-								if (isAutoplay) scheduleAutoplayNextStep();
-							}}
-							title="Cycle speed"
-							class="cursor-pointer rounded-lg border border-slate-200/80 bg-white px-2 py-1 font-headline text-[10px] font-bold text-slate-700 hover:bg-slate-100"
-						>
-							{autoplaySpeed}s
-						</button>
-
 						<!-- Voice Auto-speak Toggle -->
 						<button
 							type="button"
-							onclick={() => (autoplayAutoSpeak = !autoplayAutoSpeak)}
+							onclick={() => {
+								autoplayAutoSpeak = !autoplayAutoSpeak;
+								if (isAutoplay) runAutoplayStep();
+							}}
 							title={autoplayAutoSpeak ? 'Auto-speak enabled' : 'Auto-speak muted'}
 							class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg border border-slate-200/80 bg-white text-slate-600 hover:bg-slate-100"
 						>

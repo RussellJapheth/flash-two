@@ -88,39 +88,75 @@ export function playSound(type: 'flip' | 'correct' | 'wrong' | 'milestone') {
 	}
 }
 
+export function stopSpeech() {
+	if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+		window.speechSynthesis.cancel();
+	}
+}
+
 // Text to Speech
-export function speakWord(text: string, language: 'chinese' | 'french' = 'chinese') {
-	if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-		console.warn('SpeechSynthesis is not supported in this browser');
-		return;
-	}
+export function speakWord(
+	text: string,
+	language: 'chinese' | 'french' | 'english' = 'chinese',
+	options?: { rate?: number; cancelPrevious?: boolean }
+): Promise<void> {
+	return new Promise((resolve) => {
+		if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+			console.warn('SpeechSynthesis is not supported in this browser');
+			resolve();
+			return;
+		}
 
-	window.speechSynthesis.cancel(); // Stop any pending utterance
-	const clean = text.replace(/[[\]()]/g, '').trim();
-	if (!clean) return;
+		if (options?.cancelPrevious !== false) {
+			window.speechSynthesis.cancel(); // Stop any pending utterance
+		}
 
-	const utterance = new SpeechSynthesisUtterance(clean);
-	utterance.rate = 0.9; // Slightly slower for language learners
+		const clean = text.replace(/[[\]()]/g, '').trim();
+		if (!clean) {
+			resolve();
+			return;
+		}
 
-	if (language === 'chinese') {
-		utterance.lang = 'zh-CN';
-	} else {
-		utterance.lang = 'fr-FR';
-	}
+		const utterance = new SpeechSynthesisUtterance(clean);
+		utterance.rate = options?.rate ?? (language === 'english' ? 0.95 : 0.9);
 
-	// Try finding high quality native voices
-	const voices = window.speechSynthesis.getVoices();
-	if (voices.length > 0) {
-		const targetLang = language === 'chinese' ? 'zh' : 'fr';
-		const voice =
-			voices.find(
-				(v) =>
-					v.lang.toLowerCase().startsWith(targetLang) &&
-					(v.localService || v.name.includes('Natural'))
-			) || voices.find((v) => v.lang.toLowerCase().startsWith(targetLang));
+		if (language === 'chinese') {
+			utterance.lang = 'zh-CN';
+		} else if (language === 'french') {
+			utterance.lang = 'fr-FR';
+		} else {
+			utterance.lang = 'en-US';
+		}
 
-		if (voice) utterance.voice = voice;
-	}
+		// Try finding high quality native voices
+		const voices = window.speechSynthesis.getVoices();
+		if (voices.length > 0) {
+			const targetLang = language === 'chinese' ? 'zh' : language === 'french' ? 'fr' : 'en';
+			const voice =
+				voices.find(
+					(v) =>
+						v.lang.toLowerCase().startsWith(targetLang) &&
+						(v.localService || v.name.includes('Natural'))
+				) || voices.find((v) => v.lang.toLowerCase().startsWith(targetLang));
 
-	window.speechSynthesis.speak(utterance);
+			if (voice) utterance.voice = voice;
+		}
+
+		let settled = false;
+		const done = () => {
+			if (!settled) {
+				settled = true;
+				resolve();
+			}
+		};
+
+		utterance.onend = done;
+		utterance.onerror = done;
+
+		// Fallback safety timeout in case browser synthesis drops event
+		const fallbackMs = Math.max(2500, clean.length * 150 + 1000);
+		setTimeout(done, fallbackMs);
+
+		window.speechSynthesis.speak(utterance);
+	});
 }

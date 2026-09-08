@@ -3,12 +3,17 @@ import type { WordRecord, WordProgress, CustomDeck, SavedWord, StreakStats } fro
 const DB_NAME = 'flashcards_db';
 const DB_VERSION = 3;
 
+export interface RawPackData {
+	title?: string;
+	words?: WordRecord[];
+}
+
 // Raw imports of JSON vocabulary packs for bundling and instant offline initialization
-const chinesePacks = import.meta.glob<WordRecord[]>('../data/chinese/*.json', {
+const chinesePacks = import.meta.glob<WordRecord[] | RawPackData>('../data/chinese/*.json', {
 	eager: true,
 	import: 'default'
 });
-const frenchPacks = import.meta.glob<WordRecord[]>('../data/french/*.json', {
+const frenchPacks = import.meta.glob<WordRecord[] | RawPackData>('../data/french/*.json', {
 	eager: true,
 	import: 'default'
 });
@@ -57,17 +62,21 @@ export async function initializeOfflinePacks(): Promise<void> {
 		const store = tx.objectStore('packs_cache');
 
 		// Chinese packs
-		for (const [path, words] of Object.entries(chinesePacks)) {
+		for (const [path, raw] of Object.entries(chinesePacks)) {
 			const filename = path.split('/').pop()?.replace('.json', '') || '';
 			const id = `chinese-${filename}`;
-			store.put({ id, language: 'chinese', packName: filename, words });
+			const words = Array.isArray(raw) ? raw : raw?.words || [];
+			const title = !Array.isArray(raw) && raw?.title ? raw.title : undefined;
+			store.put({ id, language: 'chinese', packName: filename, title, words });
 		}
 
 		// French packs
-		for (const [path, words] of Object.entries(frenchPacks)) {
+		for (const [path, raw] of Object.entries(frenchPacks)) {
 			const filename = path.split('/').pop()?.replace('.json', '') || '';
 			const id = `french-${filename}`;
-			store.put({ id, language: 'french', packName: filename, words });
+			const words = Array.isArray(raw) ? raw : raw?.words || [];
+			const title = !Array.isArray(raw) && raw?.title ? raw.title : undefined;
+			store.put({ id, language: 'french', packName: filename, title, words });
 		}
 	} catch (e) {
 		console.warn('Failed to cache packs in IndexedDB:', e);
@@ -111,14 +120,15 @@ export async function getBuiltinPacks(
 		return getPackNum(pathA) - getPackNum(pathB);
 	});
 
-	for (const [path, words] of sortedEntries) {
+	for (const [path, raw] of sortedEntries) {
 		const filename = path.split('/').pop()?.replace('.json', '') || '';
 		const packNum = filename.replace(/^(?:week-|pack-)/i, '');
-		const title = `Pack ${packNum}`;
+		const words = Array.isArray(raw) ? raw : raw?.words || [];
+		const title = !Array.isArray(raw) && raw?.title ? raw.title : `Pack ${packNum}`;
 		results.push({
 			id: `${language}-${filename}`,
 			title,
-			words: Array.isArray(words) ? words : []
+			words
 		});
 	}
 
@@ -137,6 +147,57 @@ export async function getPackWords(
 			p.id.replace(`${language}-`, '') === packId
 	);
 	return match ? match.words : [];
+}
+
+/**
+ * Resolves progress for a specific word, supporting legacy keys (e.g. `week-1:5`, `pack-1:5`, `1:5`)
+ * and language-prefixed keys (e.g. `chinese-week-1:5`, `chinese-pack-1:5`, `chinese-1:5`).
+ */
+export function getWordProgress(
+	progress: Record<string, WordProgress> | undefined,
+	packId: string,
+	wordNo: number,
+	language?: string
+): WordProgress | undefined {
+	if (!progress) return undefined;
+
+	// 1. Direct match
+	const directKey = `${packId}:${wordNo}`;
+	if (progress[directKey]) return progress[directKey];
+
+	// 2. Stripped prefix match
+	const strippedPackId = packId.replace(/^(?:chinese|french)-/, '');
+	const strippedKey = `${strippedPackId}:${wordNo}`;
+	if (progress[strippedKey]) return progress[strippedKey];
+
+	// 3. Language prefixed match
+	if (language) {
+		const prefixedKey = `${language}-${strippedPackId}:${wordNo}`;
+		if (progress[prefixedKey]) return progress[prefixedKey];
+	}
+
+	// 4. Numbered pack/week variations (e.g. week-1 vs pack-1 vs 1)
+	const numMatch = packId.match(/(?:week-|pack-)?(\d+)/i);
+	if (numMatch) {
+		const num = numMatch[1];
+		const candidateKeys: string[] = [
+			`week-${num}:${wordNo}`,
+			`pack-${num}:${wordNo}`,
+			`${num}:${wordNo}`
+		];
+		if (language) {
+			candidateKeys.unshift(
+				`${language}-week-${num}:${wordNo}`,
+				`${language}-pack-${num}:${wordNo}`,
+				`${language}-${num}:${wordNo}`
+			);
+		}
+		for (const k of candidateKeys) {
+			if (progress[k]) return progress[k];
+		}
+	}
+
+	return undefined;
 }
 
 // Progress CRUD

@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
+		getWordProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
 		computeStreakStats,
@@ -93,9 +94,12 @@
 			let totalAttempts = 0;
 
 			for (const word of pack.words) {
-				const key = `${pack.id}:${word.No}`;
-				const legacyKey = `${pack.id.replace(`${activeLanguage}-`, '')}:${word.No}`;
-				const p: WordProgress | undefined = progress[key] || progress[legacyKey];
+				const p: WordProgress | undefined = getWordProgress(
+					progress,
+					pack.id,
+					word.No,
+					activeLanguage
+				);
 				if (p) {
 					if (isCardMastered(p)) mastered++;
 					else if (isCardLearning(p)) learning++;
@@ -138,12 +142,12 @@
 			let totalAttempts = 0;
 
 			for (const word of deck.words) {
-				const key = `${deck.id}:${word.No}`;
-				const p = progress[key];
+				const p = getWordProgress(progress, deck.id, word.No, deck.language || activeLanguage);
 				if (p) {
 					if (isCardMastered(p)) mastered++;
 					else if (isCardLearning(p)) learning++;
 					if (isCardDue(p)) due++;
+					if (p.wrong > 0) weakAccumulator++;
 					correctSum += p.correct || 0;
 					totalAttempts += (p.correct || 0) + (p.wrong || 0);
 				} else {

@@ -22,7 +22,9 @@
 		ChevronLeft,
 		ChevronRight,
 		Eye,
-		Volume2
+		Volume2,
+		Zap,
+		Headphones
 	} from 'lucide-svelte';
 
 	interface LeaderboardBoard {
@@ -31,8 +33,16 @@
 		gameTitle: string;
 		mode: 'visual' | 'audio';
 		title: string;
-		subtitle: string;
 		tag: string;
+		accentGradient: string;
+		borderClass: string;
+		glowClass: string;
+		badgeBg: string;
+		badgeText: string;
+		scoreColor: string;
+		scoreBadgeBg: string;
+		rank1Gradient: string;
+		rank1Border: string;
 	}
 
 	const LEADERBOARD_BOARDS: LeaderboardBoard[] = [
@@ -41,18 +51,36 @@
 			gameId: 'number-rush',
 			gameTitle: 'Number Rush',
 			mode: 'visual',
-			title: 'Visual Rush',
-			subtitle: 'Character speed recognition',
-			tag: 'Visual'
+			title: 'Visual Mode',
+			tag: 'Visual',
+			accentGradient:
+				'bg-linear-to-r from-sky-400/80 via-blue-500/75 to-indigo-600/80 text-white shadow-lg shadow-indigo-500/10',
+			borderClass: 'border-white/60',
+			glowClass: 'bg-white/20',
+			badgeBg: 'bg-white/25 border border-white/60 text-white',
+			badgeText: 'text-sky-100',
+			scoreColor: 'text-indigo-600',
+			scoreBadgeBg: 'bg-sky-50 text-indigo-700',
+			rank1Gradient: 'from-amber-200 to-amber-300 text-amber-950',
+			rank1Border: 'border-amber-300'
 		},
 		{
 			id: 'number-rush-audio',
 			gameId: 'number-rush',
 			gameTitle: 'Number Rush',
 			mode: 'audio',
-			title: 'Audio Rush',
-			subtitle: 'Listening reflex sprint',
-			tag: 'Audio'
+			title: 'Audio Mode',
+			tag: 'Audio',
+			accentGradient:
+				'bg-linear-to-r from-amber-400/80 via-orange-500/75 to-rose-500/80 text-white shadow-lg shadow-amber-500/10',
+			borderClass: 'border-white/60',
+			glowClass: 'bg-white/20',
+			badgeBg: 'bg-white/25 border border-white/60 text-white',
+			badgeText: 'text-amber-100',
+			scoreColor: 'text-amber-600',
+			scoreBadgeBg: 'bg-amber-50 text-amber-800',
+			rank1Gradient: 'from-amber-200 to-amber-300 text-amber-950',
+			rank1Border: 'border-amber-300'
 		}
 	];
 
@@ -255,16 +283,28 @@
 		</a>
 	</section>
 
-	<!-- Auto-Sliding Swipeable Leaderboard Carousel Section -->
+	<!-- Auto-Sliding Swipeable Leaderboard Carousel Section with Arcade Aesthetic -->
 	<section
-		class="shadow-card space-y-3.5 rounded-3xl border border-slate-200/80 bg-white p-5 select-none"
+		class="shadow-card space-y-4 rounded-3xl border border-slate-200/80 bg-white p-5 select-none"
 		aria-label="Leaderboards Carousel"
 	>
-		<!-- Section Header with Sync Status -->
+		<!-- Section Header with Trophy Badge & Sync Status -->
 		<div class="flex items-center justify-between gap-2">
-			<div class="flex items-center gap-2">
-				<Trophy size={18} strokeWidth={2.25} class="text-amber-500" />
-				<h3 class="font-headline text-sm font-bold text-slate-900">Leaderboards</h3>
+			<div class="flex items-center gap-2.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-2xl bg-linear-to-br from-amber-400 to-amber-600 text-white shadow-md shadow-amber-500/25"
+				>
+					<Trophy size={18} strokeWidth={2.25} />
+				</div>
+				<div>
+					<h3 class="font-headline text-sm font-black tracking-tight text-slate-900">
+						Leaderboard
+					</h3>
+					<div class="flex items-center gap-1.5 font-sans text-[10px] font-medium text-slate-400">
+						<span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500"></span>
+						<span>Global Rankings</span>
+					</div>
+				</div>
 			</div>
 
 			<button
@@ -272,9 +312,13 @@
 				onclick={loadLeaderboard}
 				disabled={isLoadingLeaderboard}
 				aria-label="Refresh Leaderboard"
-				class="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 active:scale-95 disabled:opacity-50"
+				class="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-500 transition-all hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600 active:scale-95 disabled:opacity-50"
 			>
-				<RefreshCw size={13} strokeWidth={2} class={isLoadingLeaderboard ? 'animate-spin' : ''} />
+				<RefreshCw
+					size={14}
+					strokeWidth={2.25}
+					class={isLoadingLeaderboard ? 'animate-spin text-indigo-600' : ''}
+				/>
 			</button>
 		</div>
 
@@ -343,28 +387,41 @@
 					style="transform: translateX(-{activeBoardIndex * 100}%);"
 				>
 					{#each boardsWithScores as board (board.id)}
-						<div class="w-full shrink-0">
-							<!-- Card Header: Game Name - Mode -->
+						<div class="w-full shrink-0 space-y-2.5">
+							<!-- Distinct Arcade Glass Themed Title Header -->
 							<div
-								class="mb-2.5 flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50/80 px-3.5 py-2.5"
+								class="relative overflow-hidden rounded-2xl border p-3.5 shadow-md backdrop-blur-md {board.accentGradient} {board.borderClass}"
 							>
-								<div class="flex items-center gap-2.5">
-									{#if board.mode === 'visual'}
+								<!-- Floating Glass Gloss Orbs -->
+								<div
+									class="pointer-events-none absolute -top-8 -right-8 h-28 w-28 rounded-full bg-white/25 blur-xl"
+								></div>
+								<div
+									class="pointer-events-none absolute -bottom-6 -left-6 h-20 w-20 rounded-full bg-white/15 blur-lg"
+								></div>
+
+								<div class="relative flex items-center justify-between gap-2">
+									<div class="flex items-center gap-3">
 										<div
-											class="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-100 text-indigo-700"
+											class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/60 bg-white/25 text-white shadow-xs backdrop-blur-md"
 										>
-											<Eye size={16} strokeWidth={2.25} />
+											{#if board.mode === 'visual'}
+												<Zap size={20} strokeWidth={2.5} class="text-white drop-shadow-xs" />
+											{:else}
+												<Headphones size={20} strokeWidth={2.5} class="text-white drop-shadow-xs" />
+											{/if}
 										</div>
-									{:else}
-										<div
-											class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 text-amber-800"
-										>
-											<Volume2 size={16} strokeWidth={2.25} />
+
+										<div>
+											<h4
+												class="font-headline text-base font-black tracking-tight text-white drop-shadow-xs"
+											>
+												{board.gameTitle} &middot; {board.mode === 'visual'
+													? 'Visual Mode'
+													: 'Audio Mode'}
+											</h4>
 										</div>
-									{/if}
-									<h4 class="font-headline text-sm font-bold text-slate-900">
-										{board.gameTitle} - {board.mode === 'visual' ? 'Visual Mode' : 'Audio Mode'}
-									</h4>
+									</div>
 								</div>
 							</div>
 
@@ -395,17 +452,19 @@
 							{:else}
 								<!-- Ranked Deduplicated List (1 Highest Score per User) -->
 								<div
-									class="divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200/80 bg-white"
+									class="divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xs"
 								>
 									{#each board.records as record, index (`${board.id}::${record.username}::${record.mode}::${record.id || index}::${index}`)}
 										<div
 											class="flex items-center justify-between p-3 transition-colors hover:bg-slate-50/80 {index ===
 											0
-												? 'bg-amber-50/25'
+												? board.mode === 'visual'
+													? 'bg-sky-50/30'
+													: 'bg-amber-50/30'
 												: index === 1
 													? 'bg-slate-50/50'
 													: index === 2
-														? 'bg-amber-50/15'
+														? 'bg-slate-50/25'
 														: ''}"
 										>
 											<div class="flex items-center gap-3">
@@ -413,7 +472,7 @@
 												<div
 													class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl font-headline text-xs font-black shadow-xs {index ===
 													0
-														? 'border border-amber-300 bg-linear-to-b from-amber-200 to-amber-300 text-amber-950 shadow-amber-500/20'
+														? `border ${board.rank1Border} bg-linear-to-b ${board.rank1Gradient} shadow-amber-500/20`
 														: index === 1
 															? 'border border-slate-300 bg-linear-to-b from-slate-200 to-slate-300 text-slate-800'
 															: index === 2
@@ -433,7 +492,7 @@
 															{record.username}
 														</span>
 														<span
-															class="py-0.2 rounded-full bg-slate-100 px-1.5 font-headline text-[10px] font-semibold text-slate-500 capitalize"
+															class="py-0.2 rounded-full px-1.5 font-headline text-[10px] font-semibold {board.scoreBadgeBg} capitalize"
 														>
 															{record.mode}
 														</span>
@@ -447,7 +506,7 @@
 											</div>
 
 											<div class="text-right">
-												<span class="font-headline text-sm font-black text-indigo-600"
+												<span class="font-headline text-sm font-black {board.scoreColor}"
 													>{record.score}</span
 												>
 												<span class="block font-headline text-[10px] font-bold text-slate-400"
@@ -482,7 +541,9 @@
 							onclick={() => selectBoard(dotIdx)}
 							aria-label="Slide {dotIdx + 1}"
 							class="h-1.5 rounded-full transition-all duration-300 {activeBoardIndex === dotIdx
-								? 'w-5 bg-indigo-600'
+								? dotIdx === 0
+									? 'w-5 bg-indigo-600'
+									: 'w-5 bg-amber-600'
 								: 'w-2 bg-slate-200 hover:bg-slate-300'}"
 						></button>
 					{/each}

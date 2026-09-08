@@ -4,6 +4,7 @@
 	import {
 		getSavedUsername,
 		setSavedUsername,
+		isValidUsername,
 		getSavedLanguage,
 		setSavedLanguage,
 		getAllProgress,
@@ -49,6 +50,7 @@
 	// Modal / expansion states
 	let isEditingUsername = $state(false);
 	let newUsernameInput = $state('');
+	let usernameError = $state('');
 	let isLanguageExpanded = $state(false);
 	let isSyncExpanded = $state(false);
 
@@ -68,14 +70,20 @@
 	async function handleSaveUsername() {
 		const clean = newUsernameInput.trim().toLowerCase();
 		if (clean) {
+			if (!isValidUsername(clean)) {
+				usernameError = 'Lowercase letters, numbers, and hyphens only.';
+				return;
+			}
 			username = clean;
 			setSavedUsername(clean);
 			isEditingUsername = false;
+			usernameError = '';
 			await pullAndMerge(clean);
 		} else {
 			setSavedUsername('');
 			username = '';
 			isEditingUsername = false;
+			usernameError = '';
 		}
 	}
 
@@ -228,31 +236,55 @@
 				</div>
 				<div>
 					{#if isEditingUsername}
-						<div class="flex items-center gap-2">
-							<input
-								type="text"
-								id="username-input"
-								bind:value={newUsernameInput}
-								placeholder="Enter username"
-								class="w-36 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 font-headline text-sm font-semibold text-slate-900 focus:border-indigo-600 focus:outline-none"
-							/>
-							<button
-								type="button"
-								onclick={handleSaveUsername}
-								class="rounded-xl bg-indigo-600 px-3 py-1.5 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
-							>
-								Save
-							</button>
-							<button
-								type="button"
-								onclick={() => (isEditingUsername = false)}
-								class="rounded-xl bg-slate-100 px-3 py-1.5 font-headline text-xs font-bold text-slate-600 hover:bg-slate-200 active:scale-95"
-							>
-								Cancel
-							</button>
-						</div>
+						<form
+							onsubmit={(e) => {
+								e.preventDefault();
+								handleSaveUsername();
+							}}
+							class="space-y-1.5"
+						>
+							<div class="flex items-center gap-2">
+								<input
+									type="text"
+									id="username-input"
+									bind:value={newUsernameInput}
+									oninput={() => {
+										usernameError = '';
+									}}
+									placeholder="e.g. user-123"
+									autocapitalize="none"
+									autocomplete="username"
+									spellcheck="false"
+									class="w-36 rounded-xl border {usernameError
+										? 'border-rose-300 focus:border-rose-500'
+										: 'border-slate-200 focus:border-indigo-600'} bg-white px-2.5 py-1.5 font-headline text-sm font-semibold text-slate-900 focus:outline-none"
+								/>
+								<button
+									type="submit"
+									id="save-username-btn"
+									class="rounded-xl bg-indigo-600 px-3 py-1.5 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
+								>
+									Save
+								</button>
+								<button
+									type="button"
+									onclick={() => {
+										isEditingUsername = false;
+										usernameError = '';
+									}}
+									class="rounded-xl bg-slate-100 px-3 py-1.5 font-headline text-xs font-bold text-slate-600 hover:bg-slate-200 active:scale-95"
+								>
+									Cancel
+								</button>
+							</div>
+							{#if usernameError}
+								<p class="font-headline text-[11px] font-semibold text-rose-500">
+									{usernameError}
+								</p>
+							{/if}
+						</form>
 					{:else}
-						<p class="font-headline text-base font-bold text-slate-900 capitalize">
+						<p class="font-headline text-base font-bold text-slate-900">
 							{username || 'Guest Learner'}
 						</p>
 						<p class="font-body mt-0.5 text-xs text-slate-500">
@@ -267,6 +299,7 @@
 					type="button"
 					onclick={() => {
 						newUsernameInput = username;
+						usernameError = '';
 						isEditingUsername = true;
 					}}
 					aria-label={username ? 'Edit username' : 'Set username'}

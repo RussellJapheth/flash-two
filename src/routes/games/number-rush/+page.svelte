@@ -6,10 +6,7 @@
 	import GameCanvasFX from '$lib/components/games/GameCanvasFX.svelte';
 	import GameAvatar from '$lib/components/games/GameAvatar.svelte';
 	import GameComboFloat from '$lib/components/games/GameComboFloat.svelte';
-	import {
-		generateNumberAttackQuestion,
-		type NumberAttackQuestion
-	} from '$lib/utils/chineseNumbers';
+	import { generateNumberRushQuestion, type NumberRushQuestion } from '$lib/utils/chineseNumbers';
 	import { saveGameScore, getGameHighScore, type GameScoreRecord } from '$lib/utils/gameStorage';
 	import { playSound, speakWord, stopSpeech } from '$lib/utils/audio';
 	import {
@@ -45,10 +42,10 @@
 	let correctCount = $state(0);
 	let wrongCount = $state(0);
 	let isNewHighScore = $state(false);
-	let highScore = $derived(getGameHighScore('number-attack', audioMode ? 'audio' : 'visual'));
+	let highScore = $derived(getGameHighScore('number-rush', audioMode ? 'audio' : 'visual'));
 
 	// Current Question & Selection Feedback
-	let currentQuestion = $state<NumberAttackQuestion | null>(null);
+	let currentQuestion = $state<NumberRushQuestion | null>(null);
 	let selectedOption = $state<number | null>(null);
 	let isAnswerLocked = $state(false);
 	let lastAnswerStatus = $state<'correct' | 'wrong' | null>(null);
@@ -166,7 +163,7 @@
 		selectedOption = null;
 		lastAnswerStatus = null;
 
-		const q = generateNumberAttackQuestion(maxRange, usedNumbersInRound);
+		const q = generateNumberRushQuestion(maxRange, usedNumbersInRound);
 		currentQuestion = q;
 
 		if (audioMode) {
@@ -285,13 +282,13 @@
 		const accuracy = totalAttempts > 0 ? Math.round((correctCount / totalAttempts) * 100) : 0;
 
 		const currentMode = audioMode ? 'audio' : 'visual';
-		const prevHigh = getGameHighScore('number-attack', currentMode);
+		const prevHigh = getGameHighScore('number-rush', currentMode);
 		if (score > prevHigh && score > 0) {
 			isNewHighScore = true;
 		}
 
 		summaryRecord = await saveGameScore({
-			gameId: 'number-attack',
+			gameId: 'number-rush',
 			gameName: 'Number Rush',
 			score,
 			correct: correctCount,
@@ -387,7 +384,7 @@
 				<p
 					class="mt-0.5 font-headline text-xs font-extrabold tracking-wider text-amber-500 uppercase"
 				>
-					数字狂飙 • MANDARIN SPEED DRILL
+					MANDARIN SPEED DRILL
 				</p>
 
 				<p
@@ -492,7 +489,7 @@
 			<!-- Start CTA Button with Bright Royal Gradient -->
 			<button
 				type="button"
-				id="start-number-attack-btn"
+				id="start-number-rush-btn"
 				onclick={startPreGameCountdown}
 				class="flex h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-blue-500 via-indigo-500 to-indigo-600 font-headline text-sm font-black tracking-wide text-white shadow-lg shadow-indigo-500/25 transition-all hover:brightness-105 active:scale-[0.98]"
 			>
@@ -518,9 +515,13 @@
 					class="absolute h-36 w-36 animate-ping rounded-full border-4 border-sky-400 opacity-50 duration-1000"
 				></div>
 				<div
-					class="flex h-32 w-32 items-center justify-center rounded-full border-4 border-white bg-linear-to-b from-blue-500 to-indigo-600 text-white shadow-2xl"
+					class="flex h-32 w-32 items-center justify-center rounded-full border-4 border-white bg-linear-to-b from-blue-500 to-indigo-600 p-2 text-white shadow-2xl"
 				>
-					<span class="font-headline text-6xl font-black drop-shadow-md">
+					<span
+						class="font-headline font-black drop-shadow-md select-none {countdownValue > 0
+							? 'text-6xl'
+							: 'text-4xl tracking-wider'}"
+					>
 						{countdownValue > 0 ? countdownValue : 'GO!'}
 					</span>
 				</div>

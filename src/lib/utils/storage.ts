@@ -447,6 +447,10 @@ export async function saveBulkSavedWords(words: SavedWord[]): Promise<void> {
 }
 
 // LocalStorage User & Language
+export function isValidUsername(name: string): boolean {
+	return /^[a-z0-9-]+$/.test(name);
+}
+
 export function getSavedUsername(): string {
 	if (typeof window === 'undefined') return '';
 	return localStorage.getItem('flashcards_user') || '';
@@ -454,7 +458,12 @@ export function getSavedUsername(): string {
 
 export function setSavedUsername(name: string): void {
 	if (typeof window !== 'undefined') {
-		localStorage.setItem('flashcards_user', name.trim().toLowerCase());
+		const clean = name.trim().toLowerCase();
+		if (!clean) {
+			localStorage.setItem('flashcards_user', '');
+		} else if (isValidUsername(clean)) {
+			localStorage.setItem('flashcards_user', clean);
+		}
 	}
 }
 

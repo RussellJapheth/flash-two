@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
 	numberToChinese,
 	generateDistractors,
-	generateNumberAttackQuestion
+	generateNumberRushQuestion
 } from './utils/chineseNumbers';
 import { deduplicateUserLeaderboard, type GameScoreRecord } from './utils/gameStorage';
 
@@ -67,7 +67,7 @@ describe('Chinese Number Converter (Number Rush)', () => {
 	});
 
 	it('generates a full 4-option question containing the correct answer', () => {
-		const q = generateNumberAttackQuestion(99);
+		const q = generateNumberRushQuestion(99);
 		expect(q.options).toHaveLength(4);
 		expect(q.options).toContain(q.correctValue);
 		expect(new Set(q.options).size).toBe(4);
@@ -79,7 +79,7 @@ describe('Chinese Number Converter (Number Rush)', () => {
 		const used = new Set<number>();
 		const totalQuestions = 50;
 		for (let i = 0; i < totalQuestions; i++) {
-			const q = generateNumberAttackQuestion(99, used);
+			const q = generateNumberRushQuestion(99, used);
 			expect(used.has(q.correctValue)).toBe(true);
 		}
 		// All 50 questions must have unique numbers
@@ -91,8 +91,8 @@ describe('Chinese Number Converter (Number Rush)', () => {
 			{
 				id: '1',
 				username: 'alice',
-				gameId: 'number-attack',
-				gameName: 'Number Attack',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
 				score: 500,
 				correct: 5,
 				wrong: 0,
@@ -104,8 +104,8 @@ describe('Chinese Number Converter (Number Rush)', () => {
 			{
 				id: '2',
 				username: 'bob',
-				gameId: 'number-attack',
-				gameName: 'Number Attack',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
 				score: 800,
 				correct: 8,
 				wrong: 0,
@@ -117,8 +117,8 @@ describe('Chinese Number Converter (Number Rush)', () => {
 			{
 				id: '3',
 				username: 'alice',
-				gameId: 'number-attack',
-				gameName: 'Number Attack',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
 				score: 1200,
 				correct: 12,
 				wrong: 1,
@@ -130,8 +130,8 @@ describe('Chinese Number Converter (Number Rush)', () => {
 			{
 				id: '4',
 				username: 'alice',
-				gameId: 'number-attack',
-				gameName: 'Number Attack',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
 				score: 950,
 				correct: 10,
 				wrong: 0,
@@ -143,8 +143,8 @@ describe('Chinese Number Converter (Number Rush)', () => {
 			{
 				id: '5',
 				username: 'alice',
-				gameId: 'number-attack',
-				gameName: 'Number Attack',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
 				score: 600,
 				correct: 6,
 				wrong: 2,

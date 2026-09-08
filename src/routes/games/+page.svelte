@@ -16,19 +16,17 @@
 		RefreshCw,
 		CloudCog,
 		ArrowRight,
-		Crown,
-		Flame,
-		Zap
+		Crown
 	} from 'lucide-svelte';
 
 	let leaderboard = $state<GameScoreRecord[]>([]);
-	let numberAttackBest = $state(0);
+	let numberRushBest = $state(0);
 	let isLoadingLeaderboard = $state(false);
 	let hasCloudSync = $state(false);
 
 	async function loadLeaderboard() {
 		hasCloudSync = isCloudSyncEnabled();
-		numberAttackBest = getGameHighScore('number-attack');
+		numberRushBest = getGameHighScore('number-rush');
 
 		if (!hasCloudSync) {
 			leaderboard = [];
@@ -75,17 +73,8 @@
 
 		<div class="relative flex items-center justify-between gap-3.5">
 			<div class="space-y-1">
-				<div class="flex items-center gap-2">
-					<span
-						class="flex items-center gap-1 rounded-full border border-white/30 bg-white/20 px-2.5 py-0.5 font-headline text-[10px] font-black text-amber-200 backdrop-blur-md"
-					>
-						<Zap size={11} strokeWidth={2.75} class="text-amber-300" />
-						SEASON 1
-					</span>
-					<span class="font-headline text-[11px] font-bold text-sky-100">Speed Challenge</span>
-				</div>
 				<h2 class="font-headline text-xl font-black tracking-tight text-white drop-shadow-xs">
-					Arcade & Speed Trials
+					Arcade & Challenges
 				</h2>
 				<p class="font-sans text-xs font-medium text-sky-100">
 					Race down the tracks, chain speed combos, and set high scores!
@@ -108,17 +97,12 @@
 				<Swords size={18} strokeWidth={2.25} class="text-indigo-600" />
 				<h3 class="font-headline text-sm font-bold text-slate-900">Game Modes</h3>
 			</div>
-			<span
-				class="rounded-full border border-sky-200 bg-sky-50 px-2.5 py-0.5 font-headline text-[11px] font-bold text-sky-800"
-			>
-				1 Active Drill
-			</span>
 		</div>
 
 		<!-- Number Rush Card with 3D Game Icon & Glassmorphic Highlights -->
 		<a
-			href={resolve('/games/number-attack')}
-			id="game-number-attack-card"
+			href={resolve('/games/number-rush')}
+			id="game-number-rush-card"
 			class="group shadow-card hover:shadow-card-hover relative flex items-center justify-between overflow-hidden rounded-3xl border border-sky-100 bg-linear-to-r from-white via-sky-50/40 to-indigo-50/30 p-4 transition-all hover:-translate-y-0.5 hover:border-sky-300 active:scale-[0.98]"
 		>
 			<div class="flex items-center gap-3.5">
@@ -129,43 +113,25 @@
 						alt="Number Rush"
 						class="h-16 w-16 rounded-2xl border border-white/80 object-cover shadow-md shadow-sky-500/20 transition-transform duration-300 group-hover:scale-105"
 					/>
-					<div
-						class="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-400 text-slate-950 shadow-xs ring-2 ring-white"
-					>
-						<Flame size={11} strokeWidth={3} />
-					</div>
 				</div>
 
 				<div class="space-y-1">
-					<div class="flex items-center gap-2">
-						<h4 class="font-headline text-base font-black tracking-tight text-slate-900">
-							Number Rush
-						</h4>
-						<span
-							class="rounded-full border border-amber-300/80 bg-amber-50 px-2 py-0.5 font-headline text-[10px] font-bold text-amber-800"
-						>
-							数字狂飙
-						</span>
-					</div>
+					<h4 class="font-headline text-base font-black tracking-tight text-slate-900">
+						Number Rush
+					</h4>
 					<p class="font-sans text-xs text-slate-500">
 						Mandarin speed number drill • Visual & Audio Speed Modes
 					</p>
 
 					<div class="flex flex-wrap items-center gap-2 pt-0.5">
-						{#if numberAttackBest > 0}
+						{#if numberRushBest > 0}
 							<div
 								class="flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 font-headline text-[10px] font-bold text-amber-900"
 							>
 								<Trophy size={11} strokeWidth={2.25} class="text-amber-600" />
-								<span>Best: {numberAttackBest} pts</span>
+								<span>Best: {numberRushBest} pts</span>
 							</div>
 						{/if}
-						<span
-							class="flex items-center gap-1 rounded-full border border-sky-200 bg-sky-50 px-2 py-0.5 font-headline text-[10px] font-bold text-sky-800"
-						>
-							<Sparkles size={10} strokeWidth={2.5} />
-							Speed Track
-						</span>
 					</div>
 				</div>
 			</div>

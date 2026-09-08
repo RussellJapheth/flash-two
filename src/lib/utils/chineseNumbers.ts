@@ -100,7 +100,7 @@ export function numberToChinese(num: number): ChineseNumberData {
 	return { value: n, hanzi, pinyin };
 }
 
-export interface NumberAttackQuestion {
+export interface NumberRushQuestion {
 	correctValue: number;
 	hanzi: string;
 	pinyin: string;
@@ -166,10 +166,10 @@ export function generateDistractors(correct: number, maxRange: number): number[]
 	return chosen;
 }
 
-export function generateNumberAttackQuestion(
+export function generateNumberRushQuestion(
 	maxNumber: number = 99,
 	usedNumbers?: Set<number>
-): NumberAttackQuestion {
+): NumberRushQuestion {
 	const available: number[] = [];
 	if (usedNumbers && usedNumbers.size < maxNumber + 1) {
 		for (let i = 0; i <= maxNumber; i++) {

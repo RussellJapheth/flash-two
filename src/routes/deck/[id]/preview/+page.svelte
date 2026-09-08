@@ -5,12 +5,15 @@
 	import { SvelteSet } from 'svelte/reactivity';
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
+	import DeckSpreadsheetModal from '$lib/components/DeckSpreadsheetModal.svelte';
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
 		getWordProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
+		saveCustomDeck,
+		deleteCustomDeck,
 		computeStreakStats,
 		recordRecentlyOpenedPack,
 		isWordSaved,
@@ -19,7 +22,7 @@
 	import { speakWord } from '$lib/utils/audio';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
-	import type { WordRecord, StreakStats, WordProgress } from '$lib/types';
+	import type { WordRecord, StreakStats, WordProgress, CustomDeck } from '$lib/types';
 	import {
 		Brain,
 		BookOpen,
@@ -32,7 +35,10 @@
 		Table,
 		SlidersHorizontal,
 		CheckCircle2,
-		Clock
+		Clock,
+		Pencil,
+		Trash2,
+		Plus
 	} from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
@@ -50,6 +56,8 @@
 	let words = $state<WordRecord[]>([]);
 	let allProgress = $state<Record<string, WordProgress>>({});
 	let savedWordNos = new SvelteSet<number>();
+	let currentCustomDeck = $state<CustomDeck | null>(null);
+	let isSpreadsheetModalOpen = $state(false);
 
 	let masteredCount = $state(0);
 	let learningCount = $state(0);
@@ -81,11 +89,15 @@
 			const customDecks = await getAllCustomDecks();
 			const match = customDecks.find((d) => d.id === deckId);
 			if (match) {
+				currentCustomDeck = match;
 				foundWords = match.words;
 				title = match.name;
 				lang = match.language || 'chinese';
+			} else {
+				currentCustomDeck = null;
 			}
 		} else {
+			currentCustomDeck = null;
 			// Check Chinese packs then French packs
 			const chPacks = await getBuiltinPacks('chinese');
 			const chMatch = chPacks.find(
@@ -163,6 +175,38 @@
 		return 'learning';
 	}
 
+	async function handleSaveCustomDeck(deck: CustomDeck) {
+		await saveCustomDeck(deck);
+		scheduleDebouncedSync();
+		await loadDeckData();
+	}
+
+	async function handleDeleteCustomDeck() {
+		if (confirm('Are you sure you want to delete this custom deck?')) {
+			await deleteCustomDeck(deckId);
+			scheduleDebouncedSync();
+			goto(resolve('/decks'));
+		}
+	}
+
+	async function handleDeleteSingleWord(wordNo: number) {
+		if (!currentCustomDeck) return;
+		if (confirm('Remove this card from the deck?')) {
+			const updatedWords = currentCustomDeck.words
+				.filter((w) => w.No !== wordNo)
+				.map((w, idx) => ({ ...w, No: idx + 1 }));
+
+			const updatedDeck: CustomDeck = {
+				...currentCustomDeck,
+				words: updatedWords
+			};
+
+			await saveCustomDeck(updatedDeck);
+			scheduleDebouncedSync();
+			await loadDeckData();
+		}
+	}
+
 	let filteredTableWords = $derived(
 		words.filter((w) => {
 			const target = deckLanguage === 'chinese' ? w['Chinese Word'] || '' : w['French Word'] || '';
@@ -217,18 +261,51 @@
 		class="shadow-card relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-5"
 	>
 		<div class="flex items-center justify-between">
-			<span
-				class="rounded-full px-3 py-1 font-headline text-xs font-bold tracking-wider uppercase {deckLanguage ===
-				'french'
-					? 'border border-amber-200/80 bg-amber-50 text-amber-800'
-					: 'border border-indigo-100 bg-indigo-50 text-indigo-700'}"
-			>
-				{deckLanguage}
-			</span>
+			<div class="flex items-center gap-2">
+				<span
+					class="rounded-full px-3 py-1 font-headline text-xs font-bold tracking-wider uppercase {deckLanguage ===
+					'french'
+						? 'border border-amber-200/80 bg-amber-50 text-amber-800'
+						: 'border border-indigo-100 bg-indigo-50 text-indigo-700'}"
+				>
+					{deckLanguage}
+				</span>
+				{#if currentCustomDeck}
+					<span
+						class="rounded-full border border-violet-200 bg-violet-50 px-2.5 py-0.5 font-headline text-[11px] font-bold text-violet-700"
+					>
+						Custom
+					</span>
+				{/if}
+			</div>
 
-			<span class="font-headline text-xs font-bold text-slate-500">
-				{words.length} Total Cards
-			</span>
+			<div class="flex items-center gap-2">
+				{#if currentCustomDeck}
+					<button
+						type="button"
+						onclick={() => (isSpreadsheetModalOpen = true)}
+						title="Edit Custom Deck"
+						aria-label="Edit custom deck"
+						class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-colors hover:bg-indigo-50 hover:text-indigo-600 active:scale-95"
+					>
+						<Pencil size={15} strokeWidth={2} />
+					</button>
+
+					<button
+						type="button"
+						onclick={handleDeleteCustomDeck}
+						title="Delete Custom Deck"
+						aria-label="Delete custom deck"
+						class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-colors hover:bg-rose-50 hover:text-rose-600 active:scale-95"
+					>
+						<Trash2 size={15} strokeWidth={2} />
+					</button>
+				{/if}
+
+				<span class="font-headline text-xs font-bold text-slate-500">
+					{words.length} Cards
+				</span>
+			</div>
 		</div>
 
 		<h2 class="mt-2 font-headline text-2xl font-extrabold tracking-tight text-slate-900">
@@ -411,19 +488,32 @@
 		<section class="space-y-3">
 			<!-- Table Controls & Filters -->
 			<div class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-4">
-				<!-- Search Bar -->
-				<div class="relative">
-					<Search
-						size={16}
-						strokeWidth={2.25}
-						class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-slate-400"
-					/>
-					<input
-						type="text"
-						bind:value={tableSearch}
-						placeholder="Search target word, pinyin, meaning..."
-						class="w-full rounded-2xl border border-slate-200/80 bg-slate-50/70 py-2.5 pr-4 pl-10 font-sans text-xs text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:bg-white focus:outline-none"
-					/>
+				<div class="flex items-center gap-2">
+					<!-- Search Bar -->
+					<div class="relative flex-1">
+						<Search
+							size={16}
+							strokeWidth={2.25}
+							class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-slate-400"
+						/>
+						<input
+							type="text"
+							bind:value={tableSearch}
+							placeholder="Search target word, pinyin, meaning..."
+							class="w-full rounded-2xl border border-slate-200/80 bg-slate-50/70 py-2.5 pr-4 pl-10 font-sans text-xs text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:bg-white focus:outline-none"
+						/>
+					</div>
+
+					{#if currentCustomDeck}
+						<button
+							type="button"
+							onclick={() => (isSpreadsheetModalOpen = true)}
+							class="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-2xl bg-indigo-600 px-3 py-2.5 font-headline text-xs font-bold text-white shadow-xs hover:bg-indigo-700 active:scale-95"
+						>
+							<Plus size={15} strokeWidth={2.5} />
+							<span>Spreadsheet Editor</span>
+						</button>
+					{/if}
 				</div>
 
 				<!-- Filter Chips -->
@@ -634,6 +724,19 @@
 														class={isSaved ? 'fill-current' : ''}
 													/>
 												</button>
+
+												<!-- Delete card from custom deck -->
+												{#if currentCustomDeck}
+													<button
+														type="button"
+														onclick={() => handleDeleteSingleWord(word.No)}
+														aria-label="Delete word from deck"
+														title="Delete word from deck"
+														class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-slate-400 transition-colors hover:bg-rose-50 hover:text-rose-600 active:scale-95"
+													>
+														<Trash2 size={15} strokeWidth={2} />
+													</button>
+												{/if}
 											</div>
 										</td>
 									</tr>
@@ -646,3 +749,11 @@
 		</section>
 	{/if}
 </main>
+
+<!-- SPREADSHEET DECK EDITOR MODAL -->
+<DeckSpreadsheetModal
+	isOpen={isSpreadsheetModalOpen}
+	deckToEdit={currentCustomDeck}
+	onClose={() => (isSpreadsheetModalOpen = false)}
+	onSave={handleSaveCustomDeck}
+/>

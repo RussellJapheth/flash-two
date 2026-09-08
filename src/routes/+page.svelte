@@ -3,6 +3,7 @@
 	import DeckCard from '$lib/components/DeckCard.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import StreakCalendarModal from '$lib/components/StreakCalendarModal.svelte';
+	import DeckSpreadsheetModal from '$lib/components/DeckSpreadsheetModal.svelte';
 	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
 	import {
@@ -10,14 +11,17 @@
 		getWordProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
+		saveCustomDeck,
+		deleteCustomDeck,
 		computeStreakStats,
 		getSavedUsername,
 		getSavedLanguage,
 		setSavedLanguage,
 		getRecentlyOpenedPackIds
 	} from '$lib/utils/storage';
+	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
-	import type { DeckSummary, StreakStats, WordProgress } from '$lib/types';
+	import type { DeckSummary, StreakStats, WordProgress, CustomDeck } from '$lib/types';
 	import {
 		Flame,
 		Brain,
@@ -28,7 +32,7 @@
 		BookOpen
 	} from 'lucide-svelte';
 
-	let username = $state('');
+	let username = $state('Russell');
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -40,14 +44,17 @@
 	});
 
 	let deckSummaries = $state<DeckSummary[]>([]);
+	let rawCustomDecks = $state<CustomDeck[]>([]);
 	let recentPackIds = $state<string[]>([]);
 	let totalDueCount = $state(0);
 	let totalWeakCount = $state(0);
 	let totalMasteredCount = $state(0);
 	let totalCardCount = $state(0);
-	let recommendedDeck = $state<DeckSummary | null>(null);
 
+	let recommendedDeck = $state<DeckSummary | null>(null);
 	let isStreakModalOpen = $state(false);
+	let isSpreadsheetModalOpen = $state(false);
+	let editingDeck = $state<CustomDeck | null>(null);
 
 	let masteryPercentage = $derived(
 		totalCardCount > 0 ? Math.round((totalMasteredCount / totalCardCount) * 100) : 0
@@ -76,6 +83,7 @@
 
 		const builtinPacks = await getBuiltinPacks(activeLanguage);
 		const customDecks = await getAllCustomDecks();
+		rawCustomDecks = customDecks;
 		const matchingCustom = customDecks.filter((d) => !d.language || d.language === activeLanguage);
 
 		let dueAccumulator = 0;
@@ -184,9 +192,31 @@
 	}
 
 	function switchLanguage(lang: 'chinese' | 'french') {
-		activeLanguage = lang;
+		if (activeLanguage === lang) return;
 		setSavedLanguage(lang);
 		loadDashboardData();
+	}
+
+	function handleEditCustomDeck(deckSummary: DeckSummary) {
+		const target = rawCustomDecks.find((d) => d.id === deckSummary.id);
+		if (target) {
+			editingDeck = target;
+			isSpreadsheetModalOpen = true;
+		}
+	}
+
+	async function handleSaveCustomDeck(deck: CustomDeck) {
+		await saveCustomDeck(deck);
+		scheduleDebouncedSync();
+		await loadDashboardData();
+	}
+
+	async function handleDeleteCustomDeck(id: string) {
+		if (confirm('Are you sure you want to delete this custom deck?')) {
+			await deleteCustomDeck(id);
+			scheduleDebouncedSync();
+			await loadDashboardData();
+		}
 	}
 
 	onMount(() => {
@@ -458,7 +488,12 @@
 				</div>
 			{:else}
 				{#each displayedRecentDecks() as deck (deck.id)}
-					<DeckCard {deck} onSelect={() => (recentPackIds = getRecentlyOpenedPackIds())} />
+					<DeckCard
+						{deck}
+						onSelect={() => (recentPackIds = getRecentlyOpenedPackIds())}
+						onEdit={deck.isCustom ? handleEditCustomDeck : undefined}
+						onDelete={deck.isCustom ? (d) => handleDeleteCustomDeck(d.id) : undefined}
+					/>
 				{/each}
 			{/if}
 		</div>
@@ -488,4 +523,13 @@
 	streak={streakStats.currentStreak}
 	activeDates={streakStats.activeDates}
 	onClose={() => (isStreakModalOpen = false)}
+/>
+
+<!-- SPREADSHEET DECK EDITOR MODAL -->
+<DeckSpreadsheetModal
+	isOpen={isSpreadsheetModalOpen}
+	deckToEdit={editingDeck}
+	initialLanguage={activeLanguage}
+	onClose={() => (isSpreadsheetModalOpen = false)}
+	onSave={handleSaveCustomDeck}
 />

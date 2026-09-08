@@ -5,6 +5,7 @@
 	import { resolve } from '$app/paths';
 	import {
 		getAllProgress,
+		getWordProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
 		computeStreakStats
@@ -38,22 +39,36 @@
 		const customDecks = await getAllCustomDecks();
 
 		let totalWords = 0;
-		for (const p of [...chPacks, ...frPacks]) totalWords += p.words.length;
-		for (const d of customDecks) totalWords += d.words.length;
-
 		let mastered = 0;
 		let learning = 0;
 		let due = 0;
 		let totalCorrect = 0;
 		let totalAttempts = 0;
 
-		for (const p of Object.values(progress)) {
-			if (isCardMastered(p)) mastered++;
-			else if (isCardLearning(p)) learning++;
-			if (isCardDue(p)) due++;
+		const allActivePacks = [
+			...chPacks.map((p) => ({ id: p.id, words: p.words, lang: 'chinese' as const })),
+			...frPacks.map((p) => ({ id: p.id, words: p.words, lang: 'french' as const })),
+			...customDecks.map((d) => ({
+				id: d.id,
+				words: d.words,
+				lang: (d.language || 'chinese') as 'chinese' | 'french'
+			}))
+		];
 
-			totalCorrect += p.correct || 0;
-			totalAttempts += (p.correct || 0) + (p.wrong || 0);
+		for (const pack of allActivePacks) {
+			totalWords += pack.words.length;
+			for (const word of pack.words) {
+				const p = getWordProgress(progress, pack.id, word.No, pack.lang);
+				if (p) {
+					if (isCardMastered(p)) mastered++;
+					else if (isCardLearning(p)) learning++;
+					if (isCardDue(p)) due++;
+					totalCorrect += p.correct || 0;
+					totalAttempts += (p.correct || 0) + (p.wrong || 0);
+				} else {
+					due++;
+				}
+			}
 		}
 
 		totalWordsCount = totalWords;

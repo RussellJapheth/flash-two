@@ -1,6 +1,7 @@
 <script lang="ts">
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import DeckCard from '$lib/components/DeckCard.svelte';
+	import DeckSpreadsheetModal from '$lib/components/DeckSpreadsheetModal.svelte';
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
@@ -14,7 +15,7 @@
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered } from '$lib/utils/srs';
 	import type { DeckSummary, CustomDeck, WordRecord, StreakStats } from '$lib/types';
-	import { Plus, FileUp, Search, FolderOpen, Trash2, X } from 'lucide-svelte';
+	import { Plus, FileUp, Search, FolderOpen, X } from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -28,25 +29,14 @@
 	let filterType = $state<'all' | 'chinese' | 'french' | 'custom'>('all');
 	let searchQuery = $state('');
 	let allDecks = $state<DeckSummary[]>([]);
+	let rawCustomDecks = $state<CustomDeck[]>([]);
 
-	// Modal states
-	let isCreateModalOpen = $state(false);
+	// Spreadsheet Editor Modal states
+	let isSpreadsheetModalOpen = $state(false);
+	let editingDeck = $state<CustomDeck | null>(null);
+
+	// Import Deck Form Modal state
 	let isImportModalOpen = $state(false);
-
-	// Create Deck Form
-	let newDeckName = $state('');
-	let newDeckLang = $state<'chinese' | 'french'>('chinese');
-	let newWords = $state<
-		{
-			targetWord: string;
-			phonetic: string;
-			meaning: string;
-			partOfSpeech: string;
-			example: string;
-		}[]
-	>([{ targetWord: '', phonetic: '', meaning: '', partOfSpeech: 'noun', example: '' }]);
-
-	// Import Deck Form
 	let importDeckName = $state('');
 	let importDeckLang = $state<'chinese' | 'french'>('chinese');
 	let importRawText = $state('');
@@ -59,6 +49,7 @@
 		const chinesePacks = await getBuiltinPacks('chinese');
 		const frenchPacks = await getBuiltinPacks('french');
 		const customDecks = await getAllCustomDecks();
+		rawCustomDecks = customDecks;
 
 		const summaries: DeckSummary[] = [];
 
@@ -187,56 +178,31 @@
 		})
 	);
 
-	function addWordRow() {
-		newWords.push({
-			targetWord: '',
-			phonetic: '',
-			meaning: '',
-			partOfSpeech: 'noun',
-			example: ''
-		});
+	function openCreateDeckModal() {
+		editingDeck = null;
+		isSpreadsheetModalOpen = true;
 	}
 
-	function removeWordRow(index: number) {
-		if (newWords.length > 1) {
-			newWords = newWords.filter((_, i) => i !== index);
+	function handleEditCustomDeck(deckSummary: DeckSummary) {
+		const target = rawCustomDecks.find((d) => d.id === deckSummary.id);
+		if (target) {
+			editingDeck = target;
+			isSpreadsheetModalOpen = true;
 		}
 	}
 
-	async function handleCreateDeck() {
-		if (!newDeckName.trim()) return;
-
-		const validWords: WordRecord[] = newWords
-			.filter((w) => w.targetWord.trim() && w.meaning.trim())
-			.map((w, idx) => ({
-				No: idx + 1,
-				'Chinese Word': newDeckLang === 'chinese' ? w.targetWord.trim() : undefined,
-				'French Word': newDeckLang === 'french' ? w.targetWord.trim() : undefined,
-				Pinyin: w.phonetic.trim() || undefined,
-				'Part of Speech': w.partOfSpeech.trim() || 'noun',
-				'English Meaning': w.meaning.trim(),
-				'Example (Chinese + Pinyin)':
-					newDeckLang === 'chinese' ? w.example.trim() || undefined : undefined,
-				'Example (French)': newDeckLang === 'french' ? w.example.trim() || undefined : undefined
-			}));
-
-		if (validWords.length === 0) return;
-
-		const newDeck: CustomDeck = {
-			id: `custom-${Date.now()}`,
-			name: newDeckName.trim(),
-			words: validWords,
-			language: newDeckLang,
-			createdAt: Date.now()
-		};
-
-		await saveCustomDeck(newDeck);
+	async function handleSaveCustomDeck(deck: CustomDeck) {
+		await saveCustomDeck(deck);
 		scheduleDebouncedSync();
-
-		isCreateModalOpen = false;
-		newDeckName = '';
-		newWords = [{ targetWord: '', phonetic: '', meaning: '', partOfSpeech: 'noun', example: '' }];
 		await loadDecks();
+	}
+
+	async function handleDeleteCustomDeck(id: string) {
+		if (confirm('Are you sure you want to delete this custom deck?')) {
+			await deleteCustomDeck(id);
+			scheduleDebouncedSync();
+			await loadDecks();
+		}
 	}
 
 	async function handleImportDeck() {
@@ -322,14 +288,6 @@
 		}
 	}
 
-	async function handleDeleteCustomDeck(id: string) {
-		if (confirm('Are you sure you want to delete this custom deck?')) {
-			await deleteCustomDeck(id);
-			scheduleDebouncedSync();
-			await loadDecks();
-		}
-	}
-
 	onMount(() => {
 		loadDecks();
 	});
@@ -348,7 +306,7 @@
 			<!-- Create New Deck Button -->
 			<button
 				type="button"
-				onclick={() => (isCreateModalOpen = true)}
+				onclick={openCreateDeckModal}
 				class="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-indigo-600 px-3.5 py-1.5 font-headline text-xs font-bold text-white shadow-xs transition-all hover:bg-indigo-700 active:scale-95"
 			>
 				<Plus size={16} strokeWidth={2.5} />
@@ -412,177 +370,23 @@
 			</div>
 		{:else}
 			{#each filteredDecks as deck (deck.id)}
-				<div class="relative">
-					<DeckCard {deck} />
-					{#if deck.isCustom}
-						<button
-							type="button"
-							onclick={(e) => {
-								e.preventDefault();
-								e.stopPropagation();
-								handleDeleteCustomDeck(deck.id);
-							}}
-							title="Delete Custom Deck"
-							aria-label="Delete {deck.title}"
-							class="absolute top-3 right-12 flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-slate-400 transition-colors hover:bg-rose-50 hover:text-rose-600 active:scale-95"
-						>
-							<Trash2 size={16} strokeWidth={2} />
-						</button>
-					{/if}
-				</div>
+				<DeckCard
+					{deck}
+					onEdit={deck.isCustom ? handleEditCustomDeck : undefined}
+					onDelete={deck.isCustom ? (d) => handleDeleteCustomDeck(d.id) : undefined}
+				/>
 			{/each}
 		{/if}
 	</div>
 </main>
 
-<!-- CREATE DECK MODAL -->
-{#if isCreateModalOpen}
-	<div
-		class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm"
-	>
-		<div
-			class="shadow-sheet flex max-h-[90vh] w-full max-w-md flex-col rounded-3xl border border-slate-200 bg-white p-6"
-		>
-			<div class="flex items-center justify-between border-b border-slate-100 pb-3">
-				<h3 class="font-headline text-lg font-extrabold text-slate-900">Create Custom Deck</h3>
-				<button
-					type="button"
-					onclick={() => (isCreateModalOpen = false)}
-					aria-label="Close"
-					class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100 hover:text-slate-700"
-				>
-					<X size={18} strokeWidth={2} />
-				</button>
-			</div>
-
-			<div class="flex-1 space-y-4 overflow-y-auto py-4 pr-1">
-				<div>
-					<label for="new-deck-name" class="block font-headline text-xs font-bold text-slate-900"
-						>Deck Name</label
-					>
-					<input
-						id="new-deck-name"
-						type="text"
-						placeholder="e.g. Travel Chinese / Business French"
-						bind:value={newDeckName}
-						class="mt-1 w-full rounded-2xl border border-slate-200 px-3.5 py-2 font-sans text-sm text-slate-900 focus:border-indigo-600 focus:outline-none"
-					/>
-				</div>
-
-				<div>
-					<span class="block font-headline text-xs font-bold text-slate-900">Target Language</span>
-					<div class="mt-1 flex gap-2">
-						<button
-							type="button"
-							onclick={() => (newDeckLang = 'chinese')}
-							class="flex-1 cursor-pointer rounded-xl py-2 font-headline text-xs font-bold transition-all {newDeckLang ===
-							'chinese'
-								? 'bg-indigo-600 text-white shadow-xs'
-								: 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}"
-						>
-							Chinese
-						</button>
-						<button
-							type="button"
-							onclick={() => (newDeckLang = 'french')}
-							class="flex-1 cursor-pointer rounded-xl py-2 font-headline text-xs font-bold transition-all {newDeckLang ===
-							'french'
-								? 'bg-indigo-600 text-white shadow-xs'
-								: 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}"
-						>
-							French
-						</button>
-					</div>
-				</div>
-
-				<!-- Words List Inputs -->
-				<div>
-					<div class="mb-2 flex items-center justify-between">
-						<span class="block font-headline text-xs font-bold text-slate-900"
-							>Vocabulary Cards</span
-						>
-						<button
-							type="button"
-							onclick={addWordRow}
-							class="font-headline text-xs font-bold text-indigo-600 hover:underline"
-						>
-							+ Add Card
-						</button>
-					</div>
-
-					<div class="space-y-3">
-						{#each newWords as word, idx (idx)}
-							<div
-								class="relative space-y-2 rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5"
-							>
-								<div class="flex items-center justify-between">
-									<span class="font-headline text-[11px] font-bold text-slate-600"
-										>Card #{idx + 1}</span
-									>
-									{#if newWords.length > 1}
-										<button
-											type="button"
-											onclick={() => removeWordRow(idx)}
-											class="font-headline text-xs font-bold text-rose-500 hover:text-rose-700"
-										>
-											Remove
-										</button>
-									{/if}
-								</div>
-
-								<div class="grid grid-cols-2 gap-2">
-									<input
-										type="text"
-										placeholder={newDeckLang === 'chinese' ? 'Word (Hanzi)' : 'French Word'}
-										bind:value={word.targetWord}
-										class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 font-sans text-xs text-slate-900 focus:border-indigo-600 focus:outline-none"
-									/>
-									<input
-										type="text"
-										placeholder={newDeckLang === 'chinese' ? 'Pinyin' : 'Phonetic (optional)'}
-										bind:value={word.phonetic}
-										class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 font-sans text-xs text-slate-900 focus:border-indigo-600 focus:outline-none"
-									/>
-								</div>
-
-								<input
-									type="text"
-									placeholder="English Meaning"
-									bind:value={word.meaning}
-									class="w-full rounded-xl border border-slate-200 bg-white px-3 py-1.5 font-sans text-xs text-slate-900 focus:border-indigo-600 focus:outline-none"
-								/>
-
-								<input
-									type="text"
-									placeholder="Example sentence (optional)"
-									bind:value={word.example}
-									class="w-full rounded-xl border border-slate-200 bg-white px-3 py-1.5 font-sans text-xs text-slate-900 focus:border-indigo-600 focus:outline-none"
-								/>
-							</div>
-						{/each}
-					</div>
-				</div>
-			</div>
-
-			<div class="flex gap-2 border-t border-slate-100 pt-3">
-				<button
-					type="button"
-					onclick={() => (isCreateModalOpen = false)}
-					class="flex-1 cursor-pointer rounded-2xl bg-slate-100 py-2.5 font-headline text-xs font-bold text-slate-600 hover:bg-slate-200 active:scale-95"
-				>
-					Cancel
-				</button>
-				<button
-					type="button"
-					onclick={handleCreateDeck}
-					class="flex-1 cursor-pointer rounded-2xl bg-indigo-600 py-2.5 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
-				>
-					Create Deck
-				</button>
-			</div>
-		</div>
-	</div>
-{/if}
+<!-- SPREADSHEET DECK EDITOR MODAL -->
+<DeckSpreadsheetModal
+	isOpen={isSpreadsheetModalOpen}
+	deckToEdit={editingDeck}
+	onClose={() => (isSpreadsheetModalOpen = false)}
+	onSave={handleSaveCustomDeck}
+/>
 
 <!-- IMPORT DECK MODAL -->
 {#if isImportModalOpen}

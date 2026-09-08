@@ -273,11 +273,37 @@ export async function saveCustomDeck(deck: CustomDeck): Promise<void> {
 	if (typeof window === 'undefined') return;
 	const db = await getDB();
 	return new Promise((resolve, reject) => {
-		const tx = db.transaction('custom_decks', 'readwrite');
-		const store = tx.objectStore('custom_decks');
-		const request = store.put(deck);
-		request.onsuccess = () => resolve();
-		request.onerror = () => reject(request.error);
+		const tx = db.transaction(['custom_decks', 'progress_store', 'saved_words'], 'readwrite');
+		const deckStore = tx.objectStore('custom_decks');
+		const progStore = tx.objectStore('progress_store');
+		const savedStore = tx.objectStore('saved_words');
+
+		deckStore.put(deck);
+
+		// Clean up any progress entries for word numbers exceeding current deck word count
+		const progReq = progStore.getAll();
+		progReq.onsuccess = () => {
+			const all = progReq.result || [];
+			for (const item of all) {
+				if (item.weekId === deck.id && item.wordNo > deck.words.length) {
+					progStore.delete(item.key || `${item.weekId}:${item.wordNo}`);
+				}
+			}
+		};
+
+		// Clean up any saved word entries for word numbers exceeding current deck word count
+		const savedReq = savedStore.getAll();
+		savedReq.onsuccess = () => {
+			const all = savedReq.result || [];
+			for (const item of all) {
+				if (item.weekId === deck.id && item.wordNo > deck.words.length) {
+					savedStore.delete(item.key || `${item.weekId}:${item.wordNo}`);
+				}
+			}
+		};
+
+		tx.oncomplete = () => resolve();
+		tx.onerror = () => reject(tx.error);
 	});
 }
 
@@ -285,11 +311,45 @@ export async function deleteCustomDeck(id: string): Promise<void> {
 	if (typeof window === 'undefined') return;
 	const db = await getDB();
 	return new Promise((resolve, reject) => {
-		const tx = db.transaction('custom_decks', 'readwrite');
-		const store = tx.objectStore('custom_decks');
-		const request = store.delete(id);
-		request.onsuccess = () => resolve();
-		request.onerror = () => reject(request.error);
+		const tx = db.transaction(['custom_decks', 'progress_store', 'saved_words'], 'readwrite');
+		const deckStore = tx.objectStore('custom_decks');
+		const progStore = tx.objectStore('progress_store');
+		const savedStore = tx.objectStore('saved_words');
+
+		deckStore.delete(id);
+
+		// Delete all progress associated with this deck
+		const progReq = progStore.getAll();
+		progReq.onsuccess = () => {
+			const all = progReq.result || [];
+			for (const item of all) {
+				if (item.weekId === id || (item.key && item.key.startsWith(`${id}:`))) {
+					progStore.delete(item.key || `${item.weekId}:${item.wordNo}`);
+				}
+			}
+		};
+
+		// Delete all saved words associated with this deck
+		const savedReq = savedStore.getAll();
+		savedReq.onsuccess = () => {
+			const all = savedReq.result || [];
+			for (const item of all) {
+				if (item.weekId === id || (item.key && item.key.startsWith(`${id}:`))) {
+					savedStore.delete(item.key || `${item.weekId}:${item.wordNo}`);
+				}
+			}
+		};
+
+		// Clean up recently opened packs in localStorage
+		try {
+			const recent = getRecentlyOpenedPackIds().filter((packId) => packId !== id);
+			localStorage.setItem('flashcards_recent_packs', JSON.stringify(recent));
+		} catch {
+			// ignore localStorage error
+		}
+
+		tx.oncomplete = () => resolve();
+		tx.onerror = () => reject(tx.error);
 	});
 }
 

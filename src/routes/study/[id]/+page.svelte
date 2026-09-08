@@ -21,7 +21,17 @@
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { playSound, speakWord, stopSpeech } from '$lib/utils/audio';
 	import type { WordRecord, WordProgress, StudyRating } from '$lib/types';
-	import { X, Award, CheckCheck, Play, Pause, RotateCcw, Volume2, VolumeX } from 'lucide-svelte';
+	import {
+		X,
+		Award,
+		CheckCheck,
+		Play,
+		Pause,
+		RotateCcw,
+		Volume2,
+		VolumeX,
+		FolderOpen
+	} from 'lucide-svelte';
 
 	let deckId = $derived(page.params.id || '');
 	let studyMode = $derived((page.url.searchParams.get('mode') as 'srs' | 'all' | 'weak') || 'srs');
@@ -537,17 +547,28 @@
 				</div>
 			</div>
 		{:else}
-			<div class="py-12 text-center text-slate-500">
-				<p class="font-headline text-sm font-bold text-slate-800">
-					No cards available in this set.
+			<div
+				class="shadow-card space-y-3 rounded-3xl border border-dashed border-slate-200 bg-white p-8 text-center text-slate-500"
+			>
+				<FolderOpen size={40} strokeWidth={1.5} class="mx-auto mb-2 text-slate-400" />
+				<h3 class="font-headline text-base font-bold text-slate-800">No cards in this deck</h3>
+				<p class="font-sans text-xs text-slate-400">
+					Add vocabulary cards to this custom deck before starting a study session.
 				</p>
-				<button
-					type="button"
-					onclick={() => goto(resolve('/'))}
-					class="mt-4 cursor-pointer rounded-2xl bg-indigo-600 px-4 py-2 font-headline text-xs font-bold text-white shadow-xs hover:bg-indigo-700"
-				>
-					Back to Home
-				</button>
+				<div class="pt-2 flex flex-col gap-2">
+					<a
+						href={resolve(`/deck/${deckId}/preview`)}
+						class="flex h-11 w-full items-center justify-center rounded-2xl bg-indigo-600 font-headline text-xs font-bold text-white shadow-xs hover:bg-indigo-700 active:scale-95"
+					>
+						Open Deck Settings & Spreadsheet
+					</a>
+					<a
+						href={resolve('/decks')}
+						class="flex h-11 w-full items-center justify-center rounded-2xl bg-slate-100 font-headline text-xs font-bold text-slate-700 hover:bg-slate-200 active:scale-95"
+					>
+						Back to Decks
+					</a>
+				</div>
 			</div>
 		{/if}
 	</main>

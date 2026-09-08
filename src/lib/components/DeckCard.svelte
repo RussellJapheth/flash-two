@@ -2,11 +2,18 @@
 	import type { DeckSummary } from '$lib/types';
 	import { resolve } from '$app/paths';
 	import { recordRecentlyOpenedPack } from '$lib/utils/storage';
-	import { Play, Sparkles } from 'lucide-svelte';
+	import { Play, Sparkles, Pencil, Trash2 } from 'lucide-svelte';
 
-	let { deck, onSelect = () => {} } = $props<{
+	let {
+		deck,
+		onSelect = () => {},
+		onEdit,
+		onDelete
+	} = $props<{
 		deck: DeckSummary;
 		onSelect?: (deck: DeckSummary) => void;
+		onEdit?: (deck: DeckSummary) => void;
+		onDelete?: (deck: DeckSummary) => void;
 	}>();
 
 	let progressPercent = $derived(
@@ -65,7 +72,7 @@
 		</div>
 
 		<!-- Action & Due Badges -->
-		<div class="flex shrink-0 items-center gap-2">
+		<div class="flex shrink-0 items-center gap-1.5">
 			{#if deck.dueCards > 0}
 				<span
 					class="inline-flex items-center gap-1 rounded-full border border-rose-100 bg-rose-50 px-2.5 py-0.5 font-headline text-[11px] font-bold text-rose-600"
@@ -73,6 +80,38 @@
 					<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-rose-500"></span>
 					{deck.dueCards} due
 				</span>
+			{/if}
+
+			{#if deck.isCustom && onEdit}
+				<button
+					type="button"
+					onclick={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						onEdit(deck);
+					}}
+					title="Edit custom deck"
+					aria-label="Edit {deck.title}"
+					class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-slate-400 transition-colors hover:bg-indigo-50 hover:text-indigo-600 active:scale-95"
+				>
+					<Pencil size={15} strokeWidth={2} />
+				</button>
+			{/if}
+
+			{#if deck.isCustom && onDelete}
+				<button
+					type="button"
+					onclick={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						onDelete(deck);
+					}}
+					title="Delete custom deck"
+					aria-label="Delete {deck.title}"
+					class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-slate-400 transition-colors hover:bg-rose-50 hover:text-rose-600 active:scale-95"
+				>
+					<Trash2 size={15} strokeWidth={2} />
+				</button>
 			{/if}
 
 			<div

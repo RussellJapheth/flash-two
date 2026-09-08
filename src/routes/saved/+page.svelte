@@ -106,44 +106,45 @@
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<div class="flex items-center justify-between">
-		<p class="font-headline text-xs font-bold text-on-surface-variant">
+		<p class="font-headline text-xs font-bold text-slate-500">
 			{savedList.length} Bookmarked Cards
 		</p>
 	</div>
 
 	{#if savedList.length === 0}
 		<div
-			class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-surface-container p-10 text-center text-on-surface-variant"
+			class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 p-10 text-center text-slate-500"
 		>
-			<BookmarkIcon size={40} strokeWidth={1.25} class="mb-2 text-outline" />
-			<h3 class="font-headline text-base font-bold text-on-surface">No Saved Words Yet</h3>
-			<p class="font-body mt-1 max-w-xs text-xs">
+			<BookmarkIcon size={40} strokeWidth={1.5} class="mb-2 text-slate-400" />
+			<h3 class="font-headline text-base font-bold text-slate-900">No Saved Words Yet</h3>
+			<p class="mt-1 max-w-xs font-sans text-xs text-slate-400">
 				Tap the bookmark icon on any flashcard during your study sessions to save difficult terms
 				here.
 			</p>
 		</div>
 	{:else}
-		<div class="space-y-3">
+		<div class="space-y-2.5">
 			{#each savedList as item (item.packId + ':' + item.word.No)}
 				{@const target =
 					item.language === 'chinese' ? item.word['Chinese Word'] : item.word['French Word']}
 				<div
-					class="shadow-card flex items-center justify-between rounded-2xl border border-surface-container bg-surface-container-lowest p-4 transition-all hover:border-primary/20"
+					class="shadow-card hover:shadow-card-hover flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white p-3.5 transition-all hover:border-indigo-200"
 				>
 					<div class="flex min-w-0 flex-1 items-start gap-3 pr-2">
 						<button
 							type="button"
 							onclick={() => speakWord(target || '', item.language)}
 							title="Listen"
-							class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-fixed text-primary transition-colors hover:bg-primary hover:text-white"
+							aria-label="Listen to {target}"
+							class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-indigo-600 transition-colors hover:bg-indigo-600 hover:text-white"
 						>
-							<Volume2 size={19} strokeWidth={1.75} />
+							<Volume2 size={17} strokeWidth={2} />
 						</button>
 
 						<div class="min-w-0 flex-1">
 							<div class="flex items-center gap-2">
 								<h3
-									class="truncate font-headline text-base font-bold text-on-surface {item.language ===
+									class="truncate font-headline text-sm font-bold text-slate-900 {item.language ===
 									'chinese'
 										? 'font-hanzi'
 										: ''}"
@@ -151,11 +152,11 @@
 									{target}
 								</h3>
 								{#if item.word.Pinyin}
-									<span class="text-xs font-semibold text-primary">{item.word.Pinyin}</span>
+									<span class="font-headline text-xs font-bold text-indigo-600">{item.word.Pinyin}</span>
 								{/if}
 							</div>
 
-							<p class="font-body mt-0.5 truncate text-xs text-on-surface-variant">
+							<p class="mt-0.5 truncate font-sans text-xs text-slate-500">
 								{item.word['English Meaning']}
 							</p>
 						</div>
@@ -165,9 +166,10 @@
 						type="button"
 						onclick={() => handleRemove(item.packId, item.word.No)}
 						title="Remove bookmark"
-						class="flex h-9 w-9 items-center justify-center rounded-full text-secondary transition-colors hover:bg-surface-container"
+						aria-label="Remove {target} from saved"
+						class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-amber-500 transition-colors hover:bg-slate-100"
 					>
-						<Bookmark size={20} strokeWidth={1.75} class="fill-current" />
+						<Bookmark size={18} strokeWidth={2} class="fill-current" />
 					</button>
 				</div>
 			{/each}

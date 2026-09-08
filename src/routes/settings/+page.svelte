@@ -1,4 +1,5 @@
 <script lang="ts">
+	import TopHeader from '$lib/components/TopHeader.svelte';
 	import { onMount } from 'svelte';
 	import {
 		getSavedUsername,
@@ -191,287 +192,292 @@
 	<title>Settings — FlashCards</title>
 </svelte:head>
 
-<div class="flex min-h-screen flex-col bg-[#F4F5FF]">
-	<!-- Page Header -->
-	<header class="bg-white px-4 pt-5 pb-4">
-		<h1 class="font-sans text-2xl font-bold text-gray-900">Settings</h1>
-	</header>
+<TopHeader title="Settings" streak={streakStats.currentStreak} />
 
-	<main class="flex-1 space-y-4 px-4 pt-4 pb-10">
-		<!-- ── Profile Card ── -->
-		<section class="rounded-3xl bg-white p-5 shadow-sm">
-			<div class="flex items-center justify-between">
-				<div class="flex items-center gap-3.5">
-					<!-- Avatar -->
-					<div
-						class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xl font-bold text-indigo-600 uppercase shadow-inner"
-					>
-						{username ? username[0] : '👤'}
-					</div>
-					<div>
-						{#if isEditingUsername}
-							<div class="flex items-center gap-2">
-								<input
-									type="text"
-									id="username-input"
-									bind:value={newUsernameInput}
-									placeholder="Enter username"
-									class="w-36 rounded-xl border border-gray-200 px-2.5 py-1.5 text-sm font-semibold text-gray-900 focus:border-indigo-500 focus:outline-none"
-								/>
-								<button
-									type="button"
-									onclick={handleSaveUsername}
-									class="rounded-full bg-indigo-600 px-3 py-1.5 text-xs font-bold text-white active:scale-95"
-								>
-									Save
-								</button>
-								<button
-									type="button"
-									onclick={() => (isEditingUsername = false)}
-									class="rounded-full bg-gray-100 px-3 py-1.5 text-xs font-bold text-gray-600"
-								>
-									Cancel
-								</button>
-							</div>
-						{:else}
-							<p class="text-base font-bold text-gray-900 capitalize">
-								{username || 'Guest Learner'}
-							</p>
-							<p class="mt-0.5 text-xs text-gray-400">
-								{username
-									? 'Cloud profile active'
-									: 'Local data mode • Tap to set cloud profile'}
-							</p>
-						{/if}
-					</div>
+<main class="flex-1 space-y-5 px-4 pt-4 pb-8">
+	<!-- ── Profile Card ── -->
+	<section
+		class="shadow-card relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-5"
+	>
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-3.5">
+				<!-- Avatar -->
+				<div
+					class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-indigo-100 bg-indigo-50 font-headline text-xl font-extrabold text-indigo-600 uppercase shadow-xs"
+				>
+					{username ? username[0] : '👤'}
 				</div>
-
-				{#if !isEditingUsername}
-					<button
-						type="button"
-						onclick={() => {
-							newUsernameInput = username;
-							isEditingUsername = true;
-						}}
-						aria-label={username ? 'Edit username' : 'Set username'}
-						class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 active:scale-95"
-					>
-						<ChevronRight size={18} strokeWidth={1.75} class="text-gray-400" />
-					</button>
-				{/if}
-			</div>
-		</section>
-
-		<!-- ── Settings Rows ── -->
-		<section class="divide-y divide-gray-100 overflow-hidden rounded-3xl bg-white shadow-sm">
-			<!-- Language -->
-			<button
-				type="button"
-				id="settings-language-toggle"
-				onclick={() => (isLanguageExpanded = !isLanguageExpanded)}
-				class="flex w-full items-center justify-between px-5 py-4 text-left transition-colors hover:bg-gray-50"
-			>
-				<div class="flex items-center gap-3.5">
-					<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-red-100 text-red-500">
-						<Globe size={18} strokeWidth={1.75} />
-					</div>
-					<span class="text-sm font-semibold text-gray-800">Language</span>
-				</div>
-				<div class="flex items-center gap-2">
-					<span class="text-sm text-gray-400">{languageLabel}</span>
-					<ChevronRight
-						size={18}
-						strokeWidth={1.75}
-						class="text-gray-300 transition-transform duration-200 {isLanguageExpanded
-							? 'rotate-90'
-							: ''}"
-					/>
-				</div>
-			</button>
-
-			{#if isLanguageExpanded}
-				<div class="flex gap-2 bg-gray-50 px-5 py-3">
-					<button
-						type="button"
-						onclick={() => handleLanguageChange('chinese')}
-						class="flex-1 rounded-full py-2 text-sm font-bold transition-all {activeLanguage ===
-						'chinese'
-							? 'bg-indigo-600 text-white shadow-sm'
-							: 'border border-gray-200 bg-white text-gray-500'}"
-					>
-						Chinese
-					</button>
-					<button
-						type="button"
-						onclick={() => handleLanguageChange('french')}
-						class="flex-1 rounded-full py-2 text-sm font-bold transition-all {activeLanguage ===
-						'french'
-							? 'bg-indigo-600 text-white shadow-sm'
-							: 'border border-gray-200 bg-white text-gray-500'}"
-					>
-						French
-					</button>
-				</div>
-			{/if}
-
-			<!-- Notification (TTS test) -->
-			<button
-				type="button"
-				id="settings-tts-test"
-				onclick={handleTestTTS}
-				class="flex w-full items-center justify-between px-5 py-4 transition-colors hover:bg-gray-50"
-			>
-				<div class="flex items-center gap-3.5">
-					<div
-						class="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-100 text-amber-500"
-					>
-						<Bell size={18} strokeWidth={1.75} />
-					</div>
-					<span class="text-sm font-semibold text-gray-800">Pronunciation Test</span>
-				</div>
-				<div class="flex items-center gap-2">
-					<span class="text-sm text-gray-400">Test voice</span>
-					<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
-				</div>
-			</button>
-
-			<!-- Cloud Sync toggle row -->
-			<button
-				type="button"
-				id="settings-sync-toggle"
-				onclick={() => (isSyncExpanded = !isSyncExpanded)}
-				class="flex w-full items-center justify-between px-5 py-4 text-left transition-colors hover:bg-gray-50"
-			>
-				<div class="flex items-center gap-3.5">
-					<div
-						class="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-100 text-indigo-500"
-					>
-						<CloudCog size={18} strokeWidth={1.75} />
-					</div>
-					<span class="text-sm font-semibold text-gray-800">Cloud Sync</span>
-				</div>
-				<div class="flex items-center gap-2">
-					<span
-						class="text-sm {syncStatus === 'ok'
-							? 'text-green-500'
-							: syncStatus === 'error'
-								? 'text-red-400'
-								: 'text-gray-400'}"
-					>
-						{syncStatusLabel}
-					</span>
-					<ChevronRight
-						size={18}
-						strokeWidth={1.75}
-						class="text-gray-300 transition-transform duration-200 {isSyncExpanded
-							? 'rotate-90'
-							: ''}"
-					/>
-				</div>
-			</button>
-
-			{#if isSyncExpanded}
-				<div class="space-y-2 bg-gray-50 px-5 py-3">
-					{#if syncMessage}
-						<p class="pb-1 text-xs font-semibold text-indigo-600">{syncMessage}</p>
+				<div>
+					{#if isEditingUsername}
+						<div class="flex items-center gap-2">
+							<input
+								type="text"
+								id="username-input"
+								bind:value={newUsernameInput}
+								placeholder="Enter username"
+								class="w-36 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 font-headline text-sm font-semibold text-slate-900 focus:border-indigo-600 focus:outline-none"
+							/>
+							<button
+								type="button"
+								onclick={handleSaveUsername}
+								class="rounded-xl bg-indigo-600 px-3 py-1.5 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
+							>
+								Save
+							</button>
+							<button
+								type="button"
+								onclick={() => (isEditingUsername = false)}
+								class="rounded-xl bg-slate-100 px-3 py-1.5 font-headline text-xs font-bold text-slate-600 hover:bg-slate-200 active:scale-95"
+							>
+								Cancel
+							</button>
+						</div>
+					{:else}
+						<p class="font-headline text-base font-bold text-slate-900 capitalize">
+							{username || 'Guest Learner'}
+						</p>
+						<p class="mt-0.5 font-body text-xs text-slate-500">
+							{username
+								? 'Cloud profile active'
+								: 'Local data mode • Tap to set cloud profile'}
+						</p>
 					{/if}
-					<div class="grid grid-cols-2 gap-2">
-						<button
-							type="button"
-							onclick={handleManualPush}
-							class="flex h-10 items-center justify-center gap-1.5 rounded-2xl bg-indigo-600 font-sans text-xs font-bold text-white shadow-sm transition-all hover:bg-indigo-700 active:scale-95"
-						>
-							<Upload size={14} strokeWidth={2} />
-							Push
-						</button>
-						<button
-							type="button"
-							onclick={handleManualPull}
-							class="flex h-10 items-center justify-center gap-1.5 rounded-2xl border border-gray-200 bg-white font-sans text-xs font-bold text-gray-700 transition-all hover:bg-gray-50 active:scale-95"
-						>
-							<Download size={14} strokeWidth={2} />
-							Pull & Merge
-						</button>
-					</div>
 				</div>
+			</div>
+
+			{#if !isEditingUsername}
+				<button
+					type="button"
+					onclick={() => {
+						newUsernameInput = username;
+						isEditingUsername = true;
+					}}
+					aria-label={username ? 'Edit username' : 'Set username'}
+					class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors hover:bg-slate-200 active:scale-95"
+				>
+					<ChevronRight size={18} strokeWidth={2} class="text-slate-500" />
+				</button>
 			{/if}
+		</div>
+	</section>
 
-			<!-- Export Backup -->
-			<button
-				type="button"
-				id="settings-export-backup"
-				onclick={handleExportBackup}
-				class="flex w-full items-center justify-between px-5 py-4 transition-colors hover:bg-gray-50"
-			>
-				<div class="flex items-center gap-3.5">
-					<div
-						class="flex h-9 w-9 items-center justify-center rounded-xl bg-green-100 text-green-600"
-					>
-						<Download size={18} strokeWidth={1.75} />
-					</div>
-					<span class="text-sm font-semibold text-gray-800">Export Backup</span>
+	<!-- ── Settings List ── -->
+	<section
+		class="shadow-card divide-y divide-slate-100 overflow-hidden rounded-3xl border border-slate-200/80 bg-white"
+	>
+		<!-- Language -->
+		<button
+			type="button"
+			id="settings-language-toggle"
+			onclick={() => (isLanguageExpanded = !isLanguageExpanded)}
+			class="flex w-full cursor-pointer items-center justify-between px-5 py-4 text-left transition-colors hover:bg-slate-50"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-rose-100 bg-rose-50 text-rose-600"
+				>
+					<Globe size={18} strokeWidth={2} />
 				</div>
-				<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
-			</button>
-
-			<!-- Import / Restore -->
-			<label
-				id="settings-import-backup"
-				class="flex w-full cursor-pointer items-center justify-between px-5 py-4 transition-colors hover:bg-gray-50"
-			>
-				<div class="flex items-center gap-3.5">
-					<div
-						class="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-100 text-purple-600"
-					>
-						<Upload size={18} strokeWidth={1.75} />
-					</div>
-					<span class="text-sm font-semibold text-gray-800">Restore from File</span>
-				</div>
-				<input type="file" accept=".json" onchange={handleImportFile} class="hidden" />
-				<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
-			</label>
-
-			<!-- Help & Support -->
-			<div class="flex items-center justify-between px-5 py-4">
-				<div class="flex items-center gap-3.5">
-					<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-500">
-						<HelpCircle size={18} strokeWidth={1.75} />
-					</div>
-					<span class="text-sm font-semibold text-gray-800">Help & Support</span>
-				</div>
-				<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
+				<span class="font-headline text-sm font-bold text-slate-900">Active Language</span>
 			</div>
+			<div class="flex items-center gap-2">
+				<span class="font-headline text-xs font-semibold text-slate-500">{languageLabel}</span>
+				<ChevronRight
+					size={18}
+					strokeWidth={2}
+					class="text-slate-400 transition-transform duration-200 {isLanguageExpanded
+						? 'rotate-90'
+						: ''}"
+				/>
+			</div>
+		</button>
 
-			<!-- About -->
-			<div class="flex items-center justify-between px-5 py-4">
-				<div class="flex items-center gap-3.5">
-					<div
-						class="flex h-9 w-9 items-center justify-center rounded-xl bg-gray-100 text-gray-500"
-					>
-						<Info size={18} strokeWidth={1.75} />
-					</div>
-					<div>
-						<span class="text-sm font-semibold text-gray-800">About FlashCards</span>
-					</div>
+		{#if isLanguageExpanded}
+			<div class="flex gap-2 bg-slate-50 p-3">
+				<button
+					type="button"
+					onclick={() => handleLanguageChange('chinese')}
+					class="flex-1 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeLanguage ===
+					'chinese'
+						? 'bg-indigo-600 text-white shadow-xs'
+						: 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100'}"
+				>
+					Chinese
+				</button>
+				<button
+					type="button"
+					onclick={() => handleLanguageChange('french')}
+					class="flex-1 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeLanguage ===
+					'french'
+						? 'bg-indigo-600 text-white shadow-xs'
+						: 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100'}"
+				>
+					French
+				</button>
+			</div>
+		{/if}
+
+		<!-- Notification (TTS test) -->
+		<button
+			type="button"
+			id="settings-tts-test"
+			onclick={handleTestTTS}
+			class="flex w-full cursor-pointer items-center justify-between px-5 py-4 transition-colors hover:bg-slate-50"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-amber-100 bg-amber-50 text-amber-600"
+				>
+					<Bell size={18} strokeWidth={2} />
 				</div>
-				<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
+				<span class="font-headline text-sm font-bold text-slate-900">Pronunciation Audio Test</span>
 			</div>
-		</section>
-
-		<!-- ── Motivational Footer Card ── -->
-		<section class="space-y-2 rounded-3xl bg-white px-5 py-6 text-center shadow-sm">
-			<div
-				class="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600"
-			>
-				<BookOpen size={30} strokeWidth={1.5} />
+			<div class="flex items-center gap-2">
+				<span class="font-headline text-xs font-semibold text-slate-400">Play sample</span>
+				<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
 			</div>
-			<p class="text-base font-bold text-gray-900">Better every day</p>
-			<p class="text-xs leading-relaxed text-gray-400">Your future self will thank you.</p>
+		</button>
 
-			<!-- App version -->
-			<p class="pt-2 text-[11px] font-medium text-gray-300">
-				FlashCards v1.0 · PWA · SM-2 SRS · Offline
-			</p>
-		</section>
-	</main>
-</div>
+		<!-- Cloud Sync toggle row -->
+		<button
+			type="button"
+			id="settings-sync-toggle"
+			onclick={() => (isSyncExpanded = !isSyncExpanded)}
+			class="flex w-full cursor-pointer items-center justify-between px-5 py-4 text-left transition-colors hover:bg-slate-50"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-indigo-600"
+				>
+					<CloudCog size={18} strokeWidth={2} />
+				</div>
+				<span class="font-headline text-sm font-bold text-slate-900">Cloud Sync & Storage</span>
+			</div>
+			<div class="flex items-center gap-2">
+				<span
+					class="font-headline text-xs font-bold {syncStatus === 'ok'
+						? 'text-emerald-600'
+						: syncStatus === 'error'
+							? 'text-rose-600'
+							: 'text-slate-500'}"
+				>
+					{syncStatusLabel}
+				</span>
+				<ChevronRight
+					size={18}
+					strokeWidth={2}
+					class="text-slate-400 transition-transform duration-200 {isSyncExpanded
+						? 'rotate-90'
+						: ''}"
+				/>
+			</div>
+		</button>
+
+		{#if isSyncExpanded}
+			<div class="space-y-2.5 bg-slate-50 p-4">
+				{#if syncMessage}
+					<p class="font-headline text-xs font-bold text-indigo-600">{syncMessage}</p>
+				{/if}
+				<div class="grid grid-cols-2 gap-2">
+					<button
+						type="button"
+						onclick={handleManualPush}
+						class="flex h-11 cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-indigo-600 font-headline text-xs font-bold text-white shadow-xs transition-all hover:bg-indigo-700 active:scale-95"
+					>
+						<Upload size={15} strokeWidth={2.25} />
+						Push to Cloud
+					</button>
+					<button
+						type="button"
+						onclick={handleManualPull}
+						class="flex h-11 cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white font-headline text-xs font-bold text-slate-700 shadow-xs transition-all hover:bg-slate-100 active:scale-95"
+					>
+						<Download size={15} strokeWidth={2.25} />
+						Pull & Merge
+					</button>
+				</div>
+			</div>
+		{/if}
+
+		<!-- Export Backup -->
+		<button
+			type="button"
+			id="settings-export-backup"
+			onclick={handleExportBackup}
+			class="flex w-full cursor-pointer items-center justify-between px-5 py-4 transition-colors hover:bg-slate-50"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-600"
+				>
+					<Download size={18} strokeWidth={2} />
+				</div>
+				<span class="font-headline text-sm font-bold text-slate-900">Export Backup File</span>
+			</div>
+			<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
+		</button>
+
+		<!-- Import / Restore -->
+		<label
+			id="settings-import-backup"
+			class="flex w-full cursor-pointer items-center justify-between px-5 py-4 transition-colors hover:bg-slate-50"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-purple-100 bg-purple-50 text-purple-600"
+				>
+					<Upload size={18} strokeWidth={2} />
+				</div>
+				<span class="font-headline text-sm font-bold text-slate-900">Restore from File</span>
+			</div>
+			<input type="file" accept=".json" onchange={handleImportFile} class="hidden" />
+			<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
+		</label>
+
+		<!-- Help & Support -->
+		<div class="flex items-center justify-between px-5 py-4">
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-sky-100 bg-sky-50 text-sky-600"
+				>
+					<HelpCircle size={18} strokeWidth={2} />
+				</div>
+				<span class="font-headline text-sm font-bold text-slate-900">Help & Shortcuts</span>
+			</div>
+			<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
+		</div>
+
+		<!-- About -->
+		<div class="flex items-center justify-between px-5 py-4">
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-600"
+				>
+					<Info size={18} strokeWidth={2} />
+				</div>
+				<div>
+					<span class="font-headline text-sm font-bold text-slate-900">About FlashCards</span>
+				</div>
+			</div>
+			<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
+		</div>
+	</section>
+
+	<!-- ── Motivational Footer Card ── -->
+	<section
+		class="shadow-card space-y-2 rounded-3xl border border-slate-200/80 bg-white px-5 py-6 text-center"
+	>
+		<div
+			class="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-2xl border border-indigo-100 bg-indigo-50 text-indigo-600"
+		>
+			<BookOpen size={24} strokeWidth={2} />
+		</div>
+		<p class="font-headline text-base font-extrabold text-slate-900">Better Every Day</p>
+		<p class="font-body text-xs text-slate-500">Your future self will thank you.</p>
+
+		<!-- App version -->
+		<p class="pt-2 font-headline text-[11px] font-semibold text-slate-400">
+			FlashCards v1.0 • PWA • SM-2 SRS • 100% Offline
+		</p>
+	</section>
+</main>

@@ -221,41 +221,41 @@
 	<title>Studying {deckTitle} — FlashCards</title>
 </svelte:head>
 
-<div class="flex min-h-screen flex-col justify-between bg-surface">
+<div class="flex min-h-screen flex-col justify-between bg-white">
 	<!-- Top Session Bar -->
 	<header
-		class="sticky top-0 z-20 flex items-center justify-between border-b border-surface-container bg-surface-container-lowest px-4 py-3 shadow-xs"
+		class="sticky top-0 z-20 flex items-center justify-between border-b border-slate-100 bg-white/90 px-4 py-3 shadow-xs backdrop-blur-md"
 	>
 		<button
 			type="button"
 			onclick={() => goto(`/deck/${deckId}/preview`)}
 			aria-label="Exit Study Session"
-			class="flex h-9 w-9 items-center justify-center rounded-full text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
+			class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200 active:scale-95"
 		>
-			<X size={20} strokeWidth={2} />
+			<X size={18} strokeWidth={2.25} />
 		</button>
 
 		<div class="flex flex-col items-center">
-			<h2 class="max-w-[180px] truncate font-headline text-sm font-bold text-on-surface">
+			<h2 class="max-w-[180px] truncate font-headline text-sm font-bold text-slate-900">
 				{deckTitle}
 			</h2>
-			<span class="text-[11px] font-semibold text-on-surface-variant">
+			<span class="font-headline text-[11px] font-semibold text-slate-500">
 				{progressCount} / {cards.length} cards
 			</span>
 		</div>
 
 		<div
-			class="flex items-center gap-1 rounded-full bg-surface-container px-2.5 py-1 text-xs font-bold text-on-surface-variant"
+			class="flex items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 font-headline text-xs font-bold text-emerald-700"
 		>
-			<CheckCheck size={13} strokeWidth={2} class="text-tertiary-container" />
+			<CheckCheck size={13} strokeWidth={2.25} />
 			<span>{sessionAccuracy}%</span>
 		</div>
 	</header>
 
 	<!-- Linear Progress Bar -->
-	<div class="h-1.5 w-full overflow-hidden bg-surface-container-high">
+	<div class="h-1.5 w-full overflow-hidden bg-slate-100">
 		<div
-			class="h-full bg-primary-container transition-all duration-300 ease-out"
+			class="h-full bg-indigo-600 transition-all duration-300 ease-out"
 			style="width: {cards.length > 0 ? (progressCount / cards.length) * 100 : 0}%"
 		></div>
 	</div>
@@ -265,7 +265,7 @@
 		{#if isSessionFinished}
 			<!-- FINISHED SESSION SUMMARY -->
 			<div
-				class="space-y-4 rounded-3xl border border-surface-container bg-surface-container-lowest p-6 text-center shadow-xl"
+				class="shadow-card space-y-4 rounded-3xl border border-slate-200/90 bg-white p-6 text-center"
 			>
 				<div class="mx-auto flex h-24 w-24 items-center justify-center">
 					<img
@@ -276,18 +276,18 @@
 				</div>
 
 				<div
-					class="inline-flex items-center gap-1.5 rounded-full bg-primary-fixed px-3 py-1 font-headline text-xs font-bold text-primary"
+					class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 font-headline text-xs font-bold text-indigo-700"
 				>
-					<Award size={13} strokeWidth={2} />
+					<Award size={13} strokeWidth={2.25} />
 					<span>SESSION COMPLETED</span>
 				</div>
 
-				<h2 class="font-headline text-2xl font-black text-on-surface">Great Work!</h2>
-				<p class="font-body text-xs text-on-surface-variant">
+				<h2 class="font-headline text-2xl font-black text-slate-900">Great Work!</h2>
+				<p class="font-body text-xs text-slate-500">
 					You completed all {cards.length} cards in this study run.
 				</p>
 
-				<div class="grid grid-cols-2 gap-3 border-y border-surface-container py-3">
+				<div class="grid grid-cols-2 gap-3 border-y border-slate-100 py-3">
 					<div class="rounded-2xl border border-emerald-100 bg-emerald-50 p-3 text-center">
 						<p class="font-headline text-xl font-black text-emerald-700">{sessionCorrect}</p>
 						<p class="text-[11px] font-bold text-emerald-600">Correct Recall</p>
@@ -302,14 +302,14 @@
 					<button
 						type="button"
 						onclick={() => loadStudyDeck()}
-						class="flex h-12 w-full items-center justify-center rounded-full bg-primary-container font-headline text-sm font-bold text-white shadow-md hover:bg-primary active:scale-95"
+						class="flex h-12 w-full cursor-pointer items-center justify-center rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 active:scale-[0.98]"
 					>
 						Study Again
 					</button>
 					<button
 						type="button"
 						onclick={() => goto('/')}
-						class="flex h-11 w-full items-center justify-center rounded-full bg-surface-container font-headline text-xs font-bold text-on-surface-variant hover:bg-surface-container-high"
+						class="flex h-11 w-full cursor-pointer items-center justify-center rounded-2xl bg-slate-100 font-headline text-xs font-bold text-slate-600 hover:bg-slate-200 active:scale-95"
 					>
 						Return to Dashboard
 					</button>
@@ -336,12 +336,12 @@
 				</div>
 			</div>
 		{:else}
-			<div class="py-12 text-center text-on-surface-variant">
-				<p class="font-headline text-sm font-bold">No cards available in this set.</p>
+			<div class="py-12 text-center text-slate-500">
+				<p class="font-headline text-sm font-bold text-slate-800">No cards available in this set.</p>
 				<button
 					type="button"
 					onclick={() => goto('/')}
-					class="mt-4 rounded-full bg-primary-container px-4 py-2 text-xs font-bold text-white"
+					class="mt-4 cursor-pointer rounded-2xl bg-indigo-600 px-4 py-2 font-headline text-xs font-bold text-white shadow-xs hover:bg-indigo-700"
 				>
 					Back to Home
 				</button>

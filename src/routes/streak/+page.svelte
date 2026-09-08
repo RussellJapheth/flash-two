@@ -82,20 +82,20 @@
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<!-- Hero Mascot & Streak Tier Card -->
 	<section
-		class="relative overflow-hidden rounded-3xl border border-surface-container bg-surface-container-lowest p-6 text-center shadow-[0_4px_24px_-4px_rgba(249,115,22,0.14)]"
+		class="shadow-card relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 text-center"
 	>
 		<!-- Ambient Glow Circles -->
 		<div
-			class="pointer-events-none absolute -top-12 -right-12 h-44 w-44 rounded-full bg-secondary-fixed/50 blur-3xl"
+			class="pointer-events-none absolute -top-12 -right-12 h-44 w-44 rounded-full bg-amber-100/50 blur-3xl"
 		></div>
 		<div
-			class="pointer-events-none absolute -bottom-10 -left-10 h-44 w-44 rounded-full bg-primary-fixed/40 blur-3xl"
+			class="pointer-events-none absolute -bottom-10 -left-10 h-44 w-44 rounded-full bg-indigo-100/40 blur-3xl"
 		></div>
 
 		<!-- Mascot Image -->
 		<div class="relative mx-auto my-2 flex h-40 w-40 items-center justify-center">
 			<div
-				class="absolute inset-0 animate-pulse rounded-full bg-gradient-to-tr from-secondary/20 via-secondary-container/20 to-primary-fixed/30 blur-xl"
+				class="absolute inset-0 animate-pulse rounded-full bg-gradient-to-tr from-amber-500/20 via-amber-200/30 to-indigo-100/20 blur-xl"
 			></div>
 			<img
 				src="/mascots/flame.png"
@@ -107,22 +107,22 @@
 		<!-- Tier Badge & Count -->
 		<div class="relative z-10 mt-2 flex flex-col items-center">
 			<div
-				class="inline-flex items-center gap-1.5 rounded-full bg-secondary-fixed px-3.5 py-1 font-headline text-xs font-bold text-on-secondary-fixed shadow-sm"
+				class="inline-flex items-center gap-1.5 rounded-full border border-amber-200/80 bg-amber-50 px-3.5 py-1 font-headline text-xs font-bold text-amber-900 shadow-xs"
 			>
-				<Zap size={13} strokeWidth={2} />
+				<Zap size={13} strokeWidth={2.25} />
 				<span class="uppercase">{streakStats.tierName}</span>
 			</div>
 
 			<h2
-				class="mt-2 flex items-center justify-center gap-1.5 font-headline text-3xl font-extrabold tracking-tight text-on-surface"
+				class="mt-2 flex items-center justify-center gap-1.5 font-headline text-3xl font-extrabold tracking-tight text-slate-900"
 			>
 				<span>{streakStats.currentStreak} Day Streak!</span>
-				<Flame size={26} strokeWidth={1.75} class="text-secondary" />
+				<Flame size={26} strokeWidth={2.25} class="fill-amber-500/20 text-amber-500" />
 			</h2>
 
-			<p class="font-body mt-1 max-w-[260px] text-xs leading-relaxed text-on-surface-variant">
+			<p class="font-body mt-1 max-w-[260px] text-xs leading-relaxed text-slate-500">
 				{#if username}
-					You're on fire, <span class="font-bold text-on-surface capitalize">{username}</span>! Study
+					You're on fire, <span class="font-bold text-slate-900 capitalize">{username}</span>! Study
 					daily to keep the momentum roaring.
 				{:else}
 					You're on fire! Study daily to keep the momentum roaring.
@@ -132,14 +132,14 @@
 
 		<!-- Next Milestone Progress Bar -->
 		<div
-			class="mt-5 rounded-2xl border border-surface-container bg-surface-container-low p-4 text-left"
+			class="mt-5 rounded-2xl border border-slate-200/80 bg-slate-50 p-4 text-left"
 		>
-			<div class="mb-2 flex items-center justify-between text-xs font-bold text-on-surface">
-				<span class="flex items-center gap-1">
-					<Award size={15} strokeWidth={2} class="text-secondary" />
+			<div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-900">
+				<span class="flex items-center gap-1 font-headline">
+					<Award size={15} strokeWidth={2} class="text-amber-600" />
 					Next Goal: {nextMilestone} Days
 				</span>
-				<span class="font-headline text-secondary">{daysToMilestone} days to go</span>
+				<span class="font-headline font-extrabold text-amber-700">{daysToMilestone} days to go</span>
 			</div>
 
 			<ProgressBar
@@ -150,10 +150,10 @@
 			/>
 
 			<div
-				class="mt-1.5 flex items-center justify-between px-0.5 text-[10px] font-bold text-on-surface-variant"
+				class="mt-1.5 flex items-center justify-between px-0.5 font-headline text-[10px] font-bold text-slate-500"
 			>
 				<span>Day {streakStats.currentStreak}</span>
-				<span class="text-on-surface">{milestonePercent}% Complete</span>
+				<span class="text-slate-800">{milestonePercent}% Complete</span>
 				<span>Day {nextMilestone}</span>
 			</div>
 		</div>
@@ -161,37 +161,37 @@
 
 	<!-- Streak Freeze Protection Card -->
 	<section
-		class="shadow-card flex items-center justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4"
+		class="shadow-card flex items-center justify-between rounded-3xl border border-slate-200/80 bg-white p-4"
 	>
 		<div class="flex items-center gap-3">
 			<div
 				class="flex h-11 w-11 items-center justify-center rounded-2xl border border-blue-100 bg-blue-50 text-blue-600"
 			>
-				<Snowflake size={22} strokeWidth={1.75} />
+				<Snowflake size={22} strokeWidth={2} />
 			</div>
 			<div>
-				<h3 class="font-headline text-xs font-bold text-on-surface">Streak Freeze Shield</h3>
-				<p class="text-[11px] font-medium text-on-surface-variant">
+				<h3 class="font-headline text-xs font-bold text-slate-900">Streak Freeze Shield</h3>
+				<p class="font-sans text-[11px] font-medium text-slate-500">
 					{streakStats.freezeCount} Freezes remaining this month
 				</p>
 			</div>
 		</div>
 
-		<span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700">
+		<span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 font-headline text-[11px] font-bold text-emerald-700">
 			Protected
 		</span>
 	</section>
 
 	<!-- This Week Habit Tracker -->
 	<section
-		class="shadow-card space-y-3 rounded-3xl border border-surface-container bg-surface-container-lowest p-4"
+		class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-4"
 	>
 		<div class="flex items-center justify-between">
-			<h3 class="font-headline text-sm font-bold text-on-surface">This Week's Activity</h3>
+			<h3 class="font-headline text-sm font-bold text-slate-900">This Week's Activity</h3>
 			<button
 				type="button"
 				onclick={() => (isCalendarOpen = true)}
-				class="text-xs font-bold text-primary hover:underline"
+				class="cursor-pointer font-headline text-xs font-bold text-indigo-600 hover:underline"
 			>
 				View Calendar &rarr;
 			</button>
@@ -200,22 +200,22 @@
 		<div class="grid grid-cols-7 gap-1.5 pt-1 text-center">
 			{#each weekActiveStates() as item}
 				<div class="flex flex-col items-center gap-1">
-					<span class="font-headline text-[10px] font-bold text-on-surface-variant uppercase">
+					<span class="font-headline text-[10px] font-bold text-slate-500 uppercase">
 						{item.day}
 					</span>
 					<div
 						class="flex h-10 w-9 items-center justify-center rounded-2xl text-xs font-bold transition-transform {item.isActive
-							? 'shadow-streak-glow scale-105 bg-secondary text-white'
+							? 'shadow-streak-glow scale-105 bg-amber-500 text-white'
 							: item.isToday
-								? 'bg-primary-fixed text-primary ring-2 ring-primary ring-offset-1'
+								? 'bg-indigo-50 text-indigo-600 ring-2 ring-indigo-600 ring-offset-1'
 								: item.isFuture
-									? 'bg-surface-container-low text-outline opacity-40'
-									: 'bg-surface-container text-on-surface-variant'}"
+									? 'bg-slate-50 text-slate-300'
+									: 'bg-slate-100 text-slate-600'}"
 					>
 						{#if item.isActive}
-							<Flame size={16} strokeWidth={1.75} />
+							<Flame size={16} strokeWidth={2.25} />
 						{:else if item.isToday}
-							<Hourglass size={14} strokeWidth={1.75} />
+							<Hourglass size={14} strokeWidth={2} />
 						{:else}
 							<span>&bull;</span>
 						{/if}
@@ -228,32 +228,32 @@
 	<!-- Key Habit Stats Grid -->
 	<div class="grid grid-cols-2 gap-3">
 		<div
-			class="shadow-card flex h-28 flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4"
+			class="shadow-card flex h-28 flex-col justify-between rounded-3xl border border-slate-200/80 bg-white p-4"
 		>
 			<div
-				class="flex h-8 w-8 items-center justify-center rounded-xl bg-secondary-fixed text-secondary"
+				class="flex h-8 w-8 items-center justify-center rounded-xl border border-amber-200/60 bg-amber-50 text-amber-600"
 			>
-				<Trophy size={17} strokeWidth={1.75} />
+				<Trophy size={18} strokeWidth={2} />
 			</div>
 			<div>
-				<p class="font-headline text-[11px] font-bold text-on-surface-variant">Longest Streak</p>
-				<p class="font-headline text-lg font-extrabold text-on-surface">
+				<p class="font-headline text-[11px] font-bold text-slate-500">Longest Streak</p>
+				<p class="font-headline text-lg font-extrabold text-slate-900">
 					{streakStats.longestStreak} Days
 				</p>
 			</div>
 		</div>
 
 		<div
-			class="shadow-card flex h-28 flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4"
+			class="shadow-card flex h-28 flex-col justify-between rounded-3xl border border-slate-200/80 bg-white p-4"
 		>
 			<div
-				class="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-fixed text-primary"
+				class="flex h-8 w-8 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-indigo-600"
 			>
-				<Calendar size={17} strokeWidth={1.75} />
+				<Calendar size={18} strokeWidth={2} />
 			</div>
 			<div>
-				<p class="font-headline text-[11px] font-bold text-on-surface-variant">Total Active Days</p>
-				<p class="font-headline text-lg font-extrabold text-on-surface">
+				<p class="font-headline text-[11px] font-bold text-slate-500">Total Active Days</p>
+				<p class="font-headline text-lg font-extrabold text-slate-900">
 					{streakStats.activeDates.length} Days
 				</p>
 			</div>

@@ -37,20 +37,20 @@
 		class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-md transition-opacity"
 	>
 		<div
-			class="relative w-full max-w-sm overflow-hidden rounded-[32px] border border-surface-container bg-surface-container-lowest p-6 text-center shadow-2xl"
+			class="shadow-sheet animate-in zoom-in-95 relative w-full max-w-sm overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 text-center duration-200"
 		>
 			<!-- Ambient glow background circles -->
 			<div
-				class="pointer-events-none absolute -top-12 -right-12 h-44 w-44 rounded-full bg-primary-fixed/40 blur-3xl"
+				class="pointer-events-none absolute -top-12 -right-12 h-44 w-44 rounded-full bg-indigo-100/60 blur-3xl"
 			></div>
 			<div
-				class="pointer-events-none absolute -bottom-10 -left-10 h-44 w-44 rounded-full bg-secondary-fixed/30 blur-3xl"
+				class="pointer-events-none absolute -bottom-10 -left-10 h-44 w-44 rounded-full bg-amber-100/60 blur-3xl"
 			></div>
 
 			<!-- Mascot Container -->
 			<div class="relative mx-auto my-2 flex h-36 w-36 items-center justify-center">
 				<div
-					class="absolute inset-0 animate-pulse rounded-full bg-gradient-to-tr from-primary/20 via-primary-fixed/30 to-secondary-fixed/20 blur-xl"
+					class="absolute inset-0 animate-pulse rounded-full bg-gradient-to-tr from-indigo-500/20 via-indigo-100/40 to-amber-100/30 blur-xl"
 				></div>
 				<img
 					src={mascot}
@@ -62,36 +62,36 @@
 			<!-- Milestone Tag -->
 			<div class="relative z-10 mt-2 flex flex-col items-center">
 				<div
-					class="inline-flex items-center gap-1.5 rounded-full bg-primary-fixed px-3 py-1 font-headline text-xs font-bold text-primary shadow-sm"
+					class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 font-headline text-xs font-bold text-indigo-700 shadow-xs"
 				>
-					<Zap size={13} strokeWidth={2} />
+					<Zap size={13} strokeWidth={2.25} />
 					<span>{badgeText}</span>
 				</div>
 
-				<h2 class="mt-2 font-headline text-2xl font-extrabold tracking-tight text-on-surface">
+				<h2 class="mt-2 font-headline text-2xl font-extrabold tracking-tight text-slate-900">
 					{title}
 				</h2>
 
-				<p class="font-body mt-1 text-xs leading-relaxed text-on-surface-variant">
+				<p class="font-body mt-1 text-xs leading-relaxed text-slate-500">
 					{subtitle}
 				</p>
 			</div>
 
 			<!-- Stats Card -->
 			<div
-				class="my-4 rounded-2xl border border-surface-container bg-surface-container-low p-3.5 text-left"
+				class="my-4 rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5 text-left"
 			>
-				<div class="mb-2 flex items-center justify-between text-xs font-bold text-on-surface">
+				<div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-900">
 					<span>Session Progress</span>
-					<span class="text-primary">{stats.reviewed} / {stats.total} cards</span>
+					<span class="font-headline text-indigo-600">{stats.reviewed} / {stats.total} cards</span>
 				</div>
 
-				<div class="grid grid-cols-2 gap-2 border-t border-surface-container-high pt-2 text-xs">
-					<div class="flex items-center gap-1.5 font-semibold text-emerald-600">
+				<div class="grid grid-cols-2 gap-2 border-t border-slate-200/70 pt-2 text-xs">
+					<div class="flex items-center gap-1.5 font-headline font-bold text-emerald-600">
 						<CheckCircle2 size={15} strokeWidth={2} />
 						<span>{stats.correct} Correct</span>
 					</div>
-					<div class="flex items-center gap-1.5 font-semibold text-rose-600">
+					<div class="flex items-center gap-1.5 font-headline font-bold text-rose-600">
 						<XCircle size={15} strokeWidth={2} />
 						<span>{stats.wrong} Again</span>
 					</div>
@@ -103,7 +103,7 @@
 				<button
 					type="button"
 					onclick={onPrimaryAction}
-					class="flex h-12 w-full items-center justify-center rounded-full bg-primary-container font-headline text-sm font-bold text-white shadow-md transition-all hover:bg-primary active:scale-95"
+					class="flex h-12 w-full cursor-pointer items-center justify-center rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 active:scale-[0.98]"
 				>
 					{primaryActionText}
 				</button>
@@ -111,7 +111,7 @@
 				<button
 					type="button"
 					onclick={onSecondaryAction}
-					class="flex h-11 w-full items-center justify-center rounded-full bg-surface-container font-headline text-xs font-bold text-on-surface-variant transition-colors hover:bg-surface-container-high active:scale-95"
+					class="flex h-11 w-full cursor-pointer items-center justify-center rounded-2xl bg-slate-100 font-headline text-xs font-bold text-slate-600 transition-colors hover:bg-slate-200 active:scale-95"
 				>
 					{secondaryActionText}
 				</button>

@@ -47,7 +47,6 @@
 			const diff = i - currentDayIdx;
 			const targetDate = new Date(today.getTime() + diff * 86400000);
 			const iso = targetDate.toISOString().split('T')[0];
-			const isPastOrToday = diff <= 0;
 			const isActive = streakStats.activeDates.includes(iso);
 			const isToday = diff === 0;
 
@@ -131,15 +130,14 @@
 		</div>
 
 		<!-- Next Milestone Progress Bar -->
-		<div
-			class="mt-5 rounded-2xl border border-slate-200/80 bg-slate-50 p-4 text-left"
-		>
+		<div class="mt-5 rounded-2xl border border-slate-200/80 bg-slate-50 p-4 text-left">
 			<div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-900">
 				<span class="flex items-center gap-1 font-headline">
 					<Award size={15} strokeWidth={2} class="text-amber-600" />
 					Next Goal: {nextMilestone} Days
 				</span>
-				<span class="font-headline font-extrabold text-amber-700">{daysToMilestone} days to go</span>
+				<span class="font-headline font-extrabold text-amber-700">{daysToMilestone} days to go</span
+				>
 			</div>
 
 			<ProgressBar
@@ -177,15 +175,15 @@
 			</div>
 		</div>
 
-		<span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 font-headline text-[11px] font-bold text-emerald-700">
+		<span
+			class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 font-headline text-[11px] font-bold text-emerald-700"
+		>
 			Protected
 		</span>
 	</section>
 
 	<!-- This Week Habit Tracker -->
-	<section
-		class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-4"
-	>
+	<section class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-4">
 		<div class="flex items-center justify-between">
 			<h3 class="font-headline text-sm font-bold text-slate-900">This Week's Activity</h3>
 			<button
@@ -198,7 +196,7 @@
 		</div>
 
 		<div class="grid grid-cols-7 gap-1.5 pt-1 text-center">
-			{#each weekActiveStates() as item}
+			{#each weekActiveStates() as item (item.day)}
 				<div class="flex flex-col items-center gap-1">
 					<span class="font-headline text-[10px] font-bold text-slate-500 uppercase">
 						{item.day}

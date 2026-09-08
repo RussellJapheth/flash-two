@@ -1,4 +1,4 @@
-import type { AppBackup, WordProgress, CustomDeck, SavedWord, SyncStatus } from '$lib/types';
+import type { AppBackup, WordProgress, SyncStatus } from '$lib/types';
 import {
 	getAllProgress,
 	getAllCustomDecks,
@@ -166,7 +166,7 @@ export async function pushData(username?: string): Promise<boolean> {
 					body: JSON.stringify(currentUsers)
 				});
 			}
-		} catch (e) {
+		} catch {
 			// Non-blocking users list update
 		}
 

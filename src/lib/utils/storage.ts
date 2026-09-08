@@ -74,6 +74,29 @@ export async function initializeOfflinePacks(): Promise<void> {
 	}
 }
 
+export async function clearOfflineCache(): Promise<void> {
+	if (typeof window === 'undefined') return;
+	try {
+		const db = await getDB();
+		const tx = db.transaction('packs_cache', 'readwrite');
+		const store = tx.objectStore('packs_cache');
+		store.clear();
+		await new Promise<void>((resolve, reject) => {
+			tx.oncomplete = () => resolve();
+			tx.onerror = () => reject(tx.error);
+		});
+
+		if ('caches' in window) {
+			const cacheKeys = await caches.keys();
+			await Promise.all(cacheKeys.map((key) => caches.delete(key)));
+		}
+
+		localStorage.removeItem('flashcards_recent_packs');
+	} catch (e) {
+		console.warn('Failed to clear offline cache:', e);
+	}
+}
+
 export async function getBuiltinPacks(
 	language: 'chinese' | 'french'
 ): Promise<{ id: string; title: string; words: WordRecord[] }[]> {
@@ -81,17 +104,17 @@ export async function getBuiltinPacks(
 	const results: { id: string; title: string; words: WordRecord[] }[] = [];
 
 	const sortedEntries = Object.entries(rawMap).sort(([pathA], [pathB]) => {
-		const getWeekNum = (p: string) => {
-			const m = p.match(/week-(\d+)/);
+		const getPackNum = (p: string) => {
+			const m = p.match(/(?:week-|pack-)?(\d+)/i);
 			return m ? parseInt(m[1], 10) : 0;
 		};
-		return getWeekNum(pathA) - getWeekNum(pathB);
+		return getPackNum(pathA) - getPackNum(pathB);
 	});
 
 	for (const [path, words] of sortedEntries) {
 		const filename = path.split('/').pop()?.replace('.json', '') || '';
-		const weekNum = filename.replace('week-', '');
-		const title = `Week ${weekNum} Vocabulary`;
+		const packNum = filename.replace(/^(?:week-|pack-)/i, '');
+		const title = `Pack ${packNum}`;
 		results.push({
 			id: `${language}-${filename}`,
 			title,
@@ -229,15 +252,30 @@ export async function getAllSavedWords(): Promise<SavedWord[]> {
 }
 
 export async function isWordSaved(weekId: string, wordNo: number): Promise<boolean> {
-	const key = `${weekId}:${wordNo}`;
 	if (typeof window === 'undefined') return false;
+	const key = `${weekId}:${wordNo}`;
+	const altKey =
+		weekId.startsWith('chinese-') || weekId.startsWith('french-')
+			? `${weekId.replace(/^(chinese|french)-/, '')}:${wordNo}`
+			: undefined;
+
 	try {
 		const db = await getDB();
 		return new Promise((resolve) => {
 			const tx = db.transaction('saved_words', 'readonly');
 			const store = tx.objectStore('saved_words');
 			const req = store.get(key);
-			req.onsuccess = () => resolve(!!req.result);
+			req.onsuccess = () => {
+				if (req.result) {
+					resolve(true);
+				} else if (altKey) {
+					const altReq = store.get(altKey);
+					altReq.onsuccess = () => resolve(!!altReq.result);
+					altReq.onerror = () => resolve(false);
+				} else {
+					resolve(false);
+				}
+			};
 			req.onerror = () => resolve(false);
 		});
 	} catch {
@@ -246,8 +284,13 @@ export async function isWordSaved(weekId: string, wordNo: number): Promise<boole
 }
 
 export async function toggleSavedWord(weekId: string, wordNo: number): Promise<boolean> {
-	const key = `${weekId}:${wordNo}`;
 	if (typeof window === 'undefined') return false;
+	const key = `${weekId}:${wordNo}`;
+	const altKey =
+		weekId.startsWith('chinese-') || weekId.startsWith('french-')
+			? `${weekId.replace(/^(chinese|french)-/, '')}:${wordNo}`
+			: undefined;
+
 	const db = await getDB();
 	const currentlySaved = await isWordSaved(weekId, wordNo);
 
@@ -255,9 +298,10 @@ export async function toggleSavedWord(weekId: string, wordNo: number): Promise<b
 		const tx = db.transaction('saved_words', 'readwrite');
 		const store = tx.objectStore('saved_words');
 		if (currentlySaved) {
-			const req = store.delete(key);
-			req.onsuccess = () => resolve(false);
-			req.onerror = () => reject(req.error);
+			store.delete(key);
+			if (altKey) store.delete(altKey);
+			tx.oncomplete = () => resolve(false);
+			tx.onerror = () => reject(tx.error);
 		} else {
 			const req = store.put({ key, weekId, wordNo, savedAt: Date.now() });
 			req.onsuccess = () => resolve(true);

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import FlashCard from '$lib/components/FlashCard.svelte';
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
 	import MilestoneModal from '$lib/components/MilestoneModal.svelte';
@@ -164,7 +165,7 @@
 	>
 		<button
 			type="button"
-			onclick={() => goto('/')}
+			onclick={() => goto(resolve('/'))}
 			aria-label="Exit Review Session"
 			class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200 active:scale-95"
 		>
@@ -231,7 +232,7 @@
 
 				<button
 					type="button"
-					onclick={() => goto('/')}
+					onclick={() => goto(resolve('/'))}
 					class="flex h-12 w-full cursor-pointer items-center justify-center rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 active:scale-[0.98]"
 				>
 					Return to Dashboard
@@ -264,7 +265,7 @@
 				</p>
 				<button
 					type="button"
-					onclick={() => goto('/')}
+					onclick={() => goto(resolve('/'))}
 					class="mt-4 cursor-pointer rounded-2xl bg-indigo-600 px-5 py-2.5 font-headline text-xs font-bold text-white shadow-xs hover:bg-indigo-700"
 				>
 					Back to Dashboard
@@ -293,6 +294,6 @@
 	}}
 	onSecondaryAction={() => {
 		showMilestoneModal = false;
-		goto('/');
+		goto(resolve('/'));
 	}}
 />

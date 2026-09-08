@@ -11,7 +11,8 @@
 		getAllSavedWords,
 		saveBulkProgress,
 		saveCustomDeck,
-		computeStreakStats
+		computeStreakStats,
+		clearOfflineCache
 	} from '$lib/utils/storage';
 	import { pullAndMerge, pushData, subscribeSyncStatus } from '$lib/utils/cloud';
 	import { speakWord } from '$lib/utils/audio';
@@ -22,6 +23,7 @@
 		CloudCog,
 		Download,
 		Upload,
+		Trash2,
 		HelpCircle,
 		Info,
 		BookOpen,
@@ -32,6 +34,8 @@
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
 	let syncStatus = $state<SyncStatus>('idle');
 	let syncMessage = $state('');
+	let isClearingCache = $state(false);
+	let cacheMessage = $state('');
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -159,6 +163,21 @@
 		reader.readAsText(file);
 	}
 
+	async function handleClearCache() {
+		isClearingCache = true;
+		try {
+			await clearOfflineCache();
+			cacheMessage = 'Offline cache cleared!';
+		} catch {
+			cacheMessage = 'Error clearing cache';
+		} finally {
+			isClearingCache = false;
+			setTimeout(() => {
+				cacheMessage = '';
+			}, 3500);
+		}
+	}
+
 	function handleTestTTS() {
 		if (activeLanguage === 'chinese') {
 			speakWord('你好，欢迎学习中文！', 'chinese');
@@ -236,10 +255,8 @@
 						<p class="font-headline text-base font-bold text-slate-900 capitalize">
 							{username || 'Guest Learner'}
 						</p>
-						<p class="mt-0.5 font-body text-xs text-slate-500">
-							{username
-								? 'Cloud profile active'
-								: 'Local data mode • Tap to set cloud profile'}
+						<p class="font-body mt-0.5 text-xs text-slate-500">
+							{username ? 'Cloud profile active' : 'Local data mode • Tap to set cloud profile'}
 						</p>
 					{/if}
 				</div>
@@ -433,6 +450,33 @@
 			<input type="file" accept=".json" onchange={handleImportFile} class="hidden" />
 			<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
 		</label>
+
+		<!-- Clear Offline Cache -->
+		<button
+			type="button"
+			id="settings-clear-cache"
+			onclick={handleClearCache}
+			disabled={isClearingCache}
+			class="flex w-full cursor-pointer items-center justify-between px-5 py-4 transition-colors hover:bg-slate-50 disabled:opacity-50"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-rose-100 bg-rose-50 text-rose-600"
+				>
+					<Trash2 size={18} strokeWidth={2} />
+				</div>
+				<div class="text-left">
+					<span class="block font-headline text-sm font-bold text-slate-900">Clear Offline Cache</span>
+					<span class="block font-sans text-xs text-slate-500">Purge cached packs & temporary storage</span>
+				</div>
+			</div>
+			<div class="flex items-center gap-2">
+				{#if cacheMessage}
+					<span class="font-headline text-xs font-bold text-emerald-600">{cacheMessage}</span>
+				{/if}
+				<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
+			</div>
+		</button>
 
 		<!-- Help & Support -->
 		<div class="flex items-center justify-between px-5 py-4">

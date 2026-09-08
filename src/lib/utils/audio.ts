@@ -96,7 +96,7 @@ export function speakWord(text: string, language: 'chinese' | 'french' = 'chines
 	}
 
 	window.speechSynthesis.cancel(); // Stop any pending utterance
-	const clean = text.replace(/[\[\]\(\)]/g, '').trim();
+	const clean = text.replace(/[[\]()]/g, '').trim();
 	if (!clean) return;
 
 	const utterance = new SpeechSynthesisUtterance(clean);

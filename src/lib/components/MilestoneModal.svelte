@@ -78,9 +78,7 @@
 			</div>
 
 			<!-- Stats Card -->
-			<div
-				class="my-4 rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5 text-left"
-			>
+			<div class="my-4 rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5 text-left">
 				<div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-900">
 					<span>Session Progress</span>
 					<span class="font-headline text-indigo-600">{stats.reviewed} / {stats.total} cards</span>

@@ -13,8 +13,6 @@
 	} from 'lucide-svelte';
 
 	let {
-		streak = 0,
-		onOpenStreak = () => {},
 		title = 'FlashCards',
 		showBack = false,
 		onBack = () => history.back()

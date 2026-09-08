@@ -3,7 +3,7 @@
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
-	import { initializeOfflinePacks, getAllProgress, getSavedUsername } from '$lib/utils/storage';
+	import { initializeOfflinePacks, getSavedUsername } from '$lib/utils/storage';
 	import { pullAndMerge } from '$lib/utils/cloud';
 
 	let { children } = $props();

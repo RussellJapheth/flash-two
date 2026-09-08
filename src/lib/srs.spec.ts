@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateNextReview, isCardDue, isCardMastered, isCardLearning } from './utils/srs';
+import { calculateNextReview, isCardMastered, isCardLearning } from './utils/srs';
 import type { WordProgress } from './types';
 
 describe('SRS SM-2 Algorithm', () => {
@@ -87,11 +87,15 @@ describe('SRS SM-2 Algorithm', () => {
 		expect(isCardLearning(masteredCard)).toBe(false);
 	});
 
-	it('loads builtin packs for chinese and french correctly', async () => {
+	it('loads builtin packs for chinese and french correctly without week labels', async () => {
 		const { getBuiltinPacks } = await import('./utils/storage');
 		const chinese = await getBuiltinPacks('chinese');
 		const french = await getBuiltinPacks('french');
 		expect(chinese.length).toBeGreaterThan(0);
 		expect(french.length).toBeGreaterThan(0);
+		for (const pack of [...chinese, ...french]) {
+			expect(pack.title).toMatch(/^Pack \d+/);
+			expect(pack.title.toLowerCase()).not.toContain('week');
+		}
 	});
 });

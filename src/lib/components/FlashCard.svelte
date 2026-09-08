@@ -123,7 +123,9 @@
 			</div>
 
 			<!-- Front Footer Hint -->
-			<div class="flex items-center justify-center gap-1.5 font-sans text-xs font-medium text-slate-400">
+			<div
+				class="flex items-center justify-center gap-1.5 font-sans text-xs font-medium text-slate-400"
+			>
 				<Pointer size={15} strokeWidth={1.75} />
 				<span>Tap to flip</span>
 			</div>
@@ -171,7 +173,7 @@
 						<p class="mb-1 font-headline text-xs font-bold tracking-wider text-slate-500 uppercase">
 							Example:
 						</p>
-						<p class="font-sans text-sm font-medium leading-relaxed text-slate-800">
+						<p class="font-sans text-sm leading-relaxed font-medium text-slate-800">
 							{example}
 						</p>
 					</div>
@@ -189,7 +191,9 @@
 			</div>
 
 			<!-- Back Footer Hint -->
-			<div class="flex items-center justify-center gap-1.5 font-sans text-xs font-medium text-slate-400">
+			<div
+				class="flex items-center justify-center gap-1.5 font-sans text-xs font-medium text-slate-400"
+			>
 				<span>Rate your recall below</span>
 			</div>
 		</div>

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import FlashCard from '$lib/components/FlashCard.svelte';
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
-	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import MilestoneModal from '$lib/components/MilestoneModal.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import {
 		getAllProgress,
 		getBuiltinPacks,
@@ -18,14 +18,15 @@
 
 	import { calculateNextReview, isCardDue } from '$lib/utils/srs';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
-	import { playSound } from '$lib/utils/audio';
+	import { playSound, speakWord } from '$lib/utils/audio';
 	import type { WordRecord, WordProgress, StudyRating } from '$lib/types';
-	import { X, Award, CheckCheck } from 'lucide-svelte';
+	import { X, Award, CheckCheck, Play, Pause, RotateCcw, Volume2, VolumeX } from 'lucide-svelte';
 
 	let deckId = $derived(page.params.id || '');
 	let studyMode = $derived((page.url.searchParams.get('mode') as 'srs' | 'all' | 'weak') || 'srs');
 	let cardLimit = $derived(parseInt(page.url.searchParams.get('limit') || '20', 10));
 	let showPinyinSetting = $derived(page.url.searchParams.get('pinyin') !== '0');
+	let initialAutoplay = $derived(page.url.searchParams.get('autoplay') === '1');
 
 	let deckTitle = $state('Study Session');
 	let deckLanguage = $state<'chinese' | 'french'>('chinese');
@@ -42,6 +43,15 @@
 	let showMilestoneModal = $state(false);
 	let isSessionFinished = $state(false);
 
+	// Autoplay state & options
+	let isAutoplay = $state(false);
+	let autoplaySpeed = $state<number>(2.5); // seconds
+	let autoplayAutoSpeak = $state(true);
+	let autoplayLoop = $state(false);
+	let autoplayTimer: ReturnType<typeof setTimeout> | null = null;
+	let autoplayAnimProgress = $state(0);
+	let animInterval: ReturnType<typeof setInterval> | null = null;
+
 	let currentWord = $derived(cards[currentIndex]);
 	let currentProgress = $derived(
 		currentWord ? allProgress[`${deckId}:${currentWord.No}`] : undefined
@@ -54,6 +64,7 @@
 	);
 
 	async function loadStudyDeck() {
+		clearAutoplay();
 		const progress = await getAllProgress();
 		allProgress = progress;
 
@@ -100,7 +111,7 @@
 		}
 
 		// Filter cards by studyMode
-		let filtered: WordRecord[] = [];
+		let filtered: WordRecord[];
 		if (studyMode === 'weak') {
 			filtered = rawWords.filter((w) => {
 				const p =
@@ -120,7 +131,6 @@
 		}
 
 		if (filtered.length === 0) {
-			// Fallback to all cards if none match strict filter
 			filtered = [...rawWords];
 		}
 
@@ -132,9 +142,15 @@
 		cards = filtered;
 		currentIndex = 0;
 		isFlipped = false;
+		isSessionFinished = false;
+		sessionCorrect = 0;
+		sessionWrong = 0;
 
 		if (cards.length > 0) {
 			await updateSavedStatus();
+			if (initialAutoplay) {
+				startAutoplay();
+			}
 		}
 	}
 
@@ -151,6 +167,9 @@
 
 	function handleFlipCard() {
 		isFlipped = !isFlipped;
+		if (isAutoplay) {
+			scheduleAutoplayNextStep();
+		}
 	}
 
 	async function handleRate(rating: StudyRating, customDays?: number) {
@@ -174,7 +193,12 @@
 
 		// Check for halfway milestone
 		const halfwayIndex = Math.floor(cards.length / 2);
-		if (!halfwayTriggered && cards.length >= 4 && currentIndex + 1 === halfwayIndex) {
+		if (
+			!isAutoplay &&
+			!halfwayTriggered &&
+			cards.length >= 4 &&
+			currentIndex + 1 === halfwayIndex
+		) {
 			halfwayTriggered = true;
 			showMilestoneModal = true;
 			return;
@@ -185,17 +209,111 @@
 
 	function advanceNextCard() {
 		if (currentIndex + 1 >= cards.length) {
-			isSessionFinished = true;
-			playSound('milestone');
+			if (isAutoplay && autoplayLoop) {
+				currentIndex = 0;
+				isFlipped = false;
+				updateSavedStatus();
+				scheduleAutoplayNextStep();
+			} else {
+				clearAutoplay();
+				isSessionFinished = true;
+				playSound('milestone');
+			}
 		} else {
 			currentIndex++;
 			isFlipped = false;
 			updateSavedStatus();
+			if (isAutoplay) {
+				scheduleAutoplayNextStep();
+			}
+		}
+	}
+
+	// ─── AUTOPLAY ENGINE ────────────────────────────────────────────────────────
+	function clearAutoplay() {
+		if (autoplayTimer) {
+			clearTimeout(autoplayTimer);
+			autoplayTimer = null;
+		}
+		if (animInterval) {
+			clearInterval(animInterval);
+			animInterval = null;
+		}
+		autoplayAnimProgress = 0;
+	}
+
+	function startAutoplay() {
+		isAutoplay = true;
+		scheduleAutoplayNextStep();
+	}
+
+	function pauseAutoplay() {
+		isAutoplay = false;
+		clearAutoplay();
+	}
+
+	function toggleAutoplay() {
+		if (isAutoplay) {
+			pauseAutoplay();
+		} else {
+			startAutoplay();
+		}
+	}
+
+	function scheduleAutoplayNextStep() {
+		clearAutoplay();
+		if (!isAutoplay || isSessionFinished || !currentWord) return;
+
+		const target =
+			deckLanguage === 'chinese'
+				? currentWord['Chinese Word'] || ''
+				: currentWord['French Word'] || '';
+
+		const totalMs = autoplaySpeed * 1000;
+		const startTime = Date.now();
+
+		if (!isFlipped) {
+			// Front card: Speak target word automatically if audio enabled
+			if (autoplayAutoSpeak && target) {
+				speakWord(target, deckLanguage);
+			}
+
+			// Progress bar animation for front delay
+			animInterval = setInterval(() => {
+				const elapsed = Date.now() - startTime;
+				autoplayAnimProgress = Math.min(100, Math.round((elapsed / totalMs) * 100));
+			}, 50);
+
+			autoplayTimer = setTimeout(() => {
+				clearAutoplay();
+				if (!isAutoplay) return;
+				isFlipped = true;
+				playSound('flip');
+				scheduleAutoplayNextStep();
+			}, totalMs);
+		} else {
+			// Back card: wait delay, then rate 'good' and advance
+			animInterval = setInterval(() => {
+				const elapsed = Date.now() - startTime;
+				autoplayAnimProgress = Math.min(100, Math.round((elapsed / totalMs) * 100));
+			}, 50);
+
+			autoplayTimer = setTimeout(async () => {
+				clearAutoplay();
+				if (!isAutoplay) return;
+				await handleRate('good');
+			}, totalMs);
 		}
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
 		if (isSessionFinished || showMilestoneModal) return;
+
+		if (e.key === 'p' || e.key === 'P') {
+			e.preventDefault();
+			toggleAutoplay();
+			return;
+		}
 
 		if (e.key === ' ' || e.key === 'Enter') {
 			e.preventDefault();
@@ -213,7 +331,12 @@
 		window.addEventListener('keydown', handleKeydown);
 		return () => {
 			window.removeEventListener('keydown', handleKeydown);
+			clearAutoplay();
 		};
+	});
+
+	onDestroy(() => {
+		clearAutoplay();
 	});
 </script>
 
@@ -228,7 +351,10 @@
 	>
 		<button
 			type="button"
-			onclick={() => goto(`/deck/${deckId}/preview`)}
+			onclick={() => {
+				clearAutoplay();
+				goto(resolve(`/deck/${deckId}/preview`));
+			}}
 			aria-label="Exit Study Session"
 			class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200 active:scale-95"
 		>
@@ -236,7 +362,7 @@
 		</button>
 
 		<div class="flex flex-col items-center">
-			<h2 class="max-w-[180px] truncate font-headline text-sm font-bold text-slate-900">
+			<h2 class="max-w-[170px] truncate font-headline text-sm font-bold text-slate-900">
 				{deckTitle}
 			</h2>
 			<span class="font-headline text-[11px] font-semibold text-slate-500">
@@ -244,20 +370,48 @@
 			</span>
 		</div>
 
-		<div
-			class="flex items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 font-headline text-xs font-bold text-emerald-700"
-		>
-			<CheckCheck size={13} strokeWidth={2.25} />
-			<span>{sessionAccuracy}%</span>
+		<!-- Autoplay & Accuracy Controls -->
+		<div class="flex items-center gap-1.5">
+			<!-- Autoplay Toggle Button -->
+			<button
+				type="button"
+				onclick={toggleAutoplay}
+				title={isAutoplay ? 'Pause hands-free autoplay' : 'Start hands-free autoplay'}
+				class="flex h-8 items-center gap-1.5 rounded-full px-2.5 font-headline text-xs font-bold transition-all active:scale-95 {isAutoplay
+					? 'bg-indigo-600 text-white shadow-xs shadow-indigo-600/30'
+					: 'border border-slate-200/90 bg-slate-50 text-slate-700 hover:bg-slate-100'}"
+			>
+				{#if isAutoplay}
+					<Pause size={13} strokeWidth={2.5} class="fill-current" />
+					<span>Auto</span>
+				{:else}
+					<Play size={13} strokeWidth={2.5} class="fill-current" />
+					<span>Auto</span>
+				{/if}
+			</button>
+
+			<div
+				class="flex items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50 px-2 py-1 font-headline text-xs font-bold text-emerald-700"
+			>
+				<CheckCheck size={13} strokeWidth={2.25} />
+				<span>{sessionAccuracy}%</span>
+			</div>
 		</div>
 	</header>
 
 	<!-- Linear Progress Bar -->
-	<div class="h-1.5 w-full overflow-hidden bg-slate-100">
+	<div class="relative h-1.5 w-full overflow-hidden bg-slate-100">
 		<div
 			class="h-full bg-indigo-600 transition-all duration-300 ease-out"
 			style="width: {cards.length > 0 ? (progressCount / cards.length) * 100 : 0}%"
 		></div>
+		{#if isAutoplay}
+			<!-- Micro animated step countdown bar -->
+			<div
+				class="absolute top-0 bottom-0 left-0 bg-amber-400 opacity-75 transition-all duration-75 ease-linear"
+				style="width: {autoplayAnimProgress}%"
+			></div>
+		{/if}
 	</div>
 
 	<!-- Main Study Arena -->
@@ -308,7 +462,7 @@
 					</button>
 					<button
 						type="button"
-						onclick={() => goto('/')}
+						onclick={() => goto(resolve('/'))}
 						class="flex h-11 w-full cursor-pointer items-center justify-center rounded-2xl bg-slate-100 font-headline text-xs font-bold text-slate-600 hover:bg-slate-200 active:scale-95"
 					>
 						Return to Dashboard
@@ -316,8 +470,84 @@
 				</div>
 			</div>
 		{:else if currentWord}
-			<!-- ACTIVE FLASHCARD -->
-			<div class="space-y-6">
+			<!-- ACTIVE FLASHCARD & CONTROLS -->
+			<div class="space-y-4">
+				<!-- Floating Autoplay Control Bar -->
+				<div
+					class="flex items-center justify-between rounded-2xl border border-slate-200/80 bg-slate-50/90 px-3.5 py-2 shadow-xs"
+				>
+					<div class="flex items-center gap-2">
+						<button
+							type="button"
+							onclick={toggleAutoplay}
+							aria-label={isAutoplay ? 'Pause Autoplay' : 'Play Autoplay'}
+							class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-all active:scale-95 {isAutoplay
+								? 'bg-indigo-600 text-white shadow-xs'
+								: 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100'}"
+						>
+							{#if isAutoplay}
+								<Pause size={15} strokeWidth={2.5} class="fill-current" />
+							{:else}
+								<Play size={15} strokeWidth={2.5} class="translate-x-0.5 fill-current" />
+							{/if}
+						</button>
+
+						<div>
+							<p class="font-headline text-xs font-bold text-slate-900">
+								{isAutoplay ? 'Autoplaying Hands-Free' : 'Manual Study'}
+							</p>
+							<p class="font-sans text-[10px] text-slate-500">
+								{isAutoplay
+									? `${autoplaySpeed}s pace • ${autoplayAutoSpeak ? 'Voice on' : 'Voice off'}`
+									: 'Tap card or spacebar to flip'}
+							</p>
+						</div>
+					</div>
+
+					<div class="flex items-center gap-1">
+						<!-- Autoplay Speed Toggle -->
+						<button
+							type="button"
+							onclick={() => {
+								if (autoplaySpeed === 1.5) autoplaySpeed = 2.5;
+								else if (autoplaySpeed === 2.5) autoplaySpeed = 4;
+								else autoplaySpeed = 1.5;
+								if (isAutoplay) scheduleAutoplayNextStep();
+							}}
+							title="Cycle speed"
+							class="cursor-pointer rounded-lg border border-slate-200/80 bg-white px-2 py-1 font-headline text-[10px] font-bold text-slate-700 hover:bg-slate-100"
+						>
+							{autoplaySpeed}s
+						</button>
+
+						<!-- Voice Auto-speak Toggle -->
+						<button
+							type="button"
+							onclick={() => (autoplayAutoSpeak = !autoplayAutoSpeak)}
+							title={autoplayAutoSpeak ? 'Auto-speak enabled' : 'Auto-speak muted'}
+							class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg border border-slate-200/80 bg-white text-slate-600 hover:bg-slate-100"
+						>
+							{#if autoplayAutoSpeak}
+								<Volume2 size={13} strokeWidth={2.25} />
+							{:else}
+								<VolumeX size={13} strokeWidth={2.25} />
+							{/if}
+						</button>
+
+						<!-- Loop Toggle -->
+						<button
+							type="button"
+							onclick={() => (autoplayLoop = !autoplayLoop)}
+							title={autoplayLoop ? 'Loop mode ON' : 'Loop mode OFF'}
+							class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg border border-slate-200/80 transition-colors {autoplayLoop
+								? 'border-indigo-200 bg-indigo-100 text-indigo-700'
+								: 'bg-white text-slate-400 hover:bg-slate-100'}"
+						>
+							<RotateCcw size={12} strokeWidth={2.25} />
+						</button>
+					</div>
+				</div>
+
 				<FlashCard
 					word={currentWord}
 					language={deckLanguage}
@@ -337,10 +567,12 @@
 			</div>
 		{:else}
 			<div class="py-12 text-center text-slate-500">
-				<p class="font-headline text-sm font-bold text-slate-800">No cards available in this set.</p>
+				<p class="font-headline text-sm font-bold text-slate-800">
+					No cards available in this set.
+				</p>
 				<button
 					type="button"
-					onclick={() => goto('/')}
+					onclick={() => goto(resolve('/'))}
 					class="mt-4 cursor-pointer rounded-2xl bg-indigo-600 px-4 py-2 font-headline text-xs font-bold text-white shadow-xs hover:bg-indigo-700"
 				>
 					Back to Home
@@ -372,6 +604,6 @@
 	}}
 	onSecondaryAction={() => {
 		showMilestoneModal = false;
-		goto('/');
+		goto(resolve('/'));
 	}}
 />

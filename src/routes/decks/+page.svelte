@@ -1,7 +1,6 @@
 <script lang="ts">
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import DeckCard from '$lib/components/DeckCard.svelte';
-	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
@@ -14,7 +13,7 @@
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered } from '$lib/utils/srs';
 	import type { DeckSummary, CustomDeck, WordRecord, StreakStats } from '$lib/types';
-	import { Plus, FileUp, Search, FolderOpen, Trash2, Play, X, Sparkles } from 'lucide-svelte';
+	import { Plus, FileUp, Search, FolderOpen, Trash2, X } from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -28,7 +27,6 @@
 	let filterType = $state<'all' | 'chinese' | 'french' | 'custom'>('all');
 	let searchQuery = $state('');
 	let allDecks = $state<DeckSummary[]>([]);
-	let customDecksRaw = $state<CustomDeck[]>([]);
 
 	// Modal states
 	let isCreateModalOpen = $state(false);
@@ -60,7 +58,6 @@
 		const chinesePacks = await getBuiltinPacks('chinese');
 		const frenchPacks = await getBuiltinPacks('french');
 		const customDecks = await getAllCustomDecks();
-		customDecksRaw = customDecks;
 
 		const summaries: DeckSummary[] = [];
 
@@ -390,7 +387,7 @@
 
 	<!-- Filter Chips (Segmented Pill Pattern) -->
 	<div class="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-1">
-		{#each ['all', 'chinese', 'french', 'custom'] as f}
+		{#each ['all', 'chinese', 'french', 'custom'] as f (f)}
 			<button
 				type="button"
 				onclick={() => (filterType = f as typeof filterType)}
@@ -517,7 +514,7 @@
 					</div>
 
 					<div class="space-y-3">
-						{#each newWords as word, idx}
+						{#each newWords as word, idx (idx)}
 							<div
 								class="relative space-y-2 rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5"
 							>
@@ -595,11 +592,11 @@
 	<div
 		class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm"
 	>
-		<div
-			class="shadow-sheet w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6"
-		>
+		<div class="shadow-sheet w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6">
 			<div class="flex items-center justify-between border-b border-slate-100 pb-3">
-				<h3 class="font-headline text-lg font-extrabold text-slate-900">Import Deck (JSON or CSV)</h3>
+				<h3 class="font-headline text-lg font-extrabold text-slate-900">
+					Import Deck (JSON or CSV)
+				</h3>
 				<button
 					type="button"
 					onclick={() => (isImportModalOpen = false)}
@@ -612,9 +609,8 @@
 
 			<div class="space-y-3 py-4">
 				<div>
-					<label
-						for="import-deck-name"
-						class="block font-headline text-xs font-bold text-slate-900">Deck Title</label
+					<label for="import-deck-name" class="block font-headline text-xs font-bold text-slate-900"
+						>Deck Title</label
 					>
 					<input
 						id="import-deck-name"
@@ -661,7 +657,7 @@
 					<textarea
 						id="import-raw-data"
 						rows="6"
-						placeholder={`你好, Hello, nǐ hǎo, noun, 你好世界\n再见, Goodbye, zài jiàn, verb, 明天见`}
+						placeholder="你好, Hello, nǐ hǎo, noun, 你好世界&#10;再见, Goodbye, zài jiàn, verb, 明天见"
 						bind:value={importRawText}
 						class="mt-1.5 w-full rounded-2xl border border-slate-200 p-3 font-mono text-xs text-slate-900 focus:border-indigo-600 focus:outline-none"
 					></textarea>

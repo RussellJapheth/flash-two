@@ -2,12 +2,12 @@
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import { onMount } from 'svelte';
+	import { resolve } from '$app/paths';
 	import {
 		getAllProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
-		computeStreakStats,
-		getSavedLanguage
+		computeStreakStats
 	} from '$lib/utils/storage';
 	import { isCardMastered, isCardLearning, isCardDue } from '$lib/utils/srs';
 	import type { StreakStats } from '$lib/types';
@@ -30,7 +30,6 @@
 	let weeklyActivity = $state<{ day: string; count: number; isToday: boolean }[]>([]);
 
 	async function loadProgressStats() {
-		const lang = getSavedLanguage();
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
 
@@ -109,9 +108,7 @@
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<!-- Overall Progress Card -->
-	<section
-		class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-5"
-	>
+	<section class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-5">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center gap-3">
 				<div
@@ -178,16 +175,14 @@
 	</section>
 
 	<!-- 7-Day Activity Chart -->
-	<section
-		class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-5"
-	>
+	<section class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-5">
 		<div class="flex items-center justify-between">
 			<h3 class="font-headline text-sm font-bold text-slate-900">7-Day Study Activity</h3>
 			<span class="font-headline text-xs font-semibold text-slate-500">Cards per day</span>
 		</div>
 
 		<div class="flex h-36 items-end justify-between gap-2 pt-4">
-			{#each weeklyActivity as item}
+			{#each weeklyActivity as item (item.day)}
 				{@const barHeight = Math.max(8, Math.round((item.count / maxActivityCount) * 100))}
 				<div class="flex h-full flex-1 flex-col items-center justify-end gap-1.5">
 					<span class="font-headline text-[10px] font-bold text-slate-600">{item.count}</span>
@@ -214,9 +209,7 @@
 	</section>
 
 	<!-- Word Stage Breakdown -->
-	<section
-		class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-5"
-	>
+	<section class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-5">
 		<h3 class="font-headline text-sm font-bold text-slate-900">Retention Breakdown</h3>
 
 		<div class="space-y-2">
@@ -265,7 +258,7 @@
 	<!-- Quick Links -->
 	<div class="grid grid-cols-2 gap-3">
 		<a
-			href="/streak"
+			href={resolve('/streak')}
 			class="shadow-card flex items-center justify-between rounded-2xl border border-amber-200/60 bg-amber-50/50 p-3.5 transition-colors hover:bg-amber-50"
 		>
 			<div class="flex items-center gap-2">
@@ -276,7 +269,7 @@
 		</a>
 
 		<a
-			href="/saved"
+			href={resolve('/saved')}
 			class="shadow-card flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white p-3.5 transition-colors hover:border-indigo-200 hover:bg-slate-50"
 		>
 			<div class="flex items-center gap-2">

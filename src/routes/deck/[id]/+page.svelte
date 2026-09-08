@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		goto(`/deck/${page.params.id}/preview`, { replaceState: true });
+		goto(resolve(`/deck/${page.params.id}/preview`), { replaceState: true });
 	});
 </script>
 

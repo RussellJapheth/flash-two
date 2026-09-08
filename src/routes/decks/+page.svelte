@@ -37,10 +37,14 @@
 	let newDeckName = $state('');
 	let newDeckLang = $state<'chinese' | 'french'>('chinese');
 	let newWords = $state<
-		{ targetWord: string; phonetic: string; meaning: string; partOfSpeech: string; example: string }[]
-	>([
-		{ targetWord: '', phonetic: '', meaning: '', partOfSpeech: 'noun', example: '' }
-	]);
+		{
+			targetWord: string;
+			phonetic: string;
+			meaning: string;
+			partOfSpeech: string;
+			example: string;
+		}[]
+	>([{ targetWord: '', phonetic: '', meaning: '', partOfSpeech: 'noun', example: '' }]);
 
 	// Import Deck Form
 	let importDeckName = $state('');
@@ -82,8 +86,7 @@
 				}
 			}
 
-			const accuracy =
-				totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
+			const accuracy = totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
 
 			summaries.push({
 				id: pack.id,
@@ -121,8 +124,7 @@
 				}
 			}
 
-			const accuracy =
-				totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
+			const accuracy = totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
 
 			summaries.push({
 				id: pack.id,
@@ -158,8 +160,7 @@
 				}
 			}
 
-			const accuracy =
-				totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
+			const accuracy = totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
 
 			summaries.push({
 				id: deck.id,
@@ -179,10 +180,8 @@
 
 	let filteredDecks = $derived(
 		allDecks.filter((deck) => {
-			if (filterType === 'chinese' && (deck.language !== 'chinese' || deck.isCustom))
-				return false;
-			if (filterType === 'french' && (deck.language !== 'french' || deck.isCustom))
-				return false;
+			if (filterType === 'chinese' && (deck.language !== 'chinese' || deck.isCustom)) return false;
+			if (filterType === 'french' && (deck.language !== 'french' || deck.isCustom)) return false;
 			if (filterType === 'custom' && !deck.isCustom) return false;
 
 			if (searchQuery.trim()) {
@@ -223,8 +222,7 @@
 				'English Meaning': w.meaning.trim(),
 				'Example (Chinese + Pinyin)':
 					newDeckLang === 'chinese' ? w.example.trim() || undefined : undefined,
-				'Example (French)':
-					newDeckLang === 'french' ? w.example.trim() || undefined : undefined
+				'Example (French)': newDeckLang === 'french' ? w.example.trim() || undefined : undefined
 			}));
 
 		if (validWords.length === 0) return;
@@ -266,7 +264,10 @@
 				words = array.map((item, idx) => ({
 					No: idx + 1,
 					'Chinese Word': item['Chinese Word'] || item.word || item.target,
-					'French Word': item['French Word'] || item.french || (importDeckLang === 'french' ? item.word : undefined),
+					'French Word':
+						item['French Word'] ||
+						item.french ||
+						(importDeckLang === 'french' ? item.word : undefined),
 					Pinyin: item.Pinyin || item.pinyin || item.phonetic,
 					'Part of Speech': item['Part of Speech'] || item.pos || 'noun',
 					'English Meaning': item['English Meaning'] || item.meaning || item.translation || '',
@@ -275,7 +276,10 @@
 				}));
 			} else {
 				// Parse CSV (Word, Meaning, Phonetic, POS, Example)
-				const lines = trimmed.split('\n').map((l) => l.trim()).filter((l) => l.length > 0);
+				const lines = trimmed
+					.split('\n')
+					.map((l) => l.trim())
+					.filter((l) => l.length > 0);
 				words = lines.map((line, idx) => {
 					const parts = line.split(',').map((p) => p.trim());
 					const targetWord = parts[0] || '';
@@ -291,7 +295,8 @@
 						Pinyin: phonetic || undefined,
 						'Part of Speech': pos,
 						'English Meaning': meaning,
-						'Example (Chinese + Pinyin)': importDeckLang === 'chinese' ? example || undefined : undefined,
+						'Example (Chinese + Pinyin)':
+							importDeckLang === 'chinese' ? example || undefined : undefined,
 						'Example (French)': importDeckLang === 'french' ? example || undefined : undefined
 					};
 				});
@@ -341,7 +346,7 @@
 
 <TopHeader title="My Decks" streak={streakStats.currentStreak} />
 
-<main class="flex-1 px-4 pt-3 pb-8 space-y-4">
+<main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<!-- Top Bar Actions -->
 	<div class="flex items-center justify-between">
 		<div class="flex items-center gap-2">
@@ -351,7 +356,7 @@
 				onclick={() => (isCreateModalOpen = true)}
 				class="inline-flex items-center gap-1.5 rounded-full bg-primary-container px-3.5 py-1.5 font-headline text-xs font-bold text-white shadow-sm transition-all hover:bg-primary active:scale-95"
 			>
-					<Plus size={17} strokeWidth={2.5} />
+				<Plus size={17} strokeWidth={2.5} />
 				<span>Create Deck</span>
 			</button>
 
@@ -359,7 +364,7 @@
 			<button
 				type="button"
 				onclick={() => (isImportModalOpen = true)}
-				class="inline-flex items-center gap-1.5 rounded-full bg-surface-container px-3 py-1.5 font-headline text-xs font-bold text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95"
+				class="inline-flex items-center gap-1.5 rounded-full bg-surface-container px-3 py-1.5 font-headline text-xs font-bold text-on-surface-variant transition-colors hover:bg-surface-container-high active:scale-95"
 			>
 				<FileUp size={17} strokeWidth={2} />
 				<span>Import</span>
@@ -373,17 +378,17 @@
 
 	<!-- Search Input -->
 	<div class="relative">
-		<Search size={19} strokeWidth={1.75} class="absolute left-3.5 top-2.5 text-outline" />
+		<Search size={19} strokeWidth={1.75} class="absolute top-2.5 left-3.5 text-outline" />
 		<input
 			type="text"
 			placeholder="Search decks..."
 			bind:value={searchQuery}
-			class="w-full rounded-2xl border border-surface-container bg-surface-container-lowest pl-10 pr-4 py-2 font-body text-sm text-on-surface placeholder:text-outline focus:border-primary focus:outline-none"
+			class="font-body w-full rounded-2xl border border-surface-container bg-surface-container-lowest py-2 pr-4 pl-10 text-sm text-on-surface placeholder:text-outline focus:border-primary focus:outline-none"
 		/>
 	</div>
 
 	<!-- Filter Chips -->
-	<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+	<div class="no-scrollbar flex items-center gap-2 overflow-x-auto py-1">
 		{#each ['all', 'chinese', 'french', 'custom'] as f}
 			<button
 				type="button"
@@ -404,20 +409,20 @@
 			<div
 				class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-surface-container p-8 text-center text-on-surface-variant"
 			>
-				<FolderOpen size={38} strokeWidth={1.25} class="text-outline mb-2" />
+				<FolderOpen size={38} strokeWidth={1.25} class="mb-2 text-outline" />
 				<p class="font-headline text-sm font-bold">No decks found</p>
-				<p class="font-body text-xs mt-1">Try another filter or create a new custom deck.</p>
+				<p class="font-body mt-1 text-xs">Try another filter or create a new custom deck.</p>
 			</div>
 		{:else}
 			{#each filteredDecks as deck (deck.id)}
 				<div
-					class="relative flex flex-col justify-between rounded-2xl border border-surface-container bg-surface-container-lowest p-4 shadow-card hover:border-primary/30 transition-all"
+					class="shadow-card relative flex flex-col justify-between rounded-2xl border border-surface-container bg-surface-container-lowest p-4 transition-all hover:border-primary/30"
 				>
 					<div class="flex items-start justify-between">
 						<div>
-							<div class="flex items-center gap-2 mb-1">
+							<div class="mb-1 flex items-center gap-2">
 								<span
-									class="rounded-full px-2.5 py-0.5 font-headline text-[10px] font-bold uppercase tracking-wider {deck.language ===
+									class="rounded-full px-2.5 py-0.5 font-headline text-[10px] font-bold tracking-wider uppercase {deck.language ===
 									'french'
 										? 'bg-secondary-fixed text-on-secondary-fixed'
 										: 'bg-primary-fixed text-primary'}"
@@ -429,7 +434,9 @@
 								</span>
 
 								{#if deck.dueCards > 0}
-									<span class="rounded-full bg-error-container px-2 py-0.5 text-[10px] font-bold text-on-error-container">
+									<span
+										class="rounded-full bg-error-container px-2 py-0.5 text-[10px] font-bold text-on-error-container"
+									>
 										{deck.dueCards} due
 									</span>
 								{/if}
@@ -455,7 +462,7 @@
 								type="button"
 								onclick={() => handleDeleteCustomDeck(deck.id)}
 								title="Delete Custom Deck"
-								class="flex h-8 w-8 items-center justify-center rounded-full text-outline hover:bg-red-50 hover:text-red-600 transition-colors"
+								class="flex h-8 w-8 items-center justify-center rounded-full text-outline transition-colors hover:bg-red-50 hover:text-red-600"
 							>
 								<Trash2 size={17} strokeWidth={1.75} />
 							</button>
@@ -492,7 +499,7 @@
 		<div
 			class="flex max-h-[90vh] w-full max-w-md flex-col rounded-3xl border border-surface-container bg-surface-container-lowest p-6 shadow-2xl"
 		>
-			<div class="flex items-center justify-between pb-3 border-b border-surface-container">
+			<div class="flex items-center justify-between border-b border-surface-container pb-3">
 				<h3 class="font-headline text-lg font-bold text-on-surface">Create Custom Deck</h3>
 				<button
 					type="button"
@@ -503,20 +510,22 @@
 				</button>
 			</div>
 
-			<div class="flex-1 overflow-y-auto space-y-4 py-4 pr-1">
+			<div class="flex-1 space-y-4 overflow-y-auto py-4 pr-1">
 				<div>
-					<label for="new-deck-name" class="font-headline text-xs font-bold text-on-surface block">Deck Name</label>
+					<label for="new-deck-name" class="block font-headline text-xs font-bold text-on-surface"
+						>Deck Name</label
+					>
 					<input
 						id="new-deck-name"
 						type="text"
 						placeholder="e.g. Travel Chinese / Business French"
 						bind:value={newDeckName}
-						class="mt-1 w-full rounded-2xl border border-surface-container px-3.5 py-2 font-body text-sm text-on-surface focus:border-primary focus:outline-none"
+						class="font-body mt-1 w-full rounded-2xl border border-surface-container px-3.5 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
 					/>
 				</div>
 
 				<div>
-					<span class="font-headline text-xs font-bold text-on-surface block">Target Language</span>
+					<span class="block font-headline text-xs font-bold text-on-surface">Target Language</span>
 					<div class="mt-1 flex gap-2">
 						<button
 							type="button"
@@ -543,8 +552,10 @@
 
 				<!-- Words List Inputs -->
 				<div>
-					<div class="flex items-center justify-between mb-2">
-						<span class="font-headline text-xs font-bold text-on-surface block">Vocabulary Cards</span>
+					<div class="mb-2 flex items-center justify-between">
+						<span class="block font-headline text-xs font-bold text-on-surface"
+							>Vocabulary Cards</span
+						>
 						<button
 							type="button"
 							onclick={addWordRow}
@@ -557,7 +568,7 @@
 					<div class="space-y-3">
 						{#each newWords as word, idx}
 							<div
-								class="relative rounded-2xl border border-surface-container bg-surface-container-low p-3 space-y-2"
+								class="relative space-y-2 rounded-2xl border border-surface-container bg-surface-container-low p-3"
 							>
 								<div class="flex items-center justify-between">
 									<span class="font-headline text-[11px] font-bold text-on-surface-variant"
@@ -567,7 +578,7 @@
 										<button
 											type="button"
 											onclick={() => removeWordRow(idx)}
-											class="text-xs text-rose-500 hover:text-rose-700 font-bold"
+											class="text-xs font-bold text-rose-500 hover:text-rose-700"
 										>
 											Remove
 										</button>
@@ -608,7 +619,7 @@
 				</div>
 			</div>
 
-			<div class="pt-3 border-t border-surface-container flex gap-2">
+			<div class="flex gap-2 border-t border-surface-container pt-3">
 				<button
 					type="button"
 					onclick={() => (isCreateModalOpen = false)}
@@ -619,7 +630,7 @@
 				<button
 					type="button"
 					onclick={handleCreateDeck}
-					class="flex-1 rounded-full bg-primary-container py-2.5 font-headline text-xs font-bold text-white hover:bg-primary shadow-sm"
+					class="flex-1 rounded-full bg-primary-container py-2.5 font-headline text-xs font-bold text-white shadow-sm hover:bg-primary"
 				>
 					Create Deck
 				</button>
@@ -636,7 +647,7 @@
 		<div
 			class="w-full max-w-md rounded-3xl border border-surface-container bg-surface-container-lowest p-6 shadow-2xl"
 		>
-			<div class="flex items-center justify-between pb-3 border-b border-surface-container">
+			<div class="flex items-center justify-between border-b border-surface-container pb-3">
 				<h3 class="font-headline text-lg font-bold text-on-surface">Import Deck (JSON or CSV)</h3>
 				<button
 					type="button"
@@ -649,18 +660,21 @@
 
 			<div class="space-y-3 py-4">
 				<div>
-					<label for="import-deck-name" class="font-headline text-xs font-bold text-on-surface block">Deck Title</label>
+					<label
+						for="import-deck-name"
+						class="block font-headline text-xs font-bold text-on-surface">Deck Title</label
+					>
 					<input
 						id="import-deck-name"
 						type="text"
 						placeholder="e.g. HSK 2 Practice Set"
 						bind:value={importDeckName}
-						class="mt-1 w-full rounded-2xl border border-surface-container px-3.5 py-2 font-body text-sm text-on-surface focus:border-primary focus:outline-none"
+						class="font-body mt-1 w-full rounded-2xl border border-surface-container px-3.5 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
 					/>
 				</div>
 
 				<div>
-					<span class="font-headline text-xs font-bold text-on-surface block">Language</span>
+					<span class="block font-headline text-xs font-bold text-on-surface">Language</span>
 					<div class="mt-1 flex gap-2">
 						<button
 							type="button"
@@ -686,7 +700,9 @@
 				</div>
 
 				<div>
-					<label for="import-raw-data" class="font-headline text-xs font-bold text-on-surface block">Paste JSON or CSV</label>
+					<label for="import-raw-data" class="block font-headline text-xs font-bold text-on-surface"
+						>Paste JSON or CSV</label
+					>
 					<p class="text-[11px] text-on-surface-variant">
 						CSV format: <code>Word, Meaning, Phonetic, PartOfSpeech, Example</code>
 					</p>
@@ -704,7 +720,7 @@
 				{/if}
 			</div>
 
-			<div class="pt-2 flex gap-2">
+			<div class="flex gap-2 pt-2">
 				<button
 					type="button"
 					onclick={() => (isImportModalOpen = false)}
@@ -715,7 +731,7 @@
 				<button
 					type="button"
 					onclick={handleImportDeck}
-					class="flex-1 rounded-full bg-primary-container py-2.5 font-headline text-xs font-bold text-white hover:bg-primary shadow-sm"
+					class="flex-1 rounded-full bg-primary-container py-2.5 font-headline text-xs font-bold text-white shadow-sm hover:bg-primary"
 				>
 					Import Deck
 				</button>

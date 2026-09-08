@@ -55,7 +55,7 @@
 				<img
 					src={mascot}
 					alt="Mascot milestone celebration"
-					class="relative z-10 h-32 w-32 object-contain select-none drop-shadow-md transition-transform hover:scale-105 duration-300"
+					class="relative z-10 h-32 w-32 object-contain drop-shadow-md transition-transform duration-300 select-none hover:scale-105"
 				/>
 			</div>
 
@@ -72,7 +72,7 @@
 					{title}
 				</h2>
 
-				<p class="mt-1 font-body text-xs text-on-surface-variant leading-relaxed">
+				<p class="font-body mt-1 text-xs leading-relaxed text-on-surface-variant">
 					{subtitle}
 				</p>
 			</div>
@@ -81,17 +81,17 @@
 			<div
 				class="my-4 rounded-2xl border border-surface-container bg-surface-container-low p-3.5 text-left"
 			>
-				<div class="flex items-center justify-between text-xs font-bold text-on-surface mb-2">
+				<div class="mb-2 flex items-center justify-between text-xs font-bold text-on-surface">
 					<span>Session Progress</span>
 					<span class="text-primary">{stats.reviewed} / {stats.total} cards</span>
 				</div>
 
-				<div class="grid grid-cols-2 gap-2 pt-2 border-t border-surface-container-high text-xs">
-					<div class="flex items-center gap-1.5 text-emerald-600 font-semibold">
+				<div class="grid grid-cols-2 gap-2 border-t border-surface-container-high pt-2 text-xs">
+					<div class="flex items-center gap-1.5 font-semibold text-emerald-600">
 						<CheckCircle2 size={15} strokeWidth={2} />
 						<span>{stats.correct} Correct</span>
 					</div>
-					<div class="flex items-center gap-1.5 text-rose-600 font-semibold">
+					<div class="flex items-center gap-1.5 font-semibold text-rose-600">
 						<XCircle size={15} strokeWidth={2} />
 						<span>{stats.wrong} Again</span>
 					</div>

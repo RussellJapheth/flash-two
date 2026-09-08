@@ -2,6 +2,8 @@
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import DeckCard from '$lib/components/DeckCard.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
+	import StreakCalendarModal from '$lib/components/StreakCalendarModal.svelte';
+	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
@@ -13,8 +15,16 @@
 		setSavedLanguage
 	} from '$lib/utils/storage';
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
-	import type { DeckSummary, StreakStats, WordProgress, CustomDeck } from '$lib/types';
-	import { Flame, Brain, Dumbbell, PlayCircle } from 'lucide-svelte';
+	import type { DeckSummary, StreakStats, WordProgress } from '$lib/types';
+	import {
+		Flame,
+		Brain,
+		Dumbbell,
+		PlayCircle,
+		ArrowRight,
+		Sparkles,
+		BookOpen
+	} from 'lucide-svelte';
 
 	let username = $state('Russell');
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
@@ -36,6 +46,10 @@
 
 	let isStreakModalOpen = $state(false);
 
+	let masteryPercentage = $derived(
+		totalCardCount > 0 ? Math.round((totalMasteredCount / totalCardCount) * 100) : 0
+	);
+
 	async function loadDashboardData() {
 		username = getSavedUsername() || 'Russell';
 		activeLanguage = getSavedLanguage();
@@ -45,9 +59,7 @@
 
 		const builtinPacks = await getBuiltinPacks(activeLanguage);
 		const customDecks = await getAllCustomDecks();
-		const matchingCustom = customDecks.filter(
-			(d) => !d.language || d.language === activeLanguage
-		);
+		const matchingCustom = customDecks.filter((d) => !d.language || d.language === activeLanguage);
 
 		let dueAccumulator = 0;
 		let weakAccumulator = 0;
@@ -82,8 +94,7 @@
 				}
 			}
 
-			const accuracy =
-				totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
+			const accuracy = totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
 
 			dueAccumulator += due;
 			masteredAccumulator += mastered;
@@ -124,8 +135,7 @@
 				}
 			}
 
-			const accuracy =
-				totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
+			const accuracy = totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
 
 			summaries.push({
 				id: deck.id,
@@ -174,111 +184,101 @@
 	onOpenStreak={() => (isStreakModalOpen = true)}
 />
 
-<main class="flex-1 px-4 pt-3 pb-8 space-y-4">
-	<!-- Hero Greeting & Today's Goal -->
+<main class="flex-1 space-y-5 px-4 pt-4 pb-8">
+	<!-- 1. GREETING & TODAY'S PROGRESS HERO -->
 	<section
-		class="relative overflow-hidden rounded-3xl border border-surface-container bg-gradient-to-br from-primary-fixed/30 via-surface-container-lowest to-surface-container-low p-5 shadow-card"
+		class="shadow-card relative overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-indigo-50/70 via-white to-slate-50/50 p-5"
 	>
 		<div class="relative z-10 flex items-start justify-between">
-			<div>
-				<p class="font-body text-xs font-semibold text-on-surface-variant">Good day,</p>
-				<h2 class="font-headline text-2xl font-black tracking-tight text-on-surface capitalize">
+			<div class="space-y-0.5">
+				<p class="font-body text-xs font-semibold tracking-wider text-slate-500 uppercase">
+					Good day,
+				</p>
+				<h2 class="font-headline text-2xl font-extrabold tracking-tight text-slate-900 capitalize">
 					{username}! 👋
 				</h2>
-				<p class="mt-1 font-body text-xs text-on-surface-variant max-w-[220px] leading-relaxed">
-					{streakStats.tierName} • Keep up your daily habit.
-				</p>
+				<div class="flex items-center gap-1.5 pt-0.5">
+					<span
+						class="inline-flex items-center gap-1 rounded-md bg-indigo-100/80 px-2 py-0.5 text-[11px] font-bold text-indigo-800"
+					>
+						<Sparkles size={11} strokeWidth={2.5} class="text-indigo-600" />
+						{streakStats.tierName}
+					</span>
+					<span class="text-[11px] font-medium text-slate-500">• Daily habit</span>
+				</div>
 			</div>
 
-			<a
-				href="/streak"
-				class="flex flex-col items-center justify-center rounded-2xl bg-secondary-fixed/70 border border-secondary-container/30 px-3.5 py-2 text-center transition-transform hover:scale-105 active:scale-95 shadow-sm"
+			<!-- Streak Motivation Trigger -->
+			<button
+				type="button"
+				onclick={() => (isStreakModalOpen = true)}
+				class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-amber-200/80 bg-white/90 px-3.5 py-2 text-center shadow-xs transition-transform hover:scale-105 active:scale-95"
 			>
-				<Flame size={24} strokeWidth={1.75} class="text-secondary" />
-				<span class="font-headline text-sm font-extrabold text-on-secondary-fixed">
+				<Flame size={22} strokeWidth={2.25} class="fill-amber-500/20 text-amber-500" />
+				<span class="font-headline text-xs font-extrabold text-amber-900">
 					{streakStats.currentStreak}d
 				</span>
-			</a>
+			</button>
 		</div>
 
 		<!-- Daily Mastery Progress -->
-		<div class="mt-4 pt-3 border-t border-surface-container-high/60">
-			<div class="flex items-center justify-between text-xs font-bold text-on-surface mb-1.5">
-				<span>Today's Progress</span>
-				<span class="text-primary font-headline"
-					>{totalMasteredCount} / {totalCardCount} Mastered</span
-				>
+		<div class="mt-4 border-t border-slate-200/60 pt-3.5">
+			<div class="mb-1.5 flex items-center justify-between text-xs">
+				<span class="font-headline font-bold text-slate-700">Today's Progress</span>
+				<div class="flex items-center gap-1.5">
+					<span class="font-headline font-extrabold text-indigo-600">
+						{totalMasteredCount} / {totalCardCount} Mastered
+					</span>
+					<span
+						class="py-0.2 rounded-full bg-indigo-100 px-1.5 font-headline text-[10px] font-extrabold text-indigo-700"
+					>
+						{masteryPercentage}%
+					</span>
+				</div>
 			</div>
-			<ProgressBar value={totalMasteredCount} max={totalCardCount} variant="primary" height="h-2.5" />
+			<ProgressBar value={totalMasteredCount} max={totalCardCount} variant="primary" height="h-2" />
+			<p class="mt-2 text-[11px] font-medium text-slate-400">
+				{#if totalCardCount - totalMasteredCount > 0}
+					{totalCardCount - totalMasteredCount} words remaining in curriculum
+				{:else}
+					All curriculum words mastered! 🎉
+				{/if}
+			</p>
 		</div>
 	</section>
 
-	<!-- Quick SRS Spaced Review & Practice Launchers -->
-	<div class="grid grid-cols-2 gap-3">
-		<!-- Due SRS Review Card -->
-		<a
-			href="/review"
-			class="flex flex-col justify-between rounded-2xl border border-primary/20 bg-primary-fixed/20 p-4 transition-all hover:bg-primary-fixed/30 hover:shadow-sm active:scale-98"
-		>
-			<div class="flex items-center justify-between">
-				<div
-					class="flex h-9 w-9 items-center justify-center rounded-full bg-primary-container text-white shadow-sm"
-				>
-					<Brain size={18} strokeWidth={1.75} />
-				</div>
-				<span class="rounded-full bg-primary-fixed px-2 py-0.5 font-headline text-[11px] font-bold text-primary">
-					SRS Due
-				</span>
-			</div>
-			<div class="mt-3">
-				<p class="font-headline text-xl font-extrabold text-on-surface">{totalDueCount}</p>
-				<p class="font-body text-[11px] font-medium text-on-surface-variant">Cards due for review</p>
-			</div>
-		</a>
-
-		<!-- Practice Weak Words Card -->
-		<a
-			href="/practice"
-			class="flex flex-col justify-between rounded-2xl border border-secondary-container/30 bg-secondary-fixed/20 p-4 transition-all hover:bg-secondary-fixed/30 hover:shadow-sm active:scale-98"
-		>
-			<div class="flex items-center justify-between">
-				<div
-					class="flex h-9 w-9 items-center justify-center rounded-full bg-secondary-container text-white shadow-sm"
-				>
-					<Dumbbell size={18} strokeWidth={1.75} />
-				</div>
-				<span
-					class="rounded-full bg-secondary-fixed px-2 py-0.5 font-headline text-[11px] font-bold text-on-secondary-fixed"
-				>
-					Practice
-				</span>
-			</div>
-			<div class="mt-3">
-				<p class="font-headline text-xl font-extrabold text-on-surface">{totalWeakCount}</p>
-				<p class="font-body text-[11px] font-medium text-on-surface-variant">Difficult words</p>
-			</div>
-		</a>
-	</div>
-
-	<!-- Recommended Continue Studying Card -->
+	<!-- 2. RECOMMENDED NEXT ACTION (PRIMARY CTA) -->
 	{#if recommendedDeck}
+		{@const deckProgressPercent =
+			recommendedDeck.totalCards > 0
+				? Math.round((recommendedDeck.masteredCards / recommendedDeck.totalCards) * 100)
+				: 0}
 		<section
-			class="rounded-3xl border border-surface-container bg-surface-container-lowest p-4 shadow-card"
+			class="shadow-card hover:shadow-card-hover relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-5 transition-all hover:border-indigo-200"
 		>
-			<div class="flex items-center justify-between mb-2">
-				<span class="font-headline text-xs font-bold uppercase tracking-wider text-primary">
-					Recommended Drill
-				</span>
-				<span class="rounded-full bg-surface-container px-2 py-0.5 text-[11px] font-semibold text-on-surface-variant">
+			<div class="mb-2.5 flex items-center justify-between">
+				<div
+					class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-0.5 text-xs font-bold text-indigo-700"
+				>
+					<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-indigo-600"></span>
+					<span>RECOMMENDED DRILL</span>
+				</div>
+				<span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-600">
 					{recommendedDeck.dueCards} cards ready
 				</span>
 			</div>
 
-			<h3 class="font-headline text-lg font-bold text-on-surface">
+			<h3 class="font-headline text-lg font-extrabold tracking-tight text-slate-900">
 				{recommendedDeck.title}
 			</h3>
 
-			<div class="mt-2 mb-4">
+			<div class="mt-2 mb-4 space-y-1.5">
+				<div class="flex justify-between text-xs font-medium text-slate-500">
+					<span>Mastery</span>
+					<span class="font-semibold text-slate-700"
+						>{recommendedDeck.masteredCards} / {recommendedDeck.totalCards} ({deckProgressPercent}%)</span
+					>
+				</div>
 				<ProgressBar
 					value={recommendedDeck.masteredCards}
 					max={recommendedDeck.totalCards}
@@ -288,50 +288,156 @@
 			</div>
 
 			<a
-				href="/deck/{recommendedDeck.id}/preview"
-				class="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary-container font-headline text-sm font-bold text-white shadow-md transition-all hover:bg-primary active:scale-95"
+				href={resolve(`/deck/${recommendedDeck.id}/preview`)}
+				class="group flex h-12 w-full cursor-pointer items-center justify-center gap-2.5 rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-600/30 active:scale-[0.98]"
 			>
-				<PlayCircle size={18} strokeWidth={2} />
+				<PlayCircle
+					size={19}
+					strokeWidth={2.25}
+					class="transition-transform group-hover:scale-110"
+				/>
 				<span>Start Session</span>
 			</a>
 		</section>
 	{/if}
 
-	<!-- Vocabulary Packs Header & Language Switcher -->
-	<section class="pt-2">
-		<div class="flex items-center justify-between mb-3">
-			<h3 class="font-headline text-lg font-bold text-on-surface">Vocabulary Packs</h3>
+	<!-- 3. WHAT NEEDS ATTENTION (SRS DUE & PRACTICE HUB) -->
+	<section class="space-y-2">
+		<h3 class="font-headline text-xs font-bold tracking-wider text-slate-500 uppercase">
+			Needs Attention
+		</h3>
+
+		<div class="grid grid-cols-2 gap-3">
+			<!-- Due SRS Spaced Review Card -->
+			<a
+				href={resolve('/review')}
+				class="group relative flex cursor-pointer flex-col justify-between rounded-3xl bg-gradient-to-br from-indigo-600 to-indigo-700 p-4 text-white shadow-md shadow-indigo-600/15 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-600/25 active:scale-[0.98]"
+			>
+				<div>
+					<div class="flex items-center justify-between">
+						<div
+							class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 text-white backdrop-blur-xs"
+						>
+							<Brain size={18} strokeWidth={2.25} />
+						</div>
+						<span
+							class="rounded-full bg-white/20 px-2 py-0.5 font-headline text-[10px] font-bold text-white backdrop-blur-xs"
+						>
+							SRS Due
+						</span>
+					</div>
+					<div class="mt-3">
+						<p class="font-headline text-2xl font-black">{totalDueCount}</p>
+						<p class="text-[11px] font-medium text-indigo-100">Cards for review</p>
+					</div>
+				</div>
+
+				<div
+					class="mt-3 flex items-center gap-1 text-[11px] font-bold text-white/90 group-hover:text-white"
+				>
+					<span>Review</span>
+					<ArrowRight
+						size={13}
+						strokeWidth={2.5}
+						class="transition-transform group-hover:translate-x-1"
+					/>
+				</div>
+			</a>
+
+			<!-- Difficult Words Practice Card -->
+			<a
+				href={resolve('/practice')}
+				class="group shadow-card hover:shadow-card-hover relative flex cursor-pointer flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-4 transition-all hover:-translate-y-0.5 hover:border-amber-300 active:scale-[0.98]"
+			>
+				<div>
+					<div class="flex items-center justify-between">
+						<div
+							class="flex h-9 w-9 items-center justify-center rounded-xl border border-amber-200/60 bg-amber-50 text-amber-600"
+						>
+							<Dumbbell size={18} strokeWidth={2.25} />
+						</div>
+						<span
+							class="rounded-full border border-amber-200/60 bg-amber-50 px-2 py-0.5 font-headline text-[10px] font-bold text-amber-800"
+						>
+							Practice
+						</span>
+					</div>
+					<div class="mt-3">
+						<p class="font-headline text-2xl font-black text-slate-900">{totalWeakCount}</p>
+						<p class="text-[11px] font-medium text-slate-500">Difficult words</p>
+					</div>
+				</div>
+
+				<div
+					class="mt-3 flex items-center gap-1 text-[11px] font-bold text-amber-700 group-hover:text-amber-800"
+				>
+					<span>Practice</span>
+					<ArrowRight
+						size={13}
+						strokeWidth={2.5}
+						class="transition-transform group-hover:translate-x-1"
+					/>
+				</div>
+			</a>
+		</div>
+	</section>
+
+	<!-- 4. VOCABULARY PACKS LIBRARY -->
+	<section class="space-y-3 pt-1">
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-1.5">
+				<BookOpen size={18} strokeWidth={2.25} class="text-indigo-600" />
+				<h3 class="font-headline text-base font-bold text-slate-900">Vocabulary Packs</h3>
+			</div>
 
 			<!-- Language Toggle Pill -->
-			<div class="flex items-center rounded-full bg-surface-container p-0.5 border border-surface-container-high">
+			<div class="flex items-center rounded-xl border border-slate-200/60 bg-slate-100 p-1">
 				<button
 					type="button"
 					onclick={() => switchLanguage('chinese')}
-					class="rounded-full px-3 py-1 font-headline text-xs font-bold transition-all {activeLanguage ===
+					class="cursor-pointer rounded-lg px-3 py-1 font-headline text-xs font-bold transition-all {activeLanguage ===
 					'chinese'
-						? 'bg-primary-container text-white shadow-sm'
-						: 'text-on-surface-variant hover:text-on-surface'}"
+						? 'bg-white text-indigo-600 shadow-xs'
+						: 'text-slate-500 hover:text-slate-900'}"
 				>
 					Chinese
 				</button>
 				<button
 					type="button"
 					onclick={() => switchLanguage('french')}
-					class="rounded-full px-3 py-1 font-headline text-xs font-bold transition-all {activeLanguage ===
+					class="cursor-pointer rounded-lg px-3 py-1 font-headline text-xs font-bold transition-all {activeLanguage ===
 					'french'
-						? 'bg-primary-container text-white shadow-sm'
-						: 'text-on-surface-variant hover:text-on-surface'}"
+						? 'bg-white text-indigo-600 shadow-xs'
+						: 'text-slate-500 hover:text-slate-900'}"
 				>
 					French
 				</button>
 			</div>
 		</div>
 
-		<!-- Pack Cards Grid -->
-		<div class="space-y-3">
-			{#each deckSummaries as deck (deck.id)}
-				<DeckCard {deck} />
-			{/each}
+		<!-- Pack Cards List -->
+		<div class="space-y-2.5">
+			{#if deckSummaries.length === 0}
+				<div
+					class="rounded-2xl border border-dashed border-slate-200 p-6 text-center text-slate-400"
+				>
+					<p class="font-headline text-xs font-bold">
+						No vocabulary packs found for {activeLanguage}.
+					</p>
+				</div>
+			{:else}
+				{#each deckSummaries as deck (deck.id)}
+					<DeckCard {deck} />
+				{/each}
+			{/if}
 		</div>
 	</section>
 </main>
+
+<!-- Streak Calendar Modal -->
+<StreakCalendarModal
+	isOpen={isStreakModalOpen}
+	streak={streakStats.currentStreak}
+	activeDates={streakStats.activeDates}
+	onClose={() => (isStreakModalOpen = false)}
+/>

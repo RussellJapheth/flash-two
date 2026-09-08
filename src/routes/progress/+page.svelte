@@ -94,9 +94,7 @@
 		totalWordsCount > 0 ? Math.round((masteredWordsCount / totalWordsCount) * 100) : 0
 	);
 
-	let maxActivityCount = $derived(
-		Math.max(1, ...weeklyActivity.map((a) => a.count))
-	);
+	let maxActivityCount = $derived(Math.max(1, ...weeklyActivity.map((a) => a.count)));
 
 	onMount(() => {
 		loadProgressStats();
@@ -109,15 +107,15 @@
 
 <TopHeader title="Progress" streak={streakStats.currentStreak} />
 
-<main class="flex-1 px-4 pt-3 pb-8 space-y-4">
+<main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<!-- Overall Progress Card -->
 	<section
-		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card space-y-3"
+		class="shadow-card space-y-3 rounded-3xl border border-surface-container bg-surface-container-lowest p-5"
 	>
 		<div class="flex items-center justify-between">
 			<div class="flex items-center gap-3">
 				<div
-					class="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100"
+					class="flex h-11 w-11 items-center justify-center rounded-2xl border border-emerald-100 bg-emerald-50 text-emerald-600"
 				>
 					<Flag size={22} strokeWidth={1.75} />
 				</div>
@@ -127,19 +125,26 @@
 				</div>
 			</div>
 
-			<span class="rounded-full bg-emerald-50 px-3 py-1 font-headline text-xs font-bold text-emerald-700">
+			<span
+				class="rounded-full bg-emerald-50 px-3 py-1 font-headline text-xs font-bold text-emerald-700"
+			>
 				{masteredWordsCount} of {totalWordsCount} Words
 			</span>
 		</div>
 
-		<ProgressBar value={masteredWordsCount} max={totalWordsCount} variant="emerald" height="h-2.5" />
+		<ProgressBar
+			value={masteredWordsCount}
+			max={totalWordsCount}
+			variant="emerald"
+			height="h-2.5"
+		/>
 	</section>
 
 	<!-- Key Metrics Grid -->
 	<section class="grid grid-cols-2 gap-3">
 		<!-- Accuracy Card -->
 		<div
-			class="flex flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4 shadow-card h-32"
+			class="shadow-card flex h-32 flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4"
 		>
 			<div
 				class="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-fixed text-primary"
@@ -155,7 +160,7 @@
 
 		<!-- Reviews Done Card -->
 		<div
-			class="flex flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4 shadow-card h-32"
+			class="shadow-card flex h-32 flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4"
 		>
 			<div
 				class="flex h-8 w-8 items-center justify-center rounded-xl bg-secondary-fixed text-secondary"
@@ -174,19 +179,21 @@
 
 	<!-- 7-Day Activity Chart -->
 	<section
-		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card space-y-3"
+		class="shadow-card space-y-3 rounded-3xl border border-surface-container bg-surface-container-lowest p-5"
 	>
 		<div class="flex items-center justify-between">
 			<h3 class="font-headline text-sm font-bold text-on-surface">7-Day Study Activity</h3>
 			<span class="text-xs font-semibold text-on-surface-variant">Cards per day</span>
 		</div>
 
-		<div class="flex items-end justify-between gap-2 pt-4 h-36">
+		<div class="flex h-36 items-end justify-between gap-2 pt-4">
 			{#each weeklyActivity as item}
 				{@const barHeight = Math.max(8, Math.round((item.count / maxActivityCount) * 100))}
-				<div class="flex flex-1 flex-col items-center gap-1.5 h-full justify-end">
+				<div class="flex h-full flex-1 flex-col items-center justify-end gap-1.5">
 					<span class="text-[10px] font-bold text-on-surface-variant">{item.count}</span>
-					<div class="w-full max-w-[28px] rounded-t-xl bg-surface-container-high overflow-hidden h-24 flex items-end">
+					<div
+						class="flex h-24 w-full max-w-[28px] items-end overflow-hidden rounded-t-xl bg-surface-container-high"
+					>
 						<div
 							class="w-full rounded-t-xl transition-all duration-300 {item.isToday
 								? 'bg-primary'
@@ -195,7 +202,7 @@
 						></div>
 					</div>
 					<span
-						class="text-[11px] font-headline font-bold {item.isToday
+						class="font-headline text-[11px] font-bold {item.isToday
 							? 'text-primary'
 							: 'text-on-surface-variant'}"
 					>
@@ -208,7 +215,7 @@
 
 	<!-- Word Stage Breakdown -->
 	<section
-		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card space-y-3"
+		class="shadow-card space-y-3 rounded-3xl border border-surface-container bg-surface-container-lowest p-5"
 	>
 		<h3 class="font-headline text-sm font-bold text-on-surface">Retention Breakdown</h3>
 
@@ -221,20 +228,30 @@
 				</span>
 				<span>{masteredWordsCount}</span>
 			</div>
-			<ProgressBar value={masteredWordsCount} max={totalWordsCount} variant="emerald" height="h-2" />
+			<ProgressBar
+				value={masteredWordsCount}
+				max={totalWordsCount}
+				variant="emerald"
+				height="h-2"
+			/>
 
 			<!-- Learning -->
-			<div class="flex items-center justify-between text-xs font-bold text-on-surface pt-1">
+			<div class="flex items-center justify-between pt-1 text-xs font-bold text-on-surface">
 				<span class="flex items-center gap-1.5 text-amber-600">
 					<span class="h-2 w-2 rounded-full bg-amber-500"></span>
 					Learning In Progress
 				</span>
 				<span>{learningWordsCount}</span>
 			</div>
-			<ProgressBar value={learningWordsCount} max={totalWordsCount} variant="secondary" height="h-2" />
+			<ProgressBar
+				value={learningWordsCount}
+				max={totalWordsCount}
+				variant="secondary"
+				height="h-2"
+			/>
 
 			<!-- Due -->
-			<div class="flex items-center justify-between text-xs font-bold text-on-surface pt-1">
+			<div class="flex items-center justify-between pt-1 text-xs font-bold text-on-surface">
 				<span class="flex items-center gap-1.5 text-primary">
 					<span class="h-2 w-2 rounded-full bg-primary"></span>
 					Scheduled for Review

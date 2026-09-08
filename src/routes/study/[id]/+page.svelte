@@ -70,7 +70,8 @@
 		} else {
 			const chPacks = await getBuiltinPacks('chinese');
 			const chMatch = chPacks.find(
-				(p) => p.id === deckId || p.id === `chinese-${deckId}` || p.id.replace('chinese-', '') === deckId
+				(p) =>
+					p.id === deckId || p.id === `chinese-${deckId}` || p.id.replace('chinese-', '') === deckId
 			);
 			if (chMatch) {
 				rawWords = chMatch.words;
@@ -79,7 +80,8 @@
 			} else {
 				const frPacks = await getBuiltinPacks('french');
 				const frMatch = frPacks.find(
-					(p) => p.id === deckId || p.id === `french-${deckId}` || p.id.replace('french-', '') === deckId
+					(p) =>
+						p.id === deckId || p.id === `french-${deckId}` || p.id.replace('french-', '') === deckId
 				);
 				if (frMatch) {
 					rawWords = frMatch.words;
@@ -214,7 +216,7 @@
 	<title>Studying {deckTitle} — FlashCards</title>
 </svelte:head>
 
-<div class="flex min-h-screen flex-col bg-surface justify-between">
+<div class="flex min-h-screen flex-col justify-between bg-surface">
 	<!-- Top Session Bar -->
 	<header
 		class="sticky top-0 z-20 flex items-center justify-between border-b border-surface-container bg-surface-container-lowest px-4 py-3 shadow-xs"
@@ -223,13 +225,13 @@
 			type="button"
 			onclick={() => goto(`/deck/${deckId}/preview`)}
 			aria-label="Exit Study Session"
-			class="flex h-9 w-9 items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+			class="flex h-9 w-9 items-center justify-center rounded-full text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
 		>
 			<X size={20} strokeWidth={2} />
 		</button>
 
 		<div class="flex flex-col items-center">
-			<h2 class="font-headline text-sm font-bold text-on-surface truncate max-w-[180px]">
+			<h2 class="max-w-[180px] truncate font-headline text-sm font-bold text-on-surface">
 				{deckTitle}
 			</h2>
 			<span class="text-[11px] font-semibold text-on-surface-variant">
@@ -246,19 +248,19 @@
 	</header>
 
 	<!-- Linear Progress Bar -->
-	<div class="w-full bg-surface-container-high h-1.5 overflow-hidden">
+	<div class="h-1.5 w-full overflow-hidden bg-surface-container-high">
 		<div
-			class="bg-primary-container h-full transition-all duration-300 ease-out"
+			class="h-full bg-primary-container transition-all duration-300 ease-out"
 			style="width: {cards.length > 0 ? (progressCount / cards.length) * 100 : 0}%"
 		></div>
 	</div>
 
 	<!-- Main Study Arena -->
-	<main class="flex-1 flex flex-col justify-center px-4 py-4 max-w-md mx-auto w-full">
+	<main class="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-4">
 		{#if isSessionFinished}
 			<!-- FINISHED SESSION SUMMARY -->
 			<div
-				class="rounded-3xl border border-surface-container bg-surface-container-lowest p-6 text-center shadow-xl space-y-4"
+				class="space-y-4 rounded-3xl border border-surface-container bg-surface-container-lowest p-6 text-center shadow-xl"
 			>
 				<div class="mx-auto flex h-24 w-24 items-center justify-center">
 					<img
@@ -268,7 +270,9 @@
 					/>
 				</div>
 
-				<div class="inline-flex items-center gap-1.5 rounded-full bg-primary-fixed px-3 py-1 font-headline text-xs font-bold text-primary">
+				<div
+					class="inline-flex items-center gap-1.5 rounded-full bg-primary-fixed px-3 py-1 font-headline text-xs font-bold text-primary"
+				>
 					<Award size={13} strokeWidth={2} />
 					<span>SESSION COMPLETED</span>
 				</div>
@@ -278,12 +282,12 @@
 					You completed all {cards.length} cards in this study run.
 				</p>
 
-				<div class="grid grid-cols-2 gap-3 py-3 border-y border-surface-container">
-					<div class="rounded-2xl bg-emerald-50 p-3 text-center border border-emerald-100">
+				<div class="grid grid-cols-2 gap-3 border-y border-surface-container py-3">
+					<div class="rounded-2xl border border-emerald-100 bg-emerald-50 p-3 text-center">
 						<p class="font-headline text-xl font-black text-emerald-700">{sessionCorrect}</p>
 						<p class="text-[11px] font-bold text-emerald-600">Correct Recall</p>
 					</div>
-					<div class="rounded-2xl bg-rose-50 p-3 text-center border border-rose-100">
+					<div class="rounded-2xl border border-rose-100 bg-rose-50 p-3 text-center">
 						<p class="font-headline text-xl font-black text-rose-700">{sessionWrong}</p>
 						<p class="text-[11px] font-bold text-rose-600">Needs Review</p>
 					</div>
@@ -320,12 +324,14 @@
 				/>
 
 				<!-- SRS EVALUATION CONTROLS -->
-				<div class="transition-opacity {isFlipped ? 'opacity-100' : 'opacity-40 pointer-events-none'}">
+				<div
+					class="transition-opacity {isFlipped ? 'opacity-100' : 'pointer-events-none opacity-40'}"
+				>
 					<SRSButtons onRate={handleRate} disabled={!isFlipped} progress={currentProgress} />
 				</div>
 			</div>
 		{:else}
-			<div class="text-center py-12 text-on-surface-variant">
+			<div class="py-12 text-center text-on-surface-variant">
 				<p class="font-headline text-sm font-bold">No cards available in this set.</p>
 				<button
 					type="button"

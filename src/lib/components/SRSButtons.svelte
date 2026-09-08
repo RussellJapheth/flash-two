@@ -57,7 +57,7 @@
 			type="button"
 			{disabled}
 			onclick={() => handleSelect('good')}
-			class="flex h-14 flex-col items-center justify-center rounded-2xl border border-indigo-200 bg-indigo-50 text-indigo-600 transition-all hover:bg-indigo-100 active:scale-95 disabled:opacity-50 shadow-xs"
+			class="flex h-14 flex-col items-center justify-center rounded-2xl border border-indigo-200 bg-indigo-50 text-indigo-600 shadow-xs transition-all hover:bg-indigo-100 active:scale-95 disabled:opacity-50"
 		>
 			<span class="font-headline text-xs font-bold tracking-tight">Good</span>
 			<span class="text-[10px] font-medium text-indigo-500/80">{goodDays}d</span>

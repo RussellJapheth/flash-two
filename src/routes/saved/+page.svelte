@@ -45,17 +45,24 @@
 		for (const s of savedWords) {
 			// Find word in built-in Chinese
 			const chPack = chPacks.find(
-				(p) => p.id === s.weekId || p.id === `chinese-${s.weekId}` || p.id.replace('chinese-', '') === s.weekId
+				(p) =>
+					p.id === s.weekId ||
+					p.id === `chinese-${s.weekId}` ||
+					p.id.replace('chinese-', '') === s.weekId
 			);
 			if (chPack) {
 				const word = chPack.words.find((w) => w.No === s.wordNo);
-				if (word) results.push({ packId: chPack.id, word, language: 'chinese', savedAt: s.savedAt });
+				if (word)
+					results.push({ packId: chPack.id, word, language: 'chinese', savedAt: s.savedAt });
 				continue;
 			}
 
 			// Find word in built-in French
 			const frPack = frPacks.find(
-				(p) => p.id === s.weekId || p.id === `french-${s.weekId}` || p.id.replace('french-', '') === s.weekId
+				(p) =>
+					p.id === s.weekId ||
+					p.id === `french-${s.weekId}` ||
+					p.id.replace('french-', '') === s.weekId
 			);
 			if (frPack) {
 				const word = frPack.words.find((w) => w.No === s.wordNo);
@@ -97,7 +104,7 @@
 
 <TopHeader title="Saved Words" streak={streakStats.currentStreak} showBack={true} />
 
-<main class="flex-1 px-4 pt-3 pb-8 space-y-4">
+<main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<div class="flex items-center justify-between">
 		<p class="font-headline text-xs font-bold text-on-surface-variant">
 			{savedList.length} Bookmarked Cards
@@ -108,32 +115,39 @@
 		<div
 			class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-surface-container p-10 text-center text-on-surface-variant"
 		>
-			<BookmarkIcon size={40} strokeWidth={1.25} class="text-outline mb-2" />
+			<BookmarkIcon size={40} strokeWidth={1.25} class="mb-2 text-outline" />
 			<h3 class="font-headline text-base font-bold text-on-surface">No Saved Words Yet</h3>
-			<p class="font-body text-xs mt-1 max-w-xs">
-				Tap the bookmark icon on any flashcard during your study sessions to save difficult terms here.
+			<p class="font-body mt-1 max-w-xs text-xs">
+				Tap the bookmark icon on any flashcard during your study sessions to save difficult terms
+				here.
 			</p>
 		</div>
 	{:else}
 		<div class="space-y-3">
 			{#each savedList as item (item.packId + ':' + item.word.No)}
-				{@const target = item.language === 'chinese' ? item.word['Chinese Word'] : item.word['French Word']}
+				{@const target =
+					item.language === 'chinese' ? item.word['Chinese Word'] : item.word['French Word']}
 				<div
-					class="flex items-center justify-between rounded-2xl border border-surface-container bg-surface-container-lowest p-4 shadow-card hover:border-primary/20 transition-all"
+					class="shadow-card flex items-center justify-between rounded-2xl border border-surface-container bg-surface-container-lowest p-4 transition-all hover:border-primary/20"
 				>
-					<div class="flex items-start gap-3 flex-1 min-w-0 pr-2">
+					<div class="flex min-w-0 flex-1 items-start gap-3 pr-2">
 						<button
 							type="button"
 							onclick={() => speakWord(target || '', item.language)}
 							title="Listen"
-							class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-fixed text-primary hover:bg-primary hover:text-white transition-colors"
+							class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-fixed text-primary transition-colors hover:bg-primary hover:text-white"
 						>
 							<Volume2 size={19} strokeWidth={1.75} />
 						</button>
 
 						<div class="min-w-0 flex-1">
 							<div class="flex items-center gap-2">
-								<h3 class="font-headline text-base font-bold text-on-surface truncate {item.language === 'chinese' ? 'font-hanzi' : ''}">
+								<h3
+									class="truncate font-headline text-base font-bold text-on-surface {item.language ===
+									'chinese'
+										? 'font-hanzi'
+										: ''}"
+								>
 									{target}
 								</h3>
 								{#if item.word.Pinyin}
@@ -141,7 +155,7 @@
 								{/if}
 							</div>
 
-							<p class="font-body text-xs text-on-surface-variant mt-0.5 truncate">
+							<p class="font-body mt-0.5 truncate text-xs text-on-surface-variant">
 								{item.word['English Meaning']}
 							</p>
 						</div>
@@ -151,7 +165,7 @@
 						type="button"
 						onclick={() => handleRemove(item.packId, item.word.No)}
 						title="Remove bookmark"
-						class="flex h-9 w-9 items-center justify-center rounded-full text-secondary hover:bg-surface-container transition-colors"
+						class="flex h-9 w-9 items-center justify-center rounded-full text-secondary transition-colors hover:bg-surface-container"
 					>
 						<Bookmark size={20} strokeWidth={1.75} class="fill-current" />
 					</button>

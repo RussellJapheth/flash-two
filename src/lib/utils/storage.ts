@@ -1,10 +1,4 @@
-import type {
-	WordRecord,
-	WordProgress,
-	CustomDeck,
-	SavedWord,
-	StreakStats
-} from '$lib/types';
+import type { WordRecord, WordProgress, CustomDeck, SavedWord, StreakStats } from '$lib/types';
 
 const DB_NAME = 'flashcards_db';
 const DB_VERSION = 3;

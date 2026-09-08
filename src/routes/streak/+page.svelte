@@ -79,7 +79,7 @@
 
 <TopHeader title="Habit Streak" streak={streakStats.currentStreak} showBack={true} />
 
-<main class="flex-1 px-4 pt-3 pb-8 space-y-4">
+<main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<!-- Hero Mascot & Streak Tier Card -->
 	<section
 		class="relative overflow-hidden rounded-3xl border border-surface-container bg-surface-container-lowest p-6 text-center shadow-[0_4px_24px_-4px_rgba(249,115,22,0.14)]"
@@ -100,7 +100,7 @@
 			<img
 				src="/mascots/flame.png"
 				alt="Playful 3D Flame Mascot celebrating learning streak milestone"
-				class="relative z-10 h-36 w-36 object-contain select-none drop-shadow-md transition-transform hover:scale-105 duration-300"
+				class="relative z-10 h-36 w-36 object-contain drop-shadow-md transition-transform duration-300 select-none hover:scale-105"
 			/>
 		</div>
 
@@ -114,30 +114,40 @@
 			</div>
 
 			<h2
-				class="mt-2 font-headline text-3xl font-extrabold tracking-tight text-on-surface flex items-center justify-center gap-1.5"
+				class="mt-2 flex items-center justify-center gap-1.5 font-headline text-3xl font-extrabold tracking-tight text-on-surface"
 			>
 				<span>{streakStats.currentStreak} Day Streak!</span>
 				<Flame size={26} strokeWidth={1.75} class="text-secondary" />
 			</h2>
 
-			<p class="mt-1 font-body text-xs text-on-surface-variant max-w-[260px] leading-relaxed">
-				You're on fire, <span class="font-bold text-on-surface capitalize">{username}</span>! Study daily to keep the momentum roaring.
+			<p class="font-body mt-1 max-w-[260px] text-xs leading-relaxed text-on-surface-variant">
+				You're on fire, <span class="font-bold text-on-surface capitalize">{username}</span>! Study
+				daily to keep the momentum roaring.
 			</p>
 		</div>
 
 		<!-- Next Milestone Progress Bar -->
-		<div class="mt-5 rounded-2xl bg-surface-container-low p-4 text-left border border-surface-container">
-			<div class="flex justify-between items-center text-xs font-bold text-on-surface mb-2">
+		<div
+			class="mt-5 rounded-2xl border border-surface-container bg-surface-container-low p-4 text-left"
+		>
+			<div class="mb-2 flex items-center justify-between text-xs font-bold text-on-surface">
 				<span class="flex items-center gap-1">
-				<Award size={15} strokeWidth={2} class="text-secondary" />
+					<Award size={15} strokeWidth={2} class="text-secondary" />
 					Next Goal: {nextMilestone} Days
 				</span>
-				<span class="text-secondary font-headline">{daysToMilestone} days to go</span>
+				<span class="font-headline text-secondary">{daysToMilestone} days to go</span>
 			</div>
 
-			<ProgressBar value={streakStats.currentStreak} max={nextMilestone} variant="secondary" height="h-2.5" />
+			<ProgressBar
+				value={streakStats.currentStreak}
+				max={nextMilestone}
+				variant="secondary"
+				height="h-2.5"
+			/>
 
-			<div class="flex justify-between items-center text-[10px] text-on-surface-variant font-bold mt-1.5 px-0.5">
+			<div
+				class="mt-1.5 flex items-center justify-between px-0.5 text-[10px] font-bold text-on-surface-variant"
+			>
 				<span>Day {streakStats.currentStreak}</span>
 				<span class="text-on-surface">{milestonePercent}% Complete</span>
 				<span>Day {nextMilestone}</span>
@@ -147,17 +157,17 @@
 
 	<!-- Streak Freeze Protection Card -->
 	<section
-		class="flex items-center justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4 shadow-card"
+		class="shadow-card flex items-center justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4"
 	>
 		<div class="flex items-center gap-3">
 			<div
-				class="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 border border-blue-100"
+				class="flex h-11 w-11 items-center justify-center rounded-2xl border border-blue-100 bg-blue-50 text-blue-600"
 			>
 				<Snowflake size={22} strokeWidth={1.75} />
 			</div>
 			<div>
 				<h3 class="font-headline text-xs font-bold text-on-surface">Streak Freeze Shield</h3>
-				<p class="text-[11px] text-on-surface-variant font-medium">
+				<p class="text-[11px] font-medium text-on-surface-variant">
 					{streakStats.freezeCount} Freezes remaining this month
 				</p>
 			</div>
@@ -170,7 +180,7 @@
 
 	<!-- This Week Habit Tracker -->
 	<section
-		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-4 shadow-card space-y-3"
+		class="shadow-card space-y-3 rounded-3xl border border-surface-container bg-surface-container-lowest p-4"
 	>
 		<div class="flex items-center justify-between">
 			<h3 class="font-headline text-sm font-bold text-on-surface">This Week's Activity</h3>
@@ -183,7 +193,7 @@
 			</button>
 		</div>
 
-		<div class="grid grid-cols-7 gap-1.5 text-center pt-1">
+		<div class="grid grid-cols-7 gap-1.5 pt-1 text-center">
 			{#each weekActiveStates() as item}
 				<div class="flex flex-col items-center gap-1">
 					<span class="font-headline text-[10px] font-bold text-on-surface-variant uppercase">
@@ -191,7 +201,7 @@
 					</span>
 					<div
 						class="flex h-10 w-9 items-center justify-center rounded-2xl text-xs font-bold transition-transform {item.isActive
-							? 'bg-secondary text-white shadow-streak-glow scale-105'
+							? 'shadow-streak-glow scale-105 bg-secondary text-white'
 							: item.isToday
 								? 'bg-primary-fixed text-primary ring-2 ring-primary ring-offset-1'
 								: item.isFuture
@@ -214,9 +224,11 @@
 	<!-- Key Habit Stats Grid -->
 	<div class="grid grid-cols-2 gap-3">
 		<div
-			class="flex flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4 shadow-card h-28"
+			class="shadow-card flex h-28 flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4"
 		>
-			<div class="flex h-8 w-8 items-center justify-center rounded-xl bg-secondary-fixed text-secondary">
+			<div
+				class="flex h-8 w-8 items-center justify-center rounded-xl bg-secondary-fixed text-secondary"
+			>
 				<Trophy size={17} strokeWidth={1.75} />
 			</div>
 			<div>
@@ -228,9 +240,11 @@
 		</div>
 
 		<div
-			class="flex flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4 shadow-card h-28"
+			class="shadow-card flex h-28 flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4"
 		>
-			<div class="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-fixed text-primary">
+			<div
+				class="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-fixed text-primary"
+			>
 				<Calendar size={17} strokeWidth={1.75} />
 			</div>
 			<div>

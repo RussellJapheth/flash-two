@@ -56,7 +56,8 @@
 			// Check Chinese packs then French packs
 			const chPacks = await getBuiltinPacks('chinese');
 			const chMatch = chPacks.find(
-				(p) => p.id === deckId || p.id === `chinese-${deckId}` || p.id.replace('chinese-', '') === deckId
+				(p) =>
+					p.id === deckId || p.id === `chinese-${deckId}` || p.id.replace('chinese-', '') === deckId
 			);
 			if (chMatch) {
 				foundWords = chMatch.words;
@@ -65,7 +66,8 @@
 			} else {
 				const frPacks = await getBuiltinPacks('french');
 				const frMatch = frPacks.find(
-					(p) => p.id === deckId || p.id === `french-${deckId}` || p.id.replace('french-', '') === deckId
+					(p) =>
+						p.id === deckId || p.id === `french-${deckId}` || p.id.replace('french-', '') === deckId
 				);
 				if (frMatch) {
 					foundWords = frMatch.words;
@@ -115,14 +117,14 @@
 
 <TopHeader title="Deck Overview" showBack={true} streak={streakStats.currentStreak} />
 
-<main class="flex-1 px-4 pt-3 pb-8 space-y-4">
+<main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<!-- Deck Summary Hero -->
 	<section
-		class="relative overflow-hidden rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card"
+		class="shadow-card relative overflow-hidden rounded-3xl border border-surface-container bg-surface-container-lowest p-5"
 	>
 		<div class="flex items-center justify-between">
 			<span
-				class="rounded-full px-3 py-1 font-headline text-xs font-bold uppercase tracking-wider {deckLanguage ===
+				class="rounded-full px-3 py-1 font-headline text-xs font-bold tracking-wider uppercase {deckLanguage ===
 				'french'
 					? 'bg-secondary-fixed text-on-secondary-fixed'
 					: 'bg-primary-fixed text-primary'}"
@@ -141,7 +143,7 @@
 
 		<!-- Progress Bar -->
 		<div class="mt-4">
-			<div class="flex justify-between text-xs font-bold text-on-surface mb-1">
+			<div class="mb-1 flex justify-between text-xs font-bold text-on-surface">
 				<span>Mastery</span>
 				<span class="text-tertiary-container">{masteredCount} / {words.length} cards</span>
 			</div>
@@ -149,7 +151,7 @@
 		</div>
 
 		<!-- Card status breakdown badges -->
-		<div class="mt-4 grid grid-cols-3 gap-2 pt-3 border-t border-surface-container">
+		<div class="mt-4 grid grid-cols-3 gap-2 border-t border-surface-container pt-3">
 			<div class="rounded-2xl bg-surface-container-low p-2.5 text-center">
 				<p class="font-headline text-lg font-extrabold text-primary">{dueCount}</p>
 				<p class="text-[10px] font-semibold text-on-surface-variant uppercase">Due Review</p>
@@ -167,18 +169,18 @@
 
 	<!-- Study Mode Options -->
 	<section
-		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card space-y-4"
+		class="shadow-card space-y-4 rounded-3xl border border-surface-container bg-surface-container-lowest p-5"
 	>
 		<h3 class="font-headline text-base font-bold text-on-surface">Session Preferences</h3>
 
 		<!-- Study Mode Selection -->
 		<div>
-			<span class="font-headline text-xs font-bold text-on-surface block">Study Mode</span>
+			<span class="block font-headline text-xs font-bold text-on-surface">Study Mode</span>
 			<div class="mt-2 grid grid-cols-3 gap-2">
 				<button
 					type="button"
 					onclick={() => (studyMode = 'srs')}
-					class="flex flex-col items-center justify-center rounded-2xl p-3 text-center border transition-all {studyMode ===
+					class="flex flex-col items-center justify-center rounded-2xl border p-3 text-center transition-all {studyMode ===
 					'srs'
 						? 'border-primary bg-primary-fixed/30 text-primary ring-2 ring-primary/20'
 						: 'border-surface-container bg-surface-container-low text-on-surface-variant'}"
@@ -191,7 +193,7 @@
 				<button
 					type="button"
 					onclick={() => (studyMode = 'all')}
-					class="flex flex-col items-center justify-center rounded-2xl p-3 text-center border transition-all {studyMode ===
+					class="flex flex-col items-center justify-center rounded-2xl border p-3 text-center transition-all {studyMode ===
 					'all'
 						? 'border-primary bg-primary-fixed/30 text-primary ring-2 ring-primary/20'
 						: 'border-surface-container bg-surface-container-low text-on-surface-variant'}"
@@ -204,7 +206,7 @@
 				<button
 					type="button"
 					onclick={() => (studyMode = 'weak')}
-					class="flex flex-col items-center justify-center rounded-2xl p-3 text-center border transition-all {studyMode ===
+					class="flex flex-col items-center justify-center rounded-2xl border p-3 text-center transition-all {studyMode ===
 					'weak'
 						? 'border-primary bg-primary-fixed/30 text-primary ring-2 ring-primary/20'
 						: 'border-surface-container bg-surface-container-low text-on-surface-variant'}"
@@ -218,7 +220,7 @@
 
 		<!-- Card Count Limits -->
 		<div>
-			<span class="font-headline text-xs font-bold text-on-surface block">Cards per Session</span>
+			<span class="block font-headline text-xs font-bold text-on-surface">Cards per Session</span>
 			<div class="mt-2 flex gap-2">
 				{#each [10, 20, 30, 0] as limit}
 					<button
@@ -240,7 +242,9 @@
 			<div class="flex items-center justify-between pt-2">
 				<div>
 					<p class="font-headline text-xs font-bold text-on-surface">Show Pinyin Guide</p>
-					<p class="text-[11px] text-on-surface-variant">Display romanized pronunciation on front</p>
+					<p class="text-[11px] text-on-surface-variant">
+						Display romanized pronunciation on front
+					</p>
 				</div>
 				<button
 					type="button"

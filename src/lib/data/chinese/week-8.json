@@ -1,202 +1,202 @@
 [
-  {
-    "No": 1,
-    "Chinese Word": "真的吗？",
-    "Pinyin": "zhēn de ma",
-    "Part of Speech": "Question",
-    "English Meaning": "Really? Is that true?",
-    "Example (Chinese + Pinyin)": "(Zhēn de ma? Wǒ bù gǎn xiāngxìn.) (Really? I can't believe it.)"
-  },
-  {
-    "No": 2,
-    "Chinese Word": "这个孩子",
-    "Pinyin": "zhège háizi",
-    "Part of Speech": "Noun Phrase",
-    "English Meaning": "This child / this kid",
-    "Example (Chinese + Pinyin)": "(Zhège háizi hěn cōngming.) (This child is very smart.)"
-  },
-  {
-    "No": 3,
-    "Chinese Word": "在",
-    "Pinyin": "zài",
-    "Part of Speech": "Preposition / Verb",
-    "English Meaning": "At; in; doing (ongoing action)",
-    "Example (Chinese + Pinyin)": "(Wǒ zài jiā.) (I am at home.)"
-  },
-  {
-    "No": 4,
-    "Chinese Word": "你在说什么？",
-    "Pinyin": "nǐ zài shuō shénme",
-    "Part of Speech": "Question Phrase",
-    "English Meaning": "What are you talking about?",
-    "Example (Chinese + Pinyin)": "(Nǐ zài shuō shénme? Wǒ tīng bù dǒng.) (What are you talking about? I don't understand.)"
-  },
-  {
-    "No": 5,
-    "Chinese Word": "我挺好的",
-    "Pinyin": "wǒ tǐng hǎo de",
-    "Part of Speech": "Expression",
-    "English Meaning": "I'm doing pretty well",
-    "Example (Chinese + Pinyin)": "(Xièxie, wǒ tǐng hǎo de.) (Thanks, I'm doing well.)"
-  },
-  {
-    "No": 6,
-    "Chinese Word": "你怎么来了？",
-    "Pinyin": "nǐ zěnme lái le",
-    "Part of Speech": "Question Phrase",
-    "English Meaning": "What brings you here?",
-    "Example (Chinese + Pinyin)": "(Nǐ zěnme lái le?) (How come you're here?)"
-  },
-  {
-    "No": 7,
-    "Chinese Word": "大家好吗？",
-    "Pinyin": "dàjiā hǎo ma",
-    "Part of Speech": "Question / Greeting",
-    "English Meaning": "Is everyone well?",
-    "Example (Chinese + Pinyin)": "(Dàjiā hǎo ma?) (Is everyone okay?)"
-  },
-  {
-    "No": 8,
-    "Chinese Word": "我不问",
-    "Pinyin": "wǒ bù wèn",
-    "Part of Speech": "Phrase",
-    "English Meaning": "I won't ask",
-    "Example (Chinese + Pinyin)": "(Hǎo ba, wǒ bù wèn.) (Okay, I won't ask.)"
-  },
-  {
-    "No": 9,
-    "Chinese Word": "我听不清",
-    "Pinyin": "wǒ tīng bù qīng",
-    "Part of Speech": "Expression",
-    "English Meaning": "I can't hear clearly",
-    "Example (Chinese + Pinyin)": "(Qǐng zài shuō yí biàn, wǒ tīng bù qīng.) (Please say it again.)"
-  },
-  {
-    "No": 10,
-    "Chinese Word": "你为什么不告诉我？",
-    "Pinyin": "nǐ wèishénme bù gàosu wǒ",
-    "Part of Speech": "Question Phrase",
-    "English Meaning": "Why didn't you tell me?",
-    "Example (Chinese + Pinyin)": "(Nǐ wèishénme bù gàosu wǒ?) (Why didn't you tell me?)"
-  },
-  {
-    "No": 11,
-    "Chinese Word": "本书",
-    "Pinyin": "běn shū",
-    "Part of Speech": "Noun Phrase",
-    "English Meaning": "This book; the book",
-    "Example (Chinese + Pinyin)": "(Wǒ xǐhuān zhè běn shū.) (I like this book.)"
-  },
-  {
-    "No": 12,
-    "Chinese Word": "这两个孩子",
-    "Pinyin": "zhè liǎng ge háizi",
-    "Part of Speech": "Noun Phrase",
-    "English Meaning": "These two children",
-    "Example (Chinese + Pinyin)": "(Zhè liǎng ge háizi hěn kě'ài.) (These two children are cute.)"
-  },
-  {
-    "No": 13,
-    "Chinese Word": "两年可以",
-    "Pinyin": "liǎng nián kěyǐ",
-    "Part of Speech": "Phrase",
-    "English Meaning": "Two years is possible",
-    "Example (Chinese + Pinyin)": "(Liǎng nián kěyǐ.) (Two years is possible.)"
-  },
-  {
-    "No": 14,
-    "Chinese Word": "你不记得吗？",
-    "Pinyin": "nǐ bù jìde ma",
-    "Part of Speech": "Question Phrase",
-    "English Meaning": "Don't you remember?",
-    "Example (Chinese + Pinyin)": "(Nǐ bù jìde ma?) (Don't you remember?)"
-  },
-  {
-    "No": 15,
-    "Chinese Word": "请快一点",
-    "Pinyin": "qǐng kuài yìdiǎn",
-    "Part of Speech": "Request",
-    "English Meaning": "Please hurry up",
-    "Example (Chinese + Pinyin)": "(Qǐng kuài yìdiǎn.) (Please hurry up.)"
-  },
-  {
-    "No": 16,
-    "Chinese Word": "一下",
-    "Pinyin": "yíxià",
-    "Part of Speech": "Adverb",
-    "English Meaning": "A moment; a bit",
-    "Example (Chinese + Pinyin)": "(Děng yíxià.) (Wait a moment.)"
-  },
-  {
-    "No": 17,
-    "Chinese Word": "这是",
-    "Pinyin": "zhè shì",
-    "Part of Speech": "Phrase",
-    "English Meaning": "This is",
-    "Example (Chinese + Pinyin)": "(Zhè shì wǒ de péngyǒu.) (This is my friend.)"
-  },
-  {
-    "No": 18,
-    "Chinese Word": "怎么办？",
-    "Pinyin": "zěnme bàn",
-    "Part of Speech": "Question Phrase",
-    "English Meaning": "What should I do?",
-    "Example (Chinese + Pinyin)": "(Wǒ wàng le, zěnme bàn?) (I forgot, what should I do?)"
-  },
-  {
-    "No": 19,
-    "Chinese Word": "这位",
-    "Pinyin": "zhè wèi",
-    "Part of Speech": "Noun Phrase",
-    "English Meaning": "This person (polite)",
-    "Example (Chinese + Pinyin)": "(Zhè wèi shì wǒ de lǎoshī.) (This is my teacher.)"
-  },
-  {
-    "No": 20,
-    "Chinese Word": "你做得非常好",
-    "Pinyin": "nǐ zuò de fēicháng hǎo",
-    "Part of Speech": "Praise / Expression",
-    "English Meaning": "You did very well",
-    "Example (Chinese + Pinyin)": "(Nǐ zuò de fēicháng hǎo!) (You did an excellent job!)"
-  },
-  {
-    "No": 21,
-    "Chinese Word": "请看这个",
-    "Pinyin": "qǐng kàn zhège",
-    "Part of Speech": "Instruction",
-    "English Meaning": "Please look at this",
-    "Example (Chinese + Pinyin)": "(Qǐng kàn zhège.) (Please look at this.)"
-  },
-  {
-    "No": 22,
-    "Chinese Word": "你觉得呢？",
-    "Pinyin": "nǐ juéde ne",
-    "Part of Speech": "Question Phrase",
-    "English Meaning": "What do you think?",
-    "Example (Chinese + Pinyin)": "(Wǒ shuō wán le, nǐ juéde ne?) (I've finished speaking, what do you think?)"
-  },
-  {
-    "No": 23,
-    "Chinese Word": "为什么",
-    "Pinyin": "wèishénme",
-    "Part of Speech": "Question Word",
-    "English Meaning": "Why?",
-    "Example (Chinese + Pinyin)": "(Wèishénme nǐ lái?) (Why did you come?)"
-  },
-  {
-    "No": 24,
-    "Chinese Word": "你看我干什么？",
-    "Pinyin": "nǐ kàn wǒ gànshénme",
-    "Part of Speech": "Question Phrase",
-    "English Meaning": "Why are you looking at me?",
-    "Example (Chinese + Pinyin)": "(Nǐ kàn wǒ gànshénme?) (Why are you looking at me?)"
-  },
-  {
-    "No": 25,
-    "Chinese Word": "我们以后再说",
-    "Pinyin": "wǒmen yǐhòu zài shuō",
-    "Part of Speech": "Expression",
-    "English Meaning": "We'll talk about it later",
-    "Example (Chinese + Pinyin)": "(Zhège wèntí, wǒmen yǐhòu zài shuō.) (We'll discuss this later.)"
-  }
+	{
+		"No": 1,
+		"Chinese Word": "真的吗？",
+		"Pinyin": "zhēn de ma",
+		"Part of Speech": "Question",
+		"English Meaning": "Really? Is that true?",
+		"Example (Chinese + Pinyin)": "(Zhēn de ma? Wǒ bù gǎn xiāngxìn.) (Really? I can't believe it.)"
+	},
+	{
+		"No": 2,
+		"Chinese Word": "这个孩子",
+		"Pinyin": "zhège háizi",
+		"Part of Speech": "Noun Phrase",
+		"English Meaning": "This child / this kid",
+		"Example (Chinese + Pinyin)": "(Zhège háizi hěn cōngming.) (This child is very smart.)"
+	},
+	{
+		"No": 3,
+		"Chinese Word": "在",
+		"Pinyin": "zài",
+		"Part of Speech": "Preposition / Verb",
+		"English Meaning": "At; in; doing (ongoing action)",
+		"Example (Chinese + Pinyin)": "(Wǒ zài jiā.) (I am at home.)"
+	},
+	{
+		"No": 4,
+		"Chinese Word": "你在说什么？",
+		"Pinyin": "nǐ zài shuō shénme",
+		"Part of Speech": "Question Phrase",
+		"English Meaning": "What are you talking about?",
+		"Example (Chinese + Pinyin)": "(Nǐ zài shuō shénme? Wǒ tīng bù dǒng.) (What are you talking about? I don't understand.)"
+	},
+	{
+		"No": 5,
+		"Chinese Word": "我挺好的",
+		"Pinyin": "wǒ tǐng hǎo de",
+		"Part of Speech": "Expression",
+		"English Meaning": "I'm doing pretty well",
+		"Example (Chinese + Pinyin)": "(Xièxie, wǒ tǐng hǎo de.) (Thanks, I'm doing well.)"
+	},
+	{
+		"No": 6,
+		"Chinese Word": "你怎么来了？",
+		"Pinyin": "nǐ zěnme lái le",
+		"Part of Speech": "Question Phrase",
+		"English Meaning": "What brings you here?",
+		"Example (Chinese + Pinyin)": "(Nǐ zěnme lái le?) (How come you're here?)"
+	},
+	{
+		"No": 7,
+		"Chinese Word": "大家好吗？",
+		"Pinyin": "dàjiā hǎo ma",
+		"Part of Speech": "Question / Greeting",
+		"English Meaning": "Is everyone well?",
+		"Example (Chinese + Pinyin)": "(Dàjiā hǎo ma?) (Is everyone okay?)"
+	},
+	{
+		"No": 8,
+		"Chinese Word": "我不问",
+		"Pinyin": "wǒ bù wèn",
+		"Part of Speech": "Phrase",
+		"English Meaning": "I won't ask",
+		"Example (Chinese + Pinyin)": "(Hǎo ba, wǒ bù wèn.) (Okay, I won't ask.)"
+	},
+	{
+		"No": 9,
+		"Chinese Word": "我听不清",
+		"Pinyin": "wǒ tīng bù qīng",
+		"Part of Speech": "Expression",
+		"English Meaning": "I can't hear clearly",
+		"Example (Chinese + Pinyin)": "(Qǐng zài shuō yí biàn, wǒ tīng bù qīng.) (Please say it again.)"
+	},
+	{
+		"No": 10,
+		"Chinese Word": "你为什么不告诉我？",
+		"Pinyin": "nǐ wèishénme bù gàosu wǒ",
+		"Part of Speech": "Question Phrase",
+		"English Meaning": "Why didn't you tell me?",
+		"Example (Chinese + Pinyin)": "(Nǐ wèishénme bù gàosu wǒ?) (Why didn't you tell me?)"
+	},
+	{
+		"No": 11,
+		"Chinese Word": "本书",
+		"Pinyin": "běn shū",
+		"Part of Speech": "Noun Phrase",
+		"English Meaning": "This book; the book",
+		"Example (Chinese + Pinyin)": "(Wǒ xǐhuān zhè běn shū.) (I like this book.)"
+	},
+	{
+		"No": 12,
+		"Chinese Word": "这两个孩子",
+		"Pinyin": "zhè liǎng ge háizi",
+		"Part of Speech": "Noun Phrase",
+		"English Meaning": "These two children",
+		"Example (Chinese + Pinyin)": "(Zhè liǎng ge háizi hěn kě'ài.) (These two children are cute.)"
+	},
+	{
+		"No": 13,
+		"Chinese Word": "两年可以",
+		"Pinyin": "liǎng nián kěyǐ",
+		"Part of Speech": "Phrase",
+		"English Meaning": "Two years is possible",
+		"Example (Chinese + Pinyin)": "(Liǎng nián kěyǐ.) (Two years is possible.)"
+	},
+	{
+		"No": 14,
+		"Chinese Word": "你不记得吗？",
+		"Pinyin": "nǐ bù jìde ma",
+		"Part of Speech": "Question Phrase",
+		"English Meaning": "Don't you remember?",
+		"Example (Chinese + Pinyin)": "(Nǐ bù jìde ma?) (Don't you remember?)"
+	},
+	{
+		"No": 15,
+		"Chinese Word": "请快一点",
+		"Pinyin": "qǐng kuài yìdiǎn",
+		"Part of Speech": "Request",
+		"English Meaning": "Please hurry up",
+		"Example (Chinese + Pinyin)": "(Qǐng kuài yìdiǎn.) (Please hurry up.)"
+	},
+	{
+		"No": 16,
+		"Chinese Word": "一下",
+		"Pinyin": "yíxià",
+		"Part of Speech": "Adverb",
+		"English Meaning": "A moment; a bit",
+		"Example (Chinese + Pinyin)": "(Děng yíxià.) (Wait a moment.)"
+	},
+	{
+		"No": 17,
+		"Chinese Word": "这是",
+		"Pinyin": "zhè shì",
+		"Part of Speech": "Phrase",
+		"English Meaning": "This is",
+		"Example (Chinese + Pinyin)": "(Zhè shì wǒ de péngyǒu.) (This is my friend.)"
+	},
+	{
+		"No": 18,
+		"Chinese Word": "怎么办？",
+		"Pinyin": "zěnme bàn",
+		"Part of Speech": "Question Phrase",
+		"English Meaning": "What should I do?",
+		"Example (Chinese + Pinyin)": "(Wǒ wàng le, zěnme bàn?) (I forgot, what should I do?)"
+	},
+	{
+		"No": 19,
+		"Chinese Word": "这位",
+		"Pinyin": "zhè wèi",
+		"Part of Speech": "Noun Phrase",
+		"English Meaning": "This person (polite)",
+		"Example (Chinese + Pinyin)": "(Zhè wèi shì wǒ de lǎoshī.) (This is my teacher.)"
+	},
+	{
+		"No": 20,
+		"Chinese Word": "你做得非常好",
+		"Pinyin": "nǐ zuò de fēicháng hǎo",
+		"Part of Speech": "Praise / Expression",
+		"English Meaning": "You did very well",
+		"Example (Chinese + Pinyin)": "(Nǐ zuò de fēicháng hǎo!) (You did an excellent job!)"
+	},
+	{
+		"No": 21,
+		"Chinese Word": "请看这个",
+		"Pinyin": "qǐng kàn zhège",
+		"Part of Speech": "Instruction",
+		"English Meaning": "Please look at this",
+		"Example (Chinese + Pinyin)": "(Qǐng kàn zhège.) (Please look at this.)"
+	},
+	{
+		"No": 22,
+		"Chinese Word": "你觉得呢？",
+		"Pinyin": "nǐ juéde ne",
+		"Part of Speech": "Question Phrase",
+		"English Meaning": "What do you think?",
+		"Example (Chinese + Pinyin)": "(Wǒ shuō wán le, nǐ juéde ne?) (I've finished speaking, what do you think?)"
+	},
+	{
+		"No": 23,
+		"Chinese Word": "为什么",
+		"Pinyin": "wèishénme",
+		"Part of Speech": "Question Word",
+		"English Meaning": "Why?",
+		"Example (Chinese + Pinyin)": "(Wèishénme nǐ lái?) (Why did you come?)"
+	},
+	{
+		"No": 24,
+		"Chinese Word": "你看我干什么？",
+		"Pinyin": "nǐ kàn wǒ gànshénme",
+		"Part of Speech": "Question Phrase",
+		"English Meaning": "Why are you looking at me?",
+		"Example (Chinese + Pinyin)": "(Nǐ kàn wǒ gànshénme?) (Why are you looking at me?)"
+	},
+	{
+		"No": 25,
+		"Chinese Word": "我们以后再说",
+		"Pinyin": "wǒmen yǐhòu zài shuō",
+		"Part of Speech": "Expression",
+		"English Meaning": "We'll talk about it later",
+		"Example (Chinese + Pinyin)": "(Zhège wèntí, wǒmen yǐhòu zài shuō.) (We'll discuss this later.)"
+	}
 ]

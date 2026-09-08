@@ -12,14 +12,20 @@
 		saveCustomDeck,
 		computeStreakStats
 	} from '$lib/utils/storage';
-	import {
-		pullAndMerge,
-		pushData,
-		subscribeSyncStatus
-	} from '$lib/utils/cloud';
+	import { pullAndMerge, pushData, subscribeSyncStatus } from '$lib/utils/cloud';
 	import { speakWord } from '$lib/utils/audio';
 	import type { SyncStatus, AppBackup, StreakStats } from '$lib/types';
-	import { Globe, Bell, CloudCog, Download, Upload, HelpCircle, Info, BookOpen, ChevronRight } from 'lucide-svelte';
+	import {
+		Globe,
+		Bell,
+		CloudCog,
+		Download,
+		Upload,
+		HelpCircle,
+		Info,
+		BookOpen,
+		ChevronRight
+	} from 'lucide-svelte';
 
 	let username = $state('russell');
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
@@ -176,14 +182,14 @@
 		<h1 class="font-sans text-2xl font-bold text-gray-900">Settings</h1>
 	</header>
 
-	<main class="flex-1 px-4 pb-10 space-y-4 pt-4">
+	<main class="flex-1 space-y-4 px-4 pt-4 pb-10">
 		<!-- ── Profile Card ── -->
 		<section class="rounded-3xl bg-white p-5 shadow-sm">
 			<div class="flex items-center justify-between">
 				<div class="flex items-center gap-3.5">
 					<!-- Avatar -->
 					<div
-						class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-xl uppercase shadow-inner"
+						class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xl font-bold text-indigo-600 uppercase shadow-inner"
 					>
 						{username ? username[0] : 'U'}
 					</div>
@@ -213,7 +219,7 @@
 							</div>
 						{:else}
 							<p class="text-base font-bold text-gray-900 capitalize">{username}</p>
-							<p class="text-xs text-gray-400 mt-0.5">Go further, one card at a time.</p>
+							<p class="mt-0.5 text-xs text-gray-400">Go further, one card at a time.</p>
 						{/if}
 					</div>
 				</div>
@@ -223,7 +229,7 @@
 						type="button"
 						onclick={() => (isEditingUsername = true)}
 						aria-label="Edit username"
-						class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 active:scale-95 transition-colors"
+						class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 active:scale-95"
 					>
 						<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300" />
 					</button>
@@ -232,13 +238,13 @@
 		</section>
 
 		<!-- ── Settings Rows ── -->
-		<section class="rounded-3xl bg-white shadow-sm overflow-hidden divide-y divide-gray-100">
+		<section class="divide-y divide-gray-100 overflow-hidden rounded-3xl bg-white shadow-sm">
 			<!-- Language -->
 			<button
 				type="button"
 				id="settings-language-toggle"
 				onclick={() => (isLanguageExpanded = !isLanguageExpanded)}
-				class="flex w-full items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+				class="flex w-full items-center justify-between px-5 py-4 text-left transition-colors hover:bg-gray-50"
 			>
 				<div class="flex items-center gap-3.5">
 					<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-red-100 text-red-500">
@@ -248,19 +254,25 @@
 				</div>
 				<div class="flex items-center gap-2">
 					<span class="text-sm text-gray-400">{languageLabel}</span>
-					<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300 transition-transform duration-200 {isLanguageExpanded ? 'rotate-90' : ''}" />
+					<ChevronRight
+						size={18}
+						strokeWidth={1.75}
+						class="text-gray-300 transition-transform duration-200 {isLanguageExpanded
+							? 'rotate-90'
+							: ''}"
+					/>
 				</div>
 			</button>
 
 			{#if isLanguageExpanded}
-				<div class="px-5 py-3 bg-gray-50 flex gap-2">
+				<div class="flex gap-2 bg-gray-50 px-5 py-3">
 					<button
 						type="button"
 						onclick={() => handleLanguageChange('chinese')}
 						class="flex-1 rounded-full py-2 text-sm font-bold transition-all {activeLanguage ===
 						'chinese'
 							? 'bg-indigo-600 text-white shadow-sm'
-							: 'bg-white text-gray-500 border border-gray-200'}"
+							: 'border border-gray-200 bg-white text-gray-500'}"
 					>
 						Chinese
 					</button>
@@ -270,7 +282,7 @@
 						class="flex-1 rounded-full py-2 text-sm font-bold transition-all {activeLanguage ===
 						'french'
 							? 'bg-indigo-600 text-white shadow-sm'
-							: 'bg-white text-gray-500 border border-gray-200'}"
+							: 'border border-gray-200 bg-white text-gray-500'}"
 					>
 						French
 					</button>
@@ -282,7 +294,7 @@
 				type="button"
 				id="settings-tts-test"
 				onclick={handleTestTTS}
-				class="flex w-full items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors"
+				class="flex w-full items-center justify-between px-5 py-4 transition-colors hover:bg-gray-50"
 			>
 				<div class="flex items-center gap-3.5">
 					<div
@@ -303,7 +315,7 @@
 				type="button"
 				id="settings-sync-toggle"
 				onclick={() => (isSyncExpanded = !isSyncExpanded)}
-				class="flex w-full items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+				class="flex w-full items-center justify-between px-5 py-4 text-left transition-colors hover:bg-gray-50"
 			>
 				<div class="flex items-center gap-3.5">
 					<div
@@ -323,20 +335,26 @@
 					>
 						{syncStatusLabel}
 					</span>
-					<ChevronRight size={18} strokeWidth={1.75} class="text-gray-300 transition-transform duration-200 {isSyncExpanded ? 'rotate-90' : ''}" />
+					<ChevronRight
+						size={18}
+						strokeWidth={1.75}
+						class="text-gray-300 transition-transform duration-200 {isSyncExpanded
+							? 'rotate-90'
+							: ''}"
+					/>
 				</div>
 			</button>
 
 			{#if isSyncExpanded}
-				<div class="px-5 py-3 bg-gray-50 space-y-2">
+				<div class="space-y-2 bg-gray-50 px-5 py-3">
 					{#if syncMessage}
-						<p class="text-xs font-semibold text-indigo-600 pb-1">{syncMessage}</p>
+						<p class="pb-1 text-xs font-semibold text-indigo-600">{syncMessage}</p>
 					{/if}
 					<div class="grid grid-cols-2 gap-2">
 						<button
 							type="button"
 							onclick={handleManualPush}
-							class="flex h-10 items-center justify-center gap-1.5 rounded-2xl bg-indigo-600 font-sans text-xs font-bold text-white shadow-sm hover:bg-indigo-700 active:scale-95 transition-all"
+							class="flex h-10 items-center justify-center gap-1.5 rounded-2xl bg-indigo-600 font-sans text-xs font-bold text-white shadow-sm transition-all hover:bg-indigo-700 active:scale-95"
 						>
 							<Upload size={14} strokeWidth={2} />
 							Push
@@ -344,7 +362,7 @@
 						<button
 							type="button"
 							onclick={handleManualPull}
-							class="flex h-10 items-center justify-center gap-1.5 rounded-2xl bg-white border border-gray-200 font-sans text-xs font-bold text-gray-700 hover:bg-gray-50 active:scale-95 transition-all"
+							class="flex h-10 items-center justify-center gap-1.5 rounded-2xl border border-gray-200 bg-white font-sans text-xs font-bold text-gray-700 transition-all hover:bg-gray-50 active:scale-95"
 						>
 							<Download size={14} strokeWidth={2} />
 							Pull & Merge
@@ -358,7 +376,7 @@
 				type="button"
 				id="settings-export-backup"
 				onclick={handleExportBackup}
-				class="flex w-full items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors"
+				class="flex w-full items-center justify-between px-5 py-4 transition-colors hover:bg-gray-50"
 			>
 				<div class="flex items-center gap-3.5">
 					<div
@@ -374,7 +392,7 @@
 			<!-- Import / Restore -->
 			<label
 				id="settings-import-backup"
-				class="flex w-full cursor-pointer items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors"
+				class="flex w-full cursor-pointer items-center justify-between px-5 py-4 transition-colors hover:bg-gray-50"
 			>
 				<div class="flex items-center gap-3.5">
 					<div
@@ -391,9 +409,7 @@
 			<!-- Help & Support -->
 			<div class="flex items-center justify-between px-5 py-4">
 				<div class="flex items-center gap-3.5">
-					<div
-						class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-500"
-					>
+					<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-500">
 						<HelpCircle size={18} strokeWidth={1.75} />
 					</div>
 					<span class="text-sm font-semibold text-gray-800">Help & Support</span>
@@ -418,17 +434,17 @@
 		</section>
 
 		<!-- ── Motivational Footer Card ── -->
-		<section class="rounded-3xl bg-white px-5 py-6 shadow-sm text-center space-y-2">
+		<section class="space-y-2 rounded-3xl bg-white px-5 py-6 text-center shadow-sm">
 			<div
 				class="mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600"
 			>
 				<BookOpen size={30} strokeWidth={1.5} />
 			</div>
-			<p class="font-bold text-gray-900 text-base">Better every day</p>
-			<p class="text-xs text-gray-400 leading-relaxed">Your future self will thank you.</p>
+			<p class="text-base font-bold text-gray-900">Better every day</p>
+			<p class="text-xs leading-relaxed text-gray-400">Your future self will thank you.</p>
 
 			<!-- App version -->
-			<p class="text-[11px] text-gray-300 pt-2 font-medium">
+			<p class="pt-2 text-[11px] font-medium text-gray-300">
 				FlashCards v1.0 · PWA · SM-2 SRS · Offline
 			</p>
 		</section>

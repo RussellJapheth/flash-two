@@ -56,9 +56,7 @@
 
 		const packs = await getBuiltinPacks(activeLanguage);
 		const customDecks = await getAllCustomDecks();
-		const matchingCustom = customDecks.filter(
-			(d) => !d.language || d.language === activeLanguage
-		);
+		const matchingCustom = customDecks.filter((d) => !d.language || d.language === activeLanguage);
 
 		const weakItems: PracticeItem[] = [];
 
@@ -157,7 +155,7 @@
 	<title>Practice Weak Cards — FlashCards</title>
 </svelte:head>
 
-<div class="flex min-h-screen flex-col bg-surface justify-between">
+<div class="flex min-h-screen flex-col justify-between bg-surface">
 	<header
 		class="sticky top-0 z-20 flex items-center justify-between border-b border-surface-container bg-surface-container-lowest px-4 py-3 shadow-xs"
 	>
@@ -165,7 +163,7 @@
 			type="button"
 			onclick={() => goto('/')}
 			aria-label="Exit Practice Session"
-			class="flex h-9 w-9 items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+			class="flex h-9 w-9 items-center justify-center rounded-full text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
 		>
 			<X size={20} strokeWidth={2} />
 		</button>
@@ -185,17 +183,17 @@
 		</div>
 	</header>
 
-	<div class="w-full bg-surface-container-high h-1.5 overflow-hidden">
+	<div class="h-1.5 w-full overflow-hidden bg-surface-container-high">
 		<div
-			class="bg-secondary h-full transition-all duration-300 ease-out"
+			class="h-full bg-secondary transition-all duration-300 ease-out"
 			style="width: {items.length > 0 ? (progressCount / items.length) * 100 : 0}%"
 		></div>
 	</div>
 
-	<main class="flex-1 flex flex-col justify-center px-4 py-4 max-w-md mx-auto w-full">
+	<main class="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-4">
 		{#if isSessionFinished}
 			<div
-				class="rounded-3xl border border-surface-container bg-surface-container-lowest p-6 text-center shadow-xl space-y-4"
+				class="space-y-4 rounded-3xl border border-surface-container bg-surface-container-lowest p-6 text-center shadow-xl"
 			>
 				<div class="mx-auto flex h-24 w-24 items-center justify-center">
 					<img
@@ -205,7 +203,9 @@
 					/>
 				</div>
 
-				<div class="inline-flex items-center gap-1.5 rounded-full bg-secondary-fixed px-3 py-1 font-headline text-xs font-bold text-on-secondary-fixed">
+				<div
+					class="inline-flex items-center gap-1.5 rounded-full bg-secondary-fixed px-3 py-1 font-headline text-xs font-bold text-on-secondary-fixed"
+				>
 					<Zap size={13} strokeWidth={2} />
 					<span>PRACTICE COMPLETED</span>
 				</div>
@@ -215,12 +215,12 @@
 					You practiced your most difficult vocabulary words.
 				</p>
 
-				<div class="grid grid-cols-2 gap-3 py-3 border-y border-surface-container">
-					<div class="rounded-2xl bg-emerald-50 p-3 text-center border border-emerald-100">
+				<div class="grid grid-cols-2 gap-3 border-y border-surface-container py-3">
+					<div class="rounded-2xl border border-emerald-100 bg-emerald-50 p-3 text-center">
 						<p class="font-headline text-xl font-black text-emerald-700">{sessionCorrect}</p>
 						<p class="text-[11px] font-bold text-emerald-600">Correct This Run</p>
 					</div>
-					<div class="rounded-2xl bg-rose-50 p-3 text-center border border-rose-100">
+					<div class="rounded-2xl border border-rose-100 bg-rose-50 p-3 text-center">
 						<p class="font-headline text-xl font-black text-rose-700">{sessionWrong}</p>
 						<p class="text-[11px] font-bold text-rose-600">Still Needs Work</p>
 					</div>
@@ -238,7 +238,9 @@
 			<div class="space-y-6">
 				<!-- Card Difficulty Warning Badge -->
 				<div class="flex justify-center">
-					<span class="rounded-full bg-rose-50 border border-rose-200 px-3 py-0.5 text-[11px] font-bold text-rose-700">
+					<span
+						class="rounded-full border border-rose-200 bg-rose-50 px-3 py-0.5 text-[11px] font-bold text-rose-700"
+					>
 						Missed {currentItem.wrongCount} times previously
 					</span>
 				</div>
@@ -253,15 +255,17 @@
 					onToggleSave={handleToggleSave}
 				/>
 
-				<div class="transition-opacity {isFlipped ? 'opacity-100' : 'opacity-40 pointer-events-none'}">
+				<div
+					class="transition-opacity {isFlipped ? 'opacity-100' : 'pointer-events-none opacity-40'}"
+				>
 					<SRSButtons onRate={handleRate} disabled={!isFlipped} progress={currentProgress} />
 				</div>
 			</div>
 		{:else}
-			<div class="text-center py-12 text-on-surface-variant">
-				<SmilePlus size={44} strokeWidth={1.25} class="text-emerald-500 mb-2" />
+			<div class="py-12 text-center text-on-surface-variant">
+				<SmilePlus size={44} strokeWidth={1.25} class="mb-2 text-emerald-500" />
 				<h3 class="font-headline text-lg font-bold text-on-surface">No Weak Words!</h3>
-				<p class="font-body text-xs mt-1">You don't have any troublesome cards recorded yet.</p>
+				<p class="font-body mt-1 text-xs">You don't have any troublesome cards recorded yet.</p>
 				<button
 					type="button"
 					onclick={() => goto('/')}

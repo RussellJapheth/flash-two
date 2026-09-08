@@ -64,18 +64,18 @@
 				handleFlip(e);
 			}
 		}}
-		class="transform-style-3d relative min-h-[380px] sm:min-h-[420px] w-full cursor-pointer rounded-[32px] transition-transform duration-500 {isFlipped
+		class="transform-style-3d relative min-h-[380px] w-full cursor-pointer rounded-[32px] transition-transform duration-500 sm:min-h-[420px] {isFlipped
 			? 'rotate-y-180'
 			: ''}"
 	>
 		<!-- FRONT FACE -->
 		<div
-			class="backface-hidden absolute inset-0 flex flex-col justify-between rounded-[32px] border border-surface-container bg-surface-container-lowest p-6 shadow-card hover:shadow-card-active transition-shadow"
+			class="shadow-card hover:shadow-card-active absolute inset-0 flex flex-col justify-between rounded-[32px] border border-surface-container bg-surface-container-lowest p-6 transition-shadow backface-hidden"
 		>
 			<!-- Front Header -->
 			<div class="flex items-center justify-between">
 				<span
-					class="rounded-full bg-surface-container-low px-3 py-1 font-headline text-xs font-bold uppercase tracking-wider text-on-surface-variant"
+					class="rounded-full bg-surface-container-low px-3 py-1 font-headline text-xs font-bold tracking-wider text-on-surface-variant uppercase"
 				>
 					{partOfSpeech}
 				</span>
@@ -97,7 +97,7 @@
 			<!-- Front Content -->
 			<div class="my-auto flex flex-col items-center justify-center text-center">
 				<h2
-					class="font-headline text-5xl sm:text-6xl font-extrabold tracking-tight text-on-surface {language ===
+					class="font-headline text-5xl font-extrabold tracking-tight text-on-surface sm:text-6xl {language ===
 					'chinese'
 						? 'font-hanzi'
 						: ''}"
@@ -131,7 +131,7 @@
 
 		<!-- BACK FACE -->
 		<div
-			class="backface-hidden rotate-y-180 absolute inset-0 flex flex-col justify-between rounded-[32px] border border-surface-container bg-surface-container-lowest p-6 shadow-card"
+			class="shadow-card absolute inset-0 flex rotate-y-180 flex-col justify-between rounded-[32px] border border-surface-container bg-surface-container-lowest p-6 backface-hidden"
 		>
 			<!-- Back Header -->
 			<div class="flex items-center justify-between">
@@ -160,18 +160,18 @@
 
 			<!-- Back Center Content -->
 			<div class="my-auto flex flex-col items-center justify-center text-center">
-				<p class="font-headline text-2xl sm:text-3xl font-extrabold text-on-surface">
+				<p class="font-headline text-2xl font-extrabold text-on-surface sm:text-3xl">
 					{meaning}
 				</p>
 
 				{#if example}
 					<div
-						class="mt-5 max-w-sm rounded-2xl bg-surface-container-low p-4 text-left border border-surface-container"
+						class="mt-5 max-w-sm rounded-2xl border border-surface-container bg-surface-container-low p-4 text-left"
 					>
-						<p class="text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">
+						<p class="mb-1 text-xs font-bold tracking-wider text-on-surface-variant uppercase">
 							Example:
 						</p>
-						<p class="text-sm font-medium text-on-surface leading-relaxed">
+						<p class="text-sm leading-relaxed font-medium text-on-surface">
 							{example}
 						</p>
 					</div>

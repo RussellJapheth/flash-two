@@ -3,7 +3,9 @@ let audioCtx: AudioContext | null = null;
 function getAudioContext(): AudioContext | null {
 	if (typeof window === 'undefined') return null;
 	if (!audioCtx) {
-		const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+		const AudioContextClass =
+			window.AudioContext ||
+			(window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
 		if (AudioContextClass) {
 			audioCtx = new AudioContextClass();
 		}
@@ -110,9 +112,12 @@ export function speakWord(text: string, language: 'chinese' | 'french' = 'chines
 	const voices = window.speechSynthesis.getVoices();
 	if (voices.length > 0) {
 		const targetLang = language === 'chinese' ? 'zh' : 'fr';
-		const voice = voices.find(
-			(v) => v.lang.toLowerCase().startsWith(targetLang) && (v.localService || v.name.includes('Natural'))
-		) || voices.find((v) => v.lang.toLowerCase().startsWith(targetLang));
+		const voice =
+			voices.find(
+				(v) =>
+					v.lang.toLowerCase().startsWith(targetLang) &&
+					(v.localService || v.name.includes('Natural'))
+			) || voices.find((v) => v.lang.toLowerCase().startsWith(targetLang));
 
 		if (voice) utterance.voice = voice;
 	}

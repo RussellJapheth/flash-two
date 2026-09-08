@@ -170,4 +170,61 @@ describe('Chinese Number Converter (Number Rush)', () => {
 		expect(deduplicated[2].mode).toBe('visual');
 		expect(deduplicated[2].score).toBe(800);
 	});
+
+	it('preserves unsynced local high score when merging with remote records', () => {
+		// Remote only had Alice's old run (600)
+		const remoteRecords: GameScoreRecord[] = [
+			{
+				id: 'remote-1',
+				username: 'alice',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 600,
+				correct: 6,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 6,
+				mode: 'visual',
+				playedAt: 1000
+			}
+		];
+
+		// Local storage has run 1 (unsynced best: 1500) and run 2 (recent lower score: 800)
+		const localHistory: GameScoreRecord[] = [
+			{
+				id: 'local-2',
+				username: 'alice',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 800,
+				correct: 8,
+				wrong: 1,
+				accuracy: 88,
+				maxCombo: 8,
+				mode: 'visual',
+				playedAt: 3000
+			},
+			{
+				id: 'local-1',
+				username: 'alice',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 1500,
+				correct: 15,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 15,
+				mode: 'visual',
+				playedAt: 2000
+			}
+		];
+
+		const combined = [...localHistory, ...remoteRecords];
+		const result = deduplicateUserLeaderboard(combined);
+
+		expect(result).toHaveLength(1);
+		expect(result[0].username).toBe('alice');
+		expect(result[0].score).toBe(1500);
+		expect(result[0].id).toBe('local-1');
+	});
 });

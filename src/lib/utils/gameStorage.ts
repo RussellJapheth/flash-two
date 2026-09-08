@@ -132,19 +132,13 @@ export async function fetchRemoteLeaderboard(
 	return [];
 }
 
-// Save score locally, and if cloud sync is enabled, update the user's single best entry on /leaderboard
-export async function saveGameScore(
-	record: Omit<GameScoreRecord, 'id' | 'playedAt' | 'username'> & { username?: string }
-): Promise<GameScoreRecord> {
-	const saved = saveLocalGameScore(record);
-
-	const user = record.username || getSavedUsername();
-	if (typeof window === 'undefined' || !navigator.onLine || !user) {
-		return saved;
-	}
+// Synchronize all stored local scores with remote leaderboard (1 entry per user per mode, best score retained)
+export async function syncPendingGameScores(): Promise<void> {
+	if (typeof window === 'undefined' || !navigator.onLine || !isCloudSyncEnabled()) return;
+	const localScores = getLocalGameScores();
+	if (localScores.length === 0) return;
 
 	try {
-		// Fetch existing remote leaderboard
 		let remoteRecords: GameScoreRecord[] = [];
 		const getRes = await fetch(LEADERBOARD_API, {
 			headers: { Accept: 'application/json' }
@@ -156,8 +150,8 @@ export async function saveGameScore(
 			}
 		}
 
-		// Ensure 1 entry per user across the leaderboard, retaining highest score
-		const combined = [saved, ...remoteRecords];
+		// Ensure 1 entry per user per mode across the leaderboard, retaining highest score across local history + remote
+		const combined = [...localScores, ...remoteRecords];
 		const deduplicated = deduplicateUserLeaderboard(combined);
 
 		await fetch(LEADERBOARD_API, {
@@ -166,8 +160,22 @@ export async function saveGameScore(
 			body: JSON.stringify(deduplicated.slice(0, 100))
 		});
 	} catch (err) {
-		console.error('Failed to sync score to /leaderboard:', err);
+		console.error('Failed to sync scores to /leaderboard:', err);
 	}
+}
+
+// Save score locally, and if cloud sync is enabled, update the user's single best entry on /leaderboard
+export async function saveGameScore(
+	record: Omit<GameScoreRecord, 'id' | 'playedAt' | 'username'> & { username?: string }
+): Promise<GameScoreRecord> {
+	const saved = saveLocalGameScore(record);
+
+	const user = record.username || getSavedUsername();
+	if (typeof window === 'undefined' || !navigator.onLine || !user) {
+		return saved;
+	}
+
+	await syncPendingGameScores();
 
 	return saved;
 }

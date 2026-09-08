@@ -6,6 +6,7 @@
 		fetchRemoteLeaderboard,
 		getGameHighScore,
 		isCloudSyncEnabled,
+		syncPendingGameScores,
 		type GameScoreRecord
 	} from '$lib/utils/gameStorage';
 	import {
@@ -35,6 +36,7 @@
 
 		isLoadingLeaderboard = true;
 		try {
+			await syncPendingGameScores();
 			const remote = await fetchRemoteLeaderboard();
 			leaderboard = remote || [];
 		} finally {

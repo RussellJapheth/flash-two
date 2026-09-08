@@ -12,7 +12,8 @@
 	let isStudySession = $derived(
 		page.url.pathname.startsWith('/study/') ||
 			page.url.pathname === '/review' ||
-			page.url.pathname === '/practice'
+			page.url.pathname === '/practice' ||
+			page.url.pathname.startsWith('/games/')
 	);
 
 	onMount(async () => {

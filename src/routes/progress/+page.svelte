@@ -1,0 +1,274 @@
+<script lang="ts">
+	import TopHeader from '$lib/components/TopHeader.svelte';
+	import ProgressBar from '$lib/components/ProgressBar.svelte';
+	import { onMount } from 'svelte';
+	import {
+		getAllProgress,
+		getBuiltinPacks,
+		getAllCustomDecks,
+		computeStreakStats,
+		getSavedLanguage
+	} from '$lib/utils/storage';
+	import { isCardMastered, isCardLearning, isCardDue } from '$lib/utils/srs';
+	import type { WordProgress, StreakStats } from '$lib/types';
+
+	let streakStats = $state<StreakStats>({
+		currentStreak: 0,
+		longestStreak: 0,
+		freezeCount: 2,
+		tierName: 'Novice Explorer',
+		totalReviews: 0,
+		activeDates: []
+	});
+
+	let totalWordsCount = $state(0);
+	let masteredWordsCount = $state(0);
+	let learningWordsCount = $state(0);
+	let dueWordsCount = $state(0);
+	let overallAccuracy = $state(0);
+	let weeklyActivity = $state<{ day: string; count: number; isToday: boolean }[]>([]);
+
+	async function loadProgressStats() {
+		const lang = getSavedLanguage();
+		const progress = await getAllProgress();
+		streakStats = computeStreakStats(progress);
+
+		const chPacks = await getBuiltinPacks('chinese');
+		const frPacks = await getBuiltinPacks('french');
+		const customDecks = await getAllCustomDecks();
+
+		let totalWords = 0;
+		for (const p of [...chPacks, ...frPacks]) totalWords += p.words.length;
+		for (const d of customDecks) totalWords += d.words.length;
+
+		let mastered = 0;
+		let learning = 0;
+		let due = 0;
+		let totalCorrect = 0;
+		let totalAttempts = 0;
+
+		for (const p of Object.values(progress)) {
+			if (isCardMastered(p)) mastered++;
+			else if (isCardLearning(p)) learning++;
+			if (isCardDue(p)) due++;
+
+			totalCorrect += p.correct || 0;
+			totalAttempts += (p.correct || 0) + (p.wrong || 0);
+		}
+
+		totalWordsCount = totalWords;
+		masteredWordsCount = mastered;
+		learningWordsCount = learning;
+		dueWordsCount = due;
+		overallAccuracy = totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0;
+
+		// Calculate 7-day weekly activity
+		const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+		const today = new Date();
+		const activity = [];
+
+		for (let i = 6; i >= 0; i--) {
+			const targetDate = new Date(today.getTime() - i * 86400000);
+			const iso = targetDate.toISOString().split('T')[0];
+			const dayLabel = dayLabels[targetDate.getDay()];
+			const isCurrent = i === 0;
+
+			let count = 0;
+			for (const p of Object.values(progress)) {
+				if (p.lastReviewed) {
+					const pIso = new Date(p.lastReviewed).toISOString().split('T')[0];
+					if (pIso === iso) {
+						count += (p.correct || 0) + (p.wrong || 0);
+					}
+				}
+			}
+
+			activity.push({ day: dayLabel, count, isToday: isCurrent });
+		}
+
+		weeklyActivity = activity;
+	}
+
+	let overallPercent = $derived(
+		totalWordsCount > 0 ? Math.round((masteredWordsCount / totalWordsCount) * 100) : 0
+	);
+
+	let maxActivityCount = $derived(
+		Math.max(1, ...weeklyActivity.map((a) => a.count))
+	);
+
+	onMount(() => {
+		loadProgressStats();
+	});
+</script>
+
+<svelte:head>
+	<title>Progress & Insights — FlashCards</title>
+</svelte:head>
+
+<TopHeader title="Progress" streak={streakStats.currentStreak} />
+
+<main class="flex-1 px-4 pt-3 pb-8 space-y-4">
+	<!-- Overall Progress Card -->
+	<section
+		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card space-y-3"
+	>
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-3">
+				<div
+					class="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100"
+				>
+					<span class="material-symbols-outlined text-[24px]">flag</span>
+				</div>
+				<div>
+					<p class="font-headline text-xs font-bold text-on-surface-variant">Overall Mastery</p>
+					<p class="font-headline text-2xl font-black text-on-surface">{overallPercent}%</p>
+				</div>
+			</div>
+
+			<span class="rounded-full bg-emerald-50 px-3 py-1 font-headline text-xs font-bold text-emerald-700">
+				{masteredWordsCount} of {totalWordsCount} Words
+			</span>
+		</div>
+
+		<ProgressBar value={masteredWordsCount} max={totalWordsCount} variant="emerald" height="h-2.5" />
+	</section>
+
+	<!-- Key Metrics Grid -->
+	<section class="grid grid-cols-2 gap-3">
+		<!-- Accuracy Card -->
+		<div
+			class="flex flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4 shadow-card h-32"
+		>
+			<div
+				class="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-fixed text-primary"
+			>
+				<span class="material-symbols-outlined text-[18px]">verified</span>
+			</div>
+			<div>
+				<p class="font-headline text-[11px] font-bold text-on-surface-variant">Recall Accuracy</p>
+				<p class="font-headline text-xl font-extrabold text-on-surface">{overallAccuracy}%</p>
+				<p class="text-[10px] text-on-surface-variant">Across all study drills</p>
+			</div>
+		</div>
+
+		<!-- Reviews Done Card -->
+		<div
+			class="flex flex-col justify-between rounded-3xl border border-surface-container bg-surface-container-lowest p-4 shadow-card h-32"
+		>
+			<div
+				class="flex h-8 w-8 items-center justify-center rounded-xl bg-secondary-fixed text-secondary"
+			>
+				<span class="material-symbols-outlined text-[18px]">history</span>
+			</div>
+			<div>
+				<p class="font-headline text-[11px] font-bold text-on-surface-variant">Total Reviews</p>
+				<p class="font-headline text-xl font-extrabold text-on-surface">
+					{streakStats.totalReviews}
+				</p>
+				<p class="text-[10px] text-on-surface-variant">Cards evaluated</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- 7-Day Activity Chart -->
+	<section
+		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card space-y-3"
+	>
+		<div class="flex items-center justify-between">
+			<h3 class="font-headline text-sm font-bold text-on-surface">7-Day Study Activity</h3>
+			<span class="text-xs font-semibold text-on-surface-variant">Cards per day</span>
+		</div>
+
+		<div class="flex items-end justify-between gap-2 pt-4 h-36">
+			{#each weeklyActivity as item}
+				{@const barHeight = Math.max(8, Math.round((item.count / maxActivityCount) * 100))}
+				<div class="flex flex-1 flex-col items-center gap-1.5 h-full justify-end">
+					<span class="text-[10px] font-bold text-on-surface-variant">{item.count}</span>
+					<div class="w-full max-w-[28px] rounded-t-xl bg-surface-container-high overflow-hidden h-24 flex items-end">
+						<div
+							class="w-full rounded-t-xl transition-all duration-300 {item.isToday
+								? 'bg-primary'
+								: 'bg-primary-fixed'}"
+							style="height: {barHeight}%"
+						></div>
+					</div>
+					<span
+						class="text-[11px] font-headline font-bold {item.isToday
+							? 'text-primary'
+							: 'text-on-surface-variant'}"
+					>
+						{item.day}
+					</span>
+				</div>
+			{/each}
+		</div>
+	</section>
+
+	<!-- Word Stage Breakdown -->
+	<section
+		class="rounded-3xl border border-surface-container bg-surface-container-lowest p-5 shadow-card space-y-3"
+	>
+		<h3 class="font-headline text-sm font-bold text-on-surface">Retention Breakdown</h3>
+
+		<div class="space-y-2">
+			<!-- Mastered -->
+			<div class="flex items-center justify-between text-xs font-bold text-on-surface">
+				<span class="flex items-center gap-1.5 text-emerald-600">
+					<span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+					Mastered (Interval &ge; 7d)
+				</span>
+				<span>{masteredWordsCount}</span>
+			</div>
+			<ProgressBar value={masteredWordsCount} max={totalWordsCount} variant="emerald" height="h-2" />
+
+			<!-- Learning -->
+			<div class="flex items-center justify-between text-xs font-bold text-on-surface pt-1">
+				<span class="flex items-center gap-1.5 text-amber-600">
+					<span class="h-2 w-2 rounded-full bg-amber-500"></span>
+					Learning In Progress
+				</span>
+				<span>{learningWordsCount}</span>
+			</div>
+			<ProgressBar value={learningWordsCount} max={totalWordsCount} variant="secondary" height="h-2" />
+
+			<!-- Due -->
+			<div class="flex items-center justify-between text-xs font-bold text-on-surface pt-1">
+				<span class="flex items-center gap-1.5 text-primary">
+					<span class="h-2 w-2 rounded-full bg-primary"></span>
+					Scheduled for Review
+				</span>
+				<span>{dueWordsCount}</span>
+			</div>
+			<ProgressBar value={dueWordsCount} max={totalWordsCount} variant="primary" height="h-2" />
+		</div>
+	</section>
+
+	<!-- Quick Links -->
+	<div class="grid grid-cols-2 gap-3">
+		<a
+			href="/streak"
+			class="flex items-center justify-between rounded-2xl border border-secondary-container/30 bg-secondary-fixed/20 p-3.5 transition-colors hover:bg-secondary-fixed/30"
+		>
+			<div class="flex items-center gap-2">
+				<span
+					class="material-symbols-outlined text-[20px] text-secondary"
+					style="font-variation-settings: 'FILL' 1;">local_fire_department</span
+				>
+				<span class="font-headline text-xs font-bold text-on-surface">Streak Tier</span>
+			</div>
+			<span class="material-symbols-outlined text-[18px] text-outline">chevron_right</span>
+		</a>
+
+		<a
+			href="/saved"
+			class="flex items-center justify-between rounded-2xl border border-surface-container bg-surface-container-lowest p-3.5 transition-colors hover:border-primary/30"
+		>
+			<div class="flex items-center gap-2">
+				<span class="material-symbols-outlined text-[20px] text-primary">bookmark</span>
+				<span class="font-headline text-xs font-bold text-on-surface">Saved Words</span>
+			</div>
+			<span class="material-symbols-outlined text-[18px] text-outline">chevron_right</span>
+		</a>
+	</div>
+</main>

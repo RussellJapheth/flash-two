@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Study Flashcard - HSK Level 1</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"SF Pro Display"', 'system-ui', 'sans-serif'],
+            hanzi: ['"PingFang SC"', '"Hiragino Sans GB"', '"Microsoft YaHei"', 'sans-serif']
+          },
+          colors: {
+            appBg: '#F7F9FD',
+            brandBlue: '#4F46E5',
+            softRed: '#FEE2E2',
+            textRed: '#EF4444',
+            softBlue: '#E0E7FF',
+            textBlue: '#4F46E5',
+            softGreen: '#DCFCE7',
+            textGreen: '#16A34A',
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Styles for Mobile Shell and Card Elevation -->
+<style data-purpose="custom-layout">
+    body {
+      background-color: #ECEEF2;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .card-shadow {
+      box-shadow: 0 12px 35px -6px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen py-0 sm:py-6 text-slate-800">
+<!-- BEGIN: PhoneContainer -->
+<!-- Mimics iPhone viewport dimensions -->
+<div class="w-full max-w-[393px] h-[852px] bg-[#F8FAFC] flex flex-col justify-between overflow-hidden sm:rounded-[50px] sm:shadow-2xl border border-slate-200/80 relative">
+<!-- BEGIN: TopSection -->
+<header class="w-full pt-3 px-6 flex flex-col">
+<!-- iOS Status Bar -->
+<div class="flex justify-between items-center h-6 text-xs font-semibold tracking-tight text-slate-900 mb-2" data-purpose="status-bar">
+<span>9:41</span>
+<div class="flex items-center space-x-2">
+<!-- Cellular Icon -->
+<svg class="w-4 h-3.5 fill-current" viewbox="0 0 17 12">
+<rect height="5" rx="0.5" width="2.5" x="0" y="7"></rect>
+<rect height="7" rx="0.5" width="2.5" x="4" y="5"></rect>
+<rect height="9.5" rx="0.5" width="2.5" x="8" y="2.5"></rect>
+<rect height="12" rx="0.5" width="2.5" x="12" y="0"></rect>
+</svg>
+<!-- Wifi Icon -->
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24">
+<path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4zm0 3.3c3.8 0 7.23 1.54 9.72 4.03L12 19.04 2.28 11.33C4.77 8.84 8.2 7.3 12 7.3z"></path>
+</svg>
+<!-- Battery Icon -->
+<div class="w-6 h-3 border border-slate-800 rounded-[4px] p-0.5 flex items-center">
+<div class="h-full w-4 bg-slate-800 rounded-[2px]"></div>
+</div>
+</div>
+</div>
+<!-- App Bar Navigation -->
+<div class="flex items-center justify-between py-2 relative" data-purpose="navigation-header">
+<!-- Close Button -->
+<button aria-label="Close study session" class="w-9 h-9 flex items-center justify-center text-slate-700 hover:text-slate-950 transition-colors" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24">
+<line x1="18" x2="6" y1="6" y2="18"></line>
+<line x1="6" x2="18" y1="6" y2="18"></line>
+</svg>
+</button>
+<!-- Deck Info & Progress Count -->
+<div class="flex items-center space-x-2.5">
+<!-- Flag Icon Circle -->
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-600 text-xs text-yellow-300 select-none overflow-hidden shadow-sm" title="China Flag">
+            🇨🇳
+          </span>
+<div class="flex flex-col items-center">
+<span class="text-sm font-semibold text-slate-900 leading-tight">HSK Level 1</span>
+<span class="text-[11px] font-medium text-slate-400 mt-0.5">12 / 120</span>
+</div>
+</div>
+<!-- Options Button -->
+<button aria-label="More options" class="w-9 h-9 flex items-center justify-center text-slate-700 hover:text-slate-950 transition-colors" type="button">
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+<circle cx="5" cy="12" r="2"></circle>
+<circle cx="12" cy="12" r="2"></circle>
+<circle cx="19" cy="12" r="2"></circle>
+</svg>
+</button>
+</div>
+<!-- Linear Study Progress Bar -->
+<div class="w-full bg-slate-200/80 rounded-full h-1.5 mt-2 overflow-hidden" data-purpose="study-progress-bar">
+<!-- Filled progress representation (12 of 120 = 10%) -->
+<div class="bg-indigo-600 h-1.5 rounded-full w-[10%]"></div>
+</div>
+</header>
+<!-- END: TopSection -->
+<!-- BEGIN: MainContent -->
+<main class="flex-1 px-5 py-4 flex flex-col justify-center">
+<!-- Flashcard Body Container -->
+<article class="bg-white card-shadow rounded-[32px] w-full h-full max-h-[480px] p-6 flex flex-col items-center justify-between border border-slate-100 relative">
+<!-- Top Pill Tag inside Card -->
+<div class="inline-flex items-center gap-1.5 bg-blue-50/90 text-indigo-700 px-3 py-1 rounded-full text-xs font-semibold border border-indigo-100/50">
+<span class="text-xs">🇨🇳</span>
+<span>Chinese</span>
+</div>
+<!-- Word Content Cluster -->
+<div class="flex flex-col items-center justify-center my-auto space-y-3">
+<!-- Large Hanzi Typography -->
+<h1 class="text-6xl font-bold font-hanzi text-slate-900 tracking-tight text-center select-text">
+            你好
+          </h1>
+<!-- Pinyin -->
+<p class="text-xl font-medium text-slate-500 tracking-wide select-text">
+            nǐ hǎo
+          </p>
+<!-- English Translation -->
+<p class="text-lg font-normal text-slate-400 select-text pt-1">
+            hello
+          </p>
+<!-- Audio Pronunciation Button -->
+<button aria-label="Play audio pronunciation" class="mt-4 w-12 h-12 rounded-full bg-slate-50 hover:bg-indigo-50 border border-slate-100 flex items-center justify-center text-indigo-600 transition-all active:scale-95 shadow-sm" type="button">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+<path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+<path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+</svg>
+</button>
+</div>
+<!-- Interactive Hint Pill at Card Bottom -->
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-slate-50 hover:bg-slate-100 border border-slate-200/60 rounded-full text-xs font-medium text-slate-500 transition-colors" type="button">
+<!-- Hand pointing / tap icon -->
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path>
+<path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"></path>
+<path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"></path>
+<path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"></path>
+</svg>
+<span>Tap to show answer</span>
+</button>
+</article>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: ActionControls -->
+<!-- Bottom Rating / Spaced Repetition Actions -->
+<footer class="px-5 pb-8 pt-2" data-purpose="repetition-action-bar">
+<div class="grid grid-cols-3 gap-3.5">
+<!-- Button: Hard -->
+<button class="h-24 rounded-[22px] bg-red-50 hover:bg-red-100/80 active:scale-98 transition flex flex-col items-center justify-center space-y-1.5 focus:outline-none" type="button">
+<svg class="w-5 h-5 text-red-500 stroke-[2.5]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" viewbox="0 0 24 24">
+<line x1="18" x2="6" y1="6" y2="18"></line>
+<line x1="6" x2="18" y1="6" y2="18"></line>
+</svg>
+<span class="text-xs font-semibold text-red-500">Hard</span>
+</button>
+<!-- Button: Again -->
+<button class="h-24 rounded-[22px] bg-indigo-50 hover:bg-indigo-100/80 active:scale-98 transition flex flex-col items-center justify-center space-y-1.5 focus:outline-none" type="button">
+<svg class="w-5 h-5 text-indigo-600 stroke-[2.2]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" viewbox="0 0 24 24">
+<path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.19"></path>
+</svg>
+<span class="text-xs font-semibold text-indigo-600">Again</span>
+</button>
+<!-- Button: Easy -->
+<button class="h-24 rounded-[22px] bg-emerald-50 hover:bg-emerald-100/80 active:scale-98 transition flex flex-col items-center justify-center space-y-1.5 focus:outline-none" type="button">
+<svg class="w-5 h-5 text-emerald-600 stroke-[2.5]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" viewbox="0 0 24 24">
+<polyline points="20 6 9 17 4 12"></polyline>
+</svg>
+<span class="text-xs font-semibold text-emerald-600">Easy</span>
+</button>
+</div>
+<!-- iOS Home Indicator Indicator -->
+<div class="w-32 h-1 bg-slate-300 rounded-full mx-auto mt-5"></div>
+</footer>
+<!-- END: ActionControls -->
+</div>
+<!-- END: PhoneContainer -->
+</body></html>

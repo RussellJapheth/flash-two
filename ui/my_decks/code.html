@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>My Decks - FlashCards</title>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'SF Pro Display', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-layout">
+    /* Custom utility adjustments for mobile canvas */
+    body {
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-[#F6F8FC] text-slate-800 antialiased flex justify-center items-start min-h-screen font-sans">
+<!-- BEGIN: MobileContainer -->
+<!-- Constrained mobile layout viewport simulating an iOS device -->
+<div class="w-full max-w-[393px] min-h-screen bg-[#F6F8FC] relative flex flex-col justify-between shadow-2xl pb-24 select-none" data-purpose="app-shell">
+<!-- BEGIN: iOSStatusBar -->
+<header class="w-full px-7 pt-3.5 pb-2 flex justify-between items-center text-black text-xs font-semibold tracking-tight" data-purpose="status-bar">
+<span class="text-[15px] font-semibold">9:41</span>
+<div class="flex items-center space-x-1.5">
+<!-- Cellular Signal -->
+<svg class="w-4 h-3 fill-current" viewbox="0 0 17 11">
+<rect height="4" rx="0.5" width="2.5" x="0" y="7"></rect>
+<rect height="6" rx="0.5" width="2.5" x="4.5" y="5"></rect>
+<rect height="8.5" rx="0.5" width="2.5" x="9" y="2.5"></rect>
+<rect height="11" rx="0.5" width="2.5" x="13.5" y="0"></rect>
+</svg>
+<!-- Wifi -->
+<svg class="w-3.5 h-3 fill-current" viewbox="0 0 16 12">
+<path d="M8 12a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm-4.24-4.24a6 6 0 0 1 8.48 0 .75.75 0 1 0 1.06-1.06 7.5 7.5 0 0 0-10.6 0 .75.75 0 0 0 1.06 1.06zm-2.12-2.12a9 9 0 0 1 12.72 0 .75.75 0 1 0 1.06-1.06 10.5 10.5 0 0 0-14.84 0 .75.75 0 0 0 1.06 1.06z"></path>
+</svg>
+<!-- Battery Icon -->
+<div class="w-5 h-2.5 border border-black rounded-[3px] p-0.5 flex items-center relative">
+<div class="h-full bg-black rounded-[1px] w-full"></div>
+<div class="w-0.5 h-1 bg-black absolute -right-1 rounded-r-sm"></div>
+</div>
+</div>
+</header>
+<!-- END: iOSStatusBar -->
+<!-- Main Content Container -->
+<main class="px-5 flex-1 flex flex-col">
+<!-- BEGIN: TopBar -->
+<div class="flex justify-between items-center pt-3 pb-4" data-purpose="top-navigation">
+<h1 class="text-2xl font-bold tracking-tight text-slate-900">My Decks</h1>
+<div class="flex items-center space-x-2.5">
+<!-- Search Button -->
+<button aria-label="Search decks" class="w-9 h-9 flex items-center justify-center rounded-full bg-white text-slate-600 shadow-sm border border-slate-100 hover:bg-slate-50 transition active:scale-95" type="button">
+<svg class="w-4 h-4 text-slate-600 stroke-[2.2]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<circle cx="11" cy="11" r="7"></circle>
+<path d="m20 20-3.5-3.5" stroke-linecap="round"></path>
+</svg>
+</button>
+<!-- Create New Deck Plus Button -->
+<button aria-label="Add new deck" class="w-9 h-9 flex items-center justify-center rounded-full bg-[#4F46E5] text-white shadow-md shadow-indigo-200 hover:bg-indigo-600 transition active:scale-95" type="button">
+<svg class="w-5 h-5 stroke-[2.5]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- END: TopBar -->
+<!-- BEGIN: FilterChips -->
+<div class="flex items-center space-x-2.5 py-1 mb-5 overflow-x-auto hide-scrollbar" data-purpose="filter-carousel">
+<!-- Active Filter: All -->
+<button class="px-5 py-1.5 rounded-full bg-[#4F46E5] text-white text-[13px] font-medium shadow-sm transition" type="button">
+          All
+        </button>
+<!-- Inactive Filter: Chinese -->
+<button class="px-5 py-1.5 rounded-full bg-white text-slate-600 border border-slate-200/80 text-[13px] font-medium hover:bg-slate-50 transition" type="button">
+          Chinese
+        </button>
+<!-- Inactive Filter: French -->
+<button class="px-5 py-1.5 rounded-full bg-white text-slate-600 border border-slate-200/80 text-[13px] font-medium hover:bg-slate-50 transition" type="button">
+          French
+        </button>
+<!-- Sort / Filter Action Icon -->
+<button aria-label="Filter options" class="p-2 ml-auto rounded-xl text-slate-500 hover:text-slate-700 bg-white border border-slate-200/80 shadow-xs" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M3 6h18M6 12h12m-9 6h6" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+<!-- END: FilterChips -->
+<!-- BEGIN: DecksSectionHeader -->
+<div class="mb-3">
+<h2 class="text-base font-bold text-slate-800 tracking-tight">Your Decks</h2>
+</div>
+<!-- END: DecksSectionHeader -->
+<!-- BEGIN: DeckList -->
+<section class="flex flex-col space-y-3" data-purpose="deck-card-list">
+<!-- Card 1: HSK Level 1 -->
+<article class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100/80 flex items-center justify-between transition hover:shadow-md cursor-pointer">
+<div class="flex items-start space-x-3.5 flex-1">
+<!-- China Flag Circle Icon -->
+<div class="w-10 h-10 rounded-full flex-shrink-0 overflow-hidden bg-[#DE2910] relative flex items-center justify-center shadow-inner">
+<span class="text-xs text-yellow-300 font-bold select-none leading-none">★</span>
+</div>
+<!-- Deck Info and Progress Details -->
+<div class="flex-1 pr-2">
+<h3 class="text-sm font-bold text-slate-900 leading-tight">HSK Level 1</h3>
+<p class="text-xs text-slate-400 font-normal mb-2.5">120 words</p>
+<div class="flex items-center space-x-2.5">
+<!-- Circular Progress Ring (72%) -->
+<div class="relative w-7 h-7 flex items-center justify-center flex-shrink-0">
+<svg class="w-7 h-7 transform -rotate-90" viewbox="0 0 36 36">
+<circle cx="18" cy="18" fill="none" r="14" stroke="#F1F5F9" stroke-width="3"></circle>
+<circle cx="18" cy="18" fill="none" r="14" stroke="#0D9488" stroke-dasharray="88" stroke-dashoffset="24.6" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+<span class="absolute text-[8.5px] font-bold text-slate-700">72%</span>
+</div>
+<!-- Linear Progress Bar -->
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<span class="text-[11px] text-slate-400 font-medium">86 reviewed</span>
+</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-teal-500 h-full rounded-full" style="width: 72%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chevron Right -->
+<svg class="w-4 h-4 text-slate-400 stroke-[2.5]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="m8.25 4.5 7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</article>
+<!-- Card 2: Beginner Basics -->
+<article class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100/80 flex items-center justify-between transition hover:shadow-md cursor-pointer">
+<div class="flex items-start space-x-3.5 flex-1">
+<!-- France Flag Circle Icon -->
+<div class="w-10 h-10 rounded-full flex-shrink-0 overflow-hidden flex border border-slate-100 shadow-inner">
+<div class="w-1/3 h-full bg-[#002654]"></div>
+<div class="w-1/3 h-full bg-white"></div>
+<div class="w-1/3 h-full bg-[#CE1126]"></div>
+</div>
+<!-- Deck Info and Progress Details -->
+<div class="flex-1 pr-2">
+<h3 class="text-sm font-bold text-slate-900 leading-tight">Beginner Basics</h3>
+<p class="text-xs text-slate-400 font-normal mb-2.5">80 words</p>
+<div class="flex items-center space-x-2.5">
+<!-- Circular Progress Ring (48%) -->
+<div class="relative w-7 h-7 flex items-center justify-center flex-shrink-0">
+<svg class="w-7 h-7 transform -rotate-90" viewbox="0 0 36 36">
+<circle cx="18" cy="18" fill="none" r="14" stroke="#F1F5F9" stroke-width="3"></circle>
+<circle cx="18" cy="18" fill="none" r="14" stroke="#3B82F6" stroke-dasharray="88" stroke-dashoffset="45.7" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+<span class="absolute text-[8.5px] font-bold text-slate-700">48%</span>
+</div>
+<!-- Linear Progress Bar -->
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<span class="text-[11px] text-slate-400 font-medium">38 reviewed</span>
+</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-blue-500 h-full rounded-full" style="width: 48%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chevron Right -->
+<svg class="w-4 h-4 text-slate-400 stroke-[2.5]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="m8.25 4.5 7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</article>
+<!-- Card 3: Business Phrases -->
+<article class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100/80 flex items-center justify-between transition hover:shadow-md cursor-pointer">
+<div class="flex items-start space-x-3.5 flex-1">
+<!-- Green Briefcase Icon Circle -->
+<div class="w-10 h-10 rounded-full flex-shrink-0 bg-emerald-100 flex items-center justify-center text-emerald-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<rect height="14" rx="2" width="18" x="3" y="6"></rect>
+<path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-linecap="round"></path>
+</svg>
+</div>
+<!-- Deck Info and Progress Details -->
+<div class="flex-1 pr-2">
+<h3 class="text-sm font-bold text-slate-900 leading-tight">Business Phrases</h3>
+<p class="text-xs text-slate-400 font-normal mb-2.5">60 words</p>
+<div class="flex items-center space-x-2.5">
+<!-- Circular Progress Ring (30%) -->
+<div class="relative w-7 h-7 flex items-center justify-center flex-shrink-0">
+<svg class="w-7 h-7 transform -rotate-90" viewbox="0 0 36 36">
+<circle cx="18" cy="18" fill="none" r="14" stroke="#F1F5F9" stroke-width="3"></circle>
+<circle cx="18" cy="18" fill="none" r="14" stroke="#6366F1" stroke-dasharray="88" stroke-dashoffset="61.6" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+<span class="absolute text-[8.5px] font-bold text-slate-700">30%</span>
+</div>
+<!-- Linear Progress Bar -->
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<span class="text-[11px] text-slate-400 font-medium">18 reviewed</span>
+</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-indigo-500 h-full rounded-full" style="width: 30%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chevron Right -->
+<svg class="w-4 h-4 text-slate-400 stroke-[2.5]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="m8.25 4.5 7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</article>
+<!-- Card 4: Everyday Chinese -->
+<article class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100/80 flex items-center justify-between transition hover:shadow-md cursor-pointer">
+<div class="flex items-start space-x-3.5 flex-1">
+<!-- Pagoda/Temple Purple Icon Circle -->
+<div class="w-10 h-10 rounded-full flex-shrink-0 bg-purple-100 flex items-center justify-center text-purple-600">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 2l7 4v2H5V6l7-4zM4 10h16v3H4v-3zm2 5h12v5H6v-5z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<!-- Deck Info and Progress Details -->
+<div class="flex-1 pr-2">
+<h3 class="text-sm font-bold text-slate-900 leading-tight">Everyday Chinese</h3>
+<p class="text-xs text-slate-400 font-normal mb-2.5">100 words</p>
+<div class="flex items-center space-x-2.5">
+<!-- Circular Progress Ring (62%) -->
+<div class="relative w-7 h-7 flex items-center justify-center flex-shrink-0">
+<svg class="w-7 h-7 transform -rotate-90" viewbox="0 0 36 36">
+<circle cx="18" cy="18" fill="none" r="14" stroke="#F1F5F9" stroke-width="3"></circle>
+<circle cx="18" cy="18" fill="none" r="14" stroke="#0D9488" stroke-dasharray="88" stroke-dashoffset="33.4" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+<span class="absolute text-[8.5px] font-bold text-slate-700">62%</span>
+</div>
+<!-- Linear Progress Bar -->
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<span class="text-[11px] text-slate-400 font-medium">62 reviewed</span>
+</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-teal-500 h-full rounded-full" style="width: 62%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chevron Right -->
+<svg class="w-4 h-4 text-slate-400 stroke-[2.5]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="m8.25 4.5 7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</article>
+</section>
+<!-- END: DeckList -->
+<!-- BEGIN: CreateDeckActionCard -->
+<section class="mt-4" data-purpose="create-deck-prompt">
+<button class="w-full bg-[#EEF2FF]/60 hover:bg-[#EEF2FF] border border-dashed border-[#818CF8] rounded-2xl p-3.5 flex flex-col items-center justify-center transition text-center group" type="button">
+<div class="flex items-center space-x-1.5 text-indigo-600 font-semibold text-xs tracking-tight">
+<span class="text-sm font-bold leading-none">+</span>
+<span>Create Deck</span>
+</div>
+<p class="text-[11px] text-slate-400 mt-0.5">Build your own deck and start learning.</p>
+</button>
+</section>
+<!-- END: CreateDeckActionCard -->
+</main>
+<!-- BEGIN: BottomNavigationBar -->
+<nav class="fixed bottom-0 max-w-[393px] w-full bg-white/95 backdrop-blur-md border-t border-slate-100 px-6 py-2.5 flex justify-between items-center z-50" data-purpose="bottom-navigation">
+<!-- Home Tab -->
+<button class="flex flex-col items-center space-y-1 text-slate-400 hover:text-slate-600" type="button">
+<svg class="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<!-- Decks Tab (Active) -->
+<button class="flex flex-col items-center space-y-1 text-[#4F46E5]" type="button">
+<svg class="w-5 h-5 stroke-[2]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10px] font-bold">Decks</span>
+</button>
+<!-- Progress Tab -->
+<button class="flex flex-col items-center space-y-1 text-slate-400 hover:text-slate-600" type="button">
+<svg class="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10px] font-medium">Progress</span>
+</button>
+<!-- Settings Tab -->
+<button class="flex flex-col items-center space-y-1 text-slate-400 hover:text-slate-600" type="button">
+<svg class="w-5 h-5 stroke-[1.8]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.6 6.6 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10px] font-medium">Settings</span>
+</button>
+</nav>
+<!-- END: BottomNavigationBar -->
+</div>
+<!-- END: MobileContainer -->
+</body></html>

@@ -1,0 +1,290 @@
+[
+  {
+    "No": 1,
+    "Chinese Word": "创世记",
+    "Pinyin": "Chuàngshìjì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Genesis",
+    "Example (Chinese + Pinyin)": "(Wǒmen jīntiān dú Chuàngshìjì.) (We read Genesis today.)"
+  },
+  {
+    "No": 2,
+    "Chinese Word": "出埃及记",
+    "Pinyin": "Chū'āijíjì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Exodus",
+    "Example (Chinese + Pinyin)": "(Chū'āijíjì jìzǎi le Mōxī de gùshì.) (Exodus records the story of Moses.)"
+  },
+  {
+    "No": 3,
+    "Chinese Word": "利未记",
+    "Pinyin": "Lìwèijì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Leviticus",
+    "Example (Chinese + Pinyin)": "(Lìwèijì jiǎnglǐng le lǜfǎ.) (Leviticus explains the law.)"
+  },
+  {
+    "No": 4,
+    "Chinese Word": "民数记",
+    "Pinyin": "Mínshùjì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Numbers",
+    "Example (Chinese + Pinyin)": "(Mínshùjì jìzǎi le mínshù.) (Numbers records the census.)"
+  },
+  {
+    "No": 5,
+    "Chinese Word": "申命记",
+    "Pinyin": "Shēnmìngjì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Deuteronomy",
+    "Example (Chinese + Pinyin)": "(Shēnmìngjì shì Mōxī de zuìhòu jiǎnghuà.) (Deuteronomy is Moses' final speech.)"
+  },
+  {
+    "No": 6,
+    "Chinese Word": "约书亚记",
+    "Pinyin": "Yuēshūyàjì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Joshua",
+    "Example (Chinese + Pinyin)": "(Yuēshūyàjì jiǎng shènglì de gùshì.) (Joshua tells stories of victory.)"
+  },
+  {
+    "No": 7,
+    "Chinese Word": "士师记",
+    "Pinyin": "Shìshījì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Judges",
+    "Example (Chinese + Pinyin)": "(Shìshījì jìzǎi le shìshī men de lǐngdǎo.) (Judges records the leadership of the judges.)"
+  },
+  {
+    "No": 8,
+    "Chinese Word": "路得记",
+    "Pinyin": "Lùdéjì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Ruth",
+    "Example (Chinese + Pinyin)": "(Lùdéjì shì yí gè gǎndòng de gùshì.) (Ruth is a moving story.)"
+  },
+  {
+    "No": 9,
+    "Chinese Word": "撒母耳记上",
+    "Pinyin": "Sāmǔ'ěrjì Shàng",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "1 Samuel",
+    "Example (Chinese + Pinyin)": "(Sāmǔ'ěrjì Shàng jiǎng Dàwèi de gùshì.) (1 Samuel tells David's story.)"
+  },
+  {
+    "No": 10,
+    "Chinese Word": "撒母耳记下",
+    "Pinyin": "Sāmǔ'ěrjì Xià",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "2 Samuel",
+    "Example (Chinese + Pinyin)": "(Sāmǔ'ěrjì Xià jìzǎi Dàwèi wáng de tǒngzhì.) (2 Samuel records King David's reign.)"
+  },
+  {
+    "No": 11,
+    "Chinese Word": "列王纪上",
+    "Pinyin": "Lièwángjì Shàng",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "1 Kings",
+    "Example (Chinese + Pinyin)": "(Lièwángjì Shàng jiǎng Suǒluóméng de zhìhuì.) (1 Kings tells of Solomon's wisdom.)"
+  },
+  {
+    "No": 12,
+    "Chinese Word": "列王纪下",
+    "Pinyin": "Lièwángjì Xià",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "2 Kings",
+    "Example (Chinese + Pinyin)": "(Lièwángjì Xià jìzǎi zhūwáng de gùshì.) (2 Kings records stories of kings.)"
+  },
+  {
+    "No": 13,
+    "Chinese Word": "以斯拉记",
+    "Pinyin": "Yǐsīlājì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Ezra",
+    "Example (Chinese + Pinyin)": "(Yǐsīlājì jiǎng zhòngjiàn Shèngdiàn.) (Ezra speaks of rebuilding the Temple.)"
+  },
+  {
+    "No": 14,
+    "Chinese Word": "尼希米记",
+    "Pinyin": "Níxīmǐjì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Nehemiah",
+    "Example (Chinese + Pinyin)": "(Níxīmǐjì jiǎng zhòngjiàn chéngqiáng.) (Nehemiah speaks of rebuilding the city wall.)"
+  },
+  {
+    "No": 15,
+    "Chinese Word": "以斯帖记",
+    "Pinyin": "Yǐsītiějì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Esther",
+    "Example (Chinese + Pinyin)": "(Yǐsītiějì jìzǎi Yǐsītiě wánghòu de gùshì.) (Esther records the story of Queen Esther.)"
+  },
+  {
+    "No": 16,
+    "Chinese Word": "约伯记",
+    "Pinyin": "Yuēbójì",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Job",
+    "Example (Chinese + Pinyin)": "(Yuēbójì jiǎng xìnxīn yǔ kǔnàn.) (Job speaks of faith and suffering.)"
+  },
+  {
+    "No": 17,
+    "Chinese Word": "诗篇",
+    "Pinyin": "Shīpiān",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Psalms",
+    "Example (Chinese + Pinyin)": "(Shīpiān shì zànměi de shīgē.) (Psalms is a collection of praise songs.)"
+  },
+  {
+    "No": 18,
+    "Chinese Word": "箴言",
+    "Pinyin": "Zhēnyán",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Proverbs",
+    "Example (Chinese + Pinyin)": "(Zhēnyán tígōng zhìhuì de jiàodǎo.) (Proverbs provides teachings of wisdom.)"
+  },
+  {
+    "No": 19,
+    "Chinese Word": "传道书",
+    "Pinyin": "Chuándàoshū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Ecclesiastes",
+    "Example (Chinese + Pinyin)": "(Chuándàoshū tǎolùn shēngmìng de yìyì.) (Ecclesiastes discusses the meaning of life.)"
+  },
+  {
+    "No": 20,
+    "Chinese Word": "以赛亚书",
+    "Pinyin": "Yǐsàiyǎshū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Isaiah",
+    "Example (Chinese + Pinyin)": "(Yǐsàiyǎshū yùyán le Mísǎiyà.) (Isaiah prophesied the Messiah.)"
+  },
+  {
+    "No": 21,
+    "Chinese Word": "耶利米书",
+    "Pinyin": "Yēlìmǐshū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Jeremiah",
+    "Example (Chinese + Pinyin)": "(Yēlìmǐshū shì xiānzhī de yùyán.) (Jeremiah is the prophet's prophecy.)"
+  },
+  {
+    "No": 22,
+    "Chinese Word": "以西结书",
+    "Pinyin": "Yǐxījiéshū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Ezekiel",
+    "Example (Chinese + Pinyin)": "(Yǐxījiéshū jìzǎi yìxiàng.) (Ezekiel records visions.)"
+  },
+  {
+    "No": 23,
+    "Chinese Word": "但以理书",
+    "Pinyin": "Dànyǐlǐshū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Daniel",
+    "Example (Chinese + Pinyin)": "(Dànyǐlǐshū jiǎng shīzǐkēng de gùshì.) (Daniel tells the story of the lions' den.)"
+  },
+  {
+    "No": 24,
+    "Chinese Word": "约拿书",
+    "Pinyin": "Yuēnáshū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Jonah",
+    "Example (Chinese + Pinyin)": "(Yuēnáshū jiǎng dàyú yǔ xiānzhī.) (Jonah tells of the big fish and the prophet.)"
+  },
+  {
+    "No": 25,
+    "Chinese Word": "马太福音",
+    "Pinyin": "Mǎtài Fúyīn",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Matthew",
+    "Example (Chinese + Pinyin)": "(Mǎtài Fúyīn jìzǎi Yēsū de shēngpíng.) (Matthew records the life of Jesus.)"
+  },
+  {
+    "No": 26,
+    "Chinese Word": "马可福音",
+    "Pinyin": "Mǎkě Fúyīn",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Mark",
+    "Example (Chinese + Pinyin)": "(Mǎkě Fúyīn shì zuì duǎn de Fúyīnshū.) (Mark is the shortest Gospel.)"
+  },
+  {
+    "No": 27,
+    "Chinese Word": "路加福音",
+    "Pinyin": "Lùjiā Fúyīn",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Luke",
+    "Example (Chinese + Pinyin)": "(Lùjiā Fúyīn jìzǎi cí'ài de gùshì.) (Luke records stories of compassion.)"
+  },
+  {
+    "No": 28,
+    "Chinese Word": "约翰福音",
+    "Pinyin": "Yuēhàn Fúyīn",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "John",
+    "Example (Chinese + Pinyin)": "(Yuēhàn Fúyīn jiǎng Shén de ài.) (John speaks of God's love.)"
+  },
+  {
+    "No": 29,
+    "Chinese Word": "使徒行传",
+    "Pinyin": "Shǐtú Xíngzhuàn",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Acts of the Apostles",
+    "Example (Chinese + Pinyin)": "(Shǐtú Xíngzhuàn jiǎng jiàohuì de kāishǐ.) (Acts tells of the start of the Church.)"
+  },
+  {
+    "No": 30,
+    "Chinese Word": "罗马书",
+    "Pinyin": "Luómǎshū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Romans",
+    "Example (Chinese + Pinyin)": "(Luómǎshū jiǎnglǐng yīn xìn chēngyì.) (Romans explains justification by faith.)"
+  },
+  {
+    "No": 31,
+    "Chinese Word": "哥林多前书",
+    "Pinyin": "Gēlīnduō Qiánshū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "1 Corinthians",
+    "Example (Chinese + Pinyin)": "(Gēlīnduō Qiánshū dì shísān zhāng jiǎng ài.) (1 Corinthians chapter 13 talks about love.)"
+  },
+  {
+    "No": 32,
+    "Chinese Word": "哥林多后书",
+    "Pinyin": "Gēlīnduō Hòushū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "2 Corinthians",
+    "Example (Chinese + Pinyin)": "(Gēlīnduō Hòushū jiǎng ēndiǎn.) (2 Corinthians speaks of grace.)"
+  },
+  {
+    "No": 33,
+    "Chinese Word": "加拉太书",
+    "Pinyin": "Jiālātàishū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Galatians",
+    "Example (Chinese + Pinyin)": "(Jiālātàishū jiǎng zìyóu.) (Galatians speaks of freedom.)"
+  },
+  {
+    "No": 34,
+    "Chinese Word": "以弗所书",
+    "Pinyin": "Yǐfúsuǒshū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Ephesians",
+    "Example (Chinese + Pinyin)": "(Yǐfúsuǒshū jiǎng ēndiǎn yǔ kǎnjiǎ.) (Ephesians speaks of grace and armor.)"
+  },
+  {
+    "No": 35,
+    "Chinese Word": "腓立比书",
+    "Pinyin": "Féilìbǐshū",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Philippians",
+    "Example (Chinese + Pinyin)": "(Féilìbǐshū shì xǐlè de shūxìn.) (Philippians is a letter of joy.)"
+  },
+  {
+    "No": 36,
+    "Chinese Word": "启示录",
+    "Pinyin": "Qǐshìlù",
+    "Part of Speech": "Book of the Bible",
+    "English Meaning": "Revelation",
+    "Example (Chinese + Pinyin)": "(Qǐshìlù shì Shèngjīng de zuìhòu yī juàn.) (Revelation is the last book of the Bible.)"
+  }
+]

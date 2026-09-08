@@ -21,7 +21,7 @@
 
 <nav
 	aria-label="Main Navigation"
-	class="fixed right-0 bottom-0 left-0 z-40 mx-auto max-w-md border-t border-slate-200/80 bg-white/95 pt-1.5 pb-[env(safe-area-inset-bottom,0.5rem)] shadow-lg shadow-slate-900/5 backdrop-blur-lg"
+	class="fixed right-0 bottom-0 left-0 z-40 mx-auto w-full border-t border-slate-200/80 bg-white/95 pt-1.5 pb-[env(safe-area-inset-bottom,0.5rem)] shadow-lg shadow-slate-900/5 backdrop-blur-lg sm:max-w-md"
 >
 	<div class="flex items-center justify-around px-3">
 		{#each navItems as item (item.href)}

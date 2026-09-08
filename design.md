@@ -82,9 +82,9 @@ The application follows a consistent 4px / 8px incremental scale:
 
 ## 5. Layout
 
-- **Viewport**: Mobile-first centered arena (`w-full max-w-md`) with subtle border (`border-x border-slate-200/60`) on desktop displays.
+- **Viewport**: Edge-to-edge full width (`w-full`) on mobile displays (< 640px) with clean background (`bg-white`); centered max-448px arena (`sm:max-w-md`) with subtle border (`sm:border-x sm:border-slate-200/60 sm:shadow-sm`) on tablet/desktop displays (`sm:` / >= 640px) against canvas (`sm:bg-slate-100`).
 - **Top Navigation**: Fixed/sticky at top (`sticky top-0 z-30`) with frosted backdrop blur (`bg-white/90 backdrop-blur-md`).
-- **Bottom Navigation**: Fixed dock (`fixed bottom-0 z-40 max-w-md`) with safe area inset support.
+- **Bottom Navigation**: Fixed dock (`fixed bottom-0 z-40 w-full sm:max-w-md`) with safe area inset support.
 - **Section Stack Rhythm**: Standard `space-y-5` between major dashboard functional blocks.
 
 ---

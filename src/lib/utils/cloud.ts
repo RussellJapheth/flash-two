@@ -126,7 +126,10 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 					const localCreated = localDeck.createdAt || 0;
 					if (remoteCreated > localCreated || remoteDeck.words.length > localDeck.words.length) {
 						await saveCustomDeck(remoteDeck);
-					} else if (localCreated > remoteCreated || localDeck.words.length > remoteDeck.words.length) {
+					} else if (
+						localCreated > remoteCreated ||
+						localDeck.words.length > remoteDeck.words.length
+					) {
 						localHadNewData = true;
 					}
 				}
@@ -161,9 +164,7 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 		}
 
 		if (Array.isArray(remoteData.savedWords)) {
-			const remoteKeys = new Set(
-				remoteData.savedWords.map((s) => `${s.weekId}:${s.wordNo}`)
-			);
+			const remoteKeys = new Set(remoteData.savedWords.map((s) => `${s.weekId}:${s.wordNo}`));
 			for (const [key] of localSavedMap) {
 				if (!remoteKeys.has(key)) {
 					localHadNewData = true;

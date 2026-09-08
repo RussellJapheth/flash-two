@@ -559,9 +559,15 @@
 
 				<!-- SRS EVALUATION CONTROLS -->
 				<div
-					class="transition-opacity {isFlipped && !isAdvancing ? 'opacity-100' : 'pointer-events-none opacity-40'}"
+					class="transition-opacity {isFlipped && !isAdvancing
+						? 'opacity-100'
+						: 'pointer-events-none opacity-40'}"
 				>
-					<SRSButtons onRate={handleRate} disabled={!isFlipped || isAdvancing} progress={currentProgress} />
+					<SRSButtons
+						onRate={handleRate}
+						disabled={!isFlipped || isAdvancing}
+						progress={currentProgress}
+					/>
 				</div>
 			</div>
 		{:else}
@@ -573,7 +579,7 @@
 				<p class="font-sans text-xs text-slate-400">
 					Add vocabulary cards to this custom deck before starting a study session.
 				</p>
-				<div class="pt-2 flex flex-col gap-2">
+				<div class="flex flex-col gap-2 pt-2">
 					<a
 						href={resolve(`/deck/${deckId}/preview`)}
 						class="flex h-11 w-full items-center justify-center rounded-2xl bg-indigo-600 font-headline text-xs font-bold text-white shadow-xs hover:bg-indigo-700 active:scale-95"

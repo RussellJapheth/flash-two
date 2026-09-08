@@ -269,9 +269,15 @@
 				/>
 
 				<div
-					class="transition-opacity {isFlipped && !isAdvancing ? 'opacity-100' : 'pointer-events-none opacity-40'}"
+					class="transition-opacity {isFlipped && !isAdvancing
+						? 'opacity-100'
+						: 'pointer-events-none opacity-40'}"
 				>
-					<SRSButtons onRate={handleRate} disabled={!isFlipped || isAdvancing} progress={currentProgress} />
+					<SRSButtons
+						onRate={handleRate}
+						disabled={!isFlipped || isAdvancing}
+						progress={currentProgress}
+					/>
 				</div>
 			</div>
 		{:else}

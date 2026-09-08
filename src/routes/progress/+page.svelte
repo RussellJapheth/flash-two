@@ -182,8 +182,7 @@
 						exportCount++;
 						const stage = isCardMastered(p) ? 'Mastered' : 'Learning';
 						const attempts = (p.correct || 0) + (p.wrong || 0);
-						const acc =
-							attempts > 0 ? `${Math.round(((p.correct || 0) / attempts) * 100)}%` : '0%';
+						const acc = attempts > 0 ? `${Math.round(((p.correct || 0) / attempts) * 100)}%` : '0%';
 						const targetWord = word['Chinese Word'] || word['French Word'] || '';
 						const pinyin = word.Pinyin || '';
 						const pos = word['Part of Speech'] || '';
@@ -191,8 +190,7 @@
 						const lastReviewed = p.lastReviewed
 							? new Date(p.lastReviewed).toISOString().replace('T', ' ').substring(0, 19)
 							: '';
-						const example =
-							word['Example (Chinese + Pinyin)'] || word['Example (French)'] || '';
+						const example = word['Example (Chinese + Pinyin)'] || word['Example (French)'] || '';
 
 						rows.push([
 							pack.lang === 'chinese' ? 'Chinese' : 'French',
@@ -505,4 +503,3 @@
 		</button>
 	</section>
 </main>
-

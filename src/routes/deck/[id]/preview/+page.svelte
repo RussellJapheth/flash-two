@@ -628,12 +628,7 @@
 											: word['French Word'] || ''}
 									{@const isSaved = savedWordNos.has(word.No)}
 									{@const status = getWordStatus(word.No)}
-									{@const progress = getWordProgress(
-										allProgress,
-										deckId,
-										word.No,
-										deckLanguage
-									)}
+									{@const progress = getWordProgress(allProgress, deckId, word.No, deckLanguage)}
 									<tr class="transition-colors hover:bg-slate-50/70">
 										<!-- No. -->
 										<td
@@ -721,7 +716,8 @@
 														title="{progress.wrong} lapses recorded"
 													>
 														<Dumbbell size={9} strokeWidth={2.5} />
-														<span>{progress.wrong} {progress.wrong === 1 ? 'lapse' : 'lapses'}</span>
+														<span>{progress.wrong} {progress.wrong === 1 ? 'lapse' : 'lapses'}</span
+														>
 													</span>
 												{/if}
 											</div>

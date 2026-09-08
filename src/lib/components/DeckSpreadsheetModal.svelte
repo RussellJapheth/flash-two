@@ -134,21 +134,13 @@
 
 	function clearEmptyRows() {
 		const filtered = rows.filter(
-			(r) =>
-				r.targetWord.trim() ||
-				r.phonetic.trim() ||
-				r.meaning.trim() ||
-				r.example.trim()
+			(r) => r.targetWord.trim() || r.phonetic.trim() || r.meaning.trim() || r.example.trim()
 		);
 		rows = filtered.length > 0 ? filtered : [createBlankRow()];
 	}
 
 	// Spreadsheet keyboard navigation & auto-row addition
-	function handleCellKeydown(
-		e: KeyboardEvent,
-		rowIndex: number,
-		colName: keyof SpreadsheetRow
-	) {
+	function handleCellKeydown(e: KeyboardEvent, rowIndex: number, colName: keyof SpreadsheetRow) {
 		const colNames: (keyof SpreadsheetRow)[] = [
 			'targetWord',
 			'phonetic',
@@ -224,13 +216,9 @@
 
 		for (const line of lines) {
 			// Tab-delimited (Google Sheets / Excel) or Comma-delimited (CSV)
-			let tokens: string[] = [];
-			if (line.includes('\t')) {
-				tokens = line.split('\t').map((t) => t.trim());
-			} else {
-				// Basic CSV parsing
-				tokens = line.split(',').map((t) => t.trim());
-			}
+			const tokens = line.includes('\t')
+				? line.split('\t').map((t) => t.trim())
+				: line.split(',').map((t) => t.trim());
 
 			if (tokens.length === 0) continue;
 
@@ -239,7 +227,7 @@
 			// If 3 columns: [Word, Phonetic/Pinyin, Meaning] (or [Word, Meaning, Example])
 			// If 4 columns: [Word, Phonetic, Meaning, PartOfSpeech]
 			// If 5+ columns: [Word, Phonetic, Meaning, PartOfSpeech, Example]
-			let targetWord = tokens[0] || '';
+			const targetWord = tokens[0] || '';
 			let phonetic = '';
 			let meaning = '';
 			let partOfSpeech = 'noun';
@@ -247,18 +235,15 @@
 
 			if (tokens.length === 2) {
 				meaning = tokens[1] || '';
-			} else if (tokens.length === 3) {
+			} else if (tokens.length >= 3) {
 				phonetic = tokens[1] || '';
 				meaning = tokens[2] || '';
-			} else if (tokens.length === 4) {
-				phonetic = tokens[1] || '';
-				meaning = tokens[2] || '';
-				partOfSpeech = tokens[3] || 'noun';
-			} else {
-				phonetic = tokens[1] || '';
-				meaning = tokens[2] || '';
-				partOfSpeech = tokens[3] || 'noun';
-				example = tokens.slice(4).join(' ') || '';
+				if (tokens.length >= 4) {
+					partOfSpeech = tokens[3] || 'noun';
+				}
+				if (tokens.length >= 5) {
+					example = tokens.slice(4).join(' ') || '';
+				}
 			}
 
 			parsedRows.push({
@@ -288,7 +273,10 @@
 
 	function handlePasteModalSubmit() {
 		if (!pasteRawText.trim()) return;
-		parseAndApplySpreadsheetData(pasteRawText.trim(), rows.length > 0 && rows[0].targetWord === '' ? 0 : rows.length);
+		parseAndApplySpreadsheetData(
+			pasteRawText.trim(),
+			rows.length > 0 && rows[0].targetWord === '' ? 0 : rows.length
+		);
 		pasteRawText = '';
 		showPasteModal = false;
 	}
@@ -318,8 +306,7 @@
 			'English Meaning': r.meaning.trim(),
 			'Example (Chinese + Pinyin)':
 				deckLang === 'chinese' ? r.example.trim() || undefined : undefined,
-			'Example (French)':
-				deckLang === 'french' ? r.example.trim() || undefined : undefined
+			'Example (French)': deckLang === 'french' ? r.example.trim() || undefined : undefined
 		}));
 
 		const customDeck: CustomDeck = {
@@ -344,7 +331,7 @@
 
 {#if isOpen}
 	<div
-		class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-3 sm:p-5 backdrop-blur-sm animate-in fade-in duration-200"
+		class="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-3 backdrop-blur-sm duration-200 sm:p-5"
 	>
 		<div
 			class="shadow-sheet flex max-h-[92vh] w-full max-w-4xl flex-col rounded-3xl border border-slate-200 bg-white"
@@ -353,12 +340,12 @@
 			<div class="flex items-center justify-between border-b border-slate-100 px-5 py-4">
 				<div class="flex items-center gap-2.5">
 					<div
-						class="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-indigo-600 font-bold"
+						class="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 font-bold text-indigo-600"
 					>
 						<Sparkles size={18} strokeWidth={2.25} />
 					</div>
 					<div>
-						<h3 class="font-headline text-base sm:text-lg font-extrabold text-slate-900">
+						<h3 class="font-headline text-base font-extrabold text-slate-900 sm:text-lg">
 							{deckToEdit ? 'Edit Custom Deck' : 'Create Custom Deck (Spreadsheet UI)'}
 						</h3>
 						<p class="font-sans text-xs text-slate-500">
@@ -380,9 +367,12 @@
 			<!-- Main Content / Controls -->
 			<div class="flex-1 space-y-4 overflow-y-auto px-5 py-4">
 				<!-- Deck Metadata Form Row -->
-				<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+				<div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
 					<div class="sm:col-span-2">
-						<label for="deck-title-input" class="block font-headline text-xs font-bold text-slate-900">
+						<label
+							for="deck-title-input"
+							class="block font-headline text-xs font-bold text-slate-900"
+						>
 							Deck Title *
 						</label>
 						<input
@@ -395,7 +385,8 @@
 					</div>
 
 					<div>
-						<span class="block font-headline text-xs font-bold text-slate-900">Target Language</span>
+						<span class="block font-headline text-xs font-bold text-slate-900">Target Language</span
+						>
 						<div class="mt-1 flex gap-1.5 rounded-2xl border border-slate-200/80 bg-slate-50 p-1">
 							<button
 								type="button"
@@ -422,7 +413,9 @@
 				</div>
 
 				<!-- Toolbar / Spreadsheet Actions -->
-				<div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3">
+				<div
+					class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3"
+				>
 					<div class="flex items-center gap-2">
 						<button
 							type="button"
@@ -473,34 +466,33 @@
 				<div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
 					<div class="max-h-[42vh] overflow-x-auto overflow-y-auto">
 						<table class="w-full min-w-[700px] border-collapse text-left font-sans text-xs">
-							<thead class="sticky top-0 z-10 border-b border-slate-200 bg-slate-50 font-headline text-[11px] font-bold text-slate-600 uppercase">
+							<thead
+								class="sticky top-0 z-10 border-b border-slate-200 bg-slate-50 font-headline text-[11px] font-bold text-slate-600 uppercase"
+							>
 								<tr>
-									<th class="w-10 border-r border-slate-200 bg-slate-100/70 py-2.5 text-center text-slate-400">#</th>
+									<th
+										class="w-10 border-r border-slate-200 bg-slate-100/70 py-2.5 text-center text-slate-400"
+										>#</th
+									>
 									<th class="w-36 border-r border-slate-200 px-3 py-2.5">
 										{deckLang === 'chinese' ? 'Word (Hanzi) *' : 'French Word *'}
 									</th>
 									<th class="w-32 border-r border-slate-200 px-3 py-2.5">
 										{deckLang === 'chinese' ? 'Pinyin' : 'Phonetic'}
 									</th>
-									<th class="w-44 border-r border-slate-200 px-3 py-2.5">
-										English Meaning *
-									</th>
-									<th class="w-28 border-r border-slate-200 px-3 py-2.5">
-										POS
-									</th>
-									<th class="border-r border-slate-200 px-3 py-2.5">
-										Example Sentence
-									</th>
-									<th class="w-18 px-2 py-2.5 text-center">
-										Actions
-									</th>
+									<th class="w-44 border-r border-slate-200 px-3 py-2.5"> English Meaning * </th>
+									<th class="w-28 border-r border-slate-200 px-3 py-2.5"> POS </th>
+									<th class="border-r border-slate-200 px-3 py-2.5"> Example Sentence </th>
+									<th class="w-18 px-2 py-2.5 text-center"> Actions </th>
 								</tr>
 							</thead>
 							<tbody class="divide-y divide-slate-100">
 								{#each rows as row, idx (row.id)}
 									<tr class="group transition-colors hover:bg-slate-50/60">
 										<!-- Row Number -->
-										<td class="border-r border-slate-100 bg-slate-50/50 text-center font-headline text-xs font-semibold text-slate-400">
+										<td
+											class="border-r border-slate-100 bg-slate-50/50 text-center font-headline text-xs font-semibold text-slate-400"
+										>
 											{idx + 1}
 										</td>
 
@@ -514,7 +506,10 @@
 												bind:value={row.targetWord}
 												onkeydown={(e) => handleCellKeydown(e, idx, 'targetWord')}
 												onpaste={(e) => handleCellPaste(e, idx)}
-												class="w-full bg-transparent px-3 py-2 font-headline font-bold text-slate-900 placeholder:font-normal placeholder:text-slate-300 focus:bg-indigo-50/40 focus:outline-none focus:ring-1 focus:ring-indigo-600 {deckLang === 'chinese' ? 'font-hanzi text-sm' : ''}"
+												class="w-full bg-transparent px-3 py-2 font-headline font-bold text-slate-900 placeholder:font-normal placeholder:text-slate-300 focus:bg-indigo-50/40 focus:ring-1 focus:ring-indigo-600 focus:outline-none {deckLang ===
+												'chinese'
+													? 'font-hanzi text-sm'
+													: ''}"
 											/>
 										</td>
 
@@ -528,7 +523,7 @@
 												bind:value={row.phonetic}
 												onkeydown={(e) => handleCellKeydown(e, idx, 'phonetic')}
 												onpaste={(e) => handleCellPaste(e, idx)}
-												class="w-full bg-transparent px-3 py-2 font-headline text-xs text-indigo-700 placeholder:text-slate-300 focus:bg-indigo-50/40 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+												class="w-full bg-transparent px-3 py-2 font-headline text-xs text-indigo-700 placeholder:text-slate-300 focus:bg-indigo-50/40 focus:ring-1 focus:ring-indigo-600 focus:outline-none"
 											/>
 										</td>
 
@@ -542,7 +537,7 @@
 												bind:value={row.meaning}
 												onkeydown={(e) => handleCellKeydown(e, idx, 'meaning')}
 												onpaste={(e) => handleCellPaste(e, idx)}
-												class="w-full bg-transparent px-3 py-2 font-sans text-xs text-slate-800 placeholder:text-slate-300 focus:bg-indigo-50/40 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+												class="w-full bg-transparent px-3 py-2 font-sans text-xs text-slate-800 placeholder:text-slate-300 focus:bg-indigo-50/40 focus:ring-1 focus:ring-indigo-600 focus:outline-none"
 											/>
 										</td>
 
@@ -553,7 +548,7 @@
 												data-col="partOfSpeech"
 												bind:value={row.partOfSpeech}
 												onkeydown={(e) => handleCellKeydown(e, idx, 'partOfSpeech')}
-												class="w-full cursor-pointer bg-transparent px-2 py-2 font-headline text-[11px] font-bold text-slate-600 focus:bg-indigo-50/40 focus:outline-none focus:ring-1 focus:ring-indigo-600 uppercase"
+												class="w-full cursor-pointer bg-transparent px-2 py-2 font-headline text-[11px] font-bold text-slate-600 uppercase focus:bg-indigo-50/40 focus:ring-1 focus:ring-indigo-600 focus:outline-none"
 											>
 												<option value="noun">noun</option>
 												<option value="verb">verb</option>
@@ -577,7 +572,7 @@
 												bind:value={row.example}
 												onkeydown={(e) => handleCellKeydown(e, idx, 'example')}
 												onpaste={(e) => handleCellPaste(e, idx)}
-												class="w-full bg-transparent px-3 py-2 font-sans text-xs text-slate-600 placeholder:text-slate-300 focus:bg-indigo-50/40 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+												class="w-full bg-transparent px-3 py-2 font-sans text-xs text-slate-600 placeholder:text-slate-300 focus:bg-indigo-50/40 focus:ring-1 focus:ring-indigo-600 focus:outline-none"
 											/>
 										</td>
 
@@ -656,7 +651,7 @@
 		class="fixed inset-0 z-60 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm"
 	>
 		<div
-			class="shadow-sheet w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-5 animate-in zoom-in-95 duration-150"
+			class="shadow-sheet animate-in zoom-in-95 w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-5 duration-150"
 		>
 			<div class="flex items-center justify-between border-b border-slate-100 pb-3">
 				<h4 class="font-headline text-sm font-bold text-slate-900">

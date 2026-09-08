@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import { Home, Layers, BarChart3, Settings } from 'lucide-svelte';
+	import { Home, Layers, BarChart3, Gamepad2, Settings } from 'lucide-svelte';
 
 	const navItems = [
 		{ href: '/', icon: Home, label: 'Home' },
 		{ href: '/decks', icon: Layers, label: 'Decks' },
 		{ href: '/progress', icon: BarChart3, label: 'Progress' },
+		{ href: '/games', icon: Gamepad2, label: 'Games' },
 		{ href: '/settings', icon: Settings, label: 'Settings' }
 	] as const;
 

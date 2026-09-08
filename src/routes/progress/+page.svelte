@@ -12,7 +12,17 @@
 	} from '$lib/utils/storage';
 	import { isCardMastered, isCardLearning, isCardDue } from '$lib/utils/srs';
 	import type { StreakStats } from '$lib/types';
-	import { Flag, ShieldCheck, History, Flame, ChevronRight, Bookmark } from 'lucide-svelte';
+	import {
+		Flag,
+		ShieldCheck,
+		History,
+		Flame,
+		ChevronRight,
+		Bookmark,
+		Download,
+		FileSpreadsheet,
+		Check
+	} from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -29,6 +39,8 @@
 	let dueWordsCount = $state(0);
 	let overallAccuracy = $state(0);
 	let weeklyActivity = $state<{ day: string; count: number; isToday: boolean }[]>([]);
+	let isExporting = $state(false);
+	let exportMessage = $state('');
 
 	async function loadProgressStats() {
 		const progress = await getAllProgress();
@@ -104,6 +116,164 @@
 		weeklyActivity = activity;
 	}
 
+	async function handleExportLearnedWords() {
+		if (isExporting) return;
+		isExporting = true;
+		exportMessage = '';
+
+		try {
+			const progress = await getAllProgress();
+			const chPacks = await getBuiltinPacks('chinese');
+			const frPacks = await getBuiltinPacks('french');
+			const customDecks = await getAllCustomDecks();
+
+			const allActivePacks = [
+				...chPacks.map((p) => ({
+					id: p.id,
+					title: p.title,
+					words: p.words,
+					lang: 'chinese' as const
+				})),
+				...frPacks.map((p) => ({
+					id: p.id,
+					title: p.title,
+					words: p.words,
+					lang: 'french' as const
+				})),
+				...customDecks.map((d) => ({
+					id: d.id,
+					title: d.name,
+					words: d.words,
+					lang: (d.language || 'chinese') as 'chinese' | 'french'
+				}))
+			];
+
+			const headers = [
+				'Language',
+				'Deck / Pack',
+				'Word #',
+				'Target Word',
+				'Pinyin / Phonetic',
+				'Part of Speech',
+				'English Meaning',
+				'Mastery Stage',
+				'Correct Reviews',
+				'Incorrect Reviews',
+				'Accuracy (%)',
+				'Interval (Days)',
+				'Repetitions',
+				'Last Reviewed',
+				'Example'
+			];
+
+			const rows: string[][] = [headers];
+			let exportCount = 0;
+
+			for (const pack of allActivePacks) {
+				for (const word of pack.words) {
+					const p = getWordProgress(progress, pack.id, word.No, pack.lang);
+					if (
+						p &&
+						(isCardMastered(p) ||
+							isCardLearning(p) ||
+							(p.correct || 0) + (p.wrong || 0) > 0 ||
+							(p.reps || 0) > 0)
+					) {
+						exportCount++;
+						const stage = isCardMastered(p) ? 'Mastered' : 'Learning';
+						const attempts = (p.correct || 0) + (p.wrong || 0);
+						const acc =
+							attempts > 0 ? `${Math.round(((p.correct || 0) / attempts) * 100)}%` : '0%';
+						const targetWord = word['Chinese Word'] || word['French Word'] || '';
+						const pinyin = word.Pinyin || '';
+						const pos = word['Part of Speech'] || '';
+						const meaning = word['English Meaning'] || '';
+						const lastReviewed = p.lastReviewed
+							? new Date(p.lastReviewed).toISOString().replace('T', ' ').substring(0, 19)
+							: '';
+						const example =
+							word['Example (Chinese + Pinyin)'] || word['Example (French)'] || '';
+
+						rows.push([
+							pack.lang === 'chinese' ? 'Chinese' : 'French',
+							pack.title,
+							String(word.No),
+							targetWord,
+							pinyin,
+							pos,
+							meaning,
+							stage,
+							String(p.correct || 0),
+							String(p.wrong || 0),
+							acc,
+							String(p.interval || 0),
+							String(p.reps || 0),
+							lastReviewed,
+							example
+						]);
+					}
+				}
+			}
+
+			if (exportCount === 0) {
+				exportMessage = 'No learned words yet to export.';
+				setTimeout(() => (exportMessage = ''), 3000);
+				isExporting = false;
+				return;
+			}
+
+			const csvContent = rows
+				.map((row) =>
+					row
+						.map((cell) => {
+							const str = cell ?? '';
+							if (
+								str.includes(',') ||
+								str.includes('"') ||
+								str.includes('\n') ||
+								str.includes('\r')
+							) {
+								return `"${str.replace(/"/g, '""')}"`;
+							}
+							return str;
+						})
+						.join(',')
+				)
+				.join('\r\n');
+
+			// UTF-8 BOM prefix (\uFEFF) ensures Excel, Numbers, and Google Sheets correctly display non-ASCII characters across Windows, Mac, iOS, and Android
+			const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+			const filename = `flashcards-learned-words-${new Date().toISOString().split('T')[0]}.csv`;
+
+			// Cross-platform download execution compatible with desktop browsers and mobile web
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = filename;
+			a.style.display = 'none';
+			document.body.appendChild(a);
+			a.click();
+
+			setTimeout(() => {
+				if (document.body.contains(a)) {
+					document.body.removeChild(a);
+				}
+				URL.revokeObjectURL(url);
+			}, 1500);
+
+			exportMessage = `Exported ${exportCount} learned words!`;
+			setTimeout(() => (exportMessage = ''), 3500);
+		} catch (e) {
+			console.error('Failed to export learned words CSV:', e);
+			exportMessage = 'Export failed. Please try again.';
+			setTimeout(() => (exportMessage = ''), 3500);
+		} finally {
+			isExporting = false;
+		}
+	}
+
+	let totalLearnedWords = $derived(masteredWordsCount + learningWordsCount);
+
 	let overallPercent = $derived(
 		totalWordsCount > 0 ? Math.round((masteredWordsCount / totalWordsCount) * 100) : 0
 	);
@@ -151,6 +321,31 @@
 			height="h-2.5"
 		/>
 	</section>
+
+	<!-- Quick Links (Streak Tier & Saved Words placed directly below Overall Mastery) -->
+	<div class="grid grid-cols-2 gap-3">
+		<a
+			href={resolve('/streak')}
+			class="shadow-card flex items-center justify-between rounded-2xl border border-amber-200/60 bg-amber-50/50 p-3.5 transition-colors hover:bg-amber-50"
+		>
+			<div class="flex items-center gap-2">
+				<Flame size={18} strokeWidth={2} class="text-amber-600" />
+				<span class="font-headline text-xs font-bold text-slate-900">Streak Tier</span>
+			</div>
+			<ChevronRight size={16} strokeWidth={2} class="text-slate-400" />
+		</a>
+
+		<a
+			href={resolve('/saved')}
+			class="shadow-card flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white p-3.5 transition-colors hover:border-indigo-200 hover:bg-slate-50"
+		>
+			<div class="flex items-center gap-2">
+				<Bookmark size={18} strokeWidth={2} class="text-indigo-600" />
+				<span class="font-headline text-xs font-bold text-slate-900">Saved Words</span>
+			</div>
+			<ChevronRight size={16} strokeWidth={2} class="text-slate-400" />
+		</a>
+	</div>
 
 	<!-- Key Metrics Grid -->
 	<section class="grid grid-cols-2 gap-3">
@@ -270,28 +465,44 @@
 		</div>
 	</section>
 
-	<!-- Quick Links -->
-	<div class="grid grid-cols-2 gap-3">
-		<a
-			href={resolve('/streak')}
-			class="shadow-card flex items-center justify-between rounded-2xl border border-amber-200/60 bg-amber-50/50 p-3.5 transition-colors hover:bg-amber-50"
-		>
-			<div class="flex items-center gap-2">
-				<Flame size={18} strokeWidth={2} class="text-amber-600" />
-				<span class="font-headline text-xs font-bold text-slate-900">Streak Tier</span>
+	<!-- Export Learned Words Section -->
+	<section class="shadow-card space-y-3.5 rounded-3xl border border-slate-200/80 bg-white p-5">
+		<div class="flex items-start justify-between gap-3">
+			<div class="flex items-center gap-3">
+				<div
+					class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-indigo-100 bg-indigo-50 text-indigo-600"
+				>
+					<FileSpreadsheet size={20} strokeWidth={2} />
+				</div>
+				<div>
+					<h3 class="font-headline text-sm font-bold text-slate-900">Export Learned Words</h3>
+					<p class="font-sans text-xs text-slate-500">
+						{totalLearnedWords}
+						{totalLearnedWords === 1 ? 'word' : 'words'} with study progress
+					</p>
+				</div>
 			</div>
-			<ChevronRight size={16} strokeWidth={2} class="text-slate-400" />
-		</a>
 
-		<a
-			href={resolve('/saved')}
-			class="shadow-card flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white p-3.5 transition-colors hover:border-indigo-200 hover:bg-slate-50"
+			{#if exportMessage}
+				<span
+					class="flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 font-headline text-[11px] font-bold text-emerald-700"
+				>
+					<Check size={13} strokeWidth={2.5} />
+					{exportMessage}
+				</span>
+			{/if}
+		</div>
+
+		<button
+			type="button"
+			id="export-learned-words-btn"
+			onclick={handleExportLearnedWords}
+			disabled={isExporting || totalLearnedWords === 0}
+			class="shadow-primary-glow/20 flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white transition-all hover:bg-indigo-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
 		>
-			<div class="flex items-center gap-2">
-				<Bookmark size={18} strokeWidth={2} class="text-indigo-600" />
-				<span class="font-headline text-xs font-bold text-slate-900">Saved Words</span>
-			</div>
-			<ChevronRight size={16} strokeWidth={2} class="text-slate-400" />
-		</a>
-	</div>
+			<Download size={17} strokeWidth={2.25} />
+			{isExporting ? 'Generating CSV…' : 'Download Learned Words (CSV)'}
+		</button>
+	</section>
 </main>
+

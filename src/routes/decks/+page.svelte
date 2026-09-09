@@ -15,7 +15,8 @@
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered } from '$lib/utils/srs';
 	import type { DeckSummary, CustomDeck, WordRecord, StreakStats } from '$lib/types';
-	import { Plus, FileUp, Search, FolderOpen, X } from 'lucide-svelte';
+	import { Plus, FileUp, Search, FolderOpen, X, Download } from 'lucide-svelte';
+	import { downloadCsvTemplate } from '$lib/utils/csvTemplate';
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -449,9 +450,21 @@
 				</div>
 
 				<div>
-					<label for="import-raw-data" class="block font-headline text-xs font-bold text-slate-900"
-						>Paste JSON or CSV</label
-					>
+					<div class="flex items-center justify-between gap-2">
+						<label
+							for="import-raw-data"
+							class="block font-headline text-xs font-bold text-slate-900">Paste JSON or CSV</label
+						>
+						<button
+							type="button"
+							onclick={() => downloadCsvTemplate(importDeckLang)}
+							class="inline-flex cursor-pointer items-center gap-1 font-headline text-[11px] font-bold text-slate-400 transition-colors hover:text-indigo-600 active:scale-95"
+							title="Download CSV template"
+						>
+							<Download size={11} strokeWidth={2} />
+							<span>CSV Template</span>
+						</button>
+					</div>
 					<p class="text-[11px] text-slate-500">
 						CSV format: <code>Word, Meaning, Phonetic, PartOfSpeech, Example</code>
 					</p>

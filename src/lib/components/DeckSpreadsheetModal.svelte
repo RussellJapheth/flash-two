@@ -9,8 +9,10 @@
 		ClipboardPaste,
 		Rows3,
 		Check,
-		AlertCircle
+		AlertCircle,
+		Download
 	} from 'lucide-svelte';
+	import { downloadCsvTemplate } from '$lib/utils/csvTemplate';
 
 	interface SpreadsheetRow {
 		id: string;
@@ -448,6 +450,18 @@
 					<div class="flex items-center gap-2">
 						<button
 							type="button"
+							onclick={() => downloadCsvTemplate(deckLang)}
+							class="inline-flex cursor-pointer items-center gap-1 font-headline text-[11px] font-bold text-slate-400 transition-colors hover:text-indigo-600 active:scale-95"
+							title="Download CSV template"
+						>
+							<Download size={12} strokeWidth={2} />
+							<span>CSV Template</span>
+						</button>
+
+						<span class="text-slate-300">•</span>
+
+						<button
+							type="button"
 							onclick={clearEmptyRows}
 							class="cursor-pointer font-headline text-[11px] font-bold text-slate-500 hover:text-slate-800"
 						>
@@ -668,9 +682,20 @@
 			</div>
 
 			<div class="space-y-2 py-3">
-				<p class="font-sans text-xs text-slate-500">
-					Paste rows copied directly from Google Sheets / Excel (tab-separated) or CSV.
-				</p>
+				<div class="flex items-center justify-between gap-2">
+					<p class="font-sans text-xs text-slate-500">
+						Paste rows copied directly from Google Sheets / Excel (tab-separated) or CSV.
+					</p>
+					<button
+						type="button"
+						onclick={() => downloadCsvTemplate(deckLang)}
+						class="inline-flex shrink-0 cursor-pointer items-center gap-1 font-headline text-[11px] font-bold text-slate-400 transition-colors hover:text-indigo-600 active:scale-95"
+						title="Download CSV template"
+					>
+						<Download size={11} strokeWidth={2} />
+						<span>Template</span>
+					</button>
+				</div>
 				<p class="font-mono text-[11px] text-slate-400">
 					Format: Word [tab] Pinyin [tab] English Meaning [tab] POS [tab] Example
 				</p>

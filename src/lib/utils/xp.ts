@@ -1,8 +1,15 @@
-import type { StudyRating, UserXPData, XPLeaderboardEntry, XPStats, WordProgress } from '$lib/types';
+import type {
+	StudyRating,
+	UserXPData,
+	XPLeaderboardEntry,
+	XPStats,
+	WordProgress
+} from '$lib/types';
 import { getSavedUsername } from './storage';
 
 const XP_STORAGE_KEY = 'flashcards_user_xp';
-export const XP_LEADERBOARD_API = 'https://json-drive.thespot.workers.dev/api/flashcards/xp-leaderboard';
+export const XP_LEADERBOARD_API =
+	'https://json-drive.thespot.workers.dev/api/flashcards/xp-leaderboard';
 
 export function isCloudSyncEnabled(): boolean {
 	const user = getSavedUsername();
@@ -12,10 +19,7 @@ export function isCloudSyncEnabled(): boolean {
 /**
  * Returns base XP awarded for rating a flashcard in a given study mode
  */
-export function calculateReviewXP(
-	mode: 'srs' | 'weak' | 'all',
-	rating: StudyRating
-): number {
+export function calculateReviewXP(mode: 'srs' | 'weak' | 'all', rating: StudyRating): number {
 	if (mode === 'weak') {
 		switch (rating) {
 			case 'easy':
@@ -96,7 +100,10 @@ export function calculateSessionBonus(
 /**
  * Returns level progression details for a given total XP amount
  */
-export function computeLevelStats(totalXP: number, dailyXPMap: Record<string, number> = {}): XPStats {
+export function computeLevelStats(
+	totalXP: number,
+	dailyXPMap: Record<string, number> = {}
+): XPStats {
 	const validXP = Math.max(0, Math.floor(totalXP || 0));
 	const level = Math.max(1, Math.floor(Math.sqrt(validXP / 50)) + 1);
 
@@ -447,7 +454,11 @@ export async function syncXPLeaderboard(): Promise<void> {
  */
 export async function fetchXPLeaderboard(
 	timeframe: 'weekly' | 'monthly' | 'all' = 'weekly'
-): Promise<{ entries: (XPLeaderboardEntry & { rank: number })[]; userRank: number | null; error?: string }> {
+): Promise<{
+	entries: (XPLeaderboardEntry & { rank: number })[];
+	userRank: number | null;
+	error?: string;
+}> {
 	if (!isCloudSyncEnabled()) {
 		return { entries: [], userRank: null, error: 'unauthenticated' };
 	}

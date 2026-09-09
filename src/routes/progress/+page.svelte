@@ -10,16 +10,10 @@
 		getAllCustomDecks,
 		computeStreakStats
 	} from '$lib/utils/storage';
-	import {
-		getLocalUserXPData,
-		migrateHistoricalProgressXP,
-		computeLevelStats,
-		getLevelTheme
-	} from '$lib/utils/xp';
+	import { migrateHistoricalProgressXP, computeLevelStats, getLevelTheme } from '$lib/utils/xp';
 	import { isCardMastered, isCardLearning, isCardDue } from '$lib/utils/srs';
 	import type { StreakStats, XPStats } from '$lib/types';
 	import {
-		Flag,
 		ShieldCheck,
 		History,
 		Flame,
@@ -29,8 +23,7 @@
 		FileSpreadsheet,
 		Check,
 		Sparkles,
-		Trophy,
-		Zap
+		Trophy
 	} from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
@@ -297,10 +290,6 @@
 
 	let totalLearnedWords = $derived(masteredWordsCount + learningWordsCount);
 
-	let overallPercent = $derived(
-		totalWordsCount > 0 ? Math.round((masteredWordsCount / totalWordsCount) * 100) : 0
-	);
-
 	let maxActivityCount = $derived(Math.max(1, ...weeklyActivity.map((a) => a.count)));
 
 	onMount(() => {
@@ -327,7 +316,8 @@
 				<div>
 					<div class="flex items-center gap-1.5">
 						<span
-							class="rounded-full border px-2 py-0.5 font-headline text-[10px] font-bold {xpStats.theme.badgeBg} {xpStats.theme.badgeText} {xpStats.theme.badgeBorder}"
+							class="rounded-full border px-2 py-0.5 font-headline text-[10px] font-bold {xpStats
+								.theme.badgeBg} {xpStats.theme.badgeText} {xpStats.theme.badgeBorder}"
 						>
 							LEVEL {xpStats.level}
 						</span>
@@ -386,37 +376,7 @@
 		</div>
 	</section>
 
-	<!-- Overall Progress Card -->
-	<section class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-5">
-		<div class="flex items-center justify-between">
-			<div class="flex items-center gap-3">
-				<div
-					class="flex h-11 w-11 items-center justify-center rounded-2xl border border-emerald-100 bg-emerald-50 text-emerald-600"
-				>
-					<Flag size={22} strokeWidth={2} />
-				</div>
-				<div>
-					<p class="font-headline text-xs font-bold text-slate-500">Overall Mastery</p>
-					<p class="font-headline text-2xl font-black text-slate-900">{overallPercent}%</p>
-				</div>
-			</div>
-
-			<span
-				class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 font-headline text-xs font-bold text-emerald-700"
-			>
-				{masteredWordsCount} of {totalWordsCount} Words
-			</span>
-		</div>
-
-		<ProgressBar
-			value={masteredWordsCount}
-			max={totalWordsCount}
-			variant="emerald"
-			height="h-2.5"
-		/>
-	</section>
-
-	<!-- Quick Links (Streak Tier & Saved Words placed directly below Overall Mastery) -->
+	<!-- Quick Links -->
 	<div class="grid grid-cols-2 gap-3">
 		<a
 			href={resolve('/streak')}

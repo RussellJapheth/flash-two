@@ -1,4 +1,11 @@
-import type { AppBackup, WordProgress, SyncStatus, CustomDeck, SavedWord, UserXPData } from '$lib/types';
+import type {
+	AppBackup,
+	WordProgress,
+	SyncStatus,
+	CustomDeck,
+	SavedWord,
+	UserXPData
+} from '$lib/types';
 import {
 	getAllProgress,
 	getAllCustomDecks,

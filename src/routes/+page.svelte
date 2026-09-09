@@ -20,7 +20,6 @@
 		getRecentlyOpenedPackIds
 	} from '$lib/utils/storage';
 	import {
-		getLocalUserXPData,
 		migrateHistoricalProgressXP,
 		computeLevelStats,
 		isCloudSyncEnabled
@@ -30,14 +29,12 @@
 	import type { DeckSummary, StreakStats, WordProgress, CustomDeck, XPStats } from '$lib/types';
 	import {
 		Flame,
-		Brain,
 		Dumbbell,
 		PlayCircle,
 		ArrowRight,
 		Sparkles,
 		BookOpen,
-		Trophy,
-		Lock
+		Trophy
 	} from 'lucide-svelte';
 
 	let username = $state('Russell');
@@ -56,19 +53,12 @@
 	let deckSummaries = $state<DeckSummary[]>([]);
 	let rawCustomDecks = $state<CustomDeck[]>([]);
 	let recentPackIds = $state<string[]>([]);
-	let totalDueCount = $state(0);
 	let totalWeakCount = $state(0);
-	let totalMasteredCount = $state(0);
-	let totalCardCount = $state(0);
 
 	let recommendedDeck = $state<DeckSummary | null>(null);
 	let isStreakModalOpen = $state(false);
 	let isSpreadsheetModalOpen = $state(false);
 	let editingDeck = $state<CustomDeck | null>(null);
-
-	let masteryPercentage = $derived(
-		totalCardCount > 0 ? Math.round((totalMasteredCount / totalCardCount) * 100) : 0
-	);
 
 	let displayedRecentDecks = $derived(() => {
 		if (deckSummaries.length === 0) return [];
@@ -193,10 +183,7 @@
 		}
 
 		deckSummaries = summaries;
-		totalDueCount = dueAccumulator;
 		totalWeakCount = weakAccumulator;
-		totalMasteredCount = masteredAccumulator;
-		totalCardCount = totalCardsAccumulator;
 
 		// Recommended deck: first deck with due cards or first deck
 		recommendedDeck =
@@ -249,7 +236,7 @@
 />
 
 <main class="flex-1 space-y-5 px-4 pt-4 pb-8">
-	<!-- 1. GREETING & TODAY'S PROGRESS HERO -->
+	<!-- 1. GREETING HERO -->
 	<section
 		class="shadow-card relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-5"
 	>
@@ -294,31 +281,6 @@
 					{streakStats.currentStreak}d
 				</span>
 			</button>
-		</div>
-
-		<!-- Daily Mastery Progress -->
-		<div class="relative z-10 mt-4 border-t border-slate-200/60 pt-3.5">
-			<div class="mb-1.5 flex items-center justify-between text-xs">
-				<span class="font-headline font-bold text-slate-700">Today's Progress</span>
-				<div class="flex items-center gap-1.5">
-					<span class="font-headline font-extrabold text-indigo-600">
-						{totalMasteredCount} / {totalCardCount} Mastered
-					</span>
-					<span
-						class="py-0.2 rounded-full bg-indigo-100 px-1.5 font-headline text-[10px] font-extrabold text-indigo-700"
-					>
-						{masteryPercentage}%
-					</span>
-				</div>
-			</div>
-			<ProgressBar value={totalMasteredCount} max={totalCardCount} variant="primary" height="h-2" />
-			<p class="mt-2 text-[11px] font-medium text-slate-500">
-				{#if totalCardCount - totalMasteredCount > 0}
-					{totalCardCount - totalMasteredCount} words remaining in curriculum
-				{:else}
-					All curriculum words mastered! 🎉
-				{/if}
-			</p>
 		</div>
 	</section>
 
@@ -376,85 +338,49 @@
 		</section>
 	{/if}
 
-	<!-- 3. WHAT NEEDS ATTENTION (SRS DUE & PRACTICE HUB) -->
+	<!-- 3. WHAT NEEDS ATTENTION (PRACTICE HUB) -->
 	<section class="space-y-2">
 		<h3 class="font-headline text-xs font-bold tracking-wider text-slate-500 uppercase">
 			Needs Attention
 		</h3>
 
-		<div class="grid grid-cols-2 gap-3">
-			<!-- Due SRS Spaced Review Card -->
-			<a
-				href={resolve('/review')}
-				class="group relative flex cursor-pointer flex-col justify-between rounded-3xl bg-gradient-to-br from-indigo-600 to-indigo-700 p-4 text-white shadow-md shadow-indigo-600/15 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-600/25 active:scale-[0.98]"
-			>
-				<div>
-					<div class="flex items-center justify-between">
-						<div
-							class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 text-white backdrop-blur-xs"
-						>
-							<Brain size={18} strokeWidth={2.25} />
-						</div>
-						<span
-							class="rounded-full bg-white/20 px-2 py-0.5 font-headline text-[10px] font-bold text-white backdrop-blur-xs"
-						>
-							SRS Due
-						</span>
-					</div>
-					<div class="mt-3">
-						<p class="font-headline text-2xl font-black">{totalDueCount}</p>
-						<p class="text-[11px] font-medium text-indigo-100">Cards for review</p>
-					</div>
-				</div>
-
+		<!-- Difficult Words Practice Card -->
+		<a
+			href={resolve('/practice')}
+			class="shadow-card hover:shadow-card-hover group relative flex cursor-pointer items-center justify-between overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-4.5 transition-all hover:-translate-y-0.5 hover:border-amber-300 active:scale-[0.98]"
+		>
+			<div class="flex items-center gap-3.5">
 				<div
-					class="mt-3 flex items-center gap-1 text-[11px] font-bold text-white/90 group-hover:text-white"
+					class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-amber-200/60 bg-amber-50 text-amber-600 transition-transform group-hover:scale-105"
 				>
-					<span>Review</span>
-					<ArrowRight
-						size={13}
-						strokeWidth={2.5}
-						class="transition-transform group-hover:translate-x-1"
-					/>
+					<Dumbbell size={22} strokeWidth={2.25} />
 				</div>
-			</a>
-
-			<!-- Difficult Words Practice Card -->
-			<a
-				href={resolve('/practice')}
-				class="group shadow-card hover:shadow-card-hover relative flex cursor-pointer flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-4 transition-all hover:-translate-y-0.5 hover:border-amber-300 active:scale-[0.98]"
-			>
 				<div>
-					<div class="flex items-center justify-between">
-						<div
-							class="flex h-9 w-9 items-center justify-center rounded-xl border border-amber-200/60 bg-amber-50 text-amber-600"
-						>
-							<Dumbbell size={18} strokeWidth={2.25} />
-						</div>
+					<div class="flex items-center gap-1.5">
 						<span
 							class="rounded-full border border-amber-200/60 bg-amber-50 px-2 py-0.5 font-headline text-[10px] font-bold text-amber-800"
 						>
-							Practice
+							PRACTICE
 						</span>
 					</div>
-					<div class="mt-3">
-						<p class="font-headline text-2xl font-black text-slate-900">{totalWeakCount}</p>
-						<p class="text-[11px] font-medium text-slate-500">Difficult words</p>
-					</div>
+					<h4 class="font-headline text-base font-extrabold text-slate-900">Difficult Words</h4>
+					<p class="font-body text-xs text-slate-500">
+						{totalWeakCount}
+						{totalWeakCount === 1 ? 'word needs' : 'words need'} reinforcement
+					</p>
 				</div>
+			</div>
 
-				<div
-					class="mt-3 flex items-center gap-1 text-[11px] font-bold text-amber-700 group-hover:text-amber-800"
-				>
-					<span>Practice</span>
-					<ArrowRight
-						size={13}
-						strokeWidth={2.5}
-						class="transition-transform group-hover:translate-x-1"
-					/>
-				</div>
-			</a>
-		</div>
+			<div
+				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-700 transition-colors group-hover:bg-amber-500 group-hover:text-white"
+			>
+				<ArrowRight
+					size={16}
+					strokeWidth={2.5}
+					class="transition-transform group-hover:translate-x-0.5"
+				/>
+			</div>
+		</a>
 	</section>
 
 	<!-- XP LEADERBOARD PROMOTION CARD -->
@@ -478,18 +404,19 @@
 						</span>
 						{#if isCloudUser && xpStats}
 							<span
-								class="rounded-full border px-2 py-0.5 font-headline text-[10px] font-bold {xpStats.theme.badgeBg} {xpStats.theme.badgeText} {xpStats.theme.badgeBorder}"
+								class="rounded-full border px-2 py-0.5 font-headline text-[10px] font-bold {xpStats
+									.theme.badgeBg} {xpStats.theme.badgeText} {xpStats.theme.badgeBorder}"
 							>
 								Lvl {xpStats.level}
 							</span>
 						{/if}
 					</div>
-					<h3 class="font-headline text-base font-extrabold text-slate-900">
-						XP Leaderboard
-					</h3>
+					<h3 class="font-headline text-base font-extrabold text-slate-900">XP Leaderboard</h3>
 					<p class="font-body text-xs text-slate-500">
 						{#if isCloudUser && xpStats}
-							You earned <span class="font-bold text-amber-700">{xpStats.weeklyXP.toLocaleString()} XP</span> this week
+							You earned <span class="font-bold text-amber-700"
+								>{xpStats.weeklyXP.toLocaleString()} XP</span
+							> this week
 						{:else}
 							Sign in with Cloud to view global standings & compete
 						{/if}

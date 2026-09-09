@@ -18,7 +18,12 @@ import {
 	isLeaderboardDisabled,
 	setLeaderboardDisabled
 } from './storage';
-import { getLocalUserXPData, saveLocalUserXPData, syncXPLeaderboard } from './xp';
+import {
+	getLocalUserXPData,
+	saveLocalUserXPData,
+	syncXPLeaderboard,
+	CURRENT_XP_VERSION
+} from './xp';
 import { syncPendingGameScores } from './gameStorage';
 
 const API_BASE = 'https://json-drive.thespot.workers.dev/api/flashcards';
@@ -227,34 +232,66 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 			}
 		}
 
-		// 4. Merge XP Data
+		// 4. Merge XP Data (Version-Aware)
 		const localXP = getLocalUserXPData();
 		if (remoteData.xpData && typeof remoteData.xpData === 'object') {
 			const remoteXP = remoteData.xpData;
-			const mergedDaily: Record<string, number> = { ...(localXP.dailyXP || {}) };
+			const localVersion = localXP.xpVersion ?? 1;
+			const remoteVersion = remoteXP.xpVersion ?? 1;
 
-			if (remoteXP.dailyXP && typeof remoteXP.dailyXP === 'object') {
-				for (const [dateKey, xpVal] of Object.entries(remoteXP.dailyXP)) {
-					if (typeof xpVal === 'number') {
-						mergedDaily[dateKey] = Math.max(mergedDaily[dateKey] || 0, xpVal);
+			let mergedXP: UserXPData;
+
+			if (localVersion > remoteVersion) {
+				// Local was migrated to v2 offline/locally; remote is outdated v1 -> local v2 wins
+				mergedXP = {
+					...localXP,
+					xpVersion: CURRENT_XP_VERSION
+				};
+				localHadNewData = true;
+			} else if (remoteVersion > localVersion) {
+				// Remote was already migrated to v2 on another device -> remote v2 wins
+				mergedXP = {
+					...remoteXP,
+					xpVersion: CURRENT_XP_VERSION
+				};
+			} else if (localVersion < CURRENT_XP_VERSION) {
+				// Both are legacy (< CURRENT_XP_VERSION) -> reset XP to 0 and bump to v2
+				mergedXP = {
+					totalXP: 0,
+					dailyXP: {},
+					lastUpdated: Date.now(),
+					migratedFromProgress: true,
+					xpVersion: CURRENT_XP_VERSION
+				};
+				localHadNewData = true;
+			} else {
+				// Both are on same current version -> standard daily/total merge
+				const mergedDaily: Record<string, number> = { ...(localXP.dailyXP || {}) };
+
+				if (remoteXP.dailyXP && typeof remoteXP.dailyXP === 'object') {
+					for (const [dateKey, xpVal] of Object.entries(remoteXP.dailyXP)) {
+						if (typeof xpVal === 'number') {
+							mergedDaily[dateKey] = Math.max(mergedDaily[dateKey] || 0, xpVal);
+						}
 					}
+				}
+
+				const mergedTotal = Math.max(localXP.totalXP || 0, remoteXP.totalXP || 0);
+				mergedXP = {
+					totalXP: mergedTotal,
+					dailyXP: mergedDaily,
+					lastUpdated: Math.max(localXP.lastUpdated || 0, remoteXP.lastUpdated || 0),
+					migratedFromProgress: true,
+					xpVersion: CURRENT_XP_VERSION
+				};
+
+				if (localXP.totalXP > (remoteXP.totalXP || 0)) {
+					localHadNewData = true;
 				}
 			}
 
-			const mergedTotal = Math.max(localXP.totalXP || 0, remoteXP.totalXP || 0);
-			const mergedXP: UserXPData = {
-				totalXP: mergedTotal,
-				dailyXP: mergedDaily,
-				lastUpdated: Math.max(localXP.lastUpdated || 0, remoteXP.lastUpdated || 0),
-				migratedFromProgress: true
-			};
-
 			saveLocalUserXPData(mergedXP);
-
-			if (localXP.totalXP > (remoteXP.totalXP || 0)) {
-				localHadNewData = true;
-			}
-		} else if (localXP.totalXP > 0) {
+		} else if (localXP.totalXP > 0 || (localXP.xpVersion ?? 1) >= CURRENT_XP_VERSION) {
 			localHadNewData = true;
 		}
 

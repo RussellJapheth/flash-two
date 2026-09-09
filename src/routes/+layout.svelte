@@ -5,6 +5,7 @@
 	import { page, updated } from '$app/state';
 	import { initializeOfflinePacks, getSavedUsername, clearOfflineCache } from '$lib/utils/storage';
 	import { pullAndMerge } from '$lib/utils/cloud';
+	import { migrateLocalXP } from '$lib/utils/xp';
 
 	let { children } = $props();
 
@@ -20,10 +21,13 @@
 		let interval: ReturnType<typeof setInterval>;
 
 		(async () => {
-			// 1. Preload and cache all vocabulary into IndexedDB for 100% offline availability
+			// 1. Run local XP version migration (resets v1 inflated points to v2)
+			migrateLocalXP();
+
+			// 2. Preload and cache all vocabulary into IndexedDB for 100% offline availability
 			await initializeOfflinePacks();
 
-			// 2. Pull & merge from JSON Drive cloud in background
+			// 3. Pull & merge from JSON Drive cloud in background
 			const user = getSavedUsername();
 			if (user) {
 				await pullAndMerge(user);

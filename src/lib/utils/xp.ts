@@ -235,6 +235,8 @@ export function calculateWindowXP(dailyXPMap: Record<string, number>, days: numb
 	return sum;
 }
 
+export const CURRENT_XP_VERSION = 2;
+
 /**
  * Gets local user XP data from localStorage
  */
@@ -243,7 +245,8 @@ export function getLocalUserXPData(): UserXPData {
 		totalXP: 0,
 		dailyXP: {},
 		lastUpdated: Date.now(),
-		migratedFromProgress: false
+		migratedFromProgress: false,
+		xpVersion: CURRENT_XP_VERSION
 	};
 
 	if (typeof window === 'undefined' && typeof localStorage === 'undefined') {
@@ -258,12 +261,62 @@ export function getLocalUserXPData(): UserXPData {
 			totalXP: typeof parsed.totalXP === 'number' ? parsed.totalXP : 0,
 			dailyXP: parsed.dailyXP && typeof parsed.dailyXP === 'object' ? parsed.dailyXP : {},
 			lastUpdated: parsed.lastUpdated || Date.now(),
-			migratedFromProgress: Boolean(parsed.migratedFromProgress)
+			migratedFromProgress: Boolean(parsed.migratedFromProgress),
+			xpVersion: typeof parsed.xpVersion === 'number' ? parsed.xpVersion : 1
 		};
 	} catch (e) {
 		console.error('Failed to parse local XP data:', e);
 		return defaultData;
 	}
+}
+
+/**
+ * Migrates local user XP to CURRENT_XP_VERSION.
+ * Resets inflated v1 XP to 0 for existing users; initializes clean v2 for new users.
+ */
+export function migrateLocalXP(): UserXPData {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') {
+		return getLocalUserXPData();
+	}
+
+	const raw = localStorage.getItem(XP_STORAGE_KEY);
+	if (!raw) {
+		const initialData: UserXPData = {
+			totalXP: 0,
+			dailyXP: {},
+			lastUpdated: Date.now(),
+			migratedFromProgress: true,
+			xpVersion: CURRENT_XP_VERSION
+		};
+		saveLocalUserXPData(initialData);
+		return initialData;
+	}
+
+	const current = getLocalUserXPData();
+	const version = current.xpVersion ?? 1;
+
+	if (version >= CURRENT_XP_VERSION) {
+		return current;
+	}
+
+	// Legacy user on v1: reset XP and bump version
+	const migrated: UserXPData = {
+		totalXP: 0,
+		dailyXP: {},
+		lastUpdated: Date.now(),
+		migratedFromProgress: true,
+		xpVersion: CURRENT_XP_VERSION
+	};
+
+	saveLocalUserXPData(migrated);
+
+	if (typeof window !== 'undefined' && navigator.onLine && isCloudSyncEnabled()) {
+		syncXPLeaderboard().catch((e) =>
+			console.error('Failed background XP sync after migration:', e)
+		);
+	}
+
+	return migrated;
 }
 
 /**
@@ -297,7 +350,8 @@ export function addXP(amount: number): UserXPData {
 		totalXP: newTotal,
 		dailyXP: updatedDaily,
 		lastUpdated: Date.now(),
-		migratedFromProgress: current.migratedFromProgress ?? true
+		migratedFromProgress: current.migratedFromProgress ?? true,
+		xpVersion: current.xpVersion ?? CURRENT_XP_VERSION
 	};
 
 	saveLocalUserXPData(updated);
@@ -344,7 +398,8 @@ export function migrateHistoricalProgressXP(progress: Record<string, WordProgres
 		totalXP: finalTotal,
 		dailyXP,
 		lastUpdated: Date.now(),
-		migratedFromProgress: true
+		migratedFromProgress: true,
+		xpVersion: CURRENT_XP_VERSION
 	};
 
 	saveLocalUserXPData(updated);

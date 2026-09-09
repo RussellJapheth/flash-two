@@ -41,6 +41,7 @@ export interface UserXPData {
 	dailyXP: Record<string, number>; // 'YYYY-MM-DD': xpEarned
 	lastUpdated: number;
 	migratedFromProgress?: boolean;
+	xpVersion?: number;
 }
 
 export interface XPLeaderboardEntry {

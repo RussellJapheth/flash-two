@@ -165,36 +165,110 @@
 			(activeBoardIndex - 1 + LEADERBOARD_BOARDS.length) % LEADERBOARD_BOARDS.length;
 	}
 
-	// Touch swipe gestures
-	let touchStartX = 0;
-	let touchStartY = 0;
-	let isSwiping = false;
+	// Interactive Drag & Carousel Swipe gestures
+	let containerWidth = $state(0);
+	let isDragging = $state(false);
+	let dragOffset = $state(0);
+	let isPointerDown = false;
+	let pointerStartX = 0;
+	let pointerStartY = 0;
+	let pointerStartTime = 0;
+	let pauseTimeout: ReturnType<typeof setTimeout> | null = null;
 
-	function handleTouchStart(e: TouchEvent) {
-		touchStartX = e.touches[0].clientX;
-		touchStartY = e.touches[0].clientY;
-		isSwiping = true;
+	function handlePointerDown(e: PointerEvent) {
+		if (e.button !== 0) return;
+		pointerStartX = e.clientX;
+		pointerStartY = e.clientY;
+		pointerStartTime = performance.now();
+		isPointerDown = true;
+		isDragging = false;
+		dragOffset = 0;
 		isPaused = true;
+		if (pauseTimeout) {
+			clearTimeout(pauseTimeout);
+			pauseTimeout = null;
+		}
 	}
 
-	function handleTouchEnd(e: TouchEvent) {
-		if (!isSwiping) return;
-		const touchEndX = e.changedTouches[0].clientX;
-		const touchEndY = e.changedTouches[0].clientY;
-		const deltaX = touchEndX - touchStartX;
-		const deltaY = touchEndY - touchStartY;
+	function handlePointerMove(e: PointerEvent) {
+		if (!isPointerDown) return;
+		const dx = e.clientX - pointerStartX;
+		const dy = e.clientY - pointerStartY;
 
-		if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
-			if (deltaX < 0) {
-				nextBoard();
-			} else {
-				prevBoard();
+		if (!isDragging) {
+			// Lock into horizontal drag if horizontal distance exceeds vertical distance
+			if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy)) {
+				isDragging = true;
+				if (e.currentTarget instanceof HTMLElement) {
+					e.currentTarget.setPointerCapture(e.pointerId);
+				}
+			} else if (Math.abs(dy) > 6) {
+				// User is scrolling vertically
+				isPointerDown = false;
+				return;
 			}
 		}
-		isSwiping = false;
-		setTimeout(() => {
+
+		if (isDragging) {
+			// Elastic rubber banding at carousel boundaries
+			if (
+				(activeBoardIndex === 0 && dx > 0) ||
+				(activeBoardIndex === LEADERBOARD_BOARDS.length - 1 && dx < 0)
+			) {
+				dragOffset = dx * 0.35;
+			} else {
+				dragOffset = dx;
+			}
+		}
+	}
+
+	function handlePointerUp(e: PointerEvent) {
+		if (!isPointerDown) return;
+
+		if (isDragging) {
+			const dt = Math.max(1, performance.now() - pointerStartTime);
+			const velocity = (e.clientX - pointerStartX) / dt;
+			const width = containerWidth || 320;
+			const threshold = width * 0.22;
+
+			if (
+				(dragOffset < -threshold || velocity < -0.35) &&
+				activeBoardIndex < LEADERBOARD_BOARDS.length - 1
+			) {
+				activeBoardIndex += 1;
+			} else if ((dragOffset > threshold || velocity > 0.35) && activeBoardIndex > 0) {
+				activeBoardIndex -= 1;
+			}
+
+			if (
+				e.currentTarget instanceof HTMLElement &&
+				e.currentTarget.hasPointerCapture(e.pointerId)
+			) {
+				e.currentTarget.releasePointerCapture(e.pointerId);
+			}
+		}
+
+		isPointerDown = false;
+		isDragging = false;
+		dragOffset = 0;
+
+		pauseTimeout = setTimeout(() => {
 			isPaused = false;
-		}, 2500);
+		}, 3500);
+	}
+
+	function handlePointerCancel(e: PointerEvent) {
+		if (
+			isPointerDown &&
+			e.currentTarget instanceof HTMLElement &&
+			e.currentTarget.hasPointerCapture(e.pointerId)
+		) {
+			e.currentTarget.releasePointerCapture(e.pointerId);
+		}
+		isPointerDown = false;
+		isDragging = false;
+		dragOffset = 0;
+		isPaused = false;
 	}
 
 	function formatDate(timestamp: number): string {
@@ -409,19 +483,28 @@
 			<div
 				role="region"
 				aria-label="Swipeable leaderboard cards"
-				class="relative overflow-hidden rounded-2xl"
-				ontouchstart={handleTouchStart}
-				ontouchend={handleTouchEnd}
+				bind:clientWidth={containerWidth}
+				class="relative cursor-grab touch-pan-y overflow-hidden rounded-2xl select-none {isDragging
+					? 'cursor-grabbing'
+					: ''}"
+				onpointerdown={handlePointerDown}
+				onpointermove={handlePointerMove}
+				onpointerup={handlePointerUp}
+				onpointercancel={handlePointerCancel}
 				onmouseenter={() => (isPaused = true)}
-				onmouseleave={() => (isPaused = false)}
+				onmouseleave={() => {
+					if (!isDragging && !isPointerDown) isPaused = false;
+				}}
 			>
-				<!-- Sliding Cards Reel -->
+				<!-- Sliding Cards Reel with 1rem gap between cards -->
 				<div
-					class="flex w-full transition-transform duration-500 ease-out"
-					style="transform: translateX(-{activeBoardIndex * 100}%);"
+					class="flex w-full gap-4 {isDragging
+						? 'transition-none'
+						: 'transition-transform duration-350 ease-out'}"
+					style="transform: translateX(calc(-{activeBoardIndex} * (100% + 1rem) + {dragOffset}px));"
 				>
 					{#each boardsWithScores as board (board.id)}
-						<div class="w-full shrink-0 space-y-2.5">
+						<div class="w-full min-w-full shrink-0 space-y-2.5">
 							<!-- Distinct Arcade Glass Themed Title Header -->
 							<div
 								class="relative overflow-hidden rounded-2xl border p-3.5 shadow-md backdrop-blur-md {board.accentGradient} {board.borderClass}"

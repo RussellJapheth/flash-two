@@ -1,10 +1,4 @@
-import type {
-	StudyRating,
-	UserXPData,
-	XPLeaderboardEntry,
-	XPStats,
-	WordProgress
-} from '$lib/types';
+import type { StudyRating, UserXPData, XPLeaderboardEntry, XPStats } from '$lib/types';
 import { getSavedUsername, isLeaderboardDisabled } from './storage';
 
 const XP_STORAGE_KEY = 'flashcards_user_xp';
@@ -235,7 +229,7 @@ export function calculateWindowXP(dailyXPMap: Record<string, number>, days: numb
 	return sum;
 }
 
-export const CURRENT_XP_VERSION = 2;
+export const CURRENT_XP_VERSION = 3;
 
 /**
  * Gets local user XP data from localStorage
@@ -365,45 +359,10 @@ export function addXP(amount: number): UserXPData {
 }
 
 /**
- * Migrates existing WordProgress history into baseline XP if user has not yet been migrated
+ * Deprecated historical migration helper. Returns current user XP directly.
  */
-export function migrateHistoricalProgressXP(progress: Record<string, WordProgress>): UserXPData {
-	const current = getLocalUserXPData();
-	if (current.migratedFromProgress && current.totalXP > 0) {
-		return current;
-	}
-
-	let totalCalculated = 0;
-	const dailyXP: Record<string, number> = { ...current.dailyXP };
-
-	for (const p of Object.values(progress)) {
-		if (!p) continue;
-		const correctXP = (p.correct || 0) * 2;
-		const wrongXP = 0;
-		const itemXP = correctXP + wrongXP;
-
-		if (itemXP > 0) {
-			totalCalculated += itemXP;
-
-			if (p.lastReviewed) {
-				const iso = new Date(p.lastReviewed).toISOString().split('T')[0];
-				dailyXP[iso] = (dailyXP[iso] || 0) + itemXP;
-			}
-		}
-	}
-
-	// Preserve any existing XP if larger than calculated
-	const finalTotal = Math.max(current.totalXP, totalCalculated);
-	const updated: UserXPData = {
-		totalXP: finalTotal,
-		dailyXP,
-		lastUpdated: Date.now(),
-		migratedFromProgress: true,
-		xpVersion: CURRENT_XP_VERSION
-	};
-
-	saveLocalUserXPData(updated);
-	return updated;
+export function migrateHistoricalProgressXP(): UserXPData {
+	return getLocalUserXPData();
 }
 
 /**
@@ -439,19 +398,8 @@ export function deduplicateXPLeaderboard(
 		const clean = localUserEntry.username.trim();
 		if (clean && clean.toLowerCase() !== 'guest') {
 			const key = clean.toLowerCase();
-			const existing = map.get(key);
-			if (!existing) {
-				map.set(key, { ...localUserEntry, username: clean });
-			} else {
-				map.set(key, {
-					username: clean,
-					allTimeXP: Math.max(existing.allTimeXP, localUserEntry.allTimeXP),
-					weeklyXP: Math.max(existing.weeklyXP, localUserEntry.weeklyXP),
-					monthlyXP: Math.max(existing.monthlyXP, localUserEntry.monthlyXP),
-					level: Math.max(existing.level, localUserEntry.level),
-					lastActive: Math.max(existing.lastActive, localUserEntry.lastActive)
-				});
-			}
+			// Local authentic entry strictly overwrites remote record for this user
+			map.set(key, { ...localUserEntry, username: clean });
 		}
 	}
 

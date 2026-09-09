@@ -69,40 +69,37 @@ describe('XP Versioned Migration', () => {
 		expect(saved.xpVersion).toBe(CURRENT_XP_VERSION);
 	});
 
-	it('preserves newly earned XP for users already on v2', () => {
-		// User on v2 who earned legitimate XP
-		const userV2: UserXPData = {
+	it('preserves newly earned XP for users already on v3', () => {
+		// User on v3 who earned legitimate XP
+		const userV3: UserXPData = {
 			totalXP: 85,
 			dailyXP: { '2026-09-09': 85 },
 			lastUpdated: Date.now(),
 			migratedFromProgress: true,
-			xpVersion: 2
+			xpVersion: 3
 		};
-		saveLocalUserXPData(userV2);
+		saveLocalUserXPData(userV3);
 
 		const result = migrateLocalXP();
 
 		expect(result.totalXP).toBe(85);
 		expect(result.dailyXP).toEqual({ '2026-09-09': 85 });
-		expect(result.xpVersion).toBe(2);
+		expect(result.xpVersion).toBe(3);
 	});
 
-	it('handles multi-device cloud merge: local v2 takes precedence over remote v1', async () => {
-		// Local was migrated to v2 and earned 30 XP
+	it('handles multi-device cloud merge: local v3 takes precedence over remote legacy', async () => {
+		// Local was migrated to v3 and earned 30 XP
 		saveLocalUserXPData({
 			totalXP: 30,
 			dailyXP: { '2026-09-09': 30 },
 			lastUpdated: Date.now(),
-			xpVersion: 2
+			xpVersion: 3
 		});
 
 		const originalFetch = globalThis.fetch;
-		let pushedData: any = null;
-
 		globalThis.fetch = (async (url: RequestInfo | URL, init?: RequestInit) => {
 			const urlStr = url.toString();
 			if (init?.method === 'PUT') {
-				pushedData = JSON.parse(init.body as string);
 				return { ok: true, status: 200, json: async () => ({}) } as unknown as Response;
 			}
 			if (urlStr.includes('/users/alex')) {
@@ -130,13 +127,13 @@ describe('XP Versioned Migration', () => {
 
 			const updatedLocal = getLocalUserXPData();
 			expect(updatedLocal.totalXP).toBe(30);
-			expect(updatedLocal.xpVersion).toBe(2);
+			expect(updatedLocal.xpVersion).toBe(3);
 		} finally {
 			globalThis.fetch = originalFetch;
 		}
 	});
 
-	it('handles multi-device cloud merge: remote v2 takes precedence over local v1', async () => {
+	it('handles multi-device cloud merge: remote v3 takes precedence over local legacy', async () => {
 		// Local has old v1 inflated XP
 		saveLocalUserXPData({
 			totalXP: 4000,
@@ -157,9 +154,9 @@ describe('XP Versioned Migration', () => {
 						progress: {},
 						username: 'alex',
 						xpData: {
-							totalXP: 45, // Migrated v2 XP from other device
+							totalXP: 45, // Migrated v3 XP from other device
 							dailyXP: { '2026-09-09': 45 },
-							xpVersion: 2
+							xpVersion: 3
 						}
 					})
 				} as unknown as Response;
@@ -173,7 +170,7 @@ describe('XP Versioned Migration', () => {
 
 			const updatedLocal = getLocalUserXPData();
 			expect(updatedLocal.totalXP).toBe(45);
-			expect(updatedLocal.xpVersion).toBe(2);
+			expect(updatedLocal.xpVersion).toBe(3);
 		} finally {
 			globalThis.fetch = originalFetch;
 		}

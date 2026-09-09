@@ -99,7 +99,7 @@ describe('XP calculations and progression', () => {
 		expect(calculateWindowXP(dailyMap, 30)).toBe(180);
 	});
 
-	it('deduplicates leaderboard entries and merges local best score', () => {
+	it('deduplicates leaderboard entries and lets authentic local entry overwrite remote score', () => {
 		const entries: XPLeaderboardEntry[] = [
 			{
 				username: 'alice',
@@ -119,18 +119,19 @@ describe('XP calculations and progression', () => {
 			}
 		];
 
-		const localEntry: XPLeaderboardEntry = {
+		// Local entry after reset to 0 XP
+		const localResetEntry: XPLeaderboardEntry = {
 			username: 'alice',
-			allTimeXP: 350,
-			weeklyXP: 80,
-			monthlyXP: 160,
-			level: 4,
+			allTimeXP: 0,
+			weeklyXP: 0,
+			monthlyXP: 0,
+			level: 1,
 			lastActive: 3000
 		};
 
-		const deduped = deduplicateXPLeaderboard(entries, localEntry);
+		const deduped = deduplicateXPLeaderboard(entries, localResetEntry);
 		expect(deduped.length).toBe(1);
 		expect(deduped[0].username).toBe('alice');
-		expect(deduped[0].allTimeXP).toBe(350);
+		expect(deduped[0].allTimeXP).toBe(0);
 	});
 });

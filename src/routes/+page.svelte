@@ -20,11 +20,7 @@
 		getRecentlyOpenedPackIds,
 		isLeaderboardDisabled
 	} from '$lib/utils/storage';
-	import {
-		migrateHistoricalProgressXP,
-		computeLevelStats,
-		isCloudSyncEnabled
-	} from '$lib/utils/xp';
+	import { computeLevelStats, getLocalUserXPData, isCloudSyncEnabled } from '$lib/utils/xp';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
 	import type { DeckSummary, StreakStats, WordProgress, CustomDeck, XPStats } from '$lib/types';
@@ -85,8 +81,8 @@
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
 
-		const migratedXP = migrateHistoricalProgressXP(progress);
-		xpStats = computeLevelStats(migratedXP.totalXP, migratedXP.dailyXP);
+		const xpData = getLocalUserXPData();
+		xpStats = computeLevelStats(xpData.totalXP, xpData.dailyXP);
 
 		const builtinPacks = await getBuiltinPacks(activeLanguage);
 		const customDecks = await getAllCustomDecks();

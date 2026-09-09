@@ -11,7 +11,7 @@
 		computeStreakStats,
 		isLeaderboardDisabled
 	} from '$lib/utils/storage';
-	import { migrateHistoricalProgressXP, computeLevelStats, getLevelTheme } from '$lib/utils/xp';
+	import { computeLevelStats, getLevelTheme, getLocalUserXPData } from '$lib/utils/xp';
 	import { isCardMastered, isCardLearning, isCardDue } from '$lib/utils/srs';
 	import type { StreakStats, XPStats } from '$lib/types';
 	import {
@@ -64,9 +64,8 @@
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
 
-		// Migrate and load XP stats
-		const migratedXP = migrateHistoricalProgressXP(progress);
-		xpStats = computeLevelStats(migratedXP.totalXP, migratedXP.dailyXP);
+		const xpData = getLocalUserXPData();
+		xpStats = computeLevelStats(xpData.totalXP, xpData.dailyXP);
 
 		const chPacks = await getBuiltinPacks('chinese');
 		const frPacks = await getBuiltinPacks('french');

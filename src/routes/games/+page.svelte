@@ -81,12 +81,31 @@
 			scoreBadgeBg: 'bg-amber-50 text-amber-800',
 			rank1Gradient: 'from-amber-200 to-amber-300 text-amber-950',
 			rank1Border: 'border-amber-300'
+		},
+		{
+			id: 'match-blitz',
+			gameId: 'match-blitz',
+			gameTitle: 'Match Blitz',
+			mode: 'visual',
+			title: 'Match Blitz',
+			tag: 'Match',
+			accentGradient:
+				'bg-linear-to-r from-emerald-400/80 via-teal-500/75 to-indigo-600/80 text-white shadow-lg shadow-emerald-500/10',
+			borderClass: 'border-white/60',
+			glowClass: 'bg-white/20',
+			badgeBg: 'bg-white/25 border border-white/60 text-white',
+			badgeText: 'text-emerald-100',
+			scoreColor: 'text-emerald-600',
+			scoreBadgeBg: 'bg-emerald-50 text-emerald-800',
+			rank1Gradient: 'from-emerald-200 to-emerald-300 text-emerald-950',
+			rank1Border: 'border-emerald-300'
 		}
 	];
 
 	let rawLeaderboard = $state<GameScoreRecord[]>([]);
 	let numberRushBestVisual = $state(0);
 	let numberRushBestAudio = $state(0);
+	let matchBlitzBest = $state(0);
 	let isLoadingLeaderboard = $state(false);
 	let hasCloudSync = $state(false);
 	let activeBoardIndex = $state(0);
@@ -103,6 +122,7 @@
 		hasCloudSync = isCloudSyncEnabled();
 		numberRushBestVisual = getGameHighScore('number-rush', 'visual');
 		numberRushBestAudio = getGameHighScore('number-rush', 'audio');
+		matchBlitzBest = getGameHighScore('match-blitz');
 
 		if (!hasCloudSync) {
 			rawLeaderboard = [];
@@ -286,6 +306,39 @@
 
 			<div
 				class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-linear-to-r from-blue-500 to-indigo-600 text-white shadow-md shadow-indigo-500/25 transition-all group-hover:scale-105 group-hover:brightness-110"
+			>
+				<Play size={18} strokeWidth={2.75} />
+			</div>
+		</a>
+
+		<!-- Match Blitz Card with 3D Visual Accent -->
+		<a
+			href={resolve('/games/match-blitz')}
+			id="game-match-blitz-card"
+			class="group shadow-card hover:shadow-card-hover relative flex items-center justify-between overflow-hidden rounded-3xl border border-emerald-100 bg-linear-to-r from-white via-emerald-50/40 to-teal-50/30 p-4 transition-all hover:-translate-y-0.5 hover:border-emerald-300 active:scale-[0.98]"
+		>
+			<div class="flex items-center gap-3.5">
+				<!-- 3D Game Icon -->
+				<div class="relative shrink-0">
+					<img
+						src="/images/match-blitz-icon.jpg"
+						alt="Match Blitz"
+						class="h-16 w-16 rounded-2xl border border-white/80 object-cover shadow-md shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-105"
+					/>
+				</div>
+
+				<div class="space-y-1">
+					<h4 class="font-headline text-base font-black tracking-tight text-slate-900">
+						Match Blitz
+					</h4>
+					<p class="font-sans text-xs text-slate-500">
+						Fast-paced 3D tile matching • Multiplier streaks & wave rush
+					</p>
+				</div>
+			</div>
+
+			<div
+				class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-linear-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/25 transition-all group-hover:scale-105 group-hover:brightness-110"
 			>
 				<Play size={18} strokeWidth={2.75} />
 			</div>

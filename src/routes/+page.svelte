@@ -238,49 +238,53 @@
 <main class="flex-1 space-y-5 px-4 pt-4 pb-8">
 	<!-- 1. GREETING HERO -->
 	<section
-		class="shadow-card relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-5"
+		class="shadow-card relative flex min-h-[160px] flex-col justify-between overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-7"
 	>
 		<!-- Mild Scenic Landscape Background Layer -->
 		<div class="pointer-events-none absolute inset-0 z-0 overflow-hidden">
 			<img
 				src="/images/greeting-bg.jpg"
 				alt=""
-				class="h-full w-full object-cover object-right opacity-85"
+				class="h-full w-full object-cover object-center opacity-95"
 			/>
-			<div class="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent"></div>
-			<div class="absolute inset-0 bg-gradient-to-t from-white via-white/30 to-transparent"></div>
+			<div
+				class="absolute inset-0 bg-gradient-to-r from-white/90 via-white/45 to-transparent"
+			></div>
+			<div class="absolute inset-0 bg-gradient-to-t from-white/25 via-transparent to-transparent"></div>
 		</div>
 
-		<div class="relative z-10 flex items-start justify-between">
-			<div class="space-y-0.5">
-				<p class="font-body text-xs font-semibold tracking-wider text-slate-500 uppercase">
+		<div class="relative z-10 flex h-full flex-1 items-stretch justify-between">
+			<div class="flex flex-col justify-around py-0.5">
+				<p class="font-body text-xs font-semibold tracking-wider text-slate-600 uppercase">
 					{username ? 'Good day,' : 'Welcome back,'}
 				</p>
 				<h2 class="font-headline text-2xl font-extrabold tracking-tight text-slate-900 capitalize">
 					{username ? `${username}! 👋` : 'Learner! 👋'}
 				</h2>
-				<div class="flex items-center gap-1.5 pt-0.5">
+				<div class="flex items-center gap-1.5">
 					<span
 						class="inline-flex items-center gap-1 rounded-md bg-indigo-100/90 px-2 py-0.5 text-[11px] font-bold text-indigo-800 backdrop-blur-xs"
 					>
 						<Sparkles size={11} strokeWidth={2.5} class="text-indigo-600" />
 						{streakStats.tierName}
 					</span>
-					<span class="text-[11px] font-medium text-slate-500">• Daily habit</span>
+					<span class="text-[11px] font-medium text-slate-600">• Daily habit</span>
 				</div>
 			</div>
 
 			<!-- Streak Motivation Trigger -->
-			<button
-				type="button"
-				onclick={() => (isStreakModalOpen = true)}
-				class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-amber-200/80 bg-white/90 px-3.5 py-2 text-center shadow-xs backdrop-blur-xs transition-transform hover:scale-105 active:scale-95"
-			>
-				<Flame size={22} strokeWidth={2.25} class="fill-amber-500/20 text-amber-500" />
-				<span class="font-headline text-xs font-extrabold text-amber-900">
-					{streakStats.currentStreak}d
-				</span>
-			</button>
+			<div class="flex items-center">
+				<button
+					type="button"
+					onclick={() => (isStreakModalOpen = true)}
+					class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-amber-200/80 bg-white/95 px-3.5 py-2.5 text-center shadow-xs backdrop-blur-xs transition-transform hover:scale-105 active:scale-95"
+				>
+					<Flame size={22} strokeWidth={2.25} class="fill-amber-500/20 text-amber-500" />
+					<span class="font-headline text-xs font-extrabold text-amber-900">
+						{streakStats.currentStreak}d
+					</span>
+				</button>
+			</div>
 		</div>
 	</section>
 

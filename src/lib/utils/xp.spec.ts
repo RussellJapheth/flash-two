@@ -27,36 +27,36 @@ describe('XP calculations and progression', () => {
 	});
 	it('calculates correct review XP across study modes and ratings', () => {
 		// SRS mode
-		expect(calculateReviewXP('srs', 'easy')).toBe(12);
-		expect(calculateReviewXP('srs', 'good')).toBe(10);
-		expect(calculateReviewXP('srs', 'hard')).toBe(5);
-		expect(calculateReviewXP('srs', 'again')).toBe(2);
+		expect(calculateReviewXP('srs', 'easy')).toBe(3);
+		expect(calculateReviewXP('srs', 'good')).toBe(2);
+		expect(calculateReviewXP('srs', 'hard')).toBe(1);
+		expect(calculateReviewXP('srs', 'again')).toBe(0);
 
 		// Difficult words mode
-		expect(calculateReviewXP('weak', 'easy')).toBe(15);
-		expect(calculateReviewXP('weak', 'good')).toBe(12);
-		expect(calculateReviewXP('weak', 'hard')).toBe(6);
-		expect(calculateReviewXP('weak', 'again')).toBe(3);
+		expect(calculateReviewXP('weak', 'easy')).toBe(4);
+		expect(calculateReviewXP('weak', 'good')).toBe(3);
+		expect(calculateReviewXP('weak', 'hard')).toBe(1);
+		expect(calculateReviewXP('weak', 'again')).toBe(0);
 
 		// All cards mode
-		expect(calculateReviewXP('all', 'easy')).toBe(6);
-		expect(calculateReviewXP('all', 'good')).toBe(5);
-		expect(calculateReviewXP('all', 'hard')).toBe(3);
-		expect(calculateReviewXP('all', 'again')).toBe(1);
+		expect(calculateReviewXP('all', 'easy')).toBe(2);
+		expect(calculateReviewXP('all', 'good')).toBe(1);
+		expect(calculateReviewXP('all', 'hard')).toBe(1);
+		expect(calculateReviewXP('all', 'again')).toBe(0);
 	});
 
 	it('calculates session completion and accuracy bonuses', () => {
 		// SRS mode with high accuracy
 		const srsBonus = calculateSessionBonus('srs', 10, 9);
-		expect(srsBonus.completionBonus).toBe(25);
-		expect(srsBonus.accuracyBonus).toBe(15);
-		expect(srsBonus.totalBonus).toBe(40);
+		expect(srsBonus.completionBonus).toBe(5);
+		expect(srsBonus.accuracyBonus).toBe(3);
+		expect(srsBonus.totalBonus).toBe(8);
 
 		// Difficult words with lower accuracy
 		const weakBonus = calculateSessionBonus('weak', 10, 5);
-		expect(weakBonus.completionBonus).toBe(20);
+		expect(weakBonus.completionBonus).toBe(4);
 		expect(weakBonus.accuracyBonus).toBe(0);
-		expect(weakBonus.totalBonus).toBe(20);
+		expect(weakBonus.totalBonus).toBe(4);
 
 		// Empty session
 		const emptyBonus = calculateSessionBonus('all', 0, 0);

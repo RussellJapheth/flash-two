@@ -23,42 +23,42 @@ export function calculateReviewXP(mode: 'srs' | 'weak' | 'all', rating: StudyRat
 	if (mode === 'weak') {
 		switch (rating) {
 			case 'easy':
-				return 15;
+				return 4;
 			case 'good':
 			case 'custom':
-				return 12;
+				return 3;
 			case 'hard':
-				return 6;
+				return 1;
 			case 'again':
 			default:
-				return 3;
+				return 0;
 		}
 	} else if (mode === 'srs') {
 		switch (rating) {
 			case 'easy':
-				return 12;
+				return 3;
 			case 'good':
 			case 'custom':
-				return 10;
+				return 2;
 			case 'hard':
-				return 5;
+				return 1;
 			case 'again':
 			default:
-				return 2;
+				return 0;
 		}
 	} else {
 		// 'all' cards mode
 		switch (rating) {
 			case 'easy':
-				return 6;
+				return 2;
 			case 'good':
 			case 'custom':
-				return 5;
+				return 1;
 			case 'hard':
-				return 3;
+				return 1;
 			case 'again':
 			default:
-				return 1;
+				return 0;
 		}
 	}
 }
@@ -88,17 +88,17 @@ export function calculateSessionBonus(
 	}
 
 	const accuracy = Math.round((correctCount / totalCards) * 100);
-	let completionBonus = 15;
+	let completionBonus = 3;
 	let accuracyBonus = 0;
 
 	if (mode === 'srs') {
-		completionBonus = 25;
-		if (totalCards >= 3 && accuracy >= 80) accuracyBonus = 15;
+		completionBonus = 5;
+		if (totalCards >= 3 && accuracy >= 80) accuracyBonus = 3;
 	} else if (mode === 'weak') {
-		completionBonus = 20;
-		if (totalCards >= 3 && accuracy >= 75) accuracyBonus = 20;
+		completionBonus = 4;
+		if (totalCards >= 3 && accuracy >= 75) accuracyBonus = 4;
 	} else if (totalCards >= 5 && accuracy >= 80) {
-		accuracyBonus = 10;
+		accuracyBonus = 2;
 	}
 
 	return {
@@ -324,8 +324,8 @@ export function migrateHistoricalProgressXP(progress: Record<string, WordProgres
 
 	for (const p of Object.values(progress)) {
 		if (!p) continue;
-		const correctXP = (p.correct || 0) * 10;
-		const wrongXP = (p.wrong || 0) * 2;
+		const correctXP = (p.correct || 0) * 2;
+		const wrongXP = 0;
 		const itemXP = correctXP + wrongXP;
 
 		if (itemXP > 0) {

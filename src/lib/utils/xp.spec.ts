@@ -1,15 +1,30 @@
 import { describe, it, expect } from 'vitest';
 import {
 	calculateReviewXP,
+	calculateGameXP,
 	calculateSessionBonus,
 	computeLevelStats,
 	calculateWindowXP,
-	deduplicateXPLeaderboard,
-	migrateHistoricalProgressXP
+	deduplicateXPLeaderboard
 } from './xp';
-import type { WordProgress, XPLeaderboardEntry } from '$lib/types';
+import type { XPLeaderboardEntry } from '$lib/types';
 
 describe('XP calculations and progression', () => {
+	it('calculates game XP with reduced rates compared to study sessions', () => {
+		// Zero correct -> 0 XP
+		expect(calculateGameXP(0, 0, 0)).toBe(0);
+
+		// Minimal performance
+		expect(calculateGameXP(2, 50, 0)).toBe(1);
+
+		// Average game round: 12 correct, 75% accuracy, 3 combo
+		// Base: 6, Acc bonus: 2, Combo bonus: 1 -> 9 XP
+		expect(calculateGameXP(12, 75, 3)).toBe(9);
+
+		// High performance game round: 20 correct, 95% accuracy, 9 combo
+		// Base: 10, Acc bonus: 4, Combo bonus: 3 -> 17 XP
+		expect(calculateGameXP(20, 95, 9)).toBe(17);
+	});
 	it('calculates correct review XP across study modes and ratings', () => {
 		// SRS mode
 		expect(calculateReviewXP('srs', 'easy')).toBe(12);

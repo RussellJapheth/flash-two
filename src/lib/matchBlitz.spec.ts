@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { deduplicateUserLeaderboard, type GameScoreRecord } from './utils/gameStorage';
+import { calculateGameXP } from './utils/xp';
 
 describe('Match Blitz Game Logic & Mechanics', () => {
 	function getPairsInWave(waveNumber: number): number {
@@ -11,10 +12,6 @@ describe('Match Blitz Game Logic & Mechanics', () => {
 	function calculateMatchScore(combo: number): number {
 		const comboMultiplier = combo >= 5 ? 3 : combo >= 3 ? 2 : 1;
 		return 100 * comboMultiplier;
-	}
-
-	function calculateMatchXP(correct: number, accuracy: number, maxCombo: number): number {
-		return Math.round(correct * 5 + (accuracy >= 80 ? 25 : 10) + maxCombo * 3);
 	}
 
 	it('scales board size progressively across waves', () => {
@@ -33,12 +30,18 @@ describe('Match Blitz Game Logic & Mechanics', () => {
 		expect(calculateMatchScore(10)).toBe(300);
 	});
 
-	it('calculates earned XP rewarding accuracy and high streaks', () => {
-		const xp1 = calculateMatchXP(10, 90, 5); // 10*5 + 25 + 5*3 = 50 + 25 + 15 = 90
-		expect(xp1).toBe(90);
+	it('calculates scaled mini-game XP keeping learning activities much more rewarding', () => {
+		// 10 matches, 90% acc, max combo 5 -> base 5 + acc 4 + combo 1 = 10 XP
+		const xp1 = calculateGameXP(10, 90, 5);
+		expect(xp1).toBe(10);
 
-		const xp2 = calculateMatchXP(6, 60, 2); // 6*5 + 10 + 2*3 = 30 + 10 + 6 = 46
-		expect(xp2).toBe(46);
+		// 6 matches, 60% acc, max combo 2 -> base 3 + acc 2 + combo 0 = 5 XP
+		const xp2 = calculateGameXP(6, 60, 2);
+		expect(xp2).toBe(5);
+
+		// 0 matches -> 0 XP
+		const xp0 = calculateGameXP(0, 0, 0);
+		expect(xp0).toBe(0);
 	});
 
 	it('deduplicates Match Blitz leaderboard records preserving highest score per user', () => {

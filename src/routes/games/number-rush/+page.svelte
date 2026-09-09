@@ -14,6 +14,7 @@
 		syncPendingGameScores,
 		type GameScoreRecord
 	} from '$lib/utils/gameStorage';
+	import { addXP, calculateGameXP } from '$lib/utils/xp';
 	import { playSound, speakWord, stopSpeech } from '$lib/utils/audio';
 	import {
 		Volume2,
@@ -47,6 +48,7 @@
 	let maxCombo = $state(0);
 	let correctCount = $state(0);
 	let wrongCount = $state(0);
+	let earnedXP = $state(0);
 	let isNewHighScore = $state(false);
 	let storageVersion = $state(0);
 	let highScore = $derived.by(() => {
@@ -158,6 +160,7 @@
 		maxCombo = 0;
 		correctCount = 0;
 		wrongCount = 0;
+		earnedXP = 0;
 		isNewHighScore = false;
 		selectedOption = null;
 		lastAnswerStatus = null;
@@ -298,6 +301,12 @@
 
 		const totalAttempts = correctCount + wrongCount;
 		const accuracy = totalAttempts > 0 ? Math.round((correctCount / totalAttempts) * 100) : 0;
+
+		// Calculate XP (scaled for mini-games so learning activities remain primary XP source)
+		earnedXP = calculateGameXP(correctCount, accuracy, maxCombo);
+		if (earnedXP > 0) {
+			addXP(earnedXP);
+		}
 
 		const currentMode = audioMode ? 'audio' : 'visual';
 		const prevHigh = getGameHighScore('number-rush', currentMode);
@@ -741,7 +750,7 @@
 				</p>
 
 				<!-- Stat Badges -->
-				<div class="mt-4 grid grid-cols-3 gap-2 border-t border-slate-100 pt-4">
+				<div class="mt-4 grid grid-cols-4 gap-2 border-t border-slate-100 pt-4">
 					<div class="rounded-xl border border-emerald-100 bg-emerald-50 p-2.5">
 						<span class="font-headline text-[10px] font-black text-emerald-700 uppercase"
 							>Correct</span
@@ -759,6 +768,12 @@
 						<p class="font-headline text-lg font-black text-indigo-800">
 							{summaryRecord.accuracy}%
 						</p>
+					</div>
+					<div class="rounded-xl border border-amber-100 bg-amber-50 p-2.5">
+						<span class="font-headline text-[10px] font-black text-amber-700 uppercase"
+							>XP Earned</span
+						>
+						<p class="font-headline text-lg font-black text-amber-900">+{earnedXP}</p>
 					</div>
 				</div>
 			</section>
@@ -780,6 +795,13 @@
 						<span class="font-headline font-black text-slate-900"
 							>{summaryRecord.maxCombo}x Multiplier</span
 						>
+					</div>
+					<div class="flex items-center justify-between py-2 text-xs">
+						<span class="flex items-center gap-1.5 font-sans font-medium text-slate-600">
+							<Sparkles size={14} strokeWidth={2.25} class="text-amber-500" />
+							XP Rewarded
+						</span>
+						<span class="font-headline font-black text-indigo-600">+{earnedXP} XP</span>
 					</div>
 					<div class="flex items-center justify-between py-2 text-xs">
 						<span class="flex items-center gap-1.5 font-sans font-medium text-slate-600">

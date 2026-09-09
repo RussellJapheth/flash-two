@@ -27,7 +27,7 @@
 		speakWord,
 		stopSpeech
 	} from '$lib/utils/audio';
-	import { addXP } from '$lib/utils/xp';
+	import { addXP, calculateGameXP } from '$lib/utils/xp';
 	import type { WordRecord } from '$lib/types';
 	import {
 		RotateCcw,
@@ -465,8 +465,8 @@
 		const totalAttempts = correctMatches + wrongMatches;
 		const accuracy = totalAttempts > 0 ? Math.round((correctMatches / totalAttempts) * 100) : 0;
 
-		// Calculate XP (Base + Accuracy bonus + Combo bonus)
-		earnedXP = Math.round(correctMatches * 5 + (accuracy >= 80 ? 25 : 10) + maxCombo * 3);
+		// Calculate XP (scaled for mini-games so learning activities remain primary XP source)
+		earnedXP = calculateGameXP(correctMatches, accuracy, maxCombo);
 		if (earnedXP > 0) {
 			addXP(earnedXP);
 		}

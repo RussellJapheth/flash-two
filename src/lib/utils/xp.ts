@@ -64,6 +64,18 @@ export function calculateReviewXP(mode: 'srs' | 'weak' | 'all', rating: StudyRat
 }
 
 /**
+ * Calculates XP earned from mini-games (Match Blitz, Number Rush).
+ * Deliberately scaled low so core learning activities (SRS / Decks) yield significantly more XP.
+ */
+export function calculateGameXP(correct: number, accuracy: number, maxCombo: number = 0): number {
+	if (correct <= 0) return 0;
+	const baseXP = Math.floor(correct * 0.5); // 1 XP per 2 correct answers
+	const accuracyBonus = accuracy >= 80 ? 4 : accuracy >= 60 ? 2 : 0;
+	const comboBonus = Math.min(3, Math.floor(maxCombo / 3));
+	return Math.max(1, baseXP + accuracyBonus + comboBonus);
+}
+
+/**
  * Calculates end-of-session completion & accuracy bonus XP
  */
 export function calculateSessionBonus(
@@ -76,7 +88,7 @@ export function calculateSessionBonus(
 	}
 
 	const accuracy = Math.round((correctCount / totalCards) * 100);
-	let completionBonus = 0;
+	let completionBonus = 15;
 	let accuracyBonus = 0;
 
 	if (mode === 'srs') {
@@ -85,9 +97,8 @@ export function calculateSessionBonus(
 	} else if (mode === 'weak') {
 		completionBonus = 20;
 		if (totalCards >= 3 && accuracy >= 75) accuracyBonus = 20;
-	} else {
-		completionBonus = 15;
-		if (totalCards >= 5 && accuracy >= 80) accuracyBonus = 10;
+	} else if (totalCards >= 5 && accuracy >= 80) {
+		accuracyBonus = 10;
 	}
 
 	return {

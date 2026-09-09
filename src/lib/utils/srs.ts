@@ -49,6 +49,9 @@ export function calculateNextReview(
 		dueDate = now + interval * ONE_DAY_MS;
 	} else if (rating === 'good') {
 		base.correct += 1;
+		if (base.wrong > 0 && reps >= 1) {
+			base.wrong = Math.max(0, base.wrong - 1);
+		}
 		if (reps === 0) {
 			interval = 1;
 		} else if (reps === 1) {
@@ -60,6 +63,9 @@ export function calculateNextReview(
 		dueDate = now + interval * ONE_DAY_MS;
 	} else if (rating === 'easy') {
 		base.correct += 1;
+		if (base.wrong > 0) {
+			base.wrong = Math.max(0, base.wrong - 1);
+		}
 		if (reps === 0) {
 			interval = 3;
 		} else {

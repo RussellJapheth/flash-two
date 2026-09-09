@@ -55,6 +55,53 @@ describe('SRS SM-2 Algorithm', () => {
 		expect(result.interval).toBeGreaterThan(3);
 	});
 
+	it('decrements wrong count on "easy" rating down to 0', () => {
+		const existing: WordProgress = {
+			weekId: 'week-1',
+			wordNo: 3,
+			correct: 1,
+			wrong: 2,
+			lastReviewed: Date.now() - 100000,
+			dueDate: Date.now() - 50000,
+			interval: 1,
+			easeFactor: 2.5,
+			reps: 1,
+			lapses: 1
+		};
+
+		const step1 = calculateNextReview(existing, 'easy');
+		expect(step1.wrong).toBe(1);
+		// SRS parameters still calculate correctly
+		expect(step1.interval).toBeGreaterThan(1);
+		expect(step1.reps).toBe(2);
+
+		const step2 = calculateNextReview(step1, 'easy');
+		expect(step2.wrong).toBe(0);
+
+		const step3 = calculateNextReview(step2, 'easy');
+		expect(step3.wrong).toBe(0); // Cannot go below 0
+	});
+
+	it('decrements wrong count on "good" rating when reps >= 1', () => {
+		const existing: WordProgress = {
+			weekId: 'week-1',
+			wordNo: 4,
+			correct: 2,
+			wrong: 1,
+			lastReviewed: Date.now() - 100000,
+			dueDate: Date.now() - 50000,
+			interval: 1,
+			easeFactor: 2.5,
+			reps: 1,
+			lapses: 1
+		};
+
+		const result = calculateNextReview(existing, 'good');
+		expect(result.wrong).toBe(0);
+		expect(result.reps).toBe(2);
+		expect(result.interval).toBe(3);
+	});
+
 	it('supports custom interval days', () => {
 		const result = calculateNextReview(undefined, 'custom', 14);
 		expect(result.interval).toBe(14);

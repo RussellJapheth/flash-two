@@ -250,7 +250,9 @@
 			<div
 				class="absolute inset-0 bg-gradient-to-r from-white/90 via-white/45 to-transparent"
 			></div>
-			<div class="absolute inset-0 bg-gradient-to-t from-white/25 via-transparent to-transparent"></div>
+			<div
+				class="absolute inset-0 bg-gradient-to-t from-white/25 via-transparent to-transparent"
+			></div>
 		</div>
 
 		<div class="relative z-10 flex h-full flex-1 items-stretch justify-between">

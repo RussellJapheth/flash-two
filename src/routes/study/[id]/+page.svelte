@@ -20,6 +20,7 @@
 	import { calculateNextReview, isCardDue } from '$lib/utils/srs';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { playSound, speakWord, stopSpeech } from '$lib/utils/audio';
+	import { calculateReviewXP, calculateSessionBonus, addXP } from '$lib/utils/xp';
 	import type { WordRecord, WordProgress, StudyRating } from '$lib/types';
 	import {
 		X,
@@ -30,7 +31,8 @@
 		RotateCcw,
 		Volume2,
 		VolumeX,
-		FolderOpen
+		FolderOpen,
+		Sparkles
 	} from 'lucide-svelte';
 
 	let deckId = $derived(page.params.id || '');
@@ -51,6 +53,7 @@
 	// Session metrics
 	let sessionCorrect = $state(0);
 	let sessionWrong = $state(0);
+	let sessionEarnedXP = $state(0);
 	let halfwayTriggered = $state(false);
 	let showHalfwayToast = $state(false);
 	let halfwayToastTimer: ReturnType<typeof setTimeout> | undefined;
@@ -157,6 +160,7 @@
 		isSessionFinished = false;
 		sessionCorrect = 0;
 		sessionWrong = 0;
+		sessionEarnedXP = 0;
 
 		if (cards.length > 0) {
 			await updateSavedStatus();
@@ -198,6 +202,10 @@
 		allProgress[key] = updated;
 		scheduleDebouncedSync();
 
+		const earned = calculateReviewXP(studyMode, rating);
+		addXP(earned);
+		sessionEarnedXP += earned;
+
 		if (rating === 'again') {
 			sessionWrong++;
 		} else {
@@ -231,6 +239,12 @@
 					runAutoplayStep();
 				} else {
 					clearAutoplay();
+					// Award session completion & accuracy bonus
+					const bonus = calculateSessionBonus(studyMode, cards.length, sessionCorrect);
+					if (bonus.totalBonus > 0) {
+						addXP(bonus.totalBonus);
+						sessionEarnedXP += bonus.totalBonus;
+					}
 					isSessionFinished = true;
 					playSound('milestone');
 				}
@@ -453,11 +467,22 @@
 					/>
 				</div>
 
-				<div
-					class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 font-headline text-xs font-bold text-indigo-700"
-				>
-					<Award size={13} strokeWidth={2.25} />
-					<span>SESSION COMPLETED</span>
+				<div class="flex flex-wrap items-center justify-center gap-2">
+					<div
+						class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 font-headline text-xs font-bold text-indigo-700"
+					>
+						<Award size={13} strokeWidth={2.25} />
+						<span>SESSION COMPLETED</span>
+					</div>
+
+					{#if sessionEarnedXP > 0}
+						<div
+							class="inline-flex items-center gap-1.5 rounded-full border border-amber-200/80 bg-amber-50 px-3 py-1 font-headline text-xs font-bold text-amber-900 shadow-xs"
+						>
+							<Sparkles size={13} strokeWidth={2.25} class="text-amber-600" />
+							<span>+{sessionEarnedXP} XP</span>
+						</div>
+					{/if}
 				</div>
 
 				<h2 class="font-headline text-2xl font-black text-slate-900">Great Work!</h2>

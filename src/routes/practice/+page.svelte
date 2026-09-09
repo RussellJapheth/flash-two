@@ -17,8 +17,9 @@
 	import { calculateNextReview } from '$lib/utils/srs';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { playSound } from '$lib/utils/audio';
+	import { calculateReviewXP, calculateSessionBonus, addXP } from '$lib/utils/xp';
 	import type { WordRecord, WordProgress, StudyRating } from '$lib/types';
-	import { X, Dumbbell, Zap, SmilePlus } from 'lucide-svelte';
+	import { X, Dumbbell, Zap, SmilePlus, Sparkles } from 'lucide-svelte';
 
 	interface PracticeItem {
 		packId: string;
@@ -37,6 +38,7 @@
 
 	let sessionCorrect = $state(0);
 	let sessionWrong = $state(0);
+	let sessionEarnedXP = $state(0);
 	let isSessionFinished = $state(false);
 
 	let currentItem = $derived(items[currentIndex]);
@@ -103,6 +105,10 @@
 		currentIndex = 0;
 		isFlipped = false;
 		isAdvancing = false;
+		sessionCorrect = 0;
+		sessionWrong = 0;
+		sessionEarnedXP = 0;
+		isSessionFinished = false;
 
 		if (items.length > 0) {
 			await updateSavedStatus();
@@ -145,6 +151,10 @@
 			allProgress[key] = updated;
 			scheduleDebouncedSync();
 
+			const earned = calculateReviewXP('weak', rating);
+			addXP(earned);
+			sessionEarnedXP += earned;
+
 			if (rating === 'again') {
 				sessionWrong++;
 			} else {
@@ -152,6 +162,11 @@
 			}
 
 			if (currentIndex + 1 >= items.length) {
+				const bonus = calculateSessionBonus('weak', items.length, sessionCorrect);
+				if (bonus.totalBonus > 0) {
+					addXP(bonus.totalBonus);
+					sessionEarnedXP += bonus.totalBonus;
+				}
 				isSessionFinished = true;
 				playSound('milestone');
 			} else {
@@ -225,11 +240,22 @@
 					/>
 				</div>
 
-				<div
-					class="inline-flex items-center gap-1.5 rounded-full border border-amber-200/80 bg-amber-50 px-3 py-1 font-headline text-xs font-bold text-amber-900"
-				>
-					<Zap size={13} strokeWidth={2.25} />
-					<span>PRACTICE COMPLETED</span>
+				<div class="flex flex-wrap items-center justify-center gap-2">
+					<div
+						class="inline-flex items-center gap-1.5 rounded-full border border-amber-200/80 bg-amber-50 px-3 py-1 font-headline text-xs font-bold text-amber-900"
+					>
+						<Zap size={13} strokeWidth={2.25} />
+						<span>PRACTICE COMPLETED</span>
+					</div>
+
+					{#if sessionEarnedXP > 0}
+						<div
+							class="inline-flex items-center gap-1.5 rounded-full border border-amber-200/80 bg-amber-50 px-3 py-1 font-headline text-xs font-bold text-amber-900 shadow-xs"
+						>
+							<Sparkles size={13} strokeWidth={2.25} class="text-amber-600" />
+							<span>+{sessionEarnedXP} XP</span>
+						</div>
+					{/if}
 				</div>
 
 				<h2 class="font-headline text-2xl font-black text-slate-900">Great Perseverance!</h2>

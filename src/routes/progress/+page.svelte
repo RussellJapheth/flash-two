@@ -10,8 +10,14 @@
 		getAllCustomDecks,
 		computeStreakStats
 	} from '$lib/utils/storage';
+	import {
+		getLocalUserXPData,
+		migrateHistoricalProgressXP,
+		computeLevelStats,
+		getLevelTheme
+	} from '$lib/utils/xp';
 	import { isCardMastered, isCardLearning, isCardDue } from '$lib/utils/srs';
-	import type { StreakStats } from '$lib/types';
+	import type { StreakStats, XPStats } from '$lib/types';
 	import {
 		Flag,
 		ShieldCheck,
@@ -21,7 +27,10 @@
 		Bookmark,
 		Download,
 		FileSpreadsheet,
-		Check
+		Check,
+		Sparkles,
+		Trophy,
+		Zap
 	} from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
@@ -31,6 +40,18 @@
 		tierName: 'Novice Explorer',
 		totalReviews: 0,
 		activeDates: []
+	});
+
+	let xpStats = $state<XPStats>({
+		totalXP: 0,
+		weeklyXP: 0,
+		monthlyXP: 0,
+		level: 1,
+		levelTitle: 'Novice Explorer',
+		currentLevelXP: 0,
+		nextLevelXP: 50,
+		progressInLevelPercent: 0,
+		theme: getLevelTheme(1)
 	});
 
 	let totalWordsCount = $state(0);
@@ -45,6 +66,10 @@
 	async function loadProgressStats() {
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
+
+		// Migrate and load XP stats
+		const migratedXP = migrateHistoricalProgressXP(progress);
+		xpStats = computeLevelStats(migratedXP.totalXP, migratedXP.dailyXP);
 
 		const chPacks = await getBuiltinPacks('chinese');
 		const frPacks = await getBuiltinPacks('french');
@@ -290,6 +315,77 @@
 <TopHeader title="Progress" streak={streakStats.currentStreak} />
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
+	<!-- XP & LEVEL PROGRESSION HERO -->
+	<section class="shadow-card space-y-4 rounded-3xl border border-slate-200/80 bg-white p-5">
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-3">
+				<div
+					class="flex h-11 w-11 items-center justify-center rounded-2xl border border-amber-200/60 bg-amber-50 text-amber-600"
+				>
+					<Sparkles size={22} strokeWidth={2} />
+				</div>
+				<div>
+					<div class="flex items-center gap-1.5">
+						<span
+							class="rounded-full border px-2 py-0.5 font-headline text-[10px] font-bold {xpStats.theme.badgeBg} {xpStats.theme.badgeText} {xpStats.theme.badgeBorder}"
+						>
+							LEVEL {xpStats.level}
+						</span>
+						<p class="font-headline text-xs font-bold text-slate-500">{xpStats.levelTitle}</p>
+					</div>
+					<p class="font-headline text-2xl font-black text-slate-900">
+						{xpStats.totalXP.toLocaleString()}
+						<span class="text-sm font-bold text-slate-500">XP</span>
+					</p>
+				</div>
+			</div>
+
+			<a
+				href={resolve('/leaderboard')}
+				class="flex items-center gap-1 rounded-2xl border border-amber-200/80 bg-amber-50 px-3 py-2 font-headline text-xs font-bold text-amber-900 shadow-xs transition-colors hover:bg-amber-100"
+			>
+				<Trophy size={14} strokeWidth={2.25} class="text-amber-600" />
+				<span>Leaderboard</span>
+				<ChevronRight size={13} strokeWidth={2.5} class="text-amber-700" />
+			</a>
+		</div>
+
+		<!-- Level progress bar -->
+		<div class="space-y-1.5">
+			<div class="flex justify-between text-xs font-medium text-slate-500">
+				<span>Progress to Level {xpStats.level + 1}</span>
+				<span class="font-semibold text-slate-700">{xpStats.progressInLevelPercent}%</span>
+			</div>
+			<ProgressBar
+				value={xpStats.totalXP - xpStats.currentLevelXP}
+				max={xpStats.nextLevelXP - xpStats.currentLevelXP}
+				variant="amber"
+				height="h-2.5"
+			/>
+			<div class="flex justify-between text-[11px] text-slate-400">
+				<span>{xpStats.currentLevelXP} XP</span>
+				<span>{xpStats.nextLevelXP - xpStats.totalXP} XP needed</span>
+				<span>{xpStats.nextLevelXP} XP</span>
+			</div>
+		</div>
+
+		<!-- XP Timeframe Breakdown Cards -->
+		<div class="grid grid-cols-2 gap-2.5 border-t border-slate-100 pt-3">
+			<div class="rounded-2xl border border-slate-100 bg-slate-50/80 p-3 text-center">
+				<p class="font-headline text-lg font-black text-indigo-600">
+					{xpStats.weeklyXP.toLocaleString()}
+				</p>
+				<p class="text-[11px] font-bold text-slate-500">7-Day Weekly XP</p>
+			</div>
+			<div class="rounded-2xl border border-slate-100 bg-slate-50/80 p-3 text-center">
+				<p class="font-headline text-lg font-black text-amber-600">
+					{xpStats.monthlyXP.toLocaleString()}
+				</p>
+				<p class="text-[11px] font-bold text-slate-500">30-Day Monthly XP</p>
+			</div>
+		</div>
+	</section>
+
 	<!-- Overall Progress Card -->
 	<section class="shadow-card space-y-3 rounded-3xl border border-slate-200/80 bg-white p-5">
 		<div class="flex items-center justify-between">

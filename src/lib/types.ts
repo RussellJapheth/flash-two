@@ -36,6 +36,41 @@ export interface SavedWord {
 	savedAt: number;
 }
 
+export interface UserXPData {
+	totalXP: number;
+	dailyXP: Record<string, number>; // 'YYYY-MM-DD': xpEarned
+	lastUpdated: number;
+	migratedFromProgress?: boolean;
+}
+
+export interface XPLeaderboardEntry {
+	username: string;
+	allTimeXP: number;
+	weeklyXP: number;
+	monthlyXP: number;
+	level: number;
+	lastActive: number;
+}
+
+export interface LevelTheme {
+	badgeBg: string;
+	badgeText: string;
+	badgeBorder: string;
+	accentColor: string;
+}
+
+export interface XPStats {
+	totalXP: number;
+	weeklyXP: number;
+	monthlyXP: number;
+	level: number;
+	levelTitle: string;
+	currentLevelXP: number;
+	nextLevelXP: number;
+	progressInLevelPercent: number;
+	theme: LevelTheme;
+}
+
 export interface AppBackup {
 	version: number;
 	exportedAt?: number;
@@ -45,6 +80,7 @@ export interface AppBackup {
 	savedWords?: SavedWord[];
 	language?: 'chinese' | 'french';
 	username?: string;
+	xpData?: UserXPData;
 }
 
 export type StudyRating = 'again' | 'hard' | 'good' | 'easy' | 'custom';

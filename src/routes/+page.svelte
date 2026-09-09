@@ -19,9 +19,15 @@
 		setSavedLanguage,
 		getRecentlyOpenedPackIds
 	} from '$lib/utils/storage';
+	import {
+		getLocalUserXPData,
+		migrateHistoricalProgressXP,
+		computeLevelStats,
+		isCloudSyncEnabled
+	} from '$lib/utils/xp';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
-	import type { DeckSummary, StreakStats, WordProgress, CustomDeck } from '$lib/types';
+	import type { DeckSummary, StreakStats, WordProgress, CustomDeck, XPStats } from '$lib/types';
 	import {
 		Flame,
 		Brain,
@@ -29,11 +35,15 @@
 		PlayCircle,
 		ArrowRight,
 		Sparkles,
-		BookOpen
+		BookOpen,
+		Trophy,
+		Lock
 	} from 'lucide-svelte';
 
 	let username = $state('Russell');
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
+	let isCloudUser = $state(false);
+	let xpStats = $state<XPStats | null>(null);
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
 		longestStreak: 0,
@@ -77,9 +87,13 @@
 		username = getSavedUsername();
 		activeLanguage = getSavedLanguage();
 		recentPackIds = getRecentlyOpenedPackIds();
+		isCloudUser = isCloudSyncEnabled();
 
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
+
+		const migratedXP = migrateHistoricalProgressXP(progress);
+		xpStats = computeLevelStats(migratedXP.totalXP, migratedXP.dailyXP);
 
 		const builtinPacks = await getBuiltinPacks(activeLanguage);
 		const customDecks = await getAllCustomDecks();
@@ -441,6 +455,58 @@
 				</div>
 			</a>
 		</div>
+	</section>
+
+	<!-- XP LEADERBOARD PROMOTION CARD -->
+	<section class="space-y-2">
+		<a
+			href={resolve('/leaderboard')}
+			class="shadow-card hover:shadow-card-hover group relative flex cursor-pointer items-center justify-between overflow-hidden rounded-3xl border border-amber-200/80 bg-gradient-to-r from-amber-50/70 via-white to-amber-50/40 p-4.5 transition-all hover:-translate-y-0.5 hover:border-amber-300 active:scale-[0.98]"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-amber-200/80 bg-amber-50 text-amber-600 shadow-xs transition-transform group-hover:scale-105"
+				>
+					<Trophy size={22} strokeWidth={2.25} />
+				</div>
+				<div>
+					<div class="flex items-center gap-1.5">
+						<span
+							class="rounded-full bg-amber-100/90 px-2 py-0.5 font-headline text-[10px] font-bold text-amber-900"
+						>
+							GLOBAL RANKINGS
+						</span>
+						{#if isCloudUser && xpStats}
+							<span
+								class="rounded-full border px-2 py-0.5 font-headline text-[10px] font-bold {xpStats.theme.badgeBg} {xpStats.theme.badgeText} {xpStats.theme.badgeBorder}"
+							>
+								Lvl {xpStats.level}
+							</span>
+						{/if}
+					</div>
+					<h3 class="font-headline text-base font-extrabold text-slate-900">
+						XP Leaderboard
+					</h3>
+					<p class="font-body text-xs text-slate-500">
+						{#if isCloudUser && xpStats}
+							You earned <span class="font-bold text-amber-700">{xpStats.weeklyXP.toLocaleString()} XP</span> this week
+						{:else}
+							Sign in with Cloud to view global standings & compete
+						{/if}
+					</p>
+				</div>
+			</div>
+
+			<div
+				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-100/80 text-amber-800 transition-colors group-hover:bg-amber-500 group-hover:text-white"
+			>
+				<ArrowRight
+					size={16}
+					strokeWidth={2.5}
+					class="transition-transform group-hover:translate-x-0.5"
+				/>
+			</div>
+		</a>
 	</section>
 
 	<!-- 4. RECENTLY OPENED PACKS -->

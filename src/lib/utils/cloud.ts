@@ -1,4 +1,4 @@
-import type { AppBackup, WordProgress, SyncStatus, CustomDeck, SavedWord } from '$lib/types';
+import type { AppBackup, WordProgress, SyncStatus, CustomDeck, SavedWord, UserXPData } from '$lib/types';
 import {
 	getAllProgress,
 	getAllCustomDecks,
@@ -9,6 +9,12 @@ import {
 	getSavedUsername,
 	getSavedLanguage
 } from './storage';
+import {
+	getLocalUserXPData,
+	saveLocalUserXPData,
+	syncXPLeaderboard,
+	migrateHistoricalProgressXP
+} from './xp';
 
 const API_BASE = 'https://json-drive.thespot.workers.dev/api/flashcards';
 
@@ -172,9 +178,43 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 			}
 		}
 
+		// 4. Merge XP Data
+		const localXP = getLocalUserXPData();
+		if (remoteData.xpData && typeof remoteData.xpData === 'object') {
+			const remoteXP = remoteData.xpData;
+			const mergedDaily: Record<string, number> = { ...(localXP.dailyXP || {}) };
+
+			if (remoteXP.dailyXP && typeof remoteXP.dailyXP === 'object') {
+				for (const [dateKey, xpVal] of Object.entries(remoteXP.dailyXP)) {
+					if (typeof xpVal === 'number') {
+						mergedDaily[dateKey] = Math.max(mergedDaily[dateKey] || 0, xpVal);
+					}
+				}
+			}
+
+			const mergedTotal = Math.max(localXP.totalXP || 0, remoteXP.totalXP || 0);
+			const mergedXP: UserXPData = {
+				totalXP: mergedTotal,
+				dailyXP: mergedDaily,
+				lastUpdated: Math.max(localXP.lastUpdated || 0, remoteXP.lastUpdated || 0),
+				migratedFromProgress: true
+			};
+
+			saveLocalUserXPData(mergedXP);
+
+			if (localXP.totalXP > (remoteXP.totalXP || 0)) {
+				localHadNewData = true;
+			}
+		} else if (localXP.totalXP > 0) {
+			localHadNewData = true;
+		}
+
 		updateStatus('ok');
 
-		// 4. Two-way convergence: if local had newer/additional data, push merged state to remote
+		// Sync XP leaderboard in the background
+		syncXPLeaderboard().catch((e) => console.warn('XP leaderboard sync error:', e));
+
+		// 5. Two-way convergence: if local had newer/additional data, push merged state to remote
 		if (localHadNewData) {
 			scheduleDebouncedSync(1000);
 		}
@@ -205,6 +245,7 @@ export async function pushData(username?: string): Promise<boolean> {
 		const customDecks = await getAllCustomDecks();
 		const savedWords = await getAllSavedWords();
 		const language = getSavedLanguage();
+		const xpData = getLocalUserXPData();
 
 		const payload: AppBackup = {
 			version: 1,
@@ -213,7 +254,8 @@ export async function pushData(username?: string): Promise<boolean> {
 			customDecks,
 			savedWords,
 			language,
-			username: user
+			username: user,
+			xpData
 		};
 
 		const res = await fetch(`${API_BASE}/users/${encodeURIComponent(user)}`, {
@@ -226,6 +268,9 @@ export async function pushData(username?: string): Promise<boolean> {
 			updateStatus('error');
 			return false;
 		}
+
+		// Also update global XP leaderboard
+		syncXPLeaderboard().catch((e) => console.warn('XP leaderboard sync error during push:', e));
 
 		// Also ensure username is in the users list
 		try {

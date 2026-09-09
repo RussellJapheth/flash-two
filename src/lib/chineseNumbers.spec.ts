@@ -8,6 +8,7 @@ import {
 	deduplicateUserLeaderboard,
 	mergeLeaderboardScores,
 	migrateGuestGameScores,
+	syncRemoteScoresToLocal,
 	type GameScoreRecord
 } from './utils/gameStorage';
 
@@ -509,6 +510,83 @@ describe('Chinese Number Converter (Number Rush)', () => {
 			const updated = JSON.parse(mockStorage.flashcards_game_scores);
 			expect(updated[0].username).toBe('bob');
 			expect(updated[1].username).toBe('alice');
+		} finally {
+			globalThis.localStorage = origLocalStorage;
+		}
+	});
+
+	it('syncs remote leaderboard scores to local storage when remote score is higher', () => {
+		const mockStorage: Record<string, string> = {
+			flashcards_game_scores: JSON.stringify([
+				{
+					id: 'local-1',
+					username: 'russell',
+					gameId: 'number-rush',
+					gameName: 'Number Rush',
+					score: 400,
+					correct: 4,
+					wrong: 0,
+					accuracy: 100,
+					maxCombo: 4,
+					mode: 'visual',
+					playedAt: 1000
+				}
+			])
+		};
+
+		const origLocalStorage = globalThis.localStorage;
+		globalThis.localStorage = {
+			getItem: (key: string) => mockStorage[key] || null,
+			setItem: (key: string, val: string) => {
+				mockStorage[key] = val;
+			},
+			removeItem: (key: string) => {
+				delete mockStorage[key];
+			},
+			clear: () => {
+				for (const k in mockStorage) delete mockStorage[k];
+			},
+			key: () => null,
+			length: 0
+		} as unknown as Storage;
+
+		const remoteRecords: GameScoreRecord[] = [
+			{
+				id: 'remote-1',
+				username: 'russell',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 2400,
+				correct: 24,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 24,
+				mode: 'visual',
+				playedAt: 5000
+			},
+			{
+				id: 'remote-2',
+				username: 'otheruser',
+				gameId: 'number-rush',
+				gameName: 'Number Rush',
+				score: 3000,
+				correct: 30,
+				wrong: 0,
+				accuracy: 100,
+				maxCombo: 30,
+				mode: 'visual',
+				playedAt: 6000
+			}
+		];
+
+		try {
+			const updated = syncRemoteScoresToLocal(remoteRecords, 'russell');
+			expect(updated).toBe(true);
+			const saved = JSON.parse(mockStorage.flashcards_game_scores);
+			expect(saved[0].score).toBe(2400);
+			expect(saved[0].username).toBe('russell');
+			// Did not import otheruser
+			expect(saved.some((r: GameScoreRecord) => r.username === 'otheruser')).toBe(false);
 		} finally {
 			globalThis.localStorage = origLocalStorage;
 		}

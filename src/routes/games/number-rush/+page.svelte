@@ -1,13 +1,19 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import GameCanvasFX from '$lib/components/games/GameCanvasFX.svelte';
 	import GameAvatar from '$lib/components/games/GameAvatar.svelte';
 	import GameComboFloat from '$lib/components/games/GameComboFloat.svelte';
 	import { generateNumberRushQuestion, type NumberRushQuestion } from '$lib/utils/chineseNumbers';
-	import { saveGameScore, getGameHighScore, type GameScoreRecord } from '$lib/utils/gameStorage';
+	import {
+		saveGameScore,
+		getGameHighScore,
+		isCloudSyncEnabled,
+		syncPendingGameScores,
+		type GameScoreRecord
+	} from '$lib/utils/gameStorage';
 	import { playSound, speakWord, stopSpeech } from '$lib/utils/audio';
 	import {
 		Volume2,
@@ -42,7 +48,11 @@
 	let correctCount = $state(0);
 	let wrongCount = $state(0);
 	let isNewHighScore = $state(false);
-	let highScore = $derived(getGameHighScore('number-rush', audioMode ? 'audio' : 'visual'));
+	let storageVersion = $state(0);
+	let highScore = $derived.by(() => {
+		void storageVersion;
+		return getGameHighScore('number-rush', audioMode ? 'audio' : 'visual');
+	});
 
 	// Current Question & Selection Feedback
 	let currentQuestion = $state<NumberRushQuestion | null>(null);
@@ -93,6 +103,14 @@
 			return { tier: 'A', label: 'Expert Reflexes', color: 'text-indigo-600' };
 		if (acc >= 65) return { tier: 'B', label: 'Skilled Challenger', color: 'text-emerald-600' };
 		return { tier: 'C', label: 'Apprentice', color: 'text-slate-600' };
+	});
+
+	onMount(async () => {
+		storageVersion++;
+		if (isCloudSyncEnabled()) {
+			await syncPendingGameScores();
+			storageVersion++;
+		}
 	});
 
 	onDestroy(() => {
@@ -297,6 +315,7 @@
 			maxCombo,
 			mode: audioMode ? 'audio' : 'visual'
 		});
+		storageVersion++;
 
 		playSound('milestone');
 		setTimeout(() => {

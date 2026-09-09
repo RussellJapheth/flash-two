@@ -153,6 +153,51 @@ export function mergeLeaderboardScores(
 	return deduplicateUserLeaderboard([...localBests, ...remoteScores]);
 }
 
+// Synchronize remote leaderboard records for current user into local storage
+export function syncRemoteScoresToLocal(
+	remoteScores: GameScoreRecord[],
+	targetUser?: string
+): boolean {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return false;
+	const user = (targetUser || getSavedUsername()).trim().toLowerCase();
+	if (!user || user === 'guest') return false;
+
+	const userRemoteRecords = remoteScores.filter(
+		(r) => r && r.username && r.username.trim().toLowerCase() === user
+	);
+	if (userRemoteRecords.length === 0) return false;
+
+	const localScores = getLocalGameScores();
+	let updated = false;
+	const newLocalScores = [...localScores];
+
+	for (const rem of userRemoteRecords) {
+		const rGameId = rem.gameId;
+		const rMode = rem.mode || 'visual';
+
+		const matchingLocal = localScores.filter(
+			(l) => l.gameId === rGameId && (l.mode || 'visual') === rMode
+		);
+		const maxLocalScore =
+			matchingLocal.length > 0 ? Math.max(...matchingLocal.map((l) => l.score)) : -1;
+
+		if (rem.score > maxLocalScore) {
+			newLocalScores.unshift(rem);
+			updated = true;
+		}
+	}
+
+	if (updated) {
+		try {
+			localStorage.setItem(GAME_SCORES_KEY, JSON.stringify(newLocalScores.slice(0, 100)));
+		} catch (e) {
+			console.error('Failed to sync remote scores to local:', e);
+		}
+	}
+
+	return updated;
+}
+
 // Fetch global leaderboard from /leaderboard endpoint (Only for cloud-synced users, 1 entry per user per game per mode)
 export async function fetchRemoteLeaderboard(
 	gameId?: string,
@@ -170,6 +215,7 @@ export async function fetchRemoteLeaderboard(
 		if (response.ok) {
 			const remoteList = await response.json();
 			if (Array.isArray(remoteList)) {
+				syncRemoteScoresToLocal(remoteList);
 				const uniqueByUser = deduplicateUserLeaderboard(remoteList, gameId, mode);
 				return uniqueByUser.slice(0, limit);
 			}
@@ -184,11 +230,6 @@ export async function fetchRemoteLeaderboard(
 // Synchronize all stored local scores with remote leaderboard (devices only send highest scores, best score retained)
 export async function syncPendingGameScores(): Promise<void> {
 	if (typeof window === 'undefined' || !navigator.onLine || !isCloudSyncEnabled()) return;
-	const localScores = getLocalGameScores();
-	if (localScores.length === 0) return;
-
-	const localBests = deduplicateUserLeaderboard(localScores);
-	if (localBests.length === 0) return;
 
 	try {
 		let remoteRecords: GameScoreRecord[] = [];
@@ -201,6 +242,12 @@ export async function syncPendingGameScores(): Promise<void> {
 				remoteRecords = data;
 			}
 		}
+
+		// Pull remote high scores into local storage if remote is higher
+		syncRemoteScoresToLocal(remoteRecords);
+
+		const localScores = getLocalGameScores();
+		if (localScores.length === 0 && remoteRecords.length === 0) return;
 
 		// Retain highest score across local history + remote (1 entry per user per game per mode)
 		const merged = mergeLeaderboardScores(localScores, remoteRecords);

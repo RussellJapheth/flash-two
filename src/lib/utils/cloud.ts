@@ -16,12 +16,8 @@ import {
 	getSavedUsername,
 	getSavedLanguage
 } from './storage';
-import {
-	getLocalUserXPData,
-	saveLocalUserXPData,
-	syncXPLeaderboard,
-	migrateHistoricalProgressXP
-} from './xp';
+import { getLocalUserXPData, saveLocalUserXPData, syncXPLeaderboard } from './xp';
+import { syncPendingGameScores } from './gameStorage';
 
 const API_BASE = 'https://json-drive.thespot.workers.dev/api/flashcards';
 
@@ -218,8 +214,9 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 
 		updateStatus('ok');
 
-		// Sync XP leaderboard in the background
+		// Sync XP and Game leaderboards in the background
 		syncXPLeaderboard().catch((e) => console.warn('XP leaderboard sync error:', e));
+		syncPendingGameScores().catch((e) => console.warn('Game leaderboard sync error:', e));
 
 		// 5. Two-way convergence: if local had newer/additional data, push merged state to remote
 		if (localHadNewData) {

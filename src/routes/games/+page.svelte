@@ -4,7 +4,6 @@
 	import { onMount } from 'svelte';
 	import {
 		fetchRemoteLeaderboard,
-		getGameHighScore,
 		isCloudSyncEnabled,
 		syncPendingGameScores,
 		deduplicateUserLeaderboard,
@@ -21,8 +20,6 @@
 		Crown,
 		ChevronLeft,
 		ChevronRight,
-		Eye,
-		Volume2,
 		Zap,
 		Headphones
 	} from 'lucide-svelte';
@@ -103,9 +100,6 @@
 	];
 
 	let rawLeaderboard = $state<GameScoreRecord[]>([]);
-	let numberRushBestVisual = $state(0);
-	let numberRushBestAudio = $state(0);
-	let matchBlitzBest = $state(0);
 	let isLoadingLeaderboard = $state(false);
 	let hasCloudSync = $state(false);
 	let activeBoardIndex = $state(0);
@@ -120,9 +114,6 @@
 
 	async function loadLeaderboard() {
 		hasCloudSync = isCloudSyncEnabled();
-		numberRushBestVisual = getGameHighScore('number-rush', 'visual');
-		numberRushBestAudio = getGameHighScore('number-rush', 'audio');
-		matchBlitzBest = getGameHighScore('match-blitz');
 
 		if (!hasCloudSync) {
 			rawLeaderboard = [];
@@ -282,25 +273,6 @@
 					<p class="font-sans text-xs text-slate-500">
 						Mandarin speed number drill • Visual & Audio Speed Modes
 					</p>
-
-					<div class="flex flex-wrap items-center gap-2 pt-0.5">
-						{#if numberRushBestVisual > 0}
-							<div
-								class="flex items-center gap-1 rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 font-headline text-[10px] font-bold text-indigo-900"
-							>
-								<Eye size={11} strokeWidth={2.25} class="text-indigo-600" />
-								<span>Visual: {numberRushBestVisual} pts</span>
-							</div>
-						{/if}
-						{#if numberRushBestAudio > 0}
-							<div
-								class="flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 font-headline text-[10px] font-bold text-amber-900"
-							>
-								<Volume2 size={11} strokeWidth={2.25} class="text-amber-600" />
-								<span>Audio: {numberRushBestAudio} pts</span>
-							</div>
-						{/if}
-					</div>
 				</div>
 			</div>
 

@@ -11,7 +11,13 @@
 		getAllCustomDecks,
 		getAllSavedWords
 	} from '$lib/utils/storage';
-	import { saveGameScore, getGameHighScore, type GameScoreRecord } from '$lib/utils/gameStorage';
+	import {
+		saveGameScore,
+		getGameHighScore,
+		isCloudSyncEnabled,
+		syncPendingGameScores,
+		type GameScoreRecord
+	} from '$lib/utils/gameStorage';
 	import {
 		playMatchFlip,
 		playMatchSuccess,
@@ -22,21 +28,17 @@
 		stopSpeech
 	} from '$lib/utils/audio';
 	import { addXP } from '$lib/utils/xp';
-	import type { WordRecord, CustomDeck } from '$lib/types';
+	import type { WordRecord } from '$lib/types';
 	import {
 		RotateCcw,
 		Flame,
 		Trophy,
 		Sparkles,
-		ArrowRight,
 		Play,
 		Timer,
 		Zap,
 		Award,
-		Volume2,
-		Eye,
 		Layers,
-		CheckCircle2,
 		AlertCircle
 	} from 'lucide-svelte';
 
@@ -98,7 +100,11 @@
 
 	let particleCanvasRef = $state<ParticleCanvas | null>(null);
 
-	let highScore = $derived(getGameHighScore('match-blitz'));
+	let storageVersion = $state(0);
+	let highScore = $derived.by(() => {
+		void storageVersion;
+		return getGameHighScore('match-blitz');
+	});
 
 	// Wave Difficulty Progression
 	let pairsInCurrentWave = $derived.by(() => {
@@ -477,6 +483,7 @@
 			maxCombo,
 			mode: 'visual'
 		});
+		storageVersion++;
 
 		summaryRecord = rec;
 	}
@@ -500,8 +507,13 @@
 		}
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		loadDecks();
+		storageVersion++;
+		if (isCloudSyncEnabled()) {
+			await syncPendingGameScores();
+			storageVersion++;
+		}
 	});
 
 	onDestroy(() => {
@@ -606,7 +618,7 @@
 									bind:value={selectedDeckId}
 									class="w-full cursor-pointer appearance-none rounded-2xl border-2 border-white/80 bg-white/75 py-3.5 pr-11 pl-4 text-sm font-bold text-slate-800 shadow-2xs backdrop-blur-xs transition-all hover:border-slate-300 focus:border-indigo-500 focus:bg-white focus:outline-hidden"
 								>
-									{#each availableDecks as deck}
+									{#each availableDecks as deck (deck.id)}
 										<option value={deck.id}>
 											{deck.title}
 											{deck.count ? `(${deck.count} words)` : ''}
@@ -767,7 +779,9 @@
 									{roundTimeLeft}s
 								</span>
 							</div>
-							<div class="h-2.5 w-full overflow-hidden rounded-full bg-slate-200/60 backdrop-blur-xs">
+							<div
+								class="h-2.5 w-full overflow-hidden rounded-full bg-slate-200/60 backdrop-blur-xs"
+							>
 								<div
 									class="h-full rounded-full transition-all duration-300 {roundTimeLeft <= 10
 										? 'animate-pulse bg-rose-500'

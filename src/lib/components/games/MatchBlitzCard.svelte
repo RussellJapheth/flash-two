@@ -42,25 +42,27 @@
 </script>
 
 <div
-	class="perspective-container relative h-24 sm:h-28 w-full select-none"
+	class="perspective-container relative h-24 w-full select-none sm:h-28"
 	class:opacity-0={isMatched}
 	class:pointer-events-none={isMatched}
 >
 	<button
 		type="button"
-		class="card-3d relative h-full w-full rounded-2xl transition-all duration-300 transform-style-3d cursor-pointer focus:outline-hidden focus-visible:ring-3 focus-visible:ring-indigo-500"
+		class="card-3d transform-style-3d relative h-full w-full cursor-pointer rounded-2xl transition-all duration-300 focus:outline-hidden focus-visible:ring-3 focus-visible:ring-indigo-500"
 		class:is-flipped={isFlipped || isMatched}
 		class:animate-shake={isMismatch}
 		class:animate-pulse-hint={isHinted && !isFlipped && !isMatched}
 		class:scale-95={isMismatch}
-		aria-label="{type === 'term' ? 'Term tile' : 'Definition tile'}: {isFlipped ? text : 'Hidden card'}"
+		aria-label="{type === 'term' ? 'Term tile' : 'Definition tile'}: {isFlipped
+			? text
+			: 'Hidden card'}"
 		tabindex={isMatched ? -1 : 0}
 		onclick={handleClick}
 		onkeydown={handleKeyDown}
 	>
 		<!-- Card Back Face (Hidden Face before flip) -->
 		<div
-			class="card-face card-back backface-hidden absolute inset-0 flex flex-col items-center justify-center rounded-2xl border-2 border-slate-200/85 bg-linear-to-b from-white via-slate-50 to-indigo-50/35 p-3 shadow-xs transition-all duration-200 hover:border-indigo-300 hover:shadow-md active:scale-97"
+			class="card-face card-back absolute inset-0 flex flex-col items-center justify-center rounded-2xl border-2 border-slate-200/85 bg-linear-to-b from-white via-slate-50 to-indigo-50/35 p-3 shadow-xs transition-all duration-200 backface-hidden hover:border-indigo-300 hover:shadow-md active:scale-97"
 		>
 			<div
 				class="flex h-10 w-10 items-center justify-center rounded-2xl border border-indigo-100/80 bg-linear-to-br from-indigo-50 to-purple-50 text-indigo-600 shadow-2xs"
@@ -87,19 +89,20 @@
 			></div>
 
 			{#if isAudioBlind && type === 'term' && !isFlipped}
-				<div class="flex items-center gap-1.5 text-indigo-600 font-bold text-xs">
+				<div class="flex items-center gap-1.5 text-xs font-bold text-indigo-600">
 					<span>🔊 Listen</span>
 				</div>
 			{:else}
 				<span
-					class="text-center font-extrabold text-slate-900 line-clamp-2 leading-tight tracking-tight {type === 'term'
-						? 'text-xl sm:text-2xl font-serif text-slate-900'
-						: 'text-xs sm:text-sm font-sans text-slate-800'}"
+					class="line-clamp-2 text-center leading-tight font-extrabold tracking-tight text-slate-900 {type ===
+					'term'
+						? 'font-serif text-xl text-slate-900 sm:text-2xl'
+						: 'font-sans text-xs text-slate-800 sm:text-sm'}"
 				>
 					{text}
 				</span>
 				{#if subtext}
-					<span class="mt-1 text-[11px] font-bold text-indigo-600 line-clamp-1">
+					<span class="mt-1 line-clamp-1 text-[11px] font-bold text-indigo-600">
 						{subtext}
 					</span>
 				{/if}
@@ -111,7 +114,9 @@
 <style>
 	.perspective-container {
 		perspective: 1000px;
-		transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+		transition:
+			opacity 0.35s ease-out,
+			transform 0.35s ease-out;
 	}
 
 	.transform-style-3d {

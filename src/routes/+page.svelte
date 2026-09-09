@@ -295,13 +295,13 @@
 				? Math.round((recommendedDeck.masteredCards / recommendedDeck.totalCards) * 100)
 				: 0}
 		<section
-			class="shadow-card hover:shadow-card-hover relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-5 transition-all hover:border-indigo-200"
+			class="shadow-card hover:shadow-card-hover relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-5 transition-all hover:border-emerald-200"
 		>
 			<div class="mb-2.5 flex items-center justify-between">
 				<div
-					class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-0.5 text-xs font-bold text-indigo-700"
+					class="inline-flex items-center gap-1.5 rounded-full border border-emerald-200/60 bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-emerald-800"
 				>
-					<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-indigo-600"></span>
+					<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-600"></span>
 					<span>RECOMMENDED DRILL</span>
 				</div>
 				<span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-600">
@@ -351,18 +351,18 @@
 		<!-- Difficult Words Practice Card -->
 		<a
 			href={resolve('/practice')}
-			class="shadow-card hover:shadow-card-hover group relative flex cursor-pointer items-center justify-between overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-4.5 transition-all hover:-translate-y-0.5 hover:border-amber-300 active:scale-[0.98]"
+			class="shadow-card hover:shadow-card-hover group relative flex cursor-pointer items-center justify-between overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-4.5 transition-all hover:-translate-y-0.5 hover:border-rose-300 active:scale-[0.98]"
 		>
 			<div class="flex items-center gap-3.5">
 				<div
-					class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-amber-200/60 bg-amber-50 text-amber-600 transition-transform group-hover:scale-105"
+					class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-rose-200/70 bg-rose-50 text-rose-600 transition-transform group-hover:scale-105"
 				>
 					<Dumbbell size={22} strokeWidth={2.25} />
 				</div>
 				<div>
 					<div class="flex items-center gap-1.5">
 						<span
-							class="rounded-full border border-amber-200/60 bg-amber-50 px-2 py-0.5 font-headline text-[10px] font-bold text-amber-800"
+							class="rounded-full border border-rose-200/60 bg-rose-50 px-2 py-0.5 font-headline text-[10px] font-bold text-rose-700"
 						>
 							PRACTICE
 						</span>
@@ -376,7 +376,7 @@
 			</div>
 
 			<div
-				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-700 transition-colors group-hover:bg-amber-500 group-hover:text-white"
+				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-700 transition-colors group-hover:bg-rose-500 group-hover:text-white"
 			>
 				<ArrowRight
 					size={16}
@@ -444,7 +444,7 @@
 	<section class="space-y-3 pt-1">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center gap-1.5">
-				<BookOpen size={18} strokeWidth={2.25} class="text-indigo-600" />
+				<BookOpen size={18} strokeWidth={2.25} class="text-emerald-600" />
 				<h3 class="font-headline text-base font-bold text-slate-900">Recent Packs</h3>
 			</div>
 

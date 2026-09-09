@@ -44,18 +44,18 @@ The canonical visual and interaction design reference for the FlashCards languag
 
 | Semantic Name          | HEX / Value              | Role & Purpose                               | Usage Rules                                                         |
 | :--------------------- | :----------------------- | :------------------------------------------- | :------------------------------------------------------------------ |
-| `primary` / `brand`    | `#4F46E5` (Indigo 600)   | Core brand action, primary CTAs              | Use for "Start Session", active nav icons, main progress indicators |
+| `primary` / `brand`    | `#4F46E5` (Indigo 600)   | Core brand action, primary CTAs              | "Start Session" CTA, active nav icons, main interactive buttons     |
 | `primary-hover`        | `#4338CA` (Indigo 700)   | Interactive hover state for primary elements | Button hover, active link states                                    |
-| `primary-light`        | `#EEF2FF` (Indigo 50)    | Gentle tint for hero containers & pills      | Badges, module highlight backgrounds                                |
-| `secondary` / `flame`  | `#D97706` (Amber 600)    | Streak motivation, practice badges           | Streak days, practice counters, French badge                        |
-| `secondary-light`      | `#FEF3C7` (Amber 50/100) | Soft container for streak & practice         | Streak badge background, practice cards                             |
-| `tertiary` / `mastery` | `#10B981` (Emerald 500)  | Mastery progress, success states             | Completed progress bars, accuracy stats                             |
-| `tertiary-light`       | `#D1FAE5` (Emerald 100)  | Soft success highlight                       | Mastery pills, positive delta indicators                            |
-| `attention` / `due`    | `#E11D48` (Rose 600)     | Due cards alert, urgency badges              | Due card tags, SRS review badge                                     |
-| `attention-light`      | `#FFE4E6` (Rose 50/100)  | Background for due indicators                | Due badge background                                                |
+| `primary-light`        | `#EEF2FF` (Indigo 50)    | Gentle tint for brand chips & pills          | Hero tier badge, ZH language pill                                   |
+| `secondary` / `flame`  | `#D97706` (Amber 600)    | Streak motivation & leaderboard ranking      | Streak counter, XP Leaderboard, French badge                        |
+| `secondary-light`      | `#FEF3C7` (Amber 50/100) | Soft container for streak & ranking          | Streak badge background, XP Leaderboard card background            |
+| `tertiary` / `meadow`  | `#10B981` (Emerald 500)  | Recommended next step & mastery progress     | Recommended Drill badge, Recent Packs icon, progress bar fills      |
+| `tertiary-light`       | `#D1FAE5` (Emerald 100)  | Soft meadow green highlight                  | Recommended drill pill, mastery percentage chips                    |
+| `attention` / `due`    | `#E11D48` (Rose 600)     | Difficult words practice & SRS due alerts    | Difficult Words card, due count tags, practice progress bar         |
+| `attention-light`      | `#FFE4E6` (Rose 50/100)  | Background for due & practice indicators     | Difficult Words icon container & badge, due badge background        |
 | `surface-canvas`       | `#F8FAFC` (Slate 50)     | Outer page canvas background                 | Page background behind mobile arena                                 |
 | `surface-card`         | `#FFFFFF` (Pure White)   | Elevated modules and cards                   | Primary card containers, floating nav dock                          |
-| `surface-subtle`       | `#F1F5F9` (Slate 100)    | Segmented control track, bar tracks          | Tab switcher backgrounds, unearned progress                         |
+| `surface-subtle`       | `#F1F5F9` (Slate 100)    | Segmented control track, bar tracks          | Tab switcher backgrounds, unearned progress tracks                  |
 | `border-subtle`        | `#E2E8F0` (Slate 200)    | Module outlines and dividers                 | Card borders, modal headers, navigation border                      |
 | `text-primary`         | `#0F172A` (Slate 900)    | High-contrast headings and primary labels    | All titles, numbers, and main copy                                  |
 | `text-secondary`       | `#475569` (Slate 600)    | Secondary metadata and active icons          | Card metadata, subheaders, active tabs                              |

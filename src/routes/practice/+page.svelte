@@ -213,7 +213,7 @@
 		</div>
 
 		<div
-			class="flex items-center gap-1 rounded-full border border-amber-200/80 bg-amber-50 px-2.5 py-1 font-headline text-xs font-bold text-amber-900"
+			class="flex items-center gap-1 rounded-full border border-rose-200/80 bg-rose-50 px-2.5 py-1 font-headline text-xs font-bold text-rose-800"
 		>
 			<Dumbbell size={13} strokeWidth={2.25} />
 			<span>{sessionAccuracy}%</span>
@@ -222,7 +222,7 @@
 
 	<div class="h-1.5 w-full overflow-hidden bg-slate-100">
 		<div
-			class="h-full bg-amber-500 transition-all duration-300 ease-out"
+			class="h-full bg-rose-500 transition-all duration-300 ease-out"
 			style="width: {items.length > 0 ? (progressCount / items.length) * 100 : 0}%"
 		></div>
 	</div>

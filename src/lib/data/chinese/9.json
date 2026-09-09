@@ -1,109 +1,205 @@
 {
-	"title": "Actions & Teaching",
+	"title": "Feelings, Health & Modals",
 	"words": [
 		{
 			"No": 1,
-			"Chinese Word": "做了",
-			"Pinyin": "zuò le",
-			"Part of Speech": "Verb Phrase",
-			"English Meaning": "did, have done",
-			"Example (Chinese + Pinyin)": "(Wǒ zuò le hěn duō hǎoshì.) (I did many good things.)"
+			"Chinese Word": "想",
+			"Pinyin": "xiǎng",
+			"Part of Speech": "Verb / Auxiliary Verb",
+			"English Meaning": "to want / to miss / to think",
+			"Example (Chinese + Pinyin)": "我想学习流利的普通话。(Wǒ xiǎng xuéxí liúlì de pǔtōnghuà.) — I want to learn fluent Mandarin."
 		},
 		{
 			"No": 2,
-			"Chinese Word": "一位",
-			"Pinyin": "yí wèi",
-			"Part of Speech": "Measure Word",
-			"English Meaning": "a (polite measure word for people)",
-			"Example (Chinese + Pinyin)": "(Tā shì yí wèi lǎoshī.) (He is a teacher.)"
+			"Chinese Word": "要",
+			"Pinyin": "yào",
+			"Part of Speech": "Verb / Auxiliary Verb",
+			"English Meaning": "to want / must / going to",
+			"Example (Chinese + Pinyin)": "明天我要参加一场考试。(Míngtiān wǒ yào cānjiā yì chǎng kǎoshì.) — Tomorrow I need to take an exam."
 		},
 		{
 			"No": 3,
-			"Chinese Word": "更",
-			"Pinyin": "gèng",
-			"Part of Speech": "Adverb",
-			"English Meaning": "more, even more",
-			"Example (Chinese + Pinyin)": "(Zhè jiàn shì gèng zhòngyào.) (This matter is even more important.)"
+			"Chinese Word": "会",
+			"Pinyin": "huì",
+			"Part of Speech": "Auxiliary Verb",
+			"English Meaning": "can / to know how to / will",
+			"Example (Chinese + Pinyin)": "你会说中文和法语吗？(Nǐ huì shuō zhōngwén hé fǎyǔ ma?) — Can you speak Chinese and French?"
 		},
 		{
 			"No": 4,
-			"Chinese Word": "只",
-			"Pinyin": "zhǐ",
-			"Part of Speech": "Adverb",
-			"English Meaning": "only, merely",
-			"Example (Chinese + Pinyin)": "(Wǒ zhǐ yǒu yí gè.) (I only have one.)"
+			"Chinese Word": "能",
+			"Pinyin": "néng",
+			"Part of Speech": "Auxiliary Verb",
+			"English Meaning": "can / to be able to / may",
+			"Example (Chinese + Pinyin)": "你能帮我拿一下行李吗？(Nǐ néng bāng wǒ ná yíxià xíngli ma?) — Can you help me carry the luggage?"
 		},
 		{
 			"No": 5,
-			"Chinese Word": "一件",
-			"Pinyin": "yí jiàn",
-			"Part of Speech": "Measure Word",
-			"English Meaning": "one (measure word for things/events)",
-			"Example (Chinese + Pinyin)": "(Zhè shì yí jiàn hǎoshì.) (This is one good thing.)"
+			"Chinese Word": "可以",
+			"Pinyin": "kěyǐ",
+			"Part of Speech": "Auxiliary Verb",
+			"English Meaning": "can / may / acceptable",
+			"Example (Chinese + Pinyin)": "请问我可以坐这里吗？(Qǐngwèn wǒ kěyǐ zuò zhèlǐ ma?) — Excuse me, may I sit here?"
 		},
 		{
 			"No": 6,
-			"Chinese Word": "就",
-			"Pinyin": "jiù",
-			"Part of Speech": "Adverb / Conjunction",
-			"English Meaning": "then, therefore, immediately",
-			"Example (Chinese + Pinyin)": "(Xiāngxìn tā, wǒmen jiù kěyǐ...) (If we believe him, then we can...)"
+			"Chinese Word": "喜欢",
+			"Pinyin": "xǐhuan",
+			"Part of Speech": "Verb",
+			"English Meaning": "to like / to be fond of",
+			"Example (Chinese + Pinyin)": "我非常喜欢看书和跑步。(Wǒ fēicháng xǐhuan kànshū hé pǎobù.) — I like reading and running very much."
 		},
 		{
 			"No": 7,
-			"Chinese Word": "永远",
-			"Pinyin": "yǒngyuǎn",
-			"Part of Speech": "Adverb",
-			"English Meaning": "forever, always",
-			"Example (Chinese + Pinyin)": "(Wǒ huì yǒngyuǎn jìde.) (I will remember forever.)"
+			"Chinese Word": "爱",
+			"Pinyin": "ài",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to love / love",
+			"Example (Chinese + Pinyin)": "我们深爱着我们的家人。(Wǒmen shēn'ài zhe wǒmen de jiārén.) — We deeply love our family."
 		},
 		{
 			"No": 8,
-			"Chinese Word": "活着",
-			"Pinyin": "huózhe",
-			"Part of Speech": "Verb / Adjective",
-			"English Meaning": "to be alive, living",
-			"Example (Chinese + Pinyin)": "(Tā hái huózhe.) (He is still alive.)"
+			"Chinese Word": "觉得",
+			"Pinyin": "juéde",
+			"Part of Speech": "Verb",
+			"English Meaning": "to feel / to think / to consider",
+			"Example (Chinese + Pinyin)": "我觉得这套卡片很有帮助。(Wǒ juéde zhè tào kǎpiàn hěn yǒu bāngzhù.) — I think this flashcard set is very helpful."
 		},
 		{
 			"No": 9,
-			"Chinese Word": "应该",
-			"Pinyin": "yīnggāi",
-			"Part of Speech": "Auxiliary Verb",
-			"English Meaning": "should, ought to",
-			"Example (Chinese + Pinyin)": "(Wǒmen yīnggāi xuéxí.) (We should study.)"
+			"Chinese Word": "高兴",
+			"Pinyin": "gāoxìng",
+			"Part of Speech": "Adjective",
+			"English Meaning": "happy / glad / joyful",
+			"Example (Chinese + Pinyin)": "听到这个好消息大家都很高兴。(Tīngdào zhè gè hǎo xiāoxi dàjiā dōu hěn gāoxìng.) — Everyone is happy hearing this good news."
 		},
 		{
 			"No": 10,
-			"Chinese Word": "像",
-			"Pinyin": "xiàng",
-			"Part of Speech": "Preposition / Verb",
-			"English Meaning": "like, similar to",
-			"Example (Chinese + Pinyin)": "(Tā xiàng Yēsū yíyàng.) (He is like Jesus.)"
+			"Chinese Word": "快乐",
+			"Pinyin": "kuàilè",
+			"Part of Speech": "Adjective / Noun",
+			"English Meaning": "happy / cheerful / joyful",
+			"Example (Chinese + Pinyin)": "祝大家新年快乐，万事如意！(Zhù dàjiā xīnnián kuàilè, wànshì rúyì!) — Wish everyone a Happy New Year and all the best!"
 		},
 		{
 			"No": 11,
-			"Chinese Word": "把这件",
-			"Pinyin": "bǎ zhè jiàn",
-			"Part of Speech": "Phrase",
-			"English Meaning": "take this..., this (object marker)",
-			"Example (Chinese + Pinyin)": "(Bǎ zhè jiàn shì jiāo gěi biérén.) (Teach this matter to others.)"
+			"Chinese Word": "累",
+			"Pinyin": "lèi",
+			"Part of Speech": "Adjective",
+			"English Meaning": "tired / exhausted",
+			"Example (Chinese + Pinyin)": "今天工作了一整天，感觉很累。(Jīntiān gōngzuò le yì zhěng tiān, gǎnjué hěn lèi.) — Worked all day today, feeling very tired."
 		},
 		{
 			"No": 12,
-			"Chinese Word": "教",
-			"Pinyin": "jiāo",
-			"Part of Speech": "Verb",
-			"English Meaning": "to teach",
-			"Example (Chinese + Pinyin)": "(Tā jiāo xuéshēng.) (She teaches students.)"
+			"Chinese Word": "饿",
+			"Pinyin": "è",
+			"Part of Speech": "Adjective",
+			"English Meaning": "hungry",
+			"Example (Chinese + Pinyin)": "我肚子有点饿了，去吃点东西吧。(Wǒ dùzi yǒudiǎn è le, qù chī diǎn dōngxi ba.) — I'm feeling a bit hungry, let's go eat something."
 		},
 		{
 			"No": 13,
-			"Chinese Word": "给别人",
-			"Pinyin": "gěi biérén",
-			"Part of Speech": "Phrase",
-			"English Meaning": "to others, to other people",
-			"Example (Chinese + Pinyin)": "(Bǎ hǎoshì jiāo gěi biérén.) (Teach good things to others.)"
+			"Chinese Word": "渴",
+			"Pinyin": "kě",
+			"Part of Speech": "Adjective",
+			"English Meaning": "thirsty",
+			"Example (Chinese + Pinyin)": "打完球以后大家都很渴。(Dǎ wán qiú yǐhòu dàjiā dōu hěn kě.) — After playing ball, everyone was very thirsty."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "舒服",
+			"Pinyin": "shūfu",
+			"Part of Speech": "Adjective",
+			"English Meaning": "comfortable / feeling well",
+			"Example (Chinese + Pinyin)": "今天天气凉爽，感觉很舒服。(Jīntiān tiānqì liángshuǎng, gǎnjué hěn shūfu.) — Cool weather today, feels very comfortable."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "生病",
+			"Pinyin": "shēngbìng",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to fall ill / to get sick",
+			"Example (Chinese + Pinyin)": "天气变冷要注意保暖，别生病了。(Tiānqì biàn lěng yào zhùyì bǎonuǎn, bié shēngbìng le.) — Keep warm as weather turns cold, don't get sick."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "疼",
+			"Pinyin": "téng",
+			"Part of Speech": "Adjective / Verb",
+			"English Meaning": "painful / ache / sore",
+			"Example (Chinese + Pinyin)": "我嗓子有点疼。(Wǒ sǎngzi yǒudiǎn téng.) — My throat is a little sore."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "感冒",
+			"Pinyin": "gǎnmào",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "cold / flu / to catch a cold",
+			"Example (Chinese + Pinyin)": "他感冒了，需要多喝热水。(Tā gǎnmào le, xūyào duō hē rè shuǐ.) — He caught a cold and needs to drink more hot water."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "帮助",
+			"Pinyin": "bāngzhù",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to help / assistance / help",
+			"Example (Chinese + Pinyin)": "谢谢你耐心的帮助。(Xièxie nǐ nàixīn de bāngzhù.) — Thank you for your patient help."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "懂",
+			"Pinyin": "dǒng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to understand / to comprehend",
+			"Example (Chinese + Pinyin)": "这句话我听懂了。(Zhè jù huà wǒ tīng dǒng le.) — I understood this sentence."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "明白",
+			"Pinyin": "míngbai",
+			"Part of Speech": "Verb / Adjective",
+			"English Meaning": "to understand / clear",
+			"Example (Chinese + Pinyin)": "你明白这个语法规则了吗？(Nǐ míngbai zhè gè yǔfǎ guīzé le ma?) — Do you understand this grammar rule?"
+		},
+		{
+			"No": 21,
+			"Chinese Word": "知道",
+			"Pinyin": "zhīdào",
+			"Part of Speech": "Verb",
+			"English Meaning": "to know / to realize",
+			"Example (Chinese + Pinyin)": "你知道去机场的路怎么走吗？(Nǐ zhīdào qù jīchǎng de lù zěnme zǒu ma?) — Do you know the route to the airport?"
+		},
+		{
+			"No": 22,
+			"Chinese Word": "认识",
+			"Pinyin": "rènshi",
+			"Part of Speech": "Verb",
+			"English Meaning": "to recognize / to know (a person)",
+			"Example (Chinese + Pinyin)": "你在中国认识很多新朋友吗？(Nǐ zài Zhōngguó rènshi hěn duō xīn péngyou ma?) — Did you get to know many new friends in China?"
+		},
+		{
+			"No": 23,
+			"Chinese Word": "学习",
+			"Pinyin": "xuéxí",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to study / to learn",
+			"Example (Chinese + Pinyin)": "坚持每天学习中文。(Jiānchí měitiān xuéxí zhōngwén.) — Persevere in studying Chinese every day."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "希望",
+			"Pinyin": "xīwàng",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to hope / wish",
+			"Example (Chinese + Pinyin)": "希望你学习进步，一切顺利！(Xīwàng nǐ xuéxí jìnbù, yíqiè shùnlì!) — Hope you make good study progress and all goes smoothly!"
+		},
+		{
+			"No": 25,
+			"Chinese Word": "祝",
+			"Pinyin": "zhù",
+			"Part of Speech": "Verb",
+			"English Meaning": "to wish / to express good wishes",
+			"Example (Chinese + Pinyin)": "祝你旅途愉快！(Zhù nǐ lǚtú yúkuài!) — Wish you a pleasant journey!"
 		}
 	]
 }

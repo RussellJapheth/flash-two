@@ -53,11 +53,91 @@ export function getDB(): Promise<IDBDatabase> {
 	return dbPromise;
 }
 
+export const CHINESE_VOCAB_SCHEMA_VERSION = 'v2_hsk_curriculum';
+export const CHINESE_MIGRATION_KEY = 'flashcards_chinese_vocab_version';
+
+export function isChinesePack1to9Key(key: string): boolean {
+	return /^(?:chinese-)?(?:week-|pack-)?([1-9]):\d+$/i.test(key);
+}
+
+export function isChinesePack1to9Saved(weekId: string): boolean {
+	return /^(?:chinese-)?(?:week-|pack-)?([1-9])$/i.test(weekId);
+}
+
+export function filterOutPack1to9Progress(
+	progress: Record<string, WordProgress>
+): Record<string, WordProgress> {
+	const result: Record<string, WordProgress> = {};
+	for (const [k, v] of Object.entries(progress)) {
+		if (!isChinesePack1to9Key(k)) {
+			result[k] = v;
+		}
+	}
+	return result;
+}
+
+export function filterOutPack1to9Saved(savedList: SavedWord[]): SavedWord[] {
+	return savedList.filter((item) => !isChinesePack1to9Saved(item.weekId));
+}
+
+export async function executeChinesePacksMigration(
+	db: IDBDatabase
+): Promise<{ purgedProgress: number; purgedSaved: number }> {
+	let purgedProgress = 0;
+	let purgedSaved = 0;
+
+	// 1. Purge progress for packs 1-9
+	await new Promise<void>((resolve, reject) => {
+		const tx = db.transaction('progress_store', 'readwrite');
+		const store = tx.objectStore('progress_store');
+		const req = store.getAll();
+		req.onsuccess = () => {
+			const items = req.result || [];
+			for (const item of items) {
+				if (item.key && isChinesePack1to9Key(item.key)) {
+					store.delete(item.key);
+					purgedProgress++;
+				}
+			}
+		};
+		tx.oncomplete = () => resolve();
+		tx.onerror = () => reject(tx.error);
+	});
+
+	// 2. Purge saved words for packs 1-9
+	await new Promise<void>((resolve, reject) => {
+		const tx = db.transaction('saved_words', 'readwrite');
+		const store = tx.objectStore('saved_words');
+		const req = store.getAll();
+		req.onsuccess = () => {
+			const items = req.result || [];
+			for (const item of items) {
+				if (item.weekId && isChinesePack1to9Saved(item.weekId)) {
+					store.delete(item.key);
+					purgedSaved++;
+				}
+			}
+		};
+		tx.oncomplete = () => resolve();
+		tx.onerror = () => reject(tx.error);
+	});
+
+	return { purgedProgress, purgedSaved };
+}
+
 // Ensure all bundled packs are cached into IndexedDB for 100% offline availability
 export async function initializeOfflinePacks(): Promise<void> {
 	if (typeof window === 'undefined') return;
 	try {
 		const db = await getDB();
+
+		// Check if migration is needed for Chinese packs 1-9
+		const currentVersion = localStorage.getItem(CHINESE_MIGRATION_KEY);
+		if (currentVersion !== CHINESE_VOCAB_SCHEMA_VERSION) {
+			await executeChinesePacksMigration(db);
+			localStorage.setItem(CHINESE_MIGRATION_KEY, CHINESE_VOCAB_SCHEMA_VERSION);
+		}
+
 		const tx = db.transaction('packs_cache', 'readwrite');
 		const store = tx.objectStore('packs_cache');
 

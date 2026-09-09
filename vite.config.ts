@@ -7,7 +7,10 @@ export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
 	server: {
 		port: 5190,
-		host: 'localhost'
+		host: 'localhost',
+		watch: {
+			ignored: ['**/tmp/**', '**/.git/**']
+		}
 	},
 	preview: {
 		port: 5190

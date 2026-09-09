@@ -1,245 +1,205 @@
 {
-	"title": "Overcoming Negative Emotions",
+	"title": "Family, People & Jobs",
 	"words": [
 		{
 			"No": 1,
-			"Chinese Word": "战胜",
-			"Pinyin": "zhànshèng",
-			"Part of Speech": "Verb",
-			"English Meaning": "to overcome",
-			"Example (Chinese + Pinyin)": "(Nǐ néng zhànshèng xiāojí de qíngxù!)"
+			"Chinese Word": "家",
+			"Pinyin": "jiā",
+			"Part of Speech": "Noun",
+			"English Meaning": "family / home",
+			"Example (Chinese + Pinyin)": "我家有四口人。(Wǒ jiā yǒu sì kǒu rén.) — There are four people in my family."
 		},
 		{
 			"No": 2,
-			"Chinese Word": "消极",
-			"Pinyin": "xiāojí",
-			"Part of Speech": "Adjective",
-			"English Meaning": "negative",
-			"Example (Chinese + Pinyin)": "(Zhànshèng xiāojí de qíngxù.)"
+			"Chinese Word": "人",
+			"Pinyin": "rén",
+			"Part of Speech": "Noun",
+			"English Meaning": "person / people",
+			"Example (Chinese + Pinyin)": "这里有很多中国人和外国人。(Zhèlǐ yǒu hěn duō Zhōngguórén hé wàiguórén.) — There are many Chinese and foreigners here."
 		},
 		{
 			"No": 3,
-			"Chinese Word": "情绪",
-			"Pinyin": "qíngxù",
+			"Chinese Word": "爸爸",
+			"Pinyin": "bàba",
 			"Part of Speech": "Noun",
-			"English Meaning": "emotion",
-			"Example (Chinese + Pinyin)": "(Búyào ràng xiāojí de qíngxù kòngzhì zìjǐ.)"
+			"English Meaning": "father / dad",
+			"Example (Chinese + Pinyin)": "我爸爸喜欢喝中国茶。(Wǒ bàba xǐhuan hē Zhōngguó chá.) — My dad likes drinking Chinese tea."
 		},
 		{
 			"No": 4,
-			"Chinese Word": "苦恼",
-			"Pinyin": "kǔnǎo",
-			"Part of Speech": "Adjective",
-			"English Meaning": "troubled",
-			"Example (Chinese + Pinyin)": "(Tā tī dào yì jiàn ràng tā hěn kǔnǎo de shì.)"
+			"Chinese Word": "妈妈",
+			"Pinyin": "māma",
+			"Part of Speech": "Noun",
+			"English Meaning": "mother / mom",
+			"Example (Chinese + Pinyin)": "我妈妈做的菜非常好吃。(Wǒ māma zuò de cài fēicháng hǎochī.) — The food my mom makes is very delicious."
 		},
 		{
 			"No": 5,
-			"Chinese Word": "灰心",
-			"Pinyin": "huīxīn",
-			"Part of Speech": "Verb",
-			"English Meaning": "to feel discouraged",
-			"Example (Chinese + Pinyin)": "(Tā yǒushí huì huīxīn.)"
+			"Chinese Word": "哥哥",
+			"Pinyin": "gēge",
+			"Part of Speech": "Noun",
+			"English Meaning": "older brother",
+			"Example (Chinese + Pinyin)": "我哥哥是一名大学生。(Wǒ gēge shì yì míng dàxuéshēng.) — My older brother is a university student."
 		},
 		{
 			"No": 6,
-			"Chinese Word": "沮丧",
-			"Pinyin": "jǔsàng",
-			"Part of Speech": "Adjective",
-			"English Meaning": "depressed",
-			"Example (Chinese + Pinyin)": "(Tā yě yǒu jǔsàng de shíhou.)"
+			"Chinese Word": "弟弟",
+			"Pinyin": "dìdi",
+			"Part of Speech": "Noun",
+			"English Meaning": "younger brother",
+			"Example (Chinese + Pinyin)": "弟弟正在房间里玩游戏。(Dìdi zhèngzài fángjiān lǐ wán yóuxì.) — Younger brother is playing games in the room."
 		},
 		{
 			"No": 7,
-			"Chinese Word": "挣扎",
-			"Pinyin": "zhēngzhá",
-			"Part of Speech": "Verb",
-			"English Meaning": "to struggle",
-			"Example (Chinese + Pinyin)": "(Tā de nèixīn kǔkǔ zhēngzhá.)"
+			"Chinese Word": "姐姐",
+			"Pinyin": "jiějie",
+			"Part of Speech": "Noun",
+			"English Meaning": "older sister",
+			"Example (Chinese + Pinyin)": "姐姐在一家医院工作。(Jiějie zài yì jiā yīyuàn gōngzuò.) — Older sister works at a hospital."
 		},
 		{
 			"No": 8,
-			"Chinese Word": "内疚",
-			"Pinyin": "nèijiù",
-			"Part of Speech": "Adjective",
-			"English Meaning": "guilty",
-			"Example (Chinese + Pinyin)": "(Tā yǒushí huì gǎndào hěn nèijiù.)"
+			"Chinese Word": "妹妹",
+			"Pinyin": "mèimei",
+			"Part of Speech": "Noun",
+			"English Meaning": "younger sister",
+			"Example (Chinese + Pinyin)": "妹妹喜欢画画和小动物。(Mèimei xǐhuan huàhuà hé xiǎo dòngwù.) — Younger sister likes drawing and small animals."
 		},
 		{
 			"No": 9,
-			"Chinese Word": "迫害",
-			"Pinyin": "pòhài",
-			"Part of Speech": "Verb",
-			"English Meaning": "to persecute",
-			"Example (Chinese + Pinyin)": "(Tā céng pòhài Jīdūtú.)"
+			"Chinese Word": "儿子",
+			"Pinyin": "érzi",
+			"Part of Speech": "Noun",
+			"English Meaning": "son",
+			"Example (Chinese + Pinyin)": "他儿子今年五岁。(Tā érzi jīnnián wǔ suì.) — His son is five years old this year."
 		},
 		{
 			"No": 10,
-			"Chinese Word": "忠心",
-			"Pinyin": "zhōngxīn",
-			"Part of Speech": "Adjective",
-			"English Meaning": "loyal",
-			"Example (Chinese + Pinyin)": "(Tā shì zhōngxīn de Jīdūtú.)"
+			"Chinese Word": "女儿",
+			"Pinyin": "nǚ'ér",
+			"Part of Speech": "Noun",
+			"English Meaning": "daughter",
+			"Example (Chinese + Pinyin)": "他们有一个聪明可爱的女儿。(Tāmen yǒu yí gè cōngmíng kě'ài de nǚ'ér.) — They have a smart and cute daughter."
 		},
 		{
 			"No": 11,
-			"Chinese Word": "弱点",
-			"Pinyin": "ruòdiǎn",
+			"Chinese Word": "孩子",
+			"Pinyin": "háizi",
 			"Part of Speech": "Noun",
-			"English Meaning": "weakness",
-			"Example (Chinese + Pinyin)": "(Tā xūyào gēn zìjǐ de ruòdiǎn bòdòu.)"
+			"English Meaning": "child / children",
+			"Example (Chinese + Pinyin)": "孩子们在操场上跑步。(Háizimen zài cāochǎng shang pǎobù.) — The children are running on the sports field."
 		},
 		{
 			"No": 12,
-			"Chinese Word": "欲望",
-			"Pinyin": "yùwàng",
+			"Chinese Word": "老师",
+			"Pinyin": "lǎoshī",
 			"Part of Speech": "Noun",
-			"English Meaning": "desire",
-			"Example (Chinese + Pinyin)": "(Yào dǐkàng cuòwù de yùwàng.)"
+			"English Meaning": "teacher",
+			"Example (Chinese + Pinyin)": "王老师教我们汉字。(Wáng lǎoshī jiāo wǒmen hànzì.) — Teacher Wang teaches us Chinese characters."
 		},
 		{
 			"No": 13,
-			"Chinese Word": "省察",
-			"Pinyin": "xǐngchá",
-			"Part of Speech": "Verb",
-			"English Meaning": "to examine oneself",
-			"Example (Chinese + Pinyin)": "(Tā jīngcháng xǐngchá zìjǐ de ruòdiǎn.)"
+			"Chinese Word": "学生",
+			"Pinyin": "xuésheng",
+			"Part of Speech": "Noun",
+			"English Meaning": "student",
+			"Example (Chinese + Pinyin)": "这个班有三十个学生。(Zhè gè bān yǒu sānshí gè xuésheng.) — There are thirty students in this class."
 		},
 		{
 			"No": 14,
-			"Chinese Word": "快乐",
-			"Pinyin": "kuàilè",
-			"Part of Speech": "Adjective",
-			"English Meaning": "joyful",
-			"Example (Chinese + Pinyin)": "(Tā háishì néng zhǎodào kuàilè.)"
+			"Chinese Word": "同学",
+			"Pinyin": "tóngxué",
+			"Part of Speech": "Noun",
+			"English Meaning": "classmate / schoolmate",
+			"Example (Chinese + Pinyin)": "我们是初中同学。(Wǒmen shì chūzhōng tóngxué.) — We are junior high school classmates."
 		},
 		{
 			"No": 15,
-			"Chinese Word": "友谊",
-			"Pinyin": "yǒuyì",
+			"Chinese Word": "医生",
+			"Pinyin": "yīshēng",
 			"Part of Speech": "Noun",
-			"English Meaning": "friendship",
-			"Example (Chinese + Pinyin)": "(Tā hěn xiǎngshòu dìxiōng jiěmèi de yǒuyì.)"
+			"English Meaning": "doctor",
+			"Example (Chinese + Pinyin)": "生病了要去看医生。(Shēngbìng le yào qù kàn yīshēng.) — When you get sick, you should go see a doctor."
 		},
 		{
 			"No": 16,
-			"Chinese Word": "良心",
-			"Pinyin": "liángxīn",
+			"Chinese Word": "护士",
+			"Pinyin": "hùshi",
 			"Part of Speech": "Noun",
-			"English Meaning": "conscience",
-			"Example (Chinese + Pinyin)": "(Tā huáizhe qīngbái de liángxīn.)"
+			"English Meaning": "nurse",
+			"Example (Chinese + Pinyin)": "护士在照顾病人。(Hùshi zài zhàogù bìngrén.) — The nurse is caring for patients."
 		},
 		{
 			"No": 17,
-			"Chinese Word": "赎价",
-			"Pinyin": "shújià",
+			"Chinese Word": "先生",
+			"Pinyin": "xiānsheng",
 			"Part of Speech": "Noun",
-			"English Meaning": "ransom",
-			"Example (Chinese + Pinyin)": "(Tā shēnxīn shújià shì Shàngdì de lǐwù.)"
+			"English Meaning": "Mr. / gentleman / husband",
+			"Example (Chinese + Pinyin)": "李先生今天不在办公室。(Lǐ xiānsheng jīntiān bú zài bàngōngshì.) — Mr. Li is not in the office today."
 		},
 		{
 			"No": 18,
-			"Chinese Word": "宽恕",
-			"Pinyin": "kuānshù",
-			"Part of Speech": "Verb",
-			"English Meaning": "to forgive",
-			"Example (Chinese + Pinyin)": "(Shàngdì kuānshù le tā de zuì.)"
+			"Chinese Word": "女士",
+			"Pinyin": "nǚshì",
+			"Part of Speech": "Noun",
+			"English Meaning": "Ms. / lady / madam",
+			"Example (Chinese + Pinyin)": "张女士是这家公司的经理。(Zhāng nǚshì shì zhè jiā gōngsī de jīnglǐ.) — Ms. Zhang is the manager of this company."
 		},
 		{
 			"No": 19,
-			"Chinese Word": "喜乐",
-			"Pinyin": "xǐlè",
+			"Chinese Word": "小姐",
+			"Pinyin": "xiǎojie",
 			"Part of Speech": "Noun",
-			"English Meaning": "joy",
-			"Example (Chinese + Pinyin)": "(Tā néng xǐlè de jìngfèng Shàngdì.)"
+			"English Meaning": "Miss / young lady",
+			"Example (Chinese + Pinyin)": "服务员小姐，请问洗手间在哪里？(Fúwùyuán xiǎojie, qǐngwèn xǐshǒujiān zài nǎlǐ?) — Excuse me miss, where is the restroom?"
 		},
 		{
 			"No": 20,
-			"Chinese Word": "习惯",
-			"Pinyin": "xíguàn",
-			"Part of Speech": "Noun",
-			"English Meaning": "habit",
-			"Example (Chinese + Pinyin)": "(Wéichí chóngbài fāngmiàn de hǎo xíguàn.)"
+			"Chinese Word": "男",
+			"Pinyin": "nán",
+			"Part of Speech": "Noun / Adjective",
+			"English Meaning": "male / man",
+			"Example (Chinese + Pinyin)": "他是我们部门唯一的男同事。(Tā shì wǒmen bùmén wéiyī de nán tóngshì.) — He is the only male colleague in our department."
 		},
 		{
 			"No": 21,
-			"Chinese Word": "振作",
-			"Pinyin": "zhènzuò",
-			"Part of Speech": "Verb",
-			"English Meaning": "to cheer up",
-			"Example (Chinese + Pinyin)": "(Zhèyàng gèng róngyì zhènzuò jīngshén.)"
+			"Chinese Word": "女",
+			"Pinyin": "nǚ",
+			"Part of Speech": "Noun / Adjective",
+			"English Meaning": "female / woman",
+			"Example (Chinese + Pinyin)": "女孩子穿这件裙子很漂亮。(Nǚ háizi chuān zhè jiàn qúnzi hěn piàoliang.) — The girl looks very pretty wearing this dress."
 		},
 		{
 			"No": 22,
-			"Chinese Word": "应付",
-			"Pinyin": "yìngfù",
-			"Part of Speech": "Verb",
-			"English Meaning": "to cope with",
-			"Example (Chinese + Pinyin)": "(Yǒu lìliàng yìngfù xiāojí de qíngxù.)"
+			"Chinese Word": "大家",
+			"Pinyin": "dàjiā",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "everyone / all",
+			"Example (Chinese + Pinyin)": "请大家保持安静。(Qǐng dàjiā bǎochí ānjìng.) — Please everyone keep quiet."
 		},
 		{
 			"No": 23,
-			"Chinese Word": "害怕",
-			"Pinyin": "hàipà",
-			"Part of Speech": "Verb",
-			"English Meaning": "to fear",
-			"Example (Chinese + Pinyin)": "(Yī kāishǐ tā gǎndào hàipà.)"
+			"Chinese Word": "工作",
+			"Pinyin": "gōngzuò",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "job / work / to work",
+			"Example (Chinese + Pinyin)": "你喜欢你的工作吗？(Nǐ xǐhuan nǐ de gōngzuò ma?) — Do you like your job?"
 		},
 		{
 			"No": 24,
-			"Chinese Word": "力量",
-			"Pinyin": "lìliàng",
+			"Chinese Word": "服务员",
+			"Pinyin": "fúwùyuán",
 			"Part of Speech": "Noun",
-			"English Meaning": "strength",
-			"Example (Chinese + Pinyin)": "(Yēhéhuá cì gěi tā lìliàng.)"
+			"English Meaning": "waiter / server / attendant",
+			"Example (Chinese + Pinyin)": "服务员，请给我们一份菜单。(Fúwùyuán, qǐng gěi wǒmen yí fèn càidān.) — Waiter, please give us a menu."
 		},
 		{
 			"No": 25,
-			"Chinese Word": "建议",
-			"Pinyin": "jiànyì",
+			"Chinese Word": "师傅",
+			"Pinyin": "shīfu",
 			"Part of Speech": "Noun",
-			"English Meaning": "advice",
-			"Example (Chinese + Pinyin)": "(Tīngting biérén de jiànyì.)"
-		},
-		{
-			"No": 26,
-			"Chinese Word": "分析",
-			"Pinyin": "fēnxī",
-			"Part of Speech": "Verb",
-			"English Meaning": "to analyse",
-			"Example (Chinese + Pinyin)": "(Dǎogào qǐ bāngzhù fēnxī zìjǐ de qíngkuàng.)"
-		},
-		{
-			"No": 27,
-			"Chinese Word": "根源",
-			"Pinyin": "gēnyuán",
-			"Part of Speech": "Noun",
-			"English Meaning": "root cause",
-			"Example (Chinese + Pinyin)": "(Zhǎochū qíngxù de gēnyuán.)"
-		},
-		{
-			"No": 28,
-			"Chinese Word": "沉思",
-			"Pinyin": "chénsī",
-			"Part of Speech": "Verb",
-			"English Meaning": "to meditate",
-			"Example (Chinese + Pinyin)": "(Tā chénsī shújià de yìyì.)"
-		},
-		{
-			"No": 29,
-			"Chinese Word": "积极",
-			"Pinyin": "jījí",
-			"Part of Speech": "Adjective",
-			"English Meaning": "positive",
-			"Example (Chinese + Pinyin)": "(Bǎ sīxiǎng jízhōng zài jījí de shìqíng shàng.)"
-		},
-		{
-			"No": 30,
-			"Chinese Word": "依靠",
-			"Pinyin": "yīkào",
-			"Part of Speech": "Verb",
-			"English Meaning": "to rely on",
-			"Example (Chinese + Pinyin)": "(Yào yīkào Yēhéhuá de bāngzhù.)"
+			"English Meaning": "master worker / driver / polite title",
+			"Example (Chinese + Pinyin)": "师傅，请去火车站。(Shīfu, qǐng qù huǒchēzhàn.) — Driver, please go to the train station."
 		}
 	]
 }

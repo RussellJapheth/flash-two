@@ -1,21 +1,205 @@
 {
-	"title": "Relationships & Spending",
+	"title": "Daily Life & Home",
 	"words": [
 		{
 			"No": 1,
-			"Chinese Word": "别人",
-			"Pinyin": "biéren",
-			"Part of Speech": "Pronoun",
-			"English Meaning": "other people; others",
-			"Example (Chinese + Pinyin)": "(Wǒmen yào ài biéren.) (Wǒmen yào ài biéren.)"
+			"Chinese Word": "看",
+			"Pinyin": "kàn",
+			"Part of Speech": "Verb",
+			"English Meaning": "to look / to watch / to read",
+			"Example (Chinese + Pinyin)": "我看了一本很有意思的书。(Wǒ kàn le yì běn hěn yǒuyìsi de shū.) — I read an interesting book."
 		},
 		{
 			"No": 2,
-			"Chinese Word": "花",
-			"Pinyin": "huā",
-			"Part of Speech": "Noun/Verb",
-			"English Meaning": "flower / to spend (money, time)",
-			"Example (Chinese + Pinyin)": "(Wǒ huāle hěnduō shíjiān kàn huā.) (I spent a lot of time looking at flowers.)"
+			"Chinese Word": "听",
+			"Pinyin": "tīng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to listen / to hear",
+			"Example (Chinese + Pinyin)": "我喜欢听中国流行音乐。(Wǒ xǐhuan tīng Zhōngguó liúxíng yīnyuè.) — I like listening to Chinese pop music."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "说",
+			"Pinyin": "shuō",
+			"Part of Speech": "Verb",
+			"English Meaning": "to speak / to say",
+			"Example (Chinese + Pinyin)": "请说得慢一点儿。(Qǐng shuō de màn yìdiǎnr.) — Please speak a little slower."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "读",
+			"Pinyin": "dú",
+			"Part of Speech": "Verb",
+			"English Meaning": "to read (aloud) / to study",
+			"Example (Chinese + Pinyin)": "跟着录音大声读出来。(Gēnzhe lùyīn dàshēng dú chūlái.) — Read aloud following the recording."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "写",
+			"Pinyin": "xiě",
+			"Part of Speech": "Verb",
+			"English Meaning": "to write",
+			"Example (Chinese + Pinyin)": "每天练习写五个生字。(Měitiān liànxí xiě wǔ gè shēngzì.) — Practice writing five new characters each day."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "起床",
+			"Pinyin": "qǐchuáng",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to get up (from bed)",
+			"Example (Chinese + Pinyin)": "我每天早上七点起床。(Wǒ měitiān zǎoshang qī diǎn qǐchuáng.) — I get up at 7 AM every day."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "睡觉",
+			"Pinyin": "shuìjiào",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to sleep / to go to bed",
+			"Example (Chinese + Pinyin)": "时间不早了，快去睡觉吧。(Shíjiān bù zǎo le, kuài qù shuìjiào ba.) — It's getting late, hurry and go to bed."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "洗澡",
+			"Pinyin": "xǐzǎo",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to take a bath / to shower",
+			"Example (Chinese + Pinyin)": "运动之后洗个热水澡很舒服。(Yùndòng zhīhòu xǐ gè rèshuǐ zǎo hěn shūfu.) — Taking a hot shower after exercise feels great."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "去",
+			"Pinyin": "qù",
+			"Part of Speech": "Verb",
+			"English Meaning": "to go",
+			"Example (Chinese + Pinyin)": "周末我们一起去图书馆吧。(Zhōumò wǒmen yìqǐ qù túshūguǎn ba.) — Let's go to the library together this weekend."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "来",
+			"Pinyin": "lái",
+			"Part of Speech": "Verb",
+			"English Meaning": "to come",
+			"Example (Chinese + Pinyin)": "欢迎你来我家做客。(Huānyíng nǐ lái wǒ jiā zuòkè.) — Welcome to come over to my house as a guest."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "回",
+			"Pinyin": "huí",
+			"Part of Speech": "Verb",
+			"English Meaning": "to return / to go back",
+			"Example (Chinese + Pinyin)": "天黑了，我们回家吧。(Tiān hēi le, wǒmen huí jiā ba.) — It's dark, let's go back home."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "房间",
+			"Pinyin": "fángjiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "room",
+			"Example (Chinese + Pinyin)": "我的房间非常干净整洁。(Wǒ de fángjiān fēicháng gānjìng zhěngjié.) — My room is very clean and tidy."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "门",
+			"Pinyin": "mén",
+			"Part of Speech": "Noun",
+			"English Meaning": "door / gate",
+			"Example (Chinese + Pinyin)": "出门前请把门关好。(Chū mén qián qǐng bǎ mén guān hǎo.) — Please close the door before going out."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "窗户",
+			"Pinyin": "chuānghu",
+			"Part of Speech": "Noun",
+			"English Meaning": "window",
+			"Example (Chinese + Pinyin)": "请打开窗户通通风。(Qǐng dǎkāi chuānghu tōngtōng fēng.) — Please open the window for fresh air."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "桌子",
+			"Pinyin": "zhuōzi",
+			"Part of Speech": "Noun",
+			"English Meaning": "table / desk",
+			"Example (Chinese + Pinyin)": "桌子上有一台笔记本电脑。(Zhuōzi shang yǒu yì tái bǐjìběn diànnǎo.) — There is a laptop on the desk."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "椅子",
+			"Pinyin": "yǐzi",
+			"Part of Speech": "Noun",
+			"English Meaning": "chair",
+			"Example (Chinese + Pinyin)": "这把木椅子坐着很舒服。(Zhè bǎ mù yǐzi zuò zhe hěn shūfu.) — This wooden chair is very comfortable to sit on."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "手机",
+			"Pinyin": "shǒujī",
+			"Part of Speech": "Noun",
+			"English Meaning": "cell phone / mobile phone",
+			"Example (Chinese + Pinyin)": "我的手机快没电了。(Wǒ de shǒujī kuài méi diàn le.) — My phone is running out of battery."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "电脑",
+			"Pinyin": "diànnǎo",
+			"Part of Speech": "Noun",
+			"English Meaning": "computer",
+			"Example (Chinese + Pinyin)": "我在电脑上查阅资料。(Wǒ zài diànnǎo shang cháyuè zīliào.) — I look up materials on the computer."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "电视",
+			"Pinyin": "diànshì",
+			"Part of Speech": "Noun",
+			"English Meaning": "television / TV",
+			"Example (Chinese + Pinyin)": "爸爸正在看中文新闻电视节目。(Bàba zhèngzài kàn zhōngwén xīnwén diànshì jiémù.) — Dad is watching a Chinese TV news program."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "书",
+			"Pinyin": "shū",
+			"Part of Speech": "Noun",
+			"English Meaning": "book",
+			"Example (Chinese + Pinyin)": "这本词典很适合初学者。(Zhè běn cídiǎn hěn shìhé chūxuézhě.) — This dictionary suits beginners well."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "衣服",
+			"Pinyin": "yīfu",
+			"Part of Speech": "Noun",
+			"English Meaning": "clothes / clothing",
+			"Example (Chinese + Pinyin)": "今天很冷，多穿点衣服。(Jīntiān hěn lěng, duō chuān diǎn yīfu.) — It's very cold today, put on more clothes."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "洗",
+			"Pinyin": "xǐ",
+			"Part of Speech": "Verb",
+			"English Meaning": "to wash / to clean",
+			"Example (Chinese + Pinyin)": "饭前一定要洗手。(Fàn qián yídìng yào xǐshǒu.) — Always wash your hands before eating."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "做饭",
+			"Pinyin": "zuòfàn",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to cook (a meal)",
+			"Example (Chinese + Pinyin)": "周末我喜欢在家做饭。(Zhōumò wǒ xǐhuan zài jiā zuòfàn.) — I like cooking at home on weekends."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "休息",
+			"Pinyin": "xiūxi",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to rest / to take a break",
+			"Example (Chinese + Pinyin)": "工作累了就休息十分钟。(Gōngzuò lèi le jiù xiūxi shí fēnzhōng.) — Take a 10-minute break when you are tired from work."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "打电话",
+			"Pinyin": "dǎ diànhuà",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to make a phone call",
+			"Example (Chinese + Pinyin)": "我晚上给你打电话。(Wǒ wǎnshang gěi nǐ dǎ diànhuà.) — I will give you a call tonight."
 		}
 	]
 }

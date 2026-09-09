@@ -1,173 +1,205 @@
 {
-	"title": "Guidance & Decisions",
+	"title": "Numbers, Dates & Time",
 	"words": [
 		{
 			"No": 1,
-			"Chinese Word": "希望",
-			"Pinyin": "xīwàng",
-			"Part of Speech": "Verb",
-			"English Meaning": "hope",
-			"Example (Chinese + Pinyin)": "我希望你开心。Wǒ xīwàng nǐ kāixīn."
+			"Chinese Word": "现在",
+			"Pinyin": "xiànzài",
+			"Part of Speech": "Noun",
+			"English Meaning": "now / currently",
+			"Example (Chinese + Pinyin)": "现在几点了？(Xiànzài jǐ diǎn le?) — What time is it now?"
 		},
 		{
 			"No": 2,
-			"Chinese Word": "开心",
-			"Pinyin": "kāixīn",
-			"Part of Speech": "Adjective",
-			"English Meaning": "happy",
-			"Example (Chinese + Pinyin)": "今天我很开心。Jīntiān wǒ hěn kāixīn."
+			"Chinese Word": "点",
+			"Pinyin": "diǎn",
+			"Part of Speech": "Measure Word / Noun",
+			"English Meaning": "o'clock / point / dot",
+			"Example (Chinese + Pinyin)": "现在是早上八点。(Xiànzài shì zǎoshang bā diǎn.) — It is eight o'clock in the morning now."
 		},
 		{
 			"No": 3,
-			"Chinese Word": "考虑",
-			"Pinyin": "kǎolǜ",
-			"Part of Speech": "Verb",
-			"English Meaning": "consider",
-			"Example (Chinese + Pinyin)": "我们要考虑这个问题。Wǒmen yào kǎolǜ zhège wèntí."
+			"Chinese Word": "分钟",
+			"Pinyin": "fēnzhōng",
+			"Part of Speech": "Noun",
+			"English Meaning": "minute",
+			"Example (Chinese + Pinyin)": "请等我五分钟。(Qǐng děng wǒ wǔ fēnzhōng.) — Please wait five minutes for me."
 		},
 		{
 			"No": 4,
-			"Chinese Word": "决定",
-			"Pinyin": "juédìng",
-			"Part of Speech": "Verb/Noun",
-			"English Meaning": "decide; decision",
-			"Example (Chinese + Pinyin)": "他们决定明天出发。Tāmen juédìng míngtiān chūfā."
+			"Chinese Word": "半",
+			"Pinyin": "bàn",
+			"Part of Speech": "Number / Adjective",
+			"English Meaning": "half",
+			"Example (Chinese + Pinyin)": "我们三点半见面。(Wǒmen sān diǎn bàn jiànmiàn.) — We will meet at half past three."
 		},
 		{
 			"No": 5,
-			"Chinese Word": "帮助",
-			"Pinyin": "bāngzhù",
-			"Part of Speech": "Verb/Noun",
-			"English Meaning": "help",
-			"Example (Chinese + Pinyin)": "谢谢你的帮助。Xièxie nǐ de bāngzhù."
+			"Chinese Word": "今天",
+			"Pinyin": "jīntiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "today",
+			"Example (Chinese + Pinyin)": "今天星期几？(Jīntiān xīngqī jǐ?) — What day of the week is it today?"
 		},
 		{
 			"No": 6,
-			"Chinese Word": "问题",
-			"Pinyin": "wèntí",
+			"Chinese Word": "明天",
+			"Pinyin": "míngtiān",
 			"Part of Speech": "Noun",
-			"English Meaning": "question; problem",
-			"Example (Chinese + Pinyin)": "我有一个问题。Wǒ yǒu yí gè wèntí."
+			"English Meaning": "tomorrow",
+			"Example (Chinese + Pinyin)": "明天你有时间吗？(Míngtiān nǐ yǒu shíjiān ma?) — Do you have time tomorrow?"
 		},
 		{
 			"No": 7,
-			"Chinese Word": "理由",
-			"Pinyin": "lǐyóu",
+			"Chinese Word": "昨天",
+			"Pinyin": "zuótiān",
 			"Part of Speech": "Noun",
-			"English Meaning": "reason",
-			"Example (Chinese + Pinyin)": "这是什么理由？Zhè shì shénme lǐyóu?"
+			"English Meaning": "yesterday",
+			"Example (Chinese + Pinyin)": "昨天我买了一本书。(Zuótiān wǒ mǎi le yì běn shū.) — Yesterday I bought a book."
 		},
 		{
 			"No": 8,
-			"Chinese Word": "重要",
-			"Pinyin": "zhòngyào",
-			"Part of Speech": "Adjective",
-			"English Meaning": "important",
-			"Example (Chinese + Pinyin)": "这很重要。Zhè hěn zhòngyào."
+			"Chinese Word": "年",
+			"Pinyin": "nián",
+			"Part of Speech": "Noun / Measure Word",
+			"English Meaning": "year",
+			"Example (Chinese + Pinyin)": "我学中文一年了。(Wǒ xué zhōngwén yì nián le.) — I have been studying Chinese for a year."
 		},
 		{
 			"No": 9,
-			"Chinese Word": "关系",
-			"Pinyin": "guānxì",
+			"Chinese Word": "月",
+			"Pinyin": "yuè",
 			"Part of Speech": "Noun",
-			"English Meaning": "relationship",
-			"Example (Chinese + Pinyin)": "我们关系很好。Wǒmen guānxì hěn hǎo."
+			"English Meaning": "month / moon",
+			"Example (Chinese + Pinyin)": "下个月我要去中国。(Xià ge yuè wǒ yào qù Zhōngguó.) — I am going to China next month."
 		},
 		{
 			"No": 10,
-			"Chinese Word": "朋友",
-			"Pinyin": "péngyǒu",
+			"Chinese Word": "日",
+			"Pinyin": "rì",
 			"Part of Speech": "Noun",
-			"English Meaning": "friend",
-			"Example (Chinese + Pinyin)": "他是我的朋友。Tā shì wǒ de péngyǒu."
+			"English Meaning": "day / date / sun",
+			"Example (Chinese + Pinyin)": "今天是十月一日。(Jīntiān shì shí yuè yī rì.) — Today is October 1st."
 		},
 		{
 			"No": 11,
-			"Chinese Word": "提供",
-			"Pinyin": "tígōng",
-			"Part of Speech": "Verb",
-			"English Meaning": "provide",
-			"Example (Chinese + Pinyin)": "他们提供帮助。Tāmen tígōng bāngzhù."
+			"Chinese Word": "号",
+			"Pinyin": "hào",
+			"Part of Speech": "Noun / Measure Word",
+			"English Meaning": "day of month / number",
+			"Example (Chinese + Pinyin)": "你的生日是几号？(Nǐ de shēngrì shì jǐ hào?) — What date is your birthday?"
 		},
 		{
 			"No": 12,
-			"Chinese Word": "安排",
-			"Pinyin": "ānpái",
-			"Part of Speech": "Verb",
-			"English Meaning": "arrange",
-			"Example (Chinese + Pinyin)": "我来安排时间。Wǒ lái ānpái shíjiān."
+			"Chinese Word": "星期",
+			"Pinyin": "xīngqī",
+			"Part of Speech": "Noun",
+			"English Meaning": "week",
+			"Example (Chinese + Pinyin)": "星期天我们去公园。(Xīngqītiān wǒmen qù gōngyuán.) — We go to the park on Sunday."
 		},
 		{
 			"No": 13,
-			"Chinese Word": "情况",
-			"Pinyin": "qíngkuàng",
+			"Chinese Word": "时间",
+			"Pinyin": "shíjiān",
 			"Part of Speech": "Noun",
-			"English Meaning": "situation",
-			"Example (Chinese + Pinyin)": "情况很好。Qíngkuàng hěn hǎo."
+			"English Meaning": "time",
+			"Example (Chinese + Pinyin)": "我们没有很多时间。(Wǒmen méiyǒu hěn duō shíjiān.) — We don't have much time."
 		},
 		{
 			"No": 14,
-			"Chinese Word": "法律",
-			"Pinyin": "fǎlǜ",
+			"Chinese Word": "时候",
+			"Pinyin": "shíhou",
 			"Part of Speech": "Noun",
-			"English Meaning": "law",
-			"Example (Chinese + Pinyin)": "我们要遵守法律。Wǒmen yào zūnshǒu fǎlǜ."
+			"English Meaning": "time / moment / when",
+			"Example (Chinese + Pinyin)": "你什么时候回家？(Nǐ shénme shíhou huí jiā?) — When are you going home?"
 		},
 		{
 			"No": 15,
-			"Chinese Word": "音乐",
-			"Pinyin": "yīnyuè",
+			"Chinese Word": "早上",
+			"Pinyin": "zǎoshang",
 			"Part of Speech": "Noun",
-			"English Meaning": "music",
-			"Example (Chinese + Pinyin)": "我喜欢音乐。Wǒ xǐhuān yīnyuè."
+			"English Meaning": "early morning",
+			"Example (Chinese + Pinyin)": "早上好！(Zǎoshang hǎo!) — Good morning!"
 		},
 		{
 			"No": 16,
-			"Chinese Word": "照片",
-			"Pinyin": "zhàopiàn",
+			"Chinese Word": "中午",
+			"Pinyin": "zhōngwǔ",
 			"Part of Speech": "Noun",
-			"English Meaning": "photo",
-			"Example (Chinese + Pinyin)": "我们拍了很多照片。Wǒmen pāi le hěn duō zhàopiàn."
+			"English Meaning": "noon / midday",
+			"Example (Chinese + Pinyin)": "中午我们一起吃午饭。(Zhōngwǔ wǒmen yìqǐ chī wǔfàn.) — At noon we have lunch together."
 		},
 		{
 			"No": 17,
-			"Chinese Word": "简单",
-			"Pinyin": "jiǎndān",
-			"Part of Speech": "Adjective",
-			"English Meaning": "simple",
-			"Example (Chinese + Pinyin)": "生活很简单。Shēnghuó hěn jiǎndān."
+			"Chinese Word": "下午",
+			"Pinyin": "xiàwǔ",
+			"Part of Speech": "Noun",
+			"English Meaning": "afternoon",
+			"Example (Chinese + Pinyin)": "下午两点开会。(Xiàwǔ liǎng diǎn kāihuì.) — The meeting starts at two in the afternoon."
 		},
 		{
 			"No": 18,
-			"Chinese Word": "压力",
-			"Pinyin": "yālì",
+			"Chinese Word": "晚上",
+			"Pinyin": "wǎnshang",
 			"Part of Speech": "Noun",
-			"English Meaning": "pressure",
-			"Example (Chinese + Pinyin)": "我有一点压力。Wǒ yǒu yìdiǎn yālì."
+			"English Meaning": "evening / night",
+			"Example (Chinese + Pinyin)": "晚上我想看电影。(Wǎnshang wǒ xiǎng kàn diànyǐng.) — I want to watch a movie tonight."
 		},
 		{
 			"No": 19,
-			"Chinese Word": "衣服",
-			"Pinyin": "yīfu",
-			"Part of Speech": "Noun",
-			"English Meaning": "clothes",
-			"Example (Chinese + Pinyin)": "这件衣服很好看。Zhè jiàn yīfu hěn hǎokàn."
+			"Chinese Word": "几",
+			"Pinyin": "jǐ",
+			"Part of Speech": "Pronoun / Number",
+			"English Meaning": "how many / how much (small numbers)",
+			"Example (Chinese + Pinyin)": "你要买几个苹果？(Nǐ yào mǎi jǐ ge píngguǒ?) — How many apples do you want to buy?"
 		},
 		{
 			"No": 20,
-			"Chinese Word": "经济",
-			"Pinyin": "jīngjì",
-			"Part of Speech": "Noun",
-			"English Meaning": "Adjective",
-			"Example (Chinese + Pinyin)": "economy; economic"
+			"Chinese Word": "岁",
+			"Pinyin": "suì",
+			"Part of Speech": "Measure Word / Noun",
+			"English Meaning": "years old (age)",
+			"Example (Chinese + Pinyin)": "你今年多大岁数？(Nǐ jīnnián duō dà suìshu?) — How old are you this year?"
 		},
 		{
 			"No": 21,
-			"Chinese Word": "困难",
-			"Pinyin": "kùnnan",
+			"Chinese Word": "去年",
+			"Pinyin": "qùnián",
 			"Part of Speech": "Noun",
-			"English Meaning": "Adjective",
-			"Example (Chinese + Pinyin)": "difficulty; difficult"
+			"English Meaning": "last year",
+			"Example (Chinese + Pinyin)": "去年我去了北京。(Qùnián wǒ qù le Běijīng.) — I went to Beijing last year."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "明年",
+			"Pinyin": "míngnián",
+			"Part of Speech": "Noun",
+			"English Meaning": "next year",
+			"Example (Chinese + Pinyin)": "明年我打算去旅行。(Míngnián wǒ dǎsuàn qù lǚxíng.) — I plan to travel next year."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "生日",
+			"Pinyin": "shēngrì",
+			"Part of Speech": "Noun",
+			"English Meaning": "birthday",
+			"Example (Chinese + Pinyin)": "祝你生日快乐！(Zhù nǐ shēngrì kuàilè!) — Happy birthday to you!"
+		},
+		{
+			"No": 24,
+			"Chinese Word": "零",
+			"Pinyin": "líng",
+			"Part of Speech": "Number",
+			"English Meaning": "zero",
+			"Example (Chinese + Pinyin)": "房间号码是二零八。(Fángjiān hàomǎ shì èr líng bā.) — The room number is 208."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "百",
+			"Pinyin": "bǎi",
+			"Part of Speech": "Number",
+			"English Meaning": "hundred",
+			"Example (Chinese + Pinyin)": "这本书一百块钱。(Zhè běn shū yì bǎi kuài qián.) — This book costs one hundred yuan."
 		}
 	]
 }

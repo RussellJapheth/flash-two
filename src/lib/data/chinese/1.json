@@ -1,245 +1,205 @@
 {
-	"title": "Wedding & Arrangements",
+	"title": "Essentials & Greetings",
 	"words": [
 		{
 			"No": 1,
-			"Chinese Word": "怎么办",
-			"Pinyin": "zěnme bàn",
-			"Part of Speech": "Verb",
-			"English Meaning": "to handle / to deal with",
-			"Example (Chinese + Pinyin)": "(Zěnme bàn hūnlǐ jiù néng wèi Yēhéhuá dài lái róngyào?)"
+			"Chinese Word": "你好",
+			"Pinyin": "nǐ hǎo",
+			"Part of Speech": "Interjection",
+			"English Meaning": "hello / hi",
+			"Example (Chinese + Pinyin)": "你好！很高兴认识你。(Nǐ hǎo! Hěn gāoxìng rènshí nǐ.) — Hello! Nice to meet you."
 		},
 		{
 			"No": 2,
-			"Chinese Word": "婚礼",
-			"Pinyin": "hūnlǐ",
-			"Part of Speech": "Noun",
-			"English Meaning": "wedding",
-			"Example (Chinese + Pinyin)": "(Fánshì dōu yào guīguījǔ"
+			"Chinese Word": "谢谢",
+			"Pinyin": "xièxie",
+			"Part of Speech": "Verb / Interjection",
+			"English Meaning": "thank you / thanks",
+			"Example (Chinese + Pinyin)": "谢谢你的帮助！(Xièxie nǐ de bāngzhù!) — Thank you for your help!"
 		},
 		{
 			"No": 3,
-			"Chinese Word": "荣耀",
-			"Pinyin": "róngyào",
-			"Part of Speech": "Noun",
-			"English Meaning": "glory",
-			"Example (Chinese + Pinyin)": "(Wèi Yēhéhuá dài lái róngyào.)"
+			"Chinese Word": "不客气",
+			"Pinyin": "bù kèqì",
+			"Part of Speech": "Phrase",
+			"English Meaning": "you're welcome",
+			"Example (Chinese + Pinyin)": "不客气，这是我应该做的。(Bù kèqì, zhè shì wǒ yīnggāi zuò de.) — You're welcome, it's my pleasure."
 		},
 		{
 			"No": 4,
-			"Chinese Word": "规规矩矩",
-			"Pinyin": "guīguījǔjǔ",
-			"Part of Speech": "Adverb",
-			"English Meaning": "orderly",
-			"Example (Chinese + Pinyin)": "(Fánshì dōu yào guīguījǔjǔ.)"
+			"Chinese Word": "再见",
+			"Pinyin": "zàijiàn",
+			"Part of Speech": "Interjection",
+			"English Meaning": "goodbye / see you again",
+			"Example (Chinese + Pinyin)": "明天见，再见！(Míngtiān jiàn, zàijiàn!) — See you tomorrow, goodbye!"
 		},
 		{
 			"No": 5,
-			"Chinese Word": "安排妥当",
-			"Pinyin": "ānpái tuǒdàng",
-			"Part of Speech": "Verb phrase",
-			"English Meaning": "to arrange properly",
-			"Example (Chinese + Pinyin)": "(Fánshì dōu yào ānpái tuǒdàng.)"
+			"Chinese Word": "对不起",
+			"Pinyin": "duìbuqǐ",
+			"Part of Speech": "Phrase",
+			"English Meaning": "sorry / excuse me",
+			"Example (Chinese + Pinyin)": "对不起，我迟到了。(Duìbuqǐ, wǒ chídào le.) — I'm sorry, I am late."
 		},
 		{
 			"No": 6,
-			"Chinese Word": "筹备",
-			"Pinyin": "chóubèi",
-			"Part of Speech": "Verb",
-			"English Meaning": "to prepare",
-			"Example (Chinese + Pinyin)": "(Xiànzài nǐmen kěndìng zhèng mángzhe chóubèi hūnlǐ.)"
+			"Chinese Word": "没关系",
+			"Pinyin": "méi guānxi",
+			"Part of Speech": "Phrase",
+			"English Meaning": "it doesn't matter / no problem",
+			"Example (Chinese + Pinyin)": "没关系，慢慢来。(Méi guānxi, mànman lái.) — No problem, take your time."
 		},
 		{
 			"No": 7,
-			"Chinese Word": "幸福",
-			"Pinyin": "xìngfú",
-			"Part of Speech": "Noun",
-			"English Meaning": "happiness",
-			"Example (Chinese + Pinyin)": "(Xiǎngyǒu xìngfú de hūnyīn shēnghuó.)"
+			"Chinese Word": "请",
+			"Pinyin": "qǐng",
+			"Part of Speech": "Verb",
+			"English Meaning": "please / to invite",
+			"Example (Chinese + Pinyin)": "请进，请坐！(Qǐng jìn, qǐng zuò!) — Please come in, please sit down!"
 		},
 		{
 			"No": 8,
-			"Chinese Word": "创立者",
-			"Pinyin": "chuànglìzhě",
-			"Part of Speech": "Noun",
-			"English Meaning": "founder",
-			"Example (Chinese + Pinyin)": "(Yēhéhuá shì hūnyīn de chuànglìzhě.)"
+			"Chinese Word": "我",
+			"Pinyin": "wǒ",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "I / me",
+			"Example (Chinese + Pinyin)": "我是语言学习者。(Wǒ shì yǔyán xuéxízhě.) — I am a language learner."
 		},
 		{
 			"No": 9,
-			"Chinese Word": "原则",
-			"Pinyin": "yuánzé",
-			"Part of Speech": "Noun",
-			"English Meaning": "principle",
-			"Example (Chinese + Pinyin)": "(Ànzhào Shèngjīng lǐ de yuánzé lái zuò juédìng.)"
+			"Chinese Word": "你",
+			"Pinyin": "nǐ",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "you (singular)",
+			"Example (Chinese + Pinyin)": "你是哪国人？(Nǐ shì nǎ guó rén?) — Which country are you from?"
 		},
 		{
 			"No": 10,
-			"Chinese Word": "法律规定",
-			"Pinyin": "fǎlǜ guīdìng",
-			"Part of Speech": "Noun phrase",
-			"English Meaning": "legal regulations",
-			"Example (Chinese + Pinyin)": "(Zūnshǒu xiāngguān de fǎlǜ guīdìng.)"
+			"Chinese Word": "他",
+			"Pinyin": "tā",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "he / him",
+			"Example (Chinese + Pinyin)": "他是我的好朋友。(Tā shì wǒ de hǎo péngyǒu.) — He is my good friend."
 		},
 		{
 			"No": 11,
-			"Chinese Word": "营造",
-			"Pinyin": "yíngzào",
-			"Part of Speech": "Verb",
-			"English Meaning": "to create",
-			"Example (Chinese + Pinyin)": "(Yíngzào qiàdàng de qìfēn.)"
+			"Chinese Word": "她",
+			"Pinyin": "tā",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "she / her",
+			"Example (Chinese + Pinyin)": "她会说三种语言。(Tā huì shuō sān zhǒng yǔyán.) — She can speak three languages."
 		},
 		{
 			"No": 12,
-			"Chinese Word": "气氛",
-			"Pinyin": "qìfēn",
-			"Part of Speech": "Noun",
-			"English Meaning": "atmosphere",
-			"Example (Chinese + Pinyin)": "(Hūnlǐ yīnggāi yǒu zěnyàng de qìfēn?)"
+			"Chinese Word": "我们",
+			"Pinyin": "wǒmen",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "we / us",
+			"Example (Chinese + Pinyin)": "我们一起学习中文。(Wǒmen yìqǐ xuéxí zhōngwén.) — We study Chinese together."
 		},
 		{
 			"No": 13,
-			"Chinese Word": "庄重",
-			"Pinyin": "zhuāngzhòng",
-			"Part of Speech": "Adjective",
-			"English Meaning": "dignified",
-			"Example (Chinese + Pinyin)": "(Zài huānlè yòu zhuāngzhòng de qìfēn xià jìnxíng.)"
+			"Chinese Word": "他们",
+			"Pinyin": "tāmen",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "they / them",
+			"Example (Chinese + Pinyin)": "他们都是老师。(Tāmen dōu shì lǎoshī.) — They are all teachers."
 		},
 		{
 			"No": 14,
-			"Chinese Word": "狂欢",
-			"Pinyin": "kuánghuān",
+			"Chinese Word": "是",
+			"Pinyin": "shì",
 			"Part of Speech": "Verb",
-			"English Meaning": "to revel",
-			"Example (Chinese + Pinyin)": "(Jīdūtú bù gāi kuánghuān.)"
+			"English Meaning": "to be (am / is / are)",
+			"Example (Chinese + Pinyin)": "这是一本中文书。(Zhè shì yì běn zhōngwén shū.) — This is a Chinese book."
 		},
 		{
 			"No": 15,
-			"Chinese Word": "谦虚",
-			"Pinyin": "qiānxū",
-			"Part of Speech": "Adjective",
-			"English Meaning": "humble",
-			"Example (Chinese + Pinyin)": "(Bǎochí qiānxū"
+			"Chinese Word": "不",
+			"Pinyin": "bù",
+			"Part of Speech": "Adverb",
+			"English Meaning": "not / no",
+			"Example (Chinese + Pinyin)": "我不是外国人。(Wǒ bú shì wàiguórén.) — I am not a foreigner."
 		},
 		{
 			"No": 16,
-			"Chinese Word": "炫耀",
-			"Pinyin": "xuànyào",
+			"Chinese Word": "有",
+			"Pinyin": "yǒu",
 			"Part of Speech": "Verb",
-			"English Meaning": "to show off",
-			"Example (Chinese + Pinyin)": "(Bìmiǎn xuànyào cáiwù.)"
+			"English Meaning": "to have / there is / there are",
+			"Example (Chinese + Pinyin)": "你有没有问题？(Nǐ yǒu méiyǒu wèntí?) — Do you have any questions?"
 		},
 		{
 			"No": 17,
-			"Chinese Word": "端庄得体",
-			"Pinyin": "duānzhuāng détǐ",
-			"Part of Speech": "Adjective phrase",
-			"English Meaning": "proper",
-			"Example (Chinese + Pinyin)": "(Háishì yào bǎochí duānzhuāng détǐ.)"
+			"Chinese Word": "没有",
+			"Pinyin": "méiyǒu",
+			"Part of Speech": "Verb / Adverb",
+			"English Meaning": "not have / there is not",
+			"Example (Chinese + Pinyin)": "我今天没有课。(Wǒ jīntiān méiyǒu kè.) — I don't have classes today."
 		},
 		{
 			"No": 18,
-			"Chinese Word": "习俗",
-			"Pinyin": "xísú",
-			"Part of Speech": "Noun",
-			"English Meaning": "custom",
-			"Example (Chinese + Pinyin)": "(Yuǎnbì bù fúhé Shèngjīng yuánzé de xísú.)"
+			"Chinese Word": "叫",
+			"Pinyin": "jiào",
+			"Part of Speech": "Verb",
+			"English Meaning": "to be called / to call",
+			"Example (Chinese + Pinyin)": "你叫什么名字？(Nǐ jiào shénme míngzì?) — What is your name?"
 		},
 		{
 			"No": 19,
-			"Chinese Word": "慷慨",
-			"Pinyin": "kāngkǎi",
-			"Part of Speech": "Adjective",
-			"English Meaning": "generous",
-			"Example (Chinese + Pinyin)": "(Shèngjīng gǔlì Jīdūtú yào kāngkǎi shīyǔ.)"
+			"Chinese Word": "名字",
+			"Pinyin": "míngzi",
+			"Part of Speech": "Noun",
+			"English Meaning": "name",
+			"Example (Chinese + Pinyin)": "我的名字很好记。(Wǒ de míngzi hěn hǎojì.) — My name is easy to remember."
 		},
 		{
 			"No": 20,
-			"Chinese Word": "感激",
-			"Pinyin": "gǎnjī",
-			"Part of Speech": "Verb",
-			"English Meaning": "to be grateful",
-			"Example (Chinese + Pinyin)": "(Wǒmen dōu xīnhuái gǎnjī.)"
+			"Chinese Word": "什么",
+			"Pinyin": "shénme",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "what",
+			"Example (Chinese + Pinyin)": "这是什么东西？(Zhè shì shénme dōngxi?) — What is this thing?"
 		},
 		{
 			"No": 21,
-			"Chinese Word": "障碍",
-			"Pinyin": "zhàng'ài",
-			"Part of Speech": "Noun",
-			"English Meaning": "obstacle",
-			"Example (Chinese + Pinyin)": "(Kèfú lèisì de zhàng'ài.)"
+			"Chinese Word": "谁",
+			"Pinyin": "shéi",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "who / whom",
+			"Example (Chinese + Pinyin)": "他是谁？(Tā shì shéi?) — Who is he?"
 		},
 		{
 			"No": 22,
-			"Chinese Word": "祷告",
-			"Pinyin": "dǎogào",
-			"Part of Speech": "Verb",
-			"English Meaning": "to pray",
-			"Example (Chinese + Pinyin)": "(Yào duō wèi hūnlǐ de shì dǎogào.)"
+			"Chinese Word": "哪",
+			"Pinyin": "nǎ",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "which",
+			"Example (Chinese + Pinyin)": "你想去哪个地方？(Nǐ xiǎng qù nǎ ge dìfāng?) — Which place do you want to go to?"
 		},
 		{
 			"No": 23,
-			"Chinese Word": "沟通",
-			"Pinyin": "gōutōng",
-			"Part of Speech": "Verb",
-			"English Meaning": "to communicate",
-			"Example (Chinese + Pinyin)": "(Gōutōng shì jì yào qīngchǔ yòu yào réncí.)"
+			"Chinese Word": "好",
+			"Pinyin": "hǎo",
+			"Part of Speech": "Adjective",
+			"English Meaning": "good / fine / well",
+			"Example (Chinese + Pinyin)": "今天天气很好。(Jīntiān tiānqì hěn hǎo.) — The weather is very good today."
 		},
 		{
 			"No": 24,
-			"Chinese Word": "让步",
-			"Pinyin": "ràngbù",
-			"Part of Speech": "Verb",
-			"English Meaning": "to make concessions",
-			"Example (Chinese + Pinyin)": "(Lèyú ràngbù.)"
+			"Chinese Word": "很高兴",
+			"Pinyin": "hěn gāoxìng",
+			"Part of Speech": "Phrase",
+			"English Meaning": "very glad / pleased",
+			"Example (Chinese + Pinyin)": "认识你很高兴！(Rènshí nǐ hěn gāoxìng!) — Very glad to meet you!"
 		},
 		{
 			"No": 25,
-			"Chinese Word": "耐心",
-			"Pinyin": "nàixīn",
+			"Chinese Word": "朋友",
+			"Pinyin": "péngyou",
 			"Part of Speech": "Noun",
-			"English Meaning": "patience",
-			"Example (Chinese + Pinyin)": "(Yào nàixīn de xiàng tāmen jiěshì.)"
-		},
-		{
-			"No": 26,
-			"Chinese Word": "目标",
-			"Pinyin": "mùbiāo",
-			"Part of Speech": "Noun",
-			"English Meaning": "goal",
-			"Example (Chinese + Pinyin)": "(Nǐmen de mùbiāo shì bàn yì chǎng róngyào Yēhéhuá de hūnlǐ.)"
-		},
-		{
-			"No": 27,
-			"Chinese Word": "计划",
-			"Pinyin": "jìhuà",
-			"Part of Speech": "Verb",
-			"English Meaning": "to plan",
-			"Example (Chinese + Pinyin)": "(Hǎohǎo jìhuà hūnlǐ.)"
-		},
-		{
-			"No": 28,
-			"Chinese Word": "尊重",
-			"Pinyin": "zūnzhòng",
-			"Part of Speech": "Verb",
-			"English Meaning": "to respect",
-			"Example (Chinese + Pinyin)": "(Zhèyàng zuò biǎomíng nǐmen zūnzhòng kèrén.)"
-		},
-		{
-			"No": 29,
-			"Chinese Word": "顺利",
-			"Pinyin": "shùnlì",
-			"Part of Speech": "Adjective",
-			"English Meaning": "smoothly",
-			"Example (Chinese + Pinyin)": "(Hūnlǐ jiù néng shùnlì jìnxíng.)"
-		},
-		{
-			"No": 30,
-			"Chinese Word": "信赖",
-			"Pinyin": "xìnlài",
-			"Part of Speech": "Verb",
-			"English Meaning": "to trust",
-			"Example (Chinese + Pinyin)": "(Yào xìnlài Yēhéhuá.)"
+			"English Meaning": "friend",
+			"Example (Chinese + Pinyin)": "我们是好朋友。(Wǒmen shì hǎo péngyou.) — We are good friends."
 		}
 	]
 }

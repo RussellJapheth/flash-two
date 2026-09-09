@@ -1,133 +1,205 @@
 {
-	"title": "Everyday Conversational Phrases",
+	"title": "Places & Transportation",
 	"words": [
 		{
 			"No": 1,
-			"Chinese Word": "可是 / 但是",
-			"Pinyin": "kěshì / dànshì",
-			"Part of Speech": "Conjunction",
-			"English Meaning": "but / however",
-			"Example (Chinese + Pinyin)": "(Kěshì wǒ bù xiǎng qù.) (But I don't want to go.)"
+			"Chinese Word": "在",
+			"Pinyin": "zài",
+			"Part of Speech": "Preposition / Verb",
+			"English Meaning": "at / in / on / to exist",
+			"Example (Chinese + Pinyin)": "请问你在哪里？(Qǐngwèn nǐ zài nǎlǐ?) — Excuse me, where are you?"
 		},
 		{
 			"No": 2,
-			"Chinese Word": "没事",
-			"Pinyin": "méishì",
-			"Part of Speech": "Phrase",
-			"English Meaning": "it's okay",
-			"Example (Chinese + Pinyin)": "(Méishì, bùyòng dānxīn.) (It's okay, no need to worry.)"
+			"Chinese Word": "中国",
+			"Pinyin": "Zhōngguó",
+			"Part of Speech": "Noun",
+			"English Meaning": "China",
+			"Example (Chinese + Pinyin)": "我想去中国旅游。(Wǒ xiǎng qù Zhōngguó lǚyóu.) — I want to travel to China."
 		},
 		{
 			"No": 3,
-			"Chinese Word": "没错",
-			"Pinyin": "méicuò",
-			"Part of Speech": "Expression",
-			"English Meaning": "that's right",
-			"Example (Chinese + Pinyin)": "(Méicuò, jiù shì zhèyàng.) (That's right, it's just like this.)"
+			"Chinese Word": "北京",
+			"Pinyin": "Běijīng",
+			"Part of Speech": "Noun",
+			"English Meaning": "Beijing",
+			"Example (Chinese + Pinyin)": "北京是中国的首都。(Běijīng shì Zhōngguó de shǒudū.) — Beijing is the capital of China."
 		},
 		{
 			"No": 4,
-			"Chinese Word": "还要",
-			"Pinyin": "hái yào",
-			"Part of Speech": "Verb Phrase",
-			"English Meaning": "still want / want more",
-			"Example (Chinese + Pinyin)": "(Wǒ hái yào yī bēi kāfēi.) (I still want a cup of coffee.)"
+			"Chinese Word": "学校",
+			"Pinyin": "xuéxiào",
+			"Part of Speech": "Noun",
+			"English Meaning": "school",
+			"Example (Chinese + Pinyin)": "我们的学校环境很优美。(Wǒmen de xuéxiào huánjìng hěn yōuměi.) — Our school environment is very beautiful."
 		},
 		{
 			"No": 5,
-			"Chinese Word": "还可以",
-			"Pinyin": "hái kěyǐ",
-			"Part of Speech": "Expression",
-			"English Meaning": "not bad / okay",
-			"Example (Chinese + Pinyin)": "(Zhège wèi dào hái kěyǐ.) (This taste is not bad.)"
+			"Chinese Word": "医院",
+			"Pinyin": "yīyuàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "hospital",
+			"Example (Chinese + Pinyin)": "医院离这里只有五百米。(Yīyuàn lí zhèlǐ zhǐyǒu wǔbǎi mǐ.) — The hospital is only 500 meters away from here."
 		},
 		{
 			"No": 6,
-			"Chinese Word": "还是",
-			"Pinyin": "háishì",
-			"Part of Speech": "Conjunction",
-			"English Meaning": "or / still / rather",
-			"Example (Chinese + Pinyin)": "(Nǐ hē chá háishì kāfēi?) (Do you drink tea or coffee?)"
+			"Chinese Word": "机场",
+			"Pinyin": "jīchǎng",
+			"Part of Speech": "Noun",
+			"English Meaning": "airport",
+			"Example (Chinese + Pinyin)": "下午我去机场接朋友。(Xiàwǔ wǒ qù jīchǎng jiē péngyou.) — I am going to the airport this afternoon to pick up a friend."
 		},
 		{
 			"No": 7,
-			"Chinese Word": "再说",
-			"Pinyin": "zài shuō",
-			"Part of Speech": "Verb Phrase",
-			"English Meaning": "talk about it later",
-			"Example (Chinese + Pinyin)": "(Zhè jiàn shì yǐhòu zài shuō.) (We will talk about this matter later.)"
+			"Chinese Word": "火车站",
+			"Pinyin": "huǒchēzhàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "train station",
+			"Example (Chinese + Pinyin)": "我们在火车站门口集合。(Wǒmen zài huǒchēzhàn ménkǒu jíhé.) — We will meet at the train station entrance."
 		},
 		{
 			"No": 8,
-			"Chinese Word": "多谢",
-			"Pinyin": "duōxiè",
-			"Part of Speech": "Expression",
-			"English Meaning": "many thanks",
-			"Example (Chinese + Pinyin)": "(Duōxiè nǐ de bāngzhù!) (Many thanks for your help!)"
+			"Chinese Word": "地铁",
+			"Pinyin": "dìtiě",
+			"Part of Speech": "Noun",
+			"English Meaning": "subway / metro",
+			"Example (Chinese + Pinyin)": "坐地铁比开车更快。(Zuò dìtiě bǐ kāichē gèng kuài.) — Taking the subway is faster than driving."
 		},
 		{
 			"No": 9,
-			"Chinese Word": "过来",
-			"Pinyin": "guò lái",
-			"Part of Speech": "Verb Phrase",
-			"English Meaning": "come here",
-			"Example (Chinese + Pinyin)": "(Nǐ kuài diǎn guò lái.) (Come here quickly.)"
+			"Chinese Word": "出租车",
+			"Pinyin": "chūzūchē",
+			"Part of Speech": "Noun",
+			"English Meaning": "taxi / cab",
+			"Example (Chinese + Pinyin)": "下雨天比较难打出租车。(Xiàyǔ tiān bǐjiào nán dǎ chūzūchē.) — It is harder to hail a taxi on rainy days."
 		},
 		{
 			"No": 10,
-			"Chinese Word": "走啊",
-			"Pinyin": "zǒu a",
-			"Part of Speech": "Expression",
-			"English Meaning": "let's go",
-			"Example (Chinese + Pinyin)": "(Zǒu a, wǒmen yīqǐ qù!) (Let's go, we go together!)"
+			"Chinese Word": "公共汽车",
+			"Pinyin": "gōnggòng qìchē",
+			"Part of Speech": "Noun",
+			"English Meaning": "bus / public transit bus",
+			"Example (Chinese + Pinyin)": "你可以坐一路公共汽车去市中心。(Nǐ kěyǐ zuò yī lù gōnggòng qìchē qù shìzhōngxīn.) — You can take bus route 1 to downtown."
 		},
 		{
 			"No": 11,
-			"Chinese Word": "走了",
-			"Pinyin": "zǒu le",
-			"Part of Speech": "Phrase",
-			"English Meaning": "I'm leaving / left",
-			"Example (Chinese + Pinyin)": "(Wǒ xiān zǒu le, zàijiàn.) (I'm leaving first, goodbye.)"
+			"Chinese Word": "飞机",
+			"Pinyin": "fēijī",
+			"Part of Speech": "Noun",
+			"English Meaning": "airplane / plane",
+			"Example (Chinese + Pinyin)": "飞机两个小时后起飞。(Fēijī liǎng gè xiǎoshí hòu qǐfēi.) — The airplane takes off in two hours."
 		},
 		{
 			"No": 12,
-			"Chinese Word": "我知道了",
-			"Pinyin": "wǒ zhīdào le",
-			"Part of Speech": "Expression",
-			"English Meaning": "got it",
-			"Example (Chinese + Pinyin)": "(Wǒ zhīdào le, mǎshàng chǔlǐ.) (Got it, dealing with it right away.)"
+			"Chinese Word": "车",
+			"Pinyin": "chē",
+			"Part of Speech": "Noun",
+			"English Meaning": "vehicle / car",
+			"Example (Chinese + Pinyin)": "路上的车很多，交通有点堵。(Lù shang de chē hěn duō, jiāotōng yǒudiǎn dǔ.) — There are many cars on the road, traffic is a bit jammed."
 		},
 		{
 			"No": 13,
-			"Chinese Word": "我会记得",
-			"Pinyin": "wǒ huì jìde",
-			"Part of Speech": "Phrase",
-			"English Meaning": "I'll remember",
-			"Example (Chinese + Pinyin)": "(Nǐ de huà wǒ huì jìde.) (I will remember your words.)"
+			"Chinese Word": "坐",
+			"Pinyin": "zuò",
+			"Part of Speech": "Verb",
+			"English Meaning": "to sit / to ride / to take (a vehicle)",
+			"Example (Chinese + Pinyin)": "请坐，不要客气。(Qǐng zuò, bú yào kèqi.) — Please sit, don't stand on ceremony."
 		},
 		{
 			"No": 14,
-			"Chinese Word": "我想起来了",
-			"Pinyin": "wǒ xiǎng qǐlái le",
-			"Part of Speech": "Expression",
-			"English Meaning": "I remembered",
-			"Example (Chinese + Pinyin)": "(Ā, wǒ xiǎng qǐlái le!) (Ah, I remembered!)"
+			"Chinese Word": "开",
+			"Pinyin": "kāi",
+			"Part of Speech": "Verb",
+			"English Meaning": "to drive / to open / to start",
+			"Example (Chinese + Pinyin)": "他每天开车去上班。(Tā měitiān kāichē qù shàngbān.) — He drives to work every day."
 		},
 		{
 			"No": 15,
-			"Chinese Word": "你不记得吗",
-			"Pinyin": "nǐ bù jìde ma",
-			"Part of Speech": "Question Phrase",
-			"English Meaning": "don't you remember?",
-			"Example (Chinese + Pinyin)": "(Nǐ bù jìde wǒ shì shéi ma?) (Don't you remember who I am?)"
+			"Chinese Word": "上",
+			"Pinyin": "shàng",
+			"Part of Speech": "Noun / Preposition / Verb",
+			"English Meaning": "up / above / on top / to get on",
+			"Example (Chinese + Pinyin)": "书在桌子上。(Shū zài zhuōzi shang.) — The book is on the table."
 		},
 		{
 			"No": 16,
-			"Chinese Word": "你在说什么",
-			"Pinyin": "nǐ zài shuō shénme",
-			"Part of Speech": "Question Phrase",
-			"English Meaning": "what are you talking about?",
-			"Example (Chinese + Pinyin)": "(Nǐ dàodǐ zài shuō shénme?) (What on earth are you talking about?)"
+			"Chinese Word": "下",
+			"Pinyin": "xià",
+			"Part of Speech": "Noun / Preposition / Verb",
+			"English Meaning": "down / below / under / to get off",
+			"Example (Chinese + Pinyin)": "小猫藏在椅子下面。(Xiǎomāo cáng zài yǐzi xiàmian.) — The kitten is hiding under the chair."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "前",
+			"Pinyin": "qián",
+			"Part of Speech": "Noun",
+			"English Meaning": "front / forward / ahead / before",
+			"Example (Chinese + Pinyin)": "学校前面有一家书店。(Xuéxiào qiánmian yǒu yì jiā shūdiàn.) — There is a bookstore in front of the school."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "后",
+			"Pinyin": "hòu",
+			"Part of Speech": "Noun",
+			"English Meaning": "back / behind / after",
+			"Example (Chinese + Pinyin)": "医院后面是一个大花园。(Yīyuàn hòumian shì yí gè dà huāyuán.) — Behind the hospital is a large garden."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "左",
+			"Pinyin": "zuǒ",
+			"Part of Speech": "Noun",
+			"English Meaning": "left (direction)",
+			"Example (Chinese + Pinyin)": "向左拐就是地铁站。(Xiàng zuǒ guǎi jiù shì dìtiězhàn.) — Turn left and that's the subway station."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "右",
+			"Pinyin": "yòu",
+			"Part of Speech": "Noun",
+			"English Meaning": "right (direction)",
+			"Example (Chinese + Pinyin)": "你的右边是谁？(Nǐ de yòubian shì shéi?) — Who is on your right side?"
+		},
+		{
+			"No": 21,
+			"Chinese Word": "里",
+			"Pinyin": "lǐ",
+			"Part of Speech": "Noun / Preposition",
+			"English Meaning": "inside / in",
+			"Example (Chinese + Pinyin)": "包里有两支笔和一本笔记本。(Bāo lǐ yǒu liǎng zhī bǐ hé yì běn bǐjìběn.) — There are two pens and a notebook inside the bag."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "路",
+			"Pinyin": "lù",
+			"Part of Speech": "Noun",
+			"English Meaning": "road / path / way",
+			"Example (Chinese + Pinyin)": "请问去博物馆怎么走这条路？(Qǐngwèn qù bówùguǎn zěnme zǒu zhè tiáo lù?) — Excuse me, how do I take this road to the museum?"
+		},
+		{
+			"No": 23,
+			"Chinese Word": "远",
+			"Pinyin": "yuǎn",
+			"Part of Speech": "Adjective",
+			"English Meaning": "far / distant",
+			"Example (Chinese + Pinyin)": "从我家到公司不算太远。(Cóng wǒ jiā dào gōngsī bú suàn tài yuǎn.) — From my home to the company is not too far."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "近",
+			"Pinyin": "jìn",
+			"Part of Speech": "Adjective",
+			"English Meaning": "near / close",
+			"Example (Chinese + Pinyin)": "这家咖啡馆离学校很近。(Zhè jiā kāfēiguǎn lí xuéxiào hěn jìn.) — This café is very close to school."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "怎么走",
+			"Pinyin": "zěnme zǒu",
+			"Part of Speech": "Phrase",
+			"English Meaning": "how to get to (directions)",
+			"Example (Chinese + Pinyin)": "请问到天安门广场怎么走？(Qǐngwèn dào Tiān'ānmén Guǎngchǎng zěnme zǒu?) — Excuse me, how do I get to Tiananmen Square?"
 		}
 	]
 }

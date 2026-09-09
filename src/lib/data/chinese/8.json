@@ -1,205 +1,205 @@
 {
-	"title": "Daily Questions & Greetings",
+	"title": "Weather & Nature",
 	"words": [
 		{
 			"No": 1,
-			"Chinese Word": "真的吗？",
-			"Pinyin": "zhēn de ma",
-			"Part of Speech": "Question",
-			"English Meaning": "Really? Is that true?",
-			"Example (Chinese + Pinyin)": "(Zhēn de ma? Wǒ bù gǎn xiāngxìn.) (Really? I can't believe it.)"
+			"Chinese Word": "天气",
+			"Pinyin": "tiānqì",
+			"Part of Speech": "Noun",
+			"English Meaning": "weather",
+			"Example (Chinese + Pinyin)": "今天天气真好，晴空万里。(Jīntiān tiānqì zhēn hǎo, qíngkōng wànlǐ.) — The weather today is really great, completely clear skies."
 		},
 		{
 			"No": 2,
-			"Chinese Word": "这个孩子",
-			"Pinyin": "zhège háizi",
-			"Part of Speech": "Noun Phrase",
-			"English Meaning": "This child / this kid",
-			"Example (Chinese + Pinyin)": "(Zhège háizi hěn cōngming.) (This child is very smart.)"
+			"Chinese Word": "怎么样",
+			"Pinyin": "zěnmeyàng",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "how is it / how about",
+			"Example (Chinese + Pinyin)": "你觉得这家餐馆怎么样？(Nǐ juéde zhè jiā cānguǎn zěnmeyàng?) — How do you like this restaurant?"
 		},
 		{
 			"No": 3,
-			"Chinese Word": "在",
-			"Pinyin": "zài",
-			"Part of Speech": "Preposition / Verb",
-			"English Meaning": "At; in; doing (ongoing action)",
-			"Example (Chinese + Pinyin)": "(Wǒ zài jiā.) (I am at home.)"
+			"Chinese Word": "热",
+			"Pinyin": "rè",
+			"Part of Speech": "Adjective",
+			"English Meaning": "hot (temperature)",
+			"Example (Chinese + Pinyin)": "夏天这里非常热。(Xiàtiān zhèlǐ fēicháng rè.) — In summer it is very hot here."
 		},
 		{
 			"No": 4,
-			"Chinese Word": "你在说什么？",
-			"Pinyin": "nǐ zài shuō shénme",
-			"Part of Speech": "Question Phrase",
-			"English Meaning": "What are you talking about?",
-			"Example (Chinese + Pinyin)": "(Nǐ zài shuō shénme? Wǒ tīng bù dǒng.) (What are you talking about? I don't understand.)"
+			"Chinese Word": "冷",
+			"Pinyin": "lěng",
+			"Part of Speech": "Adjective",
+			"English Meaning": "cold (temperature)",
+			"Example (Chinese + Pinyin)": "今天刮风，有点儿冷。(Jīntiān guāfēng, yǒudiǎnr lěng.) — It's windy today and a bit cold."
 		},
 		{
 			"No": 5,
-			"Chinese Word": "我挺好的",
-			"Pinyin": "wǒ tǐng hǎo de",
-			"Part of Speech": "Expression",
-			"English Meaning": "I'm doing pretty well",
-			"Example (Chinese + Pinyin)": "(Xièxie, wǒ tǐng hǎo de.) (Thanks, I'm doing well.)"
+			"Chinese Word": "暖和",
+			"Pinyin": "nuǎnhuo",
+			"Part of Speech": "Adjective",
+			"English Meaning": "warm (weather / climate)",
+			"Example (Chinese + Pinyin)": "春天的下午很暖和。(Chūntiān de xiàwǔ hěn nuǎnhuo.) — Spring afternoons are warm and pleasant."
 		},
 		{
 			"No": 6,
-			"Chinese Word": "你怎么来了？",
-			"Pinyin": "nǐ zěnme lái le",
-			"Part of Speech": "Question Phrase",
-			"English Meaning": "What brings you here?",
-			"Example (Chinese + Pinyin)": "(Nǐ zěnme lái le?) (How come you're here?)"
+			"Chinese Word": "凉快",
+			"Pinyin": "liángkuai",
+			"Part of Speech": "Adjective",
+			"English Meaning": "cool / pleasantly cold",
+			"Example (Chinese + Pinyin)": "下过雨后天气很凉快。(Xià guò yǔ hòu tiānqì hěn liángkuai.) — After the rain the weather is pleasantly cool."
 		},
 		{
 			"No": 7,
-			"Chinese Word": "大家好吗？",
-			"Pinyin": "dàjiā hǎo ma",
-			"Part of Speech": "Question / Greeting",
-			"English Meaning": "Is everyone well?",
-			"Example (Chinese + Pinyin)": "(Dàjiā hǎo ma?) (Is everyone okay?)"
+			"Chinese Word": "下雨",
+			"Pinyin": "xiàyǔ",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to rain",
+			"Example (Chinese + Pinyin)": "出门记得带伞，外面要下雨了。(Chūmén jìde dài sǎn, wàimiàn yào xiàyǔ le.) — Remember to bring an umbrella, it is going to rain outside."
 		},
 		{
 			"No": 8,
-			"Chinese Word": "我不问",
-			"Pinyin": "wǒ bù wèn",
-			"Part of Speech": "Phrase",
-			"English Meaning": "I won't ask",
-			"Example (Chinese + Pinyin)": "(Hǎo ba, wǒ bù wèn.) (Okay, I won't ask.)"
+			"Chinese Word": "下雪",
+			"Pinyin": "xiàxuě",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to snow",
+			"Example (Chinese + Pinyin)": "冬天北方经常下雪。(Dōngtiān běifāng jīngcháng xiàxuě.) — It often snows in the north during winter."
 		},
 		{
 			"No": 9,
-			"Chinese Word": "我听不清",
-			"Pinyin": "wǒ tīng bù qīng",
-			"Part of Speech": "Expression",
-			"English Meaning": "I can't hear clearly",
-			"Example (Chinese + Pinyin)": "(Qǐng zài shuō yí biàn, wǒ tīng bù qīng.) (Please say it again.)"
+			"Chinese Word": "晴天",
+			"Pinyin": "qíngtiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "sunny day / clear day",
+			"Example (Chinese + Pinyin)": "明天是个晴天，适合去郊游。(Míngtiān shì gè qíngtiān, shìhé qù jiāoyóu.) — Tomorrow will be a sunny day, perfect for an outing."
 		},
 		{
 			"No": 10,
-			"Chinese Word": "你为什么不告诉我？",
-			"Pinyin": "nǐ wèishénme bù gàosu wǒ",
-			"Part of Speech": "Question Phrase",
-			"English Meaning": "Why didn't you tell me?",
-			"Example (Chinese + Pinyin)": "(Nǐ wèishénme bù gàosu wǒ?) (Why didn't you tell me?)"
+			"Chinese Word": "阴天",
+			"Pinyin": "yīntiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "overcast day / cloudy day",
+			"Example (Chinese + Pinyin)": "今天一直是阴天，没有出太阳。(Jīntiān yìzhí shì yīntiān, méiyǒu chū tàiyáng.) — Today has been overcast all day, no sun came out."
 		},
 		{
 			"No": 11,
-			"Chinese Word": "本书",
-			"Pinyin": "běn shū",
-			"Part of Speech": "Noun Phrase",
-			"English Meaning": "This book; the book",
-			"Example (Chinese + Pinyin)": "(Wǒ xǐhuān zhè běn shū.) (I like this book.)"
+			"Chinese Word": "刮风",
+			"Pinyin": "guāfēng",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "windy / wind blowing",
+			"Example (Chinese + Pinyin)": "外面正在刮大风。(Wàimiàn zhèngzài guā dà fēng.) — Strong wind is blowing outside."
 		},
 		{
 			"No": 12,
-			"Chinese Word": "这两个孩子",
-			"Pinyin": "zhè liǎng ge háizi",
-			"Part of Speech": "Noun Phrase",
-			"English Meaning": "These two children",
-			"Example (Chinese + Pinyin)": "(Zhè liǎng ge háizi hěn kě'ài.) (These two children are cute.)"
+			"Chinese Word": "太阳",
+			"Pinyin": "tàiyáng",
+			"Part of Speech": "Noun",
+			"English Meaning": "sun",
+			"Example (Chinese + Pinyin)": "太阳从东边升起来了。(Tàiyáng cóng dōngbian shēng qǐlái le.) — The sun rose from the east."
 		},
 		{
 			"No": 13,
-			"Chinese Word": "两年可以",
-			"Pinyin": "liǎng nián kěyǐ",
-			"Part of Speech": "Phrase",
-			"English Meaning": "Two years is possible",
-			"Example (Chinese + Pinyin)": "(Liǎng nián kěyǐ.) (Two years is possible.)"
+			"Chinese Word": "月亮",
+			"Pinyin": "yuèliang",
+			"Part of Speech": "Noun",
+			"English Meaning": "moon",
+			"Example (Chinese + Pinyin)": "中秋节的月亮又圆又亮。(Zhōngqiūjié de yuèliang yòu yuán yòu liàng.) — The Mid-Autumn moon is both round and bright."
 		},
 		{
 			"No": 14,
-			"Chinese Word": "你不记得吗？",
-			"Pinyin": "nǐ bù jìde ma",
-			"Part of Speech": "Question Phrase",
-			"English Meaning": "Don't you remember?",
-			"Example (Chinese + Pinyin)": "(Nǐ bù jìde ma?) (Don't you remember?)"
+			"Chinese Word": "星星",
+			"Pinyin": "xīngxing",
+			"Part of Speech": "Noun",
+			"English Meaning": "star",
+			"Example (Chinese + Pinyin)": "夜空中闪烁着无数的星星。(Yèkōng zhōng shǎnshuò zhe wúshù de xīngxing.) — Countless stars twinkle in the night sky."
 		},
 		{
 			"No": 15,
-			"Chinese Word": "请快一点",
-			"Pinyin": "qǐng kuài yìdiǎn",
-			"Part of Speech": "Request",
-			"English Meaning": "Please hurry up",
-			"Example (Chinese + Pinyin)": "(Qǐng kuài yìdiǎn.) (Please hurry up.)"
+			"Chinese Word": "春天",
+			"Pinyin": "chūntiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "spring (season)",
+			"Example (Chinese + Pinyin)": "春天百花盛开，景色非常美。(Chūntiān bǎihuā shèngkāi, jǐngsè fēicháng měi.) — In spring all flowers bloom and scenery is beautiful."
 		},
 		{
 			"No": 16,
-			"Chinese Word": "一下",
-			"Pinyin": "yíxià",
-			"Part of Speech": "Adverb",
-			"English Meaning": "A moment; a bit",
-			"Example (Chinese + Pinyin)": "(Děng yíxià.) (Wait a moment.)"
+			"Chinese Word": "夏天",
+			"Pinyin": "xiàtiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "summer (season)",
+			"Example (Chinese + Pinyin)": "夏天大家喜欢去海边游泳。(Xiàtiān dàjiā xǐhuan qù hǎibiān yóuyǒng.) — In summer everyone likes going to the beach to swim."
 		},
 		{
 			"No": 17,
-			"Chinese Word": "这是",
-			"Pinyin": "zhè shì",
-			"Part of Speech": "Phrase",
-			"English Meaning": "This is",
-			"Example (Chinese + Pinyin)": "(Zhè shì wǒ de péngyǒu.) (This is my friend.)"
+			"Chinese Word": "秋天",
+			"Pinyin": "qiūtiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "autumn / fall (season)",
+			"Example (Chinese + Pinyin)": "北京的秋天是一年中最美的季节。(Běijīng de qiūtiān shì yì nián zhōng zuì měi de jìjié.) — Beijing's autumn is the prettiest season of the year."
 		},
 		{
 			"No": 18,
-			"Chinese Word": "怎么办？",
-			"Pinyin": "zěnme bàn",
-			"Part of Speech": "Question Phrase",
-			"English Meaning": "What should I do?",
-			"Example (Chinese + Pinyin)": "(Wǒ wàng le, zěnme bàn?) (I forgot, what should I do?)"
+			"Chinese Word": "冬天",
+			"Pinyin": "dōngtiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "winter (season)",
+			"Example (Chinese + Pinyin)": "冬天出门要戴帽子和围巾。(Dōngtiān chūmén yào dài màozi hé wéijīn.) — Wear a hat and scarf when going out in winter."
 		},
 		{
 			"No": 19,
-			"Chinese Word": "这位",
-			"Pinyin": "zhè wèi",
-			"Part of Speech": "Noun Phrase",
-			"English Meaning": "This person (polite)",
-			"Example (Chinese + Pinyin)": "(Zhè wèi shì wǒ de lǎoshī.) (This is my teacher.)"
+			"Chinese Word": "山",
+			"Pinyin": "shān",
+			"Part of Speech": "Noun",
+			"English Meaning": "mountain / hill",
+			"Example (Chinese + Pinyin)": "周末我们一起去爬山吧。(Zhōumò wǒmen yìqǐ qù pá shān ba.) — Let's go climb mountains together this weekend."
 		},
 		{
 			"No": 20,
-			"Chinese Word": "你做得非常好",
-			"Pinyin": "nǐ zuò de fēicháng hǎo",
-			"Part of Speech": "Praise / Expression",
-			"English Meaning": "You did very well",
-			"Example (Chinese + Pinyin)": "(Nǐ zuò de fēicháng hǎo!) (You did an excellent job!)"
+			"Chinese Word": "水",
+			"Pinyin": "shuǐ",
+			"Part of Speech": "Noun",
+			"English Meaning": "water / river / lake",
+			"Example (Chinese + Pinyin)": "山上的泉水清澈甘甜。(Shān shang de quánshuǐ qīngchè gāntián.) — The mountain spring water is clear and sweet."
 		},
 		{
 			"No": 21,
-			"Chinese Word": "请看这个",
-			"Pinyin": "qǐng kàn zhège",
-			"Part of Speech": "Instruction",
-			"English Meaning": "Please look at this",
-			"Example (Chinese + Pinyin)": "(Qǐng kàn zhège.) (Please look at this.)"
+			"Chinese Word": "树",
+			"Pinyin": "shù",
+			"Part of Speech": "Noun",
+			"English Meaning": "tree",
+			"Example (Chinese + Pinyin)": "院子里种着两棵大树。(Yuànzi lǐ zhòng zhe liǎng kē dà shù.) — Two large trees are planted in the courtyard."
 		},
 		{
 			"No": 22,
-			"Chinese Word": "你觉得呢？",
-			"Pinyin": "nǐ juéde ne",
-			"Part of Speech": "Question Phrase",
-			"English Meaning": "What do you think?",
-			"Example (Chinese + Pinyin)": "(Wǒ shuō wán le, nǐ juéde ne?) (I've finished speaking, what do you think?)"
+			"Chinese Word": "花",
+			"Pinyin": "huā",
+			"Part of Speech": "Noun",
+			"English Meaning": "flower / blossom",
+			"Example (Chinese + Pinyin)": "公园里的红花开得真鲜艳。(Gōngyuán lǐ de hóng huā kāi de zhēn xiānyàn.) — The red flowers in the park bloom vividly."
 		},
 		{
 			"No": 23,
-			"Chinese Word": "为什么",
-			"Pinyin": "wèishénme",
-			"Part of Speech": "Question Word",
-			"English Meaning": "Why?",
-			"Example (Chinese + Pinyin)": "(Wèishénme nǐ lái?) (Why did you come?)"
+			"Chinese Word": "草",
+			"Pinyin": "cǎo",
+			"Part of Speech": "Noun",
+			"English Meaning": "grass / lawn",
+			"Example (Chinese + Pinyin)": "请不要踩踏草坪。(Qǐng bú yào cǎità cǎopíng.) — Please do not trample on the grass."
 		},
 		{
 			"No": 24,
-			"Chinese Word": "你看我干什么？",
-			"Pinyin": "nǐ kàn wǒ gànshénme",
-			"Part of Speech": "Question Phrase",
-			"English Meaning": "Why are you looking at me?",
-			"Example (Chinese + Pinyin)": "(Nǐ kàn wǒ gànshénme?) (Why are you looking at me?)"
+			"Chinese Word": "河",
+			"Pinyin": "hé",
+			"Part of Speech": "Noun",
+			"English Meaning": "river",
+			"Example (Chinese + Pinyin)": "一条清清的小河穿过村庄。(Yì tiáo qīngqīng de xiǎo hé chuānguò cūnzhuāng.) — A clear small river flows through the village."
 		},
 		{
 			"No": 25,
-			"Chinese Word": "我们以后再说",
-			"Pinyin": "wǒmen yǐhòu zài shuō",
-			"Part of Speech": "Expression",
-			"English Meaning": "We'll talk about it later",
-			"Example (Chinese + Pinyin)": "(Zhège wèntí, wǒmen yǐhòu zài shuō.) (We'll discuss this later.)"
+			"Chinese Word": "海",
+			"Pinyin": "hǎi",
+			"Part of Speech": "Noun",
+			"English Meaning": "sea / ocean",
+			"Example (Chinese + Pinyin)": "海边的日落景色非常迷人。(Hǎibiān de rìluò jǐngsè fēicháng mírén.) — The sunset view by the seaside is charming."
 		}
 	]
 }

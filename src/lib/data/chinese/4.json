@@ -1,21 +1,205 @@
 {
-	"title": "Meeting Themes & Basics",
+	"title": "Food, Drink & Dining",
 	"words": [
 		{
-			"Chinese Word": "主题",
-			"Pinyin": "zhǔtí",
-			"Part of Speech": "Noun",
-			"English Meaning": "theme",
-			"Example (Chinese + Pinyin)": "(Zhè shì jīntiān de zhǔtí.)",
-			"No": 1
+			"No": 1,
+			"Chinese Word": "吃",
+			"Pinyin": "chī",
+			"Part of Speech": "Verb",
+			"English Meaning": "to eat",
+			"Example (Chinese + Pinyin)": "你想吃什么？(Nǐ xiǎng chī shénme?) — What would you like to eat?"
 		},
 		{
-			"Chinese Word": "我们",
-			"Pinyin": "wǒmen",
-			"Part of Speech": "Pronoun",
-			"English Meaning": "we/us",
-			"Example (Chinese + Pinyin)": "(Wǒmen shì péngyǒu.)",
-			"No": 2
+			"No": 2,
+			"Chinese Word": "喝",
+			"Pinyin": "hē",
+			"Part of Speech": "Verb",
+			"English Meaning": "to drink",
+			"Example (Chinese + Pinyin)": "我想喝一杯冰水。(Wǒ xiǎng hē yì bēi bīngshuǐ.) — I want to drink a glass of ice water."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "水",
+			"Pinyin": "shuǐ",
+			"Part of Speech": "Noun",
+			"English Meaning": "water",
+			"Example (Chinese + Pinyin)": "多喝水对身体好。(Duō hē shuǐ duì shēntǐ hǎo.) — Drinking more water is good for health."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "茶",
+			"Pinyin": "chá",
+			"Part of Speech": "Noun",
+			"English Meaning": "tea",
+			"Example (Chinese + Pinyin)": "中国人很喜欢喝绿茶。(Zhōngguórén hěn xǐhuan hē lǜchá.) — Chinese people like drinking green tea."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "咖啡",
+			"Pinyin": "kāfēi",
+			"Part of Speech": "Noun",
+			"English Meaning": "coffee",
+			"Example (Chinese + Pinyin)": "每天早上我都会喝咖啡。(Měitiān zǎoshang wǒ dōu huì hē kāfēi.) — Every morning I drink coffee."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "米饭",
+			"Pinyin": "mǐfàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "cooked rice",
+			"Example (Chinese + Pinyin)": "我要一碗米饭。(Wǒ yào yì wǎn mǐfàn.) — I want a bowl of rice."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "面条",
+			"Pinyin": "miàntiáo",
+			"Part of Speech": "Noun",
+			"English Meaning": "noodles",
+			"Example (Chinese + Pinyin)": "这里的牛肉面条很有名。(Zhèlǐ de niúròu miàntiáo hěn yǒumíng.) — The beef noodles here are famous."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "菜",
+			"Pinyin": "cài",
+			"Part of Speech": "Noun",
+			"English Meaning": "dish / vegetable / cuisine",
+			"Example (Chinese + Pinyin)": "四川菜味道很辣。(Sìchuān cài wèidao hěn là.) — Sichuan cuisine is very spicy."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "水果",
+			"Pinyin": "shuǐguǒ",
+			"Part of Speech": "Noun",
+			"English Meaning": "fruit",
+			"Example (Chinese + Pinyin)": "每天吃水果对身体有益。(Měitiān chī shuǐguǒ duì shēntǐ yǒuyì.) — Eating fruit every day is good for health."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "苹果",
+			"Pinyin": "píngguǒ",
+			"Part of Speech": "Noun",
+			"English Meaning": "apple",
+			"Example (Chinese + Pinyin)": "红苹果很甜。(Hóng píngguǒ hěn tián.) — Red apples are very sweet."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "肉",
+			"Pinyin": "ròu",
+			"Part of Speech": "Noun",
+			"English Meaning": "meat",
+			"Example (Chinese + Pinyin)": "我不常吃肥肉。(Wǒ bù cháng chī féiròu.) — I don't often eat fatty meat."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "鸡肉",
+			"Pinyin": "jīròu",
+			"Part of Speech": "Noun",
+			"English Meaning": "chicken (meat)",
+			"Example (Chinese + Pinyin)": "宫保鸡丁是著名中国菜。(Gōngbǎo jīdīng shì zhùmíng Zhōngguó cài.) — Kung Pao chicken is a famous Chinese dish."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "牛肉",
+			"Pinyin": "niúròu",
+			"Part of Speech": "Noun",
+			"English Meaning": "beef",
+			"Example (Chinese + Pinyin)": "这份牛肉很鲜嫩。(Zhè fèn niúròu hěn xiānnèn.) — This beef is very tender."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "鱼",
+			"Pinyin": "yú",
+			"Part of Speech": "Noun",
+			"English Meaning": "fish",
+			"Example (Chinese + Pinyin)": "年夜饭通常会吃鱼。(Niányèfàn tōngcháng huì chī yú.) — Fish is usually eaten for New Year's Eve dinner."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "鸡蛋",
+			"Pinyin": "jīdàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "egg",
+			"Example (Chinese + Pinyin)": "西红柿炒鸡蛋做法简单。(Xīhóngshì chǎo jīdàn zuòfǎ jiǎndān.) — Tomato scrambled eggs is simple to make."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "牛奶",
+			"Pinyin": "niúnǎi",
+			"Part of Speech": "Noun",
+			"English Meaning": "milk",
+			"Example (Chinese + Pinyin)": "睡前喝杯温牛奶有助于睡眠。(Shuìqián hē bēi wēn niúnǎi yǒuzhùyú shuìmián.) — Drinking warm milk before sleep aids rest."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "饭馆",
+			"Pinyin": "fànguǎn",
+			"Part of Speech": "Noun",
+			"English Meaning": "restaurant",
+			"Example (Chinese + Pinyin)": "这家饭馆的菜肴很地道。(Zhè jiā fànguǎn de càiyáo hěn dìdào.) — The dishes at this restaurant are authentic."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "好吃",
+			"Pinyin": "hǎochī",
+			"Part of Speech": "Adjective",
+			"English Meaning": "delicious / tasty (for food)",
+			"Example (Chinese + Pinyin)": "这个饺子真好吃！(Zhè gè jiǎozi zhēn hǎochī!) — These dumplings are really delicious!"
+		},
+		{
+			"No": 19,
+			"Chinese Word": "好喝",
+			"Pinyin": "hǎohē",
+			"Part of Speech": "Adjective",
+			"English Meaning": "delicious / good to drink (for beverages)",
+			"Example (Chinese + Pinyin)": "这碗热汤非常好喝。(Zhè wǎn rè tāng fēicháng hǎohē.) — This bowl of hot soup is delicious to drink."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "点菜",
+			"Pinyin": "diǎncài",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to order food (in restaurant)",
+			"Example (Chinese + Pinyin)": "我们可以点菜了吗？(Wǒmen kěyǐ diǎncài le ma?) — May we order our food now?"
+		},
+		{
+			"No": 21,
+			"Chinese Word": "买单",
+			"Pinyin": "mǎidān",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to pay the bill / check please",
+			"Example (Chinese + Pinyin)": "服务员，我们要买单。(Fúwùyuán, wǒmen yào mǎidān.) — Server, we would like to pay the bill."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "筷子",
+			"Pinyin": "kuàizi",
+			"Part of Speech": "Noun",
+			"English Meaning": "chopsticks",
+			"Example (Chinese + Pinyin)": "你会用筷子吃饭吗？(Nǐ huì yòng kuàizi chīfàn ma?) — Do you know how to eat with chopsticks?"
+		},
+		{
+			"No": 23,
+			"Chinese Word": "碗",
+			"Pinyin": "wǎn",
+			"Part of Speech": "Noun / Measure Word",
+			"English Meaning": "bowl",
+			"Example (Chinese + Pinyin)": "请给我一个空碗。(Qǐng gěi wǒ yí gè kōng wǎn.) — Please give me an empty bowl."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "杯子",
+			"Pinyin": "bēizi",
+			"Part of Speech": "Noun",
+			"English Meaning": "cup / glass",
+			"Example (Chinese + Pinyin)": "杯子里有热水。(Bēizi lǐ yǒu rè shuǐ.) — There is hot water in the cup."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "包子",
+			"Pinyin": "bāozi",
+			"Part of Speech": "Noun",
+			"English Meaning": "steamed stuffed bun",
+			"Example (Chinese + Pinyin)": "早餐我吃了两个肉包子。(Zǎocān wǒ chī le liǎng gè ròubāozi.) — For breakfast I ate two meat steamed buns."
 		}
 	]
 }

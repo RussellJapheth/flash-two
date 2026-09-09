@@ -41,6 +41,49 @@ export function getSyncStatus(): SyncStatus {
 	return currentSyncStatus;
 }
 
+export interface RemoteUserSummary {
+	exists: boolean;
+	totalXP?: number;
+	reviewCount?: number;
+	deckCount?: number;
+}
+
+export async function checkRemoteUser(username: string): Promise<RemoteUserSummary> {
+	if (typeof window === 'undefined') return { exists: false };
+	if (!navigator.onLine) return { exists: false };
+
+	try {
+		const cleanUser = username.trim().toLowerCase();
+		const response = await fetch(`${API_BASE}/users/${encodeURIComponent(cleanUser)}`, {
+			headers: { Accept: 'application/json' }
+		});
+
+		if (response.status === 404 || !response.ok) {
+			return { exists: false };
+		}
+
+		const remoteData: AppBackup = await response.json();
+		const reviewCount =
+			remoteData.progress && typeof remoteData.progress === 'object'
+				? Object.keys(remoteData.progress).length
+				: 0;
+		const totalXP = remoteData.xpData?.totalXP || 0;
+		const deckCount = Array.isArray(remoteData.customDecks) ? remoteData.customDecks.length : 0;
+
+		const hasExistingData = totalXP > 0 || reviewCount > 0 || deckCount > 0;
+
+		return {
+			exists: hasExistingData,
+			totalXP,
+			reviewCount,
+			deckCount
+		};
+	} catch (err) {
+		console.error('Check remote user error:', err);
+		return { exists: false };
+	}
+}
+
 // Deep bidirectional merge remote data into local state
 export async function pullAndMerge(username: string): Promise<boolean> {
 	if (typeof window === 'undefined') return false;

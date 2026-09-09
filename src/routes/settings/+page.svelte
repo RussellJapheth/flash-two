@@ -17,7 +17,13 @@
 		computeStreakStats,
 		clearOfflineCache
 	} from '$lib/utils/storage';
-	import { pullAndMerge, pushData, subscribeSyncStatus } from '$lib/utils/cloud';
+	import {
+		pullAndMerge,
+		pushData,
+		subscribeSyncStatus,
+		checkRemoteUser,
+		type RemoteUserSummary
+	} from '$lib/utils/cloud';
 	import { syncXPLeaderboard } from '$lib/utils/xp';
 	import { syncPendingGameScores } from '$lib/utils/gameStorage';
 	import { speakWord } from '$lib/utils/audio';
@@ -33,7 +39,10 @@
 		HelpCircle,
 		Info,
 		BookOpen,
-		ChevronRight
+		ChevronRight,
+		UserCheck,
+		Sparkles,
+		RotateCw
 	} from 'lucide-svelte';
 
 	let username = $state('');
@@ -55,10 +64,17 @@
 
 	// Modal / expansion states
 	let isEditingUsername = $state(false);
+	let isCheckingUsername = $state(false);
 	let newUsernameInput = $state('');
 	let usernameError = $state('');
 	let isLanguageExpanded = $state(false);
 	let isSyncExpanded = $state(false);
+
+	// Cloud username collision confirmation modal state
+	let showCollisionModal = $state(false);
+	let pendingUsername = $state('');
+	let pendingUserSummary = $state<RemoteUserSummary | null>(null);
+	let suggestedUsername = $state('');
 
 	async function loadSettings() {
 		username = getSavedUsername();
@@ -86,22 +102,70 @@
 
 	async function handleSaveUsername() {
 		const clean = newUsernameInput.trim().toLowerCase();
-		if (clean) {
-			if (!isValidUsername(clean)) {
-				usernameError = 'Lowercase letters, numbers, and hyphens only.';
-				return;
-			}
-			username = clean;
-			setSavedUsername(clean);
-			isEditingUsername = false;
-			usernameError = '';
-			await pullAndMerge(clean);
-		} else {
+		if (!clean) {
 			setSavedUsername('');
 			username = '';
 			isEditingUsername = false;
 			usernameError = '';
+			return;
 		}
+
+		if (!isValidUsername(clean)) {
+			usernameError = 'Lowercase letters, numbers, and hyphens only.';
+			return;
+		}
+
+		if (clean === username) {
+			isEditingUsername = false;
+			usernameError = '';
+			return;
+		}
+
+		isCheckingUsername = true;
+		usernameError = '';
+
+		try {
+			const summary = await checkRemoteUser(clean);
+			if (summary.exists) {
+				pendingUsername = clean;
+				pendingUserSummary = summary;
+				suggestedUsername = `${clean}-${Math.floor(10 + Math.random() * 90)}`;
+				showCollisionModal = true;
+				isCheckingUsername = false;
+				return;
+			}
+		} catch (e) {
+			console.warn('Error checking username existence:', e);
+		} finally {
+			isCheckingUsername = false;
+		}
+
+		await applyUsername(clean);
+	}
+
+	async function applyUsername(cleanName: string) {
+		username = cleanName;
+		setSavedUsername(cleanName);
+		isEditingUsername = false;
+		usernameError = '';
+		showCollisionModal = false;
+		pendingUserSummary = null;
+		await pullAndMerge(cleanName);
+		const progress = await getAllProgress();
+		streakStats = computeStreakStats(progress);
+	}
+
+	function handleChooseSuggestion(suggested: string) {
+		newUsernameInput = suggested;
+		showCollisionModal = false;
+		pendingUserSummary = null;
+		handleSaveUsername();
+	}
+
+	function handleDismissCollision() {
+		showCollisionModal = false;
+		pendingUserSummary = null;
+		isEditingUsername = true;
 	}
 
 	async function handleManualPush() {
@@ -279,9 +343,15 @@
 								<button
 									type="submit"
 									id="save-username-btn"
-									class="rounded-xl bg-indigo-600 px-3 py-1.5 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
+									disabled={isCheckingUsername}
+									class="flex items-center gap-1 rounded-xl bg-indigo-600 px-3 py-1.5 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95 disabled:opacity-50"
 								>
-									Save
+									{#if isCheckingUsername}
+										<RotateCw size={12} class="animate-spin" />
+										<span>Checking…</span>
+									{:else}
+										<span>Save</span>
+									{/if}
 								</button>
 								<button
 									type="button"
@@ -617,3 +687,92 @@
 		</p>
 	</section>
 </main>
+
+{#if showCollisionModal && pendingUserSummary}
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="collision-modal-title"
+	>
+		<div
+			class="shadow-card-hover w-full max-w-sm space-y-4 rounded-3xl border border-slate-200/90 bg-white p-5 text-center sm:p-6"
+		>
+			<div
+				class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-amber-200/80 bg-amber-50 text-amber-600 shadow-xs"
+			>
+				<UserCheck size={28} strokeWidth={2.25} />
+			</div>
+
+			<div class="space-y-1">
+				<h3 id="collision-modal-title" class="font-headline text-lg font-black text-slate-900">
+					Account Already Exists
+				</h3>
+				<p class="font-body text-xs text-slate-500">
+					Cloud data was found for <span class="font-bold text-slate-800">@{pendingUsername}</span>.
+				</p>
+			</div>
+
+			<!-- Summary of remote account stats -->
+			<div class="rounded-2xl border border-slate-100 bg-slate-50 p-3.5 text-left">
+				<div class="flex items-center justify-between text-xs">
+					<span class="font-headline font-bold text-slate-600">Cloud Records:</span>
+					<span class="font-headline font-black text-indigo-600">
+						{(pendingUserSummary.totalXP || 0).toLocaleString()} XP
+					</span>
+				</div>
+				<div class="mt-1 flex items-center justify-between text-xs text-slate-500">
+					<span>Studied Vocabulary</span>
+					<span class="font-semibold text-slate-700"
+						>{pendingUserSummary.reviewCount || 0} cards</span
+					>
+				</div>
+				{#if (pendingUserSummary.deckCount || 0) > 0}
+					<div class="mt-0.5 flex items-center justify-between text-xs text-slate-500">
+						<span>Custom Decks</span>
+						<span class="font-semibold text-slate-700">{pendingUserSummary.deckCount} decks</span>
+					</div>
+				{/if}
+			</div>
+
+			<div class="space-y-2 pt-1">
+				<!-- Option 1: Restore -->
+				<button
+					type="button"
+					id="confirm-restore-btn"
+					onclick={() => applyUsername(pendingUsername)}
+					class="flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-indigo-600 font-headline text-xs font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 active:scale-[0.98]"
+				>
+					<span>Yes, Restore My Account</span>
+				</button>
+
+				<!-- Option 2: Suggestion for new user -->
+				<div class="pt-1 text-left">
+					<p
+						class="mb-1.5 text-center font-headline text-[11px] font-bold tracking-wider text-slate-500 uppercase"
+					>
+						Creating a new profile instead?
+					</p>
+					<button
+						type="button"
+						id="use-suggested-username-btn"
+						onclick={() => handleChooseSuggestion(suggestedUsername)}
+						class="flex h-10 w-full cursor-pointer items-center justify-between rounded-xl border border-indigo-200 bg-indigo-50/60 px-3 font-headline text-xs font-bold text-indigo-700 transition-colors hover:bg-indigo-100 active:scale-[0.98]"
+					>
+						<span>Use @{suggestedUsername}</span>
+						<Sparkles size={14} strokeWidth={2.25} class="text-indigo-600" />
+					</button>
+				</div>
+
+				<button
+					type="button"
+					id="cancel-collision-btn"
+					onclick={handleDismissCollision}
+					class="w-full pt-1.5 font-headline text-xs font-semibold text-slate-400 transition-colors hover:text-slate-600"
+				>
+					Pick a different handle manually
+				</button>
+			</div>
+		</div>
+	</div>
+{/if}

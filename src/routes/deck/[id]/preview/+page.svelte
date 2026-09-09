@@ -44,10 +44,11 @@
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
 		longestStreak: 0,
-		freezeCount: 2,
+		freezeCount: 0,
 		tierName: 'Novice Explorer',
 		totalReviews: 0,
-		activeDates: []
+		activeDates: [],
+		freezeDates: []
 	});
 
 	let deckId = $derived(page.params.id || '');

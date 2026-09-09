@@ -16,7 +16,9 @@ import {
 	getSavedUsername,
 	getSavedLanguage,
 	isLeaderboardDisabled,
-	setLeaderboardDisabled
+	setLeaderboardDisabled,
+	getStreakFreezeData,
+	saveStreakFreezeData
 } from './storage';
 import {
 	getLocalUserXPData,
@@ -300,13 +302,33 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 			setLeaderboardDisabled(remoteData.leaderboardDisabled);
 		}
 
+		// 6. Merge Streak Freeze Data (Set Union of Used Dates)
+		const localFreeze = getStreakFreezeData();
+		if (remoteData.streakFreezeData && Array.isArray(remoteData.streakFreezeData.usedDates)) {
+			const remoteDates = remoteData.streakFreezeData.usedDates.filter(
+				(d: unknown): d is string => typeof d === 'string'
+			);
+			const mergedUsedDates = Array.from(
+				new Set([...localFreeze.usedDates, ...remoteDates])
+			).sort();
+
+			if (mergedUsedDates.length > localFreeze.usedDates.length) {
+				saveStreakFreezeData({ usedDates: mergedUsedDates });
+			}
+			if (remoteDates.length < mergedUsedDates.length) {
+				localHadNewData = true;
+			}
+		} else if (localFreeze.usedDates.length > 0) {
+			localHadNewData = true;
+		}
+
 		updateStatus('ok');
 
 		// Sync XP and Game leaderboards in the background
 		syncXPLeaderboard().catch((e) => console.warn('XP leaderboard sync error:', e));
 		syncPendingGameScores().catch((e) => console.warn('Game leaderboard sync error:', e));
 
-		// 6. Two-way convergence: if local had newer/additional data, push merged state to remote
+		// 7. Two-way convergence: if local had newer/additional data, push merged state to remote
 		if (localHadNewData) {
 			scheduleDebouncedSync(1000);
 		}
@@ -339,6 +361,7 @@ export async function pushData(username?: string): Promise<boolean> {
 		const language = getSavedLanguage();
 		const xpData = getLocalUserXPData();
 		const leaderboardDisabled = isLeaderboardDisabled();
+		const streakFreezeData = getStreakFreezeData();
 
 		const payload: AppBackup = {
 			version: 1,
@@ -349,7 +372,8 @@ export async function pushData(username?: string): Promise<boolean> {
 			language,
 			username: user,
 			xpData,
-			leaderboardDisabled
+			leaderboardDisabled,
+			streakFreezeData
 		};
 
 		const res = await fetch(`${API_BASE}/users/${encodeURIComponent(user)}`, {

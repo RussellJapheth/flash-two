@@ -21,10 +21,11 @@
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
 		longestStreak: 0,
-		freezeCount: 2,
+		freezeCount: 0,
 		tierName: 'Novice Explorer',
 		totalReviews: 0,
-		activeDates: []
+		activeDates: [],
+		freezeDates: []
 	});
 
 	let filterType = $state<'all' | 'chinese' | 'french' | 'custom'>('all');

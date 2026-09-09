@@ -56,10 +56,11 @@
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
 		longestStreak: 0,
-		freezeCount: 2,
+		freezeCount: 0,
 		tierName: 'Novice Explorer',
 		totalReviews: 0,
-		activeDates: []
+		activeDates: [],
+		freezeDates: []
 	});
 
 	// Modal / expansion states

@@ -1,7 +1,52 @@
-import type { WordRecord, WordProgress, CustomDeck, SavedWord, StreakStats } from '$lib/types';
+import type {
+	WordRecord,
+	WordProgress,
+	CustomDeck,
+	SavedWord,
+	StreakStats,
+	StreakFreezeData
+} from '$lib/types';
 
 const DB_NAME = 'flashcards_db';
 const DB_VERSION = 3;
+const FLASHCARDS_STREAK_FREEZES = 'flashcards_streak_freezes';
+
+export function getStreakFreezeData(): StreakFreezeData {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') {
+		return { usedDates: [] };
+	}
+	try {
+		const raw = localStorage.getItem(FLASHCARDS_STREAK_FREEZES);
+		if (!raw) return { usedDates: [] };
+		const parsed = JSON.parse(raw);
+		if (Array.isArray(parsed?.usedDates)) {
+			const validDates: string[] = parsed.usedDates.filter(
+				(d: unknown): d is string => typeof d === 'string'
+			);
+			return {
+				usedDates: Array.from(new Set(validDates)).sort()
+			};
+		}
+		return { usedDates: [] };
+	} catch {
+		return { usedDates: [] };
+	}
+}
+
+export function saveStreakFreezeData(data: StreakFreezeData): void {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return;
+	try {
+		const validDates: string[] = (data.usedDates || []).filter(
+			(d: unknown): d is string => typeof d === 'string'
+		);
+		const cleaned: StreakFreezeData = {
+			usedDates: Array.from(new Set(validDates)).sort()
+		};
+		localStorage.setItem(FLASHCARDS_STREAK_FREEZES, JSON.stringify(cleaned));
+	} catch (e) {
+		console.error('Failed to save streak freeze data:', e);
+	}
+}
 
 export interface RawPackData {
 	title?: string;
@@ -598,7 +643,10 @@ export function getRecentlyOpenedPackIds(): string[] {
 
 // Streak Computation
 
-export function computeStreakStats(progress: Record<string, WordProgress>): StreakStats {
+export function computeStreakStats(
+	progress: Record<string, WordProgress>,
+	customFreezeData?: StreakFreezeData
+): StreakStats {
 	const datesSet = new Set<string>();
 	let totalReviews = 0;
 
@@ -611,19 +659,25 @@ export function computeStreakStats(progress: Record<string, WordProgress>): Stre
 		}
 	}
 
-	const sortedDates = Array.from(datesSet).sort().reverse();
+	const freezeData = customFreezeData || getStreakFreezeData();
+	const freezeSet = new Set<string>(freezeData.usedDates || []);
+
+	// Combined valid days (practiced days + frozen days)
+	const combinedDatesSet = new Set<string>([...datesSet, ...freezeSet]);
+	const sortedCombined = Array.from(combinedDatesSet).sort().reverse();
+
 	let currentStreak = 0;
 	let longestStreak = 0;
 
 	const today = new Date().toISOString().split('T')[0];
 	const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
 
-	// Check if today or yesterday was active
-	if (sortedDates.includes(today) || sortedDates.includes(yesterday)) {
-		let checkDate = sortedDates.includes(today) ? new Date() : new Date(Date.now() - 86400000);
+	// Check if today or yesterday was active or frozen
+	if (sortedCombined.includes(today) || sortedCombined.includes(yesterday)) {
+		let checkDate = sortedCombined.includes(today) ? new Date() : new Date(Date.now() - 86400000);
 		while (true) {
 			const iso = checkDate.toISOString().split('T')[0];
-			if (sortedDates.includes(iso)) {
+			if (combinedDatesSet.has(iso)) {
 				currentStreak++;
 				checkDate = new Date(checkDate.getTime() - 86400000);
 			} else {
@@ -634,7 +688,7 @@ export function computeStreakStats(progress: Record<string, WordProgress>): Stre
 
 	// Longest streak calculation
 	let running = 0;
-	const ascendingDates = Array.from(datesSet).sort();
+	const ascendingDates = Array.from(combinedDatesSet).sort();
 	for (let i = 0; i < ascendingDates.length; i++) {
 		if (i === 0) {
 			running = 1;
@@ -655,6 +709,27 @@ export function computeStreakStats(progress: Record<string, WordProgress>): Stre
 
 	if (currentStreak > longestStreak) longestStreak = currentStreak;
 
+	// Calculate earned streak freezes:
+	// Starts at 0, earns 1 more every 5 consecutive days (max 3 streak freezes).
+	// Count active practice days vs used freeze days in the current streak window:
+	let activeDaysInStreak = 0;
+	let usedFreezesInStreak = 0;
+	if (currentStreak > 0) {
+		let checkDate = sortedCombined.includes(today) ? new Date() : new Date(Date.now() - 86400000);
+		for (let s = 0; s < currentStreak; s++) {
+			const iso = checkDate.toISOString().split('T')[0];
+			if (datesSet.has(iso)) {
+				activeDaysInStreak++;
+			} else if (freezeSet.has(iso)) {
+				usedFreezesInStreak++;
+			}
+			checkDate = new Date(checkDate.getTime() - 86400000);
+		}
+	}
+
+	const earnedFreezes = Math.floor(activeDaysInStreak / 5);
+	const freezeCount = Math.min(3, Math.max(0, earnedFreezes - usedFreezesInStreak));
+
 	// Determine Tier
 	let tierName = 'Novice Explorer';
 	if (currentStreak >= 30) tierName = 'Tier 2 Habit Hero';
@@ -663,11 +738,12 @@ export function computeStreakStats(progress: Record<string, WordProgress>): Stre
 	else if (currentStreak >= 3) tierName = 'Streak Starter';
 
 	return {
-		currentStreak: Math.max(currentStreak, datesSet.size > 0 ? 1 : 0),
-		longestStreak: Math.max(longestStreak, currentStreak),
-		freezeCount: 2,
+		currentStreak,
+		longestStreak,
+		freezeCount,
 		tierName,
 		totalReviews,
-		activeDates: Array.from(datesSet)
+		activeDates: Array.from(datesSet),
+		freezeDates: Array.from(freezeSet)
 	};
 }

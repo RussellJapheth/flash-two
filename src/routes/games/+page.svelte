@@ -323,7 +323,7 @@
 		<div class="flex items-center justify-between">
 			<div class="flex items-center gap-2">
 				<Swords size={18} strokeWidth={2.25} class="text-indigo-600" />
-				<h3 class="font-headline text-sm font-bold text-slate-900">Game Modes</h3>
+				<h3 class="font-headline text-sm font-bold text-slate-900">Games</h3>
 			</div>
 		</div>
 

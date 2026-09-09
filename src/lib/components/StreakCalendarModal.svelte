@@ -3,12 +3,16 @@
 	let {
 		isOpen = false,
 		streak = 0,
+		freezeCount = 0,
 		activeDates = [] as string[],
+		freezeDates = [] as string[],
 		onClose = () => {}
 	} = $props<{
 		isOpen?: boolean;
 		streak?: number;
+		freezeCount?: number;
 		activeDates?: string[];
+		freezeDates?: string[];
 		onClose?: () => void;
 	}>();
 
@@ -31,7 +35,7 @@
 
 		// Blank cells before first day
 		for (let i = 0; i < firstDayIndex; i++) {
-			cells.push({ day: null, dateStr: '', isActive: false, isToday: false });
+			cells.push({ day: null, dateStr: '', isActive: false, isFrozen: false, isToday: false });
 		}
 
 		// Days of month
@@ -41,8 +45,9 @@
 			const dStr = String(day).padStart(2, '0');
 			const dateStr = `${currentYear}-${mStr}-${dStr}`;
 			const isActive = activeDates.includes(dateStr);
+			const isFrozen = !isActive && freezeDates.includes(dateStr);
 			const isToday = dateStr === todayIso;
-			cells.push({ day, dateStr, isActive, isToday });
+			cells.push({ day, dateStr, isActive, isFrozen, isToday });
 		}
 
 		return cells;
@@ -92,7 +97,9 @@
 						<div
 							class="relative flex h-9 w-full items-center justify-center rounded-2xl text-xs font-bold transition-transform {cell.isActive
 								? 'shadow-streak-glow scale-105 bg-amber-500 text-white'
-								: 'bg-slate-100 text-slate-600'} {cell.isToday
+								: cell.isFrozen
+									? 'scale-105 bg-blue-500 text-white shadow-sm'
+									: 'bg-slate-100 text-slate-600'} {cell.isToday
 								? 'ring-2 ring-indigo-600 ring-offset-1'
 								: ''}"
 						>
@@ -102,6 +109,12 @@
 									strokeWidth={2.5}
 									class="absolute -top-1 -right-1 text-amber-200"
 								/>
+							{:else if cell.isFrozen}
+								<Snowflake
+									size={11}
+									strokeWidth={2.5}
+									class="absolute -top-1 -right-1 text-blue-100"
+								/>
 							{/if}
 							<span>{cell.day}</span>
 						</div>
@@ -109,9 +122,23 @@
 				{/each}
 			</div>
 
+			<!-- Legend -->
+			<div
+				class="mt-4 flex items-center justify-center gap-5 font-headline text-xs font-bold text-slate-500"
+			>
+				<div class="flex items-center gap-1.5">
+					<div class="h-3 w-3 rounded-full bg-amber-500"></div>
+					<span>Practiced</span>
+				</div>
+				<div class="flex items-center gap-1.5">
+					<div class="h-3 w-3 rounded-full bg-blue-500"></div>
+					<span>Freeze Used</span>
+				</div>
+			</div>
+
 			<!-- Streak Freeze Status -->
 			<div
-				class="mt-5 flex items-center justify-between rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5"
+				class="mt-4 flex items-center justify-between rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5"
 			>
 				<div class="flex items-center gap-2.5">
 					<div
@@ -120,15 +147,25 @@
 						<Snowflake size={17} strokeWidth={2} />
 					</div>
 					<div>
-						<p class="font-headline text-xs font-bold text-slate-900">Streak Freeze Protected</p>
-						<p class="text-[11px] text-slate-500">2 Freezes remaining this month</p>
+						<p class="font-headline text-xs font-bold text-slate-900">Streak Freeze Shield</p>
+						<p class="text-[11px] font-medium text-slate-500">
+							{freezeCount} of 3 Freezes active (1 per 5-day streak)
+						</p>
 					</div>
 				</div>
-				<span
-					class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700"
-				>
-					Active
-				</span>
+				{#if freezeCount > 0}
+					<span
+						class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 font-headline text-[11px] font-bold text-emerald-700"
+					>
+						Protected
+					</span>
+				{:else}
+					<span
+						class="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-0.5 font-headline text-[11px] font-bold text-slate-500"
+					>
+						0 Freezes
+					</span>
+				{/if}
 			</div>
 
 			<!-- Close Action -->

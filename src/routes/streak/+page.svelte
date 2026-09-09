@@ -5,7 +5,7 @@
 	import { onMount } from 'svelte';
 	import { getAllProgress, computeStreakStats, getSavedUsername } from '$lib/utils/storage';
 	import type { StreakStats } from '$lib/types';
-	import { Zap, Flame, Award, Snowflake, Hourglass, Trophy, Calendar } from 'lucide-svelte';
+	import { Flame, Snowflake, Hourglass, Trophy, Calendar } from 'lucide-svelte';
 
 	let username = $state('');
 	let isCalendarOpen = $state(false);
@@ -13,10 +13,11 @@
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
 		longestStreak: 0,
-		freezeCount: 2,
+		freezeCount: 0,
 		tierName: 'Novice Explorer',
 		totalReviews: 0,
-		activeDates: []
+		activeDates: [],
+		freezeDates: []
 	});
 
 	let nextMilestone = $derived(
@@ -48,11 +49,13 @@
 			const targetDate = new Date(today.getTime() + diff * 86400000);
 			const iso = targetDate.toISOString().split('T')[0];
 			const isActive = streakStats.activeDates.includes(iso);
+			const isFrozen = !isActive && streakStats.freezeDates.includes(iso);
 			const isToday = diff === 0;
 
 			states.push({
 				day: weekDays[i],
 				isActive,
+				isFrozen,
 				isToday,
 				isFuture: diff > 0
 			});
@@ -98,53 +101,47 @@
 			></div>
 			<img
 				src="/mascots/flame.png"
-				alt="Playful 3D Flame Mascot celebrating learning streak milestone"
-				class="relative z-10 h-36 w-36 object-contain drop-shadow-md transition-transform duration-300 select-none hover:scale-105"
+				alt="Streak Mascot"
+				class="relative z-10 h-36 w-36 object-contain drop-shadow-md"
 			/>
 		</div>
 
-		<!-- Tier Badge & Count -->
-		<div class="relative z-10 mt-2 flex flex-col items-center">
-			<div
-				class="inline-flex items-center gap-1.5 rounded-full border border-amber-200/80 bg-amber-50 px-3.5 py-1 font-headline text-xs font-bold text-amber-900 shadow-xs"
-			>
-				<Zap size={13} strokeWidth={2.25} />
-				<span class="uppercase">{streakStats.tierName}</span>
+		<!-- Streak Number & Title -->
+		<div class="mt-2 space-y-1">
+			<div class="inline-flex items-center gap-1.5 text-amber-500">
+				<Flame size={28} strokeWidth={2.5} class="fill-amber-500" />
+				<span class="font-headline text-4xl font-black tracking-tight text-slate-900">
+					{streakStats.currentStreak}
+				</span>
 			</div>
-
-			<h2
-				class="mt-2 flex items-center justify-center gap-1.5 font-headline text-3xl font-extrabold tracking-tight text-slate-900"
-			>
-				<span>{streakStats.currentStreak} Day Streak!</span>
-				<Flame size={26} strokeWidth={2.25} class="fill-amber-500/20 text-amber-500" />
+			<h2 class="font-headline text-lg font-extrabold text-slate-900">
+				{streakStats.currentStreak > 0
+					? `${streakStats.currentStreak} Day Streak!`
+					: 'Start Your Streak Today!'}
 			</h2>
-
-			<p class="font-body mt-1 max-w-[260px] text-xs leading-relaxed text-slate-500">
+			<p class="font-sans text-xs font-medium text-slate-500">
 				{#if username}
-					You're on fire, <span class="font-bold text-slate-900 capitalize">{username}</span>! Study
-					daily to keep the momentum roaring.
+					Keep studying daily to maintain your momentum, <span
+						class="font-bold text-slate-700 capitalize">{username}</span
+					>.
 				{:else}
-					You're on fire! Study daily to keep the momentum roaring.
+					Keep studying daily to maintain your momentum.
 				{/if}
 			</p>
 		</div>
 
-		<!-- Next Milestone Progress Bar -->
-		<div class="mt-5 rounded-2xl border border-slate-200/80 bg-slate-50 p-4 text-left">
-			<div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-900">
-				<span class="flex items-center gap-1 font-headline">
-					<Award size={15} strokeWidth={2} class="text-amber-600" />
-					Next Goal: {nextMilestone} Days
-				</span>
-				<span class="font-headline font-extrabold text-amber-700">{daysToMilestone} days to go</span
-				>
+		<!-- Milestone Progress Bar -->
+		<div class="mt-5 space-y-1.5">
+			<div class="flex items-center justify-between text-xs">
+				<span class="font-headline font-bold text-slate-700">Next Milestone</span>
+				<span class="font-headline font-extrabold text-amber-600">{daysToMilestone} days left</span>
 			</div>
 
 			<ProgressBar
 				value={streakStats.currentStreak}
 				max={nextMilestone}
 				variant="secondary"
-				height="h-2.5"
+				height="h-3"
 			/>
 
 			<div
@@ -170,16 +167,24 @@
 			<div>
 				<h3 class="font-headline text-xs font-bold text-slate-900">Streak Freeze Shield</h3>
 				<p class="font-sans text-[11px] font-medium text-slate-500">
-					{streakStats.freezeCount} Freezes remaining this month
+					{streakStats.freezeCount} of 3 Freezes active (1 per 5-day streak)
 				</p>
 			</div>
 		</div>
 
-		<span
-			class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 font-headline text-[11px] font-bold text-emerald-700"
-		>
-			Protected
-		</span>
+		{#if streakStats.freezeCount > 0}
+			<span
+				class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 font-headline text-[11px] font-bold text-emerald-700"
+			>
+				Protected
+			</span>
+		{:else}
+			<span
+				class="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 font-headline text-[11px] font-bold text-slate-500"
+			>
+				0 Freezes
+			</span>
+		{/if}
 	</section>
 
 	<!-- This Week Habit Tracker -->
@@ -204,14 +209,18 @@
 					<div
 						class="flex h-10 w-9 items-center justify-center rounded-2xl text-xs font-bold transition-transform {item.isActive
 							? 'shadow-streak-glow scale-105 bg-amber-500 text-white'
-							: item.isToday
-								? 'bg-indigo-50 text-indigo-600 ring-2 ring-indigo-600 ring-offset-1'
-								: item.isFuture
-									? 'bg-slate-50 text-slate-300'
-									: 'bg-slate-100 text-slate-600'}"
+							: item.isFrozen
+								? 'scale-105 bg-blue-500 text-white shadow-sm'
+								: item.isToday
+									? 'bg-indigo-50 text-indigo-600 ring-2 ring-indigo-600 ring-offset-1'
+									: item.isFuture
+										? 'bg-slate-50 text-slate-300'
+										: 'bg-slate-100 text-slate-600'}"
 					>
 						{#if item.isActive}
 							<Flame size={16} strokeWidth={2.25} />
+						{:else if item.isFrozen}
+							<Snowflake size={16} strokeWidth={2.25} />
 						{:else if item.isToday}
 							<Hourglass size={14} strokeWidth={2} />
 						{:else}
@@ -262,6 +271,8 @@
 <StreakCalendarModal
 	isOpen={isCalendarOpen}
 	streak={streakStats.currentStreak}
+	freezeCount={streakStats.freezeCount}
 	activeDates={streakStats.activeDates}
+	freezeDates={streakStats.freezeDates}
 	onClose={() => (isCalendarOpen = false)}
 />

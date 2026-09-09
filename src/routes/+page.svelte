@@ -42,10 +42,11 @@
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
 		longestStreak: 0,
-		freezeCount: 2,
+		freezeCount: 0,
 		tierName: 'Novice Explorer',
 		totalReviews: 0,
-		activeDates: []
+		activeDates: [],
+		freezeDates: []
 	});
 
 	let deckSummaries = $state<DeckSummary[]>([]);
@@ -514,7 +515,9 @@
 <StreakCalendarModal
 	isOpen={isStreakModalOpen}
 	streak={streakStats.currentStreak}
+	freezeCount={streakStats.freezeCount}
 	activeDates={streakStats.activeDates}
+	freezeDates={streakStats.freezeDates}
 	onClose={() => (isStreakModalOpen = false)}
 />
 

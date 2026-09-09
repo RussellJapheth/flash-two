@@ -83,6 +83,11 @@ export interface AppBackup {
 	username?: string;
 	xpData?: UserXPData;
 	leaderboardDisabled?: boolean;
+	streakFreezeData?: StreakFreezeData;
+}
+
+export interface StreakFreezeData {
+	usedDates: string[]; // ISO 'YYYY-MM-DD' when streak freeze was consumed
 }
 
 export type StudyRating = 'again' | 'hard' | 'good' | 'easy' | 'custom';
@@ -108,4 +113,5 @@ export interface StreakStats {
 	tierName: string;
 	totalReviews: number;
 	activeDates: string[]; // ISO 'YYYY-MM-DD'
+	freezeDates: string[]; // ISO 'YYYY-MM-DD'
 }

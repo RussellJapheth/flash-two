@@ -115,3 +115,81 @@ export interface StreakStats {
 	activeDates: string[]; // ISO 'YYYY-MM-DD'
 	freezeDates: string[]; // ISO 'YYYY-MM-DD'
 }
+
+export type StoryDifficulty = 'Beginner' | 'Intermediate' | 'Advanced';
+
+export interface StoryCharacter {
+	id: string;
+	name: string;
+	avatarUrl: string;
+	role: string;
+}
+
+export interface StoryChoice {
+	id: string;
+	text: string;
+	pinyin?: string;
+	translation?: string;
+	nextNodeId: string;
+	isOptimal?: boolean;
+	feedback?: string;
+	xpReward?: number;
+}
+
+export interface StoryNode {
+	id: string;
+	speakerId: string; // 'player' | characterId | 'narrator'
+	text: string;
+	pinyin?: string;
+	translation?: string;
+	audioText?: string;
+	type: 'dialogue' | 'choice' | 'speech' | 'cloze';
+	choices?: StoryChoice[];
+	expectedSpeech?: {
+		target: string;
+		pinyin?: string;
+		keywords?: string[];
+		fallbackChoices: StoryChoice[];
+	};
+	cloze?: {
+		sentence: string; // e.g. "我想吃一碗 {blank}。"
+		options: string[];
+		optionPinyins?: Record<string, string>;
+		optionTranslations?: Record<string, string>;
+		correctOption: string;
+		pinyin?: string;
+		translation?: string;
+		nextNodeId: string;
+	};
+	nextNodeId?: string;
+}
+
+export interface Story {
+	id: string;
+	title: string;
+	subtitle: string;
+	language: 'chinese' | 'french';
+	difficulty: StoryDifficulty;
+	durationMinutes: number;
+	requiresVoice?: boolean;
+	baseXP: number;
+	bgImageUrl: string;
+	coverImageUrl: string;
+	characters: Record<string, StoryCharacter>;
+	startNodeId: string;
+	nodes: Record<string, StoryNode>;
+	summaryVocabulary?: {
+		word: string;
+		pinyin?: string;
+		meaning: string;
+	}[];
+}
+
+export interface StoryCompletionRecord {
+	storyId: string;
+	completedAt: number;
+	score: number; // 0-100
+	stars: number; // 1-3
+	timesPlayed: number;
+	xpEarned: number;
+}

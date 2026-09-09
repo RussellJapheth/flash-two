@@ -14,7 +14,8 @@
 		page.url.pathname.startsWith('/study/') ||
 			page.url.pathname === '/review' ||
 			page.url.pathname === '/practice' ||
-			page.url.pathname.startsWith('/games/')
+			page.url.pathname.startsWith('/games/') ||
+			page.url.pathname.startsWith('/story/')
 	);
 
 	onMount(() => {

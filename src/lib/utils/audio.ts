@@ -288,3 +288,5 @@ export function speakWord(
 		window.speechSynthesis.speak(utterance);
 	});
 }
+
+export const speakText = speakWord;

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import DeckCard from '$lib/components/DeckCard.svelte';
+	import StoryCard from '$lib/components/StoryCard.svelte';
 	import DeckSpreadsheetModal from '$lib/components/DeckSpreadsheetModal.svelte';
 	import { onMount } from 'svelte';
 	import {
@@ -12,11 +13,25 @@
 		deleteCustomDeck,
 		computeStreakStats
 	} from '$lib/utils/storage';
+	import { BUILTIN_STORIES } from '$lib/data/stories';
+	import { getAllStoryProgress } from '$lib/utils/storyStorage';
+	import { isSpeechRecognitionSupported } from '$lib/utils/speech';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered } from '$lib/utils/srs';
-	import type { DeckSummary, CustomDeck, WordRecord, StreakStats } from '$lib/types';
-	import { Plus, FileUp, Search, FolderOpen, X, Download } from 'lucide-svelte';
+	import type {
+		DeckSummary,
+		CustomDeck,
+		WordRecord,
+		StreakStats,
+		StoryCompletionRecord
+	} from '$lib/types';
+	import { Plus, FileUp, Search, FolderOpen, X, Download, BookOpen, Layers } from 'lucide-svelte';
 	import { downloadCsvTemplate } from '$lib/utils/csvTemplate';
+
+	let activeTab = $state<'flashcards' | 'stories'>('flashcards');
+	let storyFilterLang = $state<'all' | 'chinese' | 'french'>('all');
+	let storyProgressMap = $state<Record<string, StoryCompletionRecord>>({});
+	let isSpeechSupported = $state(false);
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -290,8 +305,26 @@
 		}
 	}
 
+	let filteredStories = $derived(
+		BUILTIN_STORIES.filter((s) => {
+			if (storyFilterLang === 'chinese' && s.language !== 'chinese') return false;
+			if (storyFilterLang === 'french' && s.language !== 'french') return false;
+			if (searchQuery.trim()) {
+				const q = searchQuery.toLowerCase();
+				return (
+					s.title.toLowerCase().includes(q) ||
+					s.subtitle.toLowerCase().includes(q) ||
+					s.difficulty.toLowerCase().includes(q)
+				);
+			}
+			return true;
+		})
+	);
+
 	onMount(() => {
 		loadDecks();
+		isSpeechSupported = isSpeechRecognitionSupported();
+		storyProgressMap = getAllStoryProgress();
 	});
 </script>
 
@@ -302,84 +335,175 @@
 <TopHeader title="My Decks" streak={streakStats.currentStreak} />
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
-	<!-- Top Bar Actions -->
-	<div class="flex items-center justify-between">
-		<div class="flex items-center gap-2">
-			<!-- Create New Deck Button -->
-			<button
-				type="button"
-				onclick={openCreateDeckModal}
-				class="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-indigo-600 px-3.5 py-1.5 font-headline text-xs font-bold text-white shadow-xs transition-all hover:bg-indigo-700 active:scale-95"
-			>
-				<Plus size={16} strokeWidth={2.5} />
-				<span>Create Deck</span>
-			</button>
+	<!-- Tab Switcher: Flashcards vs Stories -->
+	<div class="grid grid-cols-2 rounded-2xl bg-slate-100 p-1">
+		<button
+			type="button"
+			onclick={() => (activeTab = 'flashcards')}
+			class="flex cursor-pointer items-center justify-center gap-1.5 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeTab ===
+			'flashcards'
+				? 'bg-white text-slate-900 shadow-xs'
+				: 'text-slate-500 hover:text-slate-800'}"
+		>
+			<Layers size={15} strokeWidth={2.25} />
+			<span>Flashcard Decks</span>
+		</button>
+		<button
+			type="button"
+			onclick={() => (activeTab = 'stories')}
+			class="flex cursor-pointer items-center justify-center gap-1.5 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeTab ===
+			'stories'
+				? 'bg-white text-slate-900 shadow-xs'
+				: 'text-slate-500 hover:text-slate-800'}"
+		>
+			<BookOpen size={15} strokeWidth={2.25} />
+			<span>Interactive Stories</span>
+		</button>
+	</div>
 
-			<!-- Import Deck Button -->
-			<button
-				type="button"
-				onclick={() => (isImportModalOpen = true)}
-				class="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-slate-200/80 bg-white px-3 py-1.5 font-headline text-xs font-bold text-slate-700 shadow-xs transition-colors hover:bg-slate-50 active:scale-95"
-			>
-				<FileUp size={16} strokeWidth={2} />
-				<span>Import</span>
-			</button>
+	{#if activeTab === 'flashcards'}
+		<!-- FLASHCARDS TAB -->
+		<!-- Top Bar Actions -->
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-2">
+				<!-- Create New Deck Button -->
+				<button
+					type="button"
+					onclick={openCreateDeckModal}
+					class="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-indigo-600 px-3.5 py-1.5 font-headline text-xs font-bold text-white shadow-xs transition-all hover:bg-indigo-700 active:scale-95"
+				>
+					<Plus size={16} strokeWidth={2.5} />
+					<span>Create Deck</span>
+				</button>
+
+				<!-- Import Deck Button -->
+				<button
+					type="button"
+					onclick={() => (isImportModalOpen = true)}
+					class="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-slate-200/80 bg-white px-3 py-1.5 font-headline text-xs font-bold text-slate-700 shadow-xs transition-colors hover:bg-slate-50 active:scale-95"
+				>
+					<FileUp size={16} strokeWidth={2} />
+					<span>Import</span>
+				</button>
+			</div>
+
+			<span class="font-headline text-xs font-bold text-slate-500">
+				{filteredDecks.length} Decks
+			</span>
 		</div>
 
-		<span class="font-headline text-xs font-bold text-slate-500">
-			{filteredDecks.length} Decks
-		</span>
-	</div>
+		<!-- Search Input -->
+		<div class="relative">
+			<Search size={18} strokeWidth={2} class="absolute top-2.5 left-3.5 text-slate-400" />
+			<input
+				type="text"
+				placeholder="Search decks..."
+				bind:value={searchQuery}
+				class="w-full rounded-2xl border border-slate-200/80 bg-white py-2 pr-4 pl-10 font-sans text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none"
+			/>
+		</div>
 
-	<!-- Search Input -->
-	<div class="relative">
-		<Search size={18} strokeWidth={2} class="absolute top-2.5 left-3.5 text-slate-400" />
-		<input
-			type="text"
-			placeholder="Search decks..."
-			bind:value={searchQuery}
-			class="w-full rounded-2xl border border-slate-200/80 bg-white py-2 pr-4 pl-10 font-sans text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none"
-		/>
-	</div>
-
-	<!-- Filter Chips (Segmented Pill Pattern) -->
-	<div class="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-1">
-		{#each ['all', 'chinese', 'french', 'custom'] as f (f)}
-			<button
-				type="button"
-				onclick={() => (filterType = f as typeof filterType)}
-				class="cursor-pointer rounded-xl px-3.5 py-1.5 font-headline text-xs font-bold capitalize transition-all {filterType ===
-				f
-					? 'bg-indigo-600 text-white shadow-xs'
-					: 'border border-slate-200/60 bg-white text-slate-600 hover:bg-slate-50'}"
-			>
-				{f}
-			</button>
-		{/each}
-	</div>
-
-	<!-- Decks List -->
-	<div class="space-y-2.5 pt-1">
-		{#if filteredDecks.length === 0}
-			<div
-				class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 p-8 text-center text-slate-500"
-			>
-				<FolderOpen size={36} strokeWidth={1.5} class="mb-2 text-slate-400" />
-				<p class="font-headline text-sm font-bold text-slate-800">No decks found</p>
-				<p class="mt-1 font-sans text-xs text-slate-400">
-					Try another filter or create a new custom deck.
-				</p>
-			</div>
-		{:else}
-			{#each filteredDecks as deck (deck.id)}
-				<DeckCard
-					{deck}
-					onEdit={deck.isCustom ? handleEditCustomDeck : undefined}
-					onDelete={deck.isCustom ? (d) => handleDeleteCustomDeck(d.id) : undefined}
-				/>
+		<!-- Filter Chips (Segmented Pill Pattern) -->
+		<div class="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-1">
+			{#each ['all', 'chinese', 'french', 'custom'] as f (f)}
+				<button
+					type="button"
+					onclick={() => (filterType = f as typeof filterType)}
+					class="cursor-pointer rounded-xl px-3.5 py-1.5 font-headline text-xs font-bold capitalize transition-all {filterType ===
+					f
+						? 'bg-indigo-600 text-white shadow-xs'
+						: 'border border-slate-200/60 bg-white text-slate-600 hover:bg-slate-50'}"
+				>
+					{f}
+				</button>
 			{/each}
-		{/if}
-	</div>
+		</div>
+
+		<!-- Decks List -->
+		<div class="space-y-2.5 pt-1">
+			{#if filteredDecks.length === 0}
+				<div
+					class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 p-8 text-center text-slate-500"
+				>
+					<FolderOpen size={36} strokeWidth={1.5} class="mb-2 text-slate-400" />
+					<p class="font-headline text-sm font-bold text-slate-800">No decks found</p>
+					<p class="mt-1 font-sans text-xs text-slate-400">
+						Try another filter or create a new custom deck.
+					</p>
+				</div>
+			{:else}
+				{#each filteredDecks as deck (deck.id)}
+					<DeckCard
+						{deck}
+						onEdit={deck.isCustom ? handleEditCustomDeck : undefined}
+						onDelete={deck.isCustom ? (d) => handleDeleteCustomDeck(d.id) : undefined}
+					/>
+				{/each}
+			{/if}
+		</div>
+	{:else}
+		<!-- STORIES TAB -->
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-1.5">
+				<BookOpen size={18} strokeWidth={2.25} class="text-indigo-600" />
+				<h3 class="font-headline text-sm font-bold text-slate-900">Situational Quests</h3>
+			</div>
+
+			<span class="font-headline text-xs font-bold text-slate-500">
+				{filteredStories.length} Scenarios
+			</span>
+		</div>
+
+		<!-- Search Input -->
+		<div class="relative">
+			<Search size={18} strokeWidth={2} class="absolute top-2.5 left-3.5 text-slate-400" />
+			<input
+				type="text"
+				placeholder="Search stories, topics..."
+				bind:value={searchQuery}
+				class="w-full rounded-2xl border border-slate-200/80 bg-white py-2 pr-4 pl-10 font-sans text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none"
+			/>
+		</div>
+
+		<!-- Filter Chips -->
+		<div class="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-1">
+			{#each ['all', 'chinese', 'french'] as f (f)}
+				<button
+					type="button"
+					onclick={() => (storyFilterLang = f as typeof storyFilterLang)}
+					class="cursor-pointer rounded-xl px-3.5 py-1.5 font-headline text-xs font-bold capitalize transition-all {storyFilterLang ===
+					f
+						? 'bg-indigo-600 text-white shadow-xs'
+						: 'border border-slate-200/60 bg-white text-slate-600 hover:bg-slate-50'}"
+				>
+					{f}
+				</button>
+			{/each}
+		</div>
+
+		<!-- Story Cards Grid -->
+		<div class="space-y-3.5 pt-1">
+			{#if filteredStories.length === 0}
+				<div
+					class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 p-8 text-center text-slate-500"
+				>
+					<BookOpen size={36} strokeWidth={1.5} class="mb-2 text-slate-400" />
+					<p class="font-headline text-sm font-bold text-slate-800">No stories found</p>
+					<p class="mt-1 font-sans text-xs text-slate-400">
+						Try selecting another language filter.
+					</p>
+				</div>
+			{:else}
+				{#each filteredStories as story (story.id)}
+					<StoryCard
+						{story}
+						progress={storyProgressMap[story.id]}
+						speechSupported={isSpeechSupported}
+					/>
+				{/each}
+			{/if}
+		</div>
+	{/if}
 </main>
 
 <!-- SPREADSHEET DECK EDITOR MODAL -->

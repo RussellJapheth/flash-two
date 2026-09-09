@@ -341,40 +341,43 @@
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<!-- XP & LEVEL PROGRESSION HERO -->
 	<section class="shadow-card space-y-4 rounded-3xl border border-slate-200/80 bg-white p-5">
+		<!-- Header: Level Badge & Title + Leaderboard Action -->
 		<div class="flex items-center justify-between">
-			<div class="flex items-center gap-3">
-				<div
-					class="flex h-11 w-11 items-center justify-center rounded-2xl border border-amber-200/60 bg-amber-50 text-amber-600"
+			<div class="flex items-center gap-2">
+				<span
+					class="rounded-full border px-2.5 py-0.5 font-headline text-[11px] font-bold {xpStats
+						.theme.badgeBg} {xpStats.theme.badgeText} {xpStats.theme.badgeBorder}"
 				>
-					<Sparkles size={22} strokeWidth={2} />
-				</div>
-				<div>
-					<div class="flex items-center gap-1.5">
-						<span
-							class="rounded-full border px-2 py-0.5 font-headline text-[10px] font-bold {xpStats
-								.theme.badgeBg} {xpStats.theme.badgeText} {xpStats.theme.badgeBorder}"
-						>
-							LEVEL {xpStats.level}
-						</span>
-						<p class="font-headline text-xs font-bold text-slate-500">{xpStats.levelTitle}</p>
-					</div>
-					<p class="font-headline text-2xl font-black text-slate-900">
-						{xpStats.totalXP.toLocaleString()}
-						<span class="text-sm font-bold text-slate-500">XP</span>
-					</p>
-				</div>
+					LEVEL {xpStats.level}
+				</span>
+				<p class="font-headline text-xs font-bold text-slate-500">{xpStats.levelTitle}</p>
 			</div>
 
 			{#if !leaderboardsDisabled}
 				<a
 					href={resolve('/leaderboard')}
-					class="flex items-center gap-1 rounded-2xl border border-amber-200/80 bg-amber-50 px-3 py-2 font-headline text-xs font-bold text-amber-900 shadow-xs transition-colors hover:bg-amber-100"
+					class="flex items-center gap-1 rounded-2xl border border-amber-200/80 bg-amber-50 px-3 py-1.5 font-headline text-xs font-bold text-amber-900 shadow-xs transition-colors hover:bg-amber-100"
 				>
 					<Trophy size={14} strokeWidth={2.25} class="text-amber-600" />
 					<span>Leaderboard</span>
 					<ChevronRight size={13} strokeWidth={2.5} class="text-amber-700" />
 				</a>
 			{/if}
+		</div>
+
+		<!-- Main XP Counter -->
+		<div class="flex items-center gap-3">
+			<div
+				class="flex h-11 w-11 items-center justify-center rounded-2xl border border-amber-200/60 bg-amber-50 text-amber-600"
+			>
+				<Sparkles size={22} strokeWidth={2} />
+			</div>
+			<div>
+				<p class="font-headline text-2xl font-black text-slate-900">
+					{xpStats.totalXP.toLocaleString()}
+					<span class="text-sm font-bold text-slate-500">XP</span>
+				</p>
+			</div>
 		</div>
 
 		<!-- Level progress bar -->

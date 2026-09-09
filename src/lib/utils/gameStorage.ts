@@ -1,4 +1,4 @@
-import { getSavedUsername } from './storage';
+import { getSavedUsername, isLeaderboardDisabled } from './storage';
 
 export interface GameScoreRecord {
 	id: string;
@@ -205,6 +205,7 @@ export async function fetchRemoteLeaderboard(
 	limit = 50
 ): Promise<GameScoreRecord[]> {
 	if (typeof window === 'undefined') return [];
+	if (isLeaderboardDisabled()) return [];
 	if (!isCloudSyncEnabled()) return [];
 
 	try {
@@ -231,6 +232,9 @@ export async function fetchRemoteLeaderboard(
 export async function syncPendingGameScores(): Promise<void> {
 	if (typeof window === 'undefined' || !navigator.onLine || !isCloudSyncEnabled()) return;
 
+	const currentUsername = getSavedUsername().trim().toLowerCase();
+	const disabled = isLeaderboardDisabled();
+
 	try {
 		let remoteRecords: GameScoreRecord[] = [];
 		const getRes = await fetch(LEADERBOARD_API, {
@@ -241,6 +245,21 @@ export async function syncPendingGameScores(): Promise<void> {
 			if (Array.isArray(data)) {
 				remoteRecords = data;
 			}
+		}
+
+		if (disabled) {
+			// If leaderboards are disabled, scrub user's scores from the public remote leaderboard
+			const scrubbed = remoteRecords.filter(
+				(r) => !r || !r.username || r.username.trim().toLowerCase() !== currentUsername
+			);
+			if (scrubbed.length !== remoteRecords.length) {
+				await fetch(LEADERBOARD_API, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(scrubbed.slice(0, 100))
+				});
+			}
+			return;
 		}
 
 		// Pull remote high scores into local storage if remote is higher
@@ -286,7 +305,9 @@ export async function saveGameScore(
 		return saved;
 	}
 
-	await syncPendingGameScores();
+	if (!isLeaderboardDisabled()) {
+		await syncPendingGameScores();
+	}
 
 	return saved;
 }

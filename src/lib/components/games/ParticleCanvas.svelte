@@ -111,8 +111,8 @@
 		innerRadius: number
 	) {
 		let rot = (Math.PI / 2) * 3;
-		let x = cx;
-		let y = cy;
+		let x: number;
+		let y: number;
 		const step = Math.PI / spikes;
 
 		c.beginPath();

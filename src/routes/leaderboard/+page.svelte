@@ -3,7 +3,7 @@
 	import { resolve } from '$app/paths';
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import { onMount } from 'svelte';
-	import { getSavedUsername } from '$lib/utils/storage';
+	import { getSavedUsername, isLeaderboardDisabled } from '$lib/utils/storage';
 	import {
 		isCloudSyncEnabled,
 		fetchXPLeaderboard,
@@ -17,7 +17,6 @@
 		Trophy,
 		Crown,
 		Medal,
-		Sparkles,
 		RotateCw,
 		CloudOff,
 		UserCheck,
@@ -25,14 +24,14 @@
 		ChevronRight,
 		Flame,
 		Calendar,
-		Infinity as InfinityIcon,
-		Clock
+		Infinity as InfinityIcon
 	} from 'lucide-svelte';
 
 	let activeTimeframe = $state<'weekly' | 'monthly' | 'all'>('weekly');
 	let isLoading = $state(true);
 	let isRefreshing = $state(false);
 	let isCloudUser = $state(false);
+	let leaderboardsDisabled = $state(true);
 	let currentUsername = $state('');
 
 	let userStats = $state<XPStats | null>(null);
@@ -44,10 +43,11 @@
 		if (showSpinner) isRefreshing = true;
 		errorMessage = null;
 
+		leaderboardsDisabled = isLeaderboardDisabled();
 		currentUsername = getSavedUsername().trim();
 		isCloudUser = isCloudSyncEnabled();
 
-		if (!isCloudUser) {
+		if (leaderboardsDisabled || !isCloudUser) {
 			isLoading = false;
 			isRefreshing = false;
 			return;
@@ -96,7 +96,35 @@
 <TopHeader title="XP Leaderboard" showBack={true} />
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
-	{#if !isCloudUser}
+	{#if leaderboardsDisabled}
+		<!-- DISABLED STATE: LEADERBOARD FEATURES TURNED OFF IN SETTINGS -->
+		<section
+			class="shadow-card space-y-4 rounded-3xl border border-slate-200/90 bg-white p-6 text-center"
+		>
+			<div
+				class="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl border border-slate-200 bg-slate-100 text-slate-500 shadow-xs"
+			>
+				<CloudOff size={30} strokeWidth={2.25} />
+			</div>
+
+			<div class="space-y-1">
+				<h2 class="font-headline text-xl font-black text-slate-900">Leaderboards Disabled</h2>
+				<p class="font-body text-xs text-slate-500">
+					Leaderboard features and public rankings are currently turned off in Settings. Enable
+					leaderboards in Settings to view rankings and compete with others.
+				</p>
+			</div>
+
+			<button
+				type="button"
+				onclick={() => goto(resolve('/settings'))}
+				class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 active:scale-[0.98]"
+			>
+				<span>Open Settings</span>
+				<ChevronRight size={16} strokeWidth={2.5} />
+			</button>
+		</section>
+	{:else if !isCloudUser}
 		<!-- LOCKED STATE: GUEST USER / CLOUD LOGIN REQUIRED -->
 		<section
 			class="shadow-card space-y-4 rounded-3xl border border-slate-200/90 bg-white p-6 text-center"

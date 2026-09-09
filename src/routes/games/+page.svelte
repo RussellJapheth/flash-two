@@ -9,6 +9,7 @@
 		deduplicateUserLeaderboard,
 		type GameScoreRecord
 	} from '$lib/utils/gameStorage';
+	import { isLeaderboardDisabled } from '$lib/utils/storage';
 	import {
 		Trophy,
 		Sparkles,
@@ -102,6 +103,7 @@
 	let rawLeaderboard = $state<GameScoreRecord[]>([]);
 	let isLoadingLeaderboard = $state(false);
 	let hasCloudSync = $state(false);
+	let leaderboardsDisabled = $state(true);
 	let activeBoardIndex = $state(0);
 	let isPaused = $state(false);
 
@@ -113,9 +115,10 @@
 	);
 
 	async function loadLeaderboard() {
+		leaderboardsDisabled = isLeaderboardDisabled();
 		hasCloudSync = isCloudSyncEnabled();
 
-		if (!hasCloudSync) {
+		if (leaderboardsDisabled || !hasCloudSync) {
 			rawLeaderboard = [];
 			return;
 		}
@@ -278,7 +281,7 @@
 </script>
 
 <svelte:head>
-	<title>Games & Leaderboard — FlashCards</title>
+	<title>{leaderboardsDisabled ? 'Games — FlashCards' : 'Games & Leaderboard — FlashCards'}</title>
 </svelte:head>
 
 <TopHeader title="Games" />
@@ -392,289 +395,297 @@
 	</section>
 
 	<!-- Auto-Sliding Swipeable Leaderboard Carousel Section with Arcade Aesthetic -->
-	<section
-		class="shadow-card space-y-4 rounded-3xl border border-slate-200/80 bg-white p-5 select-none"
-		aria-label="Leaderboards Carousel"
-	>
-		<!-- Section Header with Trophy Badge & Sync Status -->
-		<div class="flex items-center justify-between gap-2">
-			<div class="flex items-center gap-2.5">
-				<div
-					class="flex h-9 w-9 items-center justify-center rounded-2xl bg-linear-to-br from-amber-400 to-amber-600 text-white shadow-md shadow-amber-500/25"
-				>
-					<Trophy size={18} strokeWidth={2.25} />
-				</div>
-				<div>
-					<h3 class="font-headline text-sm font-black tracking-tight text-slate-900">
-						Leaderboard
-					</h3>
-					<div class="flex items-center gap-1.5 font-sans text-[10px] font-medium text-slate-400">
-						<span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500"></span>
-						<span>Global Rankings</span>
+	{#if !leaderboardsDisabled}
+		<section
+			class="shadow-card space-y-4 rounded-3xl border border-slate-200/80 bg-white p-5 select-none"
+			aria-label="Leaderboards Carousel"
+		>
+			<!-- Section Header with Trophy Badge & Sync Status -->
+			<div class="flex items-center justify-between gap-2">
+				<div class="flex items-center gap-2.5">
+					<div
+						class="flex h-9 w-9 items-center justify-center rounded-2xl bg-linear-to-br from-amber-400 to-amber-600 text-white shadow-md shadow-amber-500/25"
+					>
+						<Trophy size={18} strokeWidth={2.25} />
+					</div>
+					<div>
+						<h3 class="font-headline text-sm font-black tracking-tight text-slate-900">
+							Leaderboard
+						</h3>
+						<div class="flex items-center gap-1.5 font-sans text-[10px] font-medium text-slate-400">
+							<span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500"
+							></span>
+							<span>Global Rankings</span>
+						</div>
 					</div>
 				</div>
+
+				<button
+					type="button"
+					onclick={loadLeaderboard}
+					disabled={isLoadingLeaderboard}
+					aria-label="Refresh Leaderboard"
+					class="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-500 transition-all hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600 active:scale-95 disabled:opacity-50"
+				>
+					<RefreshCw
+						size={14}
+						strokeWidth={2.25}
+						class={isLoadingLeaderboard ? 'animate-spin text-indigo-600' : ''}
+					/>
+				</button>
 			</div>
 
-			<button
-				type="button"
-				onclick={loadLeaderboard}
-				disabled={isLoadingLeaderboard}
-				aria-label="Refresh Leaderboard"
-				class="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-500 transition-all hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600 active:scale-95 disabled:opacity-50"
-			>
-				<RefreshCw
-					size={14}
-					strokeWidth={2.25}
-					class={isLoadingLeaderboard ? 'animate-spin text-indigo-600' : ''}
-				/>
-			</button>
-		</div>
-
-		{#if !hasCloudSync}
-			<!-- Cloud Sync Required State -->
-			<div
-				class="flex flex-col items-center justify-center rounded-2xl border border-dashed border-indigo-200 bg-indigo-50/40 p-5 text-center"
-			>
+			{#if !hasCloudSync}
+				<!-- Cloud Sync Required State -->
 				<div
-					class="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl border border-indigo-100 bg-indigo-50 text-indigo-600 shadow-xs"
+					class="flex flex-col items-center justify-center rounded-2xl border border-dashed border-indigo-200 bg-indigo-50/40 p-5 text-center"
 				>
-					<CloudCog size={24} strokeWidth={2} />
+					<div
+						class="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl border border-indigo-100 bg-indigo-50 text-indigo-600 shadow-xs"
+					>
+						<CloudCog size={24} strokeWidth={2} />
+					</div>
+					<h4 class="font-headline text-sm font-bold text-slate-900">Cloud Sync Required</h4>
+					<p class="mt-1 max-w-xs font-sans text-xs text-slate-500">
+						Set up a username profile in Settings to sync your high scores and compete globally.
+					</p>
+					<a
+						href={resolve('/settings')}
+						id="setup-cloud-sync-cta"
+						class="mt-4 flex h-10 items-center justify-center gap-1.5 rounded-xl bg-indigo-600 px-4 font-headline text-xs font-bold text-white shadow-xs transition-all hover:bg-indigo-700 active:scale-95"
+					>
+						<span>Set Up Cloud Profile</span>
+						<ArrowRight size={14} strokeWidth={2.25} />
+					</a>
 				</div>
-				<h4 class="font-headline text-sm font-bold text-slate-900">Cloud Sync Required</h4>
-				<p class="mt-1 max-w-xs font-sans text-xs text-slate-500">
-					Set up a username profile in Settings to sync your high scores and compete globally.
-				</p>
-				<a
-					href={resolve('/settings')}
-					id="setup-cloud-sync-cta"
-					class="mt-4 flex h-10 items-center justify-center gap-1.5 rounded-xl bg-indigo-600 px-4 font-headline text-xs font-bold text-white shadow-xs transition-all hover:bg-indigo-700 active:scale-95"
+			{:else if isLoadingLeaderboard && rawLeaderboard.length === 0}
+				<!-- Skeleton Loading State -->
+				<div
+					class="divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200/80 bg-white"
+					aria-label="Loading leaderboard"
 				>
-					<span>Set Up Cloud Profile</span>
-					<ArrowRight size={14} strokeWidth={2.25} />
-				</a>
-			</div>
-		{:else if isLoadingLeaderboard && rawLeaderboard.length === 0}
-			<!-- Skeleton Loading State -->
-			<div
-				class="divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200/80 bg-white"
-				aria-label="Loading leaderboard"
-			>
-				{#each [1, 2, 3, 4] as item (item)}
-					<div class="flex animate-pulse items-center justify-between p-3.5">
-						<div class="flex items-center gap-3">
-							<div class="h-8 w-8 shrink-0 rounded-xl bg-slate-200"></div>
-							<div class="space-y-1.5">
-								<div class="flex items-center gap-2">
-									<div class="h-3.5 w-20 rounded-md bg-slate-200"></div>
-									<div class="h-3.5 w-16 rounded-full bg-slate-100"></div>
+					{#each [1, 2, 3, 4] as item (item)}
+						<div class="flex animate-pulse items-center justify-between p-3.5">
+							<div class="flex items-center gap-3">
+								<div class="h-8 w-8 shrink-0 rounded-xl bg-slate-200"></div>
+								<div class="space-y-1.5">
+									<div class="flex items-center gap-2">
+										<div class="h-3.5 w-20 rounded-md bg-slate-200"></div>
+										<div class="h-3.5 w-16 rounded-full bg-slate-100"></div>
+									</div>
+									<div class="h-2.5 w-28 rounded-md bg-slate-100"></div>
 								</div>
-								<div class="h-2.5 w-28 rounded-md bg-slate-100"></div>
+							</div>
+							<div class="flex flex-col items-end gap-1">
+								<div class="h-4 w-10 rounded-md bg-slate-200"></div>
+								<div class="h-2.5 w-6 rounded-md bg-slate-100"></div>
 							</div>
 						</div>
-						<div class="flex flex-col items-end gap-1">
-							<div class="h-4 w-10 rounded-md bg-slate-200"></div>
-							<div class="h-2.5 w-6 rounded-md bg-slate-100"></div>
-						</div>
-					</div>
-				{/each}
-			</div>
-		{:else}
-			<!-- Swipeable & Auto-Sliding Carousel Track Container -->
-			<div
-				role="region"
-				aria-label="Swipeable leaderboard cards"
-				bind:clientWidth={containerWidth}
-				class="relative cursor-grab touch-pan-y overflow-hidden rounded-2xl select-none {isDragging
-					? 'cursor-grabbing'
-					: ''}"
-				onpointerdown={handlePointerDown}
-				onpointermove={handlePointerMove}
-				onpointerup={handlePointerUp}
-				onpointercancel={handlePointerCancel}
-				onmouseenter={() => (isPaused = true)}
-				onmouseleave={() => {
-					if (!isDragging && !isPointerDown) isPaused = false;
-				}}
-			>
-				<!-- Sliding Cards Reel with 1rem gap between cards -->
+					{/each}
+				</div>
+			{:else}
+				<!-- Swipeable & Auto-Sliding Carousel Track Container -->
 				<div
-					class="flex w-full gap-4 {isDragging
-						? 'transition-none'
-						: 'transition-transform duration-350 ease-out'}"
-					style="transform: translateX(calc(-{activeBoardIndex} * (100% + 1rem) + {dragOffset}px));"
+					role="region"
+					aria-label="Swipeable leaderboard cards"
+					bind:clientWidth={containerWidth}
+					class="relative cursor-grab touch-pan-y overflow-hidden rounded-2xl select-none {isDragging
+						? 'cursor-grabbing'
+						: ''}"
+					onpointerdown={handlePointerDown}
+					onpointermove={handlePointerMove}
+					onpointerup={handlePointerUp}
+					onpointercancel={handlePointerCancel}
+					onmouseenter={() => (isPaused = true)}
+					onmouseleave={() => {
+						if (!isDragging && !isPointerDown) isPaused = false;
+					}}
 				>
-					{#each boardsWithScores as board (board.id)}
-						<div class="w-full min-w-full shrink-0 space-y-2.5">
-							<!-- Distinct Arcade Glass Themed Title Header -->
-							<div
-								class="relative overflow-hidden rounded-2xl border p-3.5 shadow-md backdrop-blur-md {board.accentGradient} {board.borderClass}"
-							>
-								<!-- Floating Glass Gloss Orbs -->
+					<!-- Sliding Cards Reel with 1rem gap between cards -->
+					<div
+						class="flex w-full gap-4 {isDragging
+							? 'transition-none'
+							: 'transition-transform duration-350 ease-out'}"
+						style="transform: translateX(calc(-{activeBoardIndex} * (100% + 1rem) + {dragOffset}px));"
+					>
+						{#each boardsWithScores as board (board.id)}
+							<div class="w-full min-w-full shrink-0 space-y-2.5">
+								<!-- Distinct Arcade Glass Themed Title Header -->
 								<div
-									class="pointer-events-none absolute -top-8 -right-8 h-28 w-28 rounded-full bg-white/25 blur-xl"
-								></div>
-								<div
-									class="pointer-events-none absolute -bottom-6 -left-6 h-20 w-20 rounded-full bg-white/15 blur-lg"
-								></div>
+									class="relative overflow-hidden rounded-2xl border p-3.5 shadow-md backdrop-blur-md {board.accentGradient} {board.borderClass}"
+								>
+									<!-- Floating Glass Gloss Orbs -->
+									<div
+										class="pointer-events-none absolute -top-8 -right-8 h-28 w-28 rounded-full bg-white/25 blur-xl"
+									></div>
+									<div
+										class="pointer-events-none absolute -bottom-6 -left-6 h-20 w-20 rounded-full bg-white/15 blur-lg"
+									></div>
 
-								<div class="relative flex items-center justify-between gap-2">
-									<div class="flex items-center gap-3">
-										<div
-											class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/60 bg-white/25 text-white shadow-xs backdrop-blur-md"
-										>
-											{#if board.mode === 'visual'}
-												<Zap size={20} strokeWidth={2.5} class="text-white drop-shadow-xs" />
-											{:else}
-												<Headphones size={20} strokeWidth={2.5} class="text-white drop-shadow-xs" />
-											{/if}
-										</div>
-
-										<div>
-											<h4
-												class="font-headline text-base font-black tracking-tight text-white drop-shadow-xs"
+									<div class="relative flex items-center justify-between gap-2">
+										<div class="flex items-center gap-3">
+											<div
+												class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/60 bg-white/25 text-white shadow-xs backdrop-blur-md"
 											>
-												{board.gameTitle} &middot; {board.mode === 'visual'
-													? 'Visual Mode'
-													: 'Audio Mode'}
-											</h4>
+												{#if board.mode === 'visual'}
+													<Zap size={20} strokeWidth={2.5} class="text-white drop-shadow-xs" />
+												{:else}
+													<Headphones
+														size={20}
+														strokeWidth={2.5}
+														class="text-white drop-shadow-xs"
+													/>
+												{/if}
+											</div>
+
+											<div>
+												<h4
+													class="font-headline text-base font-black tracking-tight text-white drop-shadow-xs"
+												>
+													{board.gameTitle} &middot; {board.mode === 'visual'
+														? 'Visual Mode'
+														: 'Audio Mode'}
+												</h4>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 
-							{#if board.records.length === 0}
-								<!-- Blank Leaderboard State for this specific mode -->
-								<div
-									class="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/60 px-4 py-8 text-center"
-								>
+								{#if board.records.length === 0}
+									<!-- Blank Leaderboard State for this specific mode -->
 									<div
-										class="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-amber-100 bg-amber-50 text-amber-600 shadow-xs"
+										class="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/60 px-4 py-8 text-center"
 									>
-										<Trophy size={20} strokeWidth={1.75} />
-									</div>
-									<h4 class="font-headline text-xs font-bold text-slate-800">
-										No {board.gameTitle} - {board.mode === 'visual' ? 'Visual Mode' : 'Audio Mode'} Scores
-										Yet
-									</h4>
-									<p class="mt-1 max-w-xs font-sans text-xs text-slate-500">
-										Play a round in {board.tag} Mode to claim rank #1!
-									</p>
-									<div
-										class="mt-2.5 flex items-center gap-1.5 font-headline text-[11px] font-semibold text-amber-700"
-									>
-										<Sparkles size={12} strokeWidth={2} />
-										<span>Awaiting First Entry</span>
-									</div>
-								</div>
-							{:else}
-								<!-- Ranked Deduplicated List (1 Highest Score per User) -->
-								<div
-									class="divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xs"
-								>
-									{#each board.records as record, index (`${board.id}::${record.username}::${record.mode}::${record.id || index}::${index}`)}
 										<div
-											class="flex items-center justify-between p-3 transition-colors hover:bg-slate-50/80 {index ===
-											0
-												? board.mode === 'visual'
-													? 'bg-sky-50/30'
-													: 'bg-amber-50/30'
-												: index === 1
-													? 'bg-slate-50/50'
-													: index === 2
-														? 'bg-slate-50/25'
-														: ''}"
+											class="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl border border-amber-100 bg-amber-50 text-amber-600 shadow-xs"
 										>
-											<div class="flex items-center gap-3">
-												<!-- Rank Badge / Podium Crown -->
-												<div
-													class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl font-headline text-xs font-black shadow-xs {index ===
-													0
-														? `border ${board.rank1Border} bg-linear-to-b ${board.rank1Gradient} shadow-amber-500/20`
-														: index === 1
-															? 'border border-slate-300 bg-linear-to-b from-slate-200 to-slate-300 text-slate-800'
-															: index === 2
-																? 'border border-amber-200 bg-linear-to-b from-amber-100 to-amber-200 text-amber-900'
-																: 'bg-slate-100 text-slate-500'}"
-												>
-													{#if index === 0}
-														<Crown size={15} strokeWidth={2.5} class="text-amber-950" />
-													{:else}
-														{index + 1}
-													{/if}
-												</div>
-
-												<div>
-													<div class="flex items-center gap-2">
-														<span class="font-headline text-xs font-black text-slate-900">
-															{record.username}
-														</span>
-														<span
-															class="py-0.2 rounded-full px-1.5 font-headline text-[10px] font-semibold {board.scoreBadgeBg} capitalize"
-														>
-															{record.mode}
-														</span>
-													</div>
-													<p class="mt-0.5 font-sans text-[10px] text-slate-400">
-														{record.accuracy}% Acc • {record.maxCombo}x Combo • {formatDate(
-															record.playedAt
-														)}
-													</p>
-												</div>
-											</div>
-
-											<div class="text-right">
-												<span class="font-headline text-sm font-black {board.scoreColor}"
-													>{record.score}</span
-												>
-												<span class="block font-headline text-[10px] font-bold text-slate-400"
-													>pts</span
-												>
-											</div>
+											<Trophy size={20} strokeWidth={1.75} />
 										</div>
-									{/each}
-								</div>
-							{/if}
-						</div>
-					{/each}
+										<h4 class="font-headline text-xs font-bold text-slate-800">
+											No {board.gameTitle} - {board.mode === 'visual'
+												? 'Visual Mode'
+												: 'Audio Mode'} Scores Yet
+										</h4>
+										<p class="mt-1 max-w-xs font-sans text-xs text-slate-500">
+											Play a round in {board.tag} Mode to claim rank #1!
+										</p>
+										<div
+											class="mt-2.5 flex items-center gap-1.5 font-headline text-[11px] font-semibold text-amber-700"
+										>
+											<Sparkles size={12} strokeWidth={2} />
+											<span>Awaiting First Entry</span>
+										</div>
+									</div>
+								{:else}
+									<!-- Ranked Deduplicated List (1 Highest Score per User) -->
+									<div
+										class="divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xs"
+									>
+										{#each board.records as record, index (`${board.id}::${record.username}::${record.mode}::${record.id || index}::${index}`)}
+											<div
+												class="flex items-center justify-between p-3 transition-colors hover:bg-slate-50/80 {index ===
+												0
+													? board.mode === 'visual'
+														? 'bg-sky-50/30'
+														: 'bg-amber-50/30'
+													: index === 1
+														? 'bg-slate-50/50'
+														: index === 2
+															? 'bg-slate-50/25'
+															: ''}"
+											>
+												<div class="flex items-center gap-3">
+													<!-- Rank Badge / Podium Crown -->
+													<div
+														class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl font-headline text-xs font-black shadow-xs {index ===
+														0
+															? `border ${board.rank1Border} bg-linear-to-b ${board.rank1Gradient} shadow-amber-500/20`
+															: index === 1
+																? 'border border-slate-300 bg-linear-to-b from-slate-200 to-slate-300 text-slate-800'
+																: index === 2
+																	? 'border border-amber-200 bg-linear-to-b from-amber-100 to-amber-200 text-amber-900'
+																	: 'bg-slate-100 text-slate-500'}"
+													>
+														{#if index === 0}
+															<Crown size={15} strokeWidth={2.5} class="text-amber-950" />
+														{:else}
+															{index + 1}
+														{/if}
+													</div>
+
+													<div>
+														<div class="flex items-center gap-2">
+															<span class="font-headline text-xs font-black text-slate-900">
+																{record.username}
+															</span>
+															<span
+																class="py-0.2 rounded-full px-1.5 font-headline text-[10px] font-semibold {board.scoreBadgeBg} capitalize"
+															>
+																{record.mode}
+															</span>
+														</div>
+														<p class="mt-0.5 font-sans text-[10px] text-slate-400">
+															{record.accuracy}% Acc • {record.maxCombo}x Combo • {formatDate(
+																record.playedAt
+															)}
+														</p>
+													</div>
+												</div>
+
+												<div class="text-right">
+													<span class="font-headline text-sm font-black {board.scoreColor}"
+														>{record.score}</span
+													>
+													<span class="block font-headline text-[10px] font-bold text-slate-400"
+														>pts</span
+													>
+												</div>
+											</div>
+										{/each}
+									</div>
+								{/if}
+							</div>
+						{/each}
+					</div>
 				</div>
-			</div>
 
-			<!-- Carousel Pagination Dots & Navigation Controls -->
-			<div class="flex items-center justify-between pt-1">
-				<button
-					type="button"
-					onclick={prevBoard}
-					aria-label="Previous Leaderboard"
-					class="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 active:scale-95"
-				>
-					<ChevronLeft size={15} strokeWidth={2.25} />
-				</button>
+				<!-- Carousel Pagination Dots & Navigation Controls -->
+				<div class="flex items-center justify-between pt-1">
+					<button
+						type="button"
+						onclick={prevBoard}
+						aria-label="Previous Leaderboard"
+						class="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 active:scale-95"
+					>
+						<ChevronLeft size={15} strokeWidth={2.25} />
+					</button>
 
-				<!-- Dots Indicator -->
-				<div class="flex items-center gap-1.5">
-					{#each LEADERBOARD_BOARDS as board, dotIdx (board.id)}
-						<button
-							type="button"
-							onclick={() => selectBoard(dotIdx)}
-							aria-label="Slide {dotIdx + 1}"
-							class="h-1.5 rounded-full transition-all duration-300 {activeBoardIndex === dotIdx
-								? dotIdx === 0
-									? 'w-5 bg-indigo-600'
-									: 'w-5 bg-amber-600'
-								: 'w-2 bg-slate-200 hover:bg-slate-300'}"
-						></button>
-					{/each}
+					<!-- Dots Indicator -->
+					<div class="flex items-center gap-1.5">
+						{#each LEADERBOARD_BOARDS as board, dotIdx (board.id)}
+							<button
+								type="button"
+								onclick={() => selectBoard(dotIdx)}
+								aria-label="Slide {dotIdx + 1}"
+								class="h-1.5 rounded-full transition-all duration-300 {activeBoardIndex === dotIdx
+									? dotIdx === 0
+										? 'w-5 bg-indigo-600'
+										: 'w-5 bg-amber-600'
+									: 'w-2 bg-slate-200 hover:bg-slate-300'}"
+							></button>
+						{/each}
+					</div>
+
+					<button
+						type="button"
+						onclick={nextBoard}
+						aria-label="Next Leaderboard"
+						class="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 active:scale-95"
+					>
+						<ChevronRight size={15} strokeWidth={2.25} />
+					</button>
 				</div>
-
-				<button
-					type="button"
-					onclick={nextBoard}
-					aria-label="Next Leaderboard"
-					class="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 active:scale-95"
-				>
-					<ChevronRight size={15} strokeWidth={2.25} />
-				</button>
-			</div>
-		{/if}
-	</section>
+			{/if}
+		</section>
+	{/if}
 </main>

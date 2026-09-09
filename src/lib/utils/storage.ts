@@ -532,12 +532,12 @@ export function isValidUsername(name: string): boolean {
 }
 
 export function getSavedUsername(): string {
-	if (typeof window === 'undefined') return '';
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return '';
 	return localStorage.getItem('flashcards_user') || '';
 }
 
 export function setSavedUsername(name: string): void {
-	if (typeof window !== 'undefined') {
+	if (typeof window !== 'undefined' || typeof localStorage !== 'undefined') {
 		const clean = name.trim().toLowerCase();
 		if (!clean) {
 			localStorage.setItem('flashcards_user', '');
@@ -548,14 +548,29 @@ export function setSavedUsername(name: string): void {
 }
 
 export function getSavedLanguage(): 'chinese' | 'french' {
-	if (typeof window === 'undefined') return 'chinese';
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return 'chinese';
 	const lang = localStorage.getItem('flashcards_language');
 	return lang === 'french' ? 'french' : 'chinese';
 }
 
 export function setSavedLanguage(lang: 'chinese' | 'french'): void {
-	if (typeof window !== 'undefined') {
+	if (typeof window !== 'undefined' || typeof localStorage !== 'undefined') {
 		localStorage.setItem('flashcards_language', lang);
+	}
+}
+
+export const LEADERBOARD_DISABLED_KEY = 'flashcards_disable_leaderboards';
+
+export function isLeaderboardDisabled(): boolean {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return true;
+	const val = localStorage.getItem(LEADERBOARD_DISABLED_KEY);
+	if (val === null) return true; // Default for new users is ON (leaderboards disabled)
+	return val === 'true';
+}
+
+export function setLeaderboardDisabled(disabled: boolean): void {
+	if (typeof window !== 'undefined' || typeof localStorage !== 'undefined') {
+		localStorage.setItem(LEADERBOARD_DISABLED_KEY, String(disabled));
 	}
 }
 

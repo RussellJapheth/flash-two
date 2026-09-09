@@ -7,6 +7,8 @@
 		isValidUsername,
 		getSavedLanguage,
 		setSavedLanguage,
+		isLeaderboardDisabled,
+		setLeaderboardDisabled,
 		getAllProgress,
 		getAllCustomDecks,
 		getAllSavedWords,
@@ -16,12 +18,15 @@
 		clearOfflineCache
 	} from '$lib/utils/storage';
 	import { pullAndMerge, pushData, subscribeSyncStatus } from '$lib/utils/cloud';
+	import { syncXPLeaderboard } from '$lib/utils/xp';
+	import { syncPendingGameScores } from '$lib/utils/gameStorage';
 	import { speakWord } from '$lib/utils/audio';
 	import type { SyncStatus, AppBackup, StreakStats } from '$lib/types';
 	import {
 		Globe,
 		Bell,
 		CloudCog,
+		Trophy,
 		Download,
 		Upload,
 		Trash2,
@@ -37,6 +42,7 @@
 	let syncMessage = $state('');
 	let isClearingCache = $state(false);
 	let cacheMessage = $state('');
+	let leaderboardDisabled = $state(true);
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -58,8 +64,19 @@
 		username = getSavedUsername();
 		newUsernameInput = username;
 		activeLanguage = getSavedLanguage();
+		leaderboardDisabled = isLeaderboardDisabled();
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
+	}
+
+	async function handleToggleLeaderboard() {
+		const next = !leaderboardDisabled;
+		leaderboardDisabled = next;
+		setLeaderboardDisabled(next);
+		if (navigator.onLine) {
+			syncXPLeaderboard().catch((e) => console.warn('Sync XP on toggle error:', e));
+			syncPendingGameScores().catch((e) => console.warn('Sync games on toggle error:', e));
+		}
 	}
 
 	function handleLanguageChange(lang: 'chinese' | 'french') {
@@ -387,6 +404,44 @@
 				<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
 			</div>
 		</button>
+
+		<!-- Disable Leaderboards Toggle -->
+		<div
+			class="flex w-full items-center justify-between px-5 py-4 transition-colors hover:bg-slate-50/60"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-amber-200/80 bg-amber-50 text-amber-600"
+				>
+					<Trophy size={18} strokeWidth={2} />
+				</div>
+				<div class="text-left">
+					<span class="block font-headline text-sm font-bold text-slate-900"
+						>Disable Leaderboards</span
+					>
+					<span class="block font-sans text-xs text-slate-500"
+						>Hide rankings and keep scores private</span
+					>
+				</div>
+			</div>
+			<button
+				type="button"
+				id="settings-leaderboard-toggle"
+				role="switch"
+				aria-checked={leaderboardDisabled}
+				aria-label="Disable Leaderboards"
+				onclick={handleToggleLeaderboard}
+				class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {leaderboardDisabled
+					? 'bg-indigo-600'
+					: 'bg-slate-200'}"
+			>
+				<span
+					class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out {leaderboardDisabled
+						? 'translate-x-5'
+						: 'translate-x-0'}"
+				></span>
+			</button>
+		</div>
 
 		<!-- Cloud Sync toggle row -->
 		<button

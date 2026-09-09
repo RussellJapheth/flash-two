@@ -5,7 +5,7 @@ import type {
 	XPStats,
 	WordProgress
 } from '$lib/types';
-import { getSavedUsername } from './storage';
+import { getSavedUsername, isLeaderboardDisabled } from './storage';
 
 const XP_STORAGE_KEY = 'flashcards_user_xp';
 export const XP_LEADERBOARD_API =
@@ -429,8 +429,8 @@ export function createLocalUserLeaderboardEntry(): XPLeaderboardEntry | null {
  */
 export async function syncXPLeaderboard(): Promise<void> {
 	if (typeof window === 'undefined' || !navigator.onLine || !isCloudSyncEnabled()) return;
-	const localEntry = createLocalUserLeaderboardEntry();
-	if (!localEntry) return;
+	const currentUsername = getSavedUsername().trim().toLowerCase();
+	const disabled = isLeaderboardDisabled();
 
 	try {
 		let remoteList: XPLeaderboardEntry[] = [];
@@ -444,6 +444,24 @@ export async function syncXPLeaderboard(): Promise<void> {
 				remoteList = data;
 			}
 		}
+
+		if (disabled) {
+			// If leaderboards are disabled, scrub user's entry from public XP leaderboard
+			const scrubbed = remoteList.filter(
+				(e) => !e || !e.username || e.username.trim().toLowerCase() !== currentUsername
+			);
+			if (scrubbed.length !== remoteList.length) {
+				await fetch(XP_LEADERBOARD_API, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(scrubbed.slice(0, 100))
+				});
+			}
+			return;
+		}
+
+		const localEntry = createLocalUserLeaderboardEntry();
+		if (!localEntry) return;
 
 		const merged = deduplicateXPLeaderboard(remoteList, localEntry);
 
@@ -470,6 +488,10 @@ export async function fetchXPLeaderboard(
 	userRank: number | null;
 	error?: string;
 }> {
+	if (isLeaderboardDisabled()) {
+		return { entries: [], userRank: null, error: 'disabled' };
+	}
+
 	if (!isCloudSyncEnabled()) {
 		return { entries: [], userRank: null, error: 'unauthenticated' };
 	}

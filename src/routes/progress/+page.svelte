@@ -8,7 +8,8 @@
 		getWordProgress,
 		getBuiltinPacks,
 		getAllCustomDecks,
-		computeStreakStats
+		computeStreakStats,
+		isLeaderboardDisabled
 	} from '$lib/utils/storage';
 	import { migrateHistoricalProgressXP, computeLevelStats, getLevelTheme } from '$lib/utils/xp';
 	import { isCardMastered, isCardLearning, isCardDue } from '$lib/utils/srs';
@@ -56,7 +57,10 @@
 	let isExporting = $state(false);
 	let exportMessage = $state('');
 
+	let leaderboardsDisabled = $state(true);
+
 	async function loadProgressStats() {
+		leaderboardsDisabled = isLeaderboardDisabled();
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
 
@@ -361,14 +365,16 @@
 				</div>
 			</div>
 
-			<a
-				href={resolve('/leaderboard')}
-				class="flex items-center gap-1 rounded-2xl border border-amber-200/80 bg-amber-50 px-3 py-2 font-headline text-xs font-bold text-amber-900 shadow-xs transition-colors hover:bg-amber-100"
-			>
-				<Trophy size={14} strokeWidth={2.25} class="text-amber-600" />
-				<span>Leaderboard</span>
-				<ChevronRight size={13} strokeWidth={2.5} class="text-amber-700" />
-			</a>
+			{#if !leaderboardsDisabled}
+				<a
+					href={resolve('/leaderboard')}
+					class="flex items-center gap-1 rounded-2xl border border-amber-200/80 bg-amber-50 px-3 py-2 font-headline text-xs font-bold text-amber-900 shadow-xs transition-colors hover:bg-amber-100"
+				>
+					<Trophy size={14} strokeWidth={2.25} class="text-amber-600" />
+					<span>Leaderboard</span>
+					<ChevronRight size={13} strokeWidth={2.5} class="text-amber-700" />
+				</a>
+			{/if}
 		</div>
 
 		<!-- Level progress bar -->

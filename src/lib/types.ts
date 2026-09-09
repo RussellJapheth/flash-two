@@ -81,6 +81,7 @@ export interface AppBackup {
 	language?: 'chinese' | 'french';
 	username?: string;
 	xpData?: UserXPData;
+	leaderboardDisabled?: boolean;
 }
 
 export type StudyRating = 'again' | 'hard' | 'good' | 'easy' | 'custom';

@@ -246,7 +246,7 @@ export function getLocalUserXPData(): UserXPData {
 		migratedFromProgress: false
 	};
 
-	if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') {
 		return defaultData;
 	}
 
@@ -270,7 +270,7 @@ export function getLocalUserXPData(): UserXPData {
  * Saves user XP data locally
  */
 export function saveLocalUserXPData(data: UserXPData): void {
-	if (typeof window === 'undefined' || typeof localStorage === 'undefined') return;
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return;
 	try {
 		localStorage.setItem(XP_STORAGE_KEY, JSON.stringify(data));
 	} catch (e) {

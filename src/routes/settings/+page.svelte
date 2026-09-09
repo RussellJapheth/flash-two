@@ -92,6 +92,9 @@
 		if (navigator.onLine) {
 			syncXPLeaderboard().catch((e) => console.warn('Sync XP on toggle error:', e));
 			syncPendingGameScores().catch((e) => console.warn('Sync games on toggle error:', e));
+			if (username) {
+				pushData(username).catch((e) => console.warn('Push data on toggle error:', e));
+			}
 		}
 	}
 
@@ -151,6 +154,7 @@
 		showCollisionModal = false;
 		pendingUserSummary = null;
 		await pullAndMerge(cleanName);
+		leaderboardDisabled = isLeaderboardDisabled();
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
 	}
@@ -207,7 +211,8 @@
 			customDecks,
 			savedWords,
 			language,
-			username: username || undefined
+			username: username || undefined,
+			leaderboardDisabled: isLeaderboardDisabled()
 		};
 
 		const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
@@ -241,6 +246,10 @@
 				if (parsed.language) {
 					setSavedLanguage(parsed.language);
 					activeLanguage = parsed.language;
+				}
+				if (typeof parsed.leaderboardDisabled === 'boolean') {
+					setLeaderboardDisabled(parsed.leaderboardDisabled);
+					leaderboardDisabled = parsed.leaderboardDisabled;
 				}
 				alert('Backup imported successfully!');
 				await pushData();

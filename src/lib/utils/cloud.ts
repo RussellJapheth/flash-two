@@ -14,7 +14,9 @@ import {
 	saveCustomDeck,
 	saveBulkSavedWords,
 	getSavedUsername,
-	getSavedLanguage
+	getSavedLanguage,
+	isLeaderboardDisabled,
+	setLeaderboardDisabled
 } from './storage';
 import { getLocalUserXPData, saveLocalUserXPData, syncXPLeaderboard } from './xp';
 import { syncPendingGameScores } from './gameStorage';
@@ -49,8 +51,9 @@ export interface RemoteUserSummary {
 }
 
 export async function checkRemoteUser(username: string): Promise<RemoteUserSummary> {
-	if (typeof window === 'undefined') return { exists: false };
-	if (!navigator.onLine) return { exists: false };
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined')
+		return { exists: false };
+	if (typeof navigator !== 'undefined' && navigator.onLine === false) return { exists: false };
 
 	try {
 		const cleanUser = username.trim().toLowerCase();
@@ -86,8 +89,8 @@ export async function checkRemoteUser(username: string): Promise<RemoteUserSumma
 
 // Deep bidirectional merge remote data into local state
 export async function pullAndMerge(username: string): Promise<boolean> {
-	if (typeof window === 'undefined') return false;
-	if (!navigator.onLine) {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return false;
+	if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 		updateStatus('idle');
 		return false;
 	}
@@ -255,13 +258,18 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 			localHadNewData = true;
 		}
 
+		// 5. Merge Leaderboard Privacy Setting
+		if (typeof remoteData.leaderboardDisabled === 'boolean') {
+			setLeaderboardDisabled(remoteData.leaderboardDisabled);
+		}
+
 		updateStatus('ok');
 
 		// Sync XP and Game leaderboards in the background
 		syncXPLeaderboard().catch((e) => console.warn('XP leaderboard sync error:', e));
 		syncPendingGameScores().catch((e) => console.warn('Game leaderboard sync error:', e));
 
-		// 5. Two-way convergence: if local had newer/additional data, push merged state to remote
+		// 6. Two-way convergence: if local had newer/additional data, push merged state to remote
 		if (localHadNewData) {
 			scheduleDebouncedSync(1000);
 		}
@@ -276,11 +284,11 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 
 // Push local data payload to JSON Drive
 export async function pushData(username?: string): Promise<boolean> {
-	if (typeof window === 'undefined') return false;
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return false;
 	const user = username || getSavedUsername();
 	if (!user) return false;
 
-	if (!navigator.onLine) {
+	if (typeof navigator !== 'undefined' && navigator.onLine === false) {
 		updateStatus('pending');
 		return false;
 	}
@@ -293,6 +301,7 @@ export async function pushData(username?: string): Promise<boolean> {
 		const savedWords = await getAllSavedWords();
 		const language = getSavedLanguage();
 		const xpData = getLocalUserXPData();
+		const leaderboardDisabled = isLeaderboardDisabled();
 
 		const payload: AppBackup = {
 			version: 1,
@@ -302,7 +311,8 @@ export async function pushData(username?: string): Promise<boolean> {
 			savedWords,
 			language,
 			username: user,
-			xpData
+			xpData,
+			leaderboardDisabled
 		};
 
 		const res = await fetch(`${API_BASE}/users/${encodeURIComponent(user)}`, {

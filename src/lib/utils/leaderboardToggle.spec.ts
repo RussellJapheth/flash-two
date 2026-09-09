@@ -91,4 +91,41 @@ describe('Leaderboard Toggle & Privacy Settings', () => {
 		expect(localScores[0].score).toBe(1500);
 		expect(localScores[0].username).toBe('privacy-user');
 	});
+
+	it('adopts remote leaderboardDisabled preference during pullAndMerge', async () => {
+		setSavedUsername('sync-user');
+		setLeaderboardDisabled(true);
+
+		// Mock global fetch for pullAndMerge
+		const originalFetch = globalThis.fetch;
+		globalThis.fetch = (async (url: RequestInfo | URL) => {
+			const urlStr = url.toString();
+			if (urlStr.includes('/users/sync-user')) {
+				return {
+					ok: true,
+					status: 200,
+					json: async () => ({
+						version: 1,
+						progress: {},
+						username: 'sync-user',
+						leaderboardDisabled: false
+					})
+				} as unknown as Response;
+			}
+			return {
+				ok: true,
+				status: 200,
+				json: async () => []
+			} as unknown as Response;
+		}) as unknown as typeof fetch;
+
+		try {
+			const { pullAndMerge } = await import('./cloud');
+			const success = await pullAndMerge('sync-user');
+			expect(success).toBe(true);
+			expect(isLeaderboardDisabled()).toBe(false);
+		} finally {
+			globalThis.fetch = originalFetch;
+		}
+	});
 });

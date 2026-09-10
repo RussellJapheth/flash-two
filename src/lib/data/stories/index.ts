@@ -495,5 +495,358 @@ export const BUILTIN_STORIES: Story[] = [
 				type: 'dialogue'
 			}
 		}
+	},
+	{
+		id: 'shanghai-milktea',
+		title: 'Ordering Bubble Tea in Shanghai',
+		subtitle: '上海奶茶店点单 · Customize ice, sugar level & select toppings',
+		language: 'chinese',
+		difficulty: 'Beginner',
+		durationMinutes: 3,
+		requiresVoice: true,
+		baseXP: 50,
+		bgImageUrl: '/images/stories/milktea-shop-bg.jpg',
+		coverImageUrl: '/images/stories/milktea-shop-bg.jpg',
+		characters: {
+			barista: {
+				id: 'barista',
+				name: 'Barista Xiao Lin',
+				avatarUrl: '/images/stories/avatars/barista.jpg',
+				role: 'Boba Barista'
+			}
+		},
+		startNodeId: 'node-tea-welcome',
+		summaryVocabulary: [
+			{ word: '奶茶', pinyin: 'nǎichá', meaning: 'Milk tea' },
+			{ word: '微糖', pinyin: 'wēi táng', meaning: 'Low sugar (30%)' },
+			{ word: '去冰', pinyin: 'qù bīng', meaning: 'No ice' },
+			{ word: '珍珠', pinyin: 'zhēnzhū', meaning: 'Tapioca pearls / Boba' },
+			{ word: '打包', pinyin: 'dǎbāo', meaning: 'To take out / To go' }
+		],
+		nodes: {
+			'node-tea-welcome': {
+				id: 'node-tea-welcome',
+				speakerId: 'barista',
+				text: '您好！欢迎光临，请问想喝点什么？',
+				pinyin: 'Nínhǎo! Huānyíng guānglín, qǐngwèn xiǎng hē diǎn shénme?',
+				translation: 'Hello! Welcome, what would you like to drink?',
+				audioText: '您好！欢迎光临，请问想喝点什么？',
+				type: 'choice',
+				choices: [
+					{
+						id: 'choice-tea-boba',
+						text: '我要一杯招牌珍珠奶茶。',
+						pinyin: 'Wǒ yào yī bēi zhāopai zhēnzhū nǎichá.',
+						translation: 'I would like a cup of signature boba milk tea.',
+						nextNodeId: 'node-tea-size-ice',
+						isOptimal: true,
+						feedback: 'Classic choice! The barista smiles and types it in on the screen.',
+						xpReward: 10
+					},
+					{
+						id: 'choice-tea-water',
+						text: '给我倒一杯热水。',
+						pinyin: 'Gěi wǒ dào yī bēi rèshuǐ.',
+						translation: 'Pour me a glass of hot water.',
+						nextNodeId: 'node-tea-size-ice',
+						isOptimal: false,
+						feedback: 'Free warm water is available, but you came for bubble tea!',
+						xpReward: 5
+					}
+				]
+			},
+			'node-tea-size-ice': {
+				id: 'node-tea-size-ice',
+				speakerId: 'barista',
+				text: '好的！请问要大杯还是中杯？冰度和甜度怎么选？',
+				pinyin: 'Hǎo de! Qǐngwèn yào dà bēi háishi zhōng bēi? Bīngdù hé tiándù zěnme xuǎn?',
+				translation: 'Sure! Large or medium cup? What ice and sweetness level would you prefer?',
+				audioText: '好的！请问要大杯还是中杯？冰度和甜度怎么选？',
+				type: 'choice',
+				choices: [
+					{
+						id: 'choice-tea-custom-optimal',
+						text: '中杯，微糖，去冰。',
+						pinyin: 'Zhōng bēi, wēi táng, qù bīng.',
+						translation: 'Medium cup, slight sugar, no ice.',
+						nextNodeId: 'node-tea-topping-speech',
+						isOptimal: true,
+						feedback: 'The gold standard order for bubble tea in China!',
+						xpReward: 15
+					},
+					{
+						id: 'choice-tea-custom-sweet',
+						text: '大杯，全糖，多冰！',
+						pinyin: 'Dà bēi, quán táng, duō bīng!',
+						translation: 'Large cup, full sugar, extra ice!',
+						nextNodeId: 'node-tea-topping-speech',
+						isOptimal: true,
+						feedback: 'A sweet tooth indulgence!',
+						xpReward: 10
+					}
+				]
+			},
+			'node-tea-topping-speech': {
+				id: 'node-tea-topping-speech',
+				speakerId: 'narrator',
+				text: 'You want extra toppings. Tell the barista clearly: "Please add an extra portion of boba (pearls)" using your voice!',
+				type: 'speech',
+				expectedSpeech: {
+					target: '请帮我加一份珍珠',
+					pinyin: 'Qǐng bāng wǒ jiā yí fèn zhēnzhū',
+					keywords: ['珍珠', '加'],
+					fallbackChoices: [
+						{
+							id: 'fb-add-boba',
+							text: '请帮我加一份珍珠。',
+							pinyin: 'Qǐng bāng wǒ jiā yí fèn zhēnzhū.',
+							translation: 'Please add an extra portion of pearls for me.',
+							nextNodeId: 'node-tea-bag-cloze',
+							isOptimal: true,
+							feedback: 'Clear and natural request!',
+							xpReward: 15
+						},
+						{
+							id: 'fb-no-topping',
+							text: '不用加任何配料。',
+							pinyin: 'Búyòng jiā rènhé pèiliào.',
+							translation: 'No need to add any toppings.',
+							nextNodeId: 'node-tea-bag-cloze',
+							isOptimal: false,
+							feedback: 'Keeping it simple.',
+							xpReward: 8
+						}
+					]
+				},
+				nextNodeId: 'node-tea-bag-cloze'
+			},
+			'node-tea-bag-cloze': {
+				id: 'node-tea-bag-cloze',
+				speakerId: 'barista',
+				text: '好的，没问题！请问您是在这里喝还是带走？',
+				pinyin: 'Hǎo de, méi wèntí! Qǐngwèn nín shì zài zhèlǐ hē háishi dài zǒu?',
+				translation: 'Got it, no problem! Will you drink it here or take it to go?',
+				audioText: '好的，没问题！请问您是在这里喝还是带走？',
+				type: 'cloze',
+				cloze: {
+					sentence: '我要 {blank}，请给我一个纸袋。',
+					pinyin: 'Wǒ yào {blank}, qǐng gěi wǒ yí gè zhǐdài.',
+					translation: 'I want to {blank}, please give me a paper bag.',
+					options: ['打包', '睡觉', '打球', '写字'],
+					optionPinyins: {
+						打包: 'dǎbāo',
+						睡觉: 'shuìjiào',
+						打球: 'dǎqiú',
+						写字: 'xiězì'
+					},
+					optionTranslations: {
+						打包: 'take out',
+						睡觉: 'sleep',
+						打球: 'play ball',
+						写字: 'write'
+					},
+					correctOption: '打包',
+					nextNodeId: 'node-tea-finish'
+				}
+			},
+			'node-tea-finish': {
+				id: 'node-tea-finish',
+				speakerId: 'barista',
+				text: '好的，一共十八块！这是您的88号小票，吸管在旁边，请慢用！',
+				pinyin: 'Hǎo de, yígòng shíbā kuài! Zhè shì nín de bāshíbā hào xiǎopiào, xīguǎn zài pángbiān, qǐng mànyòng!',
+				translation: 'Great, total is 18 yuan! Here is your receipt #88, straws are by the side, enjoy!',
+				audioText: '好的，一共十八块！这是您的88号小票，吸管在旁边，请慢用！',
+				type: 'dialogue'
+			}
+		}
+	},
+	{
+		id: 'fruit-market-bargain',
+		title: 'Bargaining at the Fruit Market',
+		subtitle: '水果摊挑水果 · Inquire prices per jin, weigh fruit & negotiate a discount',
+		language: 'chinese',
+		difficulty: 'Intermediate',
+		durationMinutes: 4,
+		requiresVoice: true,
+		baseXP: 65,
+		bgImageUrl: '/images/stories/fruit-market-bg.jpg',
+		coverImageUrl: '/images/stories/fruit-market-bg.jpg',
+		characters: {
+			vendor: {
+				id: 'vendor',
+				name: 'Auntie Chen',
+				avatarUrl: '/images/stories/avatars/fruit-vendor.jpg',
+				role: 'Fruit Stall Owner'
+			}
+		},
+		startNodeId: 'node-fruit-welcome',
+		summaryVocabulary: [
+			{ word: '斤', pinyin: 'jīn', meaning: '500g (Chinese half-kilo)' },
+			{ word: '新鲜', pinyin: 'xīnxiān', meaning: 'Fresh' },
+			{ word: '便宜', pinyin: 'piányi', meaning: 'Cheap / Inexpensive' },
+			{ word: '称', pinyin: 'chēng', meaning: 'To weigh' },
+			{ word: '扫码', pinyin: 'sǎomǎ', meaning: 'Scan QR code' }
+		],
+		nodes: {
+			'node-fruit-welcome': {
+				id: 'node-fruit-welcome',
+				speakerId: 'vendor',
+				text: '帅哥美女，今天新到的海南芒果和甜西瓜，特别新鲜！要来点吗？',
+				pinyin: 'Shuàigē měinǚ, jīntiān xīn dào de Hǎinán mángguǒ hé tián xīguā, tèbié xīnxiān! Yào lái diǎn ma?',
+				translation: 'Hello there, freshly arrived Hainan mangoes and sweet watermelon today, super fresh! Want some?',
+				audioText: '帅哥美女，今天新到的海南芒果和甜西瓜，特别新鲜！要来点吗？',
+				type: 'choice',
+				choices: [
+					{
+						id: 'choice-fruit-ask-price',
+						text: '老板娘，请问西瓜一斤多少钱？',
+						pinyin: 'Lǎobǎnniáng, qǐngwèn xīguā yì jīn duōshao qián?',
+						translation: 'Boss lady, how much is the watermelon per jin (500g)?',
+						nextNodeId: 'node-fruit-weigh-cloze',
+						isOptimal: true,
+						feedback: 'Polite and authentic market greeting!',
+						xpReward: 15
+					},
+					{
+						id: 'choice-fruit-generic',
+						text: '这个水果怎么卖？',
+						pinyin: 'Zhège shuǐguǒ zěnme mài?',
+						translation: 'How much are these fruits?',
+						nextNodeId: 'node-fruit-weigh-cloze',
+						isOptimal: false,
+						feedback: 'Good question, but specifying the fruit gets you faster service.',
+						xpReward: 8
+					}
+				]
+			},
+			'node-fruit-weigh-cloze': {
+				id: 'node-fruit-weigh-cloze',
+				speakerId: 'vendor',
+				text: '西瓜三块一斤，芒果十五块一斤，包甜！',
+				pinyin: 'Xīguā sān kuài yì jīn, mángguǒ shíwǔ kuài yì jīn, bāo tián!',
+				translation: 'Watermelon is 3 yuan per jin, mango is 15 yuan per jin, guaranteed sweet!',
+				audioText: '西瓜三块一斤，芒果十五块一斤，包甜！',
+				type: 'cloze',
+				cloze: {
+					sentence: '请帮我 {blank} 一个西瓜和两个芒果。',
+					pinyin: 'Qǐng bāng wǒ {blank} yí gè xīguā hé liǎng gè mángguǒ.',
+					translation: 'Please {blank} a watermelon and two mangoes for me.',
+					options: ['称', '画', '借', '跳'],
+					optionPinyins: {
+						称: 'chēng',
+						画: 'huà',
+						借: 'jiè',
+						跳: 'tiào'
+					},
+					optionTranslations: {
+						称: 'weigh',
+						画: 'draw',
+						借: 'borrow',
+						跳: 'jump'
+					},
+					correctOption: '称',
+					nextNodeId: 'node-fruit-price-calc'
+				}
+			},
+			'node-fruit-price-calc': {
+				id: 'node-fruit-price-calc',
+				speakerId: 'vendor',
+				text: '好咧！称好了，西瓜三十块，芒果八块，一共三十八块钱。',
+				pinyin: 'Hǎo lie! Chēng hǎo le, xīguā sānshí kuài, mángguǒ bā kuài, yígòng sānshíbā kuài qián.',
+				translation: 'Alright! Weighed and ready: watermelon is 30 yuan, mangoes 8 yuan, total is 38 yuan.',
+				audioText: '好咧！称好了，西瓜三十块，芒果八块，一共三十八块钱。',
+				type: 'speech',
+				expectedSpeech: {
+					target: '阿姨能不能便宜一点',
+					pinyin: 'Āyí néng bu néng piányi yìdiǎn',
+					keywords: ['便宜', '阿姨', '一点'],
+					fallbackChoices: [
+						{
+							id: 'fb-fruit-bargain',
+							text: '阿姨，太贵了，能不能便宜一点？',
+							pinyin: 'Āyí, tài guì le, néng bu néng piányi yìdiǎn?',
+							translation: 'Auntie, it is a bit pricey, can it be a little cheaper?',
+							nextNodeId: 'node-fruit-discount',
+							isOptimal: true,
+							feedback: 'Friendly bargaining style!',
+							xpReward: 15
+						},
+						{
+							id: 'fb-fruit-pay-full',
+							text: '好的，三十八块钱给您。',
+							pinyin: 'Hǎo de, sānshíbā kuài qián gěi nín.',
+							translation: 'Okay, here is 38 yuan.',
+							nextNodeId: 'node-fruit-nodiscount',
+							isOptimal: false,
+							feedback: 'Fair and direct payment.',
+							xpReward: 10
+						}
+					]
+				},
+				nextNodeId: 'node-fruit-discount'
+			},
+			'node-fruit-discount': {
+				id: 'node-fruit-discount',
+				speakerId: 'vendor',
+				text: '哎呀你真会说话！算你三十五块，再送你两个新鲜小橘子！',
+				pinyin: 'Āiyā nǐ zhēn huì shuōhuà! Suàn nǐ sānshíwǔ kuài, zài sòng nǐ liǎng gè xīnxiān xiǎo júzi!',
+				translation: 'Aiya, you are quite the talker! Let us make it 35 yuan, and I will give you two fresh mandarins!',
+				audioText: '哎呀你真会说话！算你三十五块，再送你两个新鲜小橘子！',
+				type: 'choice',
+				choices: [
+					{
+						id: 'choice-fruit-thank-pay',
+						text: '太谢谢阿姨了！我扫微信给您。',
+						pinyin: 'Tài xièxie āyí le! Wǒ sǎo wēixìn gěi nín.',
+						translation: 'Thank you so much Auntie! I will scan WeChat to pay you.',
+						nextNodeId: 'node-fruit-end',
+						isOptimal: true,
+						feedback: 'Auntie beams with joy at your appreciation!',
+						xpReward: 15
+					},
+					{
+						id: 'choice-fruit-too-greedy',
+						text: '还能再少五块吗？',
+						pinyin: 'Hái néng zài shǎo wǔ kuài ma?',
+						translation: 'Can you take off five more yuan?',
+						nextNodeId: 'node-fruit-end',
+						isOptimal: false,
+						feedback: 'Don’t push too far when you already got a discount and free mandarins!',
+						xpReward: 5
+					}
+				]
+			},
+			'node-fruit-nodiscount': {
+				id: 'node-fruit-nodiscount',
+				speakerId: 'vendor',
+				text: '好咧，阿姨给你挑了个最甜的西瓜！',
+				pinyin: 'Hǎo lie, āyí gěi nǐ tiāo le gè zuì tián de xīguā!',
+				translation: 'Great, Auntie picked out the sweetest watermelon for you!',
+				audioText: '好咧，阿姨给你挑了个最甜的西瓜！',
+				type: 'choice',
+				choices: [
+					{
+						id: 'choice-fruit-scan',
+						text: '谢谢阿姨，我扫码付款。',
+						pinyin: 'Xièxie āyí, wǒ sǎomǎ fùkuǎn.',
+						translation: 'Thank you Auntie, I will scan the QR code to pay.',
+						nextNodeId: 'node-fruit-end',
+						isOptimal: true,
+						feedback: 'Smooth transaction!',
+						xpReward: 10
+					}
+				]
+			},
+			'node-fruit-end': {
+				id: 'node-fruit-end',
+				speakerId: 'vendor',
+				text: '微信到账三十五元！袋子给您装好了，吃得甜下次再来啊！',
+				pinyin: 'Wēixìn dàozhàng sānshíwǔ yuán! Dàizi gěi nín zhuāng hǎo le, chī de tián xià cì zài lái a!',
+				translation: 'WeChat payment of 35 yuan received! The bag is packed, come back if you like it sweet!',
+				audioText: '微信到账三十五元！袋子给您装好了，吃得甜下次再来啊！',
+				type: 'dialogue'
+			}
+		}
 	}
 ];
+

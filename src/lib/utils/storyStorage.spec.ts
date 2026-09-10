@@ -53,5 +53,15 @@ describe('Story Progress & Storage Utilities', () => {
 
 		const newXP = getLocalUserXPData().totalXP;
 		expect(newXP).toBeGreaterThan(initialXP);
+		expect(newXP - initialXP).toBe(45);
+	});
+
+	it('does not increment XP if story is abandoned or incomplete', () => {
+		const initialXP = getLocalUserXPData().totalXP;
+		// Mid-story progress / interactions without saveStoryCompletion
+		const progress = getStoryProgress('shanghai-milktea');
+		expect(progress).toBeNull();
+		expect(getLocalUserXPData().totalXP).toBe(initialXP);
 	});
 });
+

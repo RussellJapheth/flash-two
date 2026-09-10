@@ -17,7 +17,7 @@
 		recordRecentlyOpenedPack
 	} from '$lib/utils/storage';
 
-	import { calculateNextReview, isCardDue } from '$lib/utils/srs';
+	import { calculateNextReview, isCardDue, prioritizeAndShuffleCards } from '$lib/utils/srs';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { playSound, speakWord, stopSpeech } from '$lib/utils/audio';
 	import { calculateReviewXP, calculateSessionBonus, addXP } from '$lib/utils/xp';
@@ -142,11 +142,10 @@
 			filtered = [...rawWords];
 		}
 
-		// Shuffle cards randomly
-		for (let i = filtered.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[filtered[i], filtered[j]] = [filtered[j], filtered[i]];
-		}
+		// Shuffle cards: prioritise cards that have not already been studied
+		filtered = prioritizeAndShuffleCards(filtered, (card) =>
+			getWordProgress(progress, deckId, card.No, lang)
+		);
 
 		// Apply card limit if set
 		if (cardLimit > 0 && filtered.length > cardLimit) {

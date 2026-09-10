@@ -106,3 +106,42 @@ export function isCardLearning(progress?: WordProgress): boolean {
 	if (!progress) return false;
 	return (progress.correct > 0 || progress.wrong > 0) && !isCardMastered(progress);
 }
+
+export function isCardStudied(progress?: WordProgress): boolean {
+	if (!progress) return false;
+	return (
+		(progress.correct ?? 0) > 0 ||
+		(progress.wrong ?? 0) > 0 ||
+		(progress.reps ?? 0) > 0 ||
+		Boolean(progress.lastReviewed)
+	);
+}
+
+export function prioritizeAndShuffleCards<T extends { No: number }>(
+	cards: T[],
+	getCardProgressFn: (card: T) => WordProgress | undefined
+): T[] {
+	const unstudied: T[] = [];
+	const studied: T[] = [];
+
+	for (const card of cards) {
+		const p = getCardProgressFn(card);
+		if (isCardStudied(p)) {
+			studied.push(card);
+		} else {
+			unstudied.push(card);
+		}
+	}
+
+	for (let i = unstudied.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[unstudied[i], unstudied[j]] = [unstudied[j], unstudied[i]];
+	}
+
+	for (let i = studied.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[studied[i], studied[j]] = [studied[j], studied[i]];
+	}
+
+	return [...unstudied, ...studied];
+}

@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { calculateNextReview, isCardMastered, isCardLearning } from './utils/srs';
+import {
+	calculateNextReview,
+	isCardMastered,
+	isCardLearning,
+	isCardStudied,
+	prioritizeAndShuffleCards
+} from './utils/srs';
 import type { WordProgress } from './types';
 
 describe('SRS SM-2 Algorithm', () => {
@@ -179,4 +185,66 @@ describe('SRS SM-2 Algorithm', () => {
 		expect(p4).toBeDefined();
 		expect(p4?.wrong).toBe(3);
 	});
+
+	it('correctly identifies studied vs unstudied cards', () => {
+		expect(isCardStudied(undefined)).toBe(false);
+
+		const zeroProgress: WordProgress = {
+			weekId: 'pack-1',
+			wordNo: 1,
+			correct: 0,
+			wrong: 0,
+			lastReviewed: 0,
+			reps: 0
+		};
+		expect(isCardStudied(zeroProgress)).toBe(false);
+
+		const studiedProgress1: WordProgress = {
+			weekId: 'pack-1',
+			wordNo: 1,
+			correct: 1,
+			wrong: 0,
+			lastReviewed: 100,
+			reps: 1
+		};
+		expect(isCardStudied(studiedProgress1)).toBe(true);
+
+		const studiedProgress2: WordProgress = {
+			weekId: 'pack-1',
+			wordNo: 2,
+			correct: 0,
+			wrong: 1,
+			lastReviewed: 100,
+			reps: 0
+		};
+		expect(isCardStudied(studiedProgress2)).toBe(true);
+	});
+
+	it('prioritises unstudied cards before studied cards in shuffle', () => {
+		const cards = [
+			{ No: 1, name: 'Card 1' },
+			{ No: 2, name: 'Card 2' },
+			{ No: 3, name: 'Card 3' },
+			{ No: 4, name: 'Card 4' },
+			{ No: 5, name: 'Card 5' }
+		];
+
+		// Cards 1 and 3 are studied, 2, 4, 5 are unstudied
+		const progressMap: Record<number, WordProgress> = {
+			1: { weekId: 'test', wordNo: 1, correct: 2, wrong: 0, lastReviewed: 100, reps: 1 },
+			3: { weekId: 'test', wordNo: 3, correct: 0, wrong: 1, lastReviewed: 100, reps: 0 }
+		};
+
+		const shuffled = prioritizeAndShuffleCards(cards, (card) => progressMap[card.No]);
+
+		expect(shuffled.length).toBe(5);
+		// First 3 items MUST be the unstudied cards (2, 4, 5)
+		const firstThreeNos = shuffled.slice(0, 3).map((c) => c.No);
+		expect(firstThreeNos.sort()).toEqual([2, 4, 5]);
+
+		// Last 2 items MUST be the studied cards (1, 3)
+		const lastTwoNos = shuffled.slice(3).map((c) => c.No);
+		expect(lastTwoNos.sort()).toEqual([1, 3]);
+	});
 });
+

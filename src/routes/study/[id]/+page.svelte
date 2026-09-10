@@ -17,7 +17,12 @@
 		recordRecentlyOpenedPack
 	} from '$lib/utils/storage';
 
-	import { calculateNextReview, isCardDue, prioritizeAndShuffleCards } from '$lib/utils/srs';
+	import {
+		calculateNextReview,
+		isCardDue,
+		isCardLearning,
+		prioritizeAndShuffleCards
+	} from '$lib/utils/srs';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { playSound, speakWord, stopSpeech } from '$lib/utils/audio';
 	import { calculateReviewXP, calculateSessionBonus, addXP } from '$lib/utils/xp';
@@ -36,9 +41,15 @@
 	} from 'lucide-svelte';
 
 	let deckId = $derived(page.params.id || '');
-	let studyMode = $derived((page.url.searchParams.get('mode') as 'srs' | 'all' | 'weak') || 'srs');
+	let studyMode = $derived(
+		(page.url.searchParams.get('mode') as 'srs' | 'all' | 'learning' | 'weak') || 'srs'
+	);
 	let initialAutoplay = $derived(page.url.searchParams.get('autoplay') === 'true');
-	let cardLimit = $derived(parseInt(page.url.searchParams.get('limit') || '0', 10));
+	let cardLimit = $derived(
+		page.url.searchParams.has('limit')
+			? parseInt(page.url.searchParams.get('limit') || '10', 10)
+			: 10
+	);
 	let showPinyinSetting = $derived(page.url.searchParams.get('pinyin') !== '0');
 
 	let deckTitle = $state('Study Session');
@@ -124,10 +135,10 @@
 
 		// Filter cards by studyMode
 		let filtered: WordRecord[];
-		if (studyMode === 'weak') {
+		if (studyMode === 'learning' || studyMode === 'weak') {
 			filtered = rawWords.filter((w) => {
 				const p = getWordProgress(progress, deckId, w.No, lang);
-				return p && (p.wrong || 0) > 0;
+				return isCardLearning(p);
 			});
 		} else if (studyMode === 'srs') {
 			filtered = rawWords.filter((w) => {
@@ -510,10 +521,10 @@
 					</button>
 					<button
 						type="button"
-						onclick={() => goto(resolve('/'))}
+						onclick={() => goto(resolve(`/deck/${deckId}/preview`))}
 						class="flex h-11 w-full cursor-pointer items-center justify-center rounded-2xl bg-slate-100 font-headline text-xs font-bold text-slate-600 hover:bg-slate-200 active:scale-95"
 					>
-						Return to Dashboard
+						Back to Deck
 					</button>
 				</div>
 			</div>

@@ -13,8 +13,11 @@ export function isCloudSyncEnabled(): boolean {
 /**
  * Returns base XP awarded for rating a flashcard in a given study mode
  */
-export function calculateReviewXP(mode: 'srs' | 'weak' | 'all', rating: StudyRating): number {
-	if (mode === 'weak') {
+export function calculateReviewXP(
+	mode: 'srs' | 'weak' | 'learning' | 'all',
+	rating: StudyRating
+): number {
+	if (mode === 'weak' || mode === 'learning') {
 		switch (rating) {
 			case 'easy':
 				return 4;
@@ -73,7 +76,7 @@ export function calculateGameXP(correct: number, accuracy: number, maxCombo: num
  * Calculates end-of-session completion & accuracy bonus XP
  */
 export function calculateSessionBonus(
-	mode: 'srs' | 'weak' | 'all',
+	mode: 'srs' | 'weak' | 'learning' | 'all',
 	totalCards: number,
 	correctCount: number
 ): { completionBonus: number; accuracyBonus: number; totalBonus: number } {
@@ -88,7 +91,7 @@ export function calculateSessionBonus(
 	if (mode === 'srs') {
 		completionBonus = 5;
 		if (totalCards >= 3 && accuracy >= 80) accuracyBonus = 3;
-	} else if (mode === 'weak') {
+	} else if (mode === 'weak' || mode === 'learning') {
 		completionBonus = 4;
 		if (totalCards >= 3 && accuracy >= 75) accuracyBonus = 4;
 	} else if (totalCards >= 5 && accuracy >= 80) {

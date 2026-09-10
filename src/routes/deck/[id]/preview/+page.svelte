@@ -27,6 +27,7 @@
 		Brain,
 		BookOpen,
 		Dumbbell,
+		GraduationCap,
 		Play,
 		PlayCircle,
 		Volume2,
@@ -69,8 +70,8 @@
 	let activeViewTab = $state<'study' | 'table'>('study');
 
 	// Study Settings
-	let studyMode = $state<'srs' | 'all' | 'weak'>('srs');
-	let cardLimit = $state<number>(20);
+	let studyMode = $state<'srs' | 'all' | 'learning' | 'weak'>('srs');
+	let cardLimit = $state<number>(10);
 	let showPinyin = $state(true);
 
 	// Table Search & Filters
@@ -155,6 +156,10 @@
 		learningCount = learning;
 		dueCount = due;
 		weakCount = weak;
+
+		if (dueCount === 0 && studyMode === 'srs') {
+			studyMode = learningCount > 0 ? 'learning' : 'all';
+		}
 	}
 
 	async function handleToggleSave(wordNo: number) {
@@ -380,11 +385,14 @@
 				<div class="mt-2 grid grid-cols-3 gap-2">
 					<button
 						type="button"
+						disabled={dueCount === 0}
 						onclick={() => (studyMode = 'srs')}
-						class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border p-3 text-center transition-all {studyMode ===
-						'srs'
-							? 'border-indigo-600 bg-indigo-50 text-indigo-700 shadow-xs ring-2 ring-indigo-600/20'
-							: 'border-slate-200/80 bg-slate-50 text-slate-600 hover:bg-slate-100'}"
+						class="flex flex-col items-center justify-center rounded-2xl border p-3 text-center transition-all {dueCount ===
+						0
+							? 'cursor-not-allowed border-slate-200/50 bg-slate-50/50 text-slate-300 opacity-50'
+							: studyMode === 'srs'
+								? 'cursor-pointer border-indigo-600 bg-indigo-50 text-indigo-700 shadow-xs ring-2 ring-indigo-600/20'
+								: 'cursor-pointer border-slate-200/80 bg-slate-50 text-slate-600 hover:bg-slate-100'}"
 					>
 						<Brain size={19} strokeWidth={2} class="mb-1" />
 						<span class="font-headline text-xs font-bold">Spaced SRS</span>
@@ -406,15 +414,18 @@
 
 					<button
 						type="button"
-						onclick={() => (studyMode = 'weak')}
-						class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border p-3 text-center transition-all {studyMode ===
-						'weak'
-							? 'border-indigo-600 bg-indigo-50 text-indigo-700 shadow-xs ring-2 ring-indigo-600/20'
-							: 'border-slate-200/80 bg-slate-50 text-slate-600 hover:bg-slate-100'}"
+						disabled={learningCount === 0}
+						onclick={() => (studyMode = 'learning')}
+						class="flex flex-col items-center justify-center rounded-2xl border p-3 text-center transition-all {learningCount ===
+						0
+							? 'cursor-not-allowed border-slate-200/50 bg-slate-50/50 text-slate-300 opacity-50'
+							: studyMode === 'learning'
+								? 'cursor-pointer border-indigo-600 bg-indigo-50 text-indigo-700 shadow-xs ring-2 ring-indigo-600/20'
+								: 'cursor-pointer border-slate-200/80 bg-slate-50 text-slate-600 hover:bg-slate-100'}"
 					>
-						<Dumbbell size={19} strokeWidth={2} class="mb-1" />
-						<span class="font-headline text-xs font-bold">Difficult</span>
-						<span class="font-sans text-[10px] opacity-75">{weakCount} cards</span>
+						<GraduationCap size={19} strokeWidth={2} class="mb-1" />
+						<span class="font-headline text-xs font-bold">Learning</span>
+						<span class="font-sans text-[10px] opacity-75">{learningCount} cards</span>
 					</button>
 				</div>
 			</div>

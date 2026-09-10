@@ -246,5 +246,25 @@ describe('SRS SM-2 Algorithm', () => {
 		const lastTwoNos = shuffled.slice(3).map((c) => c.No);
 		expect(lastTwoNos.sort()).toEqual([1, 3]);
 	});
+
+	it('classifies cards not marked as easy as learning', () => {
+		const easyCard = calculateNextReview(undefined, 'easy');
+		expect(easyCard.lastRating).toBe('easy');
+		expect(isCardLearning(easyCard)).toBe(false);
+		expect(isCardMastered(easyCard)).toBe(true);
+
+		const goodCard = calculateNextReview(undefined, 'good');
+		expect(goodCard.lastRating).toBe('good');
+		expect(isCardLearning(goodCard)).toBe(true);
+		expect(isCardMastered(goodCard)).toBe(false);
+
+		const hardCard = calculateNextReview(undefined, 'hard');
+		expect(hardCard.lastRating).toBe('hard');
+		expect(isCardLearning(hardCard)).toBe(true);
+
+		const againCard = calculateNextReview(undefined, 'again');
+		expect(againCard.lastRating).toBe('again');
+		expect(isCardLearning(againCard)).toBe(true);
+	});
 });
 

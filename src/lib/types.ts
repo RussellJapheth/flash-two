@@ -20,6 +20,7 @@ export interface WordProgress {
 	easeFactor?: number;
 	reps?: number;
 	lapses?: number;
+	lastRating?: StudyRating;
 }
 
 export interface CustomDeck {

@@ -88,7 +88,8 @@ export function calculateNextReview(
 		interval,
 		easeFactor,
 		reps,
-		lapses
+		lapses,
+		lastRating: rating
 	};
 }
 
@@ -99,12 +100,17 @@ export function isCardDue(progress?: WordProgress): boolean {
 
 export function isCardMastered(progress?: WordProgress): boolean {
 	if (!progress) return false;
+	if (progress.lastRating === 'easy') return true;
 	return (progress.reps ?? 0) >= 3 && (progress.interval ?? 0) >= 7;
 }
 
 export function isCardLearning(progress?: WordProgress): boolean {
 	if (!progress) return false;
-	return (progress.correct > 0 || progress.wrong > 0) && !isCardMastered(progress);
+	if (!isCardStudied(progress)) return false;
+	if (progress.lastRating) {
+		return progress.lastRating !== 'easy';
+	}
+	return !isCardMastered(progress);
 }
 
 export function isCardStudied(progress?: WordProgress): boolean {

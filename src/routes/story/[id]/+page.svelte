@@ -335,11 +335,7 @@
 
 		<!-- Scene Image — top fixed portion -->
 		<div class="relative h-[42%] shrink-0 overflow-hidden bg-slate-200">
-			<img
-				src={story.bgImageUrl}
-				alt="Scene Background"
-				class="h-full w-full object-cover"
-			/>
+			<img src={story.bgImageUrl} alt="Scene Background" class="h-full w-full object-cover" />
 			<!-- Soft bottom fade to blend into the content panel -->
 			<div
 				class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-50 to-transparent"
@@ -394,7 +390,7 @@
 		</div>
 
 		<!-- Dialogue Panel — scrollable content below image -->
-		<div class="flex min-h-0 flex-1 flex-col overflow-y-auto bg-slate-50 px-4 pb-6 pt-3">
+		<div class="flex min-h-0 flex-1 flex-col overflow-y-auto bg-slate-50 px-4 pt-3 pb-6">
 			{#if currentNode}
 				<div class="space-y-3">
 					<!-- Speaker Text -->
@@ -507,7 +503,9 @@
 								Complete the sentence
 							</p>
 
-							<div class="rounded-2xl border border-slate-200/80 bg-white p-4 text-center shadow-sm">
+							<div
+								class="rounded-2xl border border-slate-200/80 bg-white p-4 text-center shadow-sm"
+							>
 								<p class="font-headline text-base font-bold text-slate-900">
 									{#if selectedClozeOption}
 										{currentNode.cloze.sentence.replace('{blank}', `[ ${selectedClozeOption} ]`)}
@@ -532,7 +530,9 @@
 									<button
 										type="button"
 										onclick={() => handleSelectCloze(opt)}
-										class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border bg-white px-3 py-3 text-center shadow-sm transition-all {getClozeOptionClass(opt)}"
+										class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border bg-white px-3 py-3 text-center shadow-sm transition-all {getClozeOptionClass(
+											opt
+										)}"
 									>
 										<span class="font-headline text-sm font-bold text-slate-900">{opt}</span>
 										{#if showPinyin && currentNode.cloze.optionPinyins?.[opt]}
@@ -625,7 +625,9 @@
 								</div>
 
 								{#if speechTranscript}
-									<div class="rounded-xl border border-slate-200/80 bg-white p-3 text-center shadow-sm">
+									<div
+										class="rounded-xl border border-slate-200/80 bg-white p-3 text-center shadow-sm"
+									>
 										<p class="font-sans text-xs text-slate-400">Heard:</p>
 										<p class="font-headline text-sm font-bold text-slate-900">
 											"{speechTranscript}"

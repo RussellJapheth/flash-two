@@ -10,7 +10,7 @@ export interface GameScoreRecord {
 	wrong: number;
 	accuracy: number;
 	maxCombo: number;
-	mode: 'visual' | 'audio';
+	mode: 'visual' | 'audio' | 'voice';
 	playedAt: number;
 }
 
@@ -56,7 +56,7 @@ export function migrateGuestGameScores(targetUser?: string): number {
 export function deduplicateUserLeaderboard(
 	records: GameScoreRecord[],
 	gameId?: string,
-	mode?: 'visual' | 'audio'
+	mode?: 'visual' | 'audio' | 'voice'
 ): GameScoreRecord[] {
 	const userBestMap = new Map<string, GameScoreRecord>();
 
@@ -137,7 +137,7 @@ export function saveLocalGameScore(
 	return newRecord;
 }
 
-export function getGameHighScore(gameId: string, mode?: 'visual' | 'audio'): number {
+export function getGameHighScore(gameId: string, mode?: 'visual' | 'audio' | 'voice'): number {
 	const scores = getLocalGameScores(gameId);
 	const filtered = mode ? scores.filter((s) => (s.mode || 'visual') === mode) : scores;
 	if (filtered.length === 0) return 0;
@@ -201,7 +201,7 @@ export function syncRemoteScoresToLocal(
 // Fetch global leaderboard from /leaderboard endpoint (Only for cloud-synced users, 1 entry per user per game per mode)
 export async function fetchRemoteLeaderboard(
 	gameId?: string,
-	mode?: 'visual' | 'audio',
+	mode?: 'visual' | 'audio' | 'voice',
 	limit = 50
 ): Promise<GameScoreRecord[]> {
 	if (typeof window === 'undefined') return [];

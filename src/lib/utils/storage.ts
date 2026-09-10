@@ -619,6 +619,20 @@ export function setLeaderboardDisabled(disabled: boolean): void {
 	}
 }
 
+export const DEBUG_MODE_KEY = 'flashcards_debug_mode';
+
+export function isDebugModeEnabled(): boolean {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return false;
+	const val = localStorage.getItem(DEBUG_MODE_KEY);
+	return val === 'true'; // Default is OFF (false)
+}
+
+export function setDebugModeEnabled(enabled: boolean): void {
+	if (typeof window !== 'undefined' || typeof localStorage !== 'undefined') {
+		localStorage.setItem(DEBUG_MODE_KEY, String(enabled));
+	}
+}
+
 export function recordRecentlyOpenedPack(packId: string): void {
 	if (typeof window === 'undefined' || !packId) return;
 	try {

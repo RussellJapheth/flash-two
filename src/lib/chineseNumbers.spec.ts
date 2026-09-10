@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import {
 	numberToChinese,
+	numberToEnglish,
+	parseEnglishSpokenNumber,
 	generateDistractors,
 	generateNumberRushQuestion
 } from './utils/chineseNumbers';
@@ -56,6 +58,38 @@ describe('Chinese Number Converter (Number Rush)', () => {
 			hanzi: '九百九十九',
 			pinyin: 'jiǔ bǎi jiǔ shí jiǔ'
 		});
+	});
+
+	it('converts numbers to English words accurately', () => {
+		expect(numberToEnglish(0)).toBe('zero');
+		expect(numberToEnglish(7)).toBe('seven');
+		expect(numberToEnglish(15)).toBe('fifteen');
+		expect(numberToEnglish(42)).toBe('forty two');
+		expect(numberToEnglish(100)).toBe('one hundred');
+		expect(numberToEnglish(108)).toBe('one hundred eight');
+		expect(numberToEnglish(230)).toBe('two hundred thirty');
+		expect(numberToEnglish(576)).toBe('five hundred seventy six');
+	});
+
+	it('parses spoken English numbers and digits accurately', () => {
+		expect(parseEnglishSpokenNumber('zero')).toBe(0);
+		expect(parseEnglishSpokenNumber('0')).toBe(0);
+		expect(parseEnglishSpokenNumber('for')).toBe(4);
+		expect(parseEnglishSpokenNumber('to')).toBe(2);
+		expect(parseEnglishSpokenNumber('ate')).toBe(8);
+		expect(parseEnglishSpokenNumber('seven')).toBe(7);
+		expect(parseEnglishSpokenNumber('twenty five')).toBe(25);
+		expect(parseEnglishSpokenNumber('twenty-five')).toBe(25);
+		expect(parseEnglishSpokenNumber('twenty 5')).toBe(25);
+		expect(parseEnglishSpokenNumber('three five')).toBe(35);
+		expect(parseEnglishSpokenNumber('25')).toBe(25);
+		expect(parseEnglishSpokenNumber('one hundred and five')).toBe(105);
+		expect(parseEnglishSpokenNumber('one hundred five')).toBe(105);
+		expect(parseEnglishSpokenNumber('one oh five')).toBe(105);
+		expect(parseEnglishSpokenNumber('a hundred twenty five')).toBe(125);
+		expect(parseEnglishSpokenNumber('105')).toBe(105);
+		expect(parseEnglishSpokenNumber('two hundred thirty four')).toBe(234);
+		expect(parseEnglishSpokenNumber('hello world')).toBeNull();
 	});
 
 	it('generates 3 distinct valid distractors for any number', () => {

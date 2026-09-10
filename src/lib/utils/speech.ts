@@ -175,8 +175,9 @@ export function evaluateSpeechAccuracy(
 
 export interface SpeechRecognizerOptions {
 	lang: 'zh-CN' | 'fr-FR' | string;
+	continuous?: boolean;
 	onStart?: () => void;
-	onResult?: (transcript: string, isFinal: boolean) => void;
+	onResult?: (transcript: string, isFinal: boolean, alternatives?: string[]) => void;
 	onError?: (error: string) => void;
 	onEnd?: () => void;
 }
@@ -219,18 +220,23 @@ export function startSpeechRecognition(
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const recognizer = new (SpeechRecognition as any)();
 		recognizer.lang = options.lang;
-		recognizer.continuous = false;
+		recognizer.continuous = options.continuous ?? false;
 		recognizer.interimResults = true;
-		recognizer.maxAlternatives = 3;
+		recognizer.maxAlternatives = 5;
+
+		let isTerminated = false;
 
 		recognizer.onstart = () => {
+			if (isTerminated) return;
 			if (options.onStart) options.onStart();
 		};
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		recognizer.onresult = (event: any) => {
+			if (isTerminated) return;
 			let finalTranscript = '';
 			let interimTranscript = '';
+			const alternatives: string[] = [];
 
 			for (let i = event.resultIndex; i < event.results.length; i++) {
 				const result = event.results[i];
@@ -240,23 +246,33 @@ export function startSpeechRecognition(
 				} else {
 					interimTranscript += transcript;
 				}
+
+				for (let a = 0; a < result.length; a++) {
+					if (result[a]?.transcript) {
+						alternatives.push(result[a].transcript);
+					}
+				}
 			}
 
 			const text = finalTranscript || interimTranscript;
 			const isFinal = Boolean(finalTranscript);
 			if (options.onResult) {
-				options.onResult(text, isFinal);
+				options.onResult(text, isFinal, alternatives);
 			}
 		};
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		recognizer.onerror = (event: any) => {
+			if (isTerminated || event.error === 'aborted') {
+				return;
+			}
 			if (options.onError) {
 				options.onError(event.error || 'Speech recognition error');
 			}
 		};
 
 		recognizer.onend = () => {
+			if (isTerminated) return;
 			if (options.onEnd) options.onEnd();
 		};
 
@@ -265,6 +281,7 @@ export function startSpeechRecognition(
 		return {
 			stop: () => {
 				try {
+					isTerminated = true;
 					recognizer.stop();
 				} catch {
 					// Ignore if already stopped
@@ -272,6 +289,7 @@ export function startSpeechRecognition(
 			},
 			abort: () => {
 				try {
+					isTerminated = true;
 					recognizer.abort();
 				} catch {
 					// Ignore if already aborted

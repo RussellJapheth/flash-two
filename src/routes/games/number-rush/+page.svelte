@@ -6,7 +6,12 @@
 	import GameCanvasFX from '$lib/components/games/GameCanvasFX.svelte';
 	import GameAvatar from '$lib/components/games/GameAvatar.svelte';
 	import GameComboFloat from '$lib/components/games/GameComboFloat.svelte';
-	import { generateNumberRushQuestion, type NumberRushQuestion } from '$lib/utils/chineseNumbers';
+	import {
+		generateNumberRushQuestion,
+		numberToEnglish,
+		parseEnglishSpokenNumber,
+		type NumberRushQuestion
+	} from '$lib/utils/chineseNumbers';
 	import {
 		saveGameScore,
 		getGameHighScore,
@@ -14,8 +19,14 @@
 		syncPendingGameScores,
 		type GameScoreRecord
 	} from '$lib/utils/gameStorage';
+	import { isDebugModeEnabled } from '$lib/utils/storage';
 	import { addXP, calculateGameXP } from '$lib/utils/xp';
 	import { playSound, speakWord, stopSpeech } from '$lib/utils/audio';
+	import {
+		startSpeechRecognition,
+		isSpeechRecognitionSupported,
+		type SpeechRecognizerHandle
+	} from '$lib/utils/speech';
 	import {
 		Volume2,
 		RotateCcw,
@@ -26,21 +37,44 @@
 		Play,
 		Timer,
 		Award,
-		Zap
+		Zap,
+		Mic,
+		AlertCircle
 	} from 'lucide-svelte';
 
 	type GamePhase = 'lobby' | 'countdown' | 'playing' | 'summary';
+	type GameMode = 'visual' | 'audio' | 'voice';
 
 	// Game Configuration & State
 	let phase = $state<GamePhase>('lobby');
-	let audioMode = $state(false); // Visual mode by default; toggleable for listening challenge
+	let gameMode = $state<GameMode>('visual');
 	let maxRange = $state(99); // Standard 0-99 (can scale to 999)
+	let isSpeechSupported = $state(false);
+	let storageVersion = $state(0);
+	let isDebugMode = $derived.by(() => {
+		void storageVersion;
+		void phase;
+		return isDebugModeEnabled();
+	});
 
 	// Round & Timer State
 	let countdownValue = $state(3);
 	let roundTimeLeft = $state(60);
 	let questionTimeLeft = $state(5);
 	let isAudioLoading = $state(false);
+
+	// Voice Mode State
+	let isMicListening = $state(false);
+	let isMicPermissionPending = $state(false);
+	let isMicPermissionDenied = $state(false);
+	let voiceTranscript = $state('');
+	let voiceDebugTranscript = $state('');
+	let voiceDebugIsFinal = $state(false);
+	let voiceDebugError = $state('');
+	let voiceDebugParsed = $state<number | null>(null);
+	let voiceDebugAlternatives = $state<string[]>([]);
+	let voiceDebugLog = $state<string[]>([]);
+	let recognizerHandle: SpeechRecognizerHandle | null = null;
 
 	// Score & Gameplay Metrics
 	let score = $state(0);
@@ -50,10 +84,9 @@
 	let wrongCount = $state(0);
 	let earnedXP = $state(0);
 	let isNewHighScore = $state(false);
-	let storageVersion = $state(0);
 	let highScore = $derived.by(() => {
 		void storageVersion;
-		return getGameHighScore('number-rush', audioMode ? 'audio' : 'visual');
+		return getGameHighScore('number-rush', gameMode);
 	});
 
 	// Current Question & Selection Feedback
@@ -108,6 +141,10 @@
 	});
 
 	onMount(async () => {
+		isSpeechSupported = isSpeechRecognitionSupported();
+		if (!isSpeechSupported && gameMode === 'voice') {
+			gameMode = 'visual';
+		}
 		storageVersion++;
 		if (isCloudSyncEnabled()) {
 			await syncPendingGameScores();
@@ -117,8 +154,17 @@
 
 	onDestroy(() => {
 		cleanupTimers();
+		stopRecognizer();
 		stopSpeech();
 	});
+
+	function stopRecognizer() {
+		if (recognizerHandle) {
+			recognizerHandle.abort();
+			recognizerHandle = null;
+		}
+		isMicListening = false;
+	}
 
 	function cleanupTimers() {
 		if (countdownTimer) clearInterval(countdownTimer);
@@ -131,6 +177,8 @@
 
 	function startPreGameCountdown() {
 		cleanupTimers();
+		stopRecognizer();
+		storageVersion++;
 		phase = 'countdown';
 		countdownValue = 3;
 		playSound('flip');
@@ -165,29 +213,45 @@
 		selectedOption = null;
 		lastAnswerStatus = null;
 		isAnswerLocked = false;
+		voiceTranscript = '';
+		isMicPermissionPending = false;
+		isMicPermissionDenied = false;
 		usedNumbersInRound = new Set<number>();
 
-		// 60-second round clock
-		gameRoundTimer = setInterval(() => {
-			roundTimeLeft -= 1;
-			if (roundTimeLeft <= 0) {
-				endGameRound();
-			}
-		}, 1000);
-
-		nextQuestion();
+		if (gameMode !== 'voice') {
+			// For visual & audio modes: start 60s round clock immediately
+			gameRoundTimer = setInterval(() => {
+				roundTimeLeft -= 1;
+				if (roundTimeLeft <= 0) {
+					endGameRound();
+				}
+			}, 1000);
+			nextQuestion();
+		} else {
+			// For voice mode: wait until browser mic permission is granted and speech recognition is ready
+			isMicPermissionPending = true;
+			nextQuestion();
+			startVoiceRecognition();
+		}
 	}
 
 	async function nextQuestion() {
+		if (gameMode !== 'voice') {
+			stopRecognizer();
+		}
 		if (phase !== 'playing') return;
 		isAnswerLocked = false;
 		selectedOption = null;
 		lastAnswerStatus = null;
+		voiceTranscript = '';
+		voiceDebugTranscript = '';
+		voiceDebugParsed = null;
+		voiceDebugAlternatives = [];
 
 		const q = generateNumberRushQuestion(maxRange, usedNumbersInRound);
 		currentQuestion = q;
 
-		if (audioMode) {
+		if (gameMode === 'audio') {
 			questionTimeLeft = 5;
 			isAudioLoading = true;
 			try {
@@ -201,10 +265,11 @@
 
 	function startQuestionCountdown() {
 		if (questionTimer) clearInterval(questionTimer);
+		if (gameMode !== 'audio' || phase !== 'playing') return;
 		questionTimeLeft = 5;
 
 		questionTimer = setInterval(() => {
-			if (phase !== 'playing' || !audioMode) {
+			if (phase !== 'playing' || gameMode !== 'audio') {
 				if (questionTimer) clearInterval(questionTimer);
 				return;
 			}
@@ -217,6 +282,9 @@
 
 	function handleQuestionTimeout() {
 		if (isAnswerLocked || phase !== 'playing') return;
+		if (gameMode !== 'voice') {
+			stopRecognizer();
+		}
 		isAnswerLocked = true;
 		wrongCount += 1;
 		combo = 0;
@@ -228,7 +296,124 @@
 
 		setTimeout(() => {
 			nextQuestion();
-		}, 600);
+		}, 550);
+	}
+
+	function evaluateSpokenCandidates(
+		candidates: string[],
+		question: NumberRushQuestion
+	): { isCorrect: boolean; matchedValue: number; matchedText: string } | null {
+		if (!candidates || candidates.length === 0) return null;
+
+		const expectedEnglish = numberToEnglish(question.correctValue).toLowerCase().trim();
+		const digitStr = String(question.correctValue);
+
+		for (const text of candidates) {
+			if (!text || !text.trim()) continue;
+
+			// 1. Direct parsed numerical value
+			const parsedVal = parseEnglishSpokenNumber(text);
+			if (parsedVal !== null && parsedVal === question.correctValue) {
+				return { isCorrect: true, matchedValue: question.correctValue, matchedText: text };
+			}
+
+			// 2. Strict exact match (no substring contains or fuzzy similarity)
+			const cleanSpoken = text
+				.toLowerCase()
+				.replace(/[^a-z0-9\s]/g, ' ')
+				.replace(/\s+/g, ' ')
+				.trim();
+
+			if (cleanSpoken === expectedEnglish || cleanSpoken === digitStr) {
+				return { isCorrect: true, matchedValue: question.correctValue, matchedText: text };
+			}
+		}
+
+		return null;
+	}
+
+	function startVoiceRecognition() {
+		if (phase !== 'playing' || gameMode !== 'voice') return;
+
+		stopRecognizer();
+
+		console.log('[Voice Debug] Starting continuous SpeechRecognition for round (en-US)...');
+		voiceDebugError = '';
+
+		recognizerHandle = startSpeechRecognition({
+			lang: 'en-US',
+			continuous: true,
+			onStart: () => {
+				console.log('[Voice Debug] onStart: Microphone listening (continuous en-US)');
+				isMicListening = true;
+				isMicPermissionPending = false;
+				isMicPermissionDenied = false;
+				voiceDebugError = '';
+				voiceDebugLog = [
+					`[${new Date().toLocaleTimeString()}] Round mic active (en-US continuous)`,
+					...voiceDebugLog.slice(0, 5)
+				];
+
+				// Start 60s round clock only once browser is ready and listening
+				if (!gameRoundTimer) {
+					gameRoundTimer = setInterval(() => {
+						roundTimeLeft -= 1;
+						if (roundTimeLeft <= 0) {
+							endGameRound();
+						}
+					}, 1000);
+				}
+			},
+			onResult: (transcript, isFinal, alternatives) => {
+				console.log('[Voice Debug] onResult:', { transcript, isFinal, alternatives });
+				if (phase !== 'playing' || isAnswerLocked || !currentQuestion) return;
+
+				voiceTranscript = transcript;
+				voiceDebugTranscript = transcript;
+				voiceDebugIsFinal = isFinal;
+				voiceDebugAlternatives = alternatives || [];
+
+				const candidateList = Array.from(new Set([transcript, ...(alternatives || [])]));
+				const evaluated = evaluateSpokenCandidates(candidateList, currentQuestion);
+				const parsed = parseEnglishSpokenNumber(transcript);
+				voiceDebugParsed = parsed;
+				const altStr =
+					alternatives && alternatives.length > 1
+						? ` (alts: ${alternatives.slice(1).join(', ')})`
+						: '';
+				voiceDebugLog = [
+					`[${new Date().toLocaleTimeString()}] "${transcript}"${altStr} (${isFinal ? 'final' : 'interim'}, eval:${evaluated ? 'HIT' : 'awaiting'})`,
+					...voiceDebugLog.slice(0, 6)
+				];
+
+				if (evaluated && evaluated.isCorrect) {
+					handleSelectOption(evaluated.matchedValue);
+				}
+			},
+			onError: (err) => {
+				if (err === 'aborted' || err === 'no-speech') return;
+				console.warn('[Voice Debug] onError:', err);
+				voiceDebugError = String(err);
+				voiceDebugLog = [
+					`[${new Date().toLocaleTimeString()}] Error: ${err}`,
+					...voiceDebugLog.slice(0, 5)
+				];
+				if (err === 'not-allowed' || err === 'service-not-allowed') {
+					isMicPermissionDenied = true;
+					isMicPermissionPending = false;
+					isMicListening = false;
+				}
+			},
+			onEnd: () => {
+				console.log('[Voice Debug] onEnd: Stream ended');
+				isMicListening = false;
+				recognizerHandle = null;
+				// Auto-reconnect continuous stream if round is still active
+				if (phase === 'playing' && gameMode === 'voice' && !isMicPermissionDenied) {
+					startVoiceRecognition();
+				}
+			}
+		});
 	}
 
 	async function playQuestionAudio() {
@@ -243,6 +428,9 @@
 
 	function handleSelectOption(opt: number, event?: MouseEvent) {
 		if (isAnswerLocked || phase !== 'playing' || !currentQuestion) return;
+		if (gameMode !== 'voice') {
+			stopRecognizer();
+		}
 		isAnswerLocked = true;
 		selectedOption = opt;
 
@@ -296,6 +484,7 @@
 
 	async function endGameRound() {
 		cleanupTimers();
+		stopRecognizer();
 		stopSpeech();
 		phase = 'summary';
 
@@ -308,8 +497,7 @@
 			addXP(earnedXP);
 		}
 
-		const currentMode = audioMode ? 'audio' : 'visual';
-		const prevHigh = getGameHighScore('number-rush', currentMode);
+		const prevHigh = getGameHighScore('number-rush', gameMode);
 		if (score > prevHigh && score > 0) {
 			isNewHighScore = true;
 		}
@@ -322,7 +510,7 @@
 			wrong: wrongCount,
 			accuracy,
 			maxCombo,
-			mode: audioMode ? 'audio' : 'visual'
+			mode: gameMode
 		});
 		storageVersion++;
 
@@ -333,7 +521,7 @@
 	}
 
 	function handleKeydown(event: KeyboardEvent) {
-		if (phase !== 'playing' || isAnswerLocked || !currentQuestion) return;
+		if (phase !== 'playing' || isAnswerLocked || !currentQuestion || gameMode === 'voice') return;
 		const key = event.key;
 		const keyMap: Record<string, number> = {
 			'1': 0,
@@ -350,7 +538,7 @@
 	}
 </script>
 
-<svelte:window onkeydown={handleKeydown} />
+<svelte:window onkeydown={handleKeydown} onfocus={() => storageVersion++} />
 
 <svelte:head>
 	<title>Number Rush (数字狂飙) — FlashCards</title>
@@ -374,7 +562,11 @@
 	</div>
 
 	<!-- Dynamic Canvas FX Layer (sparks, waves, confetti) -->
-	<GameCanvasFX bind:this={canvasFxRef} audioActive={audioMode && isAudioLoading} />
+	<GameCanvasFX
+		bind:this={canvasFxRef}
+		audioActive={(gameMode === 'audio' && isAudioLoading) ||
+			(gameMode === 'voice' && isMicListening)}
+	/>
 
 	<!-- Floating points / combo notification layer -->
 	<GameComboFloat bind:this={comboFloatRef} />
@@ -451,39 +643,92 @@
 				<!-- Challenge Format Toggle -->
 				<div class="space-y-2">
 					<span class="font-headline text-xs font-bold text-slate-900">Challenge Format</span>
-					<div class="grid grid-cols-2 gap-2.5">
-						<button
-							type="button"
-							onclick={() => (audioMode = false)}
-							class="flex cursor-pointer items-center justify-center gap-2 rounded-2xl p-3 font-headline text-xs font-extrabold transition-all {audioMode ===
-							false
-								? 'border-2 border-sky-400 bg-sky-50/80 text-slate-900 shadow-xs'
-								: 'border border-slate-200/80 bg-slate-100/40 text-slate-500 hover:bg-white/60'}"
-						>
-							<Sparkles
-								size={16}
-								strokeWidth={2.25}
-								class={audioMode === false ? 'text-sky-600' : 'text-slate-400'}
-							/>
-							<span>Visual (Pinyin + Hanzi)</span>
-						</button>
 
-						<button
-							type="button"
-							onclick={() => (audioMode = true)}
-							class="flex cursor-pointer items-center justify-center gap-2 rounded-2xl p-3 font-headline text-xs font-extrabold transition-all {audioMode ===
-							true
-								? 'border-2 border-sky-400 bg-sky-50/80 text-slate-900 shadow-xs'
-								: 'border border-slate-200/80 bg-slate-100/40 text-slate-500 hover:bg-white/60'}"
-						>
-							<Volume2
-								size={16}
-								strokeWidth={2.25}
-								class={audioMode === true ? 'text-sky-600' : 'text-slate-400'}
-							/>
-							<span>Audio (5s Speed Test)</span>
-						</button>
-					</div>
+					{#if isSpeechSupported}
+						<div class="grid grid-cols-3 gap-2">
+							<button
+								type="button"
+								onclick={() => (gameMode = 'visual')}
+								class="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-2xl p-2.5 text-center font-headline text-xs font-extrabold transition-all {gameMode ===
+								'visual'
+									? 'border-2 border-sky-400 bg-sky-50/80 text-slate-900 shadow-xs'
+									: 'border border-slate-200/80 bg-slate-100/40 text-slate-500 hover:bg-white/60'}"
+							>
+								<Sparkles
+									size={16}
+									strokeWidth={2.25}
+									class={gameMode === 'visual' ? 'text-sky-600' : 'text-slate-400'}
+								/>
+								<span>Visual</span>
+							</button>
+
+							<button
+								type="button"
+								onclick={() => (gameMode = 'audio')}
+								class="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-2xl p-2.5 text-center font-headline text-xs font-extrabold transition-all {gameMode ===
+								'audio'
+									? 'border-2 border-sky-400 bg-sky-50/80 text-slate-900 shadow-xs'
+									: 'border border-slate-200/80 bg-slate-100/40 text-slate-500 hover:bg-white/60'}"
+							>
+								<Volume2
+									size={16}
+									strokeWidth={2.25}
+									class={gameMode === 'audio' ? 'text-sky-600' : 'text-slate-400'}
+								/>
+								<span>Audio (5s)</span>
+							</button>
+
+							<button
+								type="button"
+								onclick={() => (gameMode = 'voice')}
+								class="flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-2xl p-2.5 text-center font-headline text-xs font-extrabold transition-all {gameMode ===
+								'voice'
+									? 'border-2 border-indigo-500 bg-indigo-50/90 text-indigo-950 shadow-xs'
+									: 'border border-slate-200/80 bg-slate-100/40 text-slate-500 hover:bg-white/60'}"
+							>
+								<Mic
+									size={16}
+									strokeWidth={2.25}
+									class={gameMode === 'voice' ? 'text-indigo-600' : 'text-slate-400'}
+								/>
+								<span>Voice (Speak)</span>
+							</button>
+						</div>
+					{:else}
+						<div class="grid grid-cols-2 gap-2.5">
+							<button
+								type="button"
+								onclick={() => (gameMode = 'visual')}
+								class="flex cursor-pointer items-center justify-center gap-2 rounded-2xl p-3 font-headline text-xs font-extrabold transition-all {gameMode ===
+								'visual'
+									? 'border-2 border-sky-400 bg-sky-50/80 text-slate-900 shadow-xs'
+									: 'border border-slate-200/80 bg-slate-100/40 text-slate-500 hover:bg-white/60'}"
+							>
+								<Sparkles
+									size={16}
+									strokeWidth={2.25}
+									class={gameMode === 'visual' ? 'text-sky-600' : 'text-slate-400'}
+								/>
+								<span>Visual (Pinyin + Hanzi)</span>
+							</button>
+
+							<button
+								type="button"
+								onclick={() => (gameMode = 'audio')}
+								class="flex cursor-pointer items-center justify-center gap-2 rounded-2xl p-3 font-headline text-xs font-extrabold transition-all {gameMode ===
+								'audio'
+									? 'border-2 border-sky-400 bg-sky-50/80 text-slate-900 shadow-xs'
+									: 'border border-slate-200/80 bg-slate-100/40 text-slate-500 hover:bg-white/60'}"
+							>
+								<Volume2
+									size={16}
+									strokeWidth={2.25}
+									class={gameMode === 'audio' ? 'text-sky-600' : 'text-slate-400'}
+								/>
+								<span>Audio (5s Speed Test)</span>
+							</button>
+						</div>
+					{/if}
 				</div>
 
 				<!-- Difficulty Range Selection -->
@@ -558,7 +803,13 @@
 			<p
 				class="rounded-full border border-white/80 bg-white/85 px-4 py-1.5 font-sans text-xs font-bold text-sky-950 shadow-xs backdrop-blur-md"
 			>
-				{audioMode ? 'Listen carefully and select fast!' : 'Identify the number and tap the match!'}
+				{#if gameMode === 'voice'}
+					Speak the number in English!
+				{:else if gameMode === 'audio'}
+					Listen carefully and select fast!
+				{:else}
+					Identify the number and tap the match!
+				{/if}
 			</p>
 		</div>
 
@@ -606,13 +857,13 @@
 				</div>
 			</div>
 
-			<!-- Audio 5s Question Countdown Bar (Audio Mode) -->
-			{#if audioMode}
+			<!-- 5s Question Countdown Bar (Audio Mode Only) -->
+			{#if gameMode === 'audio'}
 				<div class="space-y-1">
 					<div class="flex items-center justify-between text-[11px] font-black text-slate-700">
 						<span class="flex items-center gap-1">
 							<Volume2 size={13} strokeWidth={2} class="text-indigo-600" />
-							Audio Timer
+							<span>Audio Timer</span>
 						</span>
 						<span class={questionTimeLeft <= 2 ? 'font-black text-rose-600' : ''}
 							>{questionTimeLeft}s</span
@@ -629,14 +880,16 @@
 
 			<!-- Prompt Card Area with Dynamic Border Glow -->
 			<section
-				class="shadow-card relative flex min-h-[170px] flex-col items-center justify-center rounded-[2.25rem] border border-white/80 bg-white/90 p-6 text-center shadow-xl shadow-sky-900/5 backdrop-blur-xl transition-all {lastAnswerStatus ===
+				class="shadow-card relative flex {gameMode === 'voice'
+					? 'min-h-[280px] flex-1'
+					: 'min-h-[170px]'} flex-col items-center justify-center rounded-[2.25rem] border border-white/80 bg-white/90 p-6 text-center shadow-xl shadow-sky-900/5 backdrop-blur-xl transition-all {lastAnswerStatus ===
 				'correct'
 					? 'border-2 border-emerald-500 bg-emerald-50/90 shadow-emerald-500/20'
 					: lastAnswerStatus === 'wrong'
 						? 'border-2 border-rose-500 bg-rose-50/90 shadow-rose-500/20'
 						: ''}"
 			>
-				{#if audioMode}
+				{#if gameMode === 'audio'}
 					<!-- Audio Mode: Listening Speaker View -->
 					<div class="space-y-3">
 						<button
@@ -659,6 +912,76 @@
 							</span>
 						</div>
 					</div>
+				{:else if gameMode === 'voice'}
+					<!-- Voice Mode: Large Pinyin + Hanzi Badge + Focused Voice Recognition Center -->
+					<div class="flex flex-col items-center justify-center space-y-4">
+						<div class="space-y-1.5">
+							<h3
+								class="font-headline text-4xl font-black tracking-wide text-indigo-600 drop-shadow-xs"
+							>
+								{currentQuestion.pinyin}
+							</h3>
+							<div>
+								<span
+									class="inline-block rounded-full border border-indigo-200 bg-indigo-50 px-5 py-1.5 font-headline text-xl font-black text-indigo-800 shadow-xs"
+								>
+									{currentQuestion.hanzi}
+								</span>
+							</div>
+						</div>
+
+						<!-- Large Animated Mic Waveform & Status Indicator -->
+						<div class="pt-2">
+							{#if isMicPermissionDenied}
+								<div
+									class="inline-flex max-w-xs items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-2 text-left font-sans text-xs font-semibold text-rose-700"
+								>
+									<AlertCircle size={18} class="shrink-0 text-rose-600" />
+									<span
+										>Microphone access was denied. Please allow microphone in browser settings.</span
+									>
+								</div>
+							{:else if isMicPermissionPending}
+								<div
+									class="inline-flex items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-4 py-1.5 font-headline text-xs font-black text-amber-900 shadow-xs"
+								>
+									<Mic size={15} class="animate-pulse text-amber-600" />
+									<span>Allow microphone access to begin…</span>
+								</div>
+							{:else}
+								<div class="flex flex-col items-center space-y-2">
+									<!-- Pulse Ring Mic Container -->
+									<div class="relative flex items-center justify-center">
+										{#if isMicListening}
+											<div
+												class="absolute h-16 w-16 animate-ping rounded-full bg-indigo-400/40 duration-1000"
+											></div>
+										{/if}
+										<div
+											class="flex h-14 w-14 items-center justify-center rounded-full border-2 transition-all {isMicListening
+												? 'border-indigo-400 bg-indigo-50 text-indigo-600 shadow-md shadow-indigo-500/20'
+												: 'border-slate-200 bg-slate-100 text-slate-400'}"
+										>
+											<Mic size={24} strokeWidth={2.5} />
+										</div>
+									</div>
+
+									<!-- Transcribed Speech Feedback -->
+									<div
+										class="inline-flex items-center gap-2 rounded-full border px-4 py-1 font-headline text-xs font-extrabold transition-all {voiceTranscript
+											? 'border-indigo-300 bg-indigo-50 text-indigo-700 shadow-xs'
+											: 'border-slate-200 bg-slate-100/80 text-slate-600'}"
+									>
+										{#if voiceTranscript}
+											<span>Heard: &ldquo;{voiceTranscript}&rdquo;</span>
+										{:else}
+											<span>Speak the number in English…</span>
+										{/if}
+									</div>
+								</div>
+							{/if}
+						</div>
+					</div>
 				{:else}
 					<!-- Visual Mode: Large Pinyin + Hanzi Badge -->
 					<div class="space-y-2">
@@ -676,34 +999,133 @@
 				{/if}
 			</section>
 
-			<!-- 4 Tactile Number Option Buttons (2x2 Grid) -->
-			<div class="grid grid-cols-2 gap-3 pt-2">
-				{#each currentQuestion.options as opt, idx (opt)}
-					{@const isSelected = selectedOption === opt}
-					{@const isThisCorrect = opt === currentQuestion.correctValue}
-					{@const showSuccess = isAnswerLocked && isThisCorrect}
-					{@const showError = isAnswerLocked && isSelected && !isThisCorrect}
-
-					<button
-						type="button"
-						id="option-btn-{idx}"
-						onclick={(e) => handleSelectOption(opt, e)}
-						disabled={isAnswerLocked}
-						class="shadow-card flex h-20 cursor-pointer flex-col items-center justify-center rounded-2xl border text-center transition-all {showSuccess
-							? 'border-2 border-emerald-600 bg-emerald-500 text-white shadow-lg shadow-emerald-500/30'
-							: showError
-								? 'border-2 border-rose-600 bg-rose-500 text-white shadow-lg shadow-rose-500/30'
-								: 'border-2 border-white/90 bg-white/90 text-slate-900 shadow-md hover:border-sky-300 hover:bg-sky-50/60 active:scale-[0.98]'}"
+			<!-- VOICE RECOGNIZER DEBUG PANEL (Controlled by Settings Debug Mode toggle) -->
+			{#if isDebugMode && gameMode === 'voice' && currentQuestion}
+				<div
+					class="rounded-2xl border-2 border-dashed border-indigo-400 bg-slate-900/95 p-3.5 text-left font-mono text-xs text-white shadow-xl backdrop-blur-md"
+				>
+					<div
+						class="flex items-center justify-between border-b border-slate-700 pb-1.5 font-bold text-indigo-300"
 					>
-						<span class="font-headline text-3xl font-black">
-							{opt}
+						<span class="flex items-center gap-1.5">
+							<span
+								class="inline-block h-2.5 w-2.5 rounded-full {isMicListening
+									? 'animate-pulse bg-emerald-400'
+									: 'bg-rose-400'}"
+							></span>
+							VOICE RECOGNIZER DEBUG
 						</span>
-						<span class="font-headline text-[10px] font-bold text-slate-400">
-							Key [{idx + 1}]
+						<span class="rounded bg-indigo-950 px-2 py-0.5 text-[11px] font-bold text-indigo-300">
+							Target: {currentQuestion.correctValue} (&ldquo;{numberToEnglish(
+								currentQuestion.correctValue
+							)}&rdquo;)
 						</span>
-					</button>
-				{/each}
-			</div>
+					</div>
+
+					<div class="mt-2.5 space-y-2 text-[11px]">
+						<div class="flex items-center justify-between">
+							<span class="text-slate-400">Mic State:</span>
+							<span class="font-bold text-amber-300">
+								{isMicListening
+									? 'LISTENING (en-US)'
+									: isMicPermissionPending
+										? 'WAITING PERMISSION'
+										: isMicPermissionDenied
+											? 'PERMISSION DENIED'
+											: 'IDLE'}
+							</span>
+						</div>
+
+						<div class="space-y-1 rounded-xl border border-slate-700/80 bg-slate-800/80 p-2.5">
+							<div class="text-[10px] font-extrabold tracking-wider text-slate-400 uppercase">
+								Raw Speech Output
+							</div>
+							<div class="text-sm font-black break-all text-emerald-300">
+								{voiceDebugTranscript ? `"${voiceDebugTranscript}"` : '(awaiting speech...)'}
+							</div>
+							<div class="flex flex-wrap items-center gap-3 pt-1 text-[10px] text-slate-300">
+								<span
+									>isFinal: <strong
+										class={voiceDebugIsFinal ? 'text-emerald-400' : 'text-amber-400'}
+										>{voiceDebugIsFinal ? 'true' : 'false'}</strong
+									></span
+								>
+								<span
+									>Parsed: <strong class="text-sky-300"
+										>{voiceDebugParsed !== null ? voiceDebugParsed : 'null'}</strong
+									></span
+								>
+							</div>
+						</div>
+
+						{#if voiceDebugAlternatives && voiceDebugAlternatives.length > 0}
+							<div class="space-y-1 rounded-xl border border-slate-700/80 bg-slate-800/50 p-2">
+								<div class="text-[10px] font-extrabold tracking-wider text-slate-400 uppercase">
+									All Speech Alternatives ({voiceDebugAlternatives.length})
+								</div>
+								<div class="flex flex-wrap gap-1.5 pt-0.5">
+									{#each voiceDebugAlternatives as alt, idx (idx)}
+										<span
+											class="rounded-md border border-slate-700 bg-slate-800 px-2 py-0.5 text-[10px] text-indigo-200"
+										>
+											"{alt}"
+										</span>
+									{/each}
+								</div>
+							</div>
+						{/if}
+
+						{#if voiceDebugError}
+							<div class="rounded-xl border border-rose-800 bg-rose-950/80 p-2 text-rose-300">
+								<span class="font-bold text-rose-400">Last Error:</span>
+								{voiceDebugError}
+							</div>
+						{/if}
+					</div>
+
+					{#if voiceDebugLog.length > 0}
+						<div class="mt-2.5 border-t border-slate-800 pt-2 text-[10px] text-slate-300">
+							<span class="font-semibold text-slate-400">Stream Event History:</span>
+							<ul class="mt-1 space-y-0.5">
+								{#each voiceDebugLog as log, idx (idx)}
+									<li class="truncate rounded bg-slate-800/40 px-2 py-0.5 text-slate-300">{log}</li>
+								{/each}
+							</ul>
+						</div>
+					{/if}
+				</div>
+			{/if}
+
+			<!-- 4 Tactile Number Option Buttons (Only for Visual & Audio Modes) -->
+			{#if gameMode !== 'voice'}
+				<div class="grid grid-cols-2 gap-3 pt-2">
+					{#each currentQuestion.options as opt, idx (opt)}
+						{@const isSelected = selectedOption === opt}
+						{@const isThisCorrect = opt === currentQuestion.correctValue}
+						{@const showSuccess = isAnswerLocked && isThisCorrect}
+						{@const showError = isAnswerLocked && isSelected && !isThisCorrect}
+
+						<button
+							type="button"
+							id="option-btn-{idx}"
+							onclick={(e) => handleSelectOption(opt, e)}
+							disabled={isAnswerLocked}
+							class="shadow-card flex h-20 cursor-pointer flex-col items-center justify-center rounded-2xl border text-center transition-all {showSuccess
+								? 'border-2 border-emerald-600 bg-emerald-500 text-white shadow-lg shadow-emerald-500/30'
+								: showError
+									? 'border-2 border-rose-600 bg-rose-500 text-white shadow-lg shadow-rose-500/30'
+									: 'border-2 border-white/90 bg-white/90 text-slate-900 shadow-md hover:border-sky-300 hover:bg-sky-50/60 active:scale-[0.98]'}"
+						>
+							<span class="font-headline text-3xl font-black">
+								{opt}
+							</span>
+							<span class="font-headline text-[10px] font-bold text-slate-400">
+								Key [{idx + 1}]
+							</span>
+						</button>
+					{/each}
+				</div>
+			{/if}
 		</div>
 
 		<!-- ══════════════════════════════════════════════════════════ -->
@@ -809,7 +1231,7 @@
 							Trial Format
 						</span>
 						<span class="font-headline font-bold text-slate-900 capitalize"
-							>{summaryRecord.mode}</span
+							>{summaryRecord.mode} Mode</span
 						>
 					</div>
 					<div class="flex items-center justify-between py-2 text-xs">

@@ -207,3 +207,251 @@ export function generateNumberRushQuestion(
 		options: allOptions
 	};
 }
+
+const ONES = [
+	'zero',
+	'one',
+	'two',
+	'three',
+	'four',
+	'five',
+	'six',
+	'seven',
+	'eight',
+	'nine',
+	'ten',
+	'eleven',
+	'twelve',
+	'thirteen',
+	'fourteen',
+	'fifteen',
+	'sixteen',
+	'seventeen',
+	'eighteen',
+	'nineteen'
+];
+
+const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+export function numberToEnglish(num: number): string {
+	const n = Math.floor(Math.max(0, Math.min(999, num)));
+	if (n < 20) return ONES[n];
+	if (n < 100) {
+		const t = Math.floor(n / 10);
+		const u = n % 10;
+		return u === 0 ? TENS[t] : `${TENS[t]} ${ONES[u]}`;
+	}
+	const h = Math.floor(n / 100);
+	const rem = n % 100;
+	if (rem === 0) return `${ONES[h]} hundred`;
+	if (rem < 20) return `${ONES[h]} hundred ${ONES[rem]}`;
+	const t = Math.floor(rem / 10);
+	const u = rem % 10;
+	return u === 0 ? `${ONES[h]} hundred ${TENS[t]}` : `${ONES[h]} hundred ${TENS[t]} ${ONES[u]}`;
+}
+
+const HOMOPHONES: Record<string, string> = {
+	to: 'two',
+	too: 'two',
+	tu: 'two',
+	tew: 'two',
+	doe: 'two',
+	for: 'four',
+	fore: 'four',
+	ford: 'four',
+	fourth: 'four',
+	fourty: 'forty',
+	fo: 'four',
+	won: 'one',
+	wan: 'one',
+	wun: 'one',
+	juan: 'one',
+	wen: 'one',
+	ate: 'eight',
+	ait: 'eight',
+	hate: 'eight',
+	late: 'eight',
+	eighth: 'eight',
+	tree: 'three',
+	free: 'three',
+	tri: 'three',
+	tre: 'three',
+	tin: 'ten',
+	tan: 'ten',
+	then: 'ten',
+	den: 'ten',
+	sex: 'six',
+	sicks: 'six',
+	syx: 'six',
+	sax: 'six',
+	sixth: 'six',
+	sevn: 'seven',
+	severn: 'seven',
+	seventh: 'seven',
+	nein: 'nine',
+	nin: 'nine',
+	ninth: 'nine',
+	night: 'nine',
+	mine: 'nine',
+	line: 'nine',
+	oh: 'zero',
+	o: 'zero',
+	nil: 'zero',
+	nought: 'zero',
+	naught: 'zero',
+	hero: 'zero',
+	zed: 'zero',
+	zip: 'zero',
+	thurty: 'thirty',
+	fif: 'five',
+	fife: 'five',
+	hive: 'five',
+	vibe: 'five',
+	fifth: 'five'
+};
+
+const NUMBER_WORDS: Record<string, number> = {
+	zero: 0,
+	one: 1,
+	two: 2,
+	three: 3,
+	four: 4,
+	five: 5,
+	six: 6,
+	seven: 7,
+	eight: 8,
+	nine: 9,
+	ten: 10,
+	eleven: 11,
+	twelve: 12,
+	thirteen: 13,
+	fourteen: 14,
+	fifteen: 15,
+	sixteen: 16,
+	seventeen: 17,
+	eighteen: 18,
+	nineteen: 19,
+	twenty: 20,
+	thirty: 30,
+	forty: 40,
+	fifty: 50,
+	sixty: 60,
+	seventy: 70,
+	eighty: 80,
+	ninety: 90
+};
+
+const FILLER_WORDS = new Set([
+	'it',
+	'is',
+	'its',
+	'the',
+	'a',
+	'an',
+	'number',
+	'and',
+	'i',
+	'said',
+	'say',
+	'think',
+	'um',
+	'uh',
+	'er',
+	'ah',
+	'yeah',
+	'yes',
+	'please'
+]);
+
+export function parseEnglishSpokenNumber(spoken: string): number | null {
+	if (!spoken) return null;
+	const clean = spoken
+		.toLowerCase()
+		.replace(/(\d+)(st|nd|rd|th)\b/g, '$1') // strip ordinals e.g. "35th" -> "35"
+		.replace(/[^a-z0-9\s]/g, ' ')
+		.trim();
+
+	if (!clean) return null;
+
+	// Check if entire string is direct numeric digits (e.g. "25", "0", "105")
+	if (/^\d+$/.test(clean)) {
+		const val = parseInt(clean, 10);
+		if (!isNaN(val) && val >= 0 && val <= 999) return val;
+	}
+
+	const rawWords = clean.split(/\s+/).filter(Boolean);
+	if (rawWords.length === 0) return null;
+
+	// Normalize homophones and filter fillers
+	const words: string[] = [];
+	for (let i = 0; i < rawWords.length; i++) {
+		const rw = rawWords[i];
+		const mapped = HOMOPHONES[rw] || rw;
+		if (mapped === 'a' && rawWords[i + 1] === 'hundred') {
+			words.push('one');
+		} else if (!FILLER_WORDS.has(mapped)) {
+			words.push(mapped);
+		}
+	}
+
+	if (words.length === 0) return null;
+
+	// Case A: Digit-by-digit sequence (e.g. ["three", "five"] -> 35, ["one", "zero", "five"] -> 105)
+	const singleDigitValues: Record<string, number> = {
+		zero: 0,
+		one: 1,
+		two: 2,
+		three: 3,
+		four: 4,
+		five: 5,
+		six: 6,
+		seven: 7,
+		eight: 8,
+		nine: 9
+	};
+
+	if (
+		words.length >= 2 &&
+		words.length <= 3 &&
+		words.every((w) => w in singleDigitValues || /^\d$/.test(w))
+	) {
+		const digits = words.map((w) =>
+			w in singleDigitValues ? singleDigitValues[w] : parseInt(w, 10)
+		);
+		const val = parseInt(digits.join(''), 10);
+		if (!isNaN(val) && val >= 0 && val <= 999) return val;
+	}
+
+	// Case B: Standard English compound numbers (e.g. "twenty five", "two hundred and eight", "a hundred five")
+	let total = 0;
+	let current = 0;
+	let matchedAny = false;
+
+	for (let i = 0; i < words.length; i++) {
+		const w = words[i];
+		if (w in NUMBER_WORDS) {
+			current += NUMBER_WORDS[w];
+			matchedAny = true;
+		} else if (w === 'hundred') {
+			current = (current === 0 ? 1 : current) * 100;
+			total += current;
+			current = 0;
+			matchedAny = true;
+		} else if (/^\d+$/.test(w)) {
+			const n = parseInt(w, 10);
+			if (n >= 100) {
+				total += n;
+			} else {
+				current += n;
+			}
+			matchedAny = true;
+		}
+	}
+	total += current;
+
+	if (matchedAny && total >= 0 && total <= 999) {
+		return total;
+	}
+
+	return null;
+}

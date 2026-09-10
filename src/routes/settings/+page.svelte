@@ -9,6 +9,8 @@
 		setSavedLanguage,
 		isLeaderboardDisabled,
 		setLeaderboardDisabled,
+		isDebugModeEnabled,
+		setDebugModeEnabled,
 		getAllProgress,
 		getAllCustomDecks,
 		getAllSavedWords,
@@ -33,6 +35,7 @@
 		Bell,
 		CloudCog,
 		Trophy,
+		Bug,
 		Download,
 		Upload,
 		Trash2,
@@ -52,6 +55,7 @@
 	let isClearingCache = $state(false);
 	let cacheMessage = $state('');
 	let leaderboardDisabled = $state(true);
+	let isDebugMode = $state(false);
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -82,6 +86,7 @@
 		newUsernameInput = username;
 		activeLanguage = getSavedLanguage();
 		leaderboardDisabled = isLeaderboardDisabled();
+		isDebugMode = isDebugModeEnabled();
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
 	}
@@ -97,6 +102,12 @@
 				pushData(username).catch((e) => console.warn('Push data on toggle error:', e));
 			}
 		}
+	}
+
+	function handleToggleDebugMode() {
+		const next = !isDebugMode;
+		isDebugMode = next;
+		setDebugModeEnabled(next);
 	}
 
 	function handleLanguageChange(lang: 'chinese' | 'french') {
@@ -517,6 +528,42 @@
 			>
 				<span
 					class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out {leaderboardDisabled
+						? 'translate-x-5'
+						: 'translate-x-0'}"
+				></span>
+			</button>
+		</div>
+
+		<!-- Debug Mode Toggle -->
+		<div
+			class="flex w-full items-center justify-between px-5 py-4 transition-colors hover:bg-slate-50/60"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-700"
+				>
+					<Bug size={18} strokeWidth={2} />
+				</div>
+				<div class="text-left">
+					<span class="block font-headline text-sm font-bold text-slate-900">Debug Mode</span>
+					<span class="block font-sans text-xs text-slate-500"
+						>Show live speech recognizer diagnostics in games</span
+					>
+				</div>
+			</div>
+			<button
+				type="button"
+				id="settings-debug-toggle"
+				role="switch"
+				aria-checked={isDebugMode}
+				aria-label="Debug Mode"
+				onclick={handleToggleDebugMode}
+				class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {isDebugMode
+					? 'bg-indigo-600'
+					: 'bg-slate-200'}"
+			>
+				<span
+					class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out {isDebugMode
 						? 'translate-x-5'
 						: 'translate-x-0'}"
 				></span>

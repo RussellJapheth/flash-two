@@ -1,0 +1,205 @@
+{
+	"title": "Health, Pharmacy & Emergencies",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "救命",
+			"Pinyin": "jiùmìng",
+			"Part of Speech": "Interjection / Verb",
+			"English Meaning": "help! / save life!",
+			"Example (Chinese + Pinyin)": "救命啊！有人掉进水里了！(Jiùmìng a! Yǒu rén diào jìn shuǐ lǐ le!) — Help! Someone fell into the water!"
+		},
+		{
+			"No": 2,
+			"Chinese Word": "报警",
+			"Pinyin": "bàojǐng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to report to the police / call 110",
+			"Example (Chinese + Pinyin)": "遇到紧急危险情况请立即报警。(Yùdào jǐnjí wēixiǎn qíngkuàng qǐng lìjí bàojǐng.) — In an emergency or danger, please call the police immediately."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "警察",
+			"Pinyin": "jǐngchá",
+			"Part of Speech": "Noun",
+			"English Meaning": "police officer",
+			"Example (Chinese + Pinyin)": "警察很快赶到了现场处理事故。(Jǐngchá hěn kuài gǎndào le xiànchǎng chǔlǐ shìgù.) — Police arrived quickly at the scene to handle the accident."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "危险",
+			"Pinyin": "wēixiǎn",
+			"Part of Speech": "Adjective / Noun",
+			"English Meaning": "dangerous / danger",
+			"Example (Chinese + Pinyin)": "雷雨天气站在大树下非常危险。(Léiyǔ tiānqì zhàn zài dàshù xià fēicháng wēixiǎn.) — Standing under large trees in a thunderstorm is very dangerous."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "安全",
+			"Pinyin": "ānquán",
+			"Part of Speech": "Adjective / Noun",
+			"English Meaning": "safe / safety / secure",
+			"Example (Chinese + Pinyin)": "出门在外一定要注意人身安全。(Chūmén zàiwài yídìng yào zhùyì rénshēn ānquán.) — Always pay attention to personal safety when traveling."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "丢了",
+			"Pinyin": "diū le",
+			"Part of Speech": "Verb / Phrase",
+			"English Meaning": "lost / misplaced",
+			"Example (Chinese + Pinyin)": "不好了，我的钱包和证件丢了。(Bù hǎo le, wǒ de qiánbāo hé zhèngjiàn diū le.) — Oh no, my wallet and ID cards are lost."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "急诊",
+			"Pinyin": "jízhěn",
+			"Part of Speech": "Noun",
+			"English Meaning": "emergency medical treatment / ER",
+			"Example (Chinese + Pinyin)": "他突然肚子剧痛，赶紧送急诊。(Tā tūrán dùzi jùtòng, gǎnjǐn sòng jízhěn.) — He suddenly had severe abdominal pain, rush him to the ER."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "挂号",
+			"Pinyin": "guàhào",
+			"Part of Speech": "Verb",
+			"English Meaning": "to register (at a hospital) / get a queue number",
+			"Example (Chinese + Pinyin)": "去医院看病先在一楼窗口挂号。(Qù yīyuàn kànbìng xiān zài yī lóu chuāngkǒu guàhào.) — When seeing a doctor at the hospital, register first at the 1st-floor counter."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "看病",
+			"Pinyin": "kànbìng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to see a doctor / to examine a patient",
+			"Example (Chinese + Pinyin)": "如果持续发烧，最好去医院看病。(Rúguǒ chíxù fāshāo, zuìhǎo qù yīyuàn kànbìng.) — If the fever persists, it's best to see a doctor at the hospital."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "药",
+			"Pinyin": "yào",
+			"Part of Speech": "Noun",
+			"English Meaning": "medicine / medication",
+			"Example (Chinese + Pinyin)": "医生给你开了三天的感冒药。(Yīshēng gěi nǐ kāi le sān tiān de gǎnmàoyào.) — The doctor prescribed three days of cold medicine for you."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "吃药",
+			"Pinyin": "chīyào",
+			"Part of Speech": "Verb",
+			"English Meaning": "to take medicine",
+			"Example (Chinese + Pinyin)": "这个药需要饭后半小时吃药。(Zhè ge yào xūyào fànhòu bàn xiǎoshí chīyào.) — This medicine should be taken half an hour after meals."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "发烧",
+			"Pinyin": "fāshāo",
+			"Part of Speech": "Verb",
+			"English Meaning": "to have a fever",
+			"Example (Chinese + Pinyin)": "他量了体温，发烧到三十八度五。(Tā liáng le tǐwēn, fāshāo dào sānshíbā dù wǔ.) — He took his temperature and had a fever of 38.5°C."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "咳嗽",
+			"Pinyin": "késou",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to cough / cough",
+			"Example (Chinese + Pinyin)": "他最近几天喉咙痒，一直咳嗽。(Tā zuìjìn jǐ tiān hóulóng yǎng, yìzhí késou.) — His throat has been itchy and he's been coughing continuously."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "头疼",
+			"Pinyin": "tóuténg",
+			"Part of Speech": "Verb / Adjective",
+			"English Meaning": "headache / to have a headache",
+			"Example (Chinese + Pinyin)": "昨晚没睡好，今天早上头疼得厉害。(Zuówǎn méi shuì hǎo, jīntiān zǎoshang tóuténg de lìhai.) — I didn't sleep well last night, so I have a bad headache this morning."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "肚子疼",
+			"Pinyin": "dùzi téng",
+			"Part of Speech": "Phrase",
+			"English Meaning": "stomachache / belly pain",
+			"Example (Chinese + Pinyin)": "可能吃了不干净的东西，我肚子疼。(Kěnéng chī le bù gānjìng de dōngxi, wǒ dùzi téng.) — Maybe I ate something unclean, my stomach hurts."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "流鼻涕",
+			"Pinyin": "liú bítì",
+			"Part of Speech": "Verb / Phrase",
+			"English Meaning": "to have a runny nose",
+			"Example (Chinese + Pinyin)": "吹了冷风后他就开始打喷嚏流鼻涕。(Chuī le lěngfēng hòu tā jiù kāishǐ dǎpēntì liú bítì.) — After catching cold wind he started sneezing and having a runny nose."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "过敏",
+			"Pinyin": "guòmǐn",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to be allergic / allergy",
+			"Example (Chinese + Pinyin)": "我对花生严重过敏，菜里不能放。(Wǒ duì huāshēng yánzhòng guòmǐn, cài lǐ bù néng fàng.) — I am severely allergic to peanuts, none in the food please."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "检查",
+			"Pinyin": "jiǎnchá",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to check / to examine / medical examination",
+			"Example (Chinese + Pinyin)": "医生建议做一次全面的身体检查。(Yīshēng jiànyì zuò yí cì quánmiàn de shēntǐ jiǎnchá.) — The doctor recommended having a comprehensive physical checkup."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "打针",
+			"Pinyin": "dǎzhēn",
+			"Part of Speech": "Verb",
+			"English Meaning": "to give/get an injection / shot",
+			"Example (Chinese + Pinyin)": "护士打针手法很轻，一点都不疼。(Hùshi dǎzhēn shǒufǎ hěn qīng, yìdiǎn dōu bù téng.) — The nurse gave the injection very gently, it didn't hurt at all."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "严重",
+			"Pinyin": "yánzhòng",
+			"Part of Speech": "Adjective",
+			"English Meaning": "serious / severe / grave",
+			"Example (Chinese + Pinyin)": "幸好只是普通感冒，并不严重。(Xìnghǎo zhǐ shì pǔtōng gǎnmào, bìng bù yánzhòng.) — Fortunately it's just a common cold, not serious."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "难受",
+			"Pinyin": "nánshòu",
+			"Part of Speech": "Adjective",
+			"English Meaning": "uncomfortable / feeling unwell / grieved",
+			"Example (Chinese + Pinyin)": "发高烧全身无力，感觉很难受。(Fā gāoshāo quánshēn wúlì, gǎnjué hěn nánshòu.) — With a high fever and weakness all over, I feel very uncomfortable."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "康复",
+			"Pinyin": "kāngfù",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to recover health / rehabilitation",
+			"Example (Chinese + Pinyin)": "祝你早日康复，重返工作岗位！(Zhù nǐ zǎorì kāngfù, chóngfǎn gōngzuò gǎngwèi!) — Wish you a speedy recovery and return to work!"
+		},
+		{
+			"No": 23,
+			"Chinese Word": "小心",
+			"Pinyin": "xiǎoxīn",
+			"Part of Speech": "Verb / Adjective",
+			"English Meaning": "careful / to be careful / watch out",
+			"Example (Chinese + Pinyin)": "地上有水很滑，请小心行走。(Dìshang yǒu shuǐ hěn huá, qǐng xiǎoxīn xíngzǒu.) — The floor is wet and slippery, please walk carefully."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "摔倒",
+			"Pinyin": "shuāidǎo",
+			"Part of Speech": "Verb",
+			"English Meaning": "to fall down / to trip and fall",
+			"Example (Chinese + Pinyin)": "下雪天路滑，老人走路要防止摔倒。(Xiàxuětiān lù huá, lǎorén zǒulù yào fángzhǐ shuāidǎo.) — Snowy roads are slick, seniors should be careful not to fall."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "流血",
+			"Pinyin": "liúxiě",
+			"Part of Speech": "Verb",
+			"English Meaning": "to bleed / hemorrhage",
+			"Example (Chinese + Pinyin)": "切菜不小心划伤了手指，正在流血。(Qiēcài bù xiǎoxīn huàshāng le shǒuzhǐ, zhèngzài liúxiě.) — Accidentally cut a finger while slicing food, it's bleeding."
+		}
+	]
+}

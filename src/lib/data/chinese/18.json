@@ -1,0 +1,205 @@
+{
+	"title": "Travel, Hotels & Sightseeing",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "护照",
+			"Pinyin": "hùzhào",
+			"Part of Speech": "Noun",
+			"English Meaning": "passport",
+			"Example (Chinese + Pinyin)": "请出示您的护照和登机牌。(Qǐng chūshì nín de hùzhào hé dēngjīpái.) — Please show your passport and boarding pass."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "签证",
+			"Pinyin": "qiānzhèng",
+			"Part of Speech": "Noun",
+			"English Meaning": "visa",
+			"Example (Chinese + Pinyin)": "去国外旅游需要提前办理签证。(Qù guówài lǚyóu xūyào tíqián bànlǐ qiānzhèng.) — Traveling abroad requires applying for a visa in advance."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "行李",
+			"Pinyin": "xíngli",
+			"Part of Speech": "Noun",
+			"English Meaning": "luggage / baggage",
+			"Example (Chinese + Pinyin)": "先生，请问您有几件托运行李？(Xiānsheng, qǐngwèn nín yǒu jǐ jiàn tuōyùn xíngli?) — Sir, how many pieces of checked luggage do you have?"
+		},
+		{
+			"No": 4,
+			"Chinese Word": "箱子",
+			"Pinyin": "xiāngzi",
+			"Part of Speech": "Noun",
+			"English Meaning": "suitcase / trunk / box",
+			"Example (Chinese + Pinyin)": "我的行李箱子装得满满的。(Wǒ de xíngli xiāngzi zhuāng de mǎnmǎn de.) — My suitcase is packed full."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "预订",
+			"Pinyin": "yùdìng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to book / to reserve",
+			"Example (Chinese + Pinyin)": "我已经网上预订了三晚的酒店。(Wǒ yǐjīng wǎngshang yùdìng le sān wǎn de jiǔdiàn.) — I've already booked three nights at the hotel online."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "酒店",
+			"Pinyin": "jiǔdiàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "hotel",
+			"Example (Chinese + Pinyin)": "这家五星级酒店环境很优雅。(Zhè jiā wǔxīngjí jiǔdiàn huánjìng hěn yōuyǎ.) — The environment of this five-star hotel is very elegant."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "入住",
+			"Pinyin": "rùzhù",
+			"Part of Speech": "Verb",
+			"English Meaning": "to check in (hotel)",
+			"Example (Chinese + Pinyin)": "你好，我来办理入住手续。(Nǐ hǎo, wǒ lái bànlǐ rùzhù shǒuxù.) — Hello, I am here to process my check-in."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "退房",
+			"Pinyin": "tuìfáng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to check out (hotel)",
+			"Example (Chinese + Pinyin)": "酒店规定中午十二点前退房。(Jiǔdiàn guīdìng zhōngwǔ shí'èr diǎn qián tuìfáng.) — The hotel policy requires checking out before 12:00 noon."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "单人房",
+			"Pinyin": "dānrénfáng",
+			"Part of Speech": "Noun",
+			"English Meaning": "single room",
+			"Example (Chinese + Pinyin)": "我想订一间安静的单人房。(Wǒ xiǎng dìng yì jiān ānjìng de dānrénfáng.) — I'd like to reserve a quiet single room."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "双人房",
+			"Pinyin": "shuāngrénfáng",
+			"Part of Speech": "Noun",
+			"English Meaning": "double room / twin room",
+			"Example (Chinese + Pinyin)": "我们两个人要一间双人房。(Wǒmen liǎng gè rén yào yì jiān shuāngrénfáng.) — The two of us want a double room."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "门票",
+			"Pinyin": "ménpiào",
+			"Part of Speech": "Noun",
+			"English Meaning": "entrance ticket / admission ticket",
+			"Example (Chinese + Pinyin)": "故宫博物院的门票需要提前预约。(Gùgōng Bówùyuàn de ménpiào xūyào tíqián yùyuē.) — Palace Museum tickets require advance reservation."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "景点",
+			"Pinyin": "jǐngdiǎn",
+			"Part of Speech": "Noun",
+			"English Meaning": "scenic spot / tourist attraction",
+			"Example (Chinese + Pinyin)": "长城是北京最著名的旅游景点。(Chángchéng shì Běijīng zuì zhùmíng de lǚyóu jǐngdiǎn.) — The Great Wall is Beijing's most famous attraction."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "导游",
+			"Pinyin": "dǎoyóu",
+			"Part of Speech": "Noun",
+			"English Meaning": "tour guide",
+			"Example (Chinese + Pinyin)": "导游正在给游客讲解古建筑历史。(Dǎoyóu zhèngzài gěi yóukè jiǎngjiě gǔ jiànzhù lìshǐ.) — The tour guide is explaining the ancient architecture history."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "纪念品",
+			"Pinyin": "jìniànpǐn",
+			"Part of Speech": "Noun",
+			"English Meaning": "souvenir",
+			"Example (Chinese + Pinyin)": "我买了很有中国特色的小纪念品。(Wǒ mǎi le hěn yǒu Zhōngguó tèsè de xiǎo jìniànpǐn.) — I bought some souvenirs with Chinese characteristics."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "航班",
+			"Pinyin": "hángbān",
+			"Part of Speech": "Noun",
+			"English Meaning": "scheduled flight",
+			"Example (Chinese + Pinyin)": "飞往上海的航班将于半小时后起飞。(Fēiwǎng Shànghǎi de hángbān jiāng yú bàn xiǎoshí hòu qǐfēi.) — The flight to Shanghai will depart in half an hour."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "登机牌",
+			"Pinyin": "dēngjīpái",
+			"Part of Speech": "Noun",
+			"English Meaning": "boarding pass",
+			"Example (Chinese + Pinyin)": "请在自助机器上打印您的登机牌。(Qǐng zài zìzhù jīqì shang dǎyìn nín de dēngjīpái.) — Please print your boarding pass at the self-service kiosk."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "安检",
+			"Pinyin": "ānjiǎn",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "security check",
+			"Example (Chinese + Pinyin)": "过安检时请把电脑和液体拿出来。(Guò ānjiǎn shí qǐng bǎ diànnǎo hé yètǐ ná chūlái.) — When passing security, please take out laptops and liquids."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "延误",
+			"Pinyin": "yánwù",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to delay / delayed",
+			"Example (Chinese + Pinyin)": "由于天气原因，列车延误了半小时。(Yóuyú tiānqì yuányīn, lièchē yánwù le bàn xiǎoshí.) — Due to weather conditions, the train is delayed 30 minutes."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "准时",
+			"Pinyin": "zhǔnshí",
+			"Part of Speech": "Adjective / Adverb",
+			"English Meaning": "on time / punctual",
+			"Example (Chinese + Pinyin)": "飞机非常准时地降落在北京机场。(Fēijī fēicháng zhǔnshí de jiàngluò zài Běijīng jīchǎng.) — The airplane landed punctually at Beijing airport."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "风景",
+			"Pinyin": "fēngjǐng",
+			"Part of Speech": "Noun",
+			"English Meaning": "scenery / landscape / view",
+			"Example (Chinese + Pinyin)": "山顶上的自然风景美丽极了。(Shāndǐng shang de zìrán fēngjǐng měilì jí le.) — The natural scenery at the mountain top is magnificent."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "咨询",
+			"Pinyin": "zīxún",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to consult / to inquire / consultation",
+			"Example (Chinese + Pinyin)": "您可以去游客咨询中心询问路线。(Nǐ kěyǐ qù yóukè zīxún zhōngxīn xúnwèn lùxiàn.) — You can inquire about routes at the tourist information center."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "建议",
+			"Pinyin": "jiànyì",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "suggestion / advice / to suggest",
+			"Example (Chinese + Pinyin)": "导游建议我们早上八点出发。(Dǎoyóu jiànyì wǒmen zǎoshang bā diǎn chūfā.) — The tour guide suggested we depart at 8:00 AM."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "愉快",
+			"Pinyin": "yúkuài",
+			"Part of Speech": "Adjective",
+			"English Meaning": "pleasant / delightful / happy",
+			"Example (Chinese + Pinyin)": "祝您在中国度过一段愉快的时光！(Zhù nín zài Zhōngguó dùguò yí duàn yúkuài de shíguāng!) — Wish you a wonderful time in China!"
+		},
+		{
+			"No": 24,
+			"Chinese Word": "出发",
+			"Pinyin": "chūfā",
+			"Part of Speech": "Verb",
+			"English Meaning": "to set off / to depart",
+			"Example (Chinese + Pinyin)": "收拾好行李，我们准备出发了。(Shōushi hǎo xíngli, wǒmen zhǔnbèi chūfā le.) — Packed up our luggage, we're ready to set off."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "到达",
+			"Pinyin": "dàodá",
+			"Part of Speech": "Verb",
+			"English Meaning": "to arrive / to reach",
+			"Example (Chinese + Pinyin)": "预计高铁将在中午十二点到达上海。(Yùjì gāotiě jiāng zài zhōngwǔ shí'èr diǎn dàodá Shànghǎi.) — The high-speed rail is estimated to arrive in Shanghai at 12:00 noon."
+		}
+	]
+}

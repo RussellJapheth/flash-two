@@ -1,0 +1,205 @@
+{
+	"title": "Workplace & Office Communication",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "上班",
+			"Pinyin": "shàngbān",
+			"Part of Speech": "Verb",
+			"English Meaning": "to go to work / on duty",
+			"Example (Chinese + Pinyin)": "我每天早上八点半准时上班。(Wǒ měitiān zǎoshang bā diǎn bàn zhǔnshí shàngbān.) — I go to work punctually at 8:30 every morning."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "下班",
+			"Pinyin": "xiàbān",
+			"Part of Speech": "Verb",
+			"English Meaning": "to get off work / off duty",
+			"Example (Chinese + Pinyin)": "今天下班后你有空一起吃饭吗？(Jīntiān xiàbān hòu nǐ yǒu kòng yìqǐ chīfàn ma?) — Do you have time to eat together after work today?"
+		},
+		{
+			"No": 3,
+			"Chinese Word": "加班",
+			"Pinyin": "jiābān",
+			"Part of Speech": "Verb",
+			"English Meaning": "to work overtime",
+			"Example (Chinese + Pinyin)": "为了赶进度，我们今晚需要加班。(Wèile gǎn jìndù, wǒmen jīnwǎn xūyào jiābān.) — To catch up on progress, we need to work overtime tonight."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "开会",
+			"Pinyin": "kāihuì",
+			"Part of Speech": "Verb",
+			"English Meaning": "to hold a meeting / to attend a meeting",
+			"Example (Chinese + Pinyin)": "下午两点全体员工在大会议室开会。(Xiàwǔ liǎng diǎn quántǐ yuángōng zài dà huìyìshì kāihuì.) — All staff will meet in the main conference room at 2 PM."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "经理",
+			"Pinyin": "jīnglǐ",
+			"Part of Speech": "Noun",
+			"English Meaning": "manager",
+			"Example (Chinese + Pinyin)": "张经理正在和新客户谈合作。(Zhāng jīnglǐ zhèngzài hé xīn kèhù tán hézuò.) — Manager Zhang is discussing cooperation with a new client."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "同事",
+			"Pinyin": "tóngshì",
+			"Part of Speech": "Noun",
+			"English Meaning": "colleague / co-worker",
+			"Example (Chinese + Pinyin)": "我和同事们相处得非常融洽。(Wǒ hé tóngshìmen xiāngchǔ de fēicháng róngqià.) — I get along very well with my colleagues."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "老板",
+			"Pinyin": "lǎobǎn",
+			"Part of Speech": "Noun",
+			"English Meaning": "boss / proprietor",
+			"Example (Chinese + Pinyin)": "老板同意了我们提出的新方案。(Lǎobǎn tóngyì le wǒmen tíchū de xīn fāng'àn.) — The boss approved our new proposal."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "办公室",
+			"Pinyin": "bàngōngshì",
+			"Part of Speech": "Noun",
+			"English Meaning": "office",
+			"Example (Chinese + Pinyin)": "李总在三楼的办公室等你。(Lǐ zǒng zài sān lóu de bàngōngshì děng nǐ.) — Director Li is waiting for you in the office on the 3rd floor."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "发邮件",
+			"Pinyin": "fā yóujiàn",
+			"Part of Speech": "Verb / Phrase",
+			"English Meaning": "to send an email",
+			"Example (Chinese + Pinyin)": "我已经把项目合同发邮件给你了。(Wǒ yǐjīng bǎ xiàngmù hétong fā yóujiàn gěi nǐ le.) — I have already emailed the project contract to you."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "打印",
+			"Pinyin": "dǎyìn",
+			"Part of Speech": "Verb",
+			"English Meaning": "to print",
+			"Example (Chinese + Pinyin)": "请帮我打印三份开会材料。(Qǐng bāng wǒ dǎyìn sān fèn kāihuì cáiliào.) — Please help me print three copies of the meeting materials."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "准备",
+			"Pinyin": "zhǔnbèi",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to prepare / preparation",
+			"Example (Chinese + Pinyin)": "大家都在认真准备明天的演讲。(Dàjiā dōu zài rènzhēn zhǔnbèi míngtiān de yǎnjiǎng.) — Everyone is diligently preparing for tomorrow's presentation."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "完成",
+			"Pinyin": "wánchéng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to complete / to finish / accomplish",
+			"Example (Chinese + Pinyin)": "这项任务必须在周五前完成。(Zhè xiàng rènwu bìxū zài zhōuwǔ qián wánchéng.) — This task must be completed before Friday."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "负责",
+			"Pinyin": "fùzé",
+			"Part of Speech": "Verb / Adjective",
+			"English Meaning": "to be responsible for / conscientious",
+			"Example (Chinese + Pinyin)": "他负责市场部的产品推广。(Tā fùzé shìchǎngbù de chǎnpǐn tuīguǎng.) — He is in charge of product promotion in marketing."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "项目",
+			"Pinyin": "xiàngmù",
+			"Part of Speech": "Noun",
+			"English Meaning": "project / item",
+			"Example (Chinese + Pinyin)": "我们团队正在做一个新软件项目。(Wǒmen tuánduì zhèngzài zuò yí gè xīn ruǎnjiàn xiàngmù.) — Our team is working on a new software project."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "报告",
+			"Pinyin": "bàogào",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "report / to report",
+			"Example (Chinese + Pinyin)": "我已经写好了上个月的财务报告。(Wǒ yǐjīng xiě hǎo le shàng gè yuè de cáiwù bàogào.) — I have finished writing last month's financial report."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "请假",
+			"Pinyin": "qǐngjià",
+			"Part of Speech": "Verb",
+			"English Meaning": "to ask for leave / time off",
+			"Example (Chinese + Pinyin)": "我身体不舒服，想请两天假。(Wǒ shēntǐ bù shūfu, xiǎng qǐng liǎng tiān jià.) — I feel unwell and would like to ask for two days of leave."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "迟到",
+			"Pinyin": "chídào",
+			"Part of Speech": "Verb",
+			"English Meaning": "to be late / arrive late",
+			"Example (Chinese + Pinyin)": "因为堵车，今天早上我迟到了。(Yīnwèi dǔchē, jīntiān zǎoshang wǒ chídào le.) — Because of traffic, I arrived late this morning."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "工资",
+			"Pinyin": "gōngzī",
+			"Part of Speech": "Noun",
+			"English Meaning": "salary / wages",
+			"Example (Chinese + Pinyin)": "公司每个月十号发工资。(Gōngsī měi gè yuè shí hào fā gōngzī.) — The company pays salaries on the 10th of every month."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "面试",
+			"Pinyin": "miànshì",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "job interview / to interview",
+			"Example (Chinese + Pinyin)": "他明天下午有一场重要面试。(Tā míngtiān xiàwǔ yǒu yì chǎng zhòngyào miànshì.) — He has an important interview tomorrow afternoon."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "问题",
+			"Pinyin": "wèntí",
+			"Part of Speech": "Noun",
+			"English Meaning": "question / problem / issue",
+			"Example (Chinese + Pinyin)": "大家对这个方案还有什么问题吗？(Dàjiā duì zhè ge fāng'àn hái yǒu shénme wèntí ma?) — Does anyone have any questions about this plan?"
+		},
+		{
+			"No": 21,
+			"Chinese Word": "解决",
+			"Pinyin": "jiějué",
+			"Part of Speech": "Verb",
+			"English Meaning": "to resolve / to settle / to solve",
+			"Example (Chinese + Pinyin)": "技术团队很快解决了系统故障。(Jìshù tuánduì hěn kuài jiějué le xìtǒng gùzhàng.) — The tech team resolved the system fault very quickly."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "合作",
+			"Pinyin": "hézuò",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to cooperate / collaboration",
+			"Example (Chinese + Pinyin)": "非常高兴能与贵公司合作！(Fēicháng gāoxìng néng yǔ guì gōngsī hézuò!) — Very glad to cooperate with your esteemed company!"
+		},
+		{
+			"No": 23,
+			"Chinese Word": "讨论",
+			"Pinyin": "tǎolùn",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to discuss / discussion",
+			"Example (Chinese + Pinyin)": "我们下周再仔细讨论这个细节。(Wǒmen xià zhōu zài zǐxì tǎolùn zhè ge xìjié.) — Let's discuss this detail carefully next week."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "同意",
+			"Pinyin": "tóngyì",
+			"Part of Speech": "Verb",
+			"English Meaning": "to agree / to consent",
+			"Example (Chinese + Pinyin)": "我和大家的意见一致，完全同意。(Wǒ hé dàjiā de yìjiàn yízhì, wánquán tóngyì.) — My opinion matches everyone's, I completely agree."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "经验",
+			"Pinyin": "jīngyàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "experience",
+			"Example (Chinese + Pinyin)": "他在国际贸易方面有丰富经验。(Tā zài guójì màoyì fāngmiàn yǒu fēngfù jīngyàn.) — He has rich experience in international trade."
+		}
+	]
+}

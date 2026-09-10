@@ -1,0 +1,205 @@
+{
+	"title": "Dining Out, Flavors & Cooking",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "菜单",
+			"Pinyin": "càidān",
+			"Part of Speech": "Noun",
+			"English Meaning": "menu",
+			"Example (Chinese + Pinyin)": "服务员，请给我们一份菜单。(Fúwùyuán, qǐng gěi wǒmen yí fèn càidān.) — Waiter, please give us a menu."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "服务",
+			"Pinyin": "fúwù",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "service / to serve",
+			"Example (Chinese + Pinyin)": "这家餐厅的服务态度非常好。(Zhè jiā cāntīng de fúwù tàidu fēicháng hǎo.) — The service attitude at this restaurant is very good."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "推荐",
+			"Pinyin": "tuījiàn",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to recommend / recommendation",
+			"Example (Chinese + Pinyin)": "请问你们店有什么特色菜推荐吗？(Qǐngwèn nǐmen diàn yǒu shénme tèsè cài tuījiàn ma?) — Could you recommend your restaurant's specialty dishes?"
+		},
+		{
+			"No": 4,
+			"Chinese Word": "味道",
+			"Pinyin": "wèidao",
+			"Part of Speech": "Noun",
+			"English Meaning": "flavor / taste / smell",
+			"Example (Chinese + Pinyin)": "这道麻婆豆腐的味道很正宗。(Zhè dào mápó dòufu de wèidao hěn zhèngzōng.) — The flavor of this Mapo Tofu is very authentic."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "辣",
+			"Pinyin": "là",
+			"Part of Speech": "Adjective",
+			"English Meaning": "spicy / hot",
+			"Example (Chinese + Pinyin)": "我不太能吃辣，请少放辣椒。(Wǒ bú tài néng chī là, qǐng shǎo fàng làjiāo.) — I can't eat very spicy food, please put less chili."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "甜",
+			"Pinyin": "tián",
+			"Part of Speech": "Adjective",
+			"English Meaning": "sweet",
+			"Example (Chinese + Pinyin)": "这个西瓜又大又甜。(Zhè ge xīguā yòu dà yòu tián.) — This watermelon is both big and sweet."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "酸",
+			"Pinyin": "suān",
+			"Part of Speech": "Adjective",
+			"English Meaning": "sour / tart",
+			"Example (Chinese + Pinyin)": "酸辣汤酸酸辣辣的，很好喝。(Suānlàtāng suānsuān làlà de, hěn hǎohē.) — The hot and sour soup is pleasantly tangy and spicy, very tasty."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "苦",
+			"Pinyin": "kǔ",
+			"Part of Speech": "Adjective",
+			"English Meaning": "bitter",
+			"Example (Chinese + Pinyin)": "良药苦口利于病。(Liáng yào kǔ kǒu lì yú bìng.) — Good medicine tastes bitter but benefits health."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "咸",
+			"Pinyin": "xián",
+			"Part of Speech": "Adjective",
+			"English Meaning": "salty",
+			"Example (Chinese + Pinyin)": "这个菜稍微有点咸，少放点盐吧。(Zhè ge cài shāowēi yǒudiǎn xián, shǎo fàng diǎn yán ba.) — This dish is slightly salty, put a bit less salt."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "清淡",
+			"Pinyin": "qīngdàn",
+			"Part of Speech": "Adjective",
+			"English Meaning": "light / mild in flavor / non-greasy",
+			"Example (Chinese + Pinyin)": "生病时饮食最好清淡一点。(Shēngbìng shí yǐnshí zuìhǎo qīngdàn yìdiǎn.) — When sick, it's best to eat lighter, milder food."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "油腻",
+			"Pinyin": "yóunì",
+			"Part of Speech": "Adjective",
+			"English Meaning": "oily / greasy",
+			"Example (Chinese + Pinyin)": "炸鸡吃多了会觉得油腻。(Zhájī chī duō le huì juéde yóunì.) — Eating too much fried chicken feels greasy."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "煮",
+			"Pinyin": "zhǔ",
+			"Part of Speech": "Verb",
+			"English Meaning": "to boil / to cook in water",
+			"Example (Chinese + Pinyin)": "水开了，可以下水饺煮了。(Shuǐ kāi le, kěyǐ xià shuǐjiǎo zhǔ le.) — The water is boiling, we can put the dumplings in to boil."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "炒",
+			"Pinyin": "chǎo",
+			"Part of Speech": "Verb",
+			"English Meaning": "to stir-fry / to sauté",
+			"Example (Chinese + Pinyin)": "西红柿炒鸡蛋是经典中国菜。(Xīhóngshì chǎo jīdàn shì jīngdiǎn Zhōngguó cài.) — Tomato scrambled eggs is a classic Chinese dish."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "烤",
+			"Pinyin": "kǎo",
+			"Part of Speech": "Verb",
+			"English Meaning": "to roast / to bake / to barbecue",
+			"Example (Chinese + Pinyin)": "北京烤鸭在全世界都很出名。(Běijīng kǎoyā zài quán shìjiè dōu hěn chūmíng.) — Beijing roast duck is famous worldwide."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "炸",
+			"Pinyin": "zhá",
+			"Part of Speech": "Verb",
+			"English Meaning": "to deep-fry",
+			"Example (Chinese + Pinyin)": "刚炸好的油条外脆内软。(Gāng zhá hǎo de yóutiáo wài cuì nèi ruǎn.) — Freshly fried dough sticks are crispy outside and soft inside."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "切",
+			"Pinyin": "qiē",
+			"Part of Speech": "Verb",
+			"English Meaning": "to cut / to slice / to chop",
+			"Example (Chinese + Pinyin)": "请把牛肉切成细丝。(Qǐng bǎ niúròu qiē chéng xì sī.) — Please slice the beef into thin shreds."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "汤",
+			"Pinyin": "tāng",
+			"Part of Speech": "Noun",
+			"English Meaning": "soup / broth",
+			"Example (Chinese + Pinyin)": "饭前喝一碗热汤对胃好。(Fàn qián hē yì wǎn rè tāng duì wèi hǎo.) — Having a bowl of hot soup before meals is good for digestion."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "盐",
+			"Pinyin": "yán",
+			"Part of Speech": "Noun",
+			"English Meaning": "salt",
+			"Example (Chinese + Pinyin)": "炒青菜时放一点点盐就够了。(Chǎo qīngcài shí fàng yìdiǎndiǎn yán jiù gòu le.) — Adding just a little salt is enough when stir-frying greens."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "糖",
+			"Pinyin": "táng",
+			"Part of Speech": "Noun",
+			"English Meaning": "sugar / candy",
+			"Example (Chinese + Pinyin)": "喝咖啡你习惯加糖和牛奶吗？(Hē kāfēi nǐ xíguàn jiā táng hé niúnǎi ma?) — Do you usually add sugar and milk to your coffee?"
+		},
+		{
+			"No": 20,
+			"Chinese Word": "醋",
+			"Pinyin": "cù",
+			"Part of Speech": "Noun",
+			"English Meaning": "vinegar",
+			"Example (Chinese + Pinyin)": "吃饺子蘸点香醋特别香。(Chī jiǎozi zhàn diǎn xiāngcù tèbié xiāng.) — Dipping dumplings in aromatic vinegar is especially delicious."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "酱油",
+			"Pinyin": "jiàngyóu",
+			"Part of Speech": "Noun",
+			"English Meaning": "soy sauce",
+			"Example (Chinese + Pinyin)": "红烧肉需要加入生抽和老抽酱油。(Hóngshāoròu xūyào jiārù shēngchōu hé lǎochōu jiàngyóu.) — Braised pork requires light and dark soy sauce."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "打包",
+			"Pinyin": "dǎbāo",
+			"Part of Speech": "Verb",
+			"English Meaning": "to pack doggie bag / take-out",
+			"Example (Chinese + Pinyin)": "服务员，剩下的菜请帮我们打包。(Fúwùyuán, shèngxià de cài qǐng bāng wǒmen dǎbāo.) — Waiter, please help us pack the remaining food to go."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "新鲜",
+			"Pinyin": "xīnxiān",
+			"Part of Speech": "Adjective",
+			"English Meaning": "fresh",
+			"Example (Chinese + Pinyin)": "这家海鲜店的鱼虾都很新鲜。(Zhè jiā hǎixiān diàn de yú xiā dōu hěn xīnxiān.) — The fish and shrimp at this seafood shop are very fresh."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "饱",
+			"Pinyin": "bǎo",
+			"Part of Speech": "Adjective",
+			"English Meaning": "full (after eating) / satiated",
+			"Example (Chinese + Pinyin)": "今天吃得太饱了，吃不下了。(Jīntiān chī de tài bǎo le, chī bú xià le.) — I am so full today, I can't eat any more."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "请客",
+			"Pinyin": "qǐngkè",
+			"Part of Speech": "Verb",
+			"English Meaning": "to treat someone (to a meal) / my treat",
+			"Example (Chinese + Pinyin)": "今天我发奖金，我请客！(Jīntiān wǒ fā jiǎngjīn, wǒ qǐngkè!) — I got my bonus today, it's my treat!"
+		}
+	]
+}

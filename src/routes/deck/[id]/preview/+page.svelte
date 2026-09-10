@@ -22,6 +22,7 @@
 	import { speakWord } from '$lib/utils/audio';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
+	import { getDeckIcon } from '$lib/utils/deckIcons';
 	import type { WordRecord, StreakStats, WordProgress, CustomDeck } from '$lib/types';
 	import {
 		Brain,
@@ -55,6 +56,7 @@
 	let deckId = $derived(page.params.id || '');
 	let deckTitle = $state('Loading Deck...');
 	let deckLanguage = $state<'chinese' | 'french'>('chinese');
+	let deckIcon = $derived(getDeckIcon(deckId, deckLanguage));
 	let words = $state<WordRecord[]>([]);
 	let allProgress = $state<Record<string, WordProgress>>({});
 	let savedWordNos = new SvelteSet<number>();
@@ -317,9 +319,22 @@
 			</div>
 		</div>
 
-		<h2 class="mt-2 font-headline text-2xl font-extrabold tracking-tight text-slate-900">
-			{deckTitle}
-		</h2>
+		<div class="mt-3 flex items-center gap-3.5">
+			<div
+				class="shadow-xs flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200/70 bg-slate-50"
+			>
+				<img
+					src={deckIcon.imageSrc}
+					alt={deckIcon.alt}
+					class="h-full w-full object-cover"
+				/>
+			</div>
+			<div class="min-w-0 flex-1">
+				<h2 class="truncate font-headline text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl">
+					{deckTitle}
+				</h2>
+			</div>
+		</div>
 
 		<!-- Progress Bar -->
 		<div class="mt-4">

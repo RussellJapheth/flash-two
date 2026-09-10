@@ -1,0 +1,205 @@
+{
+	"title": "Modern Digital Life & Mobile Pay",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "扫码",
+			"Pinyin": "sǎomǎ",
+			"Part of Speech": "Verb",
+			"English Meaning": "to scan a QR code",
+			"Example (Chinese + Pinyin)": "请扫码点餐和付款。(Qǐng sǎomǎ diǎncān hé fùkuǎn.) — Please scan the QR code to order and pay."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "二维码",
+			"Pinyin": "èrwéimǎ",
+			"Part of Speech": "Noun",
+			"English Meaning": "QR code",
+			"Example (Chinese + Pinyin)": "请出示您的健康码或付款二维码。(Qǐng chūshì nín de jiànkāngmǎ huò fùkuǎn èrwéimǎ.) — Please show your health code or payment QR code."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "支付",
+			"Pinyin": "zhīfù",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to pay / payment",
+			"Example (Chinese + Pinyin)": "在中国移动支付非常普及。(Zài Zhōngguó yídòng zhīfù fēicháng pǔjí.) — In China mobile payment is extremely widespread."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "微信",
+			"Pinyin": "Wēixìn",
+			"Part of Speech": "Proper Noun",
+			"English Meaning": "WeChat",
+			"Example (Chinese + Pinyin)": "我们加一下微信，方便以后联系。(Wǒmen jiā yíxià Wēixìn, fāngbiàn yǐhòu liánxì.) — Let's add each other on WeChat for easy contact."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "刷卡",
+			"Pinyin": "shuākǎ",
+			"Part of Speech": "Verb",
+			"English Meaning": "to swipe a card / pay by card",
+			"Example (Chinese + Pinyin)": "请问这里可以刷信用卡吗？(Qǐngwèn zhèlǐ kěyǐ shuā xìnyòngkǎ ma?) — Excuse me, can I pay by credit card here?"
+		},
+		{
+			"No": 6,
+			"Chinese Word": "充值",
+			"Pinyin": "chōngzhí",
+			"Part of Speech": "Verb",
+			"English Meaning": "to recharge / top up balance",
+			"Example (Chinese + Pinyin)": "我的交通卡没钱了，需要去充值。(Wǒ de jiāotōng kǎ méi qián le, xūyào qù chōngzhí.) — My transit card is out of money, I need to top it up."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "账号",
+			"Pinyin": "zhànghào",
+			"Part of Speech": "Noun",
+			"English Meaning": "account number / username",
+			"Example (Chinese + Pinyin)": "请输入您的登录账号和密码。(Qǐng shūrù nín de dēnglù zhànghào hé mìmǎ.) — Please enter your login account and password."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "密码",
+			"Pinyin": "mìmǎ",
+			"Part of Speech": "Noun",
+			"English Meaning": "password / PIN",
+			"Example (Chinese + Pinyin)": "请不要把银行卡密码告诉别人。(Qǐng bú yào bǎ yínhángkǎ mìmǎ gàosu biérén.) — Please do not disclose your bank card password to others."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "下载",
+			"Pinyin": "xiàzài",
+			"Part of Speech": "Verb",
+			"English Meaning": "to download",
+			"Example (Chinese + Pinyin)": "你可以在应用商店免费下载这个软件。(Nǐ kěyǐ zài yìngyòng shāngdiàn miǎnfèi xiàzài zhè ge ruǎnjiàn.) — You can download this app for free in the app store."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "发送",
+			"Pinyin": "fāsòng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to send / to transmit",
+			"Example (Chinese + Pinyin)": "消息已经成功发送出去了。(Xiāoxi yǐjīng chénggōng fāsòng chūqu le.) — The message has been sent successfully."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "接收",
+			"Pinyin": "jiēshōu",
+			"Part of Speech": "Verb",
+			"English Meaning": "to receive / accept",
+			"Example (Chinese + Pinyin)": "手机正在接收最新的系统更新。(Shǒujī zhèngzài jiēshōu zuìxīn de xìtǒng gēngxīn.) — The phone is receiving the latest system update."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "软件",
+			"Pinyin": "ruǎnjiàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "software / app",
+			"Example (Chinese + Pinyin)": "这个学中文的软件很好用。(Zhè ge xué Zhōngwén de ruǎnjiàn hěn hǎoyòng.) — This Chinese learning app is very useful."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "信号",
+			"Pinyin": "xìnhào",
+			"Part of Speech": "Noun",
+			"English Meaning": "signal (cellular/WiFi)",
+			"Example (Chinese + Pinyin)": "电梯里面手机一点信号都没有。(Diàntī lǐmiàn shǒujī yìdiǎn xìnhào dōu méiyǒu.) — There is no phone signal at all inside the elevator."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "网络",
+			"Pinyin": "wǎngluò",
+			"Part of Speech": "Noun",
+			"English Meaning": "network / internet",
+			"Example (Chinese + Pinyin)": "这里的网络连接速度非常快。(Zhèlǐ de wǎngluò liánjiē sùdù fēicháng kuài.) — The internet connection speed here is very fast."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "电池",
+			"Pinyin": "diànchí",
+			"Part of Speech": "Noun",
+			"English Meaning": "battery",
+			"Example (Chinese + Pinyin)": "手机电池只剩百分之十了。(Shǒujī diànchí zhǐ shèng bǎifēnzhī shí le.) — The phone battery only has 10% left."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "充电",
+			"Pinyin": "chōngdiàn",
+			"Part of Speech": "Verb",
+			"English Meaning": "to charge (battery / phone)",
+			"Example (Chinese + Pinyin)": "我得给手机充电了。(Wǒ děi gěi shǒujī chōngdiàn le.) — I need to charge my phone."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "充电宝",
+			"Pinyin": "chōngdiànbǎo",
+			"Part of Speech": "Noun",
+			"English Meaning": "power bank / portable charger",
+			"Example (Chinese + Pinyin)": "饭馆门口可以租借共享充电宝。(Fànguǎn ménkǒu kěyǐ zūjiè gòngxiǎng chōngdiànbǎo.) — You can rent a shared power bank at the restaurant entrance."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "屏幕",
+			"Pinyin": "píngmù",
+			"Part of Speech": "Noun",
+			"English Meaning": "screen / display",
+			"Example (Chinese + Pinyin)": "这台平板电脑的屏幕很清晰。(Zhè tái píngbǎn diànnǎo de píngmù hěn qīngxī.) — The screen of this tablet is very clear."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "视频",
+			"Pinyin": "shìpín",
+			"Part of Speech": "Noun",
+			"English Meaning": "video / video call",
+			"Example (Chinese + Pinyin)": "今晚我们和父母视频通话吧。(Jīnwǎn wǒmen hé fùmǔ shìpín tōnghuà ba.) — Let's do a video call with our parents tonight."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "语音",
+			"Pinyin": "yǔyīn",
+			"Part of Speech": "Noun",
+			"English Meaning": "voice / voice message",
+			"Example (Chinese + Pinyin)": "打字不方便的时候可以发语音。(Dǎzì bù fāngbiàn de shíhou kěyǐ fā yǔyīn.) — You can send voice messages when typing is inconvenient."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "验证码",
+			"Pinyin": "yànzhèngmǎ",
+			"Part of Speech": "Noun",
+			"English Meaning": "verification code / OTP",
+			"Example (Chinese + Pinyin)": "系统刚给你的手机发了验证码。(Xìtǒng gāng gěi nǐ de shǒujī fā le yànzhèngmǎ.) — The system just sent a verification code to your phone."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "消息",
+			"Pinyin": "xiāoxi",
+			"Part of Speech": "Noun",
+			"English Meaning": "message / news / information",
+			"Example (Chinese + Pinyin)": "看到消息后请尽快给我回复。(Kàndào xiāoxi hòu qǐng jǐnkuài gěi wǒ huífù.) — Please reply to me as soon as you see the message."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "关注",
+			"Pinyin": "guānzhù",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to follow (social media) / pay attention to",
+			"Example (Chinese + Pinyin)": "欢迎关注我们的官方公众号！(Huānyíng guānzhù wǒmen de guānfāng gōngzhònghào!) — Welcome to follow our official public account!"
+		},
+		{
+			"No": 24,
+			"Chinese Word": "搜索",
+			"Pinyin": "sōusuǒ",
+			"Part of Speech": "Verb",
+			"English Meaning": "to search (online / data)",
+			"Example (Chinese + Pinyin)": "你在搜索引擎上查查这篇论文。(Nǐ zài sōusuǒ yǐnqíng shang chácha zhè piān lùnwén.) — Search for this paper on the search engine."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "网购",
+			"Pinyin": "wǎnggòu",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "online shopping / to buy online",
+			"Example (Chinese + Pinyin)": "现代人越来越喜欢在家里网购。(Xiàndàirén yuèláiyuè xǐhuan zài jiālǐ wǎnggòu.) — Modern people increasingly like shopping online from home."
+		}
+	]
+}

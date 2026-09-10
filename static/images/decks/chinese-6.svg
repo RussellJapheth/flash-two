@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg6" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EC4899"/>
+      <stop offset="100%" stop-color="#BE185D"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg6)"/>
+  <!-- Shopping Bag & Coin -->
+  <rect x="18" y="26" width="28" height="26" rx="4" fill="#FFFFFF"/>
+  <path d="M26 26V20C26 16.7 28.7 14 32 14C35.3 14 38 16.7 38 20V26" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="32" cy="38" r="6" fill="#FDE047" stroke="#EAB308" stroke-width="1.5"/>
+  <text x="32" y="42" font-size="9" font-family="sans-serif" font-weight="bold" fill="#78350F" text-anchor="middle">¥</text>
+</svg>

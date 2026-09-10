@@ -1,0 +1,205 @@
+{
+	"title": "House, Apartment & Living Essentials",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "房子",
+			"Pinyin": "fángzi",
+			"Part of Speech": "Noun",
+			"English Meaning": "house / apartment / building",
+			"Example (Chinese + Pinyin)": "他们在市中心买了一套新房子。(Tāmen zài shìzhōngxīn mǎi le yí tào xīn fángzi.) — They bought a new apartment downtown."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "租",
+			"Pinyin": "zū",
+			"Part of Speech": "Verb",
+			"English Meaning": "to rent / to lease",
+			"Example (Chinese + Pinyin)": "我想在公司附近租一间公寓。(Wǒ xiǎng zài gōngsī fùjìn zū yì jiān gōngyù.) — I want to rent an apartment near the company."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "房租",
+			"Pinyin": "fángzū",
+			"Part of Speech": "Noun",
+			"English Meaning": "rent money",
+			"Example (Chinese + Pinyin)": "每个月五号必须交房租。(Měi gè yuè wǔ hào bìxū jiāo fángzū.) — Rent must be paid on the 5th of each month."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "厨房",
+			"Pinyin": "chúfáng",
+			"Part of Speech": "Noun",
+			"English Meaning": "kitchen",
+			"Example (Chinese + Pinyin)": "厨房里有很多新鲜蔬菜。(Chúfáng lǐ yǒu hěn duō xīnxiān shūcài.) — There are lots of fresh vegetables in the kitchen."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "卫生间",
+			"Pinyin": "wèishēngjiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "bathroom / restroom / toilet",
+			"Example (Chinese + Pinyin)": "请问，卫生间在哪里？(Qǐngwèn, wèishēngjiān zài nǎlǐ?) — Excuse me, where is the restroom?"
+		},
+		{
+			"No": 6,
+			"Chinese Word": "客厅",
+			"Pinyin": "kètīng",
+			"Part of Speech": "Noun",
+			"English Meaning": "living room",
+			"Example (Chinese + Pinyin)": "客人正在客厅里喝茶聊天。(Kèrén zhèngzài kètīng lǐ hē chá liáotiān.) — The guests are drinking tea and chatting in the living room."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "卧室",
+			"Pinyin": "wòshì",
+			"Part of Speech": "Noun",
+			"English Meaning": "bedroom",
+			"Example (Chinese + Pinyin)": "我的卧室朝南，采光很好。(Wǒ de wòshì cháo nán, cǎiguāng hěn hǎo.) — My bedroom faces south, so it gets great natural light."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "阳台",
+			"Pinyin": "yángtái",
+			"Part of Speech": "Noun",
+			"English Meaning": "balcony",
+			"Example (Chinese + Pinyin)": "阳台上种满了漂亮的花草。(Yángtái shang zhòng mǎn le piàoliang de huācǎo.) — The balcony is filled with beautiful flowers and plants."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "钥匙",
+			"Pinyin": "yàoshi",
+			"Part of Speech": "Noun",
+			"English Meaning": "key",
+			"Example (Chinese + Pinyin)": "出门前别忘了带门钥匙。(Chūmén qián bié wàng le dài mén yàoshi.) — Don't forget to take the door key before going out."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "锁",
+			"Pinyin": "suǒ",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "lock / to lock",
+			"Example (Chinese + Pinyin)": "你锁好大门了吗？(Nǐ suǒ hǎo dàmén le ma?) — Did you lock the front door?"
+		},
+		{
+			"No": 11,
+			"Chinese Word": "灯",
+			"Pinyin": "dēng",
+			"Part of Speech": "Noun",
+			"English Meaning": "lamp / light",
+			"Example (Chinese + Pinyin)": "离开房间请随手关灯。(Líkāi fángjiān qǐng suíshǒu guān dēng.) — Please turn off the light when leaving the room."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "空调",
+			"Pinyin": "kōngtiáo",
+			"Part of Speech": "Noun",
+			"English Meaning": "air conditioner",
+			"Example (Chinese + Pinyin)": "天气太热了，把空调打开吧。(Tiānqì tài rè le, bǎ kōngtiáo dǎkāi ba.) — It's too hot, let's turn on the air conditioner."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "冰箱",
+			"Pinyin": "bīngxiāng",
+			"Part of Speech": "Noun",
+			"English Meaning": "refrigerator / fridge",
+			"Example (Chinese + Pinyin)": "冰箱里有冰水和新鲜水果。(Bīngxiāng lǐ yǒu bīngshuǐ hé xīnxiān shuǐguǒ.) — There is ice water and fresh fruit in the fridge."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "洗衣机",
+			"Pinyin": "xǐyījī",
+			"Part of Speech": "Noun",
+			"English Meaning": "washing machine",
+			"Example (Chinese + Pinyin)": "脏衣服已经放进洗衣机了。(Zāng yīfu yǐjīng fàng jìn xǐyījī le.) — The dirty clothes have been put in the washing machine."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "热水器",
+			"Pinyin": "rèshuǐqì",
+			"Part of Speech": "Noun",
+			"English Meaning": "water heater",
+			"Example (Chinese + Pinyin)": "洗澡前先开一下热水器。(Xǐzǎo qián xiān kāi yíxià rèshuǐqì.) — Turn on the water heater before taking a shower."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "垃圾",
+			"Pinyin": "lājī",
+			"Part of Speech": "Noun",
+			"English Meaning": "trash / garbage",
+			"Example (Chinese + Pinyin)": "下楼的时候顺便把垃圾扔了。(Xiàlóu de shíhou shùnbiàn bǎ lājī rēng le.) — Take out the trash when you go downstairs."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "垃圾桶",
+			"Pinyin": "lājītǒng",
+			"Part of Speech": "Noun",
+			"English Meaning": "trash can / bin",
+			"Example (Chinese + Pinyin)": "书桌旁边有一个小垃圾桶。(Shūzhuō pángbiān yǒu yí gè xiǎo lājītǒng.) — There is a small trash bin next to the desk."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "打扫",
+			"Pinyin": "dǎsǎo",
+			"Part of Speech": "Verb",
+			"English Meaning": "to clean / to sweep",
+			"Example (Chinese + Pinyin)": "我们每个周末都打扫房间。(Wǒmen měi gè zhōumò dōu dǎsǎo fángjiān.) — We clean the apartment every weekend."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "搬家",
+			"Pinyin": "bānjiā",
+			"Part of Speech": "Verb",
+			"English Meaning": "to move house",
+			"Example (Chinese + Pinyin)": "我下个月搬家到新小区。(Wǒ xià gè yuè bānjiā dào xīn xiǎoqū.) — I'm moving to a new residential community next month."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "邻居",
+			"Pinyin": "línjū",
+			"Part of Speech": "Noun",
+			"English Meaning": "neighbor",
+			"Example (Chinese + Pinyin)": "隔壁邻居为人非常热情友好。(Gébì línjū wéirén fēicháng rèqíng yǒuhǎo.) — The next-door neighbor is very warm and friendly."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "电梯",
+			"Pinyin": "diàntī",
+			"Part of Speech": "Noun",
+			"English Meaning": "elevator / lift",
+			"Example (Chinese + Pinyin)": "我们坐电梯上八楼。(Wǒmen zuò diàntī shàng bā lóu.) — Let's take the elevator up to the 8th floor."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "楼梯",
+			"Pinyin": "lóutī",
+			"Part of Speech": "Noun",
+			"English Meaning": "stairs / staircase",
+			"Example (Chinese + Pinyin)": "走楼梯对身体锻炼很有帮助。(Zǒu lóutī duì shēntǐ duànliàn hěn yǒu bāngzhù.) — Taking the stairs is great exercise for the body."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "坏了",
+			"Pinyin": "huài le",
+			"Part of Speech": "Adjective / Phrase",
+			"English Meaning": "broken / out of order / spoiled",
+			"Example (Chinese + Pinyin)": "浴室的水龙头坏了，正在漏水。(Yùshì de shuǐlóngtóu huài le, zhèngzài lòushuǐ.) — The bathroom faucet is broken and leaking."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "修",
+			"Pinyin": "xiū",
+			"Part of Speech": "Verb",
+			"English Meaning": "to repair / to fix",
+			"Example (Chinese + Pinyin)": "请师傅今天下午来修空调。(Qǐng shīfu jīntiān xiàwǔ lái xiū kōngtiáo.) — Please have the technician come fix the air conditioner this afternoon."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "安静",
+			"Pinyin": "ānjìng",
+			"Part of Speech": "Adjective",
+			"English Meaning": "quiet / peaceful",
+			"Example (Chinese + Pinyin)": "这个小区环境非常安静舒适。(Zhè ge xiǎoqū huánjìng fēicháng ānjìng shūshì.) — This neighborhood environment is very quiet and comfortable."
+		}
+	]
+}

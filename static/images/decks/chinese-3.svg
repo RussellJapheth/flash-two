@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#7E22CE"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg3)"/>
+  <!-- Family Silhouettes -->
+  <circle cx="24" cy="24" r="6" fill="#FFFFFF"/>
+  <path d="M14 46C14 39 19 34 24 34C29 34 34 39 34 46" fill="#FFFFFF"/>
+  <circle cx="40" cy="26" r="5" fill="#F3E8FF"/>
+  <path d="M31 46C31 40.5 35 36.5 40 36.5C45 36.5 49 40.5 49 46" fill="#F3E8FF"/>
+</svg>

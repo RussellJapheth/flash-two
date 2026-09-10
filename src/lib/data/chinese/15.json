@@ -1,0 +1,205 @@
+{
+	"title": "City Navigation & Landmarks",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "附近",
+			"Pinyin": "fùjìn",
+			"Part of Speech": "Noun",
+			"English Meaning": "nearby / vicinity",
+			"Example (Chinese + Pinyin)": "这附近有便利店或者超市吗？(Zhè fùjìn yǒu biànlìdiàn huòzhě chāoshì ma?) — Is there a convenience store or supermarket nearby?"
+		},
+		{
+			"No": 2,
+			"Chinese Word": "旁边",
+			"Pinyin": "pángbiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "beside / next to / side",
+			"Example (Chinese + Pinyin)": "银行就在那家咖啡馆旁边。(Yínháng jiù zài nà jiā kāfēiguǎn pángbiān.) — The bank is right beside that cafe."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "对面",
+			"Pinyin": "duìmiàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "opposite / across the street",
+			"Example (Chinese + Pinyin)": "马路对面有一座大商场。(Mǎlù duìmiàn yǒu yí zuò dà shāngchǎng.) — Across the street there is a large shopping mall."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "中间",
+			"Pinyin": "zhōngjiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "middle / between",
+			"Example (Chinese + Pinyin)": "书店位于邮局和银行中间。(Shūdiàn wèiyú yóujú hé yínháng zhōngjiān.) — The bookstore is situated between the post office and the bank."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "十字路口",
+			"Pinyin": "shízì lùkǒu",
+			"Part of Speech": "Noun",
+			"English Meaning": "crossroad / four-way intersection",
+			"Example (Chinese + Pinyin)": "在前面的十字路口向左拐。(Zài qiánmiàn de shízì lùkǒu xiàng zuǒ guǎi.) — Turn left at the intersection ahead."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "红绿灯",
+			"Pinyin": "hónglǜdēng",
+			"Part of Speech": "Noun",
+			"English Meaning": "traffic light",
+			"Example (Chinese + Pinyin)": "过马路一定要看红绿灯。(Guò mǎlù yídìng yào kàn hónglǜdēng.) — Always watch the traffic light when crossing the road."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "拐弯",
+			"Pinyin": "guǎiwān",
+			"Part of Speech": "Verb",
+			"English Meaning": "to turn a corner / make a turn",
+			"Example (Chinese + Pinyin)": "走到路口右拐弯就到了。(Zǒu dào lùkǒu yòu guǎiwān jiù dào le.) — Walk to the intersection, turn right, and you're there."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "直走",
+			"Pinyin": "zhí zǒu",
+			"Part of Speech": "Verb / Phrase",
+			"English Meaning": "to go straight / walk straight ahead",
+			"Example (Chinese + Pinyin)": "一直往前直走两百米。(Yìzhí wǎng qián zhí zǒu liǎng bǎi mǐ.) — Keep walking straight ahead for 200 meters."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "停",
+			"Pinyin": "tíng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to stop / to park (vehicle)",
+			"Example (Chinese + Pinyin)": "师傅，请在前面的路口停一下。(Shīfu, qǐng zài qiánmiàn de lùkǒu tíng yíxià.) — Driver, please pull over at the intersection ahead."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "停车场",
+			"Pinyin": "tíngchēchǎng",
+			"Part of Speech": "Noun",
+			"English Meaning": "parking lot / car park",
+			"Example (Chinese + Pinyin)": "地下二层有大型收费停车场。(Dìxià èr céng yǒu dàxíng shòufèi tíngchēchǎng.) — There is a large paid parking lot on basement level 2."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "地图",
+			"Pinyin": "dìtú",
+			"Part of Speech": "Noun",
+			"English Meaning": "map",
+			"Example (Chinese + Pinyin)": "我打开电子地图查一下路线。(Wǒ dǎkāi diànzǐ dìtú chá yíxià lùxiàn.) — I'll open the electronic map to check the route."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "导航",
+			"Pinyin": "dǎoháng",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "GPS navigation / to navigate",
+			"Example (Chinese + Pinyin)": "跟着手机导航走就不会迷路。(Gēnzhe shǒujī dǎoháng zǒu jiù bú huì mílù.) — Follow the phone GPS and you won't get lost."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "迷路",
+			"Pinyin": "mílù",
+			"Part of Speech": "Verb",
+			"English Meaning": "to get lost / lose one's way",
+			"Example (Chinese + Pinyin)": "我在这个陌生的城市迷路了。(Wǒ zài zhè ge mòshēng de chéngshì mílù le.) — I got lost in this unfamiliar city."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "公园",
+			"Pinyin": "gōngyuán",
+			"Part of Speech": "Noun",
+			"English Meaning": "park / public gardens",
+			"Example (Chinese + Pinyin)": "老人们在公园里打太极拳。(Lǎorénmen zài gōngyuán lǐ dǎ tàijíquán.) — The seniors are practicing Tai Chi in the park."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "银行",
+			"Pinyin": "yínháng",
+			"Part of Speech": "Noun",
+			"English Meaning": "bank",
+			"Example (Chinese + Pinyin)": "我想去中国银行换一点外币。(Wǒ xiǎng qù Zhōngguó Yínháng huàn yìdiǎn wàibì.) — I want to go to Bank of China to exchange some foreign currency."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "邮局",
+			"Pinyin": "yóujú",
+			"Part of Speech": "Noun",
+			"English Meaning": "post office",
+			"Example (Chinese + Pinyin)": "邮局就在马路拐角处。(Yóujú jiù zài mǎlù guǎijiǎo chù.) — The post office is right at the street corner."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "药店",
+			"Pinyin": "yàodiàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "pharmacy / drugstore",
+			"Example (Chinese + Pinyin)": "去药店买一盒止痛药。(Qù yàodiàn mǎi yì hé zhǐtòngyào.) — Go to the pharmacy to buy a box of painkillers."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "加油站",
+			"Pinyin": "jiāyóuzhàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "gas station / petrol station",
+			"Example (Chinese + Pinyin)": "车快没油了，找个加油站吧。(Chē kuài méi yóu le, zhǎo gè jiāyóuzhàn ba.) — The car is running low on gas, let's find a gas station."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "桥",
+			"Pinyin": "qiáo",
+			"Part of Speech": "Noun",
+			"English Meaning": "bridge",
+			"Example (Chinese + Pinyin)": "过了这座大桥就是火车站。(Guò le zhè zuò dàqiáo jiù shì huǒchēzhàn.) — After crossing this big bridge is the train station."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "距离",
+			"Pinyin": "jùlí",
+			"Part of Speech": "Noun",
+			"English Meaning": "distance",
+			"Example (Chinese + Pinyin)": "从这里到机场的距离大概三十公里。(Cóng zhèlǐ dào jīchǎng de jùlí dàgài sānshí gōnglǐ.) — The distance from here to the airport is about 30 km."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "方便",
+			"Pinyin": "fāngbiàn",
+			"Part of Speech": "Adjective",
+			"English Meaning": "convenient",
+			"Example (Chinese + Pinyin)": "住在这里坐地铁非常方便。(Zhù zài zhèlǐ zuò dìtiě fēicháng fāngbiàn.) — Living here makes taking the subway very convenient."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "堵车",
+			"Pinyin": "dǔchē",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "traffic jam / congested",
+			"Example (Chinese + Pinyin)": "下班高峰期路上很容易堵车。(Xiàbān gāofēngqī lùshang hěn róngyì dǔchē.) — During the evening rush hour it gets traffic jammed easily."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "出口",
+			"Pinyin": "chūkǒu",
+			"Part of Speech": "Noun",
+			"English Meaning": "exit / export",
+			"Example (Chinese + Pinyin)": "我们在地铁站C出口见面吧。(Wǒmen zài dìtiězhàn C chūkǒu jiànmiàn ba.) — Let's meet at subway station Exit C."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "入口",
+			"Pinyin": "rùkǒu",
+			"Part of Speech": "Noun",
+			"English Meaning": "entrance / entry",
+			"Example (Chinese + Pinyin)": "商场主入口在东侧街道。(Shāngchǎng zhǔ rùkǒu zài dōng cè jiēdào.) — The mall's main entrance is on the east street."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "道路",
+			"Pinyin": "dàolù",
+			"Part of Speech": "Noun",
+			"English Meaning": "road / path / way",
+			"Example (Chinese + Pinyin)": "这条道路正在进行维修施工。(Zhè tiáo dàolù zhèngzài jìnxíng wéixiū shīgōng.) — This road is currently undergoing repair work."
+		}
+	]
+}

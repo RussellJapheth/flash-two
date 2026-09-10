@@ -2,7 +2,8 @@
 	import type { DeckSummary } from '$lib/types';
 	import { resolve } from '$app/paths';
 	import { recordRecentlyOpenedPack } from '$lib/utils/storage';
-	import { Play, Sparkles, Pencil, Trash2 } from 'lucide-svelte';
+	import { getDeckIcon } from '$lib/utils/deckIcons';
+	import { Play, Pencil, Trash2 } from 'lucide-svelte';
 
 	let {
 		deck,
@@ -20,7 +21,7 @@
 		deck.totalCards > 0 ? Math.round((deck.masteredCards / deck.totalCards) * 100) : 0
 	);
 
-	let isFrench = $derived(deck.language === 'french');
+	let deckIcon = $derived(getDeckIcon(deck.id, deck.language));
 
 	function handleClick() {
 		recordRecentlyOpenedPack(deck.id);
@@ -35,21 +36,16 @@
 >
 	<div class="flex items-center justify-between gap-3">
 		<div class="flex min-w-0 items-center gap-3">
-			<!-- Language / Pack Icon Avatar -->
+			<!-- Topic-Appropriate Image Icon -->
 			<div
-				class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-headline text-xs font-bold transition-transform group-hover:scale-105 {isFrench
-					? 'border border-amber-200/60 bg-amber-50 text-amber-700'
-					: deck.isCustom
-						? 'border border-violet-200/60 bg-violet-50 text-violet-700'
-						: 'border border-indigo-200/60 bg-indigo-50 text-indigo-700'}"
+				class="shadow-xs flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200/70 bg-slate-50 transition-transform duration-200 group-hover:scale-105"
 			>
-				{#if deck.isCustom}
-					<Sparkles size={16} strokeWidth={2.25} />
-				{:else if isFrench}
-					<span>FR</span>
-				{:else}
-					<span>ZH</span>
-				{/if}
+				<img
+					src={deckIcon.imageSrc}
+					alt={deckIcon.alt}
+					class="h-full w-full object-cover"
+					loading="lazy"
+				/>
 			</div>
 
 			<!-- Title and Metadata -->

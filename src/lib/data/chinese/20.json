@@ -1,0 +1,205 @@
+{
+	"title": "Expressing Opinions & Logic Connectors",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "认为",
+			"Pinyin": "rènwéi",
+			"Part of Speech": "Verb",
+			"English Meaning": "to think / to believe / to consider",
+			"Example (Chinese + Pinyin)": "我认为多和母语者交流是学语言最好的方法。(Wǒ rènwéi duō hé mǔyǔzhě jiāoliú shì xué yǔyán zuì hǎo de fāngfǎ.) — I believe conversing more with native speakers is the best way to learn languages."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "反对",
+			"Pinyin": "fǎnduì",
+			"Part of Speech": "Verb",
+			"English Meaning": "to oppose / to disagree / objection",
+			"Example (Chinese + Pinyin)": "对于这个决定，没有人提出反对意见。(Duìyú zhè ge juédìng, méiyǒu rén tíchū fǎnduì yìjiàn.) — Regarding this decision, no one voiced any objection."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "比如",
+			"Pinyin": "bǐrú",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "for example / such as",
+			"Example (Chinese + Pinyin)": "很多水果富含维生素，比如橙子和苹果。(Hěn duō shuǐguǒ fùhán wéishēngsù, bǐrú chéngzi hé píngguǒ.) — Many fruits are rich in vitamins, for example oranges and apples."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "因为",
+			"Pinyin": "yīnwèi",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "because / owing to",
+			"Example (Chinese + Pinyin)": "因为喜欢中国文化，所以我开始学中文。(Yīnwèi xǐhuan Zhōngguó wénhuà, suǒyǐ wǒ kāishǐ xué Zhōngwén.) — Because I like Chinese culture, I began learning Chinese."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "所以",
+			"Pinyin": "suǒyǐ",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "so / therefore / as a result",
+			"Example (Chinese + Pinyin)": "今天下大雨，所以我们留在家中看书。(Jīntiān xià dàyǔ, suǒyǐ wǒmen liú zài jiā zhōng kànshū.) — It's raining heavily today, so we stayed home reading."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "虽然",
+			"Pinyin": "suīrán",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "although / even though",
+			"Example (Chinese + Pinyin)": "虽然学中文很难，但是很有趣。(Suīrán xué Zhōngwén hěn nán, dànshì hěn yǒuqù.) — Although learning Chinese is challenging, it is very interesting."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "但是",
+			"Pinyin": "dànshì",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "but / however / yet",
+			"Example (Chinese + Pinyin)": "虽然工作很忙，但是他每天都坚持锻炼。(Suīrán gōngzuò hěn máng, dànshì tā měitiān dōu jiānchí duànliàn.) — Although work is busy, he still exercises daily."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "如果",
+			"Pinyin": "rúguǒ",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "if / in case",
+			"Example (Chinese + Pinyin)": "如果明天天气晴朗，我们就去郊游。(Rúguǒ míngtiān tiānqì qínglǎng, wǒmen jiù qù jiāoyóu.) — If tomorrow is sunny, we'll go for an outing."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "只要",
+			"Pinyin": "zhǐyào",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "as long as / provided that",
+			"Example (Chinese + Pinyin)": "只要坚持练习，你的发音就会越来越好。(Zhǐyào jiānchí liànxí, nǐ de fāyīn jiù huì yuèláiyuè hǎo.) — As long as you practice persistently, your pronunciation will improve."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "只有",
+			"Pinyin": "zhǐyǒu",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "only if / only when",
+			"Example (Chinese + Pinyin)": "只有努力学习，才能取得好成绩。(Zhǐyǒu nǔlì xuéxí, cái néng qǔdé hǎo chéngjì.) — Only by studying hard can one achieve good grades."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "不但",
+			"Pinyin": "búdàn",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "not only",
+			"Example (Chinese + Pinyin)": "他不但是我的老师，而且是我的好朋友。(Tā búdàn shì wǒ de lǎoshī, érqiě shì wǒ de hǎo péngyou.) — He is not only my teacher, but also my good friend."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "而且",
+			"Pinyin": "érqiě",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "but also / furthermore",
+			"Example (Chinese + Pinyin)": "这件衣服不但质量好，而且价格便宜。(Zhè jiàn yīfu búdàn zhìliàng hǎo, érqiě jiàgé piányi.) — This clothing item is not only good quality, but also affordable."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "比较",
+			"Pinyin": "bǐjiào",
+			"Part of Speech": "Adverb / Verb",
+			"English Meaning": "comparatively / relatively / to compare",
+			"Example (Chinese + Pinyin)": "我认为坐高铁比较舒适和准时。(Wǒ rènwéi zuò gāotiě bǐjiào shūshì hé zhǔnshí.) — I think taking high-speed rail is relatively comfortable and punctual."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "特别",
+			"Pinyin": "tèbié",
+			"Part of Speech": "Adverb / Adjective",
+			"English Meaning": "especially / particularly / special",
+			"Example (Chinese + Pinyin)": "今天外面的风特别大，多穿点衣服。(Jīntiān wàimiàn de fēng tèbié dà, duō chuān diǎn yīfu.) — The wind outside today is especially strong, dress warmly."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "越来越",
+			"Pinyin": "yuèláiyuè",
+			"Part of Speech": "Adverb",
+			"English Meaning": "more and more",
+			"Example (Chinese + Pinyin)": "随着春天的到来，天气越来越暖和了。(Suízhe chūntiān de dàolái, tiānqì yuèláiyuè nuǎnhuo le.) — With the coming of spring, the weather is getting warmer and warmer."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "一定",
+			"Pinyin": "yídìng",
+			"Part of Speech": "Adverb / Adjective",
+			"English Meaning": "definitely / certainly / must",
+			"Example (Chinese + Pinyin)": "有空一定来我家做客！(Yǒu kòng yídìng lái wǒ jiā zuòkè!) — When you're free you definitely must come visit my home!"
+		},
+		{
+			"No": 17,
+			"Chinese Word": "可能",
+			"Pinyin": "kěnéng",
+			"Part of Speech": "Adverb / Noun",
+			"English Meaning": "maybe / perhaps / possibility",
+			"Example (Chinese + Pinyin)": "明天可能会降温，出门记得带外套。(Míngtiān kěnéng huì jiàngwēn, chūmén jìde dài wàitào.) — It might cool down tomorrow, remember to bring a coat."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "必须",
+			"Pinyin": "bìxū",
+			"Part of Speech": "Adverb",
+			"English Meaning": "must / have to / obligatory",
+			"Example (Chinese + Pinyin)": "进入施工现场必须戴安全帽。(Jìnrù shīgōng xiànchǎng bìxū dài ānquánmào.) — Entering construction sites requires wearing a safety helmet."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "应该",
+			"Pinyin": "yīnggāi",
+			"Part of Speech": "Auxiliary Verb",
+			"English Meaning": "should / ought to",
+			"Example (Chinese + Pinyin)": "遇到不懂的问题应该主动请教他人。(Yùdào bù dǒng de wèntí yīnggāi zhǔdòng qǐngjiào tārén.) — When encountering unfamiliar questions, one should consult others."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "决定",
+			"Pinyin": "juédìng",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to decide / decision",
+			"Example (Chinese + Pinyin)": "我们最后决定下个月去北京旅游。(Wǒmen zuìhòu juédìng xià gè yuè qù Běijīng lǚyóu.) — We finally decided to travel to Beijing next month."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "发生",
+			"Pinyin": "fāshēng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to happen / to occur / to take place",
+			"Example (Chinese + Pinyin)": "刚才这里发生了一起小车祸。(Gāngcái zhèlǐ fāshēng le yì qǐ xiǎo chēhuò.) — A minor car accident just happened here."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "结果",
+			"Pinyin": "jiéguǒ",
+			"Part of Speech": "Noun / Conjunction",
+			"English Meaning": "result / outcome / as a result",
+			"Example (Chinese + Pinyin)": "经过三轮面试，他终于拿到了录用结果。(Jīngguò sān lún miànshì, tā zhōngyú nádào le lùyòng jiéguǒ.) — After three rounds of interviews, he finally received the offer outcome."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "影响",
+			"Pinyin": "yǐngxiǎng",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "influence / effect / to affect",
+			"Example (Chinese + Pinyin)": "良好的家庭氛围对孩子的成长有深远影响。(Liánghǎo de jiātíng fēnwéi duì háizi de chéngzhǎng yǒu shēnyuǎn yǐngxiǎng.) — A healthy family atmosphere has a profound influence on children."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "选择",
+			"Pinyin": "xuǎnzé",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to choose / to select / choice",
+			"Example (Chinese + Pinyin)": "每个人都有权利选择自己喜欢的生活方式。(Měi gè rén dōu yǒu quánlì xuǎnzé zìjǐ xǐhuan de shēnghuó fāngshì.) — Everyone has the right to choose their preferred lifestyle."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "无论",
+			"Pinyin": "wúlùn",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "regardless of / no matter whether",
+			"Example (Chinese + Pinyin)": "无论刮风下雨，他每天都坚持早起晨跑。(Wúlùn guāfēng xiàyǔ, tā měitiān dōu jiānchí zǎoqǐ chénpǎo.) — Regardless of wind or rain, he insists on getting up early to run."
+		}
+	]
+}

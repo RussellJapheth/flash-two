@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg17" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg17)"/>
+  <!-- Dialogue Chat Bubbles -->
+  <path d="M14 24C14 18.5 19 14 25 14H35C41 14 46 18.5 46 24C46 29.5 41 34 35 34H22L15 40V33C14.3 30.5 14 27.5 14 24Z" fill="#FFFFFF"/>
+  <circle cx="23" cy="24" r="2.5" fill="#D97706"/>
+  <circle cx="30" cy="24" r="2.5" fill="#D97706"/>
+  <circle cx="37" cy="24" r="2.5" fill="#D97706"/>
+  <path d="M48 30C49.2 31.8 50 34 50 36.5C50 41 46 44.5 41 44.5H35L30 48V44H28" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>

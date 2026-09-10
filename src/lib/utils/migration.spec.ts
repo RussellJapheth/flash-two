@@ -17,6 +17,16 @@ import pack7 from '../data/chinese/7.json';
 import pack8 from '../data/chinese/8.json';
 import pack9 from '../data/chinese/9.json';
 import pack10 from '../data/chinese/10.json';
+import pack11 from '../data/chinese/11.json';
+import pack12 from '../data/chinese/12.json';
+import pack13 from '../data/chinese/13.json';
+import pack14 from '../data/chinese/14.json';
+import pack15 from '../data/chinese/15.json';
+import pack16 from '../data/chinese/16.json';
+import pack17 from '../data/chinese/17.json';
+import pack18 from '../data/chinese/18.json';
+import pack19 from '../data/chinese/19.json';
+import pack20 from '../data/chinese/20.json';
 
 describe('Chinese Packs Content Validation', () => {
 	const newPacks = [
@@ -28,7 +38,17 @@ describe('Chinese Packs Content Validation', () => {
 		{ pack: pack6, name: '6.json', expectedMinWords: 25 },
 		{ pack: pack7, name: '7.json', expectedMinWords: 25 },
 		{ pack: pack8, name: '8.json', expectedMinWords: 25 },
-		{ pack: pack9, name: '9.json', expectedMinWords: 25 }
+		{ pack: pack9, name: '9.json', expectedMinWords: 25 },
+		{ pack: pack11, name: '11.json', expectedMinWords: 25 },
+		{ pack: pack12, name: '12.json', expectedMinWords: 25 },
+		{ pack: pack13, name: '13.json', expectedMinWords: 25 },
+		{ pack: pack14, name: '14.json', expectedMinWords: 25 },
+		{ pack: pack15, name: '15.json', expectedMinWords: 25 },
+		{ pack: pack16, name: '16.json', expectedMinWords: 25 },
+		{ pack: pack17, name: '17.json', expectedMinWords: 25 },
+		{ pack: pack18, name: '18.json', expectedMinWords: 25 },
+		{ pack: pack19, name: '19.json', expectedMinWords: 25 },
+		{ pack: pack20, name: '20.json', expectedMinWords: 25 }
 	];
 
 	for (const { pack, name, expectedMinWords } of newPacks) {

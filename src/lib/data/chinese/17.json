@@ -1,0 +1,205 @@
+{
+	"title": "Spoken Phrases & Conversational Fillers",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "真的吗",
+			"Pinyin": "zhēn de ma",
+			"Part of Speech": "Phrase",
+			"English Meaning": "really? / is that so?",
+			"Example (Chinese + Pinyin)": "真的吗？太令人惊喜了！(Zhēn de ma? Tài lìngrén jīngxǐ le!) — Really? That is so wonderful and surprising!"
+		},
+		{
+			"No": 2,
+			"Chinese Word": "当然",
+			"Pinyin": "dāngrán",
+			"Part of Speech": "Adverb",
+			"English Meaning": "of course / certainly",
+			"Example (Chinese + Pinyin)": "当然可以，随时欢迎你来！(Dāngrán kěyǐ, suíshí huānyíng nǐ lái!) — Of course, you are welcome to come anytime!"
+		},
+		{
+			"No": 3,
+			"Chinese Word": "没问题",
+			"Pinyin": "méi wèntí",
+			"Part of Speech": "Phrase",
+			"English Meaning": "no problem / sure thing",
+			"Example (Chinese + Pinyin)": "包在我身上，没问题！(Bāo zài wǒ shēnshang, méi wèntí!) — Leave it to me, no problem!"
+		},
+		{
+			"No": 4,
+			"Chinese Word": "算了吧",
+			"Pinyin": "suàn le ba",
+			"Part of Speech": "Phrase",
+			"English Meaning": "forget it / let it go / drop it",
+			"Example (Chinese + Pinyin)": "既然下雨了，算了吧，改天再去。(Jìrán xiàyǔ le, suàn le ba, gǎitiān zài qù.) — Since it's raining, let it go, we'll go another day."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "随便",
+			"Pinyin": "suíbiàn",
+			"Part of Speech": "Adjective / Adverb",
+			"English Meaning": "as you like / whatever / casual",
+			"Example (Chinese + Pinyin)": "中午吃什么？我都行，随便你。(Zhōngwǔ chī shénme? Wǒ dōu xíng, suíbiàn nǐ.) — What to eat for lunch? I'm good with anything, up to you."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "麻烦",
+			"Pinyin": "máfan",
+			"Part of Speech": "Adjective / Verb",
+			"English Meaning": "troublesome / to trouble someone / please",
+			"Example (Chinese + Pinyin)": "麻烦您帮我递一下那本书。(Máfan nín bāng wǒ dì yíxià nà běn shū.) — Trouble you to pass me that book, please."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "不好意思",
+			"Pinyin": "bù hǎoyìsi",
+			"Part of Speech": "Phrase",
+			"English Meaning": "excuse me / sorry to bother / embarrassed",
+			"Example (Chinese + Pinyin)": "不好意思，借过一下。(Bù hǎoyìsi, jièguò yíxià.) — Excuse me, pardon me coming through."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "放心",
+			"Pinyin": "fàngxīn",
+			"Part of Speech": "Verb",
+			"English Meaning": "rest assured / don't worry",
+			"Example (Chinese + Pinyin)": "你放心，我一定会按时把事情办好。(Nǐ fàngxīn, wǒ yídìng huì ànshí bǎ shìqing bàn hǎo.) — Rest assured, I will definitely get it done on time."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "加油",
+			"Pinyin": "jiāyóu",
+			"Part of Speech": "Interjection / Verb",
+			"English Meaning": "keep it up! / cheer on! / go for it!",
+			"Example (Chinese + Pinyin)": "考试别紧张，加油！(Kǎoshì bié jǐnzhāng, jiāyóu!) — Don't be nervous about the exam, cheer up and do your best!"
+		},
+		{
+			"No": 10,
+			"Chinese Word": "恭喜",
+			"Pinyin": "gōngxǐ",
+			"Part of Speech": "Verb",
+			"English Meaning": "to congratulate / congratulations",
+			"Example (Chinese + Pinyin)": "恭喜你顺利通过了汉语水平考试！(Gōngxǐ nǐ shùnlì tōngguò le Hànyǔ Shuǐpíng Kǎoshì!) — Congratulations on successfully passing the HSK exam!"
+		},
+		{
+			"No": 11,
+			"Chinese Word": "辛苦了",
+			"Pinyin": "xīnkǔ le",
+			"Part of Speech": "Phrase",
+			"English Meaning": "thank you for your hard work / you've worked hard",
+			"Example (Chinese + Pinyin)": "今天大家辛苦了，早点回家休息吧。(Jīntiān dàjiā xīnkǔ le, zǎodiǎn huíjiā xiūxi ba.) — Thank you everyone for your hard work today, go home early and rest."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "慢慢来",
+			"Pinyin": "mànman lái",
+			"Part of Speech": "Phrase",
+			"English Meaning": "take your time / no rush",
+			"Example (Chinese + Pinyin)": "学中文不用着急，慢慢来。(Xué Zhōngwén bú yòng zháojí, mànman lái.) — No need to rush learning Chinese, take your time."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "怎么了",
+			"Pinyin": "zěnme le",
+			"Part of Speech": "Phrase",
+			"English Meaning": "what's wrong? / what happened?",
+			"Example (Chinese + Pinyin)": "你脸色不太好，怎么了？(Nǐ liǎnsè bú tài hǎo, zěnme le?) — You don't look well, what's the matter?"
+		},
+		{
+			"No": 14,
+			"Chinese Word": "开玩笑",
+			"Pinyin": "kāiwánxiào",
+			"Part of Speech": "Verb / Phrase",
+			"English Meaning": "to joke / to make fun of / just kidding",
+			"Example (Chinese + Pinyin)": "别当真，我只是跟你开玩笑。(Bié dàngzhēn, wǒ zhǐshì gēn nǐ kāiwánxiào.) — Don't take it seriously, I was just kidding with you."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "厉害",
+			"Pinyin": "lìhai",
+			"Part of Speech": "Adjective",
+			"English Meaning": "awesome / impressive / formidable",
+			"Example (Chinese + Pinyin)": "你的中文说得太厉害了！(Nǐ de Zhōngwén shuō de tài lìhai le!) — Your spoken Chinese is truly impressive!"
+		},
+		{
+			"No": 16,
+			"Chinese Word": "确实",
+			"Pinyin": "quèshí",
+			"Part of Speech": "Adverb",
+			"English Meaning": "indeed / really / truly",
+			"Example (Chinese + Pinyin)": "这部电影拍得确实非常感人。(Zhè bù diànyǐng pāi de quèshí fēicháng gǎnrén.) — This movie was indeed filmed very touchingly."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "差不多",
+			"Pinyin": "chàbuduō",
+			"Part of Speech": "Adjective / Adverb",
+			"English Meaning": "almost / about the same / nearly",
+			"Example (Chinese + Pinyin)": "我的工作差不多全部做完了。(Wǒ de gōngzuò chàbuduō quánbù zuò wán le.) — My work is almost completely done."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "原来",
+			"Pinyin": "yuánlái",
+			"Part of Speech": "Adverb / Adjective",
+			"English Meaning": "so it turns out / original",
+			"Example (Chinese + Pinyin)": "原来是你啊，我还以为是谁呢！(Yuánlái shì nǐ a, wǒ hái yǐwéi shì shéi ne!) — So it was you! I was wondering who it was!"
+		},
+		{
+			"No": 19,
+			"Chinese Word": "其实",
+			"Pinyin": "qíshí",
+			"Part of Speech": "Adverb",
+			"English Meaning": "actually / in fact",
+			"Example (Chinese + Pinyin)": "其实学汉字并没有想象中那么难。(Qíshí xué hànzì bìng méiyǒu xiǎngxiàng zhōng nàme nán.) — Actually learning characters isn't as hard as imagined."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "另外",
+			"Pinyin": "lìngwài",
+			"Part of Speech": "Conjunction / Pronoun",
+			"English Meaning": "in addition / furthermore / the other",
+			"Example (Chinese + Pinyin)": "另外，请记得明天带上护照复印件。(Lìngwài, qǐng jìde míngtiān dài shàng hùzhào fùyìnjiàn.) — In addition, please remember to bring a passport copy tomorrow."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "突然",
+			"Pinyin": "tūrán",
+			"Part of Speech": "Adjective / Adverb",
+			"English Meaning": "sudden / unexpectedly",
+			"Example (Chinese + Pinyin)": "外面突然下起了大雨。(Wàimiàn tūrán xià qǐ le dàyǔ.) — Suddenly it started pouring rain outside."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "终于",
+			"Pinyin": "zhōngyú",
+			"Part of Speech": "Adverb",
+			"English Meaning": "at last / finally",
+			"Example (Chinese + Pinyin)": "经过努力，我们终于完成了任务。(Jīngguò nǔlì, wǒmen zhōngyú wánchéng le rènwu.) — Through hard work, we finally accomplished the mission."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "顺便",
+			"Pinyin": "shùnbiàn",
+			"Part of Speech": "Adverb",
+			"English Meaning": "conveniently / in passing / by the way",
+			"Example (Chinese + Pinyin)": "你去超市时顺便帮我买瓶牛奶吧。(Nǐ qù chāoshì shí shùnbiàn bāng wǒ mǎi píng niúnǎi ba.) — When you go to the store, grab me a bottle of milk while you're at it."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "无论如何",
+			"Pinyin": "wúlùn rúhé",
+			"Part of Speech": "Phrase / Conjunction",
+			"English Meaning": "no matter what / in any case",
+			"Example (Chinese + Pinyin)": "无论如何，我们都要试一试。(Wúlùn rúhé, wǒmen dōu yào shì yí shì.) — No matter what, we must give it a try."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "随便坐",
+			"Pinyin": "suíbiàn zuò",
+			"Part of Speech": "Phrase",
+			"English Meaning": "make yourself at home / sit wherever you like",
+			"Example (Chinese + Pinyin)": "快请进，家里有点乱，随便坐！(Kuài qǐng jìn, jiālǐ yǒudiǎn luàn, suíbiàn zuò!) — Please come in, house is a bit messy, have a seat anywhere!"
+		}
+	]
+}

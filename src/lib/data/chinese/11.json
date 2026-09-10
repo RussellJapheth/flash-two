@@ -1,0 +1,205 @@
+{
+	"title": "Daily Routines & Leisure Activities",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "运动",
+			"Pinyin": "yùndòng",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "exercise / sports / to work out",
+			"Example (Chinese + Pinyin)": "我每天早上都做半个小时运动。(Wǒ měitiān zǎoshang dōu zuò bàn gè xiǎoshí yùndòng.) — I exercise for half an hour every morning."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "跑步",
+			"Pinyin": "pǎobù",
+			"Part of Speech": "Verb",
+			"English Meaning": "to run / to jog",
+			"Example (Chinese + Pinyin)": "他喜欢在公园里跑步。(Tā xǐhuan zài gōngyuán lǐ pǎobù.) — He likes jogging in the park."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "散步",
+			"Pinyin": "sànbù",
+			"Part of Speech": "Verb",
+			"English Meaning": "to take a walk / to stroll",
+			"Example (Chinese + Pinyin)": "晚饭后我们一起去散步吧。(Wǎnfàn hòu wǒmen yìqǐ qù sànbù ba.) — Let's go for a walk together after dinner."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "游泳",
+			"Pinyin": "yóuyǒng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to swim",
+			"Example (Chinese + Pinyin)": "夏天很多人喜欢去海边游泳。(Xiàtiān hěn duō rén xǐhuan qù hǎibiān yóuyǒng.) — In summer many people like to go swimming at the beach."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "唱歌",
+			"Pinyin": "chànggē",
+			"Part of Speech": "Verb",
+			"English Meaning": "to sing songs / karaoke",
+			"Example (Chinese + Pinyin)": "周末我们常去KTV唱歌。(Zhōumò wǒmen cháng qù KTV chànggē.) — We often go singing at KTV on weekends."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "跳舞",
+			"Pinyin": "tiàowǔ",
+			"Part of Speech": "Verb",
+			"English Meaning": "to dance",
+			"Example (Chinese + Pinyin)": "她在广场上跟着音乐跳舞。(Tā zài guǎngchǎng shang gēnzhe yīnyuè tiàowǔ.) — She dances along to the music in the square."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "旅游",
+			"Pinyin": "lǚyóu",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to travel / tourism",
+			"Example (Chinese + Pinyin)": "今年假期你打算去哪里旅游？(Jīnnián jiàqī nǐ dǎsuàn qù nǎlǐ lǚyóu?) — Where do you plan to travel for holiday this year?"
+		},
+		{
+			"No": 8,
+			"Chinese Word": "拍照",
+			"Pinyin": "pāizhào",
+			"Part of Speech": "Verb",
+			"English Meaning": "to take photos / to snap pictures",
+			"Example (Chinese + Pinyin)": "这里的风景太美了，快拍照！(Zhèlǐ de fēngjǐng tài měi le, kuài pāizhào!) — The scenery here is gorgeous, hurry take a photo!"
+		},
+		{
+			"No": 9,
+			"Chinese Word": "电影",
+			"Pinyin": "diànyǐng",
+			"Part of Speech": "Noun",
+			"English Meaning": "movie / film",
+			"Example (Chinese + Pinyin)": "今晚你想看什么电影？(Jīnwǎn nǐ xiǎng kàn shénme diànyǐng?) — What movie do you want to watch tonight?"
+		},
+		{
+			"No": 10,
+			"Chinese Word": "玩",
+			"Pinyin": "wán",
+			"Part of Speech": "Verb",
+			"English Meaning": "to play / to hang out / to have fun",
+			"Example (Chinese + Pinyin)": "周末欢迎来我家玩！(Zhōumò huānyíng lái wǒ jiā wán!) — Welcome to come over to my place to hang out this weekend!"
+		},
+		{
+			"No": 11,
+			"Chinese Word": "上网",
+			"Pinyin": "shàngwǎng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to go online / surf the internet",
+			"Example (Chinese + Pinyin)": "他在上网查学习资料。(Tā zài shàngwǎng chá xuéxí zīliào.) — He is going online to look up study materials."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "聊天",
+			"Pinyin": "liáotiān",
+			"Part of Speech": "Verb",
+			"English Meaning": "to chat / to converse",
+			"Example (Chinese + Pinyin)": "我们一边喝咖啡一边聊天。(Wǒmen yìbiān hē kāfēi yìbiān liáotiān.) — We drank coffee while chatting."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "音乐",
+			"Pinyin": "yīnyuè",
+			"Part of Speech": "Noun",
+			"English Meaning": "music",
+			"Example (Chinese + Pinyin)": "我做家务时喜欢听轻音乐。(Wǒ zuò jiāwù shí xǐhuan tīng qīng yīnyuè.) — I like listening to light music when doing chores."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "锻炼",
+			"Pinyin": "duànliàn",
+			"Part of Speech": "Verb",
+			"English Meaning": "to exercise / to train body",
+			"Example (Chinese + Pinyin)": "经常锻炼身体对健康有好处。(Jīngcháng duànliàn shēntǐ duì jiànkāng yǒu hǎochu.) — Regular exercise is good for health."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "逛街",
+			"Pinyin": "guàngjiē",
+			"Part of Speech": "Verb",
+			"English Meaning": "to go window shopping / stroll the streets",
+			"Example (Chinese + Pinyin)": "星期六我和朋友去市中心逛街。(Xīngqīliù wǒ hé péngyou qù shìzhōngxīn guàngjiē.) — On Saturday I went window shopping downtown with friends."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "聚会",
+			"Pinyin": "jùhuì",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "gathering / party / get-together",
+			"Example (Chinese + Pinyin)": "今晚我们有一个老同学聚会。(Jīnwǎn wǒmen yǒu yí gè lǎo tóngxué jùhuì.) — We have a reunion party with old classmates tonight."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "打球",
+			"Pinyin": "dǎqiú",
+			"Part of Speech": "Verb",
+			"English Meaning": "to play ball (basketball, tennis, badminton)",
+			"Example (Chinese + Pinyin)": "下午我们去体育馆打球吧。(Xiàwǔ wǒmen qù tǐyùguǎn dǎqiú ba.) — Let's go play ball at the gymnasium this afternoon."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "骑车",
+			"Pinyin": "qíchē",
+			"Part of Speech": "Verb",
+			"English Meaning": "to ride a bicycle / bike",
+			"Example (Chinese + Pinyin)": "天气好时我喜欢骑车上班。(Tiānqì hǎo shí wǒ xǐhuan qíchē shàngbān.) — When the weather is nice I like riding a bike to work."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "爬山",
+			"Pinyin": "páshān",
+			"Part of Speech": "Verb",
+			"English Meaning": "to climb a mountain / to hike",
+			"Example (Chinese + Pinyin)": "秋天是去郊外爬山的好季节。(Qiūtiān shì qù jiāowài páshān de hǎo jìjié.) — Autumn is a great season to hike in the countryside."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "爱好",
+			"Pinyin": "àihào",
+			"Part of Speech": "Noun",
+			"English Meaning": "hobby / interest",
+			"Example (Chinese + Pinyin)": "你的主要业余爱好是什么？(Nǐ de zhǔyào yèyú àihào shì shénme?) — What is your main hobby in your spare time?"
+		},
+		{
+			"No": 21,
+			"Chinese Word": "放松",
+			"Pinyin": "fàngsōng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to relax / to loosen up",
+			"Example (Chinese + Pinyin)": "听音乐能帮我放松心情。(Tīng yīnyuè néng bāng wǒ fàngsōng xīnqíng.) — Listening to music helps me relax."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "习惯",
+			"Pinyin": "xíguàn",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "habit / to be accustomed to",
+			"Example (Chinese + Pinyin)": "早睡早起是一个好习惯。(Zǎoshuì zǎoqǐ shì yí gè hǎo xíguàn.) — Sleeping early and getting up early is a good habit."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "周末",
+			"Pinyin": "zhōumò",
+			"Part of Speech": "Noun",
+			"English Meaning": "weekend",
+			"Example (Chinese + Pinyin)": "祝你周末过得愉快！(Zhù nǐ zhōumò guò de yúkuài!) — Wish you a pleasant weekend!"
+		},
+		{
+			"No": 24,
+			"Chinese Word": "打算",
+			"Pinyin": "dǎsuan",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to plan / intention",
+			"Example (Chinese + Pinyin)": "毕业后你有什么打算？(Bìyè hòu nǐ yǒu shénme dǎsuan?) — What are your plans after graduation?"
+		},
+		{
+			"No": 25,
+			"Chinese Word": "经常",
+			"Pinyin": "jīngcháng",
+			"Part of Speech": "Adverb",
+			"English Meaning": "often / frequently",
+			"Example (Chinese + Pinyin)": "他经常去图书馆借书。(Tā jīngcháng qù túshūguǎn jiè shū.) — He often goes to the library to borrow books."
+		}
+	]
+}

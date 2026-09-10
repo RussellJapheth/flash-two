@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg5)"/>
+  <!-- Cozy House & Sun -->
+  <path d="M32 14L14 28V48C14 49.1 14.9 50 16 50H48C49.1 50 50 49.1 50 48V28L32 14Z" fill="#FFFFFF"/>
+  <rect x="26" y="34" width="12" height="16" rx="2" fill="#047857"/>
+  <circle cx="36" cy="42" r="1.5" fill="#FFFFFF"/>
+  <rect x="36" y="24" width="8" height="8" rx="1.5" fill="#A7F3D0"/>
+  <rect x="20" y="24" width="8" height="8" rx="1.5" fill="#A7F3D0"/>
+</svg>

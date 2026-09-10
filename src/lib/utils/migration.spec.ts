@@ -73,11 +73,11 @@ describe('Chinese Packs Content Validation', () => {
 		});
 	}
 
-	it('strictly preserves Pack 10 (Books of the Bible) with 36 books intact', () => {
+	it('strictly preserves Pack 10 (Books of the Bible) with 66 books intact', () => {
 		expect(pack10.title).toBe('Books of the Bible');
-		expect(pack10.words).toHaveLength(36);
+		expect(pack10.words).toHaveLength(66);
 		expect(pack10.words[0]['Chinese Word']).toBe('创世记');
-		expect(pack10.words[35]['Chinese Word']).toBe('启示录');
+		expect(pack10.words[65]['Chinese Word']).toBe('启示录');
 	});
 });
 

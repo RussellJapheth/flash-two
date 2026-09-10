@@ -1,7 +1,15 @@
 <script lang="ts">
 	import type { WordRecord } from '$lib/types';
 	import { speakWord, playSound } from '$lib/utils/audio';
-	import { Bookmark, Volume2, Pointer } from 'lucide-svelte';
+	import {
+		isSpeechRecognitionSupported,
+		startSpeechRecognition,
+		evaluateSpeechAccuracy,
+		type SpeechEvaluationResult,
+		type SpeechRecognizerHandle
+	} from '$lib/utils/speech';
+	import { Bookmark, Volume2, Pointer, Mic, MicOff, Check, RotateCcw } from 'lucide-svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	let {
 		word,
@@ -32,6 +40,92 @@
 			? word['Example (Chinese + Pinyin)'] || ''
 			: word['Example (French)'] || ''
 	);
+
+	let hasSpeechSupport = $state(false);
+	let isListening = $state(false);
+	let speechResult = $state<SpeechEvaluationResult | null>(null);
+	let currentTranscript = $state('');
+	let recognizerHandle: SpeechRecognizerHandle | null = null;
+
+	onMount(() => {
+		hasSpeechSupport = isSpeechRecognitionSupported();
+	});
+
+	onDestroy(() => {
+		stopListening();
+	});
+
+	$effect(() => {
+		// Reset speech state when the target word changes
+		if (word) {
+			stopListening();
+			speechResult = null;
+			currentTranscript = '';
+		}
+	});
+
+	function stopListening() {
+		if (recognizerHandle) {
+			recognizerHandle.stop();
+			recognizerHandle = null;
+		}
+		isListening = false;
+	}
+
+	function handleToggleMic(e: MouseEvent) {
+		e.stopPropagation();
+		if (isListening) {
+			stopListening();
+			return;
+		}
+
+		speechResult = null;
+		currentTranscript = '';
+		isListening = true;
+
+		const recognitionLang = language === 'chinese' ? 'zh-CN' : 'fr-FR';
+
+		recognizerHandle = startSpeechRecognition({
+			lang: recognitionLang,
+			continuous: false,
+			onStart: () => {
+				isListening = true;
+			},
+			onResult: (transcript, isFinal) => {
+				currentTranscript = transcript;
+				if (isFinal || transcript.trim().length >= targetWord.trim().length) {
+					gradeSpeech(transcript);
+					stopListening();
+				}
+			},
+			onError: () => {
+				stopListening();
+			},
+			onEnd: () => {
+				if (isListening && currentTranscript) {
+					gradeSpeech(currentTranscript);
+				}
+				isListening = false;
+			}
+		});
+	}
+
+	function gradeSpeech(spoken: string) {
+		if (!spoken.trim()) return;
+		const result = evaluateSpeechAccuracy(
+			spoken,
+			targetWord,
+			language,
+			phonetic,
+			targetWord ? [targetWord] : []
+		);
+		speechResult = result;
+		if (result.passed) {
+			playSound('correct');
+		} else {
+			playSound('wrong');
+		}
+	}
 
 	function handleFlip(e: MouseEvent | KeyboardEvent) {
 		// Prevent flip if clicking on audio button or save button
@@ -111,15 +205,60 @@
 					</p>
 				{/if}
 
-				<!-- Audio Trigger Pill -->
-				<button
-					type="button"
-					onclick={handleAudio}
-					class="mt-6 inline-flex cursor-pointer items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-4 py-2 font-headline text-sm font-bold text-indigo-700 shadow-xs transition-all hover:bg-indigo-100 hover:shadow-sm active:scale-95"
-				>
-					<Volume2 size={18} strokeWidth={2} />
-					<span>Listen</span>
-				</button>
+				<!-- Audio & Pronunciation Trigger Controls -->
+				<div class="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+					<button
+						type="button"
+						onclick={handleAudio}
+						class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-4 py-2 font-headline text-sm font-bold text-indigo-700 shadow-xs transition-all hover:bg-indigo-100 hover:shadow-sm active:scale-95"
+					>
+						<Volume2 size={18} strokeWidth={2} />
+						<span>Listen</span>
+					</button>
+
+					{#if hasSpeechSupport}
+						<button
+							type="button"
+							onclick={handleToggleMic}
+							class="inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 font-headline text-sm font-bold shadow-xs transition-all active:scale-95 {isListening
+								? 'animate-pulse border-rose-300 bg-rose-50 text-rose-700 hover:bg-rose-100'
+								: 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-slate-900'}"
+						>
+							<Mic
+								size={18}
+								strokeWidth={2}
+								class={isListening ? 'text-rose-600' : 'text-slate-600'}
+							/>
+							<span>{isListening ? 'Listening...' : 'Speak'}</span>
+						</button>
+					{/if}
+				</div>
+
+				<!-- Pronunciation Feedback Badge -->
+				{#if speechResult}
+					<div
+						class="mt-3.5 inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-center transition-all {speechResult.passed
+							? 'border-emerald-200 bg-emerald-50 text-emerald-800'
+							: 'border-amber-200 bg-amber-50 text-amber-800'}"
+					>
+						<div class="flex items-center gap-1.5 font-headline text-xs font-bold">
+							{#if speechResult.passed}
+								<Check size={14} class="text-emerald-600 stroke-[3]" />
+								<span>{Math.round(speechResult.score * 100)}% Match</span>
+							{:else}
+								<RotateCcw size={14} class="text-amber-600" />
+								<span>{Math.round(speechResult.score * 100)}% · Try Again</span>
+							{/if}
+						</div>
+					</div>
+				{:else if isListening}
+					<div
+						class="mt-3.5 inline-flex items-center gap-1.5 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 font-sans text-xs font-medium text-indigo-700"
+					>
+						<span class="inline-block h-2 w-2 animate-ping rounded-full bg-indigo-500"></span>
+						<span>Listening...</span>
+					</div>
+				{/if}
 			</div>
 
 			<!-- Front Footer Hint -->
@@ -179,15 +318,46 @@
 					</div>
 				{/if}
 
-				<!-- Audio Trigger -->
-				<button
-					type="button"
-					onclick={handleAudio}
-					class="mt-4 inline-flex cursor-pointer items-center gap-1.5 font-headline text-xs font-bold text-indigo-600 hover:underline"
-				>
-					<Volume2 size={16} strokeWidth={2} />
-					<span>Replay Audio</span>
-				</button>
+				<!-- Audio & Speech Trigger Controls -->
+				<div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+					<button
+						type="button"
+						onclick={handleAudio}
+						class="inline-flex cursor-pointer items-center gap-1.5 font-headline text-xs font-bold text-indigo-600 hover:underline"
+					>
+						<Volume2 size={16} strokeWidth={2} />
+						<span>Replay Audio</span>
+					</button>
+
+					{#if hasSpeechSupport}
+						<button
+							type="button"
+							onclick={handleToggleMic}
+							class="inline-flex cursor-pointer items-center gap-1.5 font-headline text-xs font-bold {isListening
+								? 'animate-pulse text-rose-600'
+								: 'text-slate-600 hover:text-slate-900 hover:underline'}"
+						>
+							<Mic size={16} strokeWidth={2} />
+							<span>{isListening ? 'Listening...' : 'Practice Speaking'}</span>
+						</button>
+					{/if}
+				</div>
+
+				{#if speechResult}
+					<div
+						class="mt-3 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-headline text-xs font-bold {speechResult.passed
+							? 'border-emerald-200 bg-emerald-50 text-emerald-800'
+							: 'border-amber-200 bg-amber-50 text-amber-800'}"
+					>
+						{#if speechResult.passed}
+							<Check size={13} class="text-emerald-600 stroke-[3]" />
+							<span>{Math.round(speechResult.score * 100)}% Accuracy</span>
+						{:else}
+							<RotateCcw size={13} class="text-amber-600" />
+							<span>{Math.round(speechResult.score * 100)}% · Try Again</span>
+						{/if}
+					</div>
+				{/if}
 			</div>
 
 			<!-- Back Footer Hint -->

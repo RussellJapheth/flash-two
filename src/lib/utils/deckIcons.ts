@@ -126,6 +126,12 @@ const DECK_ICONS_MAP: Record<string, DeckIconInfo> = {
 		accentColor: '#CA8A04',
 		bgColor: '#FEF9C3'
 	},
+	'chinese-21': {
+		imageSrc: '/images/decks/chinese-21.svg',
+		alt: 'Everyday Spoken Expressions & Situations Icon',
+		accentColor: '#0891B2',
+		bgColor: '#ECFEFF'
+	},
 	'french-1': {
 		imageSrc: '/images/decks/french-1.svg',
 		alt: 'French Greetings & Essentials Icon',

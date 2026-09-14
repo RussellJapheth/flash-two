@@ -267,4 +267,3 @@ describe('SRS SM-2 Algorithm', () => {
 		expect(isCardLearning(againCard)).toBe(true);
 	});
 });
-

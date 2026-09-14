@@ -132,6 +132,10 @@
 				}
 			}
 
+			if (count === 0 && xpData.dailyXP && xpData.dailyXP[iso]) {
+				count = Math.max(1, Math.round(xpData.dailyXP[iso] / 2));
+			}
+
 			activity.push({ day: dayLabel, count, isToday: isCurrent });
 		}
 

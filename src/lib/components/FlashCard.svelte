@@ -8,7 +8,7 @@
 		type SpeechEvaluationResult,
 		type SpeechRecognizerHandle
 	} from '$lib/utils/speech';
-	import { Bookmark, Volume2, Pointer, Mic, MicOff, Check, RotateCcw } from 'lucide-svelte';
+	import { Bookmark, Volume2, Pointer, Mic, Check, RotateCcw } from 'lucide-svelte';
 	import { onMount, onDestroy } from 'svelte';
 
 	let {
@@ -243,7 +243,7 @@
 					>
 						<div class="flex items-center gap-1.5 font-headline text-xs font-bold">
 							{#if speechResult.passed}
-								<Check size={14} class="text-emerald-600 stroke-[3]" />
+								<Check size={14} class="stroke-[3] text-emerald-600" />
 								<span>{Math.round(speechResult.score * 100)}% Match</span>
 							{:else}
 								<RotateCcw size={14} class="text-amber-600" />
@@ -350,7 +350,7 @@
 							: 'border-amber-200 bg-amber-50 text-amber-800'}"
 					>
 						{#if speechResult.passed}
-							<Check size={13} class="text-emerald-600 stroke-[3]" />
+							<Check size={13} class="stroke-[3] text-emerald-600" />
 							<span>{Math.round(speechResult.score * 100)}% Accuracy</span>
 						{:else}
 							<RotateCcw size={13} class="text-amber-600" />

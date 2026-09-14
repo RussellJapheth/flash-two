@@ -321,16 +321,14 @@
 
 		<div class="mt-3 flex items-center gap-3.5">
 			<div
-				class="shadow-xs flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200/70 bg-slate-50"
+				class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200/70 bg-slate-50 shadow-xs"
 			>
-				<img
-					src={deckIcon.imageSrc}
-					alt={deckIcon.alt}
-					class="h-full w-full object-cover"
-				/>
+				<img src={deckIcon.imageSrc} alt={deckIcon.alt} class="h-full w-full object-cover" />
 			</div>
 			<div class="min-w-0 flex-1">
-				<h2 class="truncate font-headline text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl">
+				<h2
+					class="truncate font-headline text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl"
+				>
 					{deckTitle}
 				</h2>
 			</div>

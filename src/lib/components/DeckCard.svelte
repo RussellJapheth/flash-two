@@ -38,7 +38,7 @@
 		<div class="flex min-w-0 items-center gap-3">
 			<!-- Topic-Appropriate Image Icon -->
 			<div
-				class="shadow-xs flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200/70 bg-slate-50 transition-transform duration-200 group-hover:scale-105"
+				class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200/70 bg-slate-50 shadow-xs transition-transform duration-200 group-hover:scale-105"
 			>
 				<img
 					src={deckIcon.imageSrc}

@@ -653,8 +653,10 @@ export const BUILTIN_STORIES: Story[] = [
 				id: 'node-tea-finish',
 				speakerId: 'barista',
 				text: '好的，一共十八块！这是您的88号小票，吸管在旁边，请慢用！',
-				pinyin: 'Hǎo de, yígòng shíbā kuài! Zhè shì nín de bāshíbā hào xiǎopiào, xīguǎn zài pángbiān, qǐng mànyòng!',
-				translation: 'Great, total is 18 yuan! Here is your receipt #88, straws are by the side, enjoy!',
+				pinyin:
+					'Hǎo de, yígòng shíbā kuài! Zhè shì nín de bāshíbā hào xiǎopiào, xīguǎn zài pángbiān, qǐng mànyòng!',
+				translation:
+					'Great, total is 18 yuan! Here is your receipt #88, straws are by the side, enjoy!',
 				audioText: '好的，一共十八块！这是您的88号小票，吸管在旁边，请慢用！',
 				type: 'dialogue'
 			}
@@ -692,8 +694,10 @@ export const BUILTIN_STORIES: Story[] = [
 				id: 'node-fruit-welcome',
 				speakerId: 'vendor',
 				text: '帅哥美女，今天新到的海南芒果和甜西瓜，特别新鲜！要来点吗？',
-				pinyin: 'Shuàigē měinǚ, jīntiān xīn dào de Hǎinán mángguǒ hé tián xīguā, tèbié xīnxiān! Yào lái diǎn ma?',
-				translation: 'Hello there, freshly arrived Hainan mangoes and sweet watermelon today, super fresh! Want some?',
+				pinyin:
+					'Shuàigē měinǚ, jīntiān xīn dào de Hǎinán mángguǒ hé tián xīguā, tèbié xīnxiān! Yào lái diǎn ma?',
+				translation:
+					'Hello there, freshly arrived Hainan mangoes and sweet watermelon today, super fresh! Want some?',
 				audioText: '帅哥美女，今天新到的海南芒果和甜西瓜，特别新鲜！要来点吗？',
 				type: 'choice',
 				choices: [
@@ -752,8 +756,10 @@ export const BUILTIN_STORIES: Story[] = [
 				id: 'node-fruit-price-calc',
 				speakerId: 'vendor',
 				text: '好咧！称好了，西瓜三十块，芒果八块，一共三十八块钱。',
-				pinyin: 'Hǎo lie! Chēng hǎo le, xīguā sānshí kuài, mángguǒ bā kuài, yígòng sānshíbā kuài qián.',
-				translation: 'Alright! Weighed and ready: watermelon is 30 yuan, mangoes 8 yuan, total is 38 yuan.',
+				pinyin:
+					'Hǎo lie! Chēng hǎo le, xīguā sānshí kuài, mángguǒ bā kuài, yígòng sānshíbā kuài qián.',
+				translation:
+					'Alright! Weighed and ready: watermelon is 30 yuan, mangoes 8 yuan, total is 38 yuan.',
 				audioText: '好咧！称好了，西瓜三十块，芒果八块，一共三十八块钱。',
 				type: 'speech',
 				expectedSpeech: {
@@ -789,8 +795,10 @@ export const BUILTIN_STORIES: Story[] = [
 				id: 'node-fruit-discount',
 				speakerId: 'vendor',
 				text: '哎呀你真会说话！算你三十五块，再送你两个新鲜小橘子！',
-				pinyin: 'Āiyā nǐ zhēn huì shuōhuà! Suàn nǐ sānshíwǔ kuài, zài sòng nǐ liǎng gè xīnxiān xiǎo júzi!',
-				translation: 'Aiya, you are quite the talker! Let us make it 35 yuan, and I will give you two fresh mandarins!',
+				pinyin:
+					'Āiyā nǐ zhēn huì shuōhuà! Suàn nǐ sānshíwǔ kuài, zài sòng nǐ liǎng gè xīnxiān xiǎo júzi!',
+				translation:
+					'Aiya, you are quite the talker! Let us make it 35 yuan, and I will give you two fresh mandarins!',
 				audioText: '哎呀你真会说话！算你三十五块，再送你两个新鲜小橘子！',
 				type: 'choice',
 				choices: [
@@ -841,12 +849,13 @@ export const BUILTIN_STORIES: Story[] = [
 				id: 'node-fruit-end',
 				speakerId: 'vendor',
 				text: '微信到账三十五元！袋子给您装好了，吃得甜下次再来啊！',
-				pinyin: 'Wēixìn dàozhàng sānshíwǔ yuán! Dàizi gěi nín zhuāng hǎo le, chī de tián xià cì zài lái a!',
-				translation: 'WeChat payment of 35 yuan received! The bag is packed, come back if you like it sweet!',
+				pinyin:
+					'Wēixìn dàozhàng sānshíwǔ yuán! Dàizi gěi nín zhuāng hǎo le, chī de tián xià cì zài lái a!',
+				translation:
+					'WeChat payment of 35 yuan received! The bag is packed, come back if you like it sweet!',
 				audioText: '微信到账三十五元！袋子给您装好了，吃得甜下次再来啊！',
 				type: 'dialogue'
 			}
 		}
 	}
 ];
-

@@ -239,14 +239,18 @@ export function speakWord(
 			window.speechSynthesis.cancel(); // Stop any pending utterance
 		}
 
-		const clean = text.replace(/[[\]()]/g, '').trim();
+		const clean = (
+			language === 'english' ? text.replace(/\s*\/\s*/g, ', or, ').replace(/,\s*,/g, ',') : text
+		)
+			.replace(/[[\]()]/g, '')
+			.trim();
 		if (!clean) {
 			resolve();
 			return;
 		}
 
 		const utterance = new SpeechSynthesisUtterance(clean);
-		utterance.rate = options?.rate ?? (language === 'english' ? 0.95 : 0.9);
+		utterance.rate = options?.rate ?? (language === 'english' ? 0.82 : 0.8);
 
 		if (language === 'chinese') {
 			utterance.lang = 'zh-CN';

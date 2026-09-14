@@ -659,7 +659,8 @@ export function getRecentlyOpenedPackIds(): string[] {
 
 export function computeStreakStats(
 	progress: Record<string, WordProgress>,
-	customFreezeData?: StreakFreezeData
+	customFreezeData?: StreakFreezeData,
+	customDailyXP?: Record<string, number>
 ): StreakStats {
 	const datesSet = new Set<string>();
 	let totalReviews = 0;
@@ -670,6 +671,29 @@ export function computeStreakStats(
 			const isoDate = d.toISOString().split('T')[0];
 			datesSet.add(isoDate);
 			totalReviews += (p.correct || 0) + (p.wrong || 0);
+		}
+	}
+
+	let dailyXP = customDailyXP;
+	if (!dailyXP && typeof localStorage !== 'undefined') {
+		try {
+			const raw = localStorage.getItem('flashcards_user_xp');
+			if (raw) {
+				const parsed = JSON.parse(raw);
+				if (parsed?.dailyXP && typeof parsed.dailyXP === 'object') {
+					dailyXP = parsed.dailyXP;
+				}
+			}
+		} catch {
+			// ignore
+		}
+	}
+
+	if (dailyXP && typeof dailyXP === 'object') {
+		for (const [dateStr, xp] of Object.entries(dailyXP)) {
+			if (typeof xp === 'number' && xp > 0) {
+				datesSet.add(dateStr);
+			}
 		}
 	}
 
@@ -757,7 +781,7 @@ export function computeStreakStats(
 		freezeCount,
 		tierName,
 		totalReviews,
-		activeDates: Array.from(datesSet),
-		freezeDates: Array.from(freezeSet)
+		activeDates: Array.from(datesSet).sort(),
+		freezeDates: Array.from(freezeSet).sort()
 	};
 }

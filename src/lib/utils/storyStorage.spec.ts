@@ -64,4 +64,3 @@ describe('Story Progress & Storage Utilities', () => {
 		expect(getLocalUserXPData().totalXP).toBe(initialXP);
 	});
 });
-

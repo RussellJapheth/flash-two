@@ -137,4 +137,47 @@ describe('Streak Freezes Calculation & Storage', () => {
 		const loaded = getStreakFreezeData();
 		expect(loaded.usedDates).toEqual(['2026-03-01', '2026-03-05']);
 	});
+
+	it('preserves streak active dates from dailyXP even when cards were re-reviewed on later days', () => {
+		const now = Date.now();
+		const todayIso = new Date(now).toISOString().split('T')[0];
+		const yesterdayIso = new Date(now - 86400000).toISOString().split('T')[0];
+		const twoDaysAgoIso = new Date(now - 2 * 86400000).toISOString().split('T')[0];
+
+		// Progress only has today because older reviews were overwritten by subsequent review
+		const progress = createMockProgress([0]);
+		const dailyXP = {
+			[twoDaysAgoIso]: 15,
+			[yesterdayIso]: 20,
+			[todayIso]: 10
+		};
+
+		const stats = computeStreakStats(progress, { usedDates: [] }, dailyXP);
+		expect(stats.currentStreak).toBe(3);
+		expect(stats.activeDates).toContain(twoDaysAgoIso);
+		expect(stats.activeDates).toContain(yesterdayIso);
+		expect(stats.activeDates).toContain(todayIso);
+	});
+
+	it('reads dailyXP from localStorage when customDailyXP is not provided', () => {
+		const now = Date.now();
+		const todayIso = new Date(now).toISOString().split('T')[0];
+		const yesterdayIso = new Date(now - 86400000).toISOString().split('T')[0];
+
+		localStorage.setItem(
+			'flashcards_user_xp',
+			JSON.stringify({
+				totalXP: 100,
+				dailyXP: {
+					[yesterdayIso]: 25,
+					[todayIso]: 15
+				}
+			})
+		);
+
+		const progress: Record<string, WordProgress> = {};
+		const stats = computeStreakStats(progress);
+		expect(stats.currentStreak).toBe(2);
+		expect(stats.activeDates).toEqual([yesterdayIso, todayIso].sort());
+	});
 });

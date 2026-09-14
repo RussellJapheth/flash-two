@@ -44,7 +44,10 @@
 	let studyMode = $derived(
 		(page.url.searchParams.get('mode') as 'srs' | 'all' | 'learning' | 'weak') || 'srs'
 	);
-	let initialAutoplay = $derived(page.url.searchParams.get('autoplay') === 'true');
+	let initialAutoplay = $derived(
+		page.url.searchParams.get('autoplay') === 'true' ||
+			page.url.searchParams.get('autoplay') === '1'
+	);
 	let cardLimit = $derived(
 		page.url.searchParams.has('limit')
 			? parseInt(page.url.searchParams.get('limit') || '10', 10)
@@ -327,7 +330,7 @@
 		const meaning = currentWord['English Meaning'] || '';
 
 		if (!isFlipped) {
-			// Front card: Speak target word
+			// Front card: Speak target word (1st time)
 			if (autoplayAutoSpeak && target) {
 				await speakWord(target, deckLanguage);
 				if (autoplayStepId !== currentStepId || !isAutoplay) return;
@@ -343,13 +346,40 @@
 			playSound('flip');
 			runAutoplayStep();
 		} else {
-			// Back card: Speak meaning in English, then move to next card
-			if (autoplayAutoSpeak && meaning) {
-				await speakWord(meaning, 'english');
-				if (autoplayStepId !== currentStepId || !isAutoplay) return;
-				// Brief pause after reading before advancing
-				await new Promise((resolve) => setTimeout(resolve, 500));
-				if (autoplayStepId !== currentStepId || !isAutoplay) return;
+			// Back card: Speak meaning (1st time), target word (2nd time), meaning (2nd time), then advance
+			if (autoplayAutoSpeak && (meaning || target)) {
+				const connectors = ['meaning', 'which means'];
+				const connector1 = connectors[Math.floor(Math.random() * connectors.length)];
+				const connector2 = connectors[Math.floor(Math.random() * connectors.length)];
+
+				if (meaning) {
+					await speakWord(connector1, 'english');
+					if (autoplayStepId !== currentStepId || !isAutoplay) return;
+					await new Promise((resolve) => setTimeout(resolve, 250));
+					if (autoplayStepId !== currentStepId || !isAutoplay) return;
+
+					await speakWord(meaning, 'english');
+					if (autoplayStepId !== currentStepId || !isAutoplay) return;
+					await new Promise((resolve) => setTimeout(resolve, 400));
+					if (autoplayStepId !== currentStepId || !isAutoplay) return;
+				}
+				if (target) {
+					await speakWord(target, deckLanguage);
+					if (autoplayStepId !== currentStepId || !isAutoplay) return;
+					await new Promise((resolve) => setTimeout(resolve, 400));
+					if (autoplayStepId !== currentStepId || !isAutoplay) return;
+				}
+				if (meaning) {
+					await speakWord(connector2, 'english');
+					if (autoplayStepId !== currentStepId || !isAutoplay) return;
+					await new Promise((resolve) => setTimeout(resolve, 250));
+					if (autoplayStepId !== currentStepId || !isAutoplay) return;
+
+					await speakWord(meaning, 'english');
+					if (autoplayStepId !== currentStepId || !isAutoplay) return;
+					await new Promise((resolve) => setTimeout(resolve, 500));
+					if (autoplayStepId !== currentStepId || !isAutoplay) return;
+				}
 			} else {
 				await new Promise((resolve) => setTimeout(resolve, 1500));
 				if (autoplayStepId !== currentStepId || !isAutoplay) return;

@@ -52,17 +52,95 @@
 
 		return cells;
 	});
+
+	let dragOffsetY = $state(0);
+	let isDragging = $state(false);
+	let startY = 0;
+	let hasMoved = false;
+
+	function handlePointerDown(e: PointerEvent) {
+		if (e.button !== 0) return;
+		startY = e.clientY;
+		dragOffsetY = 0;
+		isDragging = true;
+		hasMoved = false;
+		(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+	}
+
+	function handlePointerMove(e: PointerEvent) {
+		if (!isDragging) return;
+		const delta = e.clientY - startY;
+		if (delta > 5) hasMoved = true;
+		dragOffsetY = Math.max(0, delta);
+	}
+
+	function handlePointerUp(e: PointerEvent) {
+		if (!isDragging) return;
+		isDragging = false;
+		try {
+			(e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+		} catch {
+			// ignore
+		}
+
+		if (!hasMoved || dragOffsetY < 8) {
+			onClose();
+		} else if (dragOffsetY > 60) {
+			onClose();
+		}
+		dragOffsetY = 0;
+	}
+
+	function handlePointerCancel(e: PointerEvent) {
+		isDragging = false;
+		try {
+			(e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+		} catch {
+			// ignore
+		}
+		dragOffsetY = 0;
+	}
 </script>
+
+<svelte:window
+	onkeydown={(e) => {
+		if (isOpen && e.key === 'Escape') onClose();
+	}}
+/>
 
 {#if isOpen}
 	<div
+		role="presentation"
 		class="fixed inset-0 z-50 flex items-end justify-center bg-slate-900/50 p-0 backdrop-blur-sm transition-opacity sm:items-center sm:p-4"
+		onclick={(e) => {
+			if (e.target === e.currentTarget) onClose();
+		}}
 	>
 		<div
+			role="dialog"
+			aria-modal="true"
+			aria-label="Streak Calendar"
 			class="shadow-sheet animate-in slide-in-from-bottom relative w-full max-w-md rounded-t-[32px] border border-slate-200 bg-white p-6 duration-300 sm:rounded-[32px]"
+			style="transform: translateY({dragOffsetY}px); transition: {isDragging
+				? 'none'
+				: 'transform 0.2s ease-out'};"
 		>
-			<!-- iOS Drag Pill Handle -->
-			<div class="mx-auto mb-4 h-1.5 w-9 rounded-full bg-slate-200"></div>
+			<!-- iOS Drag Pill Handle / Dismiss Trigger -->
+			<div class="-mt-2 mb-3 flex items-center justify-center">
+				<button
+					type="button"
+					aria-label="Dismiss streak calendar"
+					class="group flex h-7 w-20 cursor-grab touch-none items-center justify-center rounded-full transition-transform select-none active:scale-95 active:cursor-grabbing"
+					onpointerdown={handlePointerDown}
+					onpointermove={handlePointerMove}
+					onpointerup={handlePointerUp}
+					onpointercancel={handlePointerCancel}
+				>
+					<span
+						class="h-1.5 w-10 rounded-full bg-slate-200 transition-colors group-hover:bg-slate-300 group-active:bg-slate-400"
+					></span>
+				</button>
+			</div>
 
 			<!-- Header -->
 			<div class="flex items-center justify-between">

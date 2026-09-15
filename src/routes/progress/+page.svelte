@@ -409,13 +409,13 @@
 				<p class="font-headline text-lg font-black text-indigo-600">
 					{xpStats.weeklyXP.toLocaleString()}
 				</p>
-				<p class="text-[11px] font-bold text-slate-500">7-Day Weekly XP</p>
+				<p class="text-[11px] font-bold text-slate-500">This Week's XP</p>
 			</div>
 			<div class="rounded-2xl border border-slate-100 bg-slate-50/80 p-3 text-center">
 				<p class="font-headline text-lg font-black text-amber-600">
 					{xpStats.monthlyXP.toLocaleString()}
 				</p>
-				<p class="text-[11px] font-bold text-slate-500">30-Day Monthly XP</p>
+				<p class="text-[11px] font-bold text-slate-500">This Month's XP</p>
 			</div>
 		</div>
 	</section>

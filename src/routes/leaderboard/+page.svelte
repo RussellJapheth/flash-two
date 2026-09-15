@@ -177,7 +177,7 @@
 					: 'text-slate-600 hover:text-slate-900'}"
 			>
 				<Flame size={14} strokeWidth={2.25} />
-				<span>Weekly (7d)</span>
+				<span>This Week</span>
 			</button>
 
 			<button
@@ -189,7 +189,7 @@
 					: 'text-slate-600 hover:text-slate-900'}"
 			>
 				<Calendar size={14} strokeWidth={2.25} />
-				<span>Monthly (30d)</span>
+				<span>This Month</span>
 			</button>
 
 			<button

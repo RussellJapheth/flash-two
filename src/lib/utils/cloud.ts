@@ -278,7 +278,7 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 					}
 				}
 
-				const mergedTotal = Math.max(localXP.totalXP || 0, remoteXP.totalXP || 0);
+				const mergedTotal = Object.values(mergedDaily).reduce((sum, xp) => sum + xp, 0);
 				mergedXP = {
 					totalXP: mergedTotal,
 					dailyXP: mergedDaily,
@@ -287,7 +287,7 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 					xpVersion: CURRENT_XP_VERSION
 				};
 
-				if (localXP.totalXP > (remoteXP.totalXP || 0)) {
+				if (mergedTotal > (remoteXP.totalXP || 0)) {
 					localHadNewData = true;
 				}
 			}

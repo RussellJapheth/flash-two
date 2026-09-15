@@ -4,7 +4,8 @@ import {
 	calculateGameXP,
 	calculateSessionBonus,
 	computeLevelStats,
-	calculateWindowXP,
+	calculateCurrentWeekXP,
+	calculateCurrentMonthXP,
 	deduplicateXPLeaderboard
 } from './xp';
 import type { XPLeaderboardEntry } from '$lib/types';
@@ -82,21 +83,48 @@ describe('XP calculations and progression', () => {
 		expect(stats200.level).toBe(3);
 	});
 
-	it('calculates rolling window XP from dailyXP maps', () => {
+	it('never reports all-time XP below the sum of recorded daily XP', () => {
 		const today = new Date().toISOString().split('T')[0];
-		const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-		const oldDate = new Date(Date.now() - 10 * 86400000).toISOString().split('T')[0];
+		const oldDate = new Date(Date.now() - 40 * 86400000).toISOString().split('T')[0];
 
-		const dailyMap = {
-			[today]: 50,
-			[yesterday]: 30,
-			[oldDate]: 100
+		const stats = computeLevelStats(50, { [today]: 120, [oldDate]: 80 });
+
+		expect(stats.totalXP).toBe(200);
+		expect(stats.weeklyXP).toBe(120);
+		expect(stats.monthlyXP).toBe(120);
+	});
+
+	it('sums XP for the current calendar week (Monday start)', () => {
+		const now = new Date();
+		const todayKey = now.toISOString().split('T')[0];
+		const monday = new Date(
+			Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) -
+				((now.getUTCDay() + 6) % 7) * 86400000
+		);
+		const lastWeekKey = new Date(monday.getTime() - 86400000).toISOString().split('T')[0];
+
+		const daily = {
+			[todayKey]: 100,
+			[lastWeekKey]: 200
 		};
 
-		// 7-day window should include today and yesterday (80)
-		expect(calculateWindowXP(dailyMap, 7)).toBe(80);
-		// 30-day window should include all three (180)
-		expect(calculateWindowXP(dailyMap, 30)).toBe(180);
+		expect(calculateCurrentWeekXP(daily)).toBe(100);
+	});
+
+	it('sums XP for the current calendar month', () => {
+		const now = new Date();
+		const todayKey = now.toISOString().split('T')[0];
+		const prevMonthKey = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1))
+			.toISOString()
+			.split('T')[0];
+
+		const daily = {
+			[todayKey]: 70,
+			[prevMonthKey]: 300
+		};
+
+		expect(calculateCurrentMonthXP(daily)).toBe(70);
+		expect(calculateCurrentWeekXP(daily)).toBe(70);
 	});
 
 	it('deduplicates leaderboard entries and lets authentic local entry overwrite remote score', () => {

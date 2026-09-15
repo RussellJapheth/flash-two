@@ -112,7 +112,11 @@ export function computeLevelStats(
 	totalXP: number,
 	dailyXPMap: Record<string, number> = {}
 ): XPStats {
-	const validXP = Math.max(0, Math.floor(totalXP || 0));
+	const recordedDailyXP = Object.values(dailyXPMap || {}).reduce(
+		(sum, xp) => sum + (typeof xp === 'number' ? xp : 0),
+		0
+	);
+	const validXP = Math.max(0, Math.floor(totalXP || 0), recordedDailyXP);
 	const level = Math.max(1, Math.floor(Math.sqrt(validXP / 50)) + 1);
 
 	const currentLevelXP = Math.pow(level - 1, 2) * 50;
@@ -132,9 +136,9 @@ export function computeLevelStats(
 	else if (level >= 4) levelTitle = 'Diligent Apprentice';
 	else if (level >= 2) levelTitle = 'Active Learner';
 
-	// Compute weekly & monthly sums from dailyXPMap
-	const weeklyXP = calculateWindowXP(dailyXPMap, 7);
-	const monthlyXP = calculateWindowXP(dailyXPMap, 30);
+	// Compute current calendar week & month sums from dailyXPMap
+	const weeklyXP = calculateCurrentWeekXP(dailyXPMap);
+	const monthlyXP = calculateCurrentMonthXP(dailyXPMap);
 	const theme = getLevelTheme(level);
 
 	return {
@@ -214,22 +218,42 @@ export function getLevelTheme(level: number) {
 }
 
 /**
- * Sums XP from dailyXP records in the past N days (including today)
+ * Sums XP from dailyXP records within an inclusive ISO date range
  */
-export function calculateWindowXP(dailyXPMap: Record<string, number>, days: number): number {
-	if (!dailyXPMap || typeof dailyXPMap !== 'object') return 0;
-	const today = new Date();
+function sumDailyRange(dailyXPMap: Record<string, number>, low: string, high: string): number {
 	let sum = 0;
-
-	for (let i = 0; i < days; i++) {
-		const targetDate = new Date(today.getTime() - i * 86400000);
-		const iso = targetDate.toISOString().split('T')[0];
-		if (dailyXPMap[iso]) {
-			sum += dailyXPMap[iso];
+	for (const [dateKey, xp] of Object.entries(dailyXPMap)) {
+		if (dateKey >= low && dateKey <= high && typeof xp === 'number') {
+			sum += xp;
 		}
 	}
-
 	return sum;
+}
+
+function getUTCDayKey(date: Date): string {
+	return date.toISOString().split('T')[0];
+}
+
+/**
+ * Sums XP from dailyXP records in the current calendar week (Monday start)
+ */
+export function calculateCurrentWeekXP(dailyXPMap: Record<string, number>): number {
+	if (!dailyXPMap || typeof dailyXPMap !== 'object') return 0;
+	const now = new Date();
+	const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+	const weekStart = new Date(today.getTime() - ((today.getUTCDay() + 6) % 7) * 86400000);
+	return sumDailyRange(dailyXPMap, getUTCDayKey(weekStart), getUTCDayKey(today));
+}
+
+/**
+ * Sums XP from dailyXP records in the current calendar month
+ */
+export function calculateCurrentMonthXP(dailyXPMap: Record<string, number>): number {
+	if (!dailyXPMap || typeof dailyXPMap !== 'object') return 0;
+	const now = new Date();
+	const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+	const monthStart = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1));
+	return sumDailyRange(dailyXPMap, getUTCDayKey(monthStart), getUTCDayKey(today));
 }
 
 export const CURRENT_XP_VERSION = 3;

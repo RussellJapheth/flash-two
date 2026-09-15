@@ -175,4 +175,49 @@ describe('XP Versioned Migration', () => {
 			globalThis.fetch = originalFetch;
 		}
 	});
+
+	it('recomputes totalXP as the sum of merged daily XP across devices', async () => {
+		saveLocalUserXPData({
+			totalXP: 100,
+			dailyXP: { '2026-09-01': 100 },
+			lastUpdated: Date.now(),
+			xpVersion: 3
+		});
+
+		const originalFetch = globalThis.fetch;
+		globalThis.fetch = (async (url: RequestInfo | URL, init?: RequestInit) => {
+			const urlStr = url.toString();
+			if (init?.method === 'PUT') {
+				return { ok: true, status: 200, json: async () => ({}) } as unknown as Response;
+			}
+			if (urlStr.includes('/users/alex')) {
+				return {
+					ok: true,
+					status: 200,
+					json: async () => ({
+						version: 1,
+						progress: {},
+						username: 'alex',
+						xpData: {
+							totalXP: 100,
+							dailyXP: { '2026-09-02': 100 },
+							xpVersion: 3
+						}
+					})
+				} as unknown as Response;
+			}
+			return { ok: true, status: 200, json: async () => [] } as unknown as Response;
+		}) as unknown as typeof fetch;
+
+		try {
+			const { pullAndMerge } = await import('./cloud');
+			await pullAndMerge('alex');
+
+			const updatedLocal = getLocalUserXPData();
+			expect(updatedLocal.totalXP).toBe(200);
+			expect(updatedLocal.dailyXP).toEqual({ '2026-09-01': 100, '2026-09-02': 100 });
+		} finally {
+			globalThis.fetch = originalFetch;
+		}
+	});
 });

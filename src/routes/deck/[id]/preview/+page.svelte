@@ -20,6 +20,7 @@
 		toggleSavedWord
 	} from '$lib/utils/storage';
 	import { speakWord } from '$lib/utils/audio';
+	import { buildCloze } from '$lib/utils/sentencePractice';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
 	import { getDeckIcon } from '$lib/utils/deckIcons';
@@ -36,6 +37,7 @@
 		Search,
 		Table,
 		SlidersHorizontal,
+		MessagesSquare,
 		CheckCircle2,
 		Clock,
 		Pencil,
@@ -79,6 +81,10 @@
 	// Table Search & Filters
 	let tableSearch = $state('');
 	let tableFilter = $state<'all' | 'difficult' | 'saved' | 'due' | 'learning' | 'mastered'>('all');
+
+	let sentencePracticeCount = $derived(
+		words.reduce((count, w) => (buildCloze(w, deckLanguage) ? count + 1 : count), 0)
+	);
 
 	async function loadDeckData() {
 		const progress = await getAllProgress();
@@ -509,6 +515,36 @@
 			>
 				<PlayCircle size={18} strokeWidth={2.25} class="text-indigo-600" />
 				<span>Autoplay Deck Hands-Free</span>
+			</a>
+		</div>
+
+		<!-- Sentence Practice CTA -->
+		<div
+			class="shadow-card flex items-center justify-between gap-3 rounded-2xl border border-indigo-200/70 bg-indigo-50/60 p-4"
+		>
+			<div class="flex items-center gap-2.5">
+				<div
+					class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-xs"
+				>
+					<MessagesSquare size={18} strokeWidth={2.25} />
+				</div>
+				<div>
+					<p class="font-headline text-sm font-bold text-slate-900">Sentence Practice</p>
+					<p class="font-sans text-[11px] text-slate-500">
+						{sentencePracticeCount} example {sentencePracticeCount === 1 ? 'sentence' : 'sentences'}
+						from card data
+					</p>
+				</div>
+			</div>
+			<a
+				href={resolve(`/practice/sentences/${deckId}`)}
+				class="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-2xl bg-indigo-600 px-4 py-2.5 font-headline text-xs font-bold text-white shadow-xs transition-all hover:bg-indigo-700 active:scale-[0.98] {words.length ===
+					0 || sentencePracticeCount === 0
+					? 'pointer-events-none opacity-40'
+					: ''}"
+			>
+				<Play size={14} strokeWidth={2.5} class="fill-current" />
+				<span>Practice</span>
 			</a>
 		</div>
 	{:else}

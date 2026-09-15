@@ -190,7 +190,7 @@
 
 	function getOptionClass(option: ClozeOption): string {
 		if (!hasAnswered) {
-			return 'border-slate-200/80 bg-white text-slate-800 hover:border-indigo-300 hover:bg-indigo-50/40';
+			return 'border-white/70 bg-white/75 text-slate-800 backdrop-blur-md hover:border-indigo-300 hover:bg-white/90';
 		}
 		if (option.isCorrect) {
 			return 'border-emerald-500 bg-emerald-50/90 text-emerald-800 ring-2 ring-emerald-500/20';
@@ -279,9 +279,17 @@
 	<title>Sentence Practice — {deckTitle}</title>
 </svelte:head>
 
-<div class="flex min-h-screen flex-col justify-between bg-white">
+<div
+	class="relative flex min-h-screen flex-col justify-between overflow-hidden bg-linear-to-b from-indigo-100 via-indigo-50/40 to-white"
+>
+	<div class="pointer-events-none absolute inset-0 z-0">
+		<div class="absolute -top-24 -left-20 h-72 w-72 rounded-full bg-indigo-200/50 blur-3xl"></div>
+		<div class="absolute top-1/3 -right-24 h-80 w-80 rounded-full bg-violet-200/40 blur-3xl"></div>
+		<div class="absolute -bottom-28 left-1/3 h-72 w-72 rounded-full bg-sky-200/40 blur-3xl"></div>
+	</div>
+
 	<header
-		class="sticky top-0 z-20 flex items-center justify-between border-b border-slate-100 bg-white/90 px-4 py-3 shadow-xs backdrop-blur-md"
+		class="sticky top-0 z-30 flex items-center justify-between border-b border-white/60 bg-white/60 px-4 py-3 shadow-xs backdrop-blur-xl"
 	>
 		<button
 			type="button"
@@ -309,17 +317,19 @@
 		</div>
 	</header>
 
-	<div class="h-1.5 w-full overflow-hidden bg-slate-100">
+	<div class="h-1.5 w-full overflow-hidden bg-white/60 backdrop-blur-xs">
 		<div
 			class="h-full bg-indigo-600 transition-all duration-300 ease-out"
 			style="width: {items.length > 0 ? (progressCount / items.length) * 100 : 0}%"
 		></div>
 	</div>
 
-	<main class="mx-auto flex w-full flex-1 flex-col justify-center px-4 py-4 sm:max-w-md">
+	<main
+		class="relative z-10 mx-auto flex w-full flex-1 flex-col justify-center px-4 py-4 sm:max-w-md"
+	>
 		{#if isSessionFinished}
 			<div
-				class="shadow-card space-y-4 rounded-3xl border border-slate-200/90 bg-white p-6 text-center"
+				class="space-y-4 rounded-3xl border border-white/60 bg-white/60 p-6 text-center shadow-xl shadow-indigo-600/5 backdrop-blur-xl"
 			>
 				<div
 					class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-indigo-100 bg-indigo-50"
@@ -379,10 +389,12 @@
 			</div>
 		{:else if currentItem}
 			<div class="space-y-4">
-				<div class="shadow-card rounded-3xl border border-slate-200/90 bg-white p-5">
+				<div
+					class="rounded-3xl border border-white/60 bg-white/50 p-5 shadow-xl shadow-indigo-600/5 backdrop-blur-xl"
+				>
 					<div class="flex items-center justify-between gap-2">
 						<span
-							class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-1 font-headline text-[10px] font-bold tracking-wider text-indigo-700 uppercase"
+							class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50/90 px-2.5 py-1 font-headline text-[10px] font-bold tracking-wider text-indigo-700 uppercase backdrop-blur-xs"
 						>
 							<MessagesSquare size={11} strokeWidth={2.25} />
 							<span>Complete the sentence</span>
@@ -525,7 +537,7 @@
 							<span>Correct! You nailed this sentence.</span>
 						{:else}
 							<AlertCircle size={16} class="shrink-0" />
-							<span>The answer is locked in — the correct word is now filled in above.</span>
+							<span>That's incorrect.</span>
 						{/if}
 					</div>
 				{/if}
@@ -542,7 +554,7 @@
 			</div>
 		{:else}
 			<div
-				class="shadow-card space-y-3 rounded-3xl border border-dashed border-slate-200 bg-white p-8 text-center text-slate-500"
+				class="space-y-3 rounded-3xl border border-dashed border-white/60 bg-white/50 p-8 text-center text-slate-500 shadow-xl shadow-indigo-600/5 backdrop-blur-xl"
 			>
 				<MessagesSquare size={40} strokeWidth={1.5} class="mx-auto mb-2 text-slate-400" />
 				<h3 class="font-headline text-base font-bold text-slate-800">

@@ -117,6 +117,66 @@ describe('buildCloze', () => {
 		expect(cloze?.pinyin).toBe('');
 	});
 
+	it('blanks target pinyin across a tone-sandhi variant (不 bù vs bú)', () => {
+		const word: WordRecord = {
+			No: 15,
+			'Chinese Word': '不',
+			Pinyin: 'bù',
+			'Part of Speech': 'Adverb',
+			'English Meaning': 'not / no',
+			'Example (Chinese + Pinyin)': '我不是外国人。(Wǒ bú shì wàiguórén.) — I am not a foreigner.'
+		};
+		const cloze = buildCloze(word, 'chinese');
+		expect(cloze).not.toBeNull();
+		expect(cloze?.pinyin).toBe(`Wǒ ${BLANK_TOKEN} shì wàiguórén.`);
+	});
+
+	it('blanks target pinyin fused inside a compound (星 in 星期天)', () => {
+		const word: WordRecord = {
+			No: 12,
+			'Chinese Word': '星期',
+			Pinyin: 'xīngqī',
+			'Part of Speech': 'Noun',
+			'English Meaning': 'week',
+			'Example (Chinese + Pinyin)':
+				'星期天我们去公园。(Xīngqītiān wǒmen qù gōngyuán.) — We go to the park on Sunday.'
+		};
+		const cloze = buildCloze(word, 'chinese');
+		expect(cloze).not.toBeNull();
+		expect(cloze?.pinyin).toBe(`${BLANK_TOKEN}tiān wǒmen qù gōngyuán.`);
+	});
+
+	it("blanks target pinyin after an apostrophe separator (爱 in shēn'ài)", () => {
+		const word: WordRecord = {
+			No: 7,
+			'Chinese Word': '爱',
+			Pinyin: 'ài',
+			'Part of Speech': 'Verb',
+			'English Meaning': 'to love / love',
+			'Example (Chinese + Pinyin)':
+				"我们深爱着我们的家人。(Wǒmen shēn'ài zhe wǒmen de jiārén.) — We deeply love our family."
+		};
+		const cloze = buildCloze(word, 'chinese');
+		expect(cloze).not.toBeNull();
+		expect(cloze?.pinyin).toBe(`Wǒmen shēn'${BLANK_TOKEN} zhe wǒmen de jiārén.`);
+	});
+
+	it('blanks target pinyin inside a compound word (包子 in 肉包子)', () => {
+		const word: WordRecord = {
+			No: 25,
+			'Chinese Word': '包子',
+			Pinyin: 'bāozi',
+			'Part of Speech': 'Noun',
+			'English Meaning': 'steamed stuffed bun',
+			'Example (Chinese + Pinyin)':
+				'早餐我吃了两个肉包子。(Zǎocān wǒ chī le liǎng gè ròubāozi.) — For breakfast I ate two meat steamed buns.'
+		};
+		const cloze = buildCloze(word, 'chinese');
+		expect(cloze).not.toBeNull();
+		expect(cloze?.displaySentence).toBe(`早餐我吃了两个肉${BLANK_TOKEN}。`);
+		expect(cloze?.pinyin).toBe(`Zǎocān wǒ chī le liǎng gè ròu${BLANK_TOKEN}.`);
+	});
+
 	it('returns null for a card whose target word is not in the example sentence', () => {
 		const word: WordRecord = {
 			No: 12,
@@ -181,11 +241,16 @@ describe('Data integrity: every built-in card is practiceable', () => {
 	const packs = import.meta.glob<RawPack>('../data/chinese/*.json', { eager: true });
 	const frenchPacks = import.meta.glob<RawPack>('../data/french/*.json', { eager: true });
 
-	it('every Chinese card yields a working cloze', () => {
+	it('every Chinese card yields a working cloze with pinyin', () => {
 		let cardsChecked = 0;
 		for (const raw of Object.values(packs)) {
 			for (const word of raw?.words || []) {
-				expect(buildCloze(word, 'chinese'), `chinese card ${word.No}`).not.toBeNull();
+				const cloze = buildCloze(word, 'chinese');
+				expect(cloze, `chinese card ${word.No}`).not.toBeNull();
+				expect(
+					cloze?.pinyin,
+					`pinyin for chinese card ${word.No} (${word['Chinese Word']})`
+				).toBeTruthy();
 				cardsChecked++;
 			}
 		}

@@ -84,6 +84,35 @@ function replaceAllCaseInsensitive(source: string, needle: string, replacement: 
 }
 
 /**
+ * Strips pinyin tone marks so tone-sandhi variants (bù/bú) compare as equal.
+ */
+function toneNormalize(text: string): string {
+	return text
+		.toLowerCase()
+		.replace(/[āáǎà]/g, 'a')
+		.replace(/[ēéěè]/g, 'e')
+		.replace(/[īíǐì]/g, 'i')
+		.replace(/[ōóǒò]/g, 'o')
+		.replace(/[ūúǔù]/g, 'u')
+		.replace(/[üǖǘǚǜ]/g, 'u');
+}
+
+/**
+ * Blanks the target pinyin inside `pinyinText` using a tone-insensitive substring
+ * lookup. Handles targets fused into compounds (ròubāozi → 包子), tone sandhi
+ * (bú vs bù) and apostrophe-separated syllables (shēn'ài → 爱). Returns null when
+ * the target pinyin cannot be located at all.
+ */
+function blankTargetPinyinCore(pinyinText: string, targetPinyin: string): string | null {
+	const norm = toneNormalize(pinyinText);
+	const target = toneNormalize(targetPinyin).trim();
+	if (!target) return null;
+	const index = norm.indexOf(target);
+	if (index === -1) return null;
+	return pinyinText.slice(0, index) + BLANK_TOKEN + pinyinText.slice(index + target.length);
+}
+
+/**
  * Builds a cloze question from a card. Returns null when the card cannot be
  * practiced (missing example, target word absent from the sentence).
  */
@@ -118,7 +147,7 @@ export function buildCloze(
 			pinyin = tokens.join(' ');
 		} else {
 			// Hiding pinyin is safer than leaking the answer through an unblanked line.
-			pinyin = '';
+			pinyin = blankTargetPinyinCore(parsed.pinyin, targetPinyin) ?? '';
 		}
 	} else if (pinyin) {
 		pinyin = '';

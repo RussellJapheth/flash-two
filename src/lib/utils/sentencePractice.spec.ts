@@ -10,6 +10,7 @@ import {
 import type { WordRecord } from '$lib/types';
 
 import pack1 from '../data/chinese/1.json';
+import pack2 from '../data/chinese/2.json';
 
 const helloWord: WordRecord = {
 	No: 1,
@@ -189,6 +190,18 @@ describe('buildCloze', () => {
 		};
 		expect(buildCloze(word, 'chinese')).toBeNull();
 	});
+
+	it('exposes declared acceptable answers from the card field', () => {
+		const word = pack2.words.find((w) => w.No === 5);
+		expect(word).toBeDefined();
+		const cloze = buildCloze(word!, 'chinese');
+		expect(cloze?.acceptedAnswers).toEqual(['明天', '昨天']);
+	});
+
+	it('defaults accepted answers to an empty list', () => {
+		const cloze = buildCloze(helloWord, 'chinese');
+		expect(cloze?.acceptedAnswers).toEqual([]);
+	});
 });
 
 describe('buildClozeOptions', () => {
@@ -214,6 +227,39 @@ describe('buildClozeOptions', () => {
 		const options = buildClozeOptions(cloze!, [helloWord], 3);
 		expect(options).toHaveLength(1);
 		expect(options[0].isCorrect).toBe(true);
+	});
+
+	it('marks declared acceptable answers as correct and includes them', () => {
+		const word = pack2.words.find((w) => w.No === 5);
+		expect(word).toBeDefined();
+		const cloze = buildCloze(word!, 'chinese');
+		expect(cloze).not.toBeNull();
+		const options = buildClozeOptions(cloze!, pack2.words as WordRecord[], 3);
+		const texts = options.map((o) => o.text);
+		expect(new Set(texts).size).toBe(texts.length);
+		for (const accepted of ['今天', '明天', '昨天']) {
+			const opted = options.find((o) => o.text === accepted);
+			expect(opted, accepted).toBeDefined();
+			expect(opted?.isCorrect, accepted).toBe(true);
+		}
+		expect(options.some((o) => !o.isCorrect)).toBe(true);
+	});
+
+	it('leaves accepted answers absent from the deck out of the options', () => {
+		const word: WordRecord = {
+			No: 5,
+			'Chinese Word': '今天',
+			Pinyin: 'jīntiān',
+			'Part of Speech': 'Noun',
+			'English Meaning': 'today',
+			'Acceptable Answers': ['后天'],
+			'Example (Chinese + Pinyin)':
+				'今天星期几？(Jīntiān xīngqī jǐ?) — What day of the week is it today?'
+		};
+		const cloze = buildCloze(word, 'chinese');
+		const options = buildClozeOptions(cloze!, [word], 3);
+		expect(options).toHaveLength(1);
+		expect(options[0].text).toBe('今天');
 	});
 });
 

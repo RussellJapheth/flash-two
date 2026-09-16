@@ -23,6 +23,7 @@
 			"Pinyin": "méi wèntí",
 			"Part of Speech": "Phrase",
 			"English Meaning": "no problem / sure thing",
+			"Acceptable Answers": ["放心"],
 			"Example (Chinese + Pinyin)": "包在我身上，没问题！(Bāo zài wǒ shēnshang, méi wèntí!) — Leave it to me, no problem!"
 		},
 		{
@@ -55,6 +56,7 @@
 			"Pinyin": "bù hǎoyìsi",
 			"Part of Speech": "Phrase",
 			"English Meaning": "excuse me / sorry to bother / embarrassed",
+			"Acceptable Answers": ["麻烦"],
 			"Example (Chinese + Pinyin)": "不好意思，借过一下。(Bù hǎoyìsi, jièguò yíxià.) — Excuse me, pardon me coming through."
 		},
 		{
@@ -71,6 +73,7 @@
 			"Pinyin": "jiāyóu",
 			"Part of Speech": "Interjection / Verb",
 			"English Meaning": "keep it up! / cheer on! / go for it!",
+			"Acceptable Answers": ["慢慢来"],
 			"Example (Chinese + Pinyin)": "考试别紧张，加油！(Kǎoshì bié jǐnzhāng, jiāyóu!) — Don't be nervous about the exam, cheer up and do your best!"
 		},
 		{
@@ -135,6 +138,7 @@
 			"Pinyin": "chàbuduō",
 			"Part of Speech": "Adjective / Adverb",
 			"English Meaning": "almost / about the same / nearly",
+			"Acceptable Answers": ["终于", "确实"],
 			"Example (Chinese + Pinyin)": "我的工作差不多全部做完了。(Wǒ de gōngzuò chàbuduō quánbù zuò wán le.) — My work is almost completely done."
 		},
 		{
@@ -143,6 +147,7 @@
 			"Pinyin": "yuánlái",
 			"Part of Speech": "Adverb / Adjective",
 			"English Meaning": "so it turns out / original",
+			"Acceptable Answers": ["确实", "其实"],
 			"Example (Chinese + Pinyin)": "原来是你啊，我还以为是谁呢！(Yuánlái shì nǐ a, wǒ hái yǐwéi shì shéi ne!) — So it was you! I was wondering who it was!"
 		},
 		{
@@ -151,6 +156,7 @@
 			"Pinyin": "qíshí",
 			"Part of Speech": "Adverb",
 			"English Meaning": "actually / in fact",
+			"Acceptable Answers": ["原来", "确实"],
 			"Example (Chinese + Pinyin)": "其实学汉字并没有想象中那么难。(Qíshí xué hànzì bìng méiyǒu xiǎngxiàng zhōng nàme nán.) — Actually learning characters isn't as hard as imagined."
 		},
 		{
@@ -175,6 +181,7 @@
 			"Pinyin": "zhōngyú",
 			"Part of Speech": "Adverb",
 			"English Meaning": "at last / finally",
+			"Acceptable Answers": ["确实", "差不多"],
 			"Example (Chinese + Pinyin)": "经过努力，我们终于完成了任务。(Jīngguò nǔlì, wǒmen zhōngyú wánchéng le rènwu.) — Through hard work, we finally accomplished the mission."
 		},
 		{
@@ -183,6 +190,7 @@
 			"Pinyin": "shùnbiàn",
 			"Part of Speech": "Adverb",
 			"English Meaning": "conveniently / in passing / by the way",
+			"Acceptable Answers": ["麻烦"],
 			"Example (Chinese + Pinyin)": "你去超市时顺便帮我买瓶牛奶吧。(Nǐ qù chāoshì shí shùnbiàn bāng wǒ mǎi píng niúnǎi ba.) — When you go to the store, grab me a bottle of milk while you're at it."
 		},
 		{

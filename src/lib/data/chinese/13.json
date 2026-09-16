@@ -15,6 +15,7 @@
 			"Pinyin": "xiàbān",
 			"Part of Speech": "Verb",
 			"English Meaning": "to get off work / off duty",
+			"Acceptable Answers": ["开会", "加班"],
 			"Example (Chinese + Pinyin)": "今天下班后你有空一起吃饭吗？(Jīntiān xiàbān hòu nǐ yǒu kòng yìqǐ chīfàn ma?) — Do you have time to eat together after work today?"
 		},
 		{
@@ -23,6 +24,7 @@
 			"Pinyin": "jiābān",
 			"Part of Speech": "Verb",
 			"English Meaning": "to work overtime",
+			"Acceptable Answers": ["开会"],
 			"Example (Chinese + Pinyin)": "为了赶进度，我们今晚需要加班。(Wèile gǎn jìndù, wǒmen jīnwǎn xūyào jiābān.) — To catch up on progress, we need to work overtime tonight."
 		},
 		{
@@ -31,6 +33,7 @@
 			"Pinyin": "kāihuì",
 			"Part of Speech": "Verb",
 			"English Meaning": "to hold a meeting / to attend a meeting",
+			"Acceptable Answers": ["讨论"],
 			"Example (Chinese + Pinyin)": "下午两点全体员工在大会议室开会。(Xiàwǔ liǎng diǎn quántǐ yuángōng zài dà huìyìshì kāihuì.) — All staff will meet in the main conference room at 2 PM."
 		},
 		{
@@ -39,6 +42,7 @@
 			"Pinyin": "jīnglǐ",
 			"Part of Speech": "Noun",
 			"English Meaning": "manager",
+			"Acceptable Answers": ["老板"],
 			"Example (Chinese + Pinyin)": "张经理正在和新客户谈合作。(Zhāng jīnglǐ zhèngzài hé xīn kèhù tán hézuò.) — Manager Zhang is discussing cooperation with a new client."
 		},
 		{
@@ -47,6 +51,7 @@
 			"Pinyin": "tóngshì",
 			"Part of Speech": "Noun",
 			"English Meaning": "colleague / co-worker",
+			"Acceptable Answers": ["老板"],
 			"Example (Chinese + Pinyin)": "我和同事们相处得非常融洽。(Wǒ hé tóngshìmen xiāngchǔ de fēicháng róngqià.) — I get along very well with my colleagues."
 		},
 		{
@@ -55,6 +60,7 @@
 			"Pinyin": "lǎobǎn",
 			"Part of Speech": "Noun",
 			"English Meaning": "boss / proprietor",
+			"Acceptable Answers": ["经理"],
 			"Example (Chinese + Pinyin)": "老板同意了我们提出的新方案。(Lǎobǎn tóngyì le wǒmen tíchū de xīn fāng'àn.) — The boss approved our new proposal."
 		},
 		{
@@ -79,6 +85,7 @@
 			"Pinyin": "dǎyìn",
 			"Part of Speech": "Verb",
 			"English Meaning": "to print",
+			"Acceptable Answers": ["准备"],
 			"Example (Chinese + Pinyin)": "请帮我打印三份开会材料。(Qǐng bāng wǒ dǎyìn sān fèn kāihuì cáiliào.) — Please help me print three copies of the meeting materials."
 		},
 		{

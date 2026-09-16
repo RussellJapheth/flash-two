@@ -71,6 +71,7 @@
 			"Pinyin": "kànbìng",
 			"Part of Speech": "Verb",
 			"English Meaning": "to see a doctor / to examine a patient",
+			"Acceptable Answers": ["检查"],
 			"Example (Chinese + Pinyin)": "如果持续发烧，最好去医院看病。(Rúguǒ chíxù fāshāo, zuìhǎo qù yīyuàn kànbìng.) — If the fever persists, it's best to see a doctor at the hospital."
 		},
 		{
@@ -103,6 +104,7 @@
 			"Pinyin": "késou",
 			"Part of Speech": "Verb / Noun",
 			"English Meaning": "to cough / cough",
+			"Acceptable Answers": ["流鼻涕"],
 			"Example (Chinese + Pinyin)": "他最近几天喉咙痒，一直咳嗽。(Tā zuìjìn jǐ tiān hóulóng yǎng, yìzhí késou.) — His throat has been itchy and he's been coughing continuously."
 		},
 		{
@@ -111,6 +113,7 @@
 			"Pinyin": "tóuténg",
 			"Part of Speech": "Verb / Adjective",
 			"English Meaning": "headache / to have a headache",
+			"Acceptable Answers": ["肚子疼", "难受", "咳嗽"],
 			"Example (Chinese + Pinyin)": "昨晚没睡好，今天早上头疼得厉害。(Zuówǎn méi shuì hǎo, jīntiān zǎoshang tóuténg de lìhai.) — I didn't sleep well last night, so I have a bad headache this morning."
 		},
 		{
@@ -119,6 +122,7 @@
 			"Pinyin": "dùzi téng",
 			"Part of Speech": "Phrase",
 			"English Meaning": "stomachache / belly pain",
+			"Acceptable Answers": ["难受"],
 			"Example (Chinese + Pinyin)": "可能吃了不干净的东西，我肚子疼。(Kěnéng chī le bù gānjìng de dōngxi, wǒ dùzi téng.) — Maybe I ate something unclean, my stomach hurts."
 		},
 		{
@@ -127,6 +131,7 @@
 			"Pinyin": "liú bítì",
 			"Part of Speech": "Verb / Phrase",
 			"English Meaning": "to have a runny nose",
+			"Acceptable Answers": ["咳嗽"],
 			"Example (Chinese + Pinyin)": "吹了冷风后他就开始打喷嚏流鼻涕。(Chuī le lěngfēng hòu tā jiù kāishǐ dǎpēntì liú bítì.) — After catching cold wind he started sneezing and having a runny nose."
 		},
 		{

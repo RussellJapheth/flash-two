@@ -7,6 +7,7 @@
 			"Pinyin": "tiānqì",
 			"Part of Speech": "Noun",
 			"English Meaning": "weather",
+			"Acceptable Answers": ["太阳"],
 			"Example (Chinese + Pinyin)": "今天天气真好，晴空万里。(Jīntiān tiānqì zhēn hǎo, qíngkōng wànlǐ.) — The weather today is really great, completely clear skies."
 		},
 		{
@@ -23,6 +24,7 @@
 			"Pinyin": "rè",
 			"Part of Speech": "Adjective",
 			"English Meaning": "hot (temperature)",
+			"Acceptable Answers": ["冷", "凉快"],
 			"Example (Chinese + Pinyin)": "夏天这里非常热。(Xiàtiān zhèlǐ fēicháng rè.) — In summer it is very hot here."
 		},
 		{
@@ -31,6 +33,7 @@
 			"Pinyin": "lěng",
 			"Part of Speech": "Adjective",
 			"English Meaning": "cold (temperature)",
+			"Acceptable Answers": ["热", "凉快"],
 			"Example (Chinese + Pinyin)": "今天刮风，有点儿冷。(Jīntiān guāfēng, yǒudiǎnr lěng.) — It's windy today and a bit cold."
 		},
 		{
@@ -39,6 +42,7 @@
 			"Pinyin": "nuǎnhuo",
 			"Part of Speech": "Adjective",
 			"English Meaning": "warm (weather / climate)",
+			"Acceptable Answers": ["凉快", "热", "冷"],
 			"Example (Chinese + Pinyin)": "春天的下午很暖和。(Chūntiān de xiàwǔ hěn nuǎnhuo.) — Spring afternoons are warm and pleasant."
 		},
 		{
@@ -47,6 +51,7 @@
 			"Pinyin": "liángkuai",
 			"Part of Speech": "Adjective",
 			"English Meaning": "cool / pleasantly cold",
+			"Acceptable Answers": ["暖和", "冷", "热"],
 			"Example (Chinese + Pinyin)": "下过雨后天气很凉快。(Xià guò yǔ hòu tiānqì hěn liángkuai.) — After the rain the weather is pleasantly cool."
 		},
 		{
@@ -55,6 +60,7 @@
 			"Pinyin": "xiàyǔ",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "to rain",
+			"Acceptable Answers": ["下雪", "刮风"],
 			"Example (Chinese + Pinyin)": "出门记得带伞，外面要下雨了。(Chūmén jìde dài sǎn, wàimiàn yào xiàyǔ le.) — Remember to bring an umbrella, it is going to rain outside."
 		},
 		{
@@ -63,6 +69,7 @@
 			"Pinyin": "xiàxuě",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "to snow",
+			"Acceptable Answers": ["下雨", "刮风"],
 			"Example (Chinese + Pinyin)": "冬天北方经常下雪。(Dōngtiān běifāng jīngcháng xiàxuě.) — It often snows in the north during winter."
 		},
 		{
@@ -71,6 +78,7 @@
 			"Pinyin": "qíngtiān",
 			"Part of Speech": "Noun",
 			"English Meaning": "sunny day / clear day",
+			"Acceptable Answers": ["阴天"],
 			"Example (Chinese + Pinyin)": "明天是个晴天，适合去郊游。(Míngtiān shì gè qíngtiān, shìhé qù jiāoyóu.) — Tomorrow will be a sunny day, perfect for an outing."
 		},
 		{
@@ -87,6 +95,7 @@
 			"Pinyin": "guāfēng",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "windy / wind blowing",
+			"Acceptable Answers": ["下雨", "下雪"],
 			"Example (Chinese + Pinyin)": "外面正在刮风，天气很凉。(Wàimiàn zhèngzài guāfēng, tiānqì hěn liáng.) — The wind is blowing outside; the weather is cool."
 		},
 		{
@@ -95,6 +104,7 @@
 			"Pinyin": "tàiyáng",
 			"Part of Speech": "Noun",
 			"English Meaning": "sun",
+			"Acceptable Answers": ["月亮"],
 			"Example (Chinese + Pinyin)": "太阳从东边升起来了。(Tàiyáng cóng dōngbian shēng qǐlái le.) — The sun rose from the east."
 		},
 		{
@@ -119,6 +129,7 @@
 			"Pinyin": "chūntiān",
 			"Part of Speech": "Noun",
 			"English Meaning": "spring (season)",
+			"Acceptable Answers": ["夏天", "秋天", "冬天"],
 			"Example (Chinese + Pinyin)": "春天百花盛开，景色非常美。(Chūntiān bǎihuā shèngkāi, jǐngsè fēicháng měi.) — In spring all flowers bloom and scenery is beautiful."
 		},
 		{
@@ -127,6 +138,7 @@
 			"Pinyin": "xiàtiān",
 			"Part of Speech": "Noun",
 			"English Meaning": "summer (season)",
+			"Acceptable Answers": ["春天", "秋天", "冬天"],
 			"Example (Chinese + Pinyin)": "夏天大家喜欢去海边游泳。(Xiàtiān dàjiā xǐhuan qù hǎibiān yóuyǒng.) — In summer everyone likes going to the beach to swim."
 		},
 		{
@@ -135,6 +147,7 @@
 			"Pinyin": "qiūtiān",
 			"Part of Speech": "Noun",
 			"English Meaning": "autumn / fall (season)",
+			"Acceptable Answers": ["春天", "夏天", "冬天"],
 			"Example (Chinese + Pinyin)": "北京的秋天是一年中最美的季节。(Běijīng de qiūtiān shì yì nián zhōng zuì měi de jìjié.) — Beijing's autumn is the prettiest season of the year."
 		},
 		{
@@ -143,6 +156,7 @@
 			"Pinyin": "dōngtiān",
 			"Part of Speech": "Noun",
 			"English Meaning": "winter (season)",
+			"Acceptable Answers": ["春天", "秋天"],
 			"Example (Chinese + Pinyin)": "冬天出门要戴帽子和围巾。(Dōngtiān chūmén yào dài màozi hé wéijīn.) — Wear a hat and scarf when going out in winter."
 		},
 		{
@@ -151,6 +165,7 @@
 			"Pinyin": "shān",
 			"Part of Speech": "Noun",
 			"English Meaning": "mountain / hill",
+			"Acceptable Answers": ["树"],
 			"Example (Chinese + Pinyin)": "周末我们一起去爬山吧。(Zhōumò wǒmen yìqǐ qù pá shān ba.) — Let's go climb mountains together this weekend."
 		},
 		{
@@ -199,6 +214,7 @@
 			"Pinyin": "hǎi",
 			"Part of Speech": "Noun",
 			"English Meaning": "sea / ocean",
+			"Acceptable Answers": ["河", "山"],
 			"Example (Chinese + Pinyin)": "海边的日落景色非常迷人。(Hǎibiān de rìluò jǐngsè fēicháng mírén.) — The sunset view by the seaside is charming."
 		}
 	]

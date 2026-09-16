@@ -7,6 +7,7 @@
 			"Pinyin": "fùjìn",
 			"Part of Speech": "Noun",
 			"English Meaning": "nearby / vicinity",
+			"Acceptable Answers": ["旁边"],
 			"Example (Chinese + Pinyin)": "这附近有便利店或者超市吗？(Zhè fùjìn yǒu biànlìdiàn huòzhě chāoshì ma?) — Is there a convenience store or supermarket nearby?"
 		},
 		{
@@ -15,6 +16,7 @@
 			"Pinyin": "pángbiān",
 			"Part of Speech": "Noun",
 			"English Meaning": "beside / next to / side",
+			"Acceptable Answers": ["对面", "附近"],
 			"Example (Chinese + Pinyin)": "银行就在那家咖啡馆旁边。(Yínháng jiù zài nà jiā kāfēiguǎn pángbiān.) — The bank is right beside that cafe."
 		},
 		{
@@ -23,6 +25,7 @@
 			"Pinyin": "duìmiàn",
 			"Part of Speech": "Noun",
 			"English Meaning": "opposite / across the street",
+			"Acceptable Answers": ["旁边", "附近"],
 			"Example (Chinese + Pinyin)": "马路对面有一座大商场。(Mǎlù duìmiàn yǒu yí zuò dà shāngchǎng.) — Across the street there is a large shopping mall."
 		},
 		{
@@ -39,6 +42,7 @@
 			"Pinyin": "shízì lùkǒu",
 			"Part of Speech": "Noun",
 			"English Meaning": "crossroad / four-way intersection",
+			"Acceptable Answers": ["红绿灯"],
 			"Example (Chinese + Pinyin)": "在前面的十字路口向左拐。(Zài qiánmiàn de shízì lùkǒu xiàng zuǒ guǎi.) — Turn left at the intersection ahead."
 		},
 		{
@@ -87,6 +91,7 @@
 			"Pinyin": "dìtú",
 			"Part of Speech": "Noun",
 			"English Meaning": "map",
+			"Acceptable Answers": ["导航"],
 			"Example (Chinese + Pinyin)": "我打开电子地图查一下路线。(Wǒ dǎkāi diànzǐ dìtú chá yíxià lùxiàn.) — I'll open the electronic map to check the route."
 		},
 		{
@@ -95,6 +100,7 @@
 			"Pinyin": "dǎoháng",
 			"Part of Speech": "Noun / Verb",
 			"English Meaning": "GPS navigation / to navigate",
+			"Acceptable Answers": ["地图"],
 			"Example (Chinese + Pinyin)": "跟着手机导航走就不会迷路。(Gēnzhe shǒujī dǎoháng zǒu jiù bú huì mílù.) — Follow the phone GPS and you won't get lost."
 		},
 		{
@@ -127,6 +133,7 @@
 			"Pinyin": "yóujú",
 			"Part of Speech": "Noun",
 			"English Meaning": "post office",
+			"Acceptable Answers": ["药店", "银行", "加油站"],
 			"Example (Chinese + Pinyin)": "邮局就在马路拐角处。(Yóujú jiù zài mǎlù guǎijiǎo chù.) — The post office is right at the street corner."
 		},
 		{
@@ -183,6 +190,7 @@
 			"Pinyin": "chūkǒu",
 			"Part of Speech": "Noun",
 			"English Meaning": "exit / export",
+			"Acceptable Answers": ["入口"],
 			"Example (Chinese + Pinyin)": "我们在地铁站C出口见面吧。(Wǒmen zài dìtiězhàn C chūkǒu jiànmiàn ba.) — Let's meet at subway station Exit C."
 		},
 		{
@@ -191,6 +199,7 @@
 			"Pinyin": "rùkǒu",
 			"Part of Speech": "Noun",
 			"English Meaning": "entrance / entry",
+			"Acceptable Answers": ["出口"],
 			"Example (Chinese + Pinyin)": "商场主入口在东侧街道。(Shāngchǎng zhǔ rùkǒu zài dōng cè jiēdào.) — The mall's main entrance is on the east street."
 		},
 		{

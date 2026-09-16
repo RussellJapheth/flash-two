@@ -7,6 +7,7 @@
 			"Pinyin": "mǎi",
 			"Part of Speech": "Verb",
 			"English Meaning": "to buy / to purchase",
+			"Acceptable Answers": ["卖"],
 			"Example (Chinese + Pinyin)": "我想买一瓶矿泉水。(Wǒ xiǎng mǎi yì píng kuàngquánshuǐ.) — I want to buy a bottle of mineral water."
 		},
 		{
@@ -31,6 +32,7 @@
 			"Pinyin": "kuài",
 			"Part of Speech": "Measure Word",
 			"English Meaning": "yuan / buck (colloquial unit of money)",
+			"Acceptable Answers": ["元"],
 			"Example (Chinese + Pinyin)": "这个西瓜二十块钱。(Zhè gè xīguā èrshí kuài qián.) — This watermelon is twenty yuan."
 		},
 		{
@@ -39,6 +41,7 @@
 			"Pinyin": "yuán",
 			"Part of Speech": "Measure Word",
 			"English Meaning": "yuan (formal unit of currency)",
+			"Acceptable Answers": ["块"],
 			"Example (Chinese + Pinyin)": "总共是一百五十元。(Zǒnggòng shì yì bǎi wǔshí yuán.) — The total is one hundred fifty yuan."
 		},
 		{
@@ -63,6 +66,7 @@
 			"Pinyin": "piányi",
 			"Part of Speech": "Adjective",
 			"English Meaning": "cheap / inexpensive",
+			"Acceptable Answers": ["贵"],
 			"Example (Chinese + Pinyin)": "网上的价格通常更便宜。(Wǎngshang de jiàgé tōngcháng gèng piányi.) — Online prices are usually cheaper."
 		},
 		{
@@ -79,6 +83,7 @@
 			"Pinyin": "shāngdiàn",
 			"Part of Speech": "Noun",
 			"English Meaning": "store / shop",
+			"Acceptable Answers": ["超市"],
 			"Example (Chinese + Pinyin)": "学校附近有很多文具商店。(Xuéxiào fùjìn yǒu hěn duō wénjù shāngdiàn.) — There are many stationery shops near the school."
 		},
 		{
@@ -87,6 +92,7 @@
 			"Pinyin": "chāoshì",
 			"Part of Speech": "Noun",
 			"English Meaning": "supermarket",
+			"Acceptable Answers": ["商店"],
 			"Example (Chinese + Pinyin)": "我们去超市买点日常用品。(Wǒmen qù chāoshì mǎi diǎn rìcháng yòngpǐn.) — Let's go to the supermarket to buy daily necessities."
 		},
 		{
@@ -95,6 +101,7 @@
 			"Pinyin": "yánsè",
 			"Part of Speech": "Noun",
 			"English Meaning": "color",
+			"Acceptable Answers": ["东西"],
 			"Example (Chinese + Pinyin)": "你最喜欢什么颜色？(Nǐ zuì xǐhuan shénme yánsè?) — What color do you like most?"
 		},
 		{
@@ -111,6 +118,7 @@
 			"Pinyin": "báisè",
 			"Part of Speech": "Noun / Adjective",
 			"English Meaning": "white (color)",
+			"Acceptable Answers": ["红色", "黑色", "蓝色", "黄色", "绿色"],
 			"Example (Chinese + Pinyin)": "他穿了一件白色的衬衫。(Tā chuān le yí jiàn báisè de chènshān.) — He wore a white shirt."
 		},
 		{
@@ -119,6 +127,7 @@
 			"Pinyin": "hēisè",
 			"Part of Speech": "Noun / Adjective",
 			"English Meaning": "black (color)",
+			"Acceptable Answers": ["白色", "红色", "蓝色", "黄色", "绿色"],
 			"Example (Chinese + Pinyin)": "我买了一双黑色的运动鞋。(Wǒ mǎi le yì shuāng hēisè de yùndòngxié.) — I bought a pair of black sneakers."
 		},
 		{
@@ -135,6 +144,7 @@
 			"Pinyin": "huángsè",
 			"Part of Speech": "Noun / Adjective",
 			"English Meaning": "yellow (color)",
+			"Acceptable Answers": ["红色"],
 			"Example (Chinese + Pinyin)": "秋天树叶变成了黄色。(Qiūtiān shùyè biàn chéng le huángsè.) — In autumn the tree leaves turn yellow."
 		},
 		{
@@ -143,6 +153,7 @@
 			"Pinyin": "lǜsè",
 			"Part of Speech": "Noun / Adjective",
 			"English Meaning": "green (color)",
+			"Acceptable Answers": ["红色", "黄色", "白色", "黑色", "蓝色"],
 			"Example (Chinese + Pinyin)": "多看绿色植物对眼睛好。(Duō kàn lǜsè zhíwù duì yǎnjing hǎo.) — Looking at green plants is good for eyes."
 		},
 		{
@@ -151,6 +162,7 @@
 			"Pinyin": "dà",
 			"Part of Speech": "Adjective",
 			"English Meaning": "big / large",
+			"Acceptable Answers": ["小"],
 			"Example (Chinese + Pinyin)": "这双鞋子对我来说太大了。(Zhè shuāng xiézi duì wǒ láishuō tài dà le.) — These shoes are too big for me."
 		},
 		{
@@ -167,6 +179,7 @@
 			"Pinyin": "duō",
 			"Part of Speech": "Adjective / Adverb",
 			"English Meaning": "many / much / more",
+			"Acceptable Answers": ["少"],
 			"Example (Chinese + Pinyin)": "今天逛商场的人真多。(Jīntiān guàng shāngchǎng de rén zhēn duō.) — There are really so many people in the mall today."
 		},
 		{
@@ -175,6 +188,7 @@
 			"Pinyin": "shǎo",
 			"Part of Speech": "Adjective / Adverb",
 			"English Meaning": "few / little / less",
+			"Acceptable Answers": ["多"],
 			"Example (Chinese + Pinyin)": "今天来上课的学生比较少。(Jīntiān lái shàngkè de xuésheng bǐjiào shǎo.) — Relatively few students came to class today."
 		},
 		{

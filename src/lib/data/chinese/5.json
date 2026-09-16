@@ -7,6 +7,7 @@
 			"Pinyin": "kàn",
 			"Part of Speech": "Verb",
 			"English Meaning": "to look / to watch / to read",
+			"Acceptable Answers": ["读", "写"],
 			"Example (Chinese + Pinyin)": "我看了一本很有意思的书。(Wǒ kàn le yì běn hěn yǒuyìsi de shū.) — I read an interesting book."
 		},
 		{
@@ -23,6 +24,7 @@
 			"Pinyin": "shuō",
 			"Part of Speech": "Verb",
 			"English Meaning": "to speak / to say",
+			"Acceptable Answers": ["读", "写"],
 			"Example (Chinese + Pinyin)": "请说得慢一点儿。(Qǐng shuō de màn yìdiǎnr.) — Please speak a little slower."
 		},
 		{
@@ -31,6 +33,7 @@
 			"Pinyin": "dú",
 			"Part of Speech": "Verb",
 			"English Meaning": "to read (aloud) / to study",
+			"Acceptable Answers": ["说"],
 			"Example (Chinese + Pinyin)": "跟着录音大声读出来。(Gēnzhe lùyīn dàshēng dú chūlái.) — Read aloud following the recording."
 		},
 		{
@@ -39,6 +42,7 @@
 			"Pinyin": "xiě",
 			"Part of Speech": "Verb",
 			"English Meaning": "to write",
+			"Acceptable Answers": ["读"],
 			"Example (Chinese + Pinyin)": "每天练习写五个生字。(Měitiān liànxí xiě wǔ gè shēngzì.) — Practice writing five new characters each day."
 		},
 		{
@@ -47,6 +51,7 @@
 			"Pinyin": "qǐchuáng",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "to get up (from bed)",
+			"Acceptable Answers": ["洗澡", "做饭", "休息", "打电话"],
 			"Example (Chinese + Pinyin)": "我每天早上七点起床。(Wǒ měitiān zǎoshang qī diǎn qǐchuáng.) — I get up at 7 AM every day."
 		},
 		{
@@ -55,6 +60,7 @@
 			"Pinyin": "shuìjiào",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "to sleep / to go to bed",
+			"Acceptable Answers": ["休息", "洗澡", "做饭", "打电话"],
 			"Example (Chinese + Pinyin)": "时间不早了，快去睡觉吧。(Shíjiān bù zǎo le, kuài qù shuìjiào ba.) — It's getting late, hurry and go to bed."
 		},
 		{
@@ -63,6 +69,7 @@
 			"Pinyin": "xǐzǎo",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "to take a bath / to shower",
+			"Acceptable Answers": ["休息", "做饭", "打电话"],
 			"Example (Chinese + Pinyin)": "晚上我想洗澡，然后再睡觉。(Wǎnshang wǒ xiǎng xǐzǎo, ránhòu zài shuìjiào.) — In the evening I want to take a shower, then go to sleep."
 		},
 		{
@@ -71,6 +78,7 @@
 			"Pinyin": "qù",
 			"Part of Speech": "Verb",
 			"English Meaning": "to go",
+			"Acceptable Answers": ["来"],
 			"Example (Chinese + Pinyin)": "周末我们一起去图书馆吧。(Zhōumò wǒmen yìqǐ qù túshūguǎn ba.) — Let's go to the library together this weekend."
 		},
 		{
@@ -95,6 +103,7 @@
 			"Pinyin": "fángjiān",
 			"Part of Speech": "Noun",
 			"English Meaning": "room",
+			"Acceptable Answers": ["桌子", "椅子", "手机", "电脑", "电视", "书", "衣服"],
 			"Example (Chinese + Pinyin)": "我的房间非常干净整洁。(Wǒ de fángjiān fēicháng gānjìng zhěngjié.) — My room is very clean and tidy."
 		},
 		{
@@ -111,6 +120,7 @@
 			"Pinyin": "chuānghu",
 			"Part of Speech": "Noun",
 			"English Meaning": "window",
+			"Acceptable Answers": ["门"],
 			"Example (Chinese + Pinyin)": "请打开窗户通通风。(Qǐng dǎkāi chuānghu tōngtōng fēng.) — Please open the window for fresh air."
 		},
 		{
@@ -119,6 +129,7 @@
 			"Pinyin": "zhuōzi",
 			"Part of Speech": "Noun",
 			"English Meaning": "table / desk",
+			"Acceptable Answers": ["椅子"],
 			"Example (Chinese + Pinyin)": "桌子上有一台笔记本电脑。(Zhuōzi shang yǒu yì tái bǐjìběn diànnǎo.) — There is a laptop on the desk."
 		},
 		{
@@ -127,6 +138,7 @@
 			"Pinyin": "yǐzi",
 			"Part of Speech": "Noun",
 			"English Meaning": "chair",
+			"Acceptable Answers": ["桌子"],
 			"Example (Chinese + Pinyin)": "这把木椅子坐着很舒服。(Zhè bǎ mù yǐzi zuò zhe hěn shūfu.) — This wooden chair is very comfortable to sit on."
 		},
 		{
@@ -135,6 +147,7 @@
 			"Pinyin": "shǒujī",
 			"Part of Speech": "Noun",
 			"English Meaning": "cell phone / mobile phone",
+			"Acceptable Answers": ["电脑"],
 			"Example (Chinese + Pinyin)": "我的手机快没电了。(Wǒ de shǒujī kuài méi diàn le.) — My phone is running out of battery."
 		},
 		{
@@ -143,6 +156,7 @@
 			"Pinyin": "diànnǎo",
 			"Part of Speech": "Noun",
 			"English Meaning": "computer",
+			"Acceptable Answers": ["手机"],
 			"Example (Chinese + Pinyin)": "我在电脑上查阅资料。(Wǒ zài diànnǎo shang cháyuè zīliào.) — I look up materials on the computer."
 		},
 		{
@@ -183,6 +197,7 @@
 			"Pinyin": "zuòfàn",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "to cook (a meal)",
+			"Acceptable Answers": ["休息", "洗澡", "睡觉", "打电话"],
 			"Example (Chinese + Pinyin)": "周末我喜欢在家做饭。(Zhōumò wǒ xǐhuan zài jiā zuòfàn.) — I like cooking at home on weekends."
 		},
 		{
@@ -191,6 +206,7 @@
 			"Pinyin": "xiūxi",
 			"Part of Speech": "Verb / Noun",
 			"English Meaning": "to rest / to take a break",
+			"Acceptable Answers": ["睡觉"],
 			"Example (Chinese + Pinyin)": "工作累了就休息十分钟。(Gōngzuò lèi le jiù xiūxi shí fēnzhōng.) — Take a 10-minute break when you are tired from work."
 		},
 		{
@@ -199,6 +215,7 @@
 			"Pinyin": "dǎ diànhuà",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "to make a phone call",
+			"Acceptable Answers": ["做饭"],
 			"Example (Chinese + Pinyin)": "我晚上给你打电话。(Wǒ wǎnshang gěi nǐ dǎ diànhuà.) — I will give you a call tonight."
 		}
 	]

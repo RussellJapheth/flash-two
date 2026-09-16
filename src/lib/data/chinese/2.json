@@ -39,6 +39,7 @@
 			"Pinyin": "jīntiān",
 			"Part of Speech": "Noun",
 			"English Meaning": "today",
+			"Acceptable Answers": ["明天", "昨天"],
 			"Example (Chinese + Pinyin)": "今天星期几？(Jīntiān xīngqī jǐ?) — What day of the week is it today?"
 		},
 		{
@@ -47,6 +48,7 @@
 			"Pinyin": "míngtiān",
 			"Part of Speech": "Noun",
 			"English Meaning": "tomorrow",
+			"Acceptable Answers": ["今天", "昨天"],
 			"Example (Chinese + Pinyin)": "明天你有时间吗？(Míngtiān nǐ yǒu shíjiān ma?) — Do you have time tomorrow?"
 		},
 		{
@@ -55,6 +57,7 @@
 			"Pinyin": "zuótiān",
 			"Part of Speech": "Noun",
 			"English Meaning": "yesterday",
+			"Acceptable Answers": ["今天"],
 			"Example (Chinese + Pinyin)": "昨天我买了一本书。(Zuótiān wǒ mǎi le yì běn shū.) — Yesterday I bought a book."
 		},
 		{
@@ -63,6 +66,7 @@
 			"Pinyin": "nián",
 			"Part of Speech": "Noun / Measure Word",
 			"English Meaning": "year",
+			"Acceptable Answers": ["星期"],
 			"Example (Chinese + Pinyin)": "我学中文一年了。(Wǒ xué zhōngwén yì nián le.) — I have been studying Chinese for a year."
 		},
 		{
@@ -71,6 +75,7 @@
 			"Pinyin": "yuè",
 			"Part of Speech": "Noun",
 			"English Meaning": "month / moon",
+			"Acceptable Answers": ["星期"],
 			"Example (Chinese + Pinyin)": "下个月我要去中国。(Xià ge yuè wǒ yào qù Zhōngguó.) — I am going to China next month."
 		},
 		{
@@ -119,6 +124,7 @@
 			"Pinyin": "zǎoshang",
 			"Part of Speech": "Noun",
 			"English Meaning": "early morning",
+			"Acceptable Answers": ["中午", "下午", "晚上"],
 			"Example (Chinese + Pinyin)": "早上好！(Zǎoshang hǎo!) — Good morning!"
 		},
 		{
@@ -167,6 +173,7 @@
 			"Pinyin": "qùnián",
 			"Part of Speech": "Noun",
 			"English Meaning": "last year",
+			"Acceptable Answers": ["今天", "之前"],
 			"Example (Chinese + Pinyin)": "去年我去了北京。(Qùnián wǒ qù le Běijīng.) — I went to Beijing last year."
 		},
 		{
@@ -175,6 +182,7 @@
 			"Pinyin": "míngnián",
 			"Part of Speech": "Noun",
 			"English Meaning": "next year",
+			"Acceptable Answers": ["今天", "之前", "去年"],
 			"Example (Chinese + Pinyin)": "明年我打算去旅行。(Míngnián wǒ dǎsuàn qù lǚxíng.) — I plan to travel next year."
 		},
 		{
@@ -183,6 +191,7 @@
 			"Pinyin": "zhīqián",
 			"Part of Speech": "Noun / Adverb",
 			"English Meaning": "before / ago / previously",
+			"Acceptable Answers": ["去年", "今天"],
 			"Example (Chinese + Pinyin)": "我之前去过中国。(Wǒ zhīqián qù guò Zhōngguó.) — I have been to China before."
 		},
 		{

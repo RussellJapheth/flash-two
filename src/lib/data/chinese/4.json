@@ -7,6 +7,7 @@
 			"Pinyin": "chī",
 			"Part of Speech": "Verb",
 			"English Meaning": "to eat",
+			"Acceptable Answers": ["喝"],
 			"Example (Chinese + Pinyin)": "你想吃什么？(Nǐ xiǎng chī shénme?) — What would you like to eat?"
 		},
 		{
@@ -23,6 +24,7 @@
 			"Pinyin": "shuǐ",
 			"Part of Speech": "Noun",
 			"English Meaning": "water",
+			"Acceptable Answers": ["茶", "咖啡", "牛奶"],
 			"Example (Chinese + Pinyin)": "多喝水对身体好。(Duō hē shuǐ duì shēntǐ hǎo.) — Drinking more water is good for health."
 		},
 		{
@@ -39,6 +41,7 @@
 			"Pinyin": "kāfēi",
 			"Part of Speech": "Noun",
 			"English Meaning": "coffee",
+			"Acceptable Answers": ["茶", "水", "牛奶"],
 			"Example (Chinese + Pinyin)": "每天早上我都会喝咖啡。(Měitiān zǎoshang wǒ dōu huì hē kāfēi.) — Every morning I drink coffee."
 		},
 		{
@@ -47,6 +50,7 @@
 			"Pinyin": "mǐfàn",
 			"Part of Speech": "Noun",
 			"English Meaning": "cooked rice",
+			"Acceptable Answers": ["面条"],
 			"Example (Chinese + Pinyin)": "我要一碗米饭。(Wǒ yào yì wǎn mǐfàn.) — I want a bowl of rice."
 		},
 		{
@@ -55,6 +59,7 @@
 			"Pinyin": "miàntiáo",
 			"Part of Speech": "Noun",
 			"English Meaning": "noodles",
+			"Acceptable Answers": ["包子"],
 			"Example (Chinese + Pinyin)": "这里的牛肉面条很有名。(Zhèlǐ de niúròu miàntiáo hěn yǒumíng.) — The beef noodles here are famous."
 		},
 		{
@@ -71,6 +76,18 @@
 			"Pinyin": "shuǐguǒ",
 			"Part of Speech": "Noun",
 			"English Meaning": "fruit",
+			"Acceptable Answers": [
+				"苹果",
+				"菜",
+				"肉",
+				"鱼",
+				"鸡蛋",
+				"包子",
+				"面条",
+				"米饭",
+				"鸡肉",
+				"牛肉"
+			],
 			"Example (Chinese + Pinyin)": "每天吃水果对身体有益。(Měitiān chī shuǐguǒ duì shēntǐ yǒuyì.) — Eating fruit every day is good for health."
 		},
 		{
@@ -95,6 +112,7 @@
 			"Pinyin": "jīròu",
 			"Part of Speech": "Noun",
 			"English Meaning": "chicken (meat)",
+			"Acceptable Answers": ["牛肉", "鱼", "鸡蛋", "菜", "肉"],
 			"Example (Chinese + Pinyin)": "晚餐有鸡肉和米饭。(Wǎncān yǒu jīròu hé mǐfàn.) — Dinner has chicken and rice."
 		},
 		{
@@ -103,6 +121,7 @@
 			"Pinyin": "niúròu",
 			"Part of Speech": "Noun",
 			"English Meaning": "beef",
+			"Acceptable Answers": ["鸡肉", "鱼", "鸡蛋", "肉"],
 			"Example (Chinese + Pinyin)": "这份牛肉很鲜嫩。(Zhè fèn niúròu hěn xiānnèn.) — This beef is very tender."
 		},
 		{
@@ -111,6 +130,7 @@
 			"Pinyin": "yú",
 			"Part of Speech": "Noun",
 			"English Meaning": "fish",
+			"Acceptable Answers": ["菜", "肉", "鸡肉", "牛肉", "鸡蛋", "面条", "包子", "苹果", "水果"],
 			"Example (Chinese + Pinyin)": "年夜饭通常会吃鱼。(Niányèfàn tōngcháng huì chī yú.) — Fish is usually eaten for New Year's Eve dinner."
 		},
 		{
@@ -119,6 +139,7 @@
 			"Pinyin": "jīdàn",
 			"Part of Speech": "Noun",
 			"English Meaning": "egg",
+			"Acceptable Answers": ["牛肉", "鸡肉", "肉"],
 			"Example (Chinese + Pinyin)": "西红柿炒鸡蛋做法简单。(Xīhóngshì chǎo jīdàn zuòfǎ jiǎndān.) — Tomato scrambled eggs is simple to make."
 		},
 		{
@@ -127,6 +148,7 @@
 			"Pinyin": "niúnǎi",
 			"Part of Speech": "Noun",
 			"English Meaning": "milk",
+			"Acceptable Answers": ["水", "茶", "咖啡"],
 			"Example (Chinese + Pinyin)": "睡前喝杯温牛奶有助于睡眠。(Shuìqián hē bēi wēn niúnǎi yǒuzhùyú shuìmián.) — Drinking warm milk before sleep aids rest."
 		},
 		{
@@ -159,6 +181,7 @@
 			"Pinyin": "diǎncài",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "to order food (in restaurant)",
+			"Acceptable Answers": ["买单", "吃"],
 			"Example (Chinese + Pinyin)": "我们可以点菜了吗？(Wǒmen kěyǐ diǎncài le ma?) — May we order our food now?"
 		},
 		{
@@ -167,6 +190,7 @@
 			"Pinyin": "mǎidān",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "to pay the bill / check please",
+			"Acceptable Answers": ["点菜"],
 			"Example (Chinese + Pinyin)": "服务员，我们要买单。(Fúwùyuán, wǒmen yào mǎidān.) — Server, we would like to pay the bill."
 		},
 		{
@@ -183,6 +207,7 @@
 			"Pinyin": "wǎn",
 			"Part of Speech": "Noun / Measure Word",
 			"English Meaning": "bowl",
+			"Acceptable Answers": ["杯子"],
 			"Example (Chinese + Pinyin)": "请给我一个空碗。(Qǐng gěi wǒ yí gè kōng wǎn.) — Please give me an empty bowl."
 		},
 		{
@@ -191,6 +216,7 @@
 			"Pinyin": "bēizi",
 			"Part of Speech": "Noun",
 			"English Meaning": "cup / glass",
+			"Acceptable Answers": ["碗"],
 			"Example (Chinese + Pinyin)": "杯子里有热水。(Bēizi lǐ yǒu rè shuǐ.) — There is hot water in the cup."
 		},
 		{

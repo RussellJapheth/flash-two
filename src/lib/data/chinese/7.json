@@ -15,6 +15,7 @@
 			"Pinyin": "Zhōngguó",
 			"Part of Speech": "Noun",
 			"English Meaning": "China",
+			"Acceptable Answers": ["北京"],
 			"Example (Chinese + Pinyin)": "我想去中国旅游。(Wǒ xiǎng qù Zhōngguó lǚyóu.) — I want to travel to China."
 		},
 		{
@@ -31,6 +32,7 @@
 			"Pinyin": "xuéxiào",
 			"Part of Speech": "Noun",
 			"English Meaning": "school",
+			"Acceptable Answers": ["医院"],
 			"Example (Chinese + Pinyin)": "我们的学校环境很优美。(Wǒmen de xuéxiào huánjìng hěn yōuměi.) — Our school environment is very beautiful."
 		},
 		{
@@ -39,6 +41,7 @@
 			"Pinyin": "yīyuàn",
 			"Part of Speech": "Noun",
 			"English Meaning": "hospital",
+			"Acceptable Answers": ["学校", "机场", "火车站", "地铁"],
 			"Example (Chinese + Pinyin)": "医院离这里只有五百米。(Yīyuàn lí zhèlǐ zhǐyǒu wǔbǎi mǐ.) — The hospital is only 500 meters away from here."
 		},
 		{
@@ -47,6 +50,7 @@
 			"Pinyin": "jīchǎng",
 			"Part of Speech": "Noun",
 			"English Meaning": "airport",
+			"Acceptable Answers": ["火车站", "学校"],
 			"Example (Chinese + Pinyin)": "下午我去机场接朋友。(Xiàwǔ wǒ qù jīchǎng jiē péngyou.) — I am going to the airport this afternoon to pick up a friend."
 		},
 		{
@@ -55,6 +59,7 @@
 			"Pinyin": "huǒchēzhàn",
 			"Part of Speech": "Noun",
 			"English Meaning": "train station",
+			"Acceptable Answers": ["学校", "医院", "机场"],
 			"Example (Chinese + Pinyin)": "我们在火车站门口集合。(Wǒmen zài huǒchēzhàn ménkǒu jíhé.) — We will meet at the train station entrance."
 		},
 		{
@@ -63,6 +68,7 @@
 			"Pinyin": "dìtiě",
 			"Part of Speech": "Noun",
 			"English Meaning": "subway / metro",
+			"Acceptable Answers": ["飞机", "出租车"],
 			"Example (Chinese + Pinyin)": "坐地铁比开车更快。(Zuò dìtiě bǐ kāichē gèng kuài.) — Taking the subway is faster than driving."
 		},
 		{
@@ -95,6 +101,7 @@
 			"Pinyin": "chē",
 			"Part of Speech": "Noun",
 			"English Meaning": "vehicle / car",
+			"Acceptable Answers": ["公共汽车", "出租车"],
 			"Example (Chinese + Pinyin)": "路上的车很多，交通有点堵。(Lù shang de chē hěn duō, jiāotōng yǒudiǎn dǔ.) — There are many cars on the road, traffic is a bit jammed."
 		},
 		{
@@ -111,6 +118,7 @@
 			"Pinyin": "kāi",
 			"Part of Speech": "Verb",
 			"English Meaning": "to drive / to open / to start",
+			"Acceptable Answers": ["坐"],
 			"Example (Chinese + Pinyin)": "他每天开车去上班。(Tā měitiān kāichē qù shàngbān.) — He drives to work every day."
 		},
 		{
@@ -119,6 +127,7 @@
 			"Pinyin": "shàng",
 			"Part of Speech": "Noun / Preposition / Verb",
 			"English Meaning": "up / above / on top / to get on",
+			"Acceptable Answers": ["下"],
 			"Example (Chinese + Pinyin)": "书在桌子上。(Shū zài zhuōzi shang.) — The book is on the table."
 		},
 		{
@@ -127,6 +136,7 @@
 			"Pinyin": "xià",
 			"Part of Speech": "Noun / Preposition / Verb",
 			"English Meaning": "down / below / under / to get off",
+			"Acceptable Answers": ["前", "后"],
 			"Example (Chinese + Pinyin)": "小猫藏在椅子下面。(Xiǎomāo cáng zài yǐzi xiàmian.) — The kitten is hiding under the chair."
 		},
 		{
@@ -135,6 +145,7 @@
 			"Pinyin": "qián",
 			"Part of Speech": "Noun",
 			"English Meaning": "front / forward / ahead / before",
+			"Acceptable Answers": ["后"],
 			"Example (Chinese + Pinyin)": "学校前面有一家书店。(Xuéxiào qiánmian yǒu yì jiā shūdiàn.) — There is a bookstore in front of the school."
 		},
 		{
@@ -143,6 +154,7 @@
 			"Pinyin": "hòu",
 			"Part of Speech": "Noun",
 			"English Meaning": "back / behind / after",
+			"Acceptable Answers": ["前"],
 			"Example (Chinese + Pinyin)": "医院后面是一个大花园。(Yīyuàn hòumian shì yí gè dà huāyuán.) — Behind the hospital is a large garden."
 		},
 		{
@@ -151,6 +163,7 @@
 			"Pinyin": "zuǒ",
 			"Part of Speech": "Noun",
 			"English Meaning": "left (direction)",
+			"Acceptable Answers": ["右"],
 			"Example (Chinese + Pinyin)": "向左拐就是地铁站。(Xiàng zuǒ guǎi jiù shì dìtiězhàn.) — Turn left and that's the subway station."
 		},
 		{
@@ -159,6 +172,7 @@
 			"Pinyin": "yòu",
 			"Part of Speech": "Noun",
 			"English Meaning": "right (direction)",
+			"Acceptable Answers": ["左"],
 			"Example (Chinese + Pinyin)": "你的右边是谁？(Nǐ de yòubian shì shéi?) — Who is on your right side?"
 		},
 		{
@@ -183,6 +197,7 @@
 			"Pinyin": "yuǎn",
 			"Part of Speech": "Adjective",
 			"English Meaning": "far / distant",
+			"Acceptable Answers": ["近"],
 			"Example (Chinese + Pinyin)": "从我家到公司不算太远。(Cóng wǒ jiā dào gōngsī bú suàn tài yuǎn.) — From my home to the company is not too far."
 		},
 		{
@@ -191,6 +206,7 @@
 			"Pinyin": "jìn",
 			"Part of Speech": "Adjective",
 			"English Meaning": "near / close",
+			"Acceptable Answers": ["远"],
 			"Example (Chinese + Pinyin)": "这家咖啡馆离学校很近。(Zhè jiā kāfēiguǎn lí xuéxiào hěn jìn.) — This café is very close to school."
 		},
 		{

@@ -39,6 +39,7 @@
 			"Pinyin": "suǒyǐ",
 			"Part of Speech": "Conjunction",
 			"English Meaning": "so / therefore / as a result",
+			"Acceptable Answers": ["结果"],
 			"Example (Chinese + Pinyin)": "今天下大雨，所以我们留在家中看书。(Jīntiān xià dàyǔ, suǒyǐ wǒmen liú zài jiā zhōng kànshū.) — It's raining heavily today, so we stayed home reading."
 		},
 		{
@@ -63,6 +64,7 @@
 			"Pinyin": "rúguǒ",
 			"Part of Speech": "Conjunction",
 			"English Meaning": "if / in case",
+			"Acceptable Answers": ["只要"],
 			"Example (Chinese + Pinyin)": "如果明天天气晴朗，我们就去郊游。(Rúguǒ míngtiān tiānqì qínglǎng, wǒmen jiù qù jiāoyóu.) — If tomorrow is sunny, we'll go for an outing."
 		},
 		{
@@ -71,6 +73,7 @@
 			"Pinyin": "zhǐyào",
 			"Part of Speech": "Conjunction",
 			"English Meaning": "as long as / provided that",
+			"Acceptable Answers": ["如果"],
 			"Example (Chinese + Pinyin)": "只要坚持练习，你的发音就会越来越好。(Zhǐyào jiānchí liànxí, nǐ de fāyīn jiù huì yuèláiyuè hǎo.) — As long as you practice persistently, your pronunciation will improve."
 		},
 		{
@@ -79,6 +82,7 @@
 			"Pinyin": "zhǐyǒu",
 			"Part of Speech": "Conjunction",
 			"English Meaning": "only if / only when",
+			"Acceptable Answers": ["必须", "应该"],
 			"Example (Chinese + Pinyin)": "只有努力学习，才能取得好成绩。(Zhǐyǒu nǔlì xuéxí, cái néng qǔdé hǎo chéngjì.) — Only by studying hard can one achieve good grades."
 		},
 		{
@@ -103,6 +107,7 @@
 			"Pinyin": "bǐjiào",
 			"Part of Speech": "Adverb / Verb",
 			"English Meaning": "comparatively / relatively / to compare",
+			"Acceptable Answers": ["特别"],
 			"Example (Chinese + Pinyin)": "我认为坐高铁比较舒适和准时。(Wǒ rènwéi zuò gāotiě bǐjiào shūshì hé zhǔnshí.) — I think taking high-speed rail is relatively comfortable and punctual."
 		},
 		{
@@ -111,6 +116,7 @@
 			"Pinyin": "tèbié",
 			"Part of Speech": "Adverb / Adjective",
 			"English Meaning": "especially / particularly / special",
+			"Acceptable Answers": ["比较"],
 			"Example (Chinese + Pinyin)": "今天外面的风特别大，多穿点衣服。(Jīntiān wàimiàn de fēng tèbié dà, duō chuān diǎn yīfu.) — The wind outside today is especially strong, dress warmly."
 		},
 		{
@@ -127,6 +133,7 @@
 			"Pinyin": "yídìng",
 			"Part of Speech": "Adverb / Adjective",
 			"English Meaning": "definitely / certainly / must",
+			"Acceptable Answers": ["必须", "应该", "可能"],
 			"Example (Chinese + Pinyin)": "有空一定来我家做客！(Yǒu kòng yídìng lái wǒ jiā zuòkè!) — When you're free you definitely must come visit my home!"
 		},
 		{
@@ -135,6 +142,7 @@
 			"Pinyin": "kěnéng",
 			"Part of Speech": "Adverb / Noun",
 			"English Meaning": "maybe / perhaps / possibility",
+			"Acceptable Answers": ["应该"],
 			"Example (Chinese + Pinyin)": "明天可能会降温，出门记得带外套。(Míngtiān kěnéng huì jiàngwēn, chūmén jìde dài wàitào.) — It might cool down tomorrow, remember to bring a coat."
 		},
 		{
@@ -143,6 +151,7 @@
 			"Pinyin": "bìxū",
 			"Part of Speech": "Adverb",
 			"English Meaning": "must / have to / obligatory",
+			"Acceptable Answers": ["应该", "一定"],
 			"Example (Chinese + Pinyin)": "进入施工现场必须戴安全帽。(Jìnrù shīgōng xiànchǎng bìxū dài ānquánmào.) — Entering construction sites requires wearing a safety helmet."
 		},
 		{
@@ -151,6 +160,7 @@
 			"Pinyin": "yīnggāi",
 			"Part of Speech": "Auxiliary Verb",
 			"English Meaning": "should / ought to",
+			"Acceptable Answers": ["必须"],
 			"Example (Chinese + Pinyin)": "遇到不懂的问题应该主动请教他人。(Yùdào bù dǒng de wèntí yīnggāi zhǔdòng qǐngjiào tārén.) — When encountering unfamiliar questions, one should consult others."
 		},
 		{

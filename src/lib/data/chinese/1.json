@@ -63,6 +63,7 @@
 			"Pinyin": "wǒ",
 			"Part of Speech": "Pronoun",
 			"English Meaning": "I / me",
+			"Acceptable Answers": ["你", "他", "她", "我们", "他们", "谁"],
 			"Example (Chinese + Pinyin)": "我是语言学习者。(Wǒ shì yǔyán xuéxízhě.) — I am a language learner."
 		},
 		{
@@ -71,6 +72,7 @@
 			"Pinyin": "nǐ",
 			"Part of Speech": "Pronoun",
 			"English Meaning": "you (singular)",
+			"Acceptable Answers": ["我", "他", "她", "我们", "他们", "谁"],
 			"Example (Chinese + Pinyin)": "你是哪国人？(Nǐ shì nǎ guó rén?) — Which country are you from?"
 		},
 		{
@@ -79,6 +81,7 @@
 			"Pinyin": "tā",
 			"Part of Speech": "Pronoun",
 			"English Meaning": "he / him",
+			"Acceptable Answers": ["我", "你", "她", "我们", "他们", "谁"],
 			"Example (Chinese + Pinyin)": "他是我的好朋友。(Tā shì wǒ de hǎo péngyǒu.) — He is my good friend."
 		},
 		{
@@ -87,6 +90,7 @@
 			"Pinyin": "tā",
 			"Part of Speech": "Pronoun",
 			"English Meaning": "she / her",
+			"Acceptable Answers": ["他", "我", "你", "我们", "他们", "谁"],
 			"Example (Chinese + Pinyin)": "她会说三种语言。(Tā huì shuō sān zhǒng yǔyán.) — She can speak three languages."
 		},
 		{
@@ -95,6 +99,7 @@
 			"Pinyin": "wǒmen",
 			"Part of Speech": "Pronoun",
 			"English Meaning": "we / us",
+			"Acceptable Answers": ["他们"],
 			"Example (Chinese + Pinyin)": "我们一起学习中文。(Wǒmen yìqǐ xuéxí zhōngwén.) — We study Chinese together."
 		},
 		{
@@ -103,6 +108,7 @@
 			"Pinyin": "tāmen",
 			"Part of Speech": "Pronoun",
 			"English Meaning": "they / them",
+			"Acceptable Answers": ["我们"],
 			"Example (Chinese + Pinyin)": "他们都是老师。(Tāmen dōu shì lǎoshī.) — They are all teachers."
 		},
 		{
@@ -111,6 +117,7 @@
 			"Pinyin": "shì",
 			"Part of Speech": "Verb",
 			"English Meaning": "to be (am / is / are)",
+			"Acceptable Answers": ["有"],
 			"Example (Chinese + Pinyin)": "这是一本中文书。(Zhè shì yì běn zhōngwén shū.) — This is a Chinese book."
 		},
 		{
@@ -135,6 +142,7 @@
 			"Pinyin": "méiyǒu",
 			"Part of Speech": "Verb / Adverb",
 			"English Meaning": "not have / there is not",
+			"Acceptable Answers": ["有"],
 			"Example (Chinese + Pinyin)": "我今天没有课。(Wǒ jīntiān méiyǒu kè.) — I don't have classes today."
 		},
 		{
@@ -167,6 +175,7 @@
 			"Pinyin": "shéi",
 			"Part of Speech": "Pronoun",
 			"English Meaning": "who / whom",
+			"Acceptable Answers": ["什么"],
 			"Example (Chinese + Pinyin)": "他是谁？(Tā shì shéi?) — Who is he?"
 		},
 		{

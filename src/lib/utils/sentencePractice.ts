@@ -13,6 +13,8 @@ export interface SentenceExample {
 	/** Pinyin line with the target pinyin blanked; empty when it cannot be blanked safely. */
 	pinyin: string;
 	translation?: string;
+	/** Other words from the same deck that also complete the blank validly. */
+	acceptedAnswers: string[];
 }
 
 export interface ClozeOption {
@@ -156,6 +158,10 @@ export function buildCloze(
 	const displaySentence = replaceAllCaseInsensitive(parsed.sentence, targetWord, BLANK_TOKEN);
 	if (!displaySentence.includes(BLANK_TOKEN)) return null;
 
+	const acceptedAnswers = (record['Acceptable Answers'] || [])
+		.map((answer) => answer.trim())
+		.filter((answer) => answer && answer !== targetWord);
+
 	return {
 		language,
 		targetWord,
@@ -163,31 +169,46 @@ export function buildCloze(
 		displaySentence,
 		fullSentence: parsed.sentence,
 		pinyin,
-		translation: parsed.translation
+		translation: parsed.translation,
+		acceptedAnswers
 	};
 }
 
 /**
- * Builds a shuffled set of cloze options: the correct target word plus up to `count`
- * distractors drawn from other words in the same deck.
+ * Builds a shuffled set of cloze options: the correct target word, every accepted
+ * alternative present in the deck, plus distractors drawn from other deck words.
  */
 export function buildClozeOptions(
 	cloze: SentenceExample,
 	distractorWords: WordRecord[],
 	count = 3
 ): ClozeOption[] {
+	const accepted = new Set(cloze.acceptedAnswers);
 	const pool = distractorWords
 		.map((w) => ({ word: getTargetWord(w, cloze.language), pinyin: (w.Pinyin || '').trim() }))
 		.filter((d) => d.word && d.word !== cloze.targetWord);
 
-	const distractors = shuffleArray(pool)
+	const acceptedOptions = pool
+		.filter((d) => accepted.has(d.word))
+		.map((d) => ({ text: d.word, pinyin: d.pinyin, isCorrect: true }));
+
+	const remaining = pool.filter((d) => !accepted.has(d.word));
+	const distractors = shuffleArray(remaining)
 		.slice(0, count)
 		.map((d) => ({ text: d.word, pinyin: d.pinyin, isCorrect: false }));
 
-	return shuffleArray([
+	const options = shuffleArray([
 		{ text: cloze.targetWord, pinyin: cloze.targetPinyin, isCorrect: true },
+		...acceptedOptions.map((o) => ({ ...o })),
 		...distractors
 	]);
+
+	const seen = new Set<string>();
+	return options.filter((o) => {
+		if (seen.has(o.text)) return false;
+		seen.add(o.text);
+		return true;
+	});
 }
 
 export function shuffleArray<T>(input: T[]): T[] {

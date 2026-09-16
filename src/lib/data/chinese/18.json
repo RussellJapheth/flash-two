@@ -7,6 +7,7 @@
 			"Pinyin": "hùzhào",
 			"Part of Speech": "Noun",
 			"English Meaning": "passport",
+			"Acceptable Answers": ["签证"],
 			"Example (Chinese + Pinyin)": "请出示您的护照和登机牌。(Qǐng chūshì nín de hùzhào hé dēngjīpái.) — Please show your passport and boarding pass."
 		},
 		{
@@ -15,6 +16,7 @@
 			"Pinyin": "qiānzhèng",
 			"Part of Speech": "Noun",
 			"English Meaning": "visa",
+			"Acceptable Answers": ["护照"],
 			"Example (Chinese + Pinyin)": "去国外旅游需要提前办理签证。(Qù guówài lǚyóu xūyào tíqián bànlǐ qiānzhèng.) — Traveling abroad requires applying for a visa in advance."
 		},
 		{
@@ -55,6 +57,7 @@
 			"Pinyin": "rùzhù",
 			"Part of Speech": "Verb",
 			"English Meaning": "to check in (hotel)",
+			"Acceptable Answers": ["退房"],
 			"Example (Chinese + Pinyin)": "你好，我来办理入住手续。(Nǐ hǎo, wǒ lái bànlǐ rùzhù shǒuxù.) — Hello, I am here to process my check-in."
 		},
 		{
@@ -63,6 +66,7 @@
 			"Pinyin": "tuìfáng",
 			"Part of Speech": "Verb",
 			"English Meaning": "to check out (hotel)",
+			"Acceptable Answers": ["入住"],
 			"Example (Chinese + Pinyin)": "酒店规定中午十二点前退房。(Jiǔdiàn guīdìng zhōngwǔ shí'èr diǎn qián tuìfáng.) — The hotel policy requires checking out before 12:00 noon."
 		},
 		{
@@ -71,6 +75,7 @@
 			"Pinyin": "dānrénfáng",
 			"Part of Speech": "Noun",
 			"English Meaning": "single room",
+			"Acceptable Answers": ["双人房"],
 			"Example (Chinese + Pinyin)": "我想订一间安静的单人房。(Wǒ xiǎng dìng yì jiān ānjìng de dānrénfáng.) — I'd like to reserve a quiet single room."
 		},
 		{
@@ -79,6 +84,7 @@
 			"Pinyin": "shuāngrénfáng",
 			"Part of Speech": "Noun",
 			"English Meaning": "double room / twin room",
+			"Acceptable Answers": ["单人房"],
 			"Example (Chinese + Pinyin)": "我们两个人要一间双人房。(Wǒmen liǎng gè rén yào yì jiān shuāngrénfáng.) — The two of us want a double room."
 		},
 		{

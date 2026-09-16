@@ -23,6 +23,7 @@
 			"Pinyin": "bàba",
 			"Part of Speech": "Noun",
 			"English Meaning": "father / dad",
+			"Acceptable Answers": ["妈妈", "哥哥", "弟弟", "姐姐", "妹妹", "儿子", "女儿", "孩子"],
 			"Example (Chinese + Pinyin)": "我爸爸喜欢喝中国茶。(Wǒ bàba xǐhuan hē Zhōngguó chá.) — My dad likes drinking Chinese tea."
 		},
 		{
@@ -31,6 +32,19 @@
 			"Pinyin": "māma",
 			"Part of Speech": "Noun",
 			"English Meaning": "mother / mom",
+			"Acceptable Answers": [
+				"爸爸",
+				"哥哥",
+				"弟弟",
+				"姐姐",
+				"妹妹",
+				"儿子",
+				"女儿",
+				"孩子",
+				"老师",
+				"同学",
+				"师傅"
+			],
 			"Example (Chinese + Pinyin)": "我妈妈做的菜非常好吃。(Wǒ māma zuò de cài fēicháng hǎochī.) — The food my mom makes is very delicious."
 		},
 		{
@@ -39,6 +53,17 @@
 			"Pinyin": "gēge",
 			"Part of Speech": "Noun",
 			"English Meaning": "older brother",
+			"Acceptable Answers": [
+				"爸爸",
+				"妈妈",
+				"弟弟",
+				"姐姐",
+				"妹妹",
+				"儿子",
+				"女儿",
+				"孩子",
+				"同学"
+			],
 			"Example (Chinese + Pinyin)": "我哥哥是一名大学生。(Wǒ gēge shì yì míng dàxuéshēng.) — My older brother is a university student."
 		},
 		{
@@ -47,6 +72,22 @@
 			"Pinyin": "dìdi",
 			"Part of Speech": "Noun",
 			"English Meaning": "younger brother",
+			"Acceptable Answers": [
+				"爸爸",
+				"妈妈",
+				"哥哥",
+				"姐姐",
+				"妹妹",
+				"儿子",
+				"女儿",
+				"孩子",
+				"老师",
+				"学生",
+				"同学",
+				"医生",
+				"护士",
+				"大家"
+			],
 			"Example (Chinese + Pinyin)": "弟弟正在房间里玩游戏。(Dìdi zhèngzài fángjiān lǐ wán yóuxì.) — Younger brother is playing games in the room."
 		},
 		{
@@ -55,6 +96,18 @@
 			"Pinyin": "jiějie",
 			"Part of Speech": "Noun",
 			"English Meaning": "older sister",
+			"Acceptable Answers": [
+				"爸爸",
+				"妈妈",
+				"哥哥",
+				"弟弟",
+				"妹妹",
+				"儿子",
+				"女儿",
+				"孩子",
+				"医生",
+				"护士"
+			],
 			"Example (Chinese + Pinyin)": "姐姐在一家医院工作。(Jiějie zài yì jiā yīyuàn gōngzuò.) — Older sister works at a hospital."
 		},
 		{
@@ -63,6 +116,22 @@
 			"Pinyin": "mèimei",
 			"Part of Speech": "Noun",
 			"English Meaning": "younger sister",
+			"Acceptable Answers": [
+				"哥哥",
+				"姐姐",
+				"弟弟",
+				"爸爸",
+				"妈妈",
+				"儿子",
+				"女儿",
+				"孩子",
+				"学生",
+				"同学",
+				"老师",
+				"医生",
+				"护士",
+				"大家"
+			],
 			"Example (Chinese + Pinyin)": "妹妹喜欢画画和小动物。(Mèimei xǐhuan huàhuà hé xiǎo dòngwù.) — Younger sister likes drawing and small animals."
 		},
 		{
@@ -71,6 +140,7 @@
 			"Pinyin": "érzi",
 			"Part of Speech": "Noun",
 			"English Meaning": "son",
+			"Acceptable Answers": ["女儿"],
 			"Example (Chinese + Pinyin)": "他儿子今年五岁。(Tā érzi jīnnián wǔ suì.) — His son is five years old this year."
 		},
 		{
@@ -79,6 +149,7 @@
 			"Pinyin": "nǚ'ér",
 			"Part of Speech": "Noun",
 			"English Meaning": "daughter",
+			"Acceptable Answers": ["儿子", "孩子"],
 			"Example (Chinese + Pinyin)": "他们有一个聪明可爱的女儿。(Tāmen yǒu yí gè cōngmíng kě'ài de nǚ'ér.) — They have a smart and cute daughter."
 		},
 		{
@@ -87,6 +158,7 @@
 			"Pinyin": "háizi",
 			"Part of Speech": "Noun",
 			"English Meaning": "child / children",
+			"Acceptable Answers": ["学生", "同学"],
 			"Example (Chinese + Pinyin)": "孩子们在操场上跑步。(Háizimen zài cāochǎng shang pǎobù.) — The children are running on the sports field."
 		},
 		{
@@ -95,6 +167,7 @@
 			"Pinyin": "lǎoshī",
 			"Part of Speech": "Noun",
 			"English Meaning": "teacher",
+			"Acceptable Answers": ["先生", "女士", "小姐", "医生", "师傅"],
 			"Example (Chinese + Pinyin)": "王老师教我们汉字。(Wáng lǎoshī jiāo wǒmen hànzì.) — Teacher Wang teaches us Chinese characters."
 		},
 		{
@@ -103,6 +176,7 @@
 			"Pinyin": "xuésheng",
 			"Part of Speech": "Noun",
 			"English Meaning": "student",
+			"Acceptable Answers": ["同学", "孩子"],
 			"Example (Chinese + Pinyin)": "这个班有三十个学生。(Zhè gè bān yǒu sānshí gè xuésheng.) — There are thirty students in this class."
 		},
 		{
@@ -111,6 +185,7 @@
 			"Pinyin": "tóngxué",
 			"Part of Speech": "Noun",
 			"English Meaning": "classmate / schoolmate",
+			"Acceptable Answers": ["学生", "老师"],
 			"Example (Chinese + Pinyin)": "我们是初中同学。(Wǒmen shì chūzhōng tóngxué.) — We are junior high school classmates."
 		},
 		{
@@ -127,6 +202,7 @@
 			"Pinyin": "hùshi",
 			"Part of Speech": "Noun",
 			"English Meaning": "nurse",
+			"Acceptable Answers": ["医生"],
 			"Example (Chinese + Pinyin)": "护士在照顾病人。(Hùshi zài zhàogù bìngrén.) — The nurse is caring for patients."
 		},
 		{
@@ -135,6 +211,7 @@
 			"Pinyin": "xiānsheng",
 			"Part of Speech": "Noun",
 			"English Meaning": "Mr. / gentleman / husband",
+			"Acceptable Answers": ["女士", "小姐", "老师", "医生", "师傅"],
 			"Example (Chinese + Pinyin)": "李先生今天不在办公室。(Lǐ xiānsheng jīntiān bú zài bàngōngshì.) — Mr. Li is not in the office today."
 		},
 		{
@@ -143,6 +220,7 @@
 			"Pinyin": "nǚshì",
 			"Part of Speech": "Noun",
 			"English Meaning": "Ms. / lady / madam",
+			"Acceptable Answers": ["先生", "小姐", "老师", "医生", "师傅"],
 			"Example (Chinese + Pinyin)": "张女士是这家公司的经理。(Zhāng nǚshì shì zhè jiā gōngsī de jīnglǐ.) — Ms. Zhang is the manager of this company."
 		},
 		{
@@ -151,6 +229,7 @@
 			"Pinyin": "xiǎojie",
 			"Part of Speech": "Noun",
 			"English Meaning": "Miss / young lady",
+			"Acceptable Answers": ["先生"],
 			"Example (Chinese + Pinyin)": "服务员小姐，请问洗手间在哪里？(Fúwùyuán xiǎojie, qǐngwèn xǐshǒujiān zài nǎlǐ?) — Excuse me miss, where is the restroom?"
 		},
 		{
@@ -159,6 +238,7 @@
 			"Pinyin": "nán",
 			"Part of Speech": "Noun / Adjective",
 			"English Meaning": "male / man",
+			"Acceptable Answers": ["女"],
 			"Example (Chinese + Pinyin)": "他是我们部门唯一的男同事。(Tā shì wǒmen bùmén wéiyī de nán tóngshì.) — He is the only male colleague in our department."
 		},
 		{
@@ -167,6 +247,7 @@
 			"Pinyin": "nǚ",
 			"Part of Speech": "Noun / Adjective",
 			"English Meaning": "female / woman",
+			"Acceptable Answers": ["男"],
 			"Example (Chinese + Pinyin)": "女孩子穿这件裙子很漂亮。(Nǚ háizi chuān zhè jiàn qúnzi hěn piàoliang.) — The girl looks very pretty wearing this dress."
 		},
 		{
@@ -175,6 +256,19 @@
 			"Pinyin": "dàjiā",
 			"Part of Speech": "Pronoun",
 			"English Meaning": "everyone / all",
+			"Acceptable Answers": [
+				"老师",
+				"学生",
+				"同学",
+				"孩子",
+				"医生",
+				"护士",
+				"先生",
+				"女士",
+				"小姐",
+				"服务员",
+				"师傅"
+			],
 			"Example (Chinese + Pinyin)": "请大家保持安静。(Qǐng dàjiā bǎochí ānjìng.) — Please everyone keep quiet."
 		},
 		{
@@ -183,6 +277,7 @@
 			"Pinyin": "gōngzuò",
 			"Part of Speech": "Noun / Verb",
 			"English Meaning": "job / work / to work",
+			"Acceptable Answers": ["家"],
 			"Example (Chinese + Pinyin)": "你喜欢你的工作吗？(Nǐ xǐhuan nǐ de gōngzuò ma?) — Do you like your job?"
 		},
 		{
@@ -191,6 +286,7 @@
 			"Pinyin": "fúwùyuán",
 			"Part of Speech": "Noun",
 			"English Meaning": "waiter / server / attendant",
+			"Acceptable Answers": ["先生", "女士", "小姐", "师傅"],
 			"Example (Chinese + Pinyin)": "服务员，请给我们一份菜单。(Fúwùyuán, qǐng gěi wǒmen yí fèn càidān.) — Waiter, please give us a menu."
 		},
 		{
@@ -199,6 +295,7 @@
 			"Pinyin": "shīfu",
 			"Part of Speech": "Noun",
 			"English Meaning": "master worker / driver / polite title",
+			"Acceptable Answers": ["先生", "女士", "小姐", "服务员"],
 			"Example (Chinese + Pinyin)": "师傅，请去火车站。(Shīfu, qǐng qù huǒchēzhàn.) — Driver, please go to the train station."
 		}
 	]

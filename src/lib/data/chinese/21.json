@@ -55,6 +55,7 @@
 			"Pinyin": "háizimen",
 			"Part of Speech": "Noun",
 			"English Meaning": "children / kids",
+			"Acceptable Answers": ["年轻人"],
 			"Example (Chinese + Pinyin)": "周末公园里有很多孩子们在草地上奔跑。(Zhōumò gōngyuán li yǒu hěn duō háizimen zài cǎodì shang bēnpǎo.) — On weekends, there are many children running on the grass in the park."
 		},
 		{
@@ -87,6 +88,7 @@
 			"Pinyin": "huàishì",
 			"Part of Speech": "Noun",
 			"English Meaning": "bad thing / evil deed / misdeed",
+			"Acceptable Answers": ["好事"],
 			"Example (Chinese + Pinyin)": "有时候坏事也能变成吸取教训的好机会。(Yǒushíhou huàishì yě néng biànchéng xīqǔ jiàoxun de hǎo jīhuì.) — Sometimes a bad thing can also turn into a good opportunity to learn a lesson."
 		},
 		{
@@ -127,6 +129,7 @@
 			"Pinyin": "xiǎoshíhou",
 			"Part of Speech": "Time Noun",
 			"English Meaning": "childhood / when one was young",
+			"Acceptable Answers": ["从小"],
 			"Example (Chinese + Pinyin)": "我小时候最喜欢在夏天的晚上看星星。(Wǒ xiǎoshíhou zuì xǐhuan zài xiàtiān de wǎnshang kàn xīngxing.) — When I was a child, I liked looking at the stars on summer nights most."
 		},
 		{

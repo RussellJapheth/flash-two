@@ -7,6 +7,8 @@ export interface WordRecord {
 	'English Meaning': string;
 	'Example (Chinese + Pinyin)'?: string;
 	'Example (French)'?: string;
+	/** Other words that also complete this card's example sentence validly. */
+	'Acceptable Answers'?: string[];
 }
 
 export interface WordProgress {

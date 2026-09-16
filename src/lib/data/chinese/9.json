@@ -7,6 +7,7 @@
 			"Pinyin": "xiǎng",
 			"Part of Speech": "Verb / Auxiliary Verb",
 			"English Meaning": "to want / to miss / to think",
+			"Acceptable Answers": ["要", "喜欢", "希望", "会", "能", "可以"],
 			"Example (Chinese + Pinyin)": "我想学习流利的普通话。(Wǒ xiǎng xuéxí liúlì de pǔtōnghuà.) — I want to learn fluent Mandarin."
 		},
 		{
@@ -15,6 +16,7 @@
 			"Pinyin": "yào",
 			"Part of Speech": "Verb / Auxiliary Verb",
 			"English Meaning": "to want / must / going to",
+			"Acceptable Answers": ["想", "会", "可以", "能"],
 			"Example (Chinese + Pinyin)": "明天我要参加一场考试。(Míngtiān wǒ yào cānjiā yì chǎng kǎoshì.) — Tomorrow I need to take an exam."
 		},
 		{
@@ -23,6 +25,7 @@
 			"Pinyin": "huì",
 			"Part of Speech": "Auxiliary Verb",
 			"English Meaning": "can / to know how to / will",
+			"Acceptable Answers": ["能", "可以", "想", "要"],
 			"Example (Chinese + Pinyin)": "你会说中文和法语吗？(Nǐ huì shuō zhōngwén hé fǎyǔ ma?) — Can you speak Chinese and French?"
 		},
 		{
@@ -31,6 +34,7 @@
 			"Pinyin": "néng",
 			"Part of Speech": "Auxiliary Verb",
 			"English Meaning": "can / to be able to / may",
+			"Acceptable Answers": ["可以", "会", "想"],
 			"Example (Chinese + Pinyin)": "你能帮我拿一下行李吗？(Nǐ néng bāng wǒ ná yíxià xíngli ma?) — Can you help me carry the luggage?"
 		},
 		{
@@ -39,6 +43,7 @@
 			"Pinyin": "kěyǐ",
 			"Part of Speech": "Auxiliary Verb",
 			"English Meaning": "can / may / acceptable",
+			"Acceptable Answers": ["能"],
 			"Example (Chinese + Pinyin)": "请问我可以坐这里吗？(Qǐngwèn wǒ kěyǐ zuò zhèlǐ ma?) — Excuse me, may I sit here?"
 		},
 		{
@@ -47,6 +52,7 @@
 			"Pinyin": "xǐhuan",
 			"Part of Speech": "Verb",
 			"English Meaning": "to like / to be fond of",
+			"Acceptable Answers": ["爱"],
 			"Example (Chinese + Pinyin)": "我非常喜欢看书和跑步。(Wǒ fēicháng xǐhuan kànshū hé pǎobù.) — I like reading and running very much."
 		},
 		{
@@ -71,6 +77,7 @@
 			"Pinyin": "gāoxìng",
 			"Part of Speech": "Adjective",
 			"English Meaning": "happy / glad / joyful",
+			"Acceptable Answers": ["快乐", "舒服"],
 			"Example (Chinese + Pinyin)": "听到这个好消息大家都很高兴。(Tīngdào zhè gè hǎo xiāoxi dàjiā dōu hěn gāoxìng.) — Everyone is happy hearing this good news."
 		},
 		{
@@ -87,6 +94,7 @@
 			"Pinyin": "lèi",
 			"Part of Speech": "Adjective",
 			"English Meaning": "tired / exhausted",
+			"Acceptable Answers": ["饿", "渴"],
 			"Example (Chinese + Pinyin)": "今天工作了一整天，感觉很累。(Jīntiān gōngzuò le yì zhěng tiān, gǎnjué hěn lèi.) — Worked all day today, feeling very tired."
 		},
 		{
@@ -95,6 +103,7 @@
 			"Pinyin": "è",
 			"Part of Speech": "Adjective",
 			"English Meaning": "hungry",
+			"Acceptable Answers": ["疼"],
 			"Example (Chinese + Pinyin)": "我肚子有点饿了，去吃点东西吧。(Wǒ dùzi yǒudiǎn è le, qù chī diǎn dōngxi ba.) — I'm feeling a bit hungry, let's go eat something."
 		},
 		{
@@ -103,6 +112,7 @@
 			"Pinyin": "kě",
 			"Part of Speech": "Adjective",
 			"English Meaning": "thirsty",
+			"Acceptable Answers": ["累", "饿"],
 			"Example (Chinese + Pinyin)": "打完球以后大家都很渴。(Dǎ wán qiú yǐhòu dàjiā dōu hěn kě.) — After playing ball, everyone was very thirsty."
 		},
 		{
@@ -111,6 +121,7 @@
 			"Pinyin": "shūfu",
 			"Part of Speech": "Adjective",
 			"English Meaning": "comfortable / feeling well",
+			"Acceptable Answers": ["高兴", "快乐"],
 			"Example (Chinese + Pinyin)": "今天天气凉爽，感觉很舒服。(Jīntiān tiānqì liángshuǎng, gǎnjué hěn shūfu.) — Cool weather today, feels very comfortable."
 		},
 		{
@@ -119,6 +130,7 @@
 			"Pinyin": "shēngbìng",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "to fall ill / to get sick",
+			"Acceptable Answers": ["感冒"],
 			"Example (Chinese + Pinyin)": "天气变冷要注意保暖，别生病了。(Tiānqì biàn lěng yào zhùyì bǎonuǎn, bié shēngbìng le.) — Keep warm as weather turns cold, don't get sick."
 		},
 		{
@@ -135,6 +147,7 @@
 			"Pinyin": "gǎnmào",
 			"Part of Speech": "Noun / Verb",
 			"English Meaning": "cold / flu / to catch a cold",
+			"Acceptable Answers": ["生病"],
 			"Example (Chinese + Pinyin)": "他感冒了，需要多喝热水。(Tā gǎnmào le, xūyào duō hē rè shuǐ.) — He caught a cold and needs to drink more hot water."
 		},
 		{
@@ -151,6 +164,7 @@
 			"Pinyin": "dǒng",
 			"Part of Speech": "Verb",
 			"English Meaning": "to understand / to comprehend",
+			"Acceptable Answers": ["明白"],
 			"Example (Chinese + Pinyin)": "这句话我听懂了。(Zhè jù huà wǒ tīng dǒng le.) — I understood this sentence."
 		},
 		{
@@ -159,6 +173,7 @@
 			"Pinyin": "míngbai",
 			"Part of Speech": "Verb / Adjective",
 			"English Meaning": "to understand / clear",
+			"Acceptable Answers": ["懂", "知道"],
 			"Example (Chinese + Pinyin)": "你明白这个语法规则了吗？(Nǐ míngbai zhè gè yǔfǎ guīzé le ma?) — Do you understand this grammar rule?"
 		},
 		{
@@ -167,6 +182,7 @@
 			"Pinyin": "zhīdào",
 			"Part of Speech": "Verb",
 			"English Meaning": "to know / to realize",
+			"Acceptable Answers": ["懂", "明白"],
 			"Example (Chinese + Pinyin)": "你知道去机场的路怎么走吗？(Nǐ zhīdào qù jīchǎng de lù zěnme zǒu ma?) — Do you know the route to the airport?"
 		},
 		{
@@ -191,6 +207,7 @@
 			"Pinyin": "xīwàng",
 			"Part of Speech": "Verb / Noun",
 			"English Meaning": "to hope / wish",
+			"Acceptable Answers": ["祝"],
 			"Example (Chinese + Pinyin)": "希望你学习进步，一切顺利！(Xīwàng nǐ xuéxí jìnbù, yíqiè shùnlì!) — Hope you make good study progress and all goes smoothly!"
 		},
 		{
@@ -199,6 +216,7 @@
 			"Pinyin": "zhù",
 			"Part of Speech": "Verb",
 			"English Meaning": "to wish / to express good wishes",
+			"Acceptable Answers": ["希望"],
 			"Example (Chinese + Pinyin)": "祝你旅途愉快！(Zhù nǐ lǚtú yúkuài!) — Wish you a pleasant journey!"
 		}
 	]

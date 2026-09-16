@@ -23,6 +23,7 @@
 			"Pinyin": "zhīfù",
 			"Part of Speech": "Verb / Noun",
 			"English Meaning": "to pay / payment",
+			"Acceptable Answers": ["网络"],
 			"Example (Chinese + Pinyin)": "在中国移动支付非常普及。(Zài Zhōngguó yídòng zhīfù fēicháng pǔjí.) — In China mobile payment is extremely widespread."
 		},
 		{
@@ -39,6 +40,7 @@
 			"Pinyin": "shuākǎ",
 			"Part of Speech": "Verb",
 			"English Meaning": "to swipe a card / pay by card",
+			"Acceptable Answers": ["扫码", "微信"],
 			"Example (Chinese + Pinyin)": "这里可以刷卡付款吗？(Zhèlǐ kěyǐ shuākǎ fùkuǎn ma?) — Can I pay by card here?"
 		},
 		{
@@ -63,6 +65,7 @@
 			"Pinyin": "mìmǎ",
 			"Part of Speech": "Noun",
 			"English Meaning": "password / PIN",
+			"Acceptable Answers": ["账号", "验证码"],
 			"Example (Chinese + Pinyin)": "请不要把银行卡密码告诉别人。(Qǐng bú yào bǎ yínhángkǎ mìmǎ gàosu biérén.) — Please do not disclose your bank card password to others."
 		},
 		{
@@ -71,6 +74,7 @@
 			"Pinyin": "xiàzài",
 			"Part of Speech": "Verb",
 			"English Meaning": "to download",
+			"Acceptable Answers": ["搜索"],
 			"Example (Chinese + Pinyin)": "你可以在应用商店免费下载这个软件。(Nǐ kěyǐ zài yìngyòng shāngdiàn miǎnfèi xiàzài zhè ge ruǎnjiàn.) — You can download this app for free in the app store."
 		},
 		{
@@ -87,6 +91,7 @@
 			"Pinyin": "jiēshōu",
 			"Part of Speech": "Verb",
 			"English Meaning": "to receive / accept",
+			"Acceptable Answers": ["下载"],
 			"Example (Chinese + Pinyin)": "手机正在接收最新的系统更新。(Shǒujī zhèngzài jiēshōu zuìxīn de xìtǒng gēngxīn.) — The phone is receiving the latest system update."
 		},
 		{
@@ -103,6 +108,7 @@
 			"Pinyin": "xìnhào",
 			"Part of Speech": "Noun",
 			"English Meaning": "signal (cellular/WiFi)",
+			"Acceptable Answers": ["网络"],
 			"Example (Chinese + Pinyin)": "电梯里面手机一点信号都没有。(Diàntī lǐmiàn shǒujī yìdiǎn xìnhào dōu méiyǒu.) — There is no phone signal at all inside the elevator."
 		},
 		{
@@ -127,6 +133,7 @@
 			"Pinyin": "chōngdiàn",
 			"Part of Speech": "Verb",
 			"English Meaning": "to charge (battery / phone)",
+			"Acceptable Answers": ["充值"],
 			"Example (Chinese + Pinyin)": "我得给手机充电了。(Wǒ děi gěi shǒujī chōngdiàn le.) — I need to charge my phone."
 		},
 		{
@@ -151,6 +158,7 @@
 			"Pinyin": "shìpín",
 			"Part of Speech": "Noun",
 			"English Meaning": "video / video call",
+			"Acceptable Answers": ["语音"],
 			"Example (Chinese + Pinyin)": "今晚我们和父母视频通话吧。(Jīnwǎn wǒmen hé fùmǔ shìpín tōnghuà ba.) — Let's do a video call with our parents tonight."
 		},
 		{
@@ -159,6 +167,7 @@
 			"Pinyin": "yǔyīn",
 			"Part of Speech": "Noun",
 			"English Meaning": "voice / voice message",
+			"Acceptable Answers": ["消息", "视频"],
 			"Example (Chinese + Pinyin)": "打字不方便的时候可以发语音。(Dǎzì bù fāngbiàn de shíhou kěyǐ fā yǔyīn.) — You can send voice messages when typing is inconvenient."
 		},
 		{
@@ -167,6 +176,7 @@
 			"Pinyin": "yànzhèngmǎ",
 			"Part of Speech": "Noun",
 			"English Meaning": "verification code / OTP",
+			"Acceptable Answers": ["消息"],
 			"Example (Chinese + Pinyin)": "系统刚给你的手机发了验证码。(Xìtǒng gāng gěi nǐ de shǒujī fā le yànzhèngmǎ.) — The system just sent a verification code to your phone."
 		},
 		{

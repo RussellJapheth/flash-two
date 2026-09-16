@@ -12,6 +12,7 @@
 			"French Word": "travail",
 			"Part of Speech": "Noun",
 			"English Meaning": "work / job",
+			"Acceptable Answers": ["monde"],
 			"Example (French)": "Son travail est très intéressant.",
 			"No": 2
 		},
@@ -26,6 +27,7 @@
 			"French Word": "monde",
 			"Part of Speech": "Noun",
 			"English Meaning": "world / people",
+			"Acceptable Answers": ["travail"],
 			"Example (French)": "Tout le monde est là.",
 			"No": 4
 		},
@@ -33,6 +35,7 @@
 			"French Word": "voyager",
 			"Part of Speech": "Verb",
 			"English Meaning": "to travel",
+			"Acceptable Answers": ["parler"],
 			"Example (French)": "Nous voulons voyager cet été.",
 			"No": 5
 		}

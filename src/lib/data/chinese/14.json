@@ -7,6 +7,7 @@
 			"Pinyin": "càidān",
 			"Part of Speech": "Noun",
 			"English Meaning": "menu",
+			"Acceptable Answers": ["汤"],
 			"Example (Chinese + Pinyin)": "服务员，请给我们一份菜单。(Fúwùyuán, qǐng gěi wǒmen yí fèn càidān.) — Waiter, please give us a menu."
 		},
 		{
@@ -47,6 +48,7 @@
 			"Pinyin": "tián",
 			"Part of Speech": "Adjective",
 			"English Meaning": "sweet",
+			"Acceptable Answers": ["酸", "新鲜"],
 			"Example (Chinese + Pinyin)": "这个西瓜又大又甜。(Zhè ge xīguā yòu dà yòu tián.) — This watermelon is both big and sweet."
 		},
 		{
@@ -87,6 +89,7 @@
 			"Pinyin": "yóunì",
 			"Part of Speech": "Adjective",
 			"English Meaning": "oily / greasy",
+			"Acceptable Answers": ["饱", "咸"],
 			"Example (Chinese + Pinyin)": "炸鸡吃多了会觉得油腻。(Zhájī chī duō le huì juéde yóunì.) — Eating too much fried chicken feels greasy."
 		},
 		{
@@ -103,6 +106,7 @@
 			"Pinyin": "chǎo",
 			"Part of Speech": "Verb",
 			"English Meaning": "to stir-fry / to sauté",
+			"Acceptable Answers": ["煮"],
 			"Example (Chinese + Pinyin)": "西红柿炒鸡蛋是经典中国菜。(Xīhóngshì chǎo jīdàn shì jīngdiǎn Zhōngguó cài.) — Tomato scrambled eggs is a classic Chinese dish."
 		},
 		{
@@ -143,6 +147,7 @@
 			"Pinyin": "yán",
 			"Part of Speech": "Noun",
 			"English Meaning": "salt",
+			"Acceptable Answers": ["糖", "酱油", "醋"],
 			"Example (Chinese + Pinyin)": "炒青菜时放一点点盐就够了。(Chǎo qīngcài shí fàng yìdiǎndiǎn yán jiù gòu le.) — Adding just a little salt is enough when stir-frying greens."
 		},
 		{

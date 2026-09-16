@@ -15,6 +15,7 @@
 			"Pinyin": "pǎobù",
 			"Part of Speech": "Verb",
 			"English Meaning": "to run / to jog",
+			"Acceptable Answers": ["散步", "打球", "骑车", "跳舞"],
 			"Example (Chinese + Pinyin)": "他喜欢在公园里跑步。(Tā xǐhuan zài gōngyuán lǐ pǎobù.) — He likes jogging in the park."
 		},
 		{
@@ -23,6 +24,19 @@
 			"Pinyin": "sànbù",
 			"Part of Speech": "Verb",
 			"English Meaning": "to take a walk / to stroll",
+			"Acceptable Answers": [
+				"跑步",
+				"逛街",
+				"打球",
+				"骑车",
+				"跳舞",
+				"唱歌",
+				"拍照",
+				"爬山",
+				"游泳",
+				"聊天",
+				"上网"
+			],
 			"Example (Chinese + Pinyin)": "晚饭后我们一起去散步吧。(Wǎnfàn hòu wǒmen yìqǐ qù sànbù ba.) — Let's go for a walk together after dinner."
 		},
 		{
@@ -31,6 +45,7 @@
 			"Pinyin": "yóuyǒng",
 			"Part of Speech": "Verb",
 			"English Meaning": "to swim",
+			"Acceptable Answers": ["玩", "拍照", "散步"],
 			"Example (Chinese + Pinyin)": "夏天很多人喜欢去海边游泳。(Xiàtiān hěn duō rén xǐhuan qù hǎibiān yóuyǒng.) — In summer many people like to go swimming at the beach."
 		},
 		{
@@ -39,6 +54,7 @@
 			"Pinyin": "chànggē",
 			"Part of Speech": "Verb",
 			"English Meaning": "to sing songs / karaoke",
+			"Acceptable Answers": ["玩", "聚会"],
 			"Example (Chinese + Pinyin)": "周末我们常去KTV唱歌。(Zhōumò wǒmen cháng qù KTV chànggē.) — We often go singing at KTV on weekends."
 		},
 		{
@@ -47,6 +63,7 @@
 			"Pinyin": "tiàowǔ",
 			"Part of Speech": "Verb",
 			"English Meaning": "to dance",
+			"Acceptable Answers": ["唱歌"],
 			"Example (Chinese + Pinyin)": "她在广场上跟着音乐跳舞。(Tā zài guǎngchǎng shang gēnzhe yīnyuè tiàowǔ.) — She dances along to the music in the square."
 		},
 		{
@@ -55,6 +72,7 @@
 			"Pinyin": "lǚyóu",
 			"Part of Speech": "Verb / Noun",
 			"English Meaning": "to travel / tourism",
+			"Acceptable Answers": ["玩", "拍照", "逛街"],
 			"Example (Chinese + Pinyin)": "今年假期你打算去哪里旅游？(Jīnnián jiàqī nǐ dǎsuàn qù nǎlǐ lǚyóu?) — Where do you plan to travel for holiday this year?"
 		},
 		{
@@ -79,6 +97,7 @@
 			"Pinyin": "wán",
 			"Part of Speech": "Verb",
 			"English Meaning": "to play / to hang out / to have fun",
+			"Acceptable Answers": ["唱歌", "聊天", "打球", "拍照", "上网", "聚会"],
 			"Example (Chinese + Pinyin)": "周末欢迎来我家玩！(Zhōumò huānyíng lái wǒ jiā wán!) — Welcome to come over to my place to hang out this weekend!"
 		},
 		{
@@ -95,6 +114,7 @@
 			"Pinyin": "liáotiān",
 			"Part of Speech": "Verb",
 			"English Meaning": "to chat / to converse",
+			"Acceptable Answers": ["上网", "拍照", "唱歌", "放松"],
 			"Example (Chinese + Pinyin)": "我们一边喝咖啡一边聊天。(Wǒmen yìbiān hē kāfēi yìbiān liáotiān.) — We drank coffee while chatting."
 		},
 		{
@@ -119,6 +139,7 @@
 			"Pinyin": "guàngjiē",
 			"Part of Speech": "Verb",
 			"English Meaning": "to go window shopping / stroll the streets",
+			"Acceptable Answers": ["玩", "拍照", "散步"],
 			"Example (Chinese + Pinyin)": "星期六我和朋友去市中心逛街。(Xīngqīliù wǒ hé péngyou qù shìzhōngxīn guàngjiē.) — On Saturday I went window shopping downtown with friends."
 		},
 		{
@@ -135,6 +156,7 @@
 			"Pinyin": "dǎqiú",
 			"Part of Speech": "Verb",
 			"English Meaning": "to play ball (basketball, tennis, badminton)",
+			"Acceptable Answers": ["跑步", "游泳", "锻炼"],
 			"Example (Chinese + Pinyin)": "下午我们去体育馆打球吧。(Xiàwǔ wǒmen qù tǐyùguǎn dǎqiú ba.) — Let's go play ball at the gymnasium this afternoon."
 		},
 		{
@@ -143,6 +165,7 @@
 			"Pinyin": "qíchē",
 			"Part of Speech": "Verb",
 			"English Meaning": "to ride a bicycle / bike",
+			"Acceptable Answers": ["跑步"],
 			"Example (Chinese + Pinyin)": "天气好时我喜欢骑车上班。(Tiānqì hǎo shí wǒ xǐhuan qíchē shàngbān.) — When the weather is nice I like riding a bike to work."
 		},
 		{
@@ -151,6 +174,7 @@
 			"Pinyin": "páshān",
 			"Part of Speech": "Verb",
 			"English Meaning": "to climb a mountain / to hike",
+			"Acceptable Answers": ["拍照", "骑车", "散步", "跑步"],
 			"Example (Chinese + Pinyin)": "秋天是去郊外爬山的好季节。(Qiūtiān shì qù jiāowài páshān de hǎo jìjié.) — Autumn is a great season to hike in the countryside."
 		},
 		{
@@ -191,6 +215,7 @@
 			"Pinyin": "dǎsuan",
 			"Part of Speech": "Verb / Noun",
 			"English Meaning": "to plan / intention",
+			"Acceptable Answers": ["爱好"],
 			"Example (Chinese + Pinyin)": "毕业后你有什么打算？(Bìyè hòu nǐ yǒu shénme dǎsuan?) — What are your plans after graduation?"
 		},
 		{
@@ -199,6 +224,7 @@
 			"Pinyin": "jīngcháng",
 			"Part of Speech": "Adverb",
 			"English Meaning": "often / frequently",
+			"Acceptable Answers": ["习惯", "打算"],
 			"Example (Chinese + Pinyin)": "他经常去图书馆借书。(Tā jīngcháng qù túshūguǎn jiè shū.) — He often goes to the library to borrow books."
 		}
 	]

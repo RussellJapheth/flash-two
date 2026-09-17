@@ -75,4 +75,6 @@ Ledger of key modules:
 
 ## License
 
-[AGPL-3.0](LICENSE). Free software: you may redistribute and modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3 (or, at your option, any later version).
+[GNU AGPL-3.0](LICENSE) — copyright Russell Japheth. Free for personal and research use: you may use, modify, and share it, but any modified version running as a public-facing service must make its source code available to its users.
+
+**Commercial use requires a separate commercial license.** To use FlashCards commercially, or to ship a closed-source modified version, email [license@riveady.com.ng](mailto:license@riveady.com.ng) for licensing terms.

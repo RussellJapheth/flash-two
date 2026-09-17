@@ -337,14 +337,18 @@
 
 		stopRecognizer();
 
-		console.log('[Voice Debug] Starting continuous SpeechRecognition for round (en-US)...');
+		if (isDebugMode) {
+			console.log('[Voice Debug] Starting continuous SpeechRecognition for round (en-US)...');
+		}
 		voiceDebugError = '';
 
 		recognizerHandle = startSpeechRecognition({
 			lang: 'en-US',
 			continuous: true,
 			onStart: () => {
-				console.log('[Voice Debug] onStart: Microphone listening (continuous en-US)');
+				if (isDebugMode) {
+					console.log('[Voice Debug] onStart: Microphone listening (continuous en-US)');
+				}
 				isMicListening = true;
 				isMicPermissionPending = false;
 				isMicPermissionDenied = false;
@@ -365,7 +369,9 @@
 				}
 			},
 			onResult: (transcript, isFinal, alternatives) => {
-				console.log('[Voice Debug] onResult:', { transcript, isFinal, alternatives });
+				if (isDebugMode) {
+					console.log('[Voice Debug] onResult:', { transcript, isFinal, alternatives });
+				}
 				if (phase !== 'playing' || isAnswerLocked || !currentQuestion) return;
 
 				voiceTranscript = transcript;
@@ -392,7 +398,9 @@
 			},
 			onError: (err) => {
 				if (err === 'aborted' || err === 'no-speech') return;
-				console.warn('[Voice Debug] onError:', err);
+				if (isDebugMode) {
+					console.warn('[Voice Debug] onError:', err);
+				}
 				voiceDebugError = String(err);
 				voiceDebugLog = [
 					`[${new Date().toLocaleTimeString()}] Error: ${err}`,
@@ -405,7 +413,9 @@
 				}
 			},
 			onEnd: () => {
-				console.log('[Voice Debug] onEnd: Stream ended');
+				if (isDebugMode) {
+					console.log('[Voice Debug] onEnd: Stream ended');
+				}
 				isMicListening = false;
 				recognizerHandle = null;
 				// Auto-reconnect continuous stream if round is still active

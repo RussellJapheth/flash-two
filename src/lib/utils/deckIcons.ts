@@ -1,3 +1,6 @@
+/**
+ * Deck icon resolution: maps a deck id/language to its image and accent tokens.
+ */
 export interface DeckIconInfo {
 	imageSrc: string;
 	alt: string;

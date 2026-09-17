@@ -1,3 +1,11 @@
+/**
+ * Cloud sync layer.
+ *
+ * Works against the flashcards JSON API at `API_BASE_URL`. All study data is
+ * stored locally first (see `storage.ts`), then merged upstream on a debounce.
+ * A pull/merge strategy keeps the local IndexedDB state authoritative while
+ * tolerating offline periods.
+ */
 import type {
 	AppBackup,
 	WordProgress,
@@ -43,10 +51,6 @@ export function subscribeSyncStatus(fn: (status: SyncStatus) => void): () => voi
 function updateStatus(status: SyncStatus) {
 	currentSyncStatus = status;
 	listeners.forEach((fn) => fn(status));
-}
-
-export function getSyncStatus(): SyncStatus {
-	return currentSyncStatus;
 }
 
 export interface RemoteUserSummary {

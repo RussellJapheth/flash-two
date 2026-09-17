@@ -1,3 +1,7 @@
+/**
+ * Story completion records: stored per story per user in localStorage,
+ * combined with XP rewards after finishing a story.
+ */
 import type { StoryCompletionRecord } from '$lib/types';
 import { addXP } from './xp';
 

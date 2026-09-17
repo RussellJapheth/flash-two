@@ -56,9 +56,9 @@ pnpm test         # unit + e2e
 
 ## Environment variables
 
-| Variable               | Required | Purpose                                            |
-| ---------------------- | -------- | -------------------------------------------------- |
-| `PUBLIC_API_BASE_URL`  | Yes      | Origin of the flashcards sync API, no trailing slash |
+| Variable              | Required | Purpose                                              |
+| --------------------- | -------- | ---------------------------------------------------- |
+| `PUBLIC_API_BASE_URL` | Yes      | Origin of the flashcards sync API, no trailing slash |
 
 ## Architecture
 

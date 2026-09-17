@@ -1,3 +1,7 @@
+/**
+ * Chinese numeral helpers: Arabic digits to Hanzi, and position-aware spoken
+ * forms (tones modulo 10 for 5/9) used by the Number Rush voice game.
+ */
 const DIGIT_HANZI: Record<number, string> = {
 	0: '零',
 	1: '一',

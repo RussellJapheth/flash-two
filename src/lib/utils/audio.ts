@@ -1,3 +1,7 @@
+/**
+ * Audio helpers: synthesized speech (Web Speech API) and UI sound effects.
+ * Every helper degrades gracefully when audio APIs are unavailable.
+ */
 let audioCtx: AudioContext | null = null;
 
 function getAudioContext(): AudioContext | null {

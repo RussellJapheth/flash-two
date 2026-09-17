@@ -1,8 +1,14 @@
+/**
+ * Spaced repetition scheduling (SM-2-inspired).
+ *
+ * Review outcomes adjust an ease factor and interval for each card. The
+ * scheduler is the single source of truth for review due dates across decks.
+ */
 import type { WordProgress, StudyRating } from '$lib/types';
 
-export const DEFAULT_EASE_FACTOR = 2.5;
-export const MIN_EASE_FACTOR = 1.3;
-export const MAX_EASE_FACTOR = 3.2;
+const DEFAULT_EASE_FACTOR = 2.5;
+const MIN_EASE_FACTOR = 1.3;
+const MAX_EASE_FACTOR = 3.2;
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const TEN_MINUTES_MS = 10 * 60 * 1000;

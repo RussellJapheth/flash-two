@@ -1,3 +1,9 @@
+/**
+ * Sentence practice (cloze) model.
+ *
+ * Builds fill-in-the-blank prompts from a WordRecord and validates answers
+ * against the accepted variant set for the deck's language.
+ */
 import type { WordRecord } from '$lib/types';
 
 export const BLANK_TOKEN = '{blank}';
@@ -23,7 +29,7 @@ export interface ClozeOption {
 	isCorrect: boolean;
 }
 
-export function getTargetWord(record: WordRecord, language: 'chinese' | 'french'): string {
+function getTargetWord(record: WordRecord, language: 'chinese' | 'french'): string {
 	return language === 'chinese' ? record['Chinese Word'] || '' : record['French Word'] || '';
 }
 

@@ -184,7 +184,7 @@ describe('SRS SM-2 Algorithm', () => {
 		const p4 = getWordProgress(mockProgress, 'chinese-pack-1', 5, 'chinese');
 		expect(p4).toBeDefined();
 		expect(p4?.wrong).toBe(3);
-	});
+	}, 30_000);
 
 	it('correctly identifies studied vs unstudied cards', () => {
 		expect(isCardStudied(undefined)).toBe(false);

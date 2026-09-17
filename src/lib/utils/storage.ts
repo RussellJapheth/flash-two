@@ -1,3 +1,11 @@
+/**
+ * Local persistence layer.
+ *
+ * IndexedDB holds progress, saved words, custom decks, and offline pack data;
+ * localStorage holds lightweight settings (username, streak freezes, recent
+ * packs). Also houses schema migrations for the Chinese vocabulary packs and
+ * the streak-freeze calendar.
+ */
 import type {
 	WordRecord,
 	WordProgress,
@@ -48,7 +56,7 @@ export function saveStreakFreezeData(data: StreakFreezeData): void {
 	}
 }
 
-export interface RawPackData {
+interface RawPackData {
 	title?: string;
 	words?: WordRecord[];
 }
@@ -65,7 +73,7 @@ const frenchPacks = import.meta.glob<WordRecord[] | RawPackData>('../data/french
 
 let dbPromise: Promise<IDBDatabase> | null = null;
 
-export function getDB(): Promise<IDBDatabase> {
+function getDB(): Promise<IDBDatabase> {
 	if (typeof window === 'undefined') {
 		return Promise.reject(new Error('IndexedDB is only available in browser'));
 	}
@@ -98,8 +106,8 @@ export function getDB(): Promise<IDBDatabase> {
 	return dbPromise;
 }
 
-export const CHINESE_VOCAB_SCHEMA_VERSION = 'v2_hsk_curriculum';
-export const CHINESE_MIGRATION_KEY = 'flashcards_chinese_vocab_version';
+const CHINESE_VOCAB_SCHEMA_VERSION = 'v2_hsk_curriculum';
+const CHINESE_MIGRATION_KEY = 'flashcards_chinese_vocab_version';
 
 export function isChinesePack1to9Key(key: string): boolean {
 	return /^(?:chinese-)?(?:week-|pack-)?([1-9]):\d+$/i.test(key);
@@ -125,7 +133,7 @@ export function filterOutPack1to9Saved(savedList: SavedWord[]): SavedWord[] {
 	return savedList.filter((item) => !isChinesePack1to9Saved(item.weekId));
 }
 
-export async function executeChinesePacksMigration(
+async function executeChinesePacksMigration(
 	db: IDBDatabase
 ): Promise<{ purgedProgress: number; purgedSaved: number }> {
 	let purgedProgress = 0;

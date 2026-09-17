@@ -1,5 +1,8 @@
 /**
  * Speech Recognition and Audio Evaluation Utility for Story Mode
+ *
+ * Wraps the browser Web Speech API (webkit prefixed fallbacks) and scores the
+ * transcribed utterance against a target using fuzzy text comparison.
  */
 
 export function isSpeechRecognitionSupported(): boolean {
@@ -36,7 +39,7 @@ export function normalizeText(text: string, lang: 'chinese' | 'french'): string 
 /**
  * Computes Levenshtein edit distance between two strings
  */
-export function levenshteinDistance(a: string, b: string): number {
+function levenshteinDistance(a: string, b: string): number {
 	const m = a.length;
 	const n = b.length;
 	if (m === 0) return n;

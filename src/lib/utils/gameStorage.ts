@@ -1,3 +1,9 @@
+/**
+ * Game score persistence and leaderboard sync.
+ *
+ * Scores are written to localStorage immediately, then flushed to the remote
+ * leaderboard API when the user is authenticated and back online.
+ */
 import { getSavedUsername, isLeaderboardDisabled } from './storage';
 import { API_BASE_URL } from './apiBase';
 
@@ -114,7 +120,7 @@ export function getLocalGameScores(gameId?: string): GameScoreRecord[] {
 	}
 }
 
-export function saveLocalGameScore(
+function saveLocalGameScore(
 	record: Omit<GameScoreRecord, 'id' | 'playedAt' | 'username'> & { username?: string }
 ): GameScoreRecord {
 	const user = record.username || getSavedUsername() || 'Guest';

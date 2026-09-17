@@ -1,9 +1,15 @@
+/**
+ * XP, levels, and leaderboard logic.
+ *
+ * Awarded points feed a local XP ledger that is bucketed into calendar
+ * weekly/monthly leaderboard windows and synced to the remote API.
+ */
 import type { StudyRating, UserXPData, XPLeaderboardEntry, XPStats } from '$lib/types';
 import { getSavedUsername, isLeaderboardDisabled } from './storage';
 import { API_BASE_URL } from './apiBase';
 
 const XP_STORAGE_KEY = 'flashcards_user_xp';
-export const XP_LEADERBOARD_API = `${API_BASE_URL}/xp-leaderboard`;
+const XP_LEADERBOARD_API = `${API_BASE_URL}/xp-leaderboard`;
 
 export function isCloudSyncEnabled(): boolean {
 	const user = getSavedUsername();
@@ -386,13 +392,6 @@ export function addXP(amount: number): UserXPData {
 }
 
 /**
- * Deprecated historical migration helper. Returns current user XP directly.
- */
-export function migrateHistoricalProgressXP(): UserXPData {
-	return getLocalUserXPData();
-}
-
-/**
  * Deduplicates and updates leaderboard entries (1 entry per user, keeping highest scores)
  */
 export function deduplicateXPLeaderboard(
@@ -436,7 +435,7 @@ export function deduplicateXPLeaderboard(
 /**
  * Creates the local user's XP leaderboard entry
  */
-export function createLocalUserLeaderboardEntry(): XPLeaderboardEntry | null {
+function createLocalUserLeaderboardEntry(): XPLeaderboardEntry | null {
 	if (!isCloudSyncEnabled()) return null;
 	const user = getSavedUsername().trim();
 	if (!user) return null;

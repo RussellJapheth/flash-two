@@ -1,9 +1,9 @@
 import type { StudyRating, UserXPData, XPLeaderboardEntry, XPStats } from '$lib/types';
 import { getSavedUsername, isLeaderboardDisabled } from './storage';
+import { API_BASE_URL } from './apiBase';
 
 const XP_STORAGE_KEY = 'flashcards_user_xp';
-export const XP_LEADERBOARD_API =
-	'https://json-drive.thespot.workers.dev/api/flashcards/xp-leaderboard';
+export const XP_LEADERBOARD_API = `${API_BASE_URL}/xp-leaderboard`;
 
 export function isCloudSyncEnabled(): boolean {
 	const user = getSavedUsername();

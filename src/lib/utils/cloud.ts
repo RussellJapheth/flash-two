@@ -27,8 +27,7 @@ import {
 	CURRENT_XP_VERSION
 } from './xp';
 import { syncPendingGameScores } from './gameStorage';
-
-const API_BASE = 'https://json-drive.thespot.workers.dev/api/flashcards';
+import { API_BASE_URL } from './apiBase';
 
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 let lastPullTime = 0;
@@ -64,7 +63,7 @@ export async function checkRemoteUser(username: string): Promise<RemoteUserSumma
 
 	try {
 		const cleanUser = username.trim().toLowerCase();
-		const response = await fetch(`${API_BASE}/users/${encodeURIComponent(cleanUser)}`, {
+		const response = await fetch(`${API_BASE_URL}/users/${encodeURIComponent(cleanUser)}`, {
 			headers: { Accept: 'application/json' }
 		});
 
@@ -107,7 +106,7 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 
 	try {
 		const cleanUser = username.trim().toLowerCase();
-		const response = await fetch(`${API_BASE}/users/${cleanUser}`, {
+		const response = await fetch(`${API_BASE_URL}/users/${cleanUser}`, {
 			headers: { Accept: 'application/json' }
 		});
 
@@ -376,7 +375,7 @@ export async function pushData(username?: string): Promise<boolean> {
 			streakFreezeData
 		};
 
-		const res = await fetch(`${API_BASE}/users/${encodeURIComponent(user)}`, {
+		const res = await fetch(`${API_BASE_URL}/users/${encodeURIComponent(user)}`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(payload)
@@ -392,7 +391,7 @@ export async function pushData(username?: string): Promise<boolean> {
 
 		// Also ensure username is in the users list
 		try {
-			const usersRes = await fetch(`${API_BASE}/users`);
+			const usersRes = await fetch(`${API_BASE_URL}/users`);
 			let currentUsers: string[] = [];
 			if (usersRes.ok) {
 				currentUsers = await usersRes.json();
@@ -400,7 +399,7 @@ export async function pushData(username?: string): Promise<boolean> {
 			if (!Array.isArray(currentUsers)) currentUsers = [];
 			if (!currentUsers.includes(user)) {
 				currentUsers.push(user);
-				await fetch(`${API_BASE}/users`, {
+				await fetch(`${API_BASE_URL}/users`, {
 					method: 'PUT',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(currentUsers)

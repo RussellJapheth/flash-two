@@ -1,4 +1,5 @@
 import { getSavedUsername, isLeaderboardDisabled } from './storage';
+import { API_BASE_URL } from './apiBase';
 
 export interface GameScoreRecord {
 	id: string;
@@ -15,7 +16,7 @@ export interface GameScoreRecord {
 }
 
 const GAME_SCORES_KEY = 'flashcards_game_scores';
-const LEADERBOARD_API = 'https://json-drive.thespot.workers.dev/api/flashcards/leaderboard';
+const LEADERBOARD_API = `${API_BASE_URL}/leaderboard`;
 
 export function isCloudSyncEnabled(): boolean {
 	const user = getSavedUsername();

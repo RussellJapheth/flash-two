@@ -6,6 +6,7 @@
 declare const self: ServiceWorkerGlobalScope;
 
 import { build, files, version } from '$service-worker';
+import { API_ORIGIN } from '$lib/utils/apiBase';
 
 // Unique cache name for this deployment version
 const CACHE = `flashcards-cache-${version}`;
@@ -43,7 +44,7 @@ self.addEventListener('fetch', (event) => {
 	if (event.request.method !== 'GET') return;
 
 	// Skip external API sync requests from SW caching
-	if (event.request.url.includes('json-drive.thespot.workers.dev')) {
+	if (API_ORIGIN && event.request.url.startsWith(API_ORIGIN)) {
 		return;
 	}
 

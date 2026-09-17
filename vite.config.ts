@@ -37,6 +37,7 @@ export default defineConfig({
 				test: {
 					name: 'server',
 					environment: 'node',
+					env: { PUBLIC_API_BASE_URL: 'http://localhost.test' },
 					include: ['src/**/*.{test,spec}.{js,ts}'],
 					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
 				}

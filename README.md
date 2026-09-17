@@ -1,42 +1,78 @@
-# sv
+# FlashCards — Smart Spaced Repetition
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A modern, offline-first spaced repetition flashcards app for learning languages, built with Svelte 5. Flashcards are stored locally in the browser and synced to a small JSON API in the cloud, so the app works even without a connection.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Spaced repetition** with an SM-2-inspired scheduler (`src/lib/utils/srs.ts`), per-deck review queues, and due-date spread
+- **Offline-first**: study data lives in the browser (IndexedDB via `storage.ts`), with a service worker for offline caching and debounced background sync
+- **Chinese learning focus**: HSK-aligned decks with pinyin, tones, tone-sandhi detection, and cloze (sentence-fill) practice with multiple accepted answers
+- **Speech practice**: Web Speech API recognition with accuracy evaluation (`src/lib/utils/speech.ts`)
+- **Games**: Match Blitz and Number Rush arcade modes with combo scoring, heartbeat pressure, and shields
+- **Progress system**: XP, levels, streaks (with streak freezes), milestone celebrations, and weekly/monthly leaderboards
+- **Custom decks**: import from CSV, edit via a spreadsheet-style modal, or build decks inline
+- **PWA-ready**: installable manifest, icons, and a service worker for near-instant reloads
 
-```sh
-# create a new project
-npx sv create my-app
-```
+## Tech stack
 
-To recreate this project with the same configuration:
+- [SvelteKit](https://svelte.dev/docs/kit) (Svelte 5 with runes) as the app framework
+- [TypeScript](https://www.typescriptlang.org/) throughout
+- [Tailwind CSS](https://tailwindcss.com/) v4 for styling
+- [Vite](https://vitejs.dev/) with [Vitest](https://vitest.dev/) (unit + browser component tests) and [Playwright](https://playwright.dev/) (e2e)
+- Deployed as a static build on [Netlify](https://www.netlify.com/) (`@sveltejs/adapter-netlify`)
 
-```sh
-# recreate this project
-pnpm x sv@0.17.0 create --template minimal --types ts --add prettier eslint vitest="usages:unit,component" playwright tailwindcss="plugins:typography,forms" sveltekit-adapter="adapter:static" ai-tools="ide:gemini+tools:mcp,svelte-code-writer,svelte-core-bestpractices,svelte-file-editor+mcpSetup:remote" --install pnpm flash-two
-```
+## Getting started
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
+Prerequisites: [Node.js](https://nodejs.org/) and [pnpm](https://pnpm.io/).
 
 ```sh
-npm run build
+# install dependencies
+pnpm install
+
+# configure the sync API origin
+cp .env.example .env
 ```
 
-You can preview the production build with `npm run preview`.
+Set `PUBLIC_API_BASE_URL` in `.env` to the origin of a `json-drive`-style flashcards API. It is read at build time and baked into the client bundle.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```sh
+# run the dev server at localhost:5190
+pnpm dev
+```
+
+## Scripts
+
+```sh
+pnpm dev          # dev server (localhost:5190)
+pnpm build        # production build (output in /build)
+pnpm preview      # preview the production build
+pnpm check        # svelte-check type checking
+pnpm lint         # prettier + eslint
+pnpm format       # prettier --write
+pnpm test:unit    # vitest unit/component suite
+pnpm test:e2e     # playwright e2e suite
+pnpm test         # unit + e2e
+```
+
+## Environment variables
+
+| Variable               | Required | Purpose                                            |
+| ---------------------- | -------- | -------------------------------------------------- |
+| `PUBLIC_API_BASE_URL`  | Yes      | Origin of the flashcards sync API, no trailing slash |
+
+## Architecture
+
+The app is a client-side SvelteKit application. Study progress, saved words, deck state, streaks, and game scores are persisted in the browser (IndexedDB/localStorage) and synchronized to the JSON API at `PUBLIC_API_BASE_URL/api/flashcards` through `src/lib/utils/cloud.ts` and `gameStorage.ts`. A migration layer (`src/lib/utils/storage.ts`) keeps local data forward-compatible across schema changes.
+
+Ledger of key modules:
+
+- `src/lib/utils/srs.ts` — spaced repetition scheduling
+- `src/lib/utils/cloud.ts` — debounced sync with the remote API
+- `src/lib/utils/storage.ts` — IndexedDB persistence, migrations, offline packs
+- `src/lib/utils/xp.ts` — XP, levels, and leaderboard bucketing
+- `src/lib/utils/speech.ts` — speech recognition and accuracy scoring
+- `src/lib/data` — bundled Chinese deck content
+
+## License
+
+[AGPL-3.0](LICENSE). Free software: you may redistribute and modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3 (or, at your option, any later version).

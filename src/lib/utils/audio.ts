@@ -298,3 +298,107 @@ export function speakWord(
 }
 
 export const speakText = speakWord;
+
+let mediaRecorder: MediaRecorder | null = null;
+let recordedChunks: Blob[] = [];
+let activeStream: MediaStream | null = null;
+
+/**
+ * Checks whether user audio recording via MediaRecorder is supported
+ */
+export function isAudioRecordingSupported(): boolean {
+	return (
+		typeof window !== 'undefined' &&
+		typeof navigator !== 'undefined' &&
+		Boolean(navigator.mediaDevices?.getUserMedia) &&
+		typeof MediaRecorder !== 'undefined'
+	);
+}
+
+/**
+ * Starts recording user microphone audio.
+ */
+export async function startUserVoiceRecording(): Promise<boolean> {
+	if (!isAudioRecordingSupported()) return false;
+	try {
+		stopUserVoiceRecording();
+		activeStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+		recordedChunks = [];
+		mediaRecorder = new MediaRecorder(activeStream);
+		mediaRecorder.ondataavailable = (e) => {
+			if (e.data && e.data.size > 0) {
+				recordedChunks.push(e.data);
+			}
+		};
+		mediaRecorder.start(100);
+		return true;
+	} catch (err) {
+		console.warn('Microphone recording error:', err);
+		return false;
+	}
+}
+
+/**
+ * Stops user recording and returns a playable Object URL.
+ */
+export function stopUserVoiceRecording(): Promise<string | null> {
+	return new Promise((resolve) => {
+		if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+			if (activeStream) {
+				activeStream.getTracks().forEach((t) => t.stop());
+				activeStream = null;
+			}
+			resolve(null);
+			return;
+		}
+
+		mediaRecorder.onstop = () => {
+			try {
+				const blob = new Blob(recordedChunks, { type: 'audio/webm;codecs=opus' });
+				const url = blob.size > 0 ? URL.createObjectURL(blob) : null;
+				if (activeStream) {
+					activeStream.getTracks().forEach((t) => t.stop());
+					activeStream = null;
+				}
+				mediaRecorder = null;
+				recordedChunks = [];
+				resolve(url);
+			} catch {
+				resolve(null);
+			}
+		};
+
+		try {
+			mediaRecorder.stop();
+		} catch {
+			resolve(null);
+		}
+	});
+}
+
+let activePlaybackAudio: HTMLAudioElement | null = null;
+
+/**
+ * Plays back a recorded audio URL.
+ */
+export function playUserAudio(url: string): Promise<void> {
+	return new Promise((resolve) => {
+		if (!url || typeof window === 'undefined') {
+			resolve();
+			return;
+		}
+		if (activePlaybackAudio) {
+			activePlaybackAudio.pause();
+			activePlaybackAudio = null;
+		}
+		const audio = new Audio(url);
+		activePlaybackAudio = audio;
+		const done = () => {
+			activePlaybackAudio = null;
+			resolve();
+		};
+		audio.onended = done;
+		audio.onerror = done;
+		audio.play().catch(() => done());
+	});
+}

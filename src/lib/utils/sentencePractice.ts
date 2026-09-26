@@ -232,3 +232,65 @@ export function shuffleArray<T>(input: T[]): T[] {
 export function renderClozeSentence(sentence: string, placeholder = '[ ______ ]'): string {
 	return sentence.includes(BLANK_TOKEN) ? sentence.split(BLANK_TOKEN).join(placeholder) : sentence;
 }
+
+export interface SentenceChunk {
+	text: string;
+	pinyin?: string;
+	isFullSentence: boolean;
+}
+
+/**
+ * Splits a full sentence into progressive speaking chunks for repeat-after-me practice.
+ * Breaks clauses naturally on punctuation (，, 、 ; ! ? 。 .).
+ * The final chunk is always marked with isFullSentence: true as the mastery challenge.
+ */
+export function chunkSentence(
+	fullSentence: string,
+	pinyin?: string,
+	lang: 'chinese' | 'french' = 'chinese'
+): SentenceChunk[] {
+	const cleaned = fullSentence.trim();
+	if (!cleaned) return [];
+
+	// Extract clause segments by punctuation delimiters while preserving the text
+	const delimiterRegex = lang === 'chinese' ? /([，、；;！!？?。.]+)/g : /(\s*[,;:!?.—–]+\s*)/g;
+	const parts = cleaned.split(delimiterRegex);
+
+	const segments: string[] = [];
+	for (let i = 0; i < parts.length; i += 2) {
+		const clause = parts[i]?.trim();
+		const delimiter = parts[i + 1] || '';
+		if (clause) {
+			const formatted = (clause + delimiter).trim();
+			if (formatted) segments.push(formatted);
+		} else if (delimiter && segments.length > 0) {
+			segments[segments.length - 1] = (segments[segments.length - 1] + delimiter).trim();
+		}
+	}
+
+	// If no punctuation split resulted in multiple segments, check if clause is long
+	const clauses = segments.length > 0 ? segments : [cleaned];
+
+	const chunks: SentenceChunk[] = [];
+	for (const cl of clauses) {
+		chunks.push({
+			text: cl,
+			isFullSentence: false
+		});
+	}
+
+	// If we have 2 or more distinct sub-clauses, append the full sentence as the final challenge
+	if (chunks.length > 1) {
+		chunks.push({
+			text: cleaned,
+			pinyin: pinyin?.trim(),
+			isFullSentence: true
+		});
+	} else if (chunks.length === 1) {
+		// Only one chunk exists, mark it as full sentence
+		chunks[0].isFullSentence = true;
+		chunks[0].pinyin = pinyin?.trim();
+	}
+
+	return chunks;
+}

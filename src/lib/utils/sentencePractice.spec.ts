@@ -5,6 +5,7 @@ import {
 	parseExampleSentence,
 	renderClozeSentence,
 	shuffleArray,
+	chunkSentence,
 	BLANK_TOKEN
 } from './sentencePractice';
 import type { WordRecord } from '$lib/types';
@@ -312,5 +313,44 @@ describe('Data integrity: every built-in card is practiceable', () => {
 			}
 		}
 		expect(cardsChecked).toBeGreaterThan(8);
+	});
+});
+
+describe('chunkSentence', () => {
+	it('returns empty array for empty sentence', () => {
+		expect(chunkSentence('')).toEqual([]);
+		expect(chunkSentence('   ')).toEqual([]);
+	});
+
+	it('breaks Chinese compound sentences on punctuation and appends full challenge', () => {
+		const chunks = chunkSentence(
+			'你好！很高兴认识你。',
+			'Nǐ hǎo! Hěn gāoxìng rènshí nǐ.',
+			'chinese'
+		);
+		expect(chunks.length).toBe(3);
+		expect(chunks[0].text).toBe('你好！');
+		expect(chunks[0].isFullSentence).toBe(false);
+		expect(chunks[1].text).toBe('很高兴认识你。');
+		expect(chunks[1].isFullSentence).toBe(false);
+		expect(chunks[2].text).toBe('你好！很高兴认识你。');
+		expect(chunks[2].isFullSentence).toBe(true);
+		expect(chunks[2].pinyin).toBe('Nǐ hǎo! Hěn gāoxìng rènshí nǐ.');
+	});
+
+	it('handles single-clause sentences without duplication', () => {
+		const chunks = chunkSentence('这是一本书。', 'zhè shì yì běn shū.', 'chinese');
+		expect(chunks.length).toBe(1);
+		expect(chunks[0].text).toBe('这是一本书。');
+		expect(chunks[0].isFullSentence).toBe(true);
+	});
+
+	it('breaks French sentences on comma or semicolon and appends full challenge', () => {
+		const chunks = chunkSentence('Bonjour, comment allez-vous ?', undefined, 'french');
+		expect(chunks.length).toBe(3);
+		expect(chunks[0].text).toBe('Bonjour,');
+		expect(chunks[1].text).toBe('comment allez-vous ?');
+		expect(chunks[2].text).toBe('Bonjour, comment allez-vous ?');
+		expect(chunks[2].isFullSentence).toBe(true);
 	});
 });

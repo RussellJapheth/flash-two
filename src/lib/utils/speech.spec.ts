@@ -61,4 +61,22 @@ describe('Speech Evaluation Utilities', () => {
 		expect(stripPinyinTones('nǐ hǎo')).toBe('nihao');
 		expect(stripPinyinTones('xiāngcài')).toBe('xiangcai');
 	});
+
+	it('handles filler words using sliding window substring similarity', () => {
+		const res = evaluateSpeechAccuracy(
+			'呃 请不要放香菜 谢谢',
+			'请不要放香菜',
+			'chinese',
+			'Qǐng bù yào fàng xiāngcài',
+			['香菜']
+		);
+		expect(res.passed).toBe(true);
+		expect(res.score).toBeGreaterThanOrEqual(0.65);
+	});
+
+	it('evaluates pinyin transcription fallback tolerance', () => {
+		const res = evaluateSpeechAccuracy('ni hao', '你好', 'chinese', 'nǐ hǎo');
+		expect(res.passed).toBe(true);
+		expect(res.score).toBe(1.0);
+	});
 });

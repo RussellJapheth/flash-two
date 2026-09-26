@@ -86,6 +86,35 @@ export function stripPinyinTones(pinyinStr: string): string {
 		.replace(/[^a-z]/g, '');
 }
 
+/**
+ * Calculates the best sub-sequence similarity between a spoken text and expected text.
+ * Helps when the speech engine adds extra filler words at the beginning or end.
+ */
+export function calculateBestSubstringSimilarity(spoken: string, expected: string): number {
+	if (!spoken || !expected) return 0;
+	if (spoken.includes(expected) || expected.includes(spoken)) {
+		return Math.min(spoken.length, expected.length) / Math.max(spoken.length, expected.length);
+	}
+
+	const baseSimilarity = calculateSimilarity(spoken, expected);
+	if (spoken.length <= expected.length) {
+		return baseSimilarity;
+	}
+
+	// Spoken is longer than expected (e.g. filler words). Slide window of expected.length
+	let maxSim = baseSimilarity;
+	const windowSize = expected.length;
+	const step = 1;
+	for (let i = 0; i <= spoken.length - windowSize; i += step) {
+		const sub = spoken.slice(i, i + windowSize);
+		const sim = calculateSimilarity(sub, expected);
+		if (sim > maxSim) {
+			maxSim = sim;
+		}
+	}
+	return maxSim;
+}
+
 export interface SpeechEvaluationResult {
 	passed: boolean;
 	score: number; // 0.0 to 1.0
@@ -131,10 +160,25 @@ export function evaluateSpeechAccuracy(
 		};
 	}
 
-	// 2. Similarity calculation
-	const textSimilarity = calculateSimilarity(normSpoken, normExpected);
+	// 2. Direct string & substring similarity
+	const directSimilarity = calculateSimilarity(normSpoken, normExpected);
+	const substringSimilarity = calculateBestSubstringSimilarity(normSpoken, normExpected);
+	let textSimilarity = Math.max(directSimilarity, substringSimilarity);
 
-	// 3. Keyword matching check
+	// 3. Pinyin / Phonetic tone-tolerant matching for Chinese
+	if (lang === 'chinese' && expectedPinyin) {
+		const cleanExpectedPinyin = stripPinyinTones(expectedPinyin);
+		// If spoken text was transcribed directly into pinyin or english letters
+		if (/^[a-zA-Z\s]+$/.test(spokenText.trim())) {
+			const cleanSpokenPinyin = stripPinyinTones(spokenText);
+			const pinyinSim = calculateSimilarity(cleanSpokenPinyin, cleanExpectedPinyin);
+			if (pinyinSim > textSimilarity) {
+				textSimilarity = Math.max(textSimilarity, pinyinSim);
+			}
+		}
+	}
+
+	// 4. Keyword matching check
 	const matchedKeywords: string[] = [];
 	const missingKeywords: string[] = [];
 

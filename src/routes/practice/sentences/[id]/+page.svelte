@@ -9,10 +9,20 @@
 		buildClozeOptions,
 		renderClozeSentence,
 		shuffleArray,
+		chunkSentence,
 		type SentenceExample,
-		type ClozeOption
+		type ClozeOption,
+		type SentenceChunk
 	} from '$lib/utils/sentencePractice';
-	import { speakText, playSound, stopSpeech } from '$lib/utils/audio';
+	import {
+		speakText,
+		playSound,
+		stopSpeech,
+		isAudioRecordingSupported,
+		startUserVoiceRecording,
+		stopUserVoiceRecording,
+		playUserAudio
+	} from '$lib/utils/audio';
 	import {
 		isSpeechRecognitionSupported,
 		startSpeechRecognition,
@@ -33,7 +43,11 @@
 		RotateCcw,
 		Languages,
 		MessagesSquare,
-		CheckCheck
+		CheckCheck,
+		Repeat,
+		Play,
+		Square,
+		Turtle
 	} from 'lucide-svelte';
 
 	interface SentenceItem {
@@ -42,6 +56,9 @@
 		cloze: SentenceExample;
 		options: ClozeOption[];
 	}
+
+	type PracticeMode = 'cloze' | 'repeat';
+	let practiceMode = $state<PracticeMode>('cloze');
 
 	let deckId = $derived(page.params.id || '');
 	let deckTitle = $state('Sentence Practice');
@@ -54,7 +71,30 @@
 	let selectedOption = $state<string | null>(null);
 	let isClozeCorrect = $state<boolean | null>(null);
 
-	let hasAnswered = $derived(isClozeCorrect !== null);
+	let currentItem = $derived(items[currentIndex]);
+	let progressCount = $derived(items.length > 0 ? currentIndex + 1 : 0);
+
+	// Repeat-after-me progressive chunk state
+	let currentChunks = $derived<SentenceChunk[]>(
+		currentItem
+			? chunkSentence(
+					currentItem.cloze.fullSentence,
+					currentItem.cloze.pinyin || currentItem.cloze.targetPinyin,
+					deckLanguage
+				)
+			: []
+	);
+	let currentChunkIndex = $state(0);
+	let activeChunk = $derived(currentChunks[currentChunkIndex] || null);
+	let completedChunkIndices = $state<number[]>([]);
+	let isRepeatComplete = $derived(
+		currentChunks.length > 0 && completedChunkIndices.length >= currentChunks.length
+	);
+	let isUserRecording = $state(false);
+	let recordedAudioUrl = $state<string | null>(null);
+	let isAudioRecordingAvail = $state(false);
+
+	let hasAnswered = $derived(practiceMode === 'cloze' ? isClozeCorrect !== null : isRepeatComplete);
 
 	let sessionCorrect = $state(0);
 	let sessionWrong = $state(0);
@@ -67,8 +107,6 @@
 	let speechResult = $state<SpeechEvaluationResult | null>(null);
 	let recognizerHandle: SpeechRecognizerHandle | null = null;
 
-	let currentItem = $derived(items[currentIndex]);
-	let progressCount = $derived(items.length > 0 ? currentIndex + 1 : 0);
 	let sessionAccuracy = $derived(
 		sessionCorrect + sessionWrong > 0
 			? Math.round((sessionCorrect / (sessionCorrect + sessionWrong)) * 100)
@@ -144,6 +182,13 @@
 		stopListening();
 		speechResult = null;
 		speechTranscript = '';
+		currentChunkIndex = 0;
+		completedChunkIndices = [];
+		if (recordedAudioUrl) {
+			URL.revokeObjectURL(recordedAudioUrl);
+			recordedAudioUrl = null;
+		}
+		isUserRecording = false;
 	}
 
 	function handleSelectOption(option: ClozeOption) {
@@ -201,7 +246,7 @@
 		return 'border-slate-200/60 bg-white/60 text-slate-400 opacity-60';
 	}
 
-	function startListening() {
+	function startListening(targetText?: string, targetPinyin?: string) {
 		if (!currentItem) return;
 		stopListening();
 		speechTranscript = '';
@@ -218,15 +263,18 @@
 			},
 			onResult: (transcript, isFinal) => {
 				speechTranscript = transcript;
-				if (isFinal || transcript.trim().length >= currentItem.cloze.targetWord.trim().length) {
-					evaluateSpeech(transcript);
+				const target = targetText || currentItem?.cloze.fullSentence || '';
+				if (isFinal || transcript.trim().length >= target.trim().length) {
+					evaluateSpeech(transcript, targetText, targetPinyin);
 				}
 			},
 			onError: () => {
 				stopListening();
 			},
 			onEnd: () => {
-				if (isListening && speechTranscript) evaluateSpeech(speechTranscript);
+				if (isListening && speechTranscript) {
+					evaluateSpeech(speechTranscript, targetText, targetPinyin);
+				}
 				isListening = false;
 			}
 		});
@@ -240,38 +288,88 @@
 		isListening = false;
 	}
 
-	function evaluateSpeech(transcript: string) {
+	function evaluateSpeech(transcript: string, targetText?: string, targetPinyin?: string) {
 		if (!currentItem) return;
-		const result = evaluateSpeechAccuracy(
-			transcript,
-			currentItem.cloze.fullSentence,
-			deckLanguage,
-			currentItem.cloze.pinyin || currentItem.cloze.targetPinyin,
-			[currentItem.cloze.targetWord]
-		);
+
+		const expected = targetText || currentItem.cloze.fullSentence;
+		const pinyin = targetPinyin || currentItem.cloze.pinyin || currentItem.cloze.targetPinyin;
+		const keywords = practiceMode === 'cloze' ? [currentItem.cloze.targetWord] : undefined;
+
+		const result = evaluateSpeechAccuracy(transcript, expected, deckLanguage, pinyin, keywords);
 		speechResult = result;
 		stopListening();
+
 		if (result.passed) {
 			playSound('correct');
+
+			if (practiceMode === 'repeat' && activeChunk) {
+				if (!completedChunkIndices.includes(currentChunkIndex)) {
+					completedChunkIndices = [...completedChunkIndices, currentChunkIndex];
+				}
+
+				// If not the last chunk, automatically advance chunk or celebrate completion
+				if (currentChunkIndex + 1 < currentChunks.length) {
+					setTimeout(() => {
+						currentChunkIndex++;
+						speechResult = null;
+						speechTranscript = '';
+					}, 1200);
+				} else {
+					// All chunks + full sentence completed!
+					sessionCorrect++;
+					const earned = calculateReviewXP('all', 'easy');
+					addXP(earned);
+					sessionEarnedXP += earned;
+				}
+			}
 		} else {
 			playSound('wrong');
+			if (practiceMode === 'repeat') {
+				sessionWrong++;
+			}
 		}
 	}
 
-	function handleReplayAudio() {
-		if (currentItem) {
-			speakText(currentItem.cloze.fullSentence, deckLanguage);
+	function handleReplayAudio(text?: string, rate = 0.8) {
+		if (!currentItem) return;
+		const toSpeak = text || currentItem.cloze.fullSentence;
+		speakText(toSpeak, deckLanguage, { rate });
+	}
+
+	async function toggleUserRecording() {
+		if (isUserRecording) {
+			isUserRecording = false;
+			const url = await stopUserVoiceRecording();
+			if (url) {
+				if (recordedAudioUrl) URL.revokeObjectURL(recordedAudioUrl);
+				recordedAudioUrl = url;
+			}
+		} else {
+			const started = await startUserVoiceRecording();
+			if (started) {
+				isUserRecording = true;
+			}
+		}
+	}
+
+	function playRecordedVoice() {
+		if (recordedAudioUrl) {
+			playUserAudio(recordedAudioUrl);
 		}
 	}
 
 	onMount(() => {
 		isSpeechSupported = isSpeechRecognitionSupported();
+		isAudioRecordingAvail = isAudioRecordingSupported();
 		loadSession();
 	});
 
 	onDestroy(() => {
 		stopListening();
 		stopSpeech();
+		if (recordedAudioUrl) {
+			URL.revokeObjectURL(recordedAudioUrl);
+		}
 	});
 </script>
 
@@ -363,11 +461,11 @@
 				<div class="grid grid-cols-2 gap-3 border-y border-slate-100 py-3">
 					<div class="rounded-2xl border border-emerald-100 bg-emerald-50 p-3 text-center">
 						<p class="font-headline text-xl font-black text-emerald-700">{sessionCorrect}</p>
-						<p class="text-[11px] font-bold text-emerald-600">Correct First Try</p>
+						<p class="text-[11px] font-bold text-emerald-600">Correct</p>
 					</div>
 					<div class="rounded-2xl border border-rose-100 bg-rose-50 p-3 text-center">
 						<p class="font-headline text-xl font-black text-rose-700">{sessionWrong}</p>
-						<p class="text-[11px] font-bold text-rose-600">Needed Extra Tries</p>
+						<p class="text-[11px] font-bold text-rose-600">Extra Tries</p>
 					</div>
 				</div>
 
@@ -389,155 +487,377 @@
 			</div>
 		{:else if currentItem}
 			<div class="space-y-4">
+				<!-- Segmented Mode Control adhering to design.md -->
 				<div
-					class="rounded-3xl border border-white/60 bg-white/50 p-5 shadow-xl shadow-indigo-600/5 backdrop-blur-xl"
+					class="flex rounded-2xl border border-slate-200/80 bg-slate-100/90 p-1 backdrop-blur-xs"
+					role="tablist"
+					aria-label="Practice Mode"
 				>
-					<div class="flex items-center justify-between gap-2">
-						<span
-							class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50/90 px-2.5 py-1 font-headline text-[10px] font-bold tracking-wider text-indigo-700 uppercase backdrop-blur-xs"
-						>
-							<MessagesSquare size={11} strokeWidth={2.25} />
-							<span>Complete the sentence</span>
-						</span>
-
-						<div class="flex items-center gap-1">
-							{#if isSpeechSupported}
-								<button
-									type="button"
-									onclick={isListening ? stopListening : startListening}
-									title="Practice speaking this sentence"
-									aria-label="Practice speaking this sentence"
-									class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors active:scale-95 {isListening
-										? 'animate-pulse bg-rose-50 text-rose-600'
-										: 'bg-slate-100 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600'}"
-								>
-									<Mic size={15} strokeWidth={2.25} />
-								</button>
-							{/if}
-
-							<button
-								type="button"
-								onclick={handleReplayAudio}
-								title="Replay example audio"
-								aria-label="Replay example audio"
-								class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors hover:bg-indigo-50 hover:text-indigo-600 active:scale-95"
-							>
-								<Volume2 size={15} strokeWidth={2.25} />
-							</button>
-
-							{#if currentItem.cloze.translation}
-								<button
-									type="button"
-									onclick={() => (showTranslation = !showTranslation)}
-									class="flex h-8 cursor-pointer items-center gap-1 rounded-xl px-2 font-headline text-[10px] font-bold transition-colors active:scale-95 {showTranslation
-										? 'bg-indigo-600 text-white'
-										: 'bg-slate-100 text-slate-600 hover:bg-slate-200'}"
-									title="Toggle English Translation"
-								>
-									<Languages size={12} strokeWidth={2.25} />
-									<span>EN</span>
-								</button>
-							{/if}
-						</div>
-					</div>
-
-					<div class="mt-4 text-center">
-						<p
-							class="font-headline text-lg leading-snug font-extrabold text-slate-900 {deckLanguage ===
-							'chinese'
-								? 'font-hanzi'
-								: ''}"
-						>
-							{renderClozeSentence(
-								currentItem.cloze.displaySentence,
-								hasAnswered ? currentItem.cloze.targetWord : undefined
-							)}
-						</p>
-
-						{#if currentItem.cloze.pinyin}
-							<p class="mt-2 font-sans text-sm font-semibold tracking-wide text-indigo-500">
-								{renderClozeSentence(
-									currentItem.cloze.pinyin,
-									hasAnswered ? currentItem.cloze.targetPinyin : '[ ______ ]'
-								)}
-							</p>
-						{/if}
-
-						{#if showTranslation && currentItem.cloze.translation}
-							<p class="mt-1.5 font-sans text-xs leading-relaxed text-slate-400 italic">
-								"{currentItem.cloze.translation}"
-							</p>
-						{/if}
-					</div>
-
-					{#if speechResult}
-						<div
-							class="mt-4 rounded-2xl border p-3 text-xs font-bold {speechResult.passed
-								? 'border-emerald-100 bg-emerald-50 text-emerald-800'
-								: 'border-amber-100 bg-amber-50 text-amber-800'}"
-						>
-							<div class="flex items-center justify-between gap-2">
-								<div class="flex items-center gap-2">
-									{#if speechResult.passed}
-										<CheckCircle2 size={16} class="text-emerald-500" />
-									{:else}
-										<AlertCircle size={16} class="text-amber-500" />
-									{/if}
-									<span>{speechResult.feedback}</span>
-								</div>
-								<span class="rounded-full bg-white px-2 py-0.5 font-headline text-[11px] shadow-xs">
-									{Math.round(speechResult.score * 100)}%
-								</span>
-							</div>
-						</div>
-					{/if}
-
-					{#if speechTranscript && !speechResult}
-						<div class="mt-3 rounded-xl border border-slate-200/80 bg-slate-50 p-2.5 text-center">
-							<p class="font-sans text-[10px] text-slate-400">Heard:</p>
-							<p class="font-headline text-xs font-bold text-slate-900">"{speechTranscript}"</p>
-						</div>
-					{/if}
+					<button
+						type="button"
+						role="tab"
+						aria-selected={practiceMode === 'cloze'}
+						onclick={() => {
+							practiceMode = 'cloze';
+							resetItemState();
+						}}
+						class="flex-1 cursor-pointer rounded-xl py-2 text-center font-headline text-xs font-bold transition-all {practiceMode ===
+						'cloze'
+							? 'bg-white text-indigo-700 shadow-sm'
+							: 'text-slate-500 hover:text-slate-800'}"
+					>
+						Fill the Blank
+					</button>
+					<button
+						type="button"
+						role="tab"
+						aria-selected={practiceMode === 'repeat'}
+						onclick={() => {
+							practiceMode = 'repeat';
+							resetItemState();
+						}}
+						class="flex-1 cursor-pointer rounded-xl py-2 text-center font-headline text-xs font-bold transition-all {practiceMode ===
+						'repeat'
+							? 'bg-white text-indigo-700 shadow-sm'
+							: 'text-slate-500 hover:text-slate-800'}"
+					>
+						Repeat After Me
+					</button>
 				</div>
 
-				<div class="grid grid-cols-2 gap-2">
-					{#each currentItem.options as option (option.text)}
-						<button
-							type="button"
-							onclick={() => handleSelectOption(option)}
-							disabled={hasAnswered}
-							class="flex cursor-pointer flex-col items-center justify-center gap-0.5 rounded-2xl border px-3 py-3 text-center shadow-sm transition-all active:scale-[0.98] {getOptionClass(
-								option
-							)}"
-						>
+				{#if practiceMode === 'cloze'}
+					<!-- Existing Cloze Mode View -->
+					<div
+						class="rounded-3xl border border-white/60 bg-white/50 p-5 shadow-xl shadow-indigo-600/5 backdrop-blur-xl"
+					>
+						<div class="flex items-center justify-between gap-2">
 							<span
-								class="font-headline text-sm font-bold text-slate-900 {deckLanguage === 'chinese'
+								class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50/90 px-2.5 py-1 font-headline text-[10px] font-bold tracking-wider text-indigo-700 uppercase backdrop-blur-xs"
+							>
+								<MessagesSquare size={11} strokeWidth={2.25} />
+								<span>Complete the sentence</span>
+							</span>
+
+							<div class="flex items-center gap-1">
+								{#if isSpeechSupported}
+									<button
+										type="button"
+										onclick={() =>
+											isListening
+												? stopListening()
+												: startListening(
+														currentItem?.cloze.fullSentence,
+														currentItem?.cloze.pinyin || currentItem?.cloze.targetPinyin
+													)}
+										title="Practice speaking this sentence"
+										aria-label="Practice speaking this sentence"
+										class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl transition-colors active:scale-95 {isListening
+											? 'animate-pulse bg-rose-50 text-rose-600'
+											: 'bg-slate-100 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600'}"
+									>
+										<Mic size={15} strokeWidth={2.25} />
+									</button>
+								{/if}
+
+								<button
+									type="button"
+									onclick={() => handleReplayAudio()}
+									title="Replay example audio"
+									aria-label="Replay example audio"
+									class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors hover:bg-indigo-50 hover:text-indigo-600 active:scale-95"
+								>
+									<Volume2 size={15} strokeWidth={2.25} />
+								</button>
+
+								{#if currentItem.cloze.translation}
+									<button
+										type="button"
+										onclick={() => (showTranslation = !showTranslation)}
+										class="flex h-8 cursor-pointer items-center gap-1 rounded-xl px-2 font-headline text-[10px] font-bold transition-colors active:scale-95 {showTranslation
+											? 'bg-indigo-600 text-white'
+											: 'bg-slate-100 text-slate-600 hover:bg-slate-200'}"
+										title="Toggle English Translation"
+									>
+										<Languages size={12} strokeWidth={2.25} />
+										<span>EN</span>
+									</button>
+								{/if}
+							</div>
+						</div>
+
+						<div class="mt-4 text-center">
+							<p
+								class="font-headline text-lg leading-snug font-extrabold text-slate-900 {deckLanguage ===
+								'chinese'
 									? 'font-hanzi'
 									: ''}"
 							>
-								{option.text}
-							</span>
-							{#if option.pinyin}
-								<span class="font-sans text-[11px] font-semibold text-indigo-500">
-									{option.pinyin}
-								</span>
-							{/if}
-						</button>
-					{/each}
-				</div>
+								{renderClozeSentence(
+									currentItem.cloze.displaySentence,
+									hasAnswered ? currentItem.cloze.targetWord : undefined
+								)}
+							</p>
 
-				{#if isClozeCorrect !== null}
+							{#if currentItem.cloze.pinyin}
+								<p class="mt-2 font-sans text-sm font-semibold tracking-wide text-indigo-500">
+									{renderClozeSentence(
+										currentItem.cloze.pinyin,
+										hasAnswered ? currentItem.cloze.targetPinyin : '[ ______ ]'
+									)}
+								</p>
+							{/if}
+
+							{#if showTranslation && currentItem.cloze.translation}
+								<p class="mt-1.5 font-sans text-xs leading-relaxed text-slate-400 italic">
+									"{currentItem.cloze.translation}"
+								</p>
+							{/if}
+						</div>
+
+						{#if speechResult}
+							<div
+								class="mt-4 rounded-2xl border p-3 text-xs font-bold {speechResult.passed
+									? 'border-emerald-100 bg-emerald-50 text-emerald-800'
+									: 'border-amber-100 bg-amber-50 text-amber-800'}"
+							>
+								<div class="flex items-center justify-between gap-2">
+									<div class="flex items-center gap-2">
+										{#if speechResult.passed}
+											<CheckCircle2 size={16} class="text-emerald-500" />
+										{:else}
+											<AlertCircle size={16} class="text-amber-500" />
+										{/if}
+										<span>{speechResult.feedback}</span>
+									</div>
+									<span
+										class="rounded-full bg-white px-2 py-0.5 font-headline text-[11px] shadow-xs"
+									>
+										{Math.round(speechResult.score * 100)}%
+									</span>
+								</div>
+							</div>
+						{/if}
+
+						{#if speechTranscript && !speechResult}
+							<div class="mt-3 rounded-xl border border-slate-200/80 bg-slate-50 p-2.5 text-center">
+								<p class="font-sans text-[10px] text-slate-400">Heard:</p>
+								<p class="font-headline text-xs font-bold text-slate-900">"{speechTranscript}"</p>
+							</div>
+						{/if}
+					</div>
+
+					<div class="grid grid-cols-2 gap-2">
+						{#each currentItem.options as option (option.text)}
+							<button
+								type="button"
+								onclick={() => handleSelectOption(option)}
+								disabled={hasAnswered}
+								class="flex cursor-pointer flex-col items-center justify-center gap-0.5 rounded-2xl border px-3 py-3 text-center shadow-sm transition-all active:scale-[0.98] {getOptionClass(
+									option
+								)}"
+							>
+								<span
+									class="font-headline text-sm font-bold text-slate-900 {deckLanguage === 'chinese'
+										? 'font-hanzi'
+										: ''}"
+								>
+									{option.text}
+								</span>
+								{#if option.pinyin}
+									<span class="font-sans text-[11px] font-semibold text-indigo-500">
+										{option.pinyin}
+									</span>
+								{/if}
+							</button>
+						{/each}
+					</div>
+
+					{#if isClozeCorrect !== null}
+						<div
+							class="flex items-center gap-2 rounded-xl p-3 text-xs font-bold {isClozeCorrect
+								? 'border border-emerald-100 bg-emerald-50 text-emerald-700'
+								: 'border border-rose-100 bg-rose-50 text-rose-700'}"
+						>
+							{#if isClozeCorrect}
+								<CheckCircle2 size={16} class="shrink-0" />
+								<span>Correct! You nailed this sentence.</span>
+							{:else}
+								<AlertCircle size={16} class="shrink-0" />
+								<span>That's incorrect.</span>
+							{/if}
+						</div>
+					{/if}
+				{:else}
+					<!-- Repeat After Me (Shadowing & Stepping) Mode View -->
 					<div
-						class="flex items-center gap-2 rounded-xl p-3 text-xs font-bold {isClozeCorrect
-							? 'border border-emerald-100 bg-emerald-50 text-emerald-700'
-							: 'border border-rose-100 bg-rose-50 text-rose-700'}"
+						class="rounded-3xl border border-white/60 bg-white/50 p-5 shadow-xl shadow-indigo-600/5 backdrop-blur-xl"
 					>
-						{#if isClozeCorrect}
-							<CheckCircle2 size={16} class="shrink-0" />
-							<span>Correct! You nailed this sentence.</span>
-						{:else}
-							<AlertCircle size={16} class="shrink-0" />
-							<span>That's incorrect.</span>
+						<!-- Chunk progress indicator chips -->
+						<div class="flex items-center justify-between gap-1 border-b border-slate-100 pb-3">
+							<span
+								class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50/90 px-2.5 py-1 font-headline text-[10px] font-bold tracking-wider text-indigo-700 uppercase"
+							>
+								<Repeat size={11} strokeWidth={2.25} />
+								<span>Repeat After Me</span>
+							</span>
+
+							<div class="flex flex-wrap items-center gap-1">
+								{#each currentChunks as chunk, idx (chunk.text + idx)}
+									<button
+										type="button"
+										onclick={() => {
+											currentChunkIndex = idx;
+											speechResult = null;
+											speechTranscript = '';
+										}}
+										class="flex cursor-pointer items-center gap-1 rounded-full px-2 py-0.5 font-headline text-[10px] font-bold transition-all {idx ===
+										currentChunkIndex
+											? 'border border-indigo-600 bg-indigo-600 text-white shadow-xs'
+											: completedChunkIndices.includes(idx)
+												? 'border border-emerald-200 bg-emerald-50 text-emerald-700'
+												: 'border border-slate-200 bg-white text-slate-400'}"
+									>
+										{#if completedChunkIndices.includes(idx)}
+											<Check size={10} strokeWidth={2.5} />
+										{/if}
+										<span>{chunk.isFullSentence ? 'Full Sentence' : `Part ${idx + 1}`}</span>
+									</button>
+								{/each}
+							</div>
+						</div>
+
+						<!-- Active Clause Display -->
+						{#if activeChunk}
+							<div class="mt-4 text-center">
+								<p
+									class="font-headline text-xl leading-snug font-extrabold text-slate-900 {deckLanguage ===
+									'chinese'
+										? 'font-hanzi'
+										: ''}"
+								>
+									{activeChunk.text}
+								</p>
+
+								{#if activeChunk.pinyin}
+									<p class="mt-2 font-sans text-sm font-semibold tracking-wide text-indigo-600">
+										{activeChunk.pinyin}
+									</p>
+								{/if}
+
+								{#if currentItem.cloze.translation}
+									<p class="mt-1.5 font-sans text-xs text-slate-400 italic">
+										"{currentItem.cloze.translation}"
+									</p>
+								{/if}
+							</div>
+
+							<!-- Audio Controls and Shadowing Actions -->
+							<div class="mt-5 flex flex-wrap items-center justify-center gap-2">
+								<!-- Listen standard speed -->
+								<button
+									type="button"
+									onclick={() => handleReplayAudio(activeChunk.text, 0.82)}
+									class="flex h-11 cursor-pointer items-center gap-2 rounded-2xl border border-indigo-100 bg-indigo-50 px-4 font-headline text-xs font-bold text-indigo-700 transition-colors hover:bg-indigo-100 active:scale-95"
+									title="Listen to native pronunciation"
+								>
+									<Volume2 size={16} strokeWidth={2.25} />
+									<span>Listen</span>
+								</button>
+
+								<!-- Listen slow speed -->
+								<button
+									type="button"
+									onclick={() => handleReplayAudio(activeChunk.text, 0.65)}
+									class="flex h-11 cursor-pointer items-center gap-1.5 rounded-2xl border border-slate-200/80 bg-white px-3 font-headline text-xs font-bold text-slate-600 transition-colors hover:bg-slate-50 active:scale-95"
+									title="Slow speed (0.65x)"
+								>
+									<Turtle size={14} strokeWidth={2.25} />
+									<span>Slow</span>
+								</button>
+
+								<!-- Speak button -->
+								{#if isSpeechSupported}
+									<button
+										type="button"
+										onclick={() =>
+											isListening
+												? stopListening()
+												: startListening(activeChunk.text, activeChunk.pinyin)}
+										class="flex h-11 cursor-pointer items-center gap-2 rounded-2xl px-5 font-headline text-xs font-bold text-white shadow-md transition-all active:scale-95 {isListening
+											? 'animate-pulse bg-rose-600 shadow-rose-600/20'
+											: 'bg-indigo-600 shadow-indigo-600/20 hover:bg-indigo-700'}"
+									>
+										<Mic size={16} strokeWidth={2.25} />
+										<span>{isListening ? 'Listening...' : 'Speak Now'}</span>
+									</button>
+								{/if}
+
+								<!-- Optional user voice recording for self-comparison -->
+								{#if isAudioRecordingAvail}
+									<button
+										type="button"
+										onclick={toggleUserRecording}
+										class="flex h-11 cursor-pointer items-center gap-1.5 rounded-2xl border px-3 font-headline text-xs font-bold transition-all active:scale-95 {isUserRecording
+											? 'animate-pulse border-rose-300 bg-rose-50 text-rose-700'
+											: 'border-slate-200/80 bg-white text-slate-600 hover:bg-slate-50'}"
+										title="Record your voice to listen back"
+									>
+										{#if isUserRecording}
+											<Square size={13} strokeWidth={2.5} class="text-rose-600" />
+											<span>Stop</span>
+										{:else}
+											<Mic size={13} strokeWidth={2.25} />
+											<span>Record Self</span>
+										{/if}
+									</button>
+
+									{#if recordedAudioUrl}
+										<button
+											type="button"
+											onclick={playRecordedVoice}
+											class="flex h-11 cursor-pointer items-center gap-1.5 rounded-2xl border border-emerald-200 bg-emerald-50 px-3 font-headline text-xs font-bold text-emerald-800 transition-colors hover:bg-emerald-100 active:scale-95"
+											title="Listen to your recorded attempt"
+										>
+											<Play size={13} strokeWidth={2.5} />
+											<span>My Voice</span>
+										</button>
+									{/if}
+								{/if}
+							</div>
+
+							<!-- Feedback box -->
+							{#if speechResult}
+								<div
+									class="mt-4 rounded-2xl border p-3 text-xs font-bold {speechResult.passed
+										? 'border-emerald-100 bg-emerald-50 text-emerald-800'
+										: 'border-amber-100 bg-amber-50 text-amber-800'}"
+								>
+									<div class="flex items-center justify-between gap-2">
+										<div class="flex items-center gap-2">
+											{#if speechResult.passed}
+												<CheckCircle2 size={16} class="text-emerald-500" />
+											{:else}
+												<AlertCircle size={16} class="text-amber-500" />
+											{/if}
+											<span>{speechResult.feedback}</span>
+										</div>
+										<span
+											class="rounded-full bg-white px-2 py-0.5 font-headline text-[11px] shadow-xs"
+										>
+											{Math.round(speechResult.score * 100)}%
+										</span>
+									</div>
+								</div>
+							{/if}
+
+							{#if speechTranscript && !speechResult}
+								<div
+									class="mt-3 rounded-xl border border-slate-200/80 bg-slate-50 p-2.5 text-center"
+								>
+									<p class="font-sans text-[10px] text-slate-400">Heard:</p>
+									<p class="font-headline text-xs font-bold text-slate-900">"{speechTranscript}"</p>
+								</div>
+							{/if}
 						{/if}
 					</div>
 				{/if}

@@ -92,27 +92,40 @@ export function stripPinyinTones(pinyinStr: string): string {
  */
 export function calculateBestSubstringSimilarity(spoken: string, expected: string): number {
 	if (!spoken || !expected) return 0;
-	if (spoken.includes(expected) || expected.includes(spoken)) {
-		return Math.min(spoken.length, expected.length) / Math.max(spoken.length, expected.length);
-	}
 
 	const baseSimilarity = calculateSimilarity(spoken, expected);
-	if (spoken.length <= expected.length) {
+	if (spoken.length === expected.length) {
 		return baseSimilarity;
 	}
 
-	// Spoken is longer than expected (e.g. filler words). Slide window of expected.length
-	let maxSim = baseSimilarity;
-	const windowSize = expected.length;
-	const step = 1;
-	for (let i = 0; i <= spoken.length - windowSize; i += step) {
-		const sub = spoken.slice(i, i + windowSize);
-		const sim = calculateSimilarity(sub, expected);
-		if (sim > maxSim) {
-			maxSim = sim;
+	if (spoken.length > expected.length) {
+		// Spoken is longer than expected (e.g. leading/trailing filler words).
+		// Slide window of expected.length across spoken to find best matching segment.
+		let maxSim = baseSimilarity;
+		const windowSize = expected.length;
+		for (let i = 0; i <= spoken.length - windowSize; i++) {
+			const sub = spoken.slice(i, i + windowSize);
+			const sim = calculateSimilarity(sub, expected);
+			if (sim > maxSim) {
+				maxSim = sim;
+			}
+		}
+		return maxSim;
+	}
+
+	// Spoken is shorter than expected (user spoke only part of sentence).
+	// Slide window of spoken.length across expected, but scale by length coverage ratio.
+	let maxSubSim = 0;
+	const windowSize = spoken.length;
+	for (let i = 0; i <= expected.length - windowSize; i++) {
+		const sub = expected.slice(i, i + windowSize);
+		const sim = calculateSimilarity(spoken, sub);
+		if (sim > maxSubSim) {
+			maxSubSim = sim;
 		}
 	}
-	return maxSim;
+	const lengthRatio = spoken.length / expected.length;
+	return Math.max(baseSimilarity, maxSubSim * lengthRatio);
 }
 
 export interface SpeechEvaluationResult {
@@ -171,7 +184,9 @@ export function evaluateSpeechAccuracy(
 		// If spoken text was transcribed directly into pinyin or english letters
 		if (/^[a-zA-Z\s]+$/.test(spokenText.trim())) {
 			const cleanSpokenPinyin = stripPinyinTones(spokenText);
-			const pinyinSim = calculateSimilarity(cleanSpokenPinyin, cleanExpectedPinyin);
+			const pinyinDirect = calculateSimilarity(cleanSpokenPinyin, cleanExpectedPinyin);
+			const pinyinSub = calculateBestSubstringSimilarity(cleanSpokenPinyin, cleanExpectedPinyin);
+			const pinyinSim = Math.max(pinyinDirect, pinyinSub);
 			if (pinyinSim > textSimilarity) {
 				textSimilarity = Math.max(textSimilarity, pinyinSim);
 			}
@@ -193,18 +208,26 @@ export function evaluateSpeechAccuracy(
 		}
 	}
 
-	const keywordRatio =
-		keywords && keywords.length > 0 ? matchedKeywords.length / keywords.length : 1.0;
-
 	// Blended score
-	const score = Math.min(1.0, Math.max(textSimilarity, keywordRatio * 0.9));
+	let score = textSimilarity;
 
-	// Pass condition: similarity >= 0.65 or all keywords present
-	const passed =
-		score >= 0.65 || Boolean(keywords && keywords.length > 0 && missingKeywords.length === 0);
+	if (keywords && keywords.length > 0) {
+		const keywordRatio = matchedKeywords.length / keywords.length;
+		// Only give keyword bonus if the utterance already has meaningful similarity (>= 0.40)
+		if (textSimilarity >= 0.4) {
+			const bonus = keywordRatio * 0.2;
+			score = Math.min(1.0, textSimilarity + bonus);
+		} else if (textSimilarity < 0.25) {
+			// Completely different sentence that happened to contain a keyword by accident
+			score = textSimilarity * 0.5;
+		}
+	}
+
+	// Pass condition: score >= 0.65
+	const passed = score >= 0.65;
 
 	const feedback =
-		score >= 0.9
+		score >= 0.85
 			? 'Excellent pronunciation! Clear and natural.'
 			: passed
 				? 'Understood! Good attempt, understandable by native speakers.'

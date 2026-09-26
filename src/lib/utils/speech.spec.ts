@@ -79,4 +79,53 @@ describe('Speech Evaluation Utilities', () => {
 		expect(res.passed).toBe(true);
 		expect(res.score).toBe(1.0);
 	});
+
+	it('rejects completely unrelated Chinese speech with no keywords', () => {
+		const res = evaluateSpeechAccuracy(
+			'你好',
+			'我喜欢在周末踢足球',
+			'chinese',
+			'wǒ xǐhuan zài zhōumò tī zúqiú'
+		);
+		expect(res.passed).toBe(false);
+		expect(res.score).toBeLessThan(0.35);
+		expect(res.feedback).toBe('Could not quite catch that. Give it another try!');
+	});
+
+	it('rejects completely unrelated French speech', () => {
+		const res = evaluateSpeechAccuracy(
+			'Bonjour tout le monde',
+			'Je voudrais un café s’il vous plaît',
+			'french'
+		);
+		expect(res.passed).toBe(false);
+		expect(res.score).toBeLessThan(0.35);
+		expect(res.feedback).toBe('Could not quite catch that. Give it another try!');
+	});
+
+	it('does not pass unrelated speech when keywords is undefined (repeat mode)', () => {
+		const res = evaluateSpeechAccuracy(
+			'今天天气真好',
+			'请不要放香菜',
+			'chinese',
+			'Qǐng bù yào fàng xiāngcài',
+			undefined
+		);
+		expect(res.passed).toBe(false);
+		expect(res.score).toBeLessThan(0.35);
+		expect(res.feedback).not.toContain('Excellent pronunciation');
+	});
+
+	it('does not falsely pass unrelated sentence that accidentally contains a single keyword', () => {
+		const res = evaluateSpeechAccuracy(
+			'今天星期一我去超市买苹果',
+			'请不要放香菜',
+			'chinese',
+			'Qǐng bù yào fàng xiāngcài',
+			['我']
+		);
+		expect(res.passed).toBe(false);
+		expect(res.score).toBeLessThan(0.5);
+	});
 });
+

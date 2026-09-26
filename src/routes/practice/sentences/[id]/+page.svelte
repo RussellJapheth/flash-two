@@ -74,12 +74,29 @@
 	let currentItem = $derived(items[currentIndex]);
 	let progressCount = $derived(items.length > 0 ? currentIndex + 1 : 0);
 
+	let filledSentence = $derived(
+		currentItem
+			? renderClozeSentence(
+					currentItem.cloze.fullSentence || currentItem.cloze.displaySentence,
+					currentItem.cloze.targetWord
+				)
+			: ''
+	);
+	let filledPinyin = $derived(
+		currentItem
+			? renderClozeSentence(
+					currentItem.cloze.fullPinyin || currentItem.cloze.pinyin,
+					currentItem.cloze.targetPinyin
+				)
+			: ''
+	);
+
 	// Repeat-after-me progressive chunk state
 	let currentChunks = $derived<SentenceChunk[]>(
 		currentItem
 			? chunkSentence(
-					currentItem.cloze.fullSentence,
-					currentItem.cloze.pinyin || currentItem.cloze.targetPinyin,
+					filledSentence,
+					filledPinyin || currentItem.cloze.targetPinyin,
 					deckLanguage
 				)
 			: []
@@ -263,7 +280,7 @@
 			},
 			onResult: (transcript, isFinal) => {
 				speechTranscript = transcript;
-				const target = targetText || currentItem?.cloze.fullSentence || '';
+				const target = targetText || filledSentence || currentItem?.cloze.fullSentence || '';
 				if (isFinal || transcript.trim().length >= target.trim().length) {
 					evaluateSpeech(transcript, targetText, targetPinyin);
 				}
@@ -291,8 +308,13 @@
 	function evaluateSpeech(transcript: string, targetText?: string, targetPinyin?: string) {
 		if (!currentItem) return;
 
-		const expected = targetText || currentItem.cloze.fullSentence;
-		const pinyin = targetPinyin || currentItem.cloze.pinyin || currentItem.cloze.targetPinyin;
+		const expected = targetText || filledSentence || currentItem.cloze.fullSentence;
+		const pinyin =
+			targetPinyin ||
+			filledPinyin ||
+			currentItem.cloze.fullPinyin ||
+			currentItem.cloze.pinyin ||
+			currentItem.cloze.targetPinyin;
 		const keywords = practiceMode === 'cloze' ? [currentItem.cloze.targetWord] : undefined;
 
 		const result = evaluateSpeechAccuracy(transcript, expected, deckLanguage, pinyin, keywords);
@@ -332,7 +354,7 @@
 
 	function handleReplayAudio(text?: string, rate = 0.8) {
 		if (!currentItem) return;
-		const toSpeak = text || currentItem.cloze.fullSentence;
+		const toSpeak = text || filledSentence || currentItem.cloze.fullSentence;
 		speakText(toSpeak, deckLanguage, { rate });
 	}
 
@@ -735,12 +757,12 @@
 										? 'font-hanzi'
 										: ''}"
 								>
-									{activeChunk.text}
+									{renderClozeSentence(activeChunk.text, currentItem.cloze.targetWord)}
 								</p>
 
 								{#if activeChunk.pinyin}
 									<p class="mt-2 font-sans text-sm font-semibold tracking-wide text-indigo-600">
-										{activeChunk.pinyin}
+										{renderClozeSentence(activeChunk.pinyin, currentItem.cloze.targetPinyin)}
 									</p>
 								{/if}
 

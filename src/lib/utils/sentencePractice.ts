@@ -18,6 +18,8 @@ export interface SentenceExample {
 	fullSentence: string;
 	/** Pinyin line with the target pinyin blanked; empty when it cannot be blanked safely. */
 	pinyin: string;
+	/** Original unblanked pinyin line with target pinyin intact. */
+	fullPinyin?: string;
 	translation?: string;
 	/** Other words from the same deck that also complete the blank validly. */
 	acceptedAnswers: string[];
@@ -175,6 +177,7 @@ export function buildCloze(
 		displaySentence,
 		fullSentence: parsed.sentence,
 		pinyin,
+		fullPinyin: parsed.pinyin || renderClozeSentence(pinyin, targetPinyin),
 		translation: parsed.translation,
 		acceptedAnswers
 	};

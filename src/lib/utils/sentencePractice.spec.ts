@@ -65,6 +65,7 @@ describe('buildCloze', () => {
 		expect(cloze?.displaySentence).toBe(`${BLANK_TOKEN}！很高兴认识你。`);
 		expect(cloze?.pinyin).toBe(`${BLANK_TOKEN}! Hěn gāoxìng rènshí nǐ.`);
 		expect(cloze?.fullSentence).toBe('你好！很高兴认识你。');
+		expect(cloze?.fullPinyin).toBe('Nǐ hǎo! Hěn gāoxìng rènshí nǐ.');
 		expect(cloze?.targetWord).toBe('你好');
 		expect(cloze?.targetPinyin).toBe('nǐ hǎo');
 		expect(cloze?.translation).toBe('Hello! Nice to meet you.');

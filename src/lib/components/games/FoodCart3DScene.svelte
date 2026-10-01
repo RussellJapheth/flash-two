@@ -61,48 +61,46 @@
 	let particleSystem: THREE.Points | null = null;
 	let steamParticles: THREE.Points | null = null;
 
-	interface Pedestrian {
-		group: THREE.Group;
-		leftLeg: THREE.Mesh;
-		rightLeg: THREE.Mesh;
-		leftArm: THREE.Mesh;
-		rightArm: THREE.Mesh;
-		speed: number;
-		direction: 1 | -1;
-		walkFrequency: number;
-		baseY: number;
-	}
-	const pedestrians: Pedestrian[] = [];
+	// Counter pedestal layout:
+	// Back row: Raised shelf riser (Y = 0.38, Z = -0.45) strictly for larger/taller items
+	// Front row: Lower counter surface (Y = 0.10, Z = 0.35) strictly for compact/flat items
+	const BACK_ROW_Z = -0.45;
+	const BACK_ROW_Y = 0.38;
+	const FRONT_ROW_Z = 0.35;
+	const FRONT_ROW_Y = 0.1;
 
-	// Positions for counter pedestals (2 rows: Front row 5 items, Back row 6 items)
-	function getPedestalPositions(total: number) {
-		const positions: { x: number; y: number; z: number }[] = [];
-		const frontCount = Math.min(5, Math.ceil(total / 2));
-		const backCount = total - frontCount;
+	function getLayoutPositions(
+		itemsList: FoodItem[]
+	): Record<string, { x: number; y: number; z: number }> {
+		const result: Record<string, { x: number; y: number; z: number }> = {};
+		const largeItems = itemsList.filter((it) => it.sizeTier === 'large');
+		const compactItems = itemsList.filter((it) => it.sizeTier !== 'large');
 
-		// Front row (z = 0.22, y = 0.15) - 5 items with spacing 0.58
-		const frontSpacing = 0.58;
-		const frontStartX = -((frontCount - 1) * frontSpacing) / 2;
-		for (let i = 0; i < frontCount; i++) {
-			positions.push({
-				x: frontStartX + i * frontSpacing,
-				y: 0.15,
-				z: 0.22
-			});
-		}
-
-		// Back row (z = -0.62, slightly raised) - 6 items with spacing 0.50
-		const backSpacing = 0.5;
+		const backCount = largeItems.length;
+		const backSpacing = backCount > 1 ? Math.min(0.56, 2.4 / (backCount - 1)) : 0.56;
 		const backStartX = -((backCount - 1) * backSpacing) / 2;
-		for (let i = 0; i < backCount; i++) {
-			positions.push({
-				x: backStartX + i * backSpacing,
-				y: 0.42,
-				z: -0.62
-			});
-		}
 
-		return positions;
+		largeItems.forEach((it, idx) => {
+			result[it.id] = {
+				x: backStartX + idx * backSpacing,
+				y: BACK_ROW_Y,
+				z: BACK_ROW_Z
+			};
+		});
+
+		const frontCount = compactItems.length;
+		const frontSpacing = frontCount > 1 ? Math.min(0.56, 2.4 / (frontCount - 1)) : 0.56;
+		const frontStartX = -((frontCount - 1) * frontSpacing) / 2;
+
+		compactItems.forEach((it, idx) => {
+			result[it.id] = {
+				x: frontStartX + idx * frontSpacing,
+				y: FRONT_ROW_Y,
+				z: FRONT_ROW_Z
+			};
+		});
+
+		return result;
 	}
 
 	// Flying food animation state
@@ -127,18 +125,16 @@
 	onMount(() => {
 		if (!canvasEl || !containerEl) return;
 
-		// 1. Scene with warm street market ambiance and gentle atmospheric fog
+		// 1. Scene (Transparent background to let authentic street market photo show behind cart)
 		scene = new THREE.Scene();
-		scene.background = new THREE.Color(0xf6ede2);
-		scene.fog = new THREE.FogExp2(0xf6ede2, 0.032);
 
-		// 2. Camera
+		// 2. Camera (Looking straight ahead at eye level)
 		const width = containerEl.clientWidth || 400;
 		const height = containerEl.clientHeight || 450;
 		camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
 		updateCameraAspect(width, height);
 
-		// 3. Renderer
+		// 3. Renderer with transparent alpha
 		if (!isWebGLSupported()) {
 			webglError = 'WebGL 3D graphics is not supported or is disabled in your browser.';
 			isLoadingModels = false;
@@ -149,10 +145,11 @@
 		try {
 			renderer = new THREE.WebGLRenderer({
 				canvas: canvasEl,
-				alpha: false,
+				alpha: true,
 				antialias: true,
 				powerPreference: 'high-performance'
 			});
+			renderer.setClearColor(0x000000, 0); // Transparent background
 			renderer.setSize(width, height);
 			renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 			renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -167,26 +164,23 @@
 			return;
 		}
 
-		// 4. Lighting
+		// 4. Warm Lighting
 		setupLighting(scene);
 
-		// 5. Living Street Background with Moving Everyday People
-		buildStreetBackground(scene);
-
-		// 6. Build Cart Counter & Stall Decor
+		// 5. Build Detailed Authentic Food Cart matching food-cart-icon.jpg
 		buildCartStructure(scene);
 
-		// 7. Build Steam & Confetti Particle Systems
+		// 6. Build Steam & Confetti Particle Systems
 		steamParticles = createSteamSystem();
 		scene.add(steamParticles);
 
 		particleSystem = createConfettiSystem();
 		scene.add(particleSystem);
 
-		// 8. Load GLTF Models for Plate and Food Items
+		// 7. Load GLTF Models for Plate and Food Items
 		loadModels();
 
-		// 9. Event Listeners (Touch & Pointer)
+		// 8. Event Listeners (Touch & Pointer)
 		canvasEl.addEventListener('pointerdown', handlePointerDown);
 		canvasEl.addEventListener('pointermove', handlePointerMove);
 
@@ -203,7 +197,7 @@
 		});
 		resizeObserver.observe(containerEl);
 
-		// 10. Render Loop
+		// 9. Render Loop
 		let prevTime = performance.now();
 		const animate = () => {
 			animationFrameId = requestAnimationFrame(animate);
@@ -229,40 +223,41 @@
 		const aspect = width / height;
 		camera.aspect = aspect;
 
-		// Guaranteed 100% visible framing of cart (width ~3.5, height ~3.1, wheels & lanterns)
-		// with generous headroom for the floating order card on mobile screens
-		if (aspect < 0.55) {
-			// Tall phone portrait (iPhone ~0.46, Galaxy ~0.45)
-			camera.fov = 64;
-			camera.position.set(0, 5.8, 9.2);
-			camera.lookAt(0, 0.82, 0.1);
+		// Straight-ahead eye-level view:
+		// Stand right in front of the cart counter at eye level looking straight across
+		const camY = 1.1;
+		const lookAtY = 0.94;
+		const lookAtZ = 0.15;
+
+		if (aspect < 0.52) {
+			// Tall phone portrait (e.g. iPhone, Galaxy 9:20 aspect)
+			camera.fov = 58;
+			camera.position.set(0, camY, 5.5);
 		} else if (aspect < 0.75) {
-			// Standard phone portrait (~0.56-0.70)
-			camera.fov = 56;
-			camera.position.set(0, 5.2, 8.0);
-			camera.lookAt(0, 0.85, 0.1);
-		} else if (aspect < 1.0) {
+			// Standard mobile portrait
+			camera.fov = 52;
+			camera.position.set(0, camY, 4.9);
+		} else if (aspect < 1.1) {
 			// Tablet portrait
-			camera.fov = 48;
-			camera.position.set(0, 4.6, 6.6);
-			camera.lookAt(0, 0.88, 0.1);
+			camera.fov = 44;
+			camera.position.set(0, camY, 4.4);
 		} else {
 			// Desktop / landscape
-			camera.fov = 40;
-			camera.position.set(0, 3.8, 5.2);
-			camera.lookAt(0, 0.9, 0.1);
+			camera.fov = 38;
+			camera.position.set(0, camY, 4.1);
 		}
+		camera.lookAt(0, lookAtY, lookAtZ);
 		camera.updateProjectionMatrix();
 	}
 
 	function setupLighting(s: THREE.Scene) {
-		// Warm sunny ambient light matching daylight street food market
-		const ambientLight = new THREE.AmbientLight(0xfff8ee, 1.6);
+		// Warm ambient light matching daytime/evening street stall ambiance
+		const ambientLight = new THREE.AmbientLight(0xfff5ea, 1.8);
 		s.add(ambientLight);
 
 		// Key directional sunlight casting warm soft shadows
-		const dirLight = new THREE.DirectionalLight(0xfffae6, 2.4);
-		dirLight.position.set(3.5, 8.5, 4.5);
+		const dirLight = new THREE.DirectionalLight(0xfff1dc, 2.2);
+		dirLight.position.set(3.0, 7.0, 4.0);
 		dirLight.castShadow = true;
 		dirLight.shadow.mapSize.width = 1024;
 		dirLight.shadow.mapSize.height = 1024;
@@ -275,14 +270,14 @@
 		dirLight.shadow.bias = -0.001;
 		s.add(dirLight);
 
-		// Soft sky fill light from left
-		const fillLight = new THREE.DirectionalLight(0xffeed4, 1.0);
-		fillLight.position.set(-4, 5, 2);
+		// Soft fill light from left
+		const fillLight = new THREE.DirectionalLight(0xffe8cf, 1.0);
+		fillLight.position.set(-3.0, 4.0, 4.0);
 		s.add(fillLight);
 
 		// Warm golden counter spotlight illuminating customer serving plate
-		const plateLight = new THREE.PointLight(0xffa020, 1.6, 4);
-		plateLight.position.set(0, 1.6, 0.85);
+		const plateLight = new THREE.PointLight(0xff9922, 1.8, 4);
+		plateLight.position.set(0, 1.2, 1.0);
 		s.add(plateLight);
 	}
 
@@ -317,6 +312,39 @@
 		return texture;
 	}
 
+	function createVerticalBannerTexture(text: string): THREE.CanvasTexture {
+		const canvas = document.createElement('canvas');
+		canvas.width = 128;
+		canvas.height = 384;
+		const ctx = canvas.getContext('2d');
+		if (ctx) {
+			ctx.fillStyle = '#991b1b'; // Crimson silk
+			ctx.fillRect(0, 0, 128, 384);
+
+			// Gold decorative borders
+			ctx.strokeStyle = '#f59e0b';
+			ctx.lineWidth = 8;
+			ctx.strokeRect(4, 4, 120, 376);
+			ctx.lineWidth = 2;
+			ctx.strokeRect(10, 10, 108, 364);
+
+			// Gold calligraphy characters
+			ctx.fillStyle = '#fef08a';
+			ctx.font = 'bold 50px "Noto Serif SC", "Songti SC", "SimSun", serif, sans-serif';
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+
+			const chars = text.split('');
+			const step = 320 / (chars.length + 1);
+			chars.forEach((char, i) => {
+				ctx.fillText(char, 64, 40 + (i + 1) * step);
+			});
+		}
+		const texture = new THREE.CanvasTexture(canvas);
+		texture.colorSpace = THREE.SRGBColorSpace;
+		return texture;
+	}
+
 	function createCartWheel(x: number, y: number, z: number, s: THREE.Scene) {
 		const wheelGroup = new THREE.Group();
 		wheelGroup.position.set(x, y, z);
@@ -336,298 +364,29 @@
 
 		// Spokes
 		const spokeGeo = new THREE.CylinderGeometry(0.014, 0.014, 0.66, 8);
-		for (let i = 0; i < 3; i++) {
+		for (let i = 0; i < 4; i++) {
 			const spoke = new THREE.Mesh(spokeGeo, woodMat);
-			spoke.rotation.x = (i * Math.PI) / 3;
+			spoke.rotation.x = (i * Math.PI) / 4;
 			wheelGroup.add(spoke);
 		}
 		s.add(wheelGroup);
 	}
 
-	function buildStreetBackground(s: THREE.Scene) {
-		// 1. Street Asphalt / Cobblestone Road
-		const roadGeo = new THREE.BoxGeometry(26, 0.1, 5.0);
-		const roadMat = new THREE.MeshStandardMaterial({
-			color: 0x64748b,
-			roughness: 0.8
-		});
-		const road = new THREE.Mesh(roadGeo, roadMat);
-		road.position.set(0, -0.62, -3.2);
-		road.receiveShadow = true;
-		s.add(road);
-
-		// Sidewalk Curb separating cart from street
-		const curbGeo = new THREE.BoxGeometry(26, 0.08, 0.4);
-		const curbMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, roughness: 0.6 });
-		const curb = new THREE.Mesh(curbGeo, curbMat);
-		curb.position.set(0, -0.52, -1.0);
-		s.add(curb);
-
-		// 2. Distant Street Market Facades / Silhouette Buildings (Z = -5.0)
-		const shopColors = [0x991b1b, 0xd97706, 0x065f46, 0x1e3a8a, 0x7c2d12];
-		for (let i = 0; i < 5; i++) {
-			const bldGeo = new THREE.BoxGeometry(3.6, 3.5, 0.6);
-			const bldMat = new THREE.MeshStandardMaterial({
-				color: 0xf3f4f6,
-				roughness: 0.9
-			});
-			const bld = new THREE.Mesh(bldGeo, bldMat);
-			const bx = -7.2 + i * 3.6;
-			bld.position.set(bx, 1.2, -5.2);
-			s.add(bld);
-
-			// Warm Glowing Shop Window
-			const winGeo = new THREE.BoxGeometry(2.4, 1.4, 0.1);
-			const winMat = new THREE.MeshStandardMaterial({
-				color: 0xfef08a,
-				emissive: 0xfef08a,
-				emissiveIntensity: 0.4,
-				roughness: 0.3
-			});
-			const win = new THREE.Mesh(winGeo, winMat);
-			win.position.set(bx, 0.9, -4.85);
-			s.add(win);
-
-			// Shop Awning
-			const awnGeo = new THREE.BoxGeometry(2.8, 0.12, 0.8);
-			const awnMat = new THREE.MeshStandardMaterial({
-				color: shopColors[i % shopColors.length],
-				roughness: 0.5
-			});
-			const awn = new THREE.Mesh(awnGeo, awnMat);
-			awn.position.set(bx, 1.75, -4.6);
-			awn.rotation.x = 0.25;
-			s.add(awn);
-		}
-
-		// 3. Overhead Festoon Lights strung across street
-		const cableGeo = new THREE.CylinderGeometry(0.008, 0.008, 16, 8);
-		const cableMat = new THREE.MeshBasicMaterial({ color: 0x333333 });
-		const cable = new THREE.Mesh(cableGeo, cableMat);
-		cable.rotation.z = Math.PI / 2;
-		cable.position.set(0, 3.2, -2.8);
-		s.add(cable);
-
-		// Hanging Mini Lanterns on festoon cable
-		const festoonColors = [0xef4444, 0xf59e0b, 0xef4444, 0xfbbf24, 0xef4444, 0xf59e0b];
-		for (let i = 0; i < 6; i++) {
-			const lx = -5.0 + i * 2.0;
-			const lantGeo = new THREE.SphereGeometry(0.1, 10, 8);
-			const lantMat = new THREE.MeshStandardMaterial({
-				color: festoonColors[i],
-				emissive: festoonColors[i],
-				emissiveIntensity: 0.6
-			});
-			const lant = new THREE.Mesh(lantGeo, lantMat);
-			lant.position.set(lx, 3.08, -2.8);
-			s.add(lant);
-		}
-
-		// 4. Street Trees at Sides
-		createStreetTree(s, -5.2, -0.55, -2.8);
-		createStreetTree(s, 5.2, -0.55, -2.8);
-
-		// 5. Everyday People Walking (7 pedestrians)
-		const personConfigs = [
-			{
-				x: -5.5,
-				z: -2.3,
-				dir: 1 as const,
-				outfit: 0x2563eb,
-				skin: 0xfcd34d,
-				hair: 0x1e293b,
-				scale: 0.95
-			},
-			{
-				x: -2.8,
-				z: -3.4,
-				dir: 1 as const,
-				outfit: 0xdc2626,
-				skin: 0xfbcfe8,
-				hair: 0x3f3f46,
-				scale: 1.0
-			},
-			{
-				x: -0.5,
-				z: -2.6,
-				dir: -1 as const,
-				outfit: 0x059669,
-				skin: 0xfde047,
-				hair: 0x18181b,
-				scale: 0.9
-			},
-			{
-				x: 1.8,
-				z: -3.6,
-				dir: 1 as const,
-				outfit: 0xd97706,
-				skin: 0xfcd34d,
-				hair: 0x78350f,
-				scale: 1.05
-			},
-			{
-				x: 4.2,
-				z: -2.4,
-				dir: -1 as const,
-				outfit: 0x7c3aed,
-				skin: 0xfde047,
-				hair: 0x09090b,
-				scale: 0.92
-			},
-			{
-				x: 6.0,
-				z: -3.2,
-				dir: -1 as const,
-				outfit: 0xe11d48,
-				skin: 0xfbcfe8,
-				hair: 0x52525b,
-				scale: 0.98
-			},
-			{
-				x: -4.0,
-				z: -3.8,
-				dir: 1 as const,
-				outfit: 0x0891b2,
-				skin: 0xfcd34d,
-				hair: 0x1e293b,
-				scale: 0.85
-			}
-		];
-
-		personConfigs.forEach((cfg) => {
-			const ped = createPedestrian(
-				cfg.x,
-				cfg.z,
-				cfg.dir,
-				cfg.outfit,
-				cfg.skin,
-				cfg.hair,
-				cfg.scale
-			);
-			s.add(ped.group);
-			pedestrians.push(ped);
-		});
-	}
-
-	function createStreetTree(s: THREE.Scene, x: number, y: number, z: number) {
-		const treeGroup = new THREE.Group();
-		treeGroup.position.set(x, y, z);
-
-		// Trunk
-		const trunkGeo = new THREE.CylinderGeometry(0.08, 0.12, 1.8, 8);
-		const trunkMat = new THREE.MeshStandardMaterial({ color: 0x5c3818, roughness: 0.8 });
-		const trunk = new THREE.Mesh(trunkGeo, trunkMat);
-		trunk.position.y = 0.9;
-		treeGroup.add(trunk);
-
-		// Low-poly Foliage Spheres
-		const foliageMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.6 });
-		const f1 = new THREE.Mesh(new THREE.DodecahedronGeometry(0.7, 1), foliageMat);
-		f1.position.set(0, 2.0, 0);
-		treeGroup.add(f1);
-
-		const f2 = new THREE.Mesh(new THREE.DodecahedronGeometry(0.5, 1), foliageMat);
-		f2.position.set(0.3, 2.4, 0.2);
-		treeGroup.add(f2);
-
-		s.add(treeGroup);
-	}
-
-	function createPedestrian(
-		x: number,
-		z: number,
-		direction: 1 | -1,
-		outfitColor: number,
-		skinTone: number,
-		hairColor: number,
-		scale = 1.0
-	): Pedestrian {
-		const group = new THREE.Group();
-		group.position.set(x, -0.55, z);
-		group.scale.set(scale, scale, scale);
-
-		// Torso / Coat
-		const torsoGeo = new THREE.CylinderGeometry(0.1, 0.13, 0.42, 10);
-		const torsoMat = new THREE.MeshStandardMaterial({ color: outfitColor, roughness: 0.6 });
-		const torso = new THREE.Mesh(torsoGeo, torsoMat);
-		torso.position.y = 0.56;
-		torso.castShadow = true;
-		group.add(torso);
-
-		// Head
-		const headGeo = new THREE.SphereGeometry(0.1, 12, 10);
-		const headMat = new THREE.MeshStandardMaterial({ color: skinTone, roughness: 0.5 });
-		const head = new THREE.Mesh(headGeo, headMat);
-		head.position.y = 0.84;
-		group.add(head);
-
-		// Hair
-		const hairGeo = new THREE.SphereGeometry(0.108, 10, 8, 0, Math.PI * 2, 0, Math.PI / 1.8);
-		const hairMat = new THREE.MeshStandardMaterial({ color: hairColor, roughness: 0.7 });
-		const hair = new THREE.Mesh(hairGeo, hairMat);
-		hair.position.y = 0.86;
-		group.add(hair);
-
-		// Legs (pivot at hip y=0.38)
-		const legGeo = new THREE.CylinderGeometry(0.038, 0.038, 0.38, 8);
-		legGeo.translate(0, -0.19, 0);
-		const legMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.7 });
-
-		const leftLeg = new THREE.Mesh(legGeo, legMat);
-		leftLeg.position.set(-0.06, 0.38, 0);
-		group.add(leftLeg);
-
-		const rightLeg = new THREE.Mesh(legGeo, legMat);
-		rightLeg.position.set(0.06, 0.38, 0);
-		group.add(rightLeg);
-
-		// Arms (pivot at shoulder y=0.72)
-		const armGeo = new THREE.CylinderGeometry(0.028, 0.028, 0.32, 8);
-		armGeo.translate(0, -0.16, 0);
-		const armMat = new THREE.MeshStandardMaterial({ color: outfitColor, roughness: 0.6 });
-
-		const leftArm = new THREE.Mesh(armGeo, armMat);
-		leftArm.position.set(-0.15, 0.72, 0);
-		group.add(leftArm);
-
-		const rightArm = new THREE.Mesh(armGeo, armMat);
-		rightArm.position.set(0.15, 0.72, 0);
-		group.add(rightArm);
-
-		// Face walking direction
-		group.rotation.y = direction === 1 ? Math.PI / 2 : -Math.PI / 2;
-
-		const speed = 0.75 + Math.random() * 0.65;
-		const walkFrequency = 5.5 + Math.random() * 2.0;
-
-		return {
-			group,
-			leftLeg,
-			rightLeg,
-			leftArm,
-			rightArm,
-			speed,
-			direction,
-			walkFrequency,
-			baseY: -0.55
-		};
-	}
-
 	function buildCartStructure(s: THREE.Scene) {
-		// 1. Main Counter Table Top (Warm rich wood, compact 3.5 width for mobile clearance)
-		const tableGeo = new THREE.BoxGeometry(3.5, 0.16, 2.1);
+		// 1. Main Counter Table Top (Polished rich wood)
+		const tableGeo = new THREE.BoxGeometry(3.6, 0.14, 2.0);
 		const tableMat = new THREE.MeshStandardMaterial({
 			color: 0xc87533,
 			roughness: 0.4,
 			metalness: 0.05
 		});
 		const table = new THREE.Mesh(tableGeo, tableMat);
-		table.position.set(0, -0.08, -0.05);
+		table.position.set(0, -0.07, 0.05);
 		table.receiveShadow = true;
 		s.add(table);
 
 		// Front decorative brass rail
-		const railGeo = new THREE.CylinderGeometry(0.02, 0.02, 3.4, 16);
+		const railGeo = new THREE.CylinderGeometry(0.018, 0.018, 3.5, 16);
 		const brassMat = new THREE.MeshStandardMaterial({
 			color: 0xe6b840,
 			roughness: 0.25,
@@ -635,65 +394,85 @@
 		});
 		const rail = new THREE.Mesh(railGeo, brassMat);
 		rail.rotation.z = Math.PI / 2;
-		rail.position.set(0, 0.03, 0.98);
+		rail.position.set(0, 0.03, 1.05);
 		s.add(rail);
 
-		// 2. Back Shelf (Tier 2 riser)
-		const shelfGeo = new THREE.BoxGeometry(3.2, 0.22, 0.85);
+		// 2. Back Shelf Riser (Tier 2 elevated riser for large items)
+		const shelfGeo = new THREE.BoxGeometry(3.3, 0.28, 0.72);
 		const shelfMat = new THREE.MeshStandardMaterial({
-			color: 0xa45220,
+			color: 0x9a4418,
 			roughness: 0.45,
 			metalness: 0.05
 		});
 		const shelf = new THREE.Mesh(shelfGeo, shelfMat);
-		shelf.position.set(0, 0.12, -0.62);
+		shelf.position.set(0, 0.14, BACK_ROW_Z);
 		shelf.receiveShadow = true;
 		s.add(shelf);
 
 		// 3. Cart Lower Body & Side Wooden Wheels
-		const bodyGeo = new THREE.BoxGeometry(2.8, 0.65, 1.5);
+		const bodyGeo = new THREE.BoxGeometry(3.0, 0.7, 1.5);
 		const bodyMat = new THREE.MeshStandardMaterial({
 			color: 0x8b3e1c,
 			roughness: 0.6
 		});
 		const body = new THREE.Mesh(bodyGeo, bodyMat);
-		body.position.set(0, -0.48, -0.05);
+		body.position.set(0, -0.49, 0.05);
 		body.receiveShadow = true;
 		s.add(body);
 
-		// Lower fruit/veggie crate shelf (like food-cart-icon.jpg)
-		const crateShelfGeo = new THREE.BoxGeometry(2.2, 0.05, 0.4);
+		// Lower Produce Shelf (like food-cart-icon.jpg)
+		const crateShelfGeo = new THREE.BoxGeometry(2.4, 0.05, 0.42);
 		const crateShelfMat = new THREE.MeshStandardMaterial({ color: 0x693214, roughness: 0.7 });
 		const crateShelf = new THREE.Mesh(crateShelfGeo, crateShelfMat);
-		crateShelf.position.set(0, -0.58, 0.8);
+		crateShelf.position.set(0, -0.58, 0.85);
 		s.add(crateShelf);
 
-		// 3 Crate boxes on lower shelf (Green, Orange, Yellow)
+		// 3 Wooden Crates filled with colorful fresh produce
 		const crateColors = [0x15803d, 0xea580c, 0xb45309];
-		for (let i = 0; i < 3; i++) {
-			const crateGeo = new THREE.BoxGeometry(0.62, 0.12, 0.32);
+		const crateConfigs = [
+			{ x: -0.76, fruitColor: 0xf97316 }, // Oranges
+			{ x: 0.0, fruitColor: 0xdc2626 }, // Red apples
+			{ x: 0.76, fruitColor: 0x84cc16 } // Melons
+		];
+
+		crateConfigs.forEach((cfg, idx) => {
+			const crateGeo = new THREE.BoxGeometry(0.64, 0.13, 0.34);
 			const crateMat = new THREE.MeshStandardMaterial({
-				color: crateColors[i],
+				color: crateColors[idx],
 				roughness: 0.6
 			});
 			const crate = new THREE.Mesh(crateGeo, crateMat);
-			crate.position.set(-0.72 + i * 0.72, -0.48, 0.8);
+			crate.position.set(cfg.x, -0.48, 0.85);
 			s.add(crate);
-		}
 
-		// Cart Spoked Wheels on Left and Right sides
-		createCartWheel(-1.48, -0.48, -0.05, s);
-		createCartWheel(1.48, -0.48, -0.05, s);
+			// Produce spheres inside crate
+			const fruitGeo = new THREE.SphereGeometry(0.055, 8, 8);
+			const fruitMat = new THREE.MeshStandardMaterial({
+				color: cfg.fruitColor,
+				roughness: 0.35
+			});
+			for (let fx = -0.22; fx <= 0.22; fx += 0.11) {
+				for (let fz = -0.09; fz <= 0.09; fz += 0.11) {
+					const fruit = new THREE.Mesh(fruitGeo, fruitMat);
+					fruit.position.set(cfg.x + fx, -0.41, 0.85 + fz);
+					s.add(fruit);
+				}
+			}
+		});
+
+		// Cart Spoked Wheels
+		createCartWheel(-1.54, -0.48, 0.05, s);
+		createCartWheel(1.54, -0.48, 0.05, s);
 
 		// 4. Colorful Festive Triangular Bunting Flags (under front counter edge)
 		const flagColors = [0xef4444, 0xf59e0b, 0x3b82f6, 0x10b981, 0xf97316];
-		const numFlags = 10;
-		const flagWidth = 0.3;
+		const numFlags = 11;
+		const flagWidth = 0.28;
 		const startX = -((numFlags - 1) * flagWidth) / 2;
 		for (let i = 0; i < numFlags; i++) {
 			const flagGeo = new THREE.BufferGeometry();
 			const fx = startX + i * flagWidth;
-			const w = 0.28;
+			const w = 0.26;
 			const h = 0.22;
 			const vertices = new Float32Array([fx - w / 2, 0, 0, fx + w / 2, 0, 0, fx, -h, 0]);
 			flagGeo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
@@ -704,7 +483,7 @@
 				roughness: 0.5
 			});
 			const flag = new THREE.Mesh(flagGeo, flagMat);
-			flag.position.set(0, -0.02, 1.0);
+			flag.position.set(0, -0.01, 1.06);
 			s.add(flag);
 		}
 
@@ -716,10 +495,10 @@
 		const postGeo = new THREE.CylinderGeometry(0.04, 0.045, 2.7, 12);
 
 		const postPositions = [
-			{ x: -1.48, z: 0.65 },
-			{ x: 1.48, z: 0.65 },
-			{ x: -1.48, z: -0.75 },
-			{ x: 1.48, z: -0.75 }
+			{ x: -1.5, z: 0.7 },
+			{ x: 1.5, z: 0.7 },
+			{ x: -1.5, z: -0.75 },
+			{ x: 1.5, z: -0.75 }
 		];
 
 		postPositions.forEach((pos) => {
@@ -729,12 +508,12 @@
 			s.add(post);
 		});
 
-		// 6. Chinese Roof Canopy (Gabled red tiles with golden trim, matching icon)
-		const roofRidgeGeo = new THREE.BoxGeometry(3.6, 0.14, 0.2);
+		// 6. Chinese Pagoda Roof Canopy (Vermilion red tiles with golden trim, matching icon)
+		const roofRidgeGeo = new THREE.BoxGeometry(3.7, 0.14, 0.22);
 		const goldTrimMat = new THREE.MeshStandardMaterial({
 			color: 0xd97706,
 			roughness: 0.35,
-			metalness: 0.3
+			metalness: 0.35
 		});
 		const roofRidge = new THREE.Mesh(roofRidgeGeo, goldTrimMat);
 		roofRidge.position.set(0, 2.55, -0.05);
@@ -747,34 +526,174 @@
 		});
 
 		// Front roof slope
-		const frontRoofGeo = new THREE.BoxGeometry(3.5, 0.08, 1.05);
+		const frontRoofGeo = new THREE.BoxGeometry(3.6, 0.08, 1.08);
 		const frontRoof = new THREE.Mesh(frontRoofGeo, roofTileMat);
-		frontRoof.position.set(0, 2.32, 0.4);
+		frontRoof.position.set(0, 2.32, 0.42);
 		frontRoof.rotation.x = 0.44;
 		frontRoof.castShadow = true;
 		s.add(frontRoof);
 
 		// Back roof slope
-		const backRoofGeo = new THREE.BoxGeometry(3.5, 0.08, 1.05);
+		const backRoofGeo = new THREE.BoxGeometry(3.6, 0.08, 1.08);
 		const backRoof = new THREE.Mesh(backRoofGeo, roofTileMat);
-		backRoof.position.set(0, 2.32, -0.5);
+		backRoof.position.set(0, 2.32, -0.52);
 		backRoof.rotation.x = -0.44;
 		backRoof.castShadow = true;
 		s.add(backRoof);
 
-		// 7. Hanging Wooden Signboard ("点心坊" / Dim Sum Stall)
-		const signGeo = new THREE.BoxGeometry(1.4, 0.42, 0.05);
+		// 7. Authentic Traditional Blue Scalloped Fabric Valance (like food-cart-icon.jpg)
+		const valanceGroup = new THREE.Group();
+		valanceGroup.position.set(0, 2.05, 0.9);
+		const blueValanceMat = new THREE.MeshStandardMaterial({
+			color: 0x1e3a8a, // Deep indigo silk
+			roughness: 0.7
+		});
+		const valancePipingMat = new THREE.MeshStandardMaterial({
+			color: 0xfef3c7,
+			roughness: 0.4
+		});
+
+		const numScallops = 7;
+		const scallopW = 3.5 / numScallops;
+		const sStartX = -((numScallops - 1) * scallopW) / 2;
+
+		for (let i = 0; i < numScallops; i++) {
+			const sx = sStartX + i * scallopW;
+			const scGeo = new THREE.CylinderGeometry(
+				scallopW / 2,
+				scallopW / 2,
+				0.02,
+				16,
+				1,
+				false,
+				0,
+				Math.PI
+			);
+			const sc = new THREE.Mesh(scGeo, blueValanceMat);
+			sc.rotation.x = Math.PI / 2;
+			sc.position.set(sx, 0, 0);
+			valanceGroup.add(sc);
+
+			// Bottom piping trim
+			const pipeGeo = new THREE.TorusGeometry(scallopW / 2, 0.012, 6, 16, Math.PI);
+			const pipe = new THREE.Mesh(pipeGeo, valancePipingMat);
+			pipe.rotation.z = Math.PI;
+			pipe.position.set(sx, 0, 0.012);
+			valanceGroup.add(pipe);
+		}
+		s.add(valanceGroup);
+
+		// 8. Hanging Wooden Signboard ("点心坊" / Dim Sum Stall)
+		const signGeo = new THREE.BoxGeometry(1.5, 0.42, 0.05);
 		const signMat = new THREE.MeshStandardMaterial({
 			map: createSignboardTexture('点心坊'),
 			roughness: 0.4
 		});
 		const sign = new THREE.Mesh(signGeo, signMat);
-		sign.position.set(0, 1.95, 0.75);
+		sign.position.set(0, 1.95, 0.78);
 		s.add(sign);
 
-		// 8. Hanging Red Festival Lanterns from Front Posts
-		createLantern(s, -1.45, 1.85, 0.65);
-		createLantern(s, 1.45, 1.85, 0.65);
+		// 9. Vertical Calligraphy Side Banners on Front Posts
+		// Left: "中华小吃" (Classic Chinese Street Food)
+		const leftBannerGeo = new THREE.PlaneGeometry(0.24, 0.72);
+		const leftBannerMat = new THREE.MeshStandardMaterial({
+			map: createVerticalBannerTexture('中华小吃'),
+			roughness: 0.4,
+			side: THREE.DoubleSide
+		});
+		const leftBanner = new THREE.Mesh(leftBannerGeo, leftBannerMat);
+		leftBanner.position.set(-1.49, 1.25, 0.72);
+		s.add(leftBanner);
+
+		// Right: "热气腾腾" (Steaming Hot & Fresh)
+		const rightBannerGeo = new THREE.PlaneGeometry(0.24, 0.72);
+		const rightBannerMat = new THREE.MeshStandardMaterial({
+			map: createVerticalBannerTexture('热气腾腾'),
+			roughness: 0.4,
+			side: THREE.DoubleSide
+		});
+		const rightBanner = new THREE.Mesh(rightBannerGeo, rightBannerMat);
+		rightBanner.position.set(1.49, 1.25, 0.72);
+		s.add(rightBanner);
+
+		// 10. Hanging Red Festival Lanterns from Front Posts
+		createLantern(s, -1.5, 1.88, 0.72);
+		createLantern(s, 1.5, 1.88, 0.72);
+
+		// 11. Stall Wing Decor (Teapot, cups, chili oil, chopsticks)
+		buildWingDecor(s);
+	}
+
+	function buildWingDecor(s: THREE.Scene) {
+		const wingMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2 });
+
+		// Left Wing: Steamer basket stack & porcelain teapot with tea cup
+		// Mini bamboo steamer stack
+		const steamerMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.7 });
+		for (let i = 0; i < 3; i++) {
+			const st = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.08, 16), steamerMat);
+			st.position.set(-1.46, 0.04 + i * 0.08, -0.15);
+			st.castShadow = true;
+			s.add(st);
+		}
+
+		// Teapot
+		const potGeo = new THREE.SphereGeometry(0.1, 14, 10);
+		const teapot = new THREE.Mesh(potGeo, wingMat);
+		teapot.position.set(-1.46, 0.1, 0.35);
+		teapot.castShadow = true;
+		s.add(teapot);
+
+		// Teapot lid knob
+		const knob = new THREE.Mesh(new THREE.SphereGeometry(0.025, 8, 8), wingMat);
+		knob.position.set(-1.46, 0.21, 0.35);
+		s.add(knob);
+
+		// Small teacup
+		const cup = new THREE.Mesh(
+			new THREE.CylinderGeometry(0.04, 0.03, 0.05, 12),
+			new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.3 })
+		);
+		cup.position.set(-1.32, 0.03, 0.48);
+		s.add(cup);
+
+		// Right Wing: Chili oil glass jar, soy sauce bottle, chopstick holder
+		// Chili oil jar
+		const jarGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.14, 14);
+		const jarMat = new THREE.MeshStandardMaterial({
+			color: 0xef4444,
+			roughness: 0.2,
+			transparent: true,
+			opacity: 0.85
+		});
+		const jar = new THREE.Mesh(jarGeo, jarMat);
+		jar.position.set(1.46, 0.07, -0.15);
+		jar.castShadow = true;
+		s.add(jar);
+
+		// Soy sauce bottle
+		const bottleGeo = new THREE.CylinderGeometry(0.04, 0.06, 0.18, 12);
+		const bottleMat = new THREE.MeshStandardMaterial({ color: 0x1f2937, roughness: 0.3 });
+		const bottle = new THREE.Mesh(bottleGeo, bottleMat);
+		bottle.position.set(1.46, 0.09, 0.18);
+		s.add(bottle);
+
+		// Chopstick cylinder
+		const holder = new THREE.Mesh(
+			new THREE.CylinderGeometry(0.06, 0.06, 0.14, 12),
+			new THREE.MeshStandardMaterial({ color: 0xfef08a, roughness: 0.4 })
+		);
+		holder.position.set(1.36, 0.07, 0.45);
+		s.add(holder);
+
+		// Bamboo chopsticks sticks inside holder
+		const stickMat = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.6 });
+		for (let i = 0; i < 5; i++) {
+			const stick = new THREE.Mesh(new THREE.CylinderGeometry(0.007, 0.007, 0.26, 6), stickMat);
+			stick.position.set(1.35 + (i - 2) * 0.015, 0.15, 0.45);
+			stick.rotation.z = (i - 2) * 0.05;
+			s.add(stick);
+		}
 	}
 
 	function createLantern(s: THREE.Scene, x: number, y: number, z: number) {
@@ -817,8 +736,15 @@
 		botRing.position.y = -0.2;
 		group.add(botRing);
 
-		// Small warm point light inside lantern
-		const light = new THREE.PointLight(0xff5533, 1.0, 2.5);
+		// Silk Tassel hanging at bottom
+		const tasselGeo = new THREE.CylinderGeometry(0.015, 0.035, 0.18, 8);
+		const tasselMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.5 });
+		const tassel = new THREE.Mesh(tasselGeo, tasselMat);
+		tassel.position.y = -0.32;
+		group.add(tassel);
+
+		// Warm interior lantern point light
+		const light = new THREE.PointLight(0xff6622, 1.2, 2.5);
 		light.position.set(0, 0, 0);
 		group.add(light);
 
@@ -826,24 +752,21 @@
 	}
 
 	function createSteamSystem(): THREE.Points {
-		const count = 45;
+		const count = 40;
 		const geo = new THREE.BufferGeometry();
 		const positions = new Float32Array(count * 3);
-		const alphas = new Float32Array(count);
 
 		for (let i = 0; i < count; i++) {
-			positions[i * 3] = (Math.random() - 0.5) * 2.5;
-			positions[i * 3 + 1] = 0.3 + Math.random() * 1.5;
-			positions[i * 3 + 2] = (Math.random() - 0.5) * 1.5;
-			alphas[i] = Math.random();
+			positions[i * 3] = (Math.random() - 0.5) * 2.4;
+			positions[i * 3 + 1] = 0.2 + Math.random() * 1.5;
+			positions[i * 3 + 2] = (Math.random() - 0.5) * 1.2;
 		}
 
 		geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-		// Soft white particles
 		const mat = new THREE.PointsMaterial({
 			color: 0xffffff,
-			size: 0.08,
+			size: 0.09,
 			transparent: true,
 			opacity: 0.35,
 			blending: THREE.AdditiveBlending,
@@ -991,13 +914,13 @@
 
 			scene.add(plateGroup);
 
-			// 2. Load Food Items
-			const positions = getPedestalPositions(items.length);
+			// 2. Load Food Items arranged strictly with larger items in back row
+			const layoutMap = getLayoutPositions(items);
 			let loadedCount = 0;
 
 			for (let i = 0; i < items.length; i++) {
 				const item = items[i];
-				const pos = positions[i];
+				const pos = layoutMap[item.id] || { x: 0, y: 0.1, z: 0 };
 
 				const group = new THREE.Group();
 				group.position.set(pos.x, pos.y, pos.z);
@@ -1139,17 +1062,53 @@
 		}
 	}
 
+	// Shuffling strictly preserves size-tier rows:
+	// Large items only shuffle among back-row shelf slots.
+	// Compact items only shuffle among front-row counter slots.
 	function shuffleItemPositions() {
 		if (itemGroups.size === 0) return;
-		const positions = getPedestalPositions(items.length);
-		const shuffled = [...positions].sort(() => Math.random() - 0.5);
-		let i = 0;
-		itemGroups.forEach((group) => {
-			const pos = shuffled[i % shuffled.length];
-			group.userData.targetX = pos.x;
-			group.userData.targetZ = pos.z;
-			group.userData.baseY = pos.y;
-			i++;
+
+		const largeItems = items.filter((it) => it.sizeTier === 'large');
+		const compactItems = items.filter((it) => it.sizeTier !== 'large');
+
+		const backCount = largeItems.length;
+		const backSpacing = backCount > 1 ? Math.min(0.56, 2.4 / (backCount - 1)) : 0.56;
+		const backStartX = -((backCount - 1) * backSpacing) / 2;
+		const backSlots = largeItems
+			.map((_, idx) => ({
+				x: backStartX + idx * backSpacing,
+				y: BACK_ROW_Y,
+				z: BACK_ROW_Z
+			}))
+			.sort(() => Math.random() - 0.5);
+
+		const frontCount = compactItems.length;
+		const frontSpacing = frontCount > 1 ? Math.min(0.56, 2.4 / (frontCount - 1)) : 0.56;
+		const frontStartX = -((frontCount - 1) * frontSpacing) / 2;
+		const frontSlots = compactItems
+			.map((_, idx) => ({
+				x: frontStartX + idx * frontSpacing,
+				y: FRONT_ROW_Y,
+				z: FRONT_ROW_Z
+			}))
+			.sort(() => Math.random() - 0.5);
+
+		largeItems.forEach((it, idx) => {
+			const grp = itemGroups.get(it.id);
+			if (grp && backSlots[idx]) {
+				grp.userData.targetX = backSlots[idx].x;
+				grp.userData.targetZ = backSlots[idx].z;
+				grp.userData.baseY = backSlots[idx].y;
+			}
+		});
+
+		compactItems.forEach((it, idx) => {
+			const grp = itemGroups.get(it.id);
+			if (grp && frontSlots[idx]) {
+				grp.userData.targetX = frontSlots[idx].x;
+				grp.userData.targetZ = frontSlots[idx].z;
+				grp.userData.baseY = frontSlots[idx].y;
+			}
 		});
 	}
 
@@ -1159,7 +1118,7 @@
 			startTime: performance.now(),
 			duration: 750,
 			startZ: 0.95,
-			targetZ: 2.3, // Slide towards camera into customer's hands
+			targetZ: 2.3, // Slide forward into customer's hands
 			phase: 'serve'
 		};
 	}
@@ -1250,25 +1209,7 @@
 	});
 
 	function updateScene(time: number, dt: number) {
-		// 1. Everyday Pedestrians Walking Along Street
-		pedestrians.forEach((ped) => {
-			ped.group.position.x += ped.direction * ped.speed * dt;
-			if (ped.direction === 1 && ped.group.position.x > 11.5) {
-				ped.group.position.x = -11.5;
-			} else if (ped.direction === -1 && ped.group.position.x < -11.5) {
-				ped.group.position.x = 11.5;
-			}
-
-			// Natural walking limb swing & vertical bobbing
-			const swing = Math.sin(time * ped.walkFrequency) * 0.55;
-			ped.leftLeg.rotation.x = swing;
-			ped.rightLeg.rotation.x = -swing;
-			ped.leftArm.rotation.x = -swing * 0.75;
-			ped.rightArm.rotation.x = swing * 0.75;
-			ped.group.position.y = ped.baseY + Math.abs(Math.sin(time * ped.walkFrequency)) * 0.04;
-		});
-
-		// 2. Smooth Pedestal Shuffling Glide & Idle Bobbing for Food Items
+		// 1. Smooth Pedestal Shuffling Glide & Idle Bobbing for Food Items
 		itemGroups.forEach((group, id) => {
 			// Interpolate smoothly to shuffled pedestal targets
 			if (group.userData.targetX !== undefined) {
@@ -1296,7 +1237,7 @@
 			group.rotation.y += isTarget ? 0.015 : 0.005;
 		});
 
-		// 3. Plate Serving Slide Out & Return Animation
+		// 2. Plate Serving Slide Out & Return Animation
 		if (plateSlideAnim && plateGroup) {
 			const elapsed = performance.now() - plateSlideAnim.startTime;
 			const t = Math.min(1.0, elapsed / plateSlideAnim.duration);
@@ -1335,7 +1276,7 @@
 			}
 		}
 
-		// 4. Flying Food Parabolic Arc Animation
+		// 3. Flying Food Parabolic Arc Animation
 		if (flyingAnim) {
 			const elapsed = performance.now() - flyingAnim.startTime;
 			const t = Math.min(1.0, elapsed / flyingAnim.duration);
@@ -1358,7 +1299,7 @@
 			}
 		}
 
-		// 5. Steam Particles Rising
+		// 4. Steam Particles Rising
 		if (steamParticles) {
 			const posAttr = steamParticles.geometry.attributes.position as THREE.BufferAttribute;
 			for (let i = 0; i < posAttr.count; i++) {
@@ -1373,7 +1314,7 @@
 			posAttr.needsUpdate = true;
 		}
 
-		// 6. Confetti Burst
+		// 5. Confetti Burst
 		if (particleSystem && particleSystem.userData.active) {
 			particleSystem.userData.time += dt;
 			const posAttr = particleSystem.geometry.attributes.position as THREE.BufferAttribute;

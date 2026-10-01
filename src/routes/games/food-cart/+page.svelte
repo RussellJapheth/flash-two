@@ -96,8 +96,21 @@
 		isMenuModalOpen = false;
 	}
 
-	// Active food items in the stall (11 diverse items)
-	const activeFoodItems: FoodItem[] = FOOD_ITEMS.slice(0, 11);
+	// Active food items in the stall (5 large in back row, 5 compact in front row)
+	const activeFoodItems: FoodItem[] = [
+		// Back row: larger / taller items
+		FOOD_ITEMS.find((f) => f.id === 'baozi')!,
+		FOOD_ITEMS.find((f) => f.id === 'cha')!,
+		FOOD_ITEMS.find((f) => f.id === 'tang')!,
+		FOOD_ITEMS.find((f) => f.id === 'rou')!,
+		FOOD_ITEMS.find((f) => f.id === 'miantiao')!,
+		// Front row: compact / flat items
+		FOOD_ITEMS.find((f) => f.id === 'mifan')!,
+		FOOD_ITEMS.find((f) => f.id === 'yu')!,
+		FOOD_ITEMS.find((f) => f.id === 'jidan')!,
+		FOOD_ITEMS.find((f) => f.id === 'pingguo')!,
+		FOOD_ITEMS.find((f) => f.id === 'mianbao')!
+	];
 
 	onMount(() => {
 		highScore = getGameHighScore('food-cart', 'visual');
@@ -360,13 +373,37 @@
 </svelte:head>
 
 {#if gamePhase === 'playing'}
-	<!-- PLAYING SCREEN: Full Viewport, Zero Scrolling on Mobile, Warm Street Market Aesthetic -->
-	<div class="fixed inset-0 z-30 flex flex-col overflow-hidden bg-[#f6ede2] font-sans select-none">
+	<!-- PLAYING SCREEN: Full Viewport, Zero Scrolling on Mobile, Authentic Street Market Background -->
+	<div class="fixed inset-0 z-30 flex flex-col overflow-hidden bg-slate-950 font-sans select-none">
+		<!-- Authentic Changing Street Market Background (Crossfades between authentic day/night street markets) -->
+		<div class="pointer-events-none absolute inset-0 overflow-hidden">
+			<div
+				class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out {roundIndex %
+					2 ===
+				0
+					? 'opacity-100'
+					: 'opacity-0'}"
+				style="background-image: url('/images/food-cart/bg-day.jpg');"
+			></div>
+			<div
+				class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out {roundIndex %
+					2 ===
+				1
+					? 'opacity-100'
+					: 'opacity-0'}"
+				style="background-image: url('/images/food-cart/bg-night.jpg');"
+			></div>
+			<!-- Subtle dark vignette and warm tone overlay -->
+			<div
+				class="absolute inset-0 bg-linear-to-b from-slate-950/40 via-transparent to-slate-950/70"
+			></div>
+		</div>
+
 		<!-- 1. Unified Compact HUD Bar -->
 		<header
-			class="flex h-12 shrink-0 items-center justify-between border-b border-amber-200/80 bg-white/90 px-3 backdrop-blur-md"
+			class="relative z-20 flex h-12 shrink-0 items-center justify-between border-b border-amber-200/50 bg-white/90 px-3 backdrop-blur-md"
 		>
-			<!-- Left: Exit & Customer Chip -->
+			<!-- Left: Exit & Customer Chip with Kenney Avatar -->
 			<div class="flex items-center gap-2">
 				<button
 					type="button"
@@ -383,8 +420,12 @@
 				<div
 					class="flex items-center gap-1.5 rounded-xl border border-amber-200/80 bg-amber-50/90 px-2 py-0.5 text-xs font-bold text-amber-900"
 				>
-					<span class="text-sm">{currentCustomer.avatar}</span>
-					<span class="hidden font-headline text-[11px] sm:inline">{currentCustomer.name}</span>
+					<img
+						src={currentCustomer.avatarImg}
+						alt={currentCustomer.name}
+						class="h-5 w-5 object-contain"
+					/>
+					<span class="font-headline text-[11px] sm:inline">{currentCustomer.name}</span>
 				</div>
 			</div>
 
@@ -457,32 +498,54 @@
 		<div class="relative min-h-0 w-full flex-1 overflow-hidden">
 			<!-- Floating Customer Order Card (Simulating Multi-Item Customer Tickets) -->
 			<div
-				class="absolute inset-x-3 top-2.5 z-20 flex flex-col gap-1.5 rounded-2xl border border-amber-200/90 bg-white/95 px-3 py-2 shadow-lg shadow-amber-950/10 backdrop-blur-md transition-all sm:inset-x-auto sm:left-1/2 sm:w-auto sm:min-w-[360px] sm:-translate-x-1/2"
+				class="absolute inset-x-3 top-2.5 z-20 flex flex-col gap-1.5 rounded-2xl border border-amber-200/90 bg-white/95 px-3 py-2 shadow-lg shadow-amber-950/15 backdrop-blur-md transition-all sm:inset-x-auto sm:left-1/2 sm:w-auto sm:min-w-[380px] sm:-translate-x-1/2"
 			>
-				<!-- Top Bar: Customer profile & Progress -->
+				<!-- Top Bar: Customer avatar, speech & Progress -->
 				<div class="flex items-center justify-between gap-2 border-b border-amber-100 pb-1.5">
-					<div class="flex min-w-0 items-center gap-1.5">
-						<span class="text-base">{currentCustomer.avatar}</span>
-						<span class="truncate text-xs font-bold text-amber-950">
-							{currentCustomer.name} wants:
-						</span>
+					<div class="flex min-w-0 items-center gap-2">
+						<div
+							class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-amber-300 bg-amber-100/90 p-0.5 shadow-2xs"
+						>
+							<img
+								src={currentCustomer.avatarImg}
+								alt={currentCustomer.name}
+								class="h-full w-full object-contain"
+							/>
+						</div>
+						<div class="flex min-w-0 flex-col">
+							<div class="flex items-center gap-1.5">
+								<span class="truncate text-xs font-black text-amber-950">
+									{currentCustomer.name}
+								</span>
+								<span
+									class="py-0.2 rounded bg-amber-100 px-1.5 font-headline text-[9px] font-extrabold text-amber-900"
+								>
+									{currentCustomer.role}
+								</span>
+							</div>
+							<span class="truncate text-[10px] text-amber-800/80 italic">
+								"{currentCustomer.greeting}"
+							</span>
+						</div>
+					</div>
+
+					<div class="flex shrink-0 items-center gap-1.5">
 						<span
-							class="rounded bg-amber-100 px-1.5 py-0.5 font-headline text-[10px] font-extrabold text-amber-900"
+							class="rounded-lg bg-amber-100/80 px-2 py-0.5 font-headline text-[10px] font-extrabold text-amber-900"
 						>
 							{currentOrder.servedIds.length}/{currentOrder.items.length} Plated
 						</span>
+						<!-- Clue Toggle Pill (Off by default) -->
+						<button
+							type="button"
+							onclick={() => (showEnglishClue = !showEnglishClue)}
+							class="shrink-0 rounded-lg px-2 py-0.5 text-[10px] font-extrabold transition-all active:scale-95 {showEnglishClue
+								? 'bg-amber-600 text-white shadow-2xs'
+								: 'border border-amber-200 bg-amber-50/80 text-amber-800 hover:bg-amber-100'}"
+						>
+							{showEnglishClue ? 'Clue ON' : 'Clue OFF'}
+						</button>
 					</div>
-
-					<!-- Clue Toggle Pill -->
-					<button
-						type="button"
-						onclick={() => (showEnglishClue = !showEnglishClue)}
-						class="shrink-0 rounded-lg px-2 py-0.5 text-[10px] font-extrabold transition-all active:scale-95 {showEnglishClue
-							? 'bg-amber-600 text-white shadow-2xs'
-							: 'border border-amber-200 bg-amber-50/80 text-amber-800 hover:bg-amber-100'}"
-					>
-						{showEnglishClue ? 'Clue ON' : 'Clue OFF'}
-					</button>
 				</div>
 
 				<!-- Dishes in Customer Ticket -->
@@ -601,11 +664,16 @@
 								>
 									Stall Dishes • 点餐菜单
 								</h3>
-								<p class="text-[11px] text-slate-500">
-									{currentCustomer.avatar} Wants:
+								<div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+									<img
+										src={currentCustomer.avatarImg}
+										alt=""
+										class="inline h-4 w-4 object-contain"
+									/>
+									<span>{currentCustomer.name} wants:</span>
 									<span class="font-bold text-indigo-600">{targetFood.pinyin}</span>
-									({targetFood.hanzi})
-								</p>
+									<span>({targetFood.hanzi})</span>
+								</div>
 							</div>
 						</div>
 						<button

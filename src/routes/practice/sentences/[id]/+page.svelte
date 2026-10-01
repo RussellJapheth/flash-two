@@ -94,11 +94,7 @@
 	// Repeat-after-me progressive chunk state
 	let currentChunks = $derived<SentenceChunk[]>(
 		currentItem
-			? chunkSentence(
-					filledSentence,
-					filledPinyin || currentItem.cloze.targetPinyin,
-					deckLanguage
-				)
+			? chunkSentence(filledSentence, filledPinyin || currentItem.cloze.targetPinyin, deckLanguage)
 			: []
 	);
 	let currentChunkIndex = $state(0);

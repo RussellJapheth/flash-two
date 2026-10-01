@@ -565,28 +565,6 @@
 					</div>
 				</div>
 			{/each}
-
-			<!-- Floating Guide Badge -->
-			<div
-				class="pointer-events-none absolute bottom-14 left-1/2 -translate-x-1/2 rounded-full border border-amber-300/60 bg-amber-50/90 px-3 py-0.5 font-sans text-[11px] font-medium text-amber-900 shadow-xs backdrop-blur-xs"
-			>
-				Tap 3D dishes on cart or tap Menu below
-			</div>
-
-			<!-- Bottom Floating Action Bar -->
-			<div class="absolute inset-x-2 bottom-2 z-20 flex items-center justify-between gap-2">
-				<button
-					type="button"
-					onclick={() => (isMenuModalOpen = true)}
-					class="flex h-11 flex-1 items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-amber-500 to-orange-500 font-headline text-xs font-extrabold text-white shadow-lg shadow-orange-500/30 transition-transform active:scale-98"
-				>
-					<BookOpen size={16} />
-					<span>Open Stall Menu (11 Dishes)</span>
-					<span class="rounded-full bg-white/20 px-2 py-0.5 text-[10px]">
-						Target: {targetFood.pinyin}
-					</span>
-				</button>
-			</div>
 		</div>
 
 		<!-- Stall Dishes Modal (Mobile Friendly, No Scrolling Needed on Main Page) -->

@@ -12,16 +12,26 @@
 </script>
 
 <div class="pointer-events-none absolute inset-0 overflow-hidden {className}" aria-hidden="true">
+	<!-- Atmospheric restaurant backdrop -->
+	<img
+		src="/images/restaurant/kitchen-bg.jpg"
+		alt=""
+		class="absolute inset-0 h-full w-full object-cover object-center opacity-85 select-none"
+	/>
+	<div
+		class="absolute inset-0 bg-linear-to-b from-amber-950/20 via-slate-900/10 to-amber-950/35 backdrop-blur-[0.5px]"
+	></div>
+
 	<!-- Back wall: extractor hood, cabinets and a television over the counter -->
 	<img
 		src="/images/restaurant/sprites/props/hoodLarge.png"
 		alt=""
-		class="absolute top-[6%] left-[4%] w-24 opacity-20 select-none"
+		class="absolute top-[6%] left-[4%] w-24 opacity-30 drop-shadow-sm select-none"
 	/>
 	<img
 		src="/images/restaurant/sprites/props/kitchenCabinet.png"
 		alt=""
-		class="absolute top-[18%] right-[3%] w-28 opacity-20 select-none"
+		class="absolute top-[18%] right-[3%] w-28 opacity-30 drop-shadow-sm select-none"
 	/>
 	<img
 		src="/images/restaurant/sprites/props/televisionModern.png"

@@ -5,6 +5,7 @@
 	import KitchenLine, {
 		type RoundResult
 	} from '$lib/components/games/restaurant/KitchenLine.svelte';
+	import KitchenScene from '$lib/components/games/restaurant/KitchenScene.svelte';
 	import { buildRestaurantMenu } from '$lib/data/restaurantDishes';
 	import { playSound } from '$lib/utils/audio';
 	import { getGameHighScore, saveGameScore } from '$lib/utils/gameStorage';
@@ -136,7 +137,9 @@
 		</main>
 	</div>
 {:else if phase === 'playing'}
-	<div class="flex min-h-dvh flex-col bg-slate-50 font-sans text-slate-900 select-none">
+	<div
+		class="relative flex min-h-dvh flex-col overflow-hidden bg-slate-900 font-sans text-slate-900 select-none"
+	>
 		<KitchenLine
 			{menu}
 			{soundEnabled}
@@ -147,14 +150,15 @@
 		/>
 	</div>
 {:else if summary}
-	<div class="min-h-dvh bg-slate-50 font-sans text-slate-900 select-none">
+	<div class="relative min-h-dvh overflow-hidden bg-slate-900 font-sans text-slate-900 select-none">
+		<KitchenScene />
 		<header
-			class="sticky top-0 z-40 flex items-center gap-2 border-b border-slate-200/80 bg-white/90 px-4 py-3 backdrop-blur-md"
+			class="sticky top-0 z-40 flex items-center gap-2 border-b border-white/60 bg-white/70 px-4 py-3 shadow-xs backdrop-blur-xl"
 		>
 			<a
 				href={resolve('/games')}
 				aria-label="Back to Games"
-				class="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200/80 bg-white text-slate-700 shadow-xs transition-transform hover:bg-slate-50 active:scale-95"
+				class="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/80 bg-white/80 text-slate-700 shadow-2xs backdrop-blur-xs transition-transform hover:bg-white active:scale-95"
 			>
 				<ChevronLeft size={20} strokeWidth={2.5} />
 			</a>
@@ -163,8 +167,10 @@
 			</h1>
 		</header>
 
-		<main class="mx-auto w-full max-w-lg px-4 py-6">
-			<section class="shadow-card rounded-3xl border border-slate-200/80 bg-white p-6 text-center">
+		<main class="relative z-10 mx-auto w-full max-w-lg px-4 py-6">
+			<section
+				class="relative overflow-hidden rounded-3xl border border-white/80 bg-white/85 p-6 text-center shadow-xl shadow-amber-950/10 backdrop-blur-xl"
+			>
 				<div
 					class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-amber-400 to-amber-600 text-white shadow-lg shadow-amber-500/25"
 				>
@@ -174,11 +180,11 @@
 				<h2 class="mt-4 font-headline text-2xl font-black tracking-tight text-slate-900">
 					{summary.headline}
 				</h2>
-				<p class="mt-1 text-xs text-slate-500">{summary.detail}</p>
+				<p class="mt-1 text-xs font-semibold text-slate-500">{summary.detail}</p>
 
 				{#if isNewHighScore}
 					<div
-						class="mx-auto mt-3 inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-100 px-3 py-1 font-headline text-xs font-black text-amber-900"
+						class="mx-auto mt-3 inline-flex items-center gap-1.5 rounded-full border border-amber-300/80 bg-amber-100/90 px-3 py-1 font-headline text-xs font-black text-amber-900 shadow-2xs backdrop-blur-xs"
 					>
 						<Sparkles size={14} class="text-amber-600" />
 						<span>New personal best!</span>
@@ -186,33 +192,41 @@
 				{/if}
 
 				<div class="mt-5 grid grid-cols-2 gap-3">
-					<div class="rounded-2xl border border-slate-200/80 bg-slate-50 p-3">
+					<div
+						class="rounded-2xl border border-white/70 bg-white/70 p-3 shadow-xs backdrop-blur-xs"
+					>
 						<p class="font-headline text-xl font-black text-slate-900 tabular-nums">
 							{summary.score.toLocaleString()}
 						</p>
-						<p class="text-[11px] font-medium text-slate-500">Score</p>
+						<p class="text-[11px] font-semibold text-slate-500">Score</p>
 					</div>
-					<div class="rounded-2xl border border-slate-200/80 bg-slate-50 p-3">
+					<div
+						class="rounded-2xl border border-white/70 bg-white/70 p-3 shadow-xs backdrop-blur-xs"
+					>
 						<p class="font-headline text-xl font-black text-slate-900 tabular-nums">{accuracy}%</p>
-						<p class="text-[11px] font-medium text-slate-500">Accuracy</p>
+						<p class="text-[11px] font-semibold text-slate-500">Accuracy</p>
 					</div>
-					<div class="rounded-2xl border border-slate-200/80 bg-slate-50 p-3">
+					<div
+						class="rounded-2xl border border-white/70 bg-white/70 p-3 shadow-xs backdrop-blur-xs"
+					>
 						<p class="font-headline text-xl font-black text-slate-900 tabular-nums">
 							x{summary.maxCombo}
 						</p>
-						<p class="text-[11px] font-medium text-slate-500">Best combo</p>
+						<p class="text-[11px] font-semibold text-slate-500">Best combo</p>
 					</div>
-					<div class="rounded-2xl border border-slate-200/80 bg-slate-50 p-3">
+					<div
+						class="rounded-2xl border border-white/70 bg-white/70 p-3 shadow-xs backdrop-blur-xs"
+					>
 						<p class="font-headline text-xl font-black text-slate-900 tabular-nums">
 							{summary.correct}
 						</p>
-						<p class="text-[11px] font-medium text-slate-500">Correct</p>
+						<p class="text-[11px] font-semibold text-slate-500">Correct</p>
 					</div>
 				</div>
 
 				{#if earnedXP > 0}
 					<div
-						class="mt-4 flex items-center justify-center gap-2 rounded-2xl border border-indigo-200 bg-indigo-50 p-3"
+						class="mt-4 flex items-center justify-center gap-2 rounded-2xl border border-indigo-200/80 bg-indigo-50/90 p-3 shadow-2xs backdrop-blur-xs"
 					>
 						<Sparkles size={16} class="text-indigo-600" />
 						<span class="font-headline text-base font-black text-indigo-700">+{earnedXP} XP</span>
@@ -222,13 +236,13 @@
 				<button
 					type="button"
 					onclick={replay}
-					class="mt-5 flex h-12 w-full items-center justify-center rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 active:scale-[0.98]"
+					class="mt-5 flex h-12 w-full items-center justify-center rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-lg shadow-indigo-600/25 transition-all hover:bg-indigo-700 active:scale-[0.98]"
 				>
 					Serve another order
 				</button>
 				<a
 					href={resolve('/games')}
-					class="mt-2 flex h-11 w-full items-center justify-center rounded-2xl border border-slate-200/80 bg-white font-headline text-sm font-bold text-slate-700 transition-colors hover:bg-slate-50 active:scale-[0.98]"
+					class="mt-2 flex h-11 w-full items-center justify-center rounded-2xl border border-white/80 bg-white/80 font-headline text-sm font-bold text-slate-700 shadow-2xs backdrop-blur-xs transition-colors hover:bg-white active:scale-[0.98]"
 				>
 					Back to games
 				</a>

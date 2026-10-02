@@ -319,13 +319,13 @@
 
 <div class="flex min-h-full flex-col">
 	<header
-		class="sticky top-0 z-30 flex h-12 shrink-0 items-center gap-2 border-b border-slate-200/90 bg-white/90 px-3 backdrop-blur-md"
+		class="sticky top-0 z-30 flex h-12 shrink-0 items-center gap-2 border-b border-white/60 bg-white/75 px-3 shadow-xs backdrop-blur-xl"
 	>
 		<button
 			type="button"
 			onclick={leave}
 			aria-label={phase === 'briefing' ? 'Back to Games' : 'Exit the shift'}
-			class="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200/80 bg-white text-slate-700 transition-transform hover:bg-slate-50 active:scale-95"
+			class="flex h-8 w-8 items-center justify-center rounded-xl border border-white/80 bg-white/80 text-slate-700 shadow-2xs backdrop-blur-xs transition-transform hover:bg-white active:scale-95"
 		>
 			<svg
 				viewBox="0 0 24 24"
@@ -341,12 +341,14 @@
 		</button>
 
 		{#if phase === 'briefing'}
-			<h1 class="flex-1 truncate text-center font-headline text-sm font-extrabold text-slate-900">
+			<h1
+				class="drop-shadow-2xs flex-1 truncate text-center font-headline text-sm font-black text-slate-900"
+			>
 				Kitchen Line
 			</h1>
 		{:else}
 			<div
-				class="flex flex-1 items-center justify-center gap-1"
+				class="flex flex-1 items-center justify-center gap-1.5"
 				role="status"
 				aria-label={`Lives left: ${lives}`}
 			>
@@ -355,7 +357,7 @@
 						size={18}
 						strokeWidth={2.2}
 						fill={index < lives ? 'currentColor' : 'none'}
-						class={index < lives ? 'text-rose-500' : 'text-slate-300'}
+						class={index < lives ? 'text-rose-500 drop-shadow-xs' : 'text-slate-300'}
 					/>
 				{/each}
 			</div>
@@ -365,12 +367,12 @@
 			{#if phase !== 'briefing'}
 				{#if combo >= 2}
 					<span
-						class="rounded-full bg-amber-100 px-2 py-0.5 font-headline text-[11px] font-extrabold text-amber-900"
+						class="rounded-full border border-amber-300/80 bg-amber-100/90 px-2 py-0.5 font-headline text-[11px] font-extrabold text-amber-950 shadow-2xs backdrop-blur-xs"
 					>
 						x{combo}
 					</span>
 				{/if}
-				<span class="font-headline text-xs font-black text-slate-900 tabular-nums">
+				<span class="drop-shadow-2xs font-headline text-xs font-black text-slate-900 tabular-nums">
 					{score.toLocaleString()}
 				</span>
 			{/if}
@@ -378,7 +380,7 @@
 				type="button"
 				onclick={onToggleSound}
 				aria-label={soundEnabled ? 'Mute sound' : 'Enable sound'}
-				class="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200/80 bg-white transition-colors hover:bg-slate-50 active:scale-95"
+				class="flex h-8 w-8 items-center justify-center rounded-xl border border-white/80 bg-white/80 shadow-2xs backdrop-blur-xs transition-colors hover:bg-white active:scale-95"
 			>
 				{#if soundEnabled}
 					<Volume2 size={16} strokeWidth={2.2} class="text-indigo-600" />
@@ -393,24 +395,29 @@
 		<div class="relative flex flex-1 flex-col justify-center gap-4 p-5">
 			<KitchenScene />
 			<section
-				class="shadow-card relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-5"
+				class="relative overflow-hidden rounded-3xl border border-white/80 bg-white/85 p-6 shadow-xl shadow-amber-950/10 backdrop-blur-xl"
 			>
+				<div
+					class="pointer-events-none absolute -top-10 -right-10 h-36 w-36 rounded-full bg-amber-400/20 blur-2xl"
+				></div>
 				<span
-					class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 font-headline text-[11px] font-extrabold tracking-wider text-amber-900 uppercase"
+					class="inline-flex items-center rounded-full border border-amber-200/90 bg-amber-100/90 px-2.5 py-0.5 font-headline text-[11px] font-extrabold tracking-wider text-amber-950 uppercase shadow-2xs backdrop-blur-xs"
 				>
 					Kitchen Line
 				</span>
-				<h2 class="mt-3 font-headline text-xl font-black tracking-tight text-slate-900">
+				<h2
+					class="drop-shadow-2xs mt-3 font-headline text-2xl font-black tracking-tight text-slate-900"
+				>
 					Plate the order
 				</h2>
-				<p class="mt-1.5 text-sm leading-relaxed text-slate-600">
+				<p class="mt-2 text-sm leading-relaxed font-medium text-slate-600">
 					Each course shows its hanzi and pinyin. Tap the English meaning before the timer runs out
 					— three misses and the diner walks out.
 				</p>
 
 				{#if highScore > 0}
 					<div
-						class="mt-5 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50/80 px-4 py-1.5 font-headline text-xs font-bold text-amber-900"
+						class="mt-5 inline-flex items-center gap-2 rounded-full border border-amber-300/80 bg-amber-50/90 px-4 py-1.5 font-headline text-xs font-bold text-amber-950 shadow-2xs backdrop-blur-xs"
 					>
 						<span>Best service: {highScore.toLocaleString()} pts</span>
 					</div>
@@ -419,7 +426,7 @@
 				<button
 					type="button"
 					onclick={startRound}
-					class="mt-6 flex h-12 w-full items-center justify-center rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 active:scale-[0.98]"
+					class="mt-6 flex h-12 w-full items-center justify-center rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-lg shadow-indigo-600/30 transition-all hover:bg-indigo-700 active:scale-[0.98]"
 				>
 					Start shift
 				</button>
@@ -430,26 +437,26 @@
 			<KitchenScene />
 			<!-- Diner -->
 			<section
-				class="shadow-card mx-3 mt-3 flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-3"
+				class="mx-3 mt-3 flex items-center gap-3 rounded-2xl border border-white/80 bg-white/85 p-3 shadow-lg shadow-amber-950/5 backdrop-blur-xl"
 			>
 				<img
 					src={diner.avatarImg}
 					alt={diner.name}
-					class="h-11 w-11 shrink-0 rounded-xl bg-slate-100 object-cover"
+					class="h-11 w-11 shrink-0 rounded-xl bg-slate-100/90 object-cover shadow-2xs ring-2 ring-indigo-500/20"
 				/>
 				<div class="min-w-0 flex-1">
-					<p class="truncate font-headline text-xs font-extrabold text-slate-900">{diner.name}</p>
-					<p class="truncate text-[11px] text-slate-500">{diner.greeting}</p>
+					<p class="truncate font-headline text-xs font-black text-slate-900">{diner.name}</p>
+					<p class="truncate text-[11px] font-medium text-slate-500">{diner.greeting}</p>
 				</div>
 				<p
-					class="shrink-0 rounded-full bg-indigo-50 px-2 py-1 font-headline text-[11px] font-extrabold text-indigo-700"
+					class="shrink-0 rounded-full border border-indigo-200/80 bg-indigo-50/90 px-2.5 py-1 font-headline text-[11px] font-extrabold text-indigo-700 shadow-2xs backdrop-blur-xs"
 				>
 					{remaining} left
 				</p>
 			</section>
 
 			<p
-				class="mt-3 text-center font-headline text-[11px] font-bold tracking-wider text-slate-400 uppercase"
+				class="drop-shadow-2xs mt-3 text-center font-headline text-[11px] font-extrabold tracking-wider text-slate-700 uppercase"
 			>
 				{courseLabel} · Course {Math.min(questionIndex + 1, order.requirements.length)} of {order
 					.requirements.length}
@@ -458,20 +465,27 @@
 			<!-- Prompt: the hanzi + pinyin the player has to translate -->
 			<div bind:this={promptEl} class="relative mx-3 mt-4 flex flex-1 flex-col">
 				<section
-					class="shadow-card flex flex-1 flex-col items-center justify-center rounded-3xl border border-slate-200/80 bg-white p-5"
+					class="relative flex flex-1 flex-col items-center justify-center overflow-hidden rounded-3xl border border-white/80 bg-white/85 p-5 shadow-xl shadow-amber-950/10 backdrop-blur-xl"
 				>
-					<span class="font-headline text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+					<div
+						class="pointer-events-none absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-indigo-500/10 blur-2xl"
+					></div>
+					<span
+						class="font-headline text-[11px] font-extrabold tracking-wider text-slate-500 uppercase"
+					>
 						What does this mean?
 					</span>
 
-					<p class="mt-4 font-headline text-6xl font-black tracking-tight text-slate-900">
+					<p
+						class="mt-4 font-headline text-6xl font-black tracking-tight text-slate-900 drop-shadow-xs"
+					>
 						{currentItem.hanzi}
 					</p>
 					<button
 						type="button"
 						onclick={() => say(currentItem.hanzi, 0)}
 						aria-label={`Hear ${currentItem.hanzi} pronounced`}
-						class="mt-1 flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 font-headline text-sm font-bold text-slate-600 transition-colors hover:bg-indigo-600 hover:text-white active:scale-95"
+						class="mt-1.5 flex items-center gap-1.5 rounded-full border border-indigo-100/90 bg-indigo-50/90 px-3.5 py-1 font-headline text-sm font-bold text-indigo-700 shadow-2xs backdrop-blur-xs transition-colors hover:bg-indigo-600 hover:text-white active:scale-95"
 					>
 						<svg
 							viewBox="0 0 24 24"
@@ -490,7 +504,7 @@
 
 					<!-- Per-item timer -->
 					<div
-						class="mt-5 h-2 w-full overflow-hidden rounded-full bg-slate-200"
+						class="mt-5 h-2.5 w-full overflow-hidden rounded-full border border-white/60 bg-slate-200/80 p-0.5 backdrop-blur-xs"
 						role="progressbar"
 						aria-label="Time left to answer"
 						aria-valuemin="0"
@@ -514,12 +528,13 @@
 			{#if feedback}
 				<div
 					role="status"
-					class="mx-3 mt-3 rounded-2xl px-4 py-2.5 text-center {feedback.tone === 'bad'
-						? 'bg-rose-600'
-						: 'bg-emerald-600'}"
+					class="mx-3 mt-3 rounded-2xl border border-white/40 px-4 py-2.5 text-center shadow-lg backdrop-blur-xl {feedback.tone ===
+					'bad'
+						? 'bg-rose-600/95 shadow-rose-950/20'
+						: 'bg-emerald-600/95 shadow-emerald-950/20'}"
 				>
 					<p class="font-headline text-sm font-black text-white">{feedback.title}</p>
-					<p class="text-xs font-semibold text-white/85">{feedback.detail}</p>
+					<p class="text-xs font-semibold text-white/90">{feedback.detail}</p>
 				</div>
 			{/if}
 
@@ -529,7 +544,7 @@
 					{#if revealed}
 						{#if feedback?.tone === 'bad'}
 							<div
-								class="shadow-card flex flex-col items-center rounded-3xl border border-rose-200 bg-white p-5 text-center"
+								class="flex flex-col items-center rounded-3xl border-2 border-rose-300/80 bg-white/90 p-5 text-center shadow-2xl shadow-rose-950/15 backdrop-blur-xl"
 								role="alert"
 							>
 								<span
@@ -556,7 +571,7 @@
 							</div>
 						{:else}
 							<div
-								class="shadow-card flex items-center justify-center gap-4 rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4"
+								class="flex items-center justify-center gap-4 rounded-2xl border border-emerald-200/80 bg-white/90 p-4 shadow-xl shadow-emerald-950/10 backdrop-blur-xl"
 							>
 								<img
 									src={revealed.sprite}
@@ -582,15 +597,15 @@
 								type="button"
 								onclick={() => chooseOption(option)}
 								aria-label={option.english}
-								class="shadow-card hover:shadow-card-hover flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-3 text-left transition-all hover:border-indigo-200 active:scale-[0.98]"
+								class="flex items-center gap-3.5 rounded-2xl border border-white/80 bg-white/85 p-3 text-left shadow-md shadow-amber-950/5 backdrop-blur-xl transition-all hover:border-indigo-300 hover:bg-white/95 hover:shadow-lg active:scale-[0.98]"
 							>
 								<img
 									src={option.sprite}
 									alt={option.english}
 									decoding="async"
-									class="h-10 w-10 shrink-0 object-contain"
+									class="drop-shadow-2xs h-10 w-10 shrink-0 object-contain"
 								/>
-								<span class="flex-1 font-headline text-sm font-bold text-slate-900">
+								<span class="flex-1 font-headline text-sm font-extrabold text-slate-900">
 									{option.english}
 								</span>
 								<svg
@@ -600,7 +615,7 @@
 									fill="none"
 									stroke="currentColor"
 									stroke-width="2.5"
-									class="shrink-0 text-slate-300"
+									class="shrink-0 text-slate-400"
 									aria-hidden="true"
 								>
 									<path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />

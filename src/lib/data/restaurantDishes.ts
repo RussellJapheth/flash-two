@@ -64,16 +64,16 @@ const COMPONENT_SEEDS: ReadonlyArray<{
 	hanzi: string;
 	sprites: readonly string[];
 }> = [
-	{ id: 'mifan', station: 'main', hanzi: '米饭', sprites: ['bowl', 'rice-ball'] },
+	{ id: 'mifan', station: 'main', hanzi: '米饭', sprites: ['rice-ball'] },
 	{ id: 'miantiao', station: 'main', hanzi: '面条', sprites: ['chinese'] },
 	{ id: 'baozi', station: 'main', hanzi: '包子', sprites: ['steamer', 'dim-sum'] },
 	{
 		id: 'rou',
 		station: 'dish',
 		hanzi: '肉',
-		sprites: ['meat-cooked', 'meat-ribs', 'bacon', 'sausage', 'whole-ham']
+		sprites: ['meat-cooked', 'meat-ribs']
 	},
-	{ id: 'niurou', station: 'dish', hanzi: '牛肉', sprites: ['burger', 'meat-patty'] },
+	{ id: 'niurou', station: 'dish', hanzi: '牛肉', sprites: ['meat-patty'] },
 	{ id: 'jirou', station: 'dish', hanzi: '鸡肉', sprites: ['turkey'] },
 	{ id: 'yu', station: 'dish', hanzi: '鱼', sprites: ['fish'] },
 	{ id: 'jidan', station: 'dish', hanzi: '鸡蛋', sprites: ['egg-cooked', 'egg', 'egg-half'] },
@@ -82,20 +82,7 @@ const COMPONENT_SEEDS: ReadonlyArray<{
 		id: 'cai',
 		station: 'produce',
 		hanzi: '菜',
-		sprites: [
-			'broccoli',
-			'cabbage',
-			'carrot',
-			'corn',
-			'cauliflower',
-			'eggplant',
-			'leek',
-			'mushroom',
-			'onion',
-			'pepper',
-			'tomato',
-			'salad'
-		]
+		sprites: ['cabbage', 'salad']
 	},
 	{
 		id: 'shuiguo',
@@ -115,14 +102,14 @@ const COMPONENT_SEEDS: ReadonlyArray<{
 	{ id: 'pingguo', station: 'produce', hanzi: '苹果', sprites: ['apple', 'apple-half'] },
 	{ id: 'cha', station: 'drink', hanzi: '茶', sprites: ['cup-tea'] },
 	{ id: 'kafei', station: 'drink', hanzi: '咖啡', sprites: ['cup-coffee'] },
-	{ id: 'niunai', station: 'drink', hanzi: '牛奶', sprites: ['mug', 'carton', 'carton-small'] },
-	{ id: 'shui', station: 'drink', hanzi: '水', sprites: ['glass', 'soda-glass'] },
+	{ id: 'niunai', station: 'drink', hanzi: '牛奶', sprites: ['carton', 'carton-small'] },
+	{ id: 'shui', station: 'drink', hanzi: '水', sprites: ['glass'] },
 	{ id: 'yan', station: 'pantry', hanzi: '盐', sprites: ['shaker-salt'] },
 	{
 		id: 'sugar',
 		station: 'pantry',
 		hanzi: '糖',
-		sprites: ['candy-bar', 'lollypop', 'chocolate', 'popsicle']
+		sprites: ['candy-bar', 'lollypop', 'chocolate']
 	},
 	{ id: 'jiangyou', station: 'pantry', hanzi: '酱油', sprites: ['soy'] }
 ];

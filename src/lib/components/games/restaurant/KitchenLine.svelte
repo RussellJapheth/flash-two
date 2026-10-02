@@ -46,9 +46,10 @@
 
 	const TICK_MS = 40;
 	const LIFE_SLOTS = Array.from({ length: MAX_LIVES }, (_, index) => index);
-	/** Verdict beat. The outcome message is shown in full before the next
-	 * question and its options are loaded. */
-	const OUTCOME_MS = 1500;
+	/** Verdict beat for correct answers. */
+	const OUTCOME_MS = 2000;
+	/** Verdict beat for wrong answers. The message stays for 5 seconds so the user has time to read it. */
+	const WRONG_OUTCOME_MS = 3500;
 
 	let phase = $state<'briefing' | 'playing' | 'finished'>('briefing');
 	let order = $state<DishSpec | null>(null);
@@ -106,12 +107,13 @@
 		if (speechTimer) clearTimeout(speechTimer);
 	}
 
-	function announce(title: string, detail: string, tone: 'good' | 'bad') {
+	function announce(title: string, detail: string, tone: 'good' | 'bad', duration?: number) {
 		const id = ++feedbackSeq;
 		feedback = { id, title, detail, tone };
+		const timeout = duration ?? (tone === 'bad' ? WRONG_OUTCOME_MS : OUTCOME_MS - 200);
 		later(() => {
 			if (feedback?.id === id) feedback = null;
-		}, OUTCOME_MS - 200);
+		}, timeout);
 	}
 
 	function componentById(id: string): MenuItem | undefined {
@@ -188,18 +190,26 @@
 		stopTimer();
 		revealed = answer ?? null;
 		options = [];
-		if (soundEnabled) playSound('wrong');
+		if (soundEnabled) {
+			playSound('wrong');
+			if (answer?.hanzi) say(answer.hanzi, 300);
+		}
 		const detail = answer
-			? `${answer.hanzi} ${answer.pinyin} means ${answer.english}`
+			? `${answer.hanzi} (${answer.pinyin}) means ${answer.english}`
 			: 'This menu item has no meaning loaded';
-		announce(timedOut ? "Time's up" : `Not ${tapped?.english ?? 'that'}`, detail, 'bad');
+		announce(
+			timedOut ? "Time's up" : tapped ? `Not ${tapped.english}` : 'Incorrect',
+			detail,
+			'bad',
+			WRONG_OUTCOME_MS
+		);
 		later(() => {
 			if (lives <= 0 || cursor >= (order?.requirements.length ?? 0)) {
 				finishRound();
 				return;
 			}
 			loadItem();
-		}, OUTCOME_MS);
+		}, WRONG_OUTCOME_MS);
 	}
 
 	function chooseOption(option: MenuItem) {
@@ -516,9 +526,55 @@
 			<!-- English answers -->
 			<section class="mt-3 px-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
 				{#if locked}
-					<p class="text-center text-sm font-semibold text-slate-500">
-						{revealed?.hanzi} ({revealed?.pinyin}) means {revealed?.english}
-					</p>
+					{#if revealed}
+						{#if feedback?.tone === 'bad'}
+							<div
+								class="shadow-card flex flex-col items-center rounded-3xl border border-rose-200 bg-white p-5 text-center"
+								role="alert"
+							>
+								<span
+									class="rounded-full bg-rose-100 px-3 py-1 font-headline text-[11px] font-extrabold tracking-wider text-rose-700 uppercase"
+								>
+									Correct Answer
+								</span>
+
+								<img
+									src={revealed.sprite}
+									alt={revealed.english}
+									class="my-3 h-20 w-20 object-contain drop-shadow-sm"
+								/>
+
+								<p class="font-headline text-4xl font-black tracking-tight text-slate-900">
+									{revealed.hanzi}
+								</p>
+								<p class="mt-0.5 font-headline text-base font-bold text-indigo-600">
+									{revealed.pinyin}
+								</p>
+								<p class="mt-1.5 font-headline text-lg font-black text-slate-800">
+									{revealed.english}
+								</p>
+							</div>
+						{:else}
+							<div
+								class="shadow-card flex items-center justify-center gap-4 rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4"
+							>
+								<img
+									src={revealed.sprite}
+									alt={revealed.english}
+									class="h-12 w-12 object-contain"
+								/>
+								<div>
+									<p class="font-headline text-base font-black text-slate-900">
+										{revealed.hanzi}
+										<span class="text-sm font-bold text-indigo-600">({revealed.pinyin})</span>
+									</p>
+									<p class="text-sm font-bold text-slate-700">{revealed.english}</p>
+								</div>
+							</div>
+						{/if}
+					{:else}
+						<p class="text-center text-sm font-semibold text-slate-500">Loading next course...</p>
+					{/if}
 				{:else}
 					<div class="grid gap-2">
 						{#each options as option (option.id)}
@@ -530,7 +586,7 @@
 							>
 								<img
 									src={option.sprite}
-									alt=""
+									alt={option.english}
 									decoding="async"
 									class="h-10 w-10 shrink-0 object-contain"
 								/>

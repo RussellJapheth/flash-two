@@ -99,7 +99,7 @@ describe('Restaurant menu data', () => {
 	it('uses a lot of the food pack across the menu', () => {
 		const resolved = requireMenu();
 		const used = new Set(resolved.components.flatMap((component) => component.sprites));
-		expect(used.size).toBeGreaterThanOrEqual(45);
+		expect(used.size).toBeGreaterThanOrEqual(30);
 
 		const baked = readdirSync(SPRITE_DIR).filter((file) => file.endsWith('.png'));
 		expect(baked.length).toBeGreaterThanOrEqual(50);

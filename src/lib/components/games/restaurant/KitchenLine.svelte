@@ -7,9 +7,8 @@
 	import {
 		ITEM_TIME_MS,
 		MAX_LIVES,
-		ORDER_STATIONS,
 		buildItemOptions,
-		buildOrder,
+		buildShuffledOrder,
 		flattenServiceMenu,
 		itemPoints,
 		resolveServiceMenu,
@@ -49,6 +48,28 @@
 	const OUTCOME_MS = 2000;
 	/** Verdict beat for wrong answers. The message stays for 5 seconds so the user has time to read it. */
 	const WRONG_OUTCOME_MS = 3500;
+	const RECENT_ITEMS_KEY = 'restaurant_recent_items';
+
+	function loadRecentComponentIds(): string[] {
+		if (typeof window === 'undefined') return [];
+		try {
+			const raw = sessionStorage.getItem(RECENT_ITEMS_KEY);
+			if (!raw) return [];
+			const parsed = JSON.parse(raw);
+			return Array.isArray(parsed) ? parsed : [];
+		} catch {
+			return [];
+		}
+	}
+
+	function saveRecentComponentIds(ids: string[]): void {
+		if (typeof window === 'undefined') return;
+		try {
+			sessionStorage.setItem(RECENT_ITEMS_KEY, JSON.stringify(ids));
+		} catch {
+			// Ignore quota or disabled storage errors
+		}
+	}
 
 	let phase = $state<'briefing' | 'playing' | 'finished'>('briefing');
 	let order = $state<DishSpec | null>(null);
@@ -263,19 +284,12 @@
 		clearPending();
 		roundActive = true;
 		diner = DINER_PROFILES[Math.floor(Math.random() * DINER_PROFILES.length)];
-		service = flattenServiceMenu(resolveServiceMenu(Math.random, menu.byStation));
+		const resolvedByStation = resolveServiceMenu(Math.random, menu.byStation);
+		service = flattenServiceMenu(resolvedByStation);
 		warmSprites(service);
-		order = buildOrder(
-			Math.random,
-			{
-				main: service.filter((item) => item.station === 'main'),
-				dish: service.filter((item) => item.station === 'dish'),
-				produce: service.filter((item) => item.station === 'produce'),
-				drink: service.filter((item) => item.station === 'drink'),
-				pantry: service.filter((item) => item.station === 'pantry')
-			},
-			ORDER_STATIONS
-		);
+		const previousIds = loadRecentComponentIds();
+		order = buildShuffledOrder(Math.random, resolvedByStation, previousIds);
+		saveRecentComponentIds(order.requirements.map((r) => r.componentId));
 		cursor = 0;
 		currentId = null;
 		platedIds = [];

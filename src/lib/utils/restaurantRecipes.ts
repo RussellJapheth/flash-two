@@ -131,6 +131,97 @@ export function buildOrder(
 }
 
 /**
+ * Builds a diner order where questions are properly shuffled and items are drawn
+ * without immediate replacement across rounds.
+ *
+ * Ensures:
+ * 1. Items not served in recent rounds (`previousComponentIds`) are prioritized,
+ *    so players experience the full menu instead of cycling the same 10-11 items.
+ * 2. Every station present on the menu is represented in the order whenever possible.
+ * 3. The courses/questions are randomly shuffled so the order of questions is
+ *    unpredictable and engaging.
+ */
+export function buildShuffledOrder(
+	rng: () => number,
+	service: Record<StationId, MenuItem[]>,
+	previousComponentIds: readonly string[] = [],
+	size = ORDER_SIZE
+): DishSpec {
+	if (!Number.isInteger(size) || size < 1) {
+		throw new Error('An order needs at least one item');
+	}
+
+	const allItems = flattenServiceMenu(service);
+	if (allItems.length === 0) {
+		throw new Error('No menu items available for order');
+	}
+
+	const previousSet = new Set(previousComponentIds);
+	const fresh = allItems.filter((item) => !previousSet.has(item.id));
+	const used = allItems.filter((item) => previousSet.has(item.id));
+
+	const chosen: MenuItem[] = [];
+	const chosenIds = new Set<string>();
+
+	// 1. Ensure each available station has representation if possible, preferring fresh items
+	for (const station of ORDER_STATIONS) {
+		if (chosen.length >= size) break;
+		const stationItems = service[station] ?? [];
+		if (stationItems.length === 0) continue;
+
+		const stationFresh = stationItems.filter((item) => !previousSet.has(item.id));
+		const candidatePool = stationFresh.length > 0 ? stationFresh : stationItems;
+		const available = candidatePool.filter((item) => !chosenIds.has(item.id));
+		if (available.length > 0) {
+			const picked = pickRandom(rng, available);
+			chosen.push(picked);
+			chosenIds.add(picked.id);
+		}
+	}
+
+	// 2. Fill remaining slots prioritizing remaining fresh items
+	const remainingFresh = shuffle(
+		rng,
+		fresh.filter((item) => !chosenIds.has(item.id))
+	);
+	while (chosen.length < size && remainingFresh.length > 0) {
+		const next = remainingFresh.pop();
+		if (!next) break;
+		chosen.push(next);
+		chosenIds.add(next.id);
+	}
+
+	// 3. If still needed, fill from remaining used items
+	const remainingUsed = shuffle(
+		rng,
+		used.filter((item) => !chosenIds.has(item.id))
+	);
+	while (chosen.length < size && remainingUsed.length > 0) {
+		const next = remainingUsed.pop();
+		if (!next) break;
+		chosen.push(next);
+		chosenIds.add(next.id);
+	}
+
+	// 4. Fallback if size exceeds unique items
+	while (chosen.length < size) {
+		const picked = pickRandom(rng, allItems);
+		chosen.push(picked);
+	}
+
+	// 5. Shuffle the questions thoroughly so the course sequence is not fixed
+	const shuffled = shuffle(rng, chosen);
+
+	return {
+		components: shuffled,
+		requirements: shuffled.map((component) => ({
+			station: component.station,
+			componentId: component.id
+		}))
+	};
+}
+
+/**
  * English answer choices for one item: the correct component plus distractors
  * from the same course, so every tap is a real meaning decision.
  */

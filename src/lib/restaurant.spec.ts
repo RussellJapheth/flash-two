@@ -16,6 +16,7 @@ import {
 	OPTION_COUNT,
 	buildItemOptions,
 	buildOrder,
+	buildShuffledOrder,
 	createRng,
 	flattenServiceMenu,
 	itemPoints,
@@ -329,5 +330,83 @@ describe('Restaurant XP rewards', () => {
 		expect(calculateGameXP(4, 100, 4)).toBe(7);
 		expect(calculateGameXP(2, 60, 1)).toBe(3);
 		expect(calculateGameXP(1, 40, 0)).toBe(1);
+	});
+});
+
+describe('Shuffled order building', () => {
+	it('serves ten unique items without duplicates in one order', () => {
+		const order = buildShuffledOrder(createRng(42), serviceFor(42));
+		expect(order.requirements).toHaveLength(ORDER_SIZE);
+		expect(order.components).toHaveLength(ORDER_SIZE);
+		const ids = order.requirements.map((r) => r.componentId);
+		expect(new Set(ids).size).toBe(ORDER_SIZE);
+	});
+
+	it('covers every station present on the menu', () => {
+		const order = buildShuffledOrder(createRng(99), serviceFor(99));
+		const stations = new Set(order.requirements.map((r) => r.station));
+		for (const station of ORDER_STATIONS) {
+			expect(stations.has(station)).toBe(true);
+		}
+	});
+
+	it('shuffles the questions so they do not follow a fixed repeating cycle', () => {
+		// Over 10 different seeds, at least some orders will not start with 'main' or follow strict cyclic order
+		let hasNonCyclicStationOrder = false;
+		for (let seed = 1; seed <= 15; seed += 1) {
+			const order = buildShuffledOrder(createRng(seed), serviceFor(seed));
+			const stations = order.requirements.map((r) => r.station);
+			// Check if any adjacent stations do not follow the strict ORDER_STATIONS cycle
+			for (let i = 1; i < stations.length; i += 1) {
+				const prevStation = stations[i - 1];
+				const expectedNext =
+					ORDER_STATIONS[(ORDER_STATIONS.indexOf(prevStation) + 1) % ORDER_STATIONS.length];
+				if (stations[i] !== expectedNext) {
+					hasNonCyclicStationOrder = true;
+					break;
+				}
+			}
+			if (hasNonCyclicStationOrder) break;
+		}
+		expect(hasNonCyclicStationOrder).toBe(true);
+	});
+
+	it('prioritizes unserved items across consecutive rounds (draw without replacement)', () => {
+		const rng = createRng(100);
+		const service = serviceFor(100);
+
+		// Round 1
+		const round1 = buildShuffledOrder(rng, service, []);
+		const round1Ids = round1.requirements.map((r) => r.componentId);
+		expect(round1Ids).toHaveLength(ORDER_SIZE);
+
+		// Round 2 receives Round 1's IDs as previousComponentIds
+		const round2 = buildShuffledOrder(rng, service, round1Ids);
+		const round2Ids = round2.requirements.map((r) => r.componentId);
+		expect(round2Ids).toHaveLength(ORDER_SIZE);
+
+		// From 19 total items, 10 served in round 1 leaves 9 fresh items.
+		// Round 2 MUST contain all 9 fresh items!
+		const combined = new Set([...round1Ids, ...round2Ids]);
+		expect(combined.size).toBe(19);
+
+		// Exactly 1 item should overlap between round 1 and round 2 (10 + 10 - 19 = 1)
+		const overlap = round1Ids.filter((id) => round2Ids.includes(id));
+		expect(overlap).toHaveLength(1);
+	});
+
+	it('throws for invalid sizes or empty menu', () => {
+		const service = serviceFor(1);
+		expect(() => buildShuffledOrder(createRng(1), service, [], 0)).toThrow();
+		expect(() => buildShuffledOrder(createRng(1), service, [], -1)).toThrow();
+		expect(() =>
+			buildShuffledOrder(createRng(1), {
+				main: [],
+				dish: [],
+				produce: [],
+				drink: [],
+				pantry: []
+			})
+		).toThrow(/No menu items/);
 	});
 });

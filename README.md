@@ -18,7 +18,7 @@ A modern, offline-first spaced repetition flashcards app for learning languages,
 - [SvelteKit](https://svelte.dev/docs/kit) (Svelte 5 with runes) as the app framework
 - [TypeScript](https://www.typescriptlang.org/) throughout
 - [Tailwind CSS](https://tailwindcss.com/) v4 for styling
-- [Vite](https://vitejs.dev/) with [Vitest](https://vitest.dev/) (unit + browser component tests) and [Playwright](https://playwright.dev/) (e2e)
+- [Vite](https://vitejs.dev/) with [Vitest](https://vitest.dev/) (unit suite)
 - Deployed as a static build on [Netlify](https://www.netlify.com/) (`@sveltejs/adapter-netlify`)
 
 ## Getting started
@@ -49,9 +49,8 @@ pnpm preview      # preview the production build
 pnpm check        # svelte-check type checking
 pnpm lint         # prettier + eslint
 pnpm format       # prettier --write
-pnpm test:unit    # vitest unit/component suite
-pnpm test:e2e     # playwright e2e suite
-pnpm test         # unit + e2e
+pnpm test:unit    # vitest unit suite
+pnpm test         # run tests
 ```
 
 ## Environment variables

@@ -17,8 +17,6 @@ import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
-import { chromium } from 'playwright';
-
 const execFileAsync = promisify(execFile);
 const REPO_ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const SPRITE_DIR = join(REPO_ROOT, 'static/images/restaurant/sprites');
@@ -88,6 +86,7 @@ async function main() {
 	]);
 
 	const { server, port } = await startStaticServer();
+	const { chromium } = await import('playwright');
 	const browser = await chromium.launch();
 	const page = await browser.newPage({ viewport: { width: SPRITE_SIZE, height: SPRITE_SIZE } });
 	page.on('pageerror', (error) => {

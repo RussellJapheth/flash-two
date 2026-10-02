@@ -99,12 +99,12 @@
 			rank1Border: 'border-emerald-300'
 		},
 		{
-			id: 'food-cart',
-			gameId: 'food-cart',
-			gameTitle: 'Street Food Cart',
+			id: 'restaurant',
+			gameId: 'restaurant',
+			gameTitle: 'Restaurant',
 			mode: 'visual',
-			title: 'Food Cart 3D',
-			tag: '3D Food',
+			title: 'Restaurant',
+			tag: 'Food',
 			accentGradient:
 				'bg-linear-to-r from-amber-500/85 via-orange-500/80 to-rose-600/80 text-white shadow-lg shadow-orange-500/10',
 			borderClass: 'border-white/60',
@@ -411,35 +411,31 @@
 			</div>
 		</a>
 
-		<!-- Street Food Cart 3D Card -->
+		<!-- Restaurant Card -->
 		<a
-			href={resolve('/games/food-cart')}
-			id="game-food-cart-card"
+			href={resolve('/games/restaurant')}
+			id="game-restaurant-card"
 			class="group shadow-card hover:shadow-card-hover relative flex items-center justify-between overflow-hidden rounded-3xl border border-amber-200 bg-linear-to-r from-white via-amber-50/50 to-orange-50/40 p-4 transition-all hover:-translate-y-0.5 hover:border-amber-400 active:scale-[0.98]"
 		>
 			<div class="flex items-center gap-3.5">
-				<!-- 3D Game Icon -->
+				<!-- Game Icon -->
 				<div class="relative shrink-0">
 					<img
-						src="/images/food-cart-icon.jpg"
-						alt="Street Food Cart 3D"
-						class="h-16 w-16 rounded-2xl border border-white/80 object-cover shadow-md shadow-amber-500/20 transition-transform duration-300 group-hover:scale-105"
+						src="/images/restaurant/icon.png"
+						alt="Restaurant"
+						width="64"
+						height="64"
+						decoding="async"
+						class="h-16 w-16 rounded-2xl border border-white/80 bg-amber-50 object-contain p-1.5 shadow-md shadow-amber-500/20 transition-transform duration-300 group-hover:scale-105"
 					/>
 				</div>
 
 				<div class="space-y-1">
-					<div class="flex items-center gap-1.5">
-						<h4 class="font-headline text-base font-black tracking-tight text-slate-900">
-							Street Food Cart 3D
-						</h4>
-						<span
-							class="rounded-md bg-amber-100 px-1.5 py-0.5 font-headline text-[10px] font-extrabold text-amber-800"
-						>
-							NEW 3D
-						</span>
-					</div>
+					<h4 class="font-headline text-base font-black tracking-tight text-slate-900">
+						Restaurant
+					</h4>
 					<p class="font-sans text-xs text-slate-500">
-						Serve hungry patrons • 3D touch counter & voice orders
+						Read hanzi + pinyin, pick the English meaning
 					</p>
 				</div>
 			</div>

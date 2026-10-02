@@ -30,12 +30,16 @@
 
 ## 3D Game Ideas (Kenney CC0 Assets + Three.js)
 
-### 1. "Street Food Cart" — 3D Order Rush
+### 1. "Restaurant" — 2D Kitchen Line (shipped)
 
-- **Pack**: [Kenney Food Kit](https://kenney.nl/assets/food-kit) (fruits, veggies, bowls, buns, dishes)
-- **Concept**: Customer orders food via audio / pinyin (e.g. _píngguǒ_, _bāozi_, _chá_). Player taps/drags 3D food item from counter onto customer tray. Combo streak, tip multiplier, timer rush.
-- **Why it fits**: Food vocab matches beginner HSK1 curriculum. 3D items show visual meaning directly without needing Chinese character reading.
-- **Mobile Playability**: Excellent. Single-finger tap or drag-and-drop using Three.js raycasting (`pointerdown` / `touchstart`). Fits portrait or landscape screens cleanly.
+- **Route**: `src/routes/games/restaurant/` — game ID `restaurant`, leaderboard mode `visual`
+- **Packs**: [Kenney Food Kit](https://kenney.nl/assets/food-kit) + [Furniture Kit](https://kenney.nl/assets/furniture-kit) (CC0)
+- **Concept**: One timed ordering game on a shared menu of 19 real vocabulary terms across 5 courses (main, dish, produce, drink, pantry). Each course shows its hanzi and pinyin; tap the English meaning before the 7s timer runs out and the course is plated onto the order. A wrong pick or a timeout costs one of 3 lives, and plating all 10 courses ends the shift. Every new question and its full 7s timer appear together.
+- **Sprite variety**: Each term maps to a pool of 2-4 Food Kit sprites, resolved once per round, so repeated rounds and repeated words show different art. Answers carry the artwork; the prompt stays text-only.
+- **Why it fits**: Food vocab is HSK1-level and the answer buttons reuse the same baked sprites, so meaning and picture are learned together.
+- **Asset pipeline**: `pnpm bake:sprites` loads each GLB headless, frames it with an alpha-trimmed auto-fit camera, and writes 256×256 PNGs to `static/images/restaurant/sprites/` (67 sprites: 57 food + 10 furniture) plus a 512×512 `static/images/restaurant/icon.png` for the games list. Source models stay in `static/models/restaurant/`. `three` is a **dev-only** dependency used solely by this pipeline; the shipped game imports no 3D runtime.
+- **Sprite preloading**: `warmSprites()` pulls the whole menu through the network and decoder on mount, then re-warms the exact round being served, so answer art is already decoded when a question appears.
+- **Mobile Playability**: Portrait, tap-only, no scrolling in the playing states.
 
 ### 2. "Vocab Taxi" — 3D City Delivery
 
@@ -49,6 +53,10 @@
 ---
 
 ## 3D Game Engine Setup Instructions (Three.js in SvelteKit)
+
+Three.js is installed as a **dev-only** dependency for the Restaurant sprite bake pipeline; the shipped
+game is 2D and imports no 3D runtime. Use these notes only if a future game genuinely needs live 3D in
+the browser.
 
 1. **Dependency**:
 

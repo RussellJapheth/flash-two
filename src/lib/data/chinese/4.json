@@ -189,7 +189,7 @@
 			"Chinese Word": "买单",
 			"Pinyin": "mǎidān",
 			"Part of Speech": "Verb Phrase",
-			"English Meaning": "to pay the bill / check please",
+			"English Meaning": "to pay the bill / bill please",
 			"Acceptable Answers": ["点菜"],
 			"Example (Chinese + Pinyin)": "服务员，我们要买单。(Fúwùyuán, wǒmen yào mǎidān.) — Server, we would like to pay the bill."
 		},

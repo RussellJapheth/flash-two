@@ -8,7 +8,7 @@ A modern, offline-first spaced repetition flashcards app for learning languages,
 - **Offline-first**: study data lives in the browser (IndexedDB via `storage.ts`), with a service worker for offline caching and debounced background sync
 - **Chinese learning focus**: HSK-aligned decks with pinyin, tones, tone-sandhi detection, and cloze (sentence-fill) practice with multiple accepted answers
 - **Speech practice**: Web Speech API recognition with accuracy evaluation (`src/lib/utils/speech.ts`)
-- **Games**: Match Blitz and Number Rush arcade modes with combo scoring, heartbeat pressure, and shields
+- **Games**: Match Blitz and Number Rush arcade modes with combo scoring, heartbeat pressure, and shields, plus Restaurant's timed Kitchen Line, a 10-course shift across 19 real food and drink words in 5 courses, where you match hanzi and pinyin to the English meaning before the timer runs out
 - **Progress system**: XP, levels, streaks (with streak freezes), milestone celebrations, and weekly/monthly leaderboards
 - **Custom decks**: import from CSV, edit via a spreadsheet-style modal, or build decks inline
 - **PWA-ready**: installable manifest, icons, and a service worker for near-instant reloads

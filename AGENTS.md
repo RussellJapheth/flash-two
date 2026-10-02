@@ -8,7 +8,7 @@
 - **Code Quality & Validation**: All code must meet production-grade standards. Enforce strict TypeScript typing (no `any`), zero compiler/svelte-check warnings, zero runtime errors, and adherence to accessibility standards. Before marking any task complete, verify with type-checking (`pnpm check`), linting (`pnpm lint`), and existing test suites (`pnpm test:unit`).
 - **XP Economy & Award Rules**: All XP awards must go through the centralized ledger in `src/lib/utils/xp.ts` via `addXP()`. Never fabricate arbitrary XP increments or bypass standard formulas:
   - **Core Learning Priority**: SRS and deck study are the primary XP drivers. Flashcard ratings award 1–4 XP via `calculateReviewXP()` plus session completion and accuracy bonuses (2–5 XP) via `calculateSessionBonus()`.
-  - **Mini-Game Scaling**: Mini-games must be scaled lower than core study to prevent gamification exploits. All mini-games (Match Blitz, Number Rush, and new 2D/3D games) must calculate rewards via `calculateGameXP(correct, accuracy, maxCombo)`:
+  - **Mini-Game Scaling**: Mini-games must be scaled lower than core study to prevent gamification exploits. All mini-games (Match Blitz, Number Rush, Restaurant, and new 2D/3D games) must calculate rewards via `calculateGameXP(correct, accuracy, maxCombo)`:
     - Base: 1 XP per 2 correct answers (`Math.floor(correct * 0.5)`).
     - Accuracy Bonus: +4 XP (accuracy ≥ 80%) or +2 XP (accuracy ≥ 60%).
     - Combo Bonus: `Math.min(3, Math.floor(maxCombo / 3))` (max +3 XP).

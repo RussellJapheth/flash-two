@@ -138,19 +138,24 @@
 	</div>
 {:else if phase === 'playing'}
 	<div
-		class="relative flex min-h-dvh flex-col overflow-hidden bg-slate-900 font-sans text-slate-900 select-none"
+		class="relative flex min-h-dvh flex-col overflow-hidden bg-amber-50/40 font-sans text-slate-900 select-none"
 	>
-		<KitchenLine
-			{menu}
-			{soundEnabled}
-			{highScore}
-			onFinish={(result) => void recordRound(result)}
-			onExit={() => goto(resolve('/games'))}
-			onToggleSound={() => (soundEnabled = !soundEnabled)}
-		/>
+		<KitchenScene />
+		<div class="relative z-10 mx-auto flex min-h-dvh w-full max-w-md flex-1 flex-col">
+			<KitchenLine
+				{menu}
+				{soundEnabled}
+				{highScore}
+				onFinish={(result) => void recordRound(result)}
+				onExit={() => goto(resolve('/games'))}
+				onToggleSound={() => (soundEnabled = !soundEnabled)}
+			/>
+		</div>
 	</div>
 {:else if summary}
-	<div class="relative min-h-dvh overflow-hidden bg-slate-900 font-sans text-slate-900 select-none">
+	<div
+		class="relative min-h-dvh overflow-hidden bg-amber-50/40 font-sans text-slate-900 select-none"
+	>
 		<KitchenScene />
 		<header
 			class="sticky top-0 z-40 flex items-center gap-2 border-b border-white/60 bg-white/70 px-4 py-3 shadow-xs backdrop-blur-xl"

@@ -22,7 +22,6 @@
 		type MenuItem,
 		type RestaurantMenu
 	} from '$lib/data/restaurantDishes';
-	import KitchenScene from './KitchenScene.svelte';
 
 	export interface RoundResult {
 		score: number;
@@ -393,7 +392,6 @@
 
 	{#if phase === 'briefing'}
 		<div class="relative flex flex-1 flex-col justify-center gap-4 p-5">
-			<KitchenScene />
 			<section
 				class="relative overflow-hidden rounded-3xl border border-white/80 bg-white/85 p-6 shadow-xl shadow-amber-950/10 backdrop-blur-xl"
 			>
@@ -434,7 +432,6 @@
 		</div>
 	{:else if order && currentItem}
 		<div class="relative flex min-h-full flex-col">
-			<KitchenScene />
 			<!-- Diner -->
 			<section
 				class="mx-3 mt-3 flex items-center gap-3 rounded-2xl border border-white/80 bg-white/85 p-3 shadow-lg shadow-amber-950/5 backdrop-blur-xl"

@@ -452,12 +452,14 @@
 				</p>
 			</section>
 
-			<p
-				class="drop-shadow-2xs mt-3 text-center font-headline text-[11px] font-extrabold tracking-wider text-slate-700 uppercase"
-			>
-				{courseLabel} · Course {Math.min(questionIndex + 1, order.requirements.length)} of {order
-					.requirements.length}
-			</p>
+			<div class="mt-3 flex justify-center">
+				<span
+					class="inline-flex items-center rounded-full border border-white/80 bg-white/90 px-3 py-1 font-headline text-[11px] font-black tracking-wider text-slate-800 uppercase shadow-xs backdrop-blur-md"
+				>
+					{courseLabel} · Course {Math.min(questionIndex + 1, order.requirements.length)} of {order
+						.requirements.length}
+				</span>
+			</div>
 
 			<!-- Prompt: the hanzi + pinyin the player has to translate -->
 			<div bind:this={promptEl} class="relative mx-3 mt-4 flex flex-1 flex-col">

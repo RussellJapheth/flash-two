@@ -305,9 +305,22 @@
 					{meaning}
 				</p>
 
+				{#if word.customNote}
+					<div
+						class="mt-4 max-w-sm rounded-2xl border border-indigo-100 bg-indigo-50/70 p-3.5 text-left"
+					>
+						<p class="mb-1 font-headline text-xs font-bold tracking-wider text-indigo-700 uppercase">
+							Personal Note:
+						</p>
+						<p class="font-sans text-sm leading-relaxed font-medium text-indigo-950">
+							{word.customNote}
+						</p>
+					</div>
+				{/if}
+
 				{#if example}
 					<div
-						class="mt-5 max-w-sm rounded-2xl border border-slate-200/80 bg-slate-50 p-4 text-left"
+						class="mt-4 max-w-sm rounded-2xl border border-slate-200/80 bg-slate-50 p-4 text-left"
 					>
 						<p class="mb-1 font-headline text-xs font-bold tracking-wider text-slate-500 uppercase">
 							Example:

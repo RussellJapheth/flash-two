@@ -99,13 +99,19 @@
 		let title = 'Vocabulary Drill';
 		let lang: 'chinese' | 'french' = 'chinese';
 
-		if (deckId.startsWith('custom-')) {
+		if (deckId.startsWith('custom-') || deckId === 'personal-dictionary') {
 			const customDecks = await getAllCustomDecks();
-			const match = customDecks.find((d) => d.id === deckId);
+			const match = customDecks.find((d) => d.id === deckId || (deckId === 'personal-dictionary' && d.isPersonalDictionary));
 			if (match) {
 				rawWords = match.words;
 				title = match.name;
 				lang = match.language || 'chinese';
+			} else if (deckId === 'personal-dictionary') {
+				const { getPersonalDictionaryDeck } = await import('$lib/utils/dictionary');
+				const pd = await getPersonalDictionaryDeck();
+				rawWords = pd.words;
+				title = pd.name;
+				lang = pd.language || 'chinese';
 			}
 		} else {
 			const chPacks = await getBuiltinPacks('chinese');

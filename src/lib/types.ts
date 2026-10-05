@@ -9,6 +9,19 @@ export interface WordRecord {
 	'Example (French)'?: string;
 	/** Other words that also complete this card's example sentence validly. */
 	'Acceptable Answers'?: string[];
+	customNote?: string;
+}
+
+export interface DictionaryEntry {
+	simplified: string;
+	traditional?: string;
+	pinyin: string;
+	pinyinNormalized: string;
+	definitions: string[];
+	partOfSpeech?: string;
+	exampleChinese?: string;
+	examplePinyin?: string;
+	exampleEnglish?: string;
 }
 
 export interface WordProgress {
@@ -31,6 +44,7 @@ export interface CustomDeck {
 	words: WordRecord[];
 	language?: 'chinese' | 'french';
 	createdAt?: number;
+	isPersonalDictionary?: boolean;
 }
 
 export interface SavedWord {

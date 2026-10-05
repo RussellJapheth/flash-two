@@ -39,7 +39,8 @@
 		Timer,
 		Pause,
 		Play,
-		Square
+		Square,
+		MessagesSquare
 	} from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
@@ -850,6 +851,36 @@
 			</div>
 		{/if}
 	</section>
+
+	<!-- Mastered Words Sentence Practice Dedicated Card -->
+	{#if masteredWordsCount > 0}
+		<section
+			class="shadow-card flex items-center justify-between gap-3 rounded-3xl border border-emerald-200/80 bg-emerald-50/50 p-5 transition-all hover:bg-emerald-50"
+		>
+			<div class="flex items-center gap-3">
+				<div
+					class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-emerald-200 bg-emerald-600 text-white shadow-xs"
+				>
+					<MessagesSquare size={20} strokeWidth={2.25} />
+				</div>
+				<div>
+					<h4 class="font-headline text-sm font-bold text-slate-900">
+						Sentence Practice — Mastered Words
+					</h4>
+					<p class="font-sans text-xs text-slate-500">
+						Reinforce all {masteredWordsCount.toLocaleString()} mastered words with cloze & speech drills
+					</p>
+				</div>
+			</div>
+			<a
+				href={resolve('/practice/sentences/mastered')}
+				class="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-2xl bg-emerald-600 px-4 py-2.5 font-headline text-xs font-bold text-white shadow-xs transition-all hover:bg-emerald-700 active:scale-[0.98]"
+			>
+				<span>Practice</span>
+				<ChevronRight size={14} strokeWidth={2.25} />
+			</a>
+		</section>
+	{/if}
 
 	<!-- Export Learned Words Section -->
 	<section class="shadow-card space-y-3.5 rounded-3xl border border-slate-200/80 bg-white p-5">

@@ -4,7 +4,8 @@
 	import { resolve } from '$app/paths';
 	import { onMount, onDestroy } from 'svelte';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
-	import { getBuiltinPacks, getAllCustomDecks } from '$lib/utils/storage';
+	import { getAllProgress, getWordProgress, getBuiltinPacks, getAllCustomDecks, saveProgress } from '$lib/utils/storage';
+	import { isCardMastered, calculateNextReview } from '$lib/utils/srs';
 	import {
 		buildCloze,
 		buildClozeOptions,
@@ -127,13 +128,41 @@
 			: 100
 	);
 
+	let isMasteredOnly = $derived(page.url.searchParams.get('mode') === 'mastered');
+
 	async function loadSession() {
 		stopSpeech();
 		let rawWords: WordRecord[] = [];
 		let title = 'Sentence Practice';
 		let lang: 'chinese' | 'french' = 'chinese';
 
-		if (deckId.startsWith('custom-')) {
+		const userProgress = await getAllProgress();
+
+		if (deckId === 'mastered') {
+			title = 'Mastered Words Sentence Practice';
+			const chPacks = await getBuiltinPacks('chinese');
+			const frPacks = await getBuiltinPacks('french');
+			const customDecks = await getAllCustomDecks();
+
+			const allActivePacks = [
+				...chPacks.map((p) => ({ id: p.id, words: p.words, lang: 'chinese' as const })),
+				...frPacks.map((p) => ({ id: p.id, words: p.words, lang: 'french' as const })),
+				...customDecks.map((d) => ({
+					id: d.id,
+					words: d.words,
+					lang: (d.language || 'chinese') as 'chinese' | 'french'
+				}))
+			];
+
+			for (const pack of allActivePacks) {
+				for (const w of pack.words) {
+					const p = getWordProgress(userProgress, pack.id, w.No, pack.lang);
+					if (isCardMastered(p)) {
+						rawWords.push(w);
+					}
+				}
+			}
+		} else if (deckId.startsWith('custom-')) {
 			const customDecks = await getAllCustomDecks();
 			const match = customDecks.find((d) => d.id === deckId);
 			if (match) {
@@ -165,6 +194,14 @@
 			}
 		}
 
+		if (isMasteredOnly && deckId !== 'mastered') {
+			title = `${title} (Mastered)`;
+			rawWords = rawWords.filter((w) => {
+				const p = getWordProgress(userProgress, deckId, w.No, lang);
+				return isCardMastered(p);
+			});
+		}
+
 		deckTitle = title;
 		deckLanguage = lang;
 
@@ -180,7 +217,8 @@
 			});
 		}
 
-		items = shuffleArray(built);
+		const shuffled = shuffleArray(built);
+		items = (deckId === 'mastered' || isMasteredOnly) ? shuffled.slice(0, 10) : shuffled;
 		currentIndex = 0;
 		isSessionFinished = false;
 		sessionCorrect = 0;
@@ -205,7 +243,7 @@
 		isUserRecording = false;
 	}
 
-	function handleSelectOption(option: ClozeOption) {
+	async function handleSelectOption(option: ClozeOption) {
 		if (!currentItem || isAdvancing || hasAnswered) return;
 		selectedOption = option.text;
 		showTranslation = true;
@@ -221,6 +259,14 @@
 			isClozeCorrect = false;
 			sessionWrong++;
 			playSound('wrong');
+
+			// Demote word back to learning stage in SRS
+			const allProg = await getAllProgress();
+			const currentProg = getWordProgress(allProg, currentItem.packId, currentItem.wordNo, deckLanguage);
+			const updatedProg = calculateNextReview(currentProg, 'again');
+			updatedProg.weekId = currentProg?.weekId || currentItem.packId;
+			updatedProg.wordNo = currentItem.wordNo;
+			await saveProgress(updatedProg);
 		}
 	}
 

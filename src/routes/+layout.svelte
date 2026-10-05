@@ -1,6 +1,7 @@
 <script lang="ts">
 	import './layout.css';
 	import BottomNav from '$lib/components/BottomNav.svelte';
+	import DictionaryModal from '$lib/components/DictionaryModal.svelte';
 	import { onMount } from 'svelte';
 	import { page, updated } from '$app/state';
 	import { initializeOfflinePacks, getSavedUsername, clearOfflineCache } from '$lib/utils/storage';
@@ -61,6 +62,9 @@
 	>
 		{@render children()}
 	</div>
+
+	<!-- Floating Dictionary Icon & Lookup Modal (Visible on all pages) -->
+	<DictionaryModal />
 
 	<!-- Bottom Navigation Bar (Shown on main views) -->
 	{#if !isStudySession}

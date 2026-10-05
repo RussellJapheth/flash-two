@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { onMount, onDestroy } from 'svelte';
+	import StudyTimer from '$lib/components/StudyTimer.svelte';
 	import { BUILTIN_STORIES } from '$lib/data/stories';
 	import type { Story, StoryNode, StoryChoice } from '$lib/types';
 	import {
@@ -306,6 +307,9 @@
 
 			<!-- Accessibility / Display Toggles -->
 			<div class="flex items-center gap-1.5">
+				<!-- Discreet Study Timer -->
+				<StudyTimer compact={true} />
+
 				{#if story.language === 'chinese'}
 					<button
 						type="button"

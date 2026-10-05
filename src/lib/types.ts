@@ -87,10 +87,27 @@ export interface AppBackup {
 	xpData?: UserXPData;
 	leaderboardDisabled?: boolean;
 	streakFreezeData?: StreakFreezeData;
+	studyTimeData?: StudyTimeData;
 }
 
 export interface StreakFreezeData {
 	usedDates: string[]; // ISO 'YYYY-MM-DD' when streak freeze was consumed
+}
+
+export type StudyTimerStatus = 'idle' | 'running' | 'paused';
+
+export interface ActiveStudyTimerState {
+	status: StudyTimerStatus;
+	elapsedSeconds: number;
+	sessionStartedAt: number;
+	lastActiveTimestamp: number;
+}
+
+export interface StudyTimeData {
+	totalSeconds: number;
+	dailySeconds: Record<string, number>; // 'YYYY-MM-DD': seconds
+	sessionsCount: number;
+	lastSessionDate?: string;
 }
 
 export type StudyRating = 'again' | 'hard' | 'good' | 'easy' | 'custom';

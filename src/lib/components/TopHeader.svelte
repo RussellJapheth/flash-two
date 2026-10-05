@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { SyncStatus } from '$lib/types';
 	import { subscribeSyncStatus, pushData } from '$lib/utils/cloud';
+	import StudyTimer from '$lib/components/StudyTimer.svelte';
 	import { onMount } from 'svelte';
 	import {
 		ArrowLeft,
@@ -77,6 +78,9 @@
 	</div>
 
 	<div class="flex items-center gap-2">
+		<!-- Discreet Study Session Counter -->
+		<StudyTimer />
+
 		<!-- Sync Indicator Button -->
 		<button
 			type="button"

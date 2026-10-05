@@ -13,7 +13,17 @@
 	} from '$lib/utils/storage';
 	import { computeLevelStats, getLevelTheme, getLocalUserXPData } from '$lib/utils/xp';
 	import { isCardMastered, isCardLearning, isCardDue } from '$lib/utils/srs';
-	import type { StreakStats, XPStats } from '$lib/types';
+	import {
+		getStudyTimeData,
+		subscribeStudyTimer,
+		startStudyTimer,
+		pauseStudyTimer,
+		resumeStudyTimer,
+		stopStudyTimer,
+		formatStudyDuration,
+		formatTimerDisplay
+	} from '$lib/utils/studyTimer';
+	import type { StreakStats, XPStats, StudyTimeData, ActiveStudyTimerState } from '$lib/types';
 	import {
 		ShieldCheck,
 		History,
@@ -24,7 +34,12 @@
 		FileSpreadsheet,
 		Check,
 		Sparkles,
-		Trophy
+		Trophy,
+		Clock,
+		Timer,
+		Pause,
+		Play,
+		Square
 	} from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
@@ -60,8 +75,33 @@
 
 	let leaderboardsDisabled = $state(true);
 
+	let studyTimeStats = $state<StudyTimeData>({
+		totalSeconds: 0,
+		dailySeconds: {},
+		sessionsCount: 0
+	});
+
+	let activeTimer = $state<ActiveStudyTimerState>({
+		status: 'idle',
+		elapsedSeconds: 0,
+		sessionStartedAt: 0,
+		lastActiveTimestamp: 0
+	});
+
+	let todayISO = new Date().toISOString().split('T')[0];
+
+	let effectiveTotalStudySeconds = $derived(
+		studyTimeStats.totalSeconds + (activeTimer.status !== 'idle' ? activeTimer.elapsedSeconds : 0)
+	);
+
+	let todayStudySeconds = $derived(
+		(studyTimeStats.dailySeconds[todayISO] || 0) +
+			(activeTimer.status !== 'idle' ? activeTimer.elapsedSeconds : 0)
+	);
+
 	async function loadProgressStats() {
 		leaderboardsDisabled = isLeaderboardDisabled();
+		studyTimeStats = getStudyTimeData();
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
 
@@ -333,6 +373,14 @@
 
 	onMount(() => {
 		loadProgressStats();
+		const unsubscribe = subscribeStudyTimer((s) => {
+			activeTimer = s;
+			studyTimeStats = getStudyTimeData();
+		});
+
+		return () => {
+			unsubscribe();
+		};
 	});
 </script>
 
@@ -478,6 +526,106 @@
 					{streakStats.totalReviews}
 				</p>
 				<p class="font-sans text-[10px] text-slate-400">Cards evaluated</p>
+			</div>
+		</div>
+
+		<!-- Study Time Spent Card (Asymmetrical card per design.md) -->
+		<div
+			class="shadow-card col-span-2 flex flex-col justify-between rounded-3xl border border-slate-200/80 bg-white p-4.5 transition-all hover:border-emerald-200"
+		>
+			<div class="flex items-center justify-between">
+				<div class="flex items-center gap-3">
+					<div
+						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-emerald-100 bg-emerald-50 text-emerald-600"
+					>
+						<Clock size={20} strokeWidth={2.25} />
+					</div>
+					<div>
+						<p class="font-headline text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+							Study Time
+						</p>
+						<div class="flex items-baseline gap-2">
+							<p class="font-headline text-2xl font-black text-slate-900">
+								{formatStudyDuration(effectiveTotalStudySeconds)}
+							</p>
+							{#if activeTimer.status !== 'idle'}
+								<span
+									class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-headline text-[11px] font-bold {activeTimer.status ===
+									'running'
+										? 'animate-pulse border border-emerald-200 bg-emerald-50 text-emerald-700'
+										: 'border border-amber-200 bg-amber-50 text-amber-700'}"
+								>
+									<span
+										class="h-1.5 w-1.5 rounded-full {activeTimer.status === 'running'
+											? 'bg-emerald-500'
+											: 'bg-amber-500'}"
+									></span>
+									{formatTimerDisplay(activeTimer.elapsedSeconds)}
+								</span>
+							{/if}
+						</div>
+					</div>
+				</div>
+
+				{#if activeTimer.status === 'idle'}
+					<button
+						type="button"
+						onclick={() => startStudyTimer()}
+						class="flex cursor-pointer items-center gap-1.5 rounded-xl border border-indigo-200/80 bg-indigo-50 px-3 py-1.5 font-headline text-xs font-bold text-indigo-700 shadow-xs transition-colors hover:bg-indigo-100 active:scale-95"
+					>
+						<Timer size={14} strokeWidth={2.25} />
+						<span>Start Session</span>
+					</button>
+				{:else}
+					<div class="flex items-center gap-1.5">
+						{#if activeTimer.status === 'running'}
+							<button
+								type="button"
+								onclick={() => pauseStudyTimer()}
+								title="Pause timer"
+								aria-label="Pause study timer"
+								class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200 active:scale-90"
+							>
+								<Pause size={14} strokeWidth={2.5} />
+							</button>
+						{:else}
+							<button
+								type="button"
+								onclick={() => resumeStudyTimer()}
+								title="Resume timer"
+								aria-label="Resume study timer"
+								class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 transition-colors hover:bg-emerald-200 active:scale-90"
+							>
+								<Play size={14} strokeWidth={2.5} class="ml-0.5" />
+							</button>
+						{/if}
+						<button
+							type="button"
+							onclick={() => stopStudyTimer()}
+							title="Stop and save session"
+							aria-label="Stop study timer"
+							class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-rose-50 text-rose-600 transition-colors hover:bg-rose-100 active:scale-90"
+						>
+							<Square size={13} strokeWidth={2.5} />
+						</button>
+					</div>
+				{/if}
+			</div>
+
+			<div
+				class="mt-3 flex items-center justify-between border-t border-slate-100 pt-2.5 text-xs text-slate-500"
+			>
+				<span>
+					<strong class="font-semibold text-slate-700"
+						>{formatStudyDuration(todayStudySeconds)}</strong
+					>
+					today
+				</span>
+				<span class="text-slate-300">•</span>
+				<span>
+					<strong class="font-semibold text-slate-700">{studyTimeStats.sessionsCount}</strong>
+					completed {studyTimeStats.sessionsCount === 1 ? 'session' : 'sessions'}
+				</span>
 			</div>
 		</div>
 	</section>

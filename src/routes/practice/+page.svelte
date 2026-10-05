@@ -3,6 +3,7 @@
 	import { resolve } from '$app/paths';
 	import FlashCard from '$lib/components/FlashCard.svelte';
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
+	import StudyTimer from '$lib/components/StudyTimer.svelte';
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
@@ -212,11 +213,16 @@
 			</span>
 		</div>
 
-		<div
-			class="flex items-center gap-1 rounded-full border border-rose-200/80 bg-rose-50 px-2.5 py-1 font-headline text-xs font-bold text-rose-800"
-		>
-			<Dumbbell size={13} strokeWidth={2.25} />
-			<span>{sessionAccuracy}%</span>
+		<div class="flex items-center gap-1.5">
+			<!-- Discreet Study Timer -->
+			<StudyTimer compact={true} />
+
+			<div
+				class="flex items-center gap-1 rounded-full border border-rose-200/80 bg-rose-50 px-2.5 py-1 font-headline text-xs font-bold text-rose-800"
+			>
+				<Dumbbell size={13} strokeWidth={2.25} />
+				<span>{sessionAccuracy}%</span>
+			</div>
 		</div>
 	</header>
 

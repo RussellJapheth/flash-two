@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { onMount, onDestroy } from 'svelte';
+	import StudyTimer from '$lib/components/StudyTimer.svelte';
 	import { getBuiltinPacks, getAllCustomDecks } from '$lib/utils/storage';
 	import {
 		buildCloze,
@@ -425,11 +426,16 @@
 			</span>
 		</div>
 
-		<div
-			class="flex items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50 px-2 py-1 font-headline text-xs font-bold text-emerald-700"
-		>
-			<CheckCheck size={13} strokeWidth={2.25} />
-			<span>{sessionAccuracy}%</span>
+		<div class="flex items-center gap-1.5">
+			<!-- Discreet Study Timer -->
+			<StudyTimer compact={true} />
+
+			<div
+				class="flex items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50 px-2 py-1 font-headline text-xs font-bold text-emerald-700"
+			>
+				<CheckCheck size={13} strokeWidth={2.25} />
+				<span>{sessionAccuracy}%</span>
+			</div>
 		</div>
 	</header>
 

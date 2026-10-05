@@ -4,6 +4,7 @@
 	import FlashCard from '$lib/components/FlashCard.svelte';
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
 	import HalfwayToast from '$lib/components/HalfwayToast.svelte';
+	import StudyTimer from '$lib/components/StudyTimer.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import {
 		getAllProgress,
@@ -239,11 +240,16 @@
 			</span>
 		</div>
 
-		<div
-			class="flex items-center gap-1 rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-1 font-headline text-xs font-bold text-indigo-700"
-		>
-			<Brain size={13} strokeWidth={2.25} />
-			<span>{sessionAccuracy}%</span>
+		<div class="flex items-center gap-1.5">
+			<!-- Discreet Study Timer -->
+			<StudyTimer compact={true} />
+
+			<div
+				class="flex items-center gap-1 rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-1 font-headline text-xs font-bold text-indigo-700"
+			>
+				<Brain size={13} strokeWidth={2.25} />
+				<span>{sessionAccuracy}%</span>
+			</div>
 		</div>
 	</header>
 

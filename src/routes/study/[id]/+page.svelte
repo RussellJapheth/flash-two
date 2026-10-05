@@ -5,6 +5,7 @@
 	import FlashCard from '$lib/components/FlashCard.svelte';
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
 	import HalfwayToast from '$lib/components/HalfwayToast.svelte';
+	import StudyTimer from '$lib/components/StudyTimer.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import {
 		getAllProgress,
@@ -457,6 +458,9 @@
 
 		<!-- Autoplay & Accuracy Controls -->
 		<div class="flex items-center gap-1.5">
+			<!-- Discreet Study Timer -->
+			<StudyTimer compact={true} />
+
 			<!-- Autoplay Toggle Button -->
 			<button
 				type="button"

@@ -3,7 +3,9 @@ import {
 	isChinesePack1to9Key,
 	isChinesePack1to9Saved,
 	filterOutPack1to9Progress,
-	filterOutPack1to9Saved
+	filterOutPack1to9Saved,
+	isTestOrLegacyArtifactKey,
+	sanitizeWordProgress
 } from './storage';
 import type { WordProgress, SavedWord, WordRecord } from '$lib/types';
 
@@ -164,5 +166,79 @@ describe('Chinese Packs Migration Logic', () => {
 		const filtered = filterOutPack1to9Saved(sampleSaved);
 		expect(filtered).toHaveLength(2);
 		expect(filtered.map((s) => s.weekId)).toEqual(['chinese-10', 'french-1']);
+	});
+});
+
+describe('Test Artifact Sanitization & Review Normalization', () => {
+	it('identifies legacy week-9 test artifacts accurately', () => {
+		expect(isTestOrLegacyArtifactKey('week-9:1')).toBe(true);
+		expect(isTestOrLegacyArtifactKey('week-9:12')).toBe(true);
+		expect(isTestOrLegacyArtifactKey('chinese-9:1')).toBe(false);
+		expect(isTestOrLegacyArtifactKey('chinese-10:1')).toBe(false);
+		expect(isTestOrLegacyArtifactKey('french-1:5')).toBe(false);
+	});
+
+	it('purges week-9 cards and normalizes 12288 review offsets', () => {
+		const rawProgress: Record<string, WordProgress> = {
+			'week-9:1': {
+				weekId: 'week-9',
+				wordNo: 1,
+				correct: 0,
+				wrong: 12290,
+				lapses: 12290,
+				lastReviewed: 1788827284159
+			},
+			'chinese-9:1': {
+				weekId: 'chinese-9',
+				wordNo: 1,
+				correct: 12290,
+				wrong: 12289,
+				lapses: 12290,
+				lastReviewed: 1791002255247
+			},
+			'chinese-10:1': {
+				weekId: 'chinese-10',
+				wordNo: 1,
+				correct: 15,
+				wrong: 2,
+				lapses: 1,
+				lastReviewed: 1791002198199
+			}
+		};
+
+		const { cleaned, hasChanges, purgedKeys, normalizedKeys } = sanitizeWordProgress(rawProgress);
+
+		expect(hasChanges).toBe(true);
+		expect(purgedKeys).toEqual(['week-9:1']);
+		expect(normalizedKeys).toEqual(['chinese-9:1']);
+		expect(cleaned['week-9:1']).toBeUndefined();
+
+		// chinese-9:1 normalized: 12290 - 12288 = 2, 12289 - 12288 = 1
+		expect(cleaned['chinese-9:1'].correct).toBe(2);
+		expect(cleaned['chinese-9:1'].wrong).toBe(1);
+		expect(cleaned['chinese-9:1'].lapses).toBe(2);
+
+		// genuine card untouched
+		expect(cleaned['chinese-10:1'].correct).toBe(15);
+		expect(cleaned['chinese-10:1'].wrong).toBe(2);
+		expect(cleaned['chinese-10:1'].lapses).toBe(1);
+	});
+
+	it('leaves already-clean progress unchanged', () => {
+		const cleanProgress: Record<string, WordProgress> = {
+			'chinese-1:1': {
+				weekId: 'chinese-1',
+				wordNo: 1,
+				correct: 4,
+				wrong: 0,
+				lastReviewed: 1790073827528
+			}
+		};
+
+		const { cleaned, hasChanges, purgedKeys, normalizedKeys } = sanitizeWordProgress(cleanProgress);
+		expect(hasChanges).toBe(false);
+		expect(purgedKeys).toHaveLength(0);
+		expect(normalizedKeys).toHaveLength(0);
+		expect(cleaned).toEqual(cleanProgress);
 	});
 });

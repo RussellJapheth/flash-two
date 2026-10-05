@@ -26,7 +26,11 @@ import {
 	isLeaderboardDisabled,
 	setLeaderboardDisabled,
 	getStreakFreezeData,
-	saveStreakFreezeData
+	saveStreakFreezeData,
+	sanitizeWordProgress,
+	sanitizeLocalProgress,
+	deleteProgressKeys,
+	isTestOrLegacyArtifactKey
 } from './storage';
 import {
 	getLocalUserXPData,
@@ -76,9 +80,10 @@ export async function checkRemoteUser(username: string): Promise<RemoteUserSumma
 		}
 
 		const remoteData: AppBackup = await response.json();
+		const { cleaned: sanitizedProgress } = sanitizeWordProgress(remoteData.progress || {});
 		const reviewCount =
-			remoteData.progress && typeof remoteData.progress === 'object'
-				? Object.keys(remoteData.progress).length
+			sanitizedProgress && typeof sanitizedProgress === 'object'
+				? Object.keys(sanitizedProgress).length
 				: 0;
 		const totalXP = remoteData.xpData?.totalXP || 0;
 		const deckCount = Array.isArray(remoteData.customDecks) ? remoteData.customDecks.length : 0;
@@ -130,12 +135,19 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 		let localHadNewData = false;
 
 		// 1. Merge Progress (Word-by-Word deterministic Last-Reviewed-Wins)
+		await sanitizeLocalProgress();
 		const localProgress = await getAllProgress();
 		const mergedProgress: Record<string, WordProgress> = { ...localProgress };
 
 		if (remoteData.progress && typeof remoteData.progress === 'object') {
-			for (const [key, remoteProg] of Object.entries(remoteData.progress)) {
+			const { cleaned: cleanedRemote, purgedKeys } = sanitizeWordProgress(remoteData.progress);
+			if (purgedKeys.length > 0) {
+				await deleteProgressKeys(purgedKeys);
+			}
+
+			for (const [key, remoteProg] of Object.entries(cleanedRemote)) {
 				if (!remoteProg || typeof remoteProg !== 'object') continue;
+				if (isTestOrLegacyArtifactKey(key, remoteProg)) continue;
 				const localProg = localProgress[key];
 
 				if (!localProg) {
@@ -166,9 +178,10 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 				}
 			}
 
-			// Local words not present on remote -> preserve and sync back
+			// Local words not present on remote -> preserve and sync back (excluding legacy test artifacts)
 			for (const localKey of Object.keys(localProgress)) {
-				if (!remoteData.progress[localKey]) {
+				if (isTestOrLegacyArtifactKey(localKey, localProgress[localKey])) continue;
+				if (!cleanedRemote[localKey]) {
 					localHadNewData = true;
 				}
 			}
@@ -358,7 +371,8 @@ export async function pushData(username?: string): Promise<boolean> {
 	updateStatus('syncing');
 
 	try {
-		const progress = await getAllProgress();
+		const rawProgress = await getAllProgress();
+		const { cleaned: progress } = sanitizeWordProgress(rawProgress);
 		const customDecks = await getAllCustomDecks();
 		const savedWords = await getAllSavedWords();
 		const language = getSavedLanguage();

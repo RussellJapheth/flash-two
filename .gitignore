@@ -29,3 +29,5 @@ tmp/
 /scripts/bake/bake-bundle.js
 
 /ui
+
+/backups

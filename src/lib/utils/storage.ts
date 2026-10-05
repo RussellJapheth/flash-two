@@ -178,11 +178,155 @@ async function executeChinesePacksMigration(
 	return { purgedProgress, purgedSaved };
 }
 
+/**
+ * Detects legacy benchmark/test artifact keys (e.g. week-9:1) that are not part
+ * of the modern language pack curriculum.
+ */
+export function isTestOrLegacyArtifactKey(key: string, p?: WordProgress): boolean {
+	if (/^week-9:\d+$/i.test(key)) return true;
+	if (p && (p.weekId === 'week-9' || (typeof key === 'string' && key.startsWith('week-9:')))) {
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Sanitizes word progress to purge test keys (week-9:*) and normalize artificial
+ * review counts injected by old test runners (+12288 offset).
+ */
+export function sanitizeWordProgress(progress: Record<string, WordProgress>): {
+	cleaned: Record<string, WordProgress>;
+	hasChanges: boolean;
+	purgedKeys: string[];
+	normalizedKeys: string[];
+} {
+	const cleaned: Record<string, WordProgress> = {};
+	let hasChanges = false;
+	const purgedKeys: string[] = [];
+	const normalizedKeys: string[] = [];
+
+	for (const [key, p] of Object.entries(progress)) {
+		if (!p || typeof p !== 'object') continue;
+
+		if (isTestOrLegacyArtifactKey(key, p)) {
+			hasChanges = true;
+			purgedKeys.push(key);
+			continue;
+		}
+
+		let correct = p.correct ?? 0;
+		let wrong = p.wrong ?? 0;
+		let lapses = p.lapses ?? 0;
+		let modified = false;
+
+		if (correct >= 10000) {
+			correct = Math.max(0, correct - 12288);
+			modified = true;
+		}
+		if (wrong >= 10000) {
+			wrong = Math.max(0, wrong - 12288);
+			modified = true;
+		}
+		if (lapses >= 10000) {
+			lapses = Math.max(0, lapses - 12288);
+			modified = true;
+		}
+
+		if (modified) {
+			hasChanges = true;
+			normalizedKeys.push(key);
+			cleaned[key] = {
+				...p,
+				correct,
+				wrong,
+				lapses
+			};
+		} else {
+			cleaned[key] = p;
+		}
+	}
+
+	return { cleaned, hasChanges, purgedKeys, normalizedKeys };
+}
+
+export async function deleteProgressKeys(keys: string[]): Promise<void> {
+	if (typeof window === 'undefined' || !keys || keys.length === 0) return;
+	try {
+		const db = await getDB();
+		return new Promise<void>((resolve, reject) => {
+			const tx = db.transaction('progress_store', 'readwrite');
+			const store = tx.objectStore('progress_store');
+			for (const key of keys) {
+				store.delete(key);
+			}
+			tx.oncomplete = () => resolve();
+			tx.onerror = () => reject(tx.error);
+		});
+	} catch {
+		// Non-blocking fallback
+	}
+}
+
+export async function sanitizeLocalProgress(): Promise<{
+	purgedCount: number;
+	normalizedCount: number;
+}> {
+	if (typeof window === 'undefined') return { purgedCount: 0, normalizedCount: 0 };
+	try {
+		const db = await getDB();
+		return new Promise((resolve, reject) => {
+			const tx = db.transaction('progress_store', 'readwrite');
+			const store = tx.objectStore('progress_store');
+			const req = store.getAll();
+			req.onsuccess = () => {
+				const items = req.result || [];
+				let purgedCount = 0;
+				let normalizedCount = 0;
+				for (const item of items) {
+					if (!item || !item.key) continue;
+					if (isTestOrLegacyArtifactKey(item.key, item)) {
+						store.delete(item.key);
+						purgedCount++;
+						continue;
+					}
+					let modified = false;
+					let correct = item.correct ?? 0;
+					let wrong = item.wrong ?? 0;
+					let lapses = item.lapses ?? 0;
+					if (correct >= 10000) {
+						correct = Math.max(0, correct - 12288);
+						modified = true;
+					}
+					if (wrong >= 10000) {
+						wrong = Math.max(0, wrong - 12288);
+						modified = true;
+					}
+					if (lapses >= 10000) {
+						lapses = Math.max(0, lapses - 12288);
+						modified = true;
+					}
+					if (modified) {
+						store.put({ ...item, correct, wrong, lapses });
+						normalizedCount++;
+					}
+				}
+				resolve({ purgedCount, normalizedCount });
+			};
+			req.onerror = () => reject(tx.error);
+		});
+	} catch {
+		return { purgedCount: 0, normalizedCount: 0 };
+	}
+}
+
 // Ensure all bundled packs are cached into IndexedDB for 100% offline availability
 export async function initializeOfflinePacks(): Promise<void> {
 	if (typeof window === 'undefined') return;
 	try {
 		const db = await getDB();
+
+		// Clean up any lingering legacy test artifacts
+		await sanitizeLocalProgress();
 
 		// Check if migration is needed for Chinese packs 1-9
 		const currentVersion = localStorage.getItem(CHINESE_MIGRATION_KEY);
@@ -345,9 +489,29 @@ export async function getAllProgress(): Promise<Record<string, WordProgress>> {
 
 			request.onsuccess = () => {
 				const result: Record<string, WordProgress> = {};
+				const keysToDelete: string[] = [];
 				for (const item of request.result || []) {
 					const { key, ...progress } = item;
-					result[key] = progress;
+					if (isTestOrLegacyArtifactKey(key, progress)) {
+						keysToDelete.push(key);
+						continue;
+					}
+					let correct = progress.correct ?? 0;
+					let wrong = progress.wrong ?? 0;
+					let lapses = progress.lapses ?? 0;
+					if (correct >= 10000) correct = Math.max(0, correct - 12288);
+					if (wrong >= 10000) wrong = Math.max(0, wrong - 12288);
+					if (lapses >= 10000) lapses = Math.max(0, lapses - 12288);
+
+					result[key] = {
+						...progress,
+						correct,
+						wrong,
+						lapses
+					};
+				}
+				if (keysToDelete.length > 0) {
+					deleteProgressKeys(keysToDelete).catch(() => {});
 				}
 				resolve(result);
 			};
@@ -673,12 +837,16 @@ export function computeStreakStats(
 	const datesSet = new Set<string>();
 	let totalReviews = 0;
 
-	for (const p of Object.values(progress)) {
+	for (const [key, p] of Object.entries(progress)) {
+		if (isTestOrLegacyArtifactKey(key, p)) continue;
 		if (p.lastReviewed) {
 			const d = new Date(p.lastReviewed);
 			const isoDate = d.toISOString().split('T')[0];
 			datesSet.add(isoDate);
-			totalReviews += (p.correct || 0) + (p.wrong || 0);
+			const correct =
+				(p.correct || 0) >= 10000 ? Math.max(0, (p.correct || 0) - 12288) : p.correct || 0;
+			const wrong = (p.wrong || 0) >= 10000 ? Math.max(0, (p.wrong || 0) - 12288) : p.wrong || 0;
+			totalReviews += correct + wrong;
 		}
 	}
 

@@ -373,8 +373,29 @@ describe('buildUnscrambleChallenge', () => {
 		expect(challenge).not.toBeNull();
 		expect(challenge?.fullSentence).toBe('你好！很高兴认识你。');
 		expect(challenge?.translation).toBe('Hello! Nice to meet you.');
-		expect(challenge?.tokens.length).toBeGreaterThan(0);
+		expect(challenge?.tokens.length).toBe(6);
 		expect(challenge?.canonicalOrder.join('')).toBe('你好！很高兴认识你。');
+		// Verify last word is not cut out and has paired pinyin
+		const lastToken = challenge?.canonicalOrder[challenge.canonicalOrder.length - 1];
+		expect(lastToken).toBe('你。');
+		const tokensByText = Object.fromEntries(challenge?.tokens.map((t) => [t.text, t.pinyin]) || []);
+		expect(tokensByText['你。']).toBe('nǐ.');
+		expect(tokensByText['认识']).toBe('rènshí');
+	});
+
+	it('preserves the last word completely for compound vocabulary sentences', () => {
+		const challenge = buildUnscrambleChallenge(
+			'每天练习写五个生字。',
+			'Měitiān liànxí xiě wǔ gè shēngzì.',
+			'Practice writing five new characters each day.',
+			'chinese'
+		);
+		expect(challenge).not.toBeNull();
+		expect(challenge?.canonicalOrder.join('')).toBe('每天练习写五个生字。');
+		const lastOrder = challenge?.canonicalOrder[challenge.canonicalOrder.length - 1];
+		expect(lastOrder).toBe('生字。');
+		const lastTok = challenge?.tokens.find((t) => t.text === '生字。');
+		expect(lastTok?.pinyin).toBe('shēngzì.');
 	});
 
 	it('builds word tokens for French sentence', () => {

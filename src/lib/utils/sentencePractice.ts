@@ -312,6 +312,91 @@ export interface UnscrambleChallenge {
 	canonicalOrder: string[];
 }
 
+function stripToneVowel(str: string): string {
+	return str
+		.replace(/[āáǎà]/g, 'a')
+		.replace(/[ēéěè]/g, 'e')
+		.replace(/[īíǐì]/g, 'i')
+		.replace(/[ōóǒò]/g, 'o')
+		.replace(/[ūúǔù]/g, 'u')
+		.replace(/[üǖǘǚǜ]/g, 'v')
+		.toLowerCase();
+}
+
+function countPinyinWordSyllables(word: string): number {
+	const w = word.replace(/[^a-zA-ZāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜüÜ']/g, '');
+	if (!w) return 0;
+	const parts = w.split("'");
+	if (parts.length > 1) {
+		return parts.reduce((acc, p) => acc + countPinyinWordSyllables(p), 0);
+	}
+	const toneCount = (w.match(/[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/g) || []).length;
+	const stripped = stripToneVowel(w);
+	const sylRegex =
+		/^(?:zh|ch|sh|[bpmfdtnlgkhjqxrzcsyw])?(?:iang|uang|ueng|iong|uai|iao|ian|uan|ang|eng|ing|ong|ai|ei|ao|ou|ia|ie|ua|uo|ui|iu|an|en|in|un|er|a|o|e|i|u|v)/;
+
+	let rem = stripped;
+	let count = 0;
+	while (rem.length > 0) {
+		const m = rem.match(sylRegex);
+		if (m && m[0].length > 0) {
+			count++;
+			rem = rem.slice(m[0].length);
+		} else {
+			break;
+		}
+	}
+	return Math.max(1, count > 0 ? count : toneCount > 0 ? toneCount : 1);
+}
+
+function buildChinesePinyinTokens(
+	sentence: string,
+	pinyin: string
+): { text: string; pinyin: string }[] | null {
+	const pinyinWords = pinyin.trim().split(/\s+/).filter(Boolean);
+	if (pinyinWords.length === 0) return null;
+	const sylLengths = pinyinWords.map(countPinyinWordSyllables);
+	const s = sentence.trim();
+	let sIdx = 0;
+	const tokens: { text: string; pinyin: string }[] = [];
+
+	for (let i = 0; i < pinyinWords.length; i++) {
+		const pw = pinyinWords[i];
+		const expectedChars = sylLengths[i];
+		const isLast = i === pinyinWords.length - 1;
+
+		if (isLast) {
+			const text = s.slice(sIdx);
+			if (text) {
+				tokens.push({ text, pinyin: pw });
+			}
+			break;
+		}
+
+		const startIdx = sIdx;
+		while (sIdx < s.length && /[《“‘"'([/]/.test(s[sIdx])) {
+			sIdx++;
+		}
+
+		let charsConsumed = 0;
+		while (sIdx < s.length && charsConsumed < expectedChars) {
+			if (/[\u4e00-\u9fa5a-zA-Z0-9]/.test(s[sIdx])) {
+				charsConsumed++;
+			}
+			sIdx++;
+		}
+
+		while (sIdx < s.length && /[，、；;！!？?。.,!?:;》”’"')\]]/.test(s[sIdx])) {
+			sIdx++;
+		}
+
+		const text = s.slice(startIdx, sIdx);
+		tokens.push({ text, pinyin: pw });
+	}
+
+	return tokens.length > 0 ? tokens : null;
+}
+
 /**
  * Builds sentence construction / syntax recall unscramble challenge.
  * Tokenizes sentence into scrambled word chips with paired Pinyin for syntax recall.
@@ -325,63 +410,77 @@ export function buildUnscrambleChallenge(
 	const cleaned = fullSentence.trim();
 	if (!cleaned) return null;
 
-	let rawTokens: string[] = [];
+	let tokens: UnscrambleToken[] = [];
+	let canonicalOrder: string[] = [];
 
-	if (lang === 'french') {
-		rawTokens = cleaned.split(/\s+/).filter(Boolean);
-	} else {
-		// Chinese tokenization: split into clauses or 1-3 character tokens
-		const delimiterRegex = /([，、；;！!？?。.]+)/g;
-		const parts = cleaned.split(delimiterRegex).filter(Boolean);
+	if (lang === 'chinese' && fullPinyin) {
+		const aligned = buildChinesePinyinTokens(cleaned, fullPinyin);
+		if (aligned && aligned.length > 0) {
+			canonicalOrder = aligned.map((t) => t.text);
+			tokens = aligned.map((t, idx) => ({
+				id: `tok-${idx}-${t.text}`,
+				text: t.text,
+				pinyin: t.pinyin
+			}));
+		}
+	}
 
-		for (const part of parts) {
-			if (/^[，、；;！!？?。.]+$/.test(part)) {
-				if (rawTokens.length > 0) {
-					rawTokens[rawTokens.length - 1] += part;
-				} else {
-					rawTokens.push(part);
-				}
-			} else {
-				let current = part;
-				while (current.length > 0) {
-					if (current.length >= 4) {
-						rawTokens.push(current.slice(0, 2));
-						current = current.slice(2);
-					} else if (current.length === 3) {
-						rawTokens.push(current.slice(0, 2));
-						current = current.slice(2);
+	if (tokens.length === 0) {
+		let rawTokens: string[] = [];
+		if (lang === 'french') {
+			rawTokens = cleaned.split(/\s+/).filter(Boolean);
+		} else {
+			const delimiterRegex = /([，、；;！!？?。.]+)/g;
+			const parts = cleaned.split(delimiterRegex).filter(Boolean);
+
+			for (const part of parts) {
+				if (/^[，、；;！!？?。.]+$/.test(part)) {
+					if (rawTokens.length > 0) {
+						rawTokens[rawTokens.length - 1] += part;
 					} else {
-						rawTokens.push(current);
-						current = '';
+						rawTokens.push(part);
+					}
+				} else {
+					let current = part;
+					while (current.length > 0) {
+						if (current.length >= 4) {
+							rawTokens.push(current.slice(0, 2));
+							current = current.slice(2);
+						} else if (current.length === 3) {
+							rawTokens.push(current.slice(0, 2));
+							current = current.slice(2);
+						} else {
+							rawTokens.push(current);
+							current = '';
+						}
 					}
 				}
 			}
 		}
-	}
 
-	if (rawTokens.length === 0) return null;
+		if (rawTokens.length === 0) return null;
 
-	// Align pinyin words to tokens if available
-	let pinyinWords: string[] = [];
-	if (fullPinyin && lang === 'chinese') {
-		pinyinWords = fullPinyin.trim().split(/\s+/).filter(Boolean);
-	}
-
-	const canonicalOrder = [...rawTokens];
-	const tokens: UnscrambleToken[] = rawTokens.map((t, idx) => {
-		let tokenPinyin: string | undefined = undefined;
-		if (pinyinWords.length === rawTokens.length) {
-			tokenPinyin = pinyinWords[idx];
-		} else if (pinyinWords.length > 0) {
-			const pyIdx = Math.min(idx, pinyinWords.length - 1);
-			tokenPinyin = pinyinWords[pyIdx];
+		let pinyinWords: string[] = [];
+		if (fullPinyin && lang === 'chinese') {
+			pinyinWords = fullPinyin.trim().split(/\s+/).filter(Boolean);
 		}
-		return {
-			id: `tok-${idx}-${t}`,
-			text: t,
-			pinyin: tokenPinyin
-		};
-	});
+
+		canonicalOrder = [...rawTokens];
+		tokens = rawTokens.map((t, idx) => {
+			let tokenPinyin: string | undefined = undefined;
+			if (pinyinWords.length === rawTokens.length) {
+				tokenPinyin = pinyinWords[idx];
+			} else if (pinyinWords.length > 0) {
+				const pyIdx = Math.min(idx, pinyinWords.length - 1);
+				tokenPinyin = pinyinWords[pyIdx];
+			}
+			return {
+				id: `tok-${idx}-${t}`,
+				text: t,
+				pinyin: tokenPinyin
+			};
+		});
+	}
 
 	let shuffled = shuffleArray(tokens);
 	if (shuffled.length > 1 && shuffled.map((t) => t.text).join('') === canonicalOrder.join('')) {

@@ -8,7 +8,7 @@
 		type SpeechEvaluationResult,
 		type SpeechRecognizerHandle
 	} from '$lib/utils/speech';
-	import { Bookmark, Volume2, Pointer, Mic, Check, RotateCcw, Clock, Sparkles, VolumeX } from 'lucide-svelte';
+	import { Bookmark, Volume2, Pointer, Mic, Check, RotateCcw, Clock } from 'lucide-svelte';
 	import { onMount, onDestroy } from 'svelte';
 
 	let {
@@ -187,7 +187,7 @@
 					</span>
 					{#if deckName}
 						<span
-							class="max-w-[140px] truncate rounded-full bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 font-headline text-xs font-bold text-indigo-700"
+							class="max-w-[140px] truncate rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-0.5 font-headline text-xs font-bold text-indigo-700"
 							title={deckName}
 						>
 							{deckName}
@@ -200,7 +200,11 @@
 						<div
 							class="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 font-headline text-xs font-bold text-amber-700 shadow-2xs"
 						>
-							<Clock size={13} class="animate-spin text-amber-600" style="animation-duration: 3s;" />
+							<Clock
+								size={13}
+								class="animate-spin text-amber-600"
+								style="animation-duration: 3s;"
+							/>
 							<span>{timeRemaining}s</span>
 						</div>
 					{/if}
@@ -229,8 +233,14 @@
 							class="group relative flex h-28 w-28 cursor-pointer items-center justify-center rounded-full border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 to-indigo-100/80 text-indigo-600 shadow-md transition-all hover:scale-105 hover:border-indigo-400 hover:bg-indigo-100 hover:shadow-lg active:scale-95"
 							aria-label="Replay audio prompt"
 						>
-							<span class="absolute -inset-1 animate-ping rounded-full bg-indigo-400/20 duration-1000"></span>
-							<Volume2 size={48} strokeWidth={2.2} class="relative z-10 transition-transform group-hover:scale-110" />
+							<span
+								class="absolute -inset-1 animate-ping rounded-full bg-indigo-400/20 duration-1000"
+							></span>
+							<Volume2
+								size={48}
+								strokeWidth={2.2}
+								class="relative z-10 transition-transform group-hover:scale-110"
+							/>
 						</button>
 					</div>
 				{:else}
@@ -355,7 +365,9 @@
 					<div
 						class="mt-4 max-w-sm rounded-2xl border border-indigo-100 bg-indigo-50/70 p-3.5 text-left"
 					>
-						<p class="mb-1 font-headline text-xs font-bold tracking-wider text-indigo-700 uppercase">
+						<p
+							class="mb-1 font-headline text-xs font-bold tracking-wider text-indigo-700 uppercase"
+						>
 							Personal Note:
 						</p>
 						<p class="font-sans text-sm leading-relaxed font-medium text-indigo-950">

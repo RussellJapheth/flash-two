@@ -21,7 +21,7 @@
 	import { playSound } from '$lib/utils/audio';
 	import { calculateReviewXP, calculateSessionBonus, addXP } from '$lib/utils/xp';
 	import type { WordRecord, WordProgress, StudyRating } from '$lib/types';
-	import { X, Brain, Flame, CircleCheckBig, Sparkles, Volume2, Clock, Shuffle } from 'lucide-svelte';
+	import { X, Brain, Flame, CircleCheckBig, Sparkles, Volume2, Clock } from 'lucide-svelte';
 
 	interface ReviewItem {
 		packId: string;

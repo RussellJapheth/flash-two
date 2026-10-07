@@ -4,7 +4,13 @@
 	import { resolve } from '$app/paths';
 	import { onMount, onDestroy } from 'svelte';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
-	import { getAllProgress, getWordProgress, getBuiltinPacks, getAllCustomDecks, saveProgress } from '$lib/utils/storage';
+	import {
+		getAllProgress,
+		getWordProgress,
+		getBuiltinPacks,
+		getAllCustomDecks,
+		saveProgress
+	} from '$lib/utils/storage';
 	import { isCardMastered, calculateNextReview } from '$lib/utils/srs';
 	import {
 		buildCloze,
@@ -53,7 +59,6 @@
 		Play,
 		Square,
 		Turtle,
-		Blocks,
 		Puzzle
 	} from 'lucide-svelte';
 
@@ -287,7 +292,7 @@
 		}
 
 		const shuffled = shuffleArray(built);
-		items = (deckId === 'mastered' || isMasteredOnly) ? shuffled.slice(0, 10) : shuffled;
+		items = deckId === 'mastered' || isMasteredOnly ? shuffled.slice(0, 10) : shuffled;
 		currentIndex = 0;
 		isSessionFinished = false;
 		sessionCorrect = 0;
@@ -331,7 +336,12 @@
 
 			// Demote word back to learning stage in SRS
 			const allProg = await getAllProgress();
-			const currentProg = getWordProgress(allProg, currentItem.packId, currentItem.wordNo, deckLanguage);
+			const currentProg = getWordProgress(
+				allProg,
+				currentItem.packId,
+				currentItem.wordNo,
+				deckLanguage
+			);
 			const updatedProg = calculateNextReview(currentProg, 'again');
 			updatedProg.weekId = currentProg?.weekId || currentItem.packId;
 			updatedProg.wordNo = currentItem.wordNo;
@@ -878,7 +888,7 @@
 							class="flex min-h-[64px] flex-wrap items-center gap-2 rounded-2xl border-2 border-dashed border-indigo-200/80 bg-indigo-50/40 p-3.5 transition-all"
 						>
 							{#if selectedUnscrambleTokens.length === 0}
-								<span class="mx-auto select-none text-xs font-semibold text-slate-400">
+								<span class="mx-auto text-xs font-semibold text-slate-400 select-none">
 									Tap chips below to assemble sentence in correct syntax order
 								</span>
 							{:else}
@@ -889,7 +899,9 @@
 										disabled={isUnscrambleChecked}
 										class="flex flex-col items-center justify-center rounded-xl border border-indigo-200 bg-white px-3 py-1.5 font-headline text-sm font-bold text-indigo-950 shadow-xs transition-all hover:border-indigo-400 hover:bg-indigo-50 active:scale-95 disabled:opacity-90"
 									>
-										<span class="font-hanzi text-sm font-extrabold text-slate-900">{token.text}</span>
+										<span class="font-hanzi text-sm font-extrabold text-slate-900"
+											>{token.text}</span
+										>
 										{#if token.pinyin}
 											<span class="font-sans text-[10px] font-bold text-indigo-600">
 												{token.pinyin}
@@ -909,7 +921,9 @@
 										onclick={() => handleTapAvailableToken(token)}
 										class="flex flex-col items-center justify-center rounded-xl border border-slate-200/90 bg-white px-3.5 py-1.5 font-headline text-sm font-bold text-slate-800 shadow-2xs transition-all hover:border-indigo-300 hover:bg-indigo-50 active:scale-95"
 									>
-										<span class="font-hanzi text-sm font-extrabold text-slate-900">{token.text}</span>
+										<span class="font-hanzi text-sm font-extrabold text-slate-900"
+											>{token.text}</span
+										>
 										{#if token.pinyin}
 											<span class="font-sans text-[10px] font-bold text-indigo-600">
 												{token.pinyin}
@@ -945,7 +959,11 @@
 									</div>
 								{:else}
 									<div class="space-y-1">
-										<p class="font-headline text-xs font-bold text-rose-700 uppercase tracking-wider">Incorrect Order</p>
+										<p
+											class="font-headline text-xs font-bold tracking-wider text-rose-700 uppercase"
+										>
+											Incorrect Order
+										</p>
 										<p class="font-headline text-sm font-bold text-slate-900">
 											Target: {unscrambleChallenge.fullSentence}
 										</p>

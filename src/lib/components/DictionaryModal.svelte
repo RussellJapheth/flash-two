@@ -42,11 +42,7 @@
 
 	// Derived set of saved word keys for fast check
 	let savedWordKeys = $derived(
-		new Set(
-			personalDeck?.words.map(
-				(w) => w['Chinese Word'] || `${w.No}`
-			) || []
-		)
+		new Set(personalDeck?.words.map((w) => w['Chinese Word'] || `${w.No}`) || [])
 	);
 
 	onMount(() => {
@@ -171,7 +167,7 @@
 	onclick={handleOpen}
 	aria-label="Open Dictionary Lookup"
 	title="Open Dictionary"
-	class="fixed right-4 bottom-20 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 transition-all hover:bg-indigo-700 hover:scale-105 active:scale-95 sm:right-[calc(50%-13rem)]"
+	class="fixed right-4 bottom-20 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 transition-all hover:scale-105 hover:bg-indigo-700 active:scale-95 sm:right-[calc(50%-13rem)]"
 >
 	<BookOpen size={22} strokeWidth={2.25} />
 </button>
@@ -187,23 +183,28 @@
 		<!-- Modal Backdrop click to dismiss -->
 		<button
 			type="button"
-			class="absolute inset-0 cursor-default bg-transparent border-0"
+			class="absolute inset-0 cursor-default border-0 bg-transparent"
 			onclick={handleClose}
 			aria-label="Close modal backdrop"
 		></button>
 
 		<!-- Modal Content Box -->
 		<div
-			class="relative flex max-h-[85vh] w-full flex-col rounded-t-3xl border border-slate-200 bg-white shadow-xl animate-in slide-in-from-bottom duration-250 sm:max-w-md sm:rounded-3xl"
+			class="animate-in slide-in-from-bottom relative flex max-h-[85vh] w-full flex-col rounded-t-3xl border border-slate-200 bg-white shadow-xl duration-250 sm:max-w-md sm:rounded-3xl"
 		>
 			<!-- Modal Header -->
 			<div class="flex items-center justify-between border-b border-slate-100 px-5 py-4">
 				<div class="flex items-center gap-2.5">
-					<div class="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+					<div
+						class="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600"
+					>
 						<BookOpen size={20} strokeWidth={2.25} />
 					</div>
 					<div>
-						<h2 id="dictionary-modal-title" class="font-headline text-lg font-extrabold text-slate-900">
+						<h2
+							id="dictionary-modal-title"
+							class="font-headline text-lg font-extrabold text-slate-900"
+						>
 							Dictionary & Notes
 						</h2>
 						<p class="font-sans text-xs text-slate-500">
@@ -250,32 +251,46 @@
 
 			<!-- Success Toast Banner -->
 			{#if savedSuccessMsg}
-				<div class="bg-emerald-50 px-5 py-2 font-headline text-xs font-semibold text-emerald-800 transition-all flex items-center gap-2">
+				<div
+					class="flex items-center gap-2 bg-emerald-50 px-5 py-2 font-headline text-xs font-semibold text-emerald-800 transition-all"
+				>
 					<Check size={14} class="text-emerald-600" />
 					<span>{savedSuccessMsg}</span>
 				</div>
 			{/if}
 
 			<!-- Modal Body -->
-			<div class="flex-1 overflow-y-auto p-5 space-y-4">
+			<div class="flex-1 space-y-4 overflow-y-auto p-5">
 				{#if currentLanguage === 'french'}
 					<!-- French Mode Unavailable Notice -->
 					<div class="my-6 rounded-2xl border border-amber-200/80 bg-amber-50/80 p-5 text-center">
-						<div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 text-amber-700">
+						<div
+							class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 text-amber-700"
+						>
 							<AlertCircle size={24} />
 						</div>
 						<h3 class="font-headline text-base font-bold text-amber-900">
 							Dictionary Unavailable in French Mode
 						</h3>
-						<p class="mt-1 font-sans text-xs text-amber-800/90 leading-relaxed">
-							The comprehensive dictionary lookup is currently available for Chinese mode. French dictionary support will be arriving in a future update!
+						<p class="mt-1 font-sans text-xs leading-relaxed text-amber-800/90">
+							The comprehensive dictionary lookup is currently available for Chinese mode. French
+							dictionary support will be arriving in a future update!
 						</p>
 					</div>
 				{:else if modalTab === 'add_note'}
 					<!-- Create New Custom Note Form -->
-					<form onsubmit={(e) => { e.preventDefault(); handleCreateCustomNote(); }} class="space-y-3 pt-1">
+					<form
+						onsubmit={(e) => {
+							e.preventDefault();
+							handleCreateCustomNote();
+						}}
+						class="space-y-3 pt-1"
+					>
 						<div>
-							<label for="custom-word-input" class="block font-headline text-xs font-bold text-slate-800 mb-1">
+							<label
+								for="custom-word-input"
+								class="mb-1 block font-headline text-xs font-bold text-slate-800"
+							>
 								Word / Hanzi / Title *
 							</label>
 							<input
@@ -290,7 +305,10 @@
 
 						<div class="grid grid-cols-2 gap-2">
 							<div>
-								<label for="custom-pinyin-input" class="block font-headline text-xs font-bold text-slate-800 mb-1">
+								<label
+									for="custom-pinyin-input"
+									class="mb-1 block font-headline text-xs font-bold text-slate-800"
+								>
 									Pinyin (Optional)
 								</label>
 								<input
@@ -302,7 +320,10 @@
 								/>
 							</div>
 							<div>
-								<label for="custom-meaning-input" class="block font-headline text-xs font-bold text-slate-800 mb-1">
+								<label
+									for="custom-meaning-input"
+									class="mb-1 block font-headline text-xs font-bold text-slate-800"
+								>
 									Meaning (Optional)
 								</label>
 								<input
@@ -316,7 +337,10 @@
 						</div>
 
 						<div>
-							<label for="custom-note-textarea" class="block font-headline text-xs font-bold text-slate-800 mb-1">
+							<label
+								for="custom-note-textarea"
+								class="mb-1 block font-headline text-xs font-bold text-slate-800"
+							>
 								Personal Notes / Example Sentence
 							</label>
 							<textarea
@@ -330,7 +354,7 @@
 
 						<button
 							type="submit"
-							class="w-full cursor-pointer rounded-2xl bg-indigo-600 py-3 font-headline text-xs font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 active:scale-[0.98] flex items-center justify-center gap-2"
+							class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-indigo-600 py-3 font-headline text-xs font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 active:scale-[0.98]"
 						>
 							<FileText size={16} />
 							<span>Save Note to Personal Dictionary</span>
@@ -339,7 +363,9 @@
 				{:else}
 					<!-- Chinese Search Bar -->
 					<div class="relative">
-						<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+						<div
+							class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400"
+						>
 							{#if isSearching}
 								<Loader2 size={18} class="animate-spin text-indigo-600" />
 							{:else}
@@ -351,7 +377,7 @@
 							value={query}
 							oninput={handleInput}
 							placeholder="Lookup word (e.g. 你好, nihao, hello)..."
-							class="w-full rounded-2xl border border-slate-200 bg-slate-50/80 py-2.5 pl-10 pr-9 font-sans text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:bg-white focus:outline-none"
+							class="w-full rounded-2xl border border-slate-200 bg-slate-50/80 py-2.5 pr-9 pl-10 font-sans text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:bg-white focus:outline-none"
 						/>
 						{#if query}
 							<button
@@ -369,17 +395,19 @@
 
 					<!-- Search Results Container -->
 					{#if isSearching && results.length === 0}
-						<div class="py-10 text-center text-slate-400 font-sans text-xs">
+						<div class="py-10 text-center font-sans text-xs text-slate-400">
 							Searching CC-CEDICT & vocabulary dictionary...
 						</div>
 					{:else if query.trim() && results.length === 0}
 						<div class="py-10 text-center font-sans">
 							<p class="text-sm font-semibold text-slate-700">No matching words found</p>
-							<p class="mt-1 text-xs text-slate-400">Try searching by Chinese characters, Pinyin, or English</p>
+							<p class="mt-1 text-xs text-slate-400">
+								Try searching by Chinese characters, Pinyin, or English
+							</p>
 						</div>
 					{:else if results.length > 0}
 						<div class="space-y-3">
-							<p class="font-headline text-xs font-bold uppercase tracking-wider text-slate-400">
+							<p class="font-headline text-xs font-bold tracking-wider text-slate-400 uppercase">
 								Results ({results.length})
 							</p>
 
@@ -388,7 +416,9 @@
 								{@const isSaved = savedWordKeys.has(zh)}
 								{@const note = getSavedNote(word)}
 
-								<div class="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs transition-all hover:border-indigo-200">
+								<div
+									class="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs transition-all hover:border-indigo-200"
+								>
 									<div class="flex items-start justify-between gap-3">
 										<div>
 											<div class="flex items-center gap-2">
@@ -403,11 +433,15 @@
 													<Volume2 size={14} strokeWidth={2} />
 												</button>
 												{#if word.Pinyin}
-													<span class="font-headline text-xs font-bold text-indigo-600">{word.Pinyin}</span>
+													<span class="font-headline text-xs font-bold text-indigo-600"
+														>{word.Pinyin}</span
+													>
 												{/if}
 											</div>
 											{#if word['Part of Speech']}
-												<span class="mt-1 inline-block rounded-md bg-slate-100 px-2 py-0.5 font-headline text-[10px] font-bold text-slate-600">
+												<span
+													class="mt-1 inline-block rounded-md bg-slate-100 px-2 py-0.5 font-headline text-[10px] font-bold text-slate-600"
+												>
 													{word['Part of Speech']}
 												</span>
 											{/if}
@@ -420,7 +454,9 @@
 											class="flex h-9 w-9 items-center justify-center rounded-xl transition-all {isSaved
 												? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
 												: 'bg-slate-100 text-slate-500 hover:bg-indigo-50 hover:text-indigo-600'}"
-											title={isSaved ? 'Remove from Personal Dictionary' : 'Save to Personal Dictionary'}
+											title={isSaved
+												? 'Remove from Personal Dictionary'
+												: 'Save to Personal Dictionary'}
 										>
 											{#if isSaved}
 												<BookmarkCheck size={18} />
@@ -431,20 +467,24 @@
 									</div>
 
 									<!-- English Meaning -->
-									<p class="mt-2 font-sans text-xs font-medium text-slate-700 leading-relaxed">
+									<p class="mt-2 font-sans text-xs leading-relaxed font-medium text-slate-700">
 										{word['English Meaning']}
 									</p>
 
 									<!-- Example sentence if available -->
 									{#if word['Example (Chinese + Pinyin)']}
-										<p class="mt-2 rounded-xl bg-slate-50 p-2.5 font-sans text-xs text-slate-600 italic">
+										<p
+											class="mt-2 rounded-xl bg-slate-50 p-2.5 font-sans text-xs text-slate-600 italic"
+										>
 											{word['Example (Chinese + Pinyin)']}
 										</p>
 									{/if}
 
 									<!-- Personal Note Input Section -->
 									<div class="mt-3 border-t border-slate-100 pt-3">
-										<div class="flex items-center justify-between text-xs font-headline font-bold text-slate-500 mb-1">
+										<div
+											class="mb-1 flex items-center justify-between font-headline text-xs font-bold text-slate-500"
+										>
 											<span class="flex items-center gap-1.5 text-[11px]">
 												<Edit3 size={13} />
 												Personal Notes / Example Sentence
@@ -453,7 +493,7 @@
 												<button
 													type="button"
 													onclick={() => handleSaveNote(word)}
-													class="text-[11px] text-indigo-600 hover:underline font-bold"
+													class="text-[11px] font-bold text-indigo-600 hover:underline"
 												>
 													Save Note
 												</button>
@@ -473,12 +513,15 @@
 					{:else}
 						<!-- Default Empty State inside Modal -->
 						<div class="py-12 text-center">
-							<div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600">
+							<div
+								class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600"
+							>
 								<Search size={22} />
 							</div>
 							<p class="font-headline text-sm font-extrabold text-slate-800">Lookup Any Word</p>
-							<p class="mt-1 font-sans text-xs text-slate-500 max-w-xs mx-auto">
-								Type characters, Pinyin (e.g. nihao), or English to search the comprehensive Chinese dictionary.
+							<p class="mx-auto mt-1 max-w-xs font-sans text-xs text-slate-500">
+								Type characters, Pinyin (e.g. nihao), or English to search the comprehensive Chinese
+								dictionary.
 							</p>
 						</div>
 					{/if}

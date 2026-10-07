@@ -1,4 +1,4 @@
-import type { WordRecord, CustomDeck, DictionaryEntry } from '$lib/types';
+import type { WordRecord, CustomDeck } from '$lib/types';
 import { getAllCustomDecks, saveCustomDeck, getBuiltinPacks } from '$lib/utils/storage';
 
 export const PERSONAL_DICTIONARY_DECK_ID = 'personal-dictionary';
@@ -191,8 +191,10 @@ export async function searchDictionary(query: string): Promise<WordRecord[]> {
 
 	// Sort by relevance score
 	results.sort((a, b) => {
-		const aExact = (a['Chinese Word'] === trimmed || a['English Meaning']?.toLowerCase() === normQuery) ? 1 : 0;
-		const bExact = (b['Chinese Word'] === trimmed || b['English Meaning']?.toLowerCase() === normQuery) ? 1 : 0;
+		const aExact =
+			a['Chinese Word'] === trimmed || a['English Meaning']?.toLowerCase() === normQuery ? 1 : 0;
+		const bExact =
+			b['Chinese Word'] === trimmed || b['English Meaning']?.toLowerCase() === normQuery ? 1 : 0;
 		return bExact - aExact;
 	});
 
@@ -215,9 +217,25 @@ export async function searchDictionary(query: string): Promise<WordRecord[]> {
 	return results;
 }
 
-let cachedDictPromise: Promise<any[]> | null = null;
+interface RawDictEntry {
+	'Chinese Word'?: string;
+	simplified?: string;
+	word?: string;
+	Pinyin?: string;
+	pinyin?: string;
+	'English Meaning'?: string;
+	meaning?: string;
+	definition?: string;
+	'Part of Speech'?: string;
+	pos?: string;
+	partOfSpeech?: string;
+	'Example (Chinese + Pinyin)'?: string;
+	example?: string;
+}
 
-async function getEmbeddedDict(): Promise<any[]> {
+let cachedDictPromise: Promise<RawDictEntry[]> | null = null;
+
+async function getEmbeddedDict(): Promise<RawDictEntry[]> {
 	if (typeof window === 'undefined') return [];
 	if (!cachedDictPromise) {
 		cachedDictPromise = fetch('/dict.json')
@@ -240,7 +258,7 @@ async function searchLocalEmbeddedDictionary(query: string): Promise<WordRecord[
 		const normPinyinQuery = normalizePinyin(query);
 		const normZhQuery = normalizeChinese(query);
 
-		const matches: { score: number; entry: any }[] = [];
+		const matches: { score: number; entry: RawDictEntry }[] = [];
 
 		for (const entry of data) {
 			const zh = entry['Chinese Word'] || entry.simplified || entry.word || '';
@@ -276,7 +294,8 @@ async function searchLocalEmbeddedDictionary(query: string): Promise<WordRecord[
 			Pinyin: formatPinyin(m.entry.Pinyin || m.entry.pinyin || ''),
 			'Part of Speech': m.entry['Part of Speech'] || m.entry.pos || 'Vocabulary',
 			'English Meaning': m.entry['English Meaning'] || m.entry.meaning || m.entry.definition || '',
-			'Example (Chinese + Pinyin)': m.entry['Example (Chinese + Pinyin)'] || m.entry.example || undefined
+			'Example (Chinese + Pinyin)':
+				m.entry['Example (Chinese + Pinyin)'] || m.entry.example || undefined
 		}));
 	} catch {
 		return [];
@@ -288,7 +307,9 @@ async function searchLocalEmbeddedDictionary(query: string): Promise<WordRecord[
  */
 export async function getPersonalDictionaryDeck(): Promise<CustomDeck> {
 	const customDecks = await getAllCustomDecks();
-	const existing = customDecks.find((d) => d.id === PERSONAL_DICTIONARY_DECK_ID || d.isPersonalDictionary);
+	const existing = customDecks.find(
+		(d) => d.id === PERSONAL_DICTIONARY_DECK_ID || d.isPersonalDictionary
+	);
 
 	if (existing) {
 		return {

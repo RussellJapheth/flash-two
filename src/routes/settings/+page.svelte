@@ -19,6 +19,7 @@
 		computeStreakStats,
 		clearOfflineCache
 	} from '$lib/utils/storage';
+	import { getAllNotebookNotes, saveBulkNotebookNotes } from '$lib/utils/notebookStorage';
 	import {
 		pullAndMerge,
 		pushData,
@@ -214,6 +215,7 @@
 		const progress = await getAllProgress();
 		const customDecks = await getAllCustomDecks();
 		const savedWords = await getAllSavedWords();
+		const notebookNotes = getAllNotebookNotes();
 		const language = getSavedLanguage();
 
 		const backup: AppBackup = {
@@ -222,6 +224,7 @@
 			progress,
 			customDecks,
 			savedWords,
+			notebookNotes,
 			language,
 			username: username || undefined,
 			leaderboardDisabled: isLeaderboardDisabled()
@@ -250,6 +253,9 @@
 				if (parsed.progress) await saveBulkProgress(parsed.progress);
 				if (Array.isArray(parsed.customDecks)) {
 					for (const d of parsed.customDecks) await saveCustomDeck(d);
+				}
+				if (Array.isArray(parsed.notebookNotes)) {
+					saveBulkNotebookNotes(parsed.notebookNotes);
 				}
 				if (parsed.username) {
 					setSavedUsername(parsed.username);

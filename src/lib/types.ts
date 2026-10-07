@@ -102,6 +102,19 @@ export interface AppBackup {
 	leaderboardDisabled?: boolean;
 	streakFreezeData?: StreakFreezeData;
 	studyTimeData?: StudyTimeData;
+	notebookNotes?: NotebookNote[];
+}
+
+export interface NotebookNote {
+	id: string;
+	title: string;
+	content: string;
+	language: 'chinese' | 'french';
+	pinyin?: string;
+	tags: string[];
+	isPinned: boolean;
+	createdAt: number;
+	updatedAt: number;
 }
 
 export interface StreakFreezeData {

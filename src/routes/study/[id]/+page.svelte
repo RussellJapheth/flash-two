@@ -143,7 +143,9 @@
 
 		if (deckId.startsWith('custom-') || deckId === 'personal-dictionary') {
 			const customDecks = await getAllCustomDecks();
-			const match = customDecks.find((d) => d.id === deckId || (deckId === 'personal-dictionary' && d.isPersonalDictionary));
+			const match = customDecks.find(
+				(d) => d.id === deckId || (deckId === 'personal-dictionary' && d.isPersonalDictionary)
+			);
 			if (match) {
 				rawWords = match.words;
 				title = match.name;

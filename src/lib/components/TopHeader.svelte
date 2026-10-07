@@ -3,6 +3,7 @@
 	import { subscribeSyncStatus, pushData } from '$lib/utils/cloud';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
 	import { onMount } from 'svelte';
+	import { resolve } from '$app/paths';
 	import {
 		ArrowLeft,
 		RefreshCw,
@@ -10,7 +11,8 @@
 		Cloud,
 		CloudCheck,
 		CloudUpload,
-		Sparkles
+		Sparkles,
+		Settings
 	} from 'lucide-svelte';
 
 	let {
@@ -98,5 +100,15 @@
 		>
 			<SyncIcon size={16} strokeWidth={2} class={syncStatus === 'syncing' ? 'animate-spin' : ''} />
 		</button>
+
+		<!-- Settings Navigation Button -->
+		<a
+			href={resolve('/settings')}
+			title="Settings"
+			aria-label="Settings"
+			class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 active:scale-95"
+		>
+			<Settings size={16} strokeWidth={2} />
+		</a>
 	</div>
 </header>

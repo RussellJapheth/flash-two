@@ -388,4 +388,3 @@ describe('buildUnscrambleChallenge', () => {
 		expect(challenge?.canonicalOrder).toEqual(['Bonjour,', 'comment', 'allez-vous', '?']);
 	});
 });
-

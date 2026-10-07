@@ -337,7 +337,9 @@
 							</p>
 
 							{#if item.word.customNote}
-								<p class="mt-1.5 rounded-xl border border-indigo-100 bg-indigo-50/60 p-2 font-sans text-xs font-medium text-indigo-950 italic">
+								<p
+									class="mt-1.5 rounded-xl border border-indigo-100 bg-indigo-50/60 p-2 font-sans text-xs font-medium text-indigo-950 italic"
+								>
 									"{item.word.customNote}"
 								</p>
 							{/if}

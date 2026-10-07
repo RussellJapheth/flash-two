@@ -105,7 +105,9 @@
 
 		if (deckId.startsWith('custom-') || deckId === 'personal-dictionary') {
 			const customDecks = await getAllCustomDecks();
-			const match = customDecks.find((d) => d.id === deckId || (deckId === 'personal-dictionary' && d.isPersonalDictionary));
+			const match = customDecks.find(
+				(d) => d.id === deckId || (deckId === 'personal-dictionary' && d.isPersonalDictionary)
+			);
 			if (match) {
 				currentCustomDeck = match;
 				foundWords = match.words;
@@ -534,9 +536,7 @@
 		</div>
 
 		<!-- Sentence Practice CTA -->
-		<div
-			class="shadow-card space-y-3 rounded-2xl border border-indigo-200/70 bg-indigo-50/60 p-4"
-		>
+		<div class="shadow-card space-y-3 rounded-2xl border border-indigo-200/70 bg-indigo-50/60 p-4">
 			<div class="flex items-center justify-between gap-3">
 				<div class="flex items-center gap-2.5">
 					<div
@@ -547,7 +547,9 @@
 					<div>
 						<p class="font-headline text-sm font-bold text-slate-900">Sentence Practice</p>
 						<p class="font-sans text-[11px] text-slate-500">
-							{sentencePracticeCount} example {sentencePracticeCount === 1 ? 'sentence' : 'sentences'}
+							{sentencePracticeCount} example {sentencePracticeCount === 1
+								? 'sentence'
+								: 'sentences'}
 							available
 						</p>
 					</div>
@@ -567,7 +569,10 @@
 			{#if masteredSentencePracticeCount > 0}
 				<div class="flex items-center justify-between border-t border-indigo-100 pt-2.5">
 					<span class="font-sans text-xs text-indigo-900">
-						<strong class="font-bold">{masteredSentencePracticeCount}</strong> mastered {masteredSentencePracticeCount === 1 ? 'word sentence' : 'word sentences'}
+						<strong class="font-bold">{masteredSentencePracticeCount}</strong> mastered {masteredSentencePracticeCount ===
+						1
+							? 'word sentence'
+							: 'word sentences'}
 					</span>
 					<a
 						href={resolve(`/practice/sentences/${deckId}?mode=mastered`)}

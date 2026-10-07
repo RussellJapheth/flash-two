@@ -12,9 +12,12 @@
 		renderClozeSentence,
 		shuffleArray,
 		chunkSentence,
+		buildUnscrambleChallenge,
 		type SentenceExample,
 		type ClozeOption,
-		type SentenceChunk
+		type SentenceChunk,
+		type UnscrambleChallenge,
+		type UnscrambleToken
 	} from '$lib/utils/sentencePractice';
 	import {
 		speakText,
@@ -49,7 +52,9 @@
 		Repeat,
 		Play,
 		Square,
-		Turtle
+		Turtle,
+		Blocks,
+		Puzzle
 	} from 'lucide-svelte';
 
 	interface SentenceItem {
@@ -59,7 +64,7 @@
 		options: ClozeOption[];
 	}
 
-	type PracticeMode = 'cloze' | 'repeat';
+	type PracticeMode = 'cloze' | 'repeat' | 'unscramble';
 	let practiceMode = $state<PracticeMode>('cloze');
 
 	let deckId = $derived(page.params.id || '');
@@ -109,7 +114,71 @@
 	let recordedAudioUrl = $state<string | null>(null);
 	let isAudioRecordingAvail = $state(false);
 
-	let hasAnswered = $derived(practiceMode === 'cloze' ? isClozeCorrect !== null : isRepeatComplete);
+	// Sentence Construction (Unscramble) Drill State
+	let unscrambleChallenge = $derived<UnscrambleChallenge | null>(
+		currentItem
+			? buildUnscrambleChallenge(
+					filledSentence,
+					filledPinyin || currentItem.cloze.targetPinyin,
+					currentItem.cloze.translation,
+					deckLanguage
+				)
+			: null
+	);
+	let selectedUnscrambleTokens = $state<UnscrambleToken[]>([]);
+	let availableUnscrambleTokens = $state<UnscrambleToken[]>([]);
+	let isUnscrambleChecked = $state(false);
+	let isUnscrambleCorrect = $state<boolean | null>(null);
+
+	$effect(() => {
+		if (unscrambleChallenge && currentItem) {
+			availableUnscrambleTokens = [...unscrambleChallenge.tokens];
+			selectedUnscrambleTokens = [];
+			isUnscrambleChecked = false;
+			isUnscrambleCorrect = null;
+		}
+	});
+
+	function handleTapAvailableToken(token: UnscrambleToken) {
+		if (isUnscrambleChecked) return;
+		availableUnscrambleTokens = availableUnscrambleTokens.filter((t) => t.id !== token.id);
+		selectedUnscrambleTokens = [...selectedUnscrambleTokens, token];
+	}
+
+	function handleTapSelectedToken(token: UnscrambleToken) {
+		if (isUnscrambleChecked) return;
+		selectedUnscrambleTokens = selectedUnscrambleTokens.filter((t) => t.id !== token.id);
+		availableUnscrambleTokens = [...availableUnscrambleTokens, token];
+	}
+
+	async function handleCheckUnscramble() {
+		if (!unscrambleChallenge || isUnscrambleChecked) return;
+		isUnscrambleChecked = true;
+		showTranslation = true;
+		const userConstruction = selectedUnscrambleTokens.map((t) => t.text).join('');
+		const targetConstruction = unscrambleChallenge.canonicalOrder.join('');
+
+		if (userConstruction === targetConstruction) {
+			isUnscrambleCorrect = true;
+			sessionCorrect++;
+			const earned = calculateReviewXP('all', 'easy');
+			addXP(earned);
+			sessionEarnedXP += earned;
+			playSound('correct');
+		} else {
+			isUnscrambleCorrect = false;
+			sessionWrong++;
+			playSound('wrong');
+		}
+	}
+
+	let hasAnswered = $derived(
+		practiceMode === 'cloze'
+			? isClozeCorrect !== null
+			: practiceMode === 'repeat'
+				? isRepeatComplete
+				: isUnscrambleChecked
+	);
 
 	let sessionCorrect = $state(0);
 	let sessionWrong = $state(0);
@@ -576,7 +645,22 @@
 							? 'bg-white text-indigo-700 shadow-sm'
 							: 'text-slate-500 hover:text-slate-800'}"
 					>
-						Fill the Blank
+						Fill Blank
+					</button>
+					<button
+						type="button"
+						role="tab"
+						aria-selected={practiceMode === 'unscramble'}
+						onclick={() => {
+							practiceMode = 'unscramble';
+							resetItemState();
+						}}
+						class="flex-1 cursor-pointer rounded-xl py-2 text-center font-headline text-xs font-bold transition-all {practiceMode ===
+						'unscramble'
+							? 'bg-white text-indigo-700 shadow-sm'
+							: 'text-slate-500 hover:text-slate-800'}"
+					>
+						Syntax Unscramble
 					</button>
 					<button
 						type="button"
@@ -757,6 +841,124 @@
 							{/if}
 						</div>
 					{/if}
+				{:else if practiceMode === 'unscramble' && unscrambleChallenge}
+					<!-- Syntax Construction (Unscramble) Mode View -->
+					<div
+						class="space-y-4 rounded-3xl border border-white/60 bg-white/50 p-5 shadow-xl shadow-indigo-600/5 backdrop-blur-xl"
+					>
+						<!-- Prompt Header -->
+						<div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
+							<span
+								class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50/90 px-2.5 py-1 font-headline text-[10px] font-bold tracking-wider text-indigo-700 uppercase backdrop-blur-xs"
+							>
+								<Puzzle size={12} strokeWidth={2.25} />
+								<span>Construct Sentence Syntax</span>
+							</span>
+							<button
+								type="button"
+								onclick={() => handleReplayAudio(filledSentence)}
+								class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 transition-colors hover:bg-indigo-100 active:scale-95"
+								title="Play native audio"
+							>
+								<Volume2 size={15} strokeWidth={2.25} />
+							</button>
+						</div>
+
+						<!-- Target Translation Prompt -->
+						{#if unscrambleChallenge.translation}
+							<div class="rounded-2xl border border-slate-200/80 bg-white/90 p-4 text-center">
+								<p class="font-headline text-sm font-bold text-slate-800">
+									"{unscrambleChallenge.translation}"
+								</p>
+							</div>
+						{/if}
+
+						<!-- Constructed Answer Slot -->
+						<div
+							class="flex min-h-[64px] flex-wrap items-center gap-2 rounded-2xl border-2 border-dashed border-indigo-200/80 bg-indigo-50/40 p-3.5 transition-all"
+						>
+							{#if selectedUnscrambleTokens.length === 0}
+								<span class="mx-auto select-none text-xs font-semibold text-slate-400">
+									Tap chips below to assemble sentence in correct syntax order
+								</span>
+							{:else}
+								{#each selectedUnscrambleTokens as token (token.id)}
+									<button
+										type="button"
+										onclick={() => handleTapSelectedToken(token)}
+										disabled={isUnscrambleChecked}
+										class="flex flex-col items-center justify-center rounded-xl border border-indigo-200 bg-white px-3 py-1.5 font-headline text-sm font-bold text-indigo-950 shadow-xs transition-all hover:border-indigo-400 hover:bg-indigo-50 active:scale-95 disabled:opacity-90"
+									>
+										<span class="font-hanzi text-sm font-extrabold text-slate-900">{token.text}</span>
+										{#if token.pinyin}
+											<span class="font-sans text-[10px] font-bold text-indigo-600">
+												{token.pinyin}
+											</span>
+										{/if}
+									</button>
+								{/each}
+							{/if}
+						</div>
+
+						<!-- Scrambled Available Chips Tray -->
+						{#if availableUnscrambleTokens.length > 0 && !isUnscrambleChecked}
+							<div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+								{#each availableUnscrambleTokens as token (token.id)}
+									<button
+										type="button"
+										onclick={() => handleTapAvailableToken(token)}
+										class="flex flex-col items-center justify-center rounded-xl border border-slate-200/90 bg-white px-3.5 py-1.5 font-headline text-sm font-bold text-slate-800 shadow-2xs transition-all hover:border-indigo-300 hover:bg-indigo-50 active:scale-95"
+									>
+										<span class="font-hanzi text-sm font-extrabold text-slate-900">{token.text}</span>
+										{#if token.pinyin}
+											<span class="font-sans text-[10px] font-bold text-indigo-600">
+												{token.pinyin}
+											</span>
+										{/if}
+									</button>
+								{/each}
+							</div>
+						{/if}
+
+						<!-- Unscramble Actions & Feedback -->
+						{#if !isUnscrambleChecked}
+							<button
+								type="button"
+								onclick={handleCheckUnscramble}
+								disabled={selectedUnscrambleTokens.length === 0}
+								class="h-12 w-full cursor-pointer rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
+							>
+								Check Sentence Order
+							</button>
+						{:else}
+							<div
+								class="rounded-2xl border p-4 text-center transition-all {isUnscrambleCorrect
+									? 'border-emerald-200 bg-emerald-50 text-emerald-900'
+									: 'border-rose-200 bg-rose-50 text-rose-900'}"
+							>
+								{#if isUnscrambleCorrect}
+									<div
+										class="inline-flex items-center gap-1.5 font-headline text-sm font-bold text-emerald-700"
+									>
+										<Check size={16} class="stroke-[3]" />
+										<span>Perfect Sentence Construction!</span>
+									</div>
+								{:else}
+									<div class="space-y-1">
+										<p class="font-headline text-xs font-bold text-rose-700 uppercase tracking-wider">Incorrect Order</p>
+										<p class="font-headline text-sm font-bold text-slate-900">
+											Target: {unscrambleChallenge.fullSentence}
+										</p>
+										{#if unscrambleChallenge.fullPinyin}
+											<p class="font-headline text-xs font-semibold text-indigo-600">
+												{unscrambleChallenge.fullPinyin}
+											</p>
+										{/if}
+									</div>
+								{/if}
+							</div>
+						{/if}
+					</div>
 				{:else}
 					<!-- Repeat After Me (Shadowing & Stepping) Mode View -->
 					<div

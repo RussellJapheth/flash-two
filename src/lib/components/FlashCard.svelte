@@ -8,7 +8,7 @@
 		type SpeechEvaluationResult,
 		type SpeechRecognizerHandle
 	} from '$lib/utils/speech';
-	import { Bookmark, Volume2, Pointer, Mic, Check, RotateCcw } from 'lucide-svelte';
+	import { Bookmark, Volume2, Pointer, Mic, Check, RotateCcw, Clock, Sparkles, VolumeX } from 'lucide-svelte';
 	import { onMount, onDestroy } from 'svelte';
 
 	let {
@@ -17,6 +17,10 @@
 		isFlipped = false,
 		isSaved = false,
 		showPinyin = true,
+		audioFirst = false,
+		deckName = '',
+		timed = false,
+		timeRemaining = 5,
 		onFlip = () => {},
 		onToggleSave = () => {}
 	} = $props<{
@@ -25,6 +29,10 @@
 		isFlipped?: boolean;
 		isSaved?: boolean;
 		showPinyin?: boolean;
+		audioFirst?: boolean;
+		deckName?: string;
+		timed?: boolean;
+		timeRemaining?: number;
 		onFlip?: () => void;
 		onToggleSave?: () => void;
 	}>();
@@ -56,11 +64,14 @@
 	});
 
 	$effect(() => {
-		// Reset speech state when the target word changes
+		// Reset speech state and auto-play word audio if audioFirst mode is active
 		if (word) {
 			stopListening();
 			speechResult = null;
 			currentTranscript = '';
+			if (audioFirst && !isFlipped && targetWord) {
+				speakWord(targetWord, language);
+			}
 		}
 	});
 
@@ -167,14 +178,33 @@
 			class="shadow-card hover:shadow-card-hover absolute inset-0 flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-6 transition-all backface-hidden"
 		>
 			<!-- Front Header -->
-			<div class="flex items-center justify-between">
-				<span
-					class="rounded-full bg-slate-100 px-3 py-1 font-headline text-xs font-bold tracking-wider text-slate-600 uppercase"
-				>
-					{partOfSpeech}
-				</span>
+			<div class="flex items-center justify-between gap-2">
+				<div class="flex flex-wrap items-center gap-1.5">
+					<span
+						class="rounded-full bg-slate-100 px-3 py-1 font-headline text-xs font-bold tracking-wider text-slate-600 uppercase"
+					>
+						{partOfSpeech}
+					</span>
+					{#if deckName}
+						<span
+							class="max-w-[140px] truncate rounded-full bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 font-headline text-xs font-bold text-indigo-700"
+							title={deckName}
+						>
+							{deckName}
+						</span>
+					{/if}
+				</div>
 
-				<div class="flex items-center gap-1">
+				<div class="flex items-center gap-2">
+					{#if timed && !isFlipped}
+						<div
+							class="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 font-headline text-xs font-bold text-amber-700 shadow-2xs"
+						>
+							<Clock size={13} class="animate-spin text-amber-600" style="animation-duration: 3s;" />
+							<span>{timeRemaining}s</span>
+						</div>
+					{/if}
+
 					<button
 						type="button"
 						onclick={handleSave}
@@ -190,74 +220,90 @@
 
 			<!-- Front Content -->
 			<div class="my-auto flex flex-col items-center justify-center text-center">
-				<h2
-					class="font-headline text-5xl font-extrabold tracking-tight text-slate-900 sm:text-6xl {language ===
-					'chinese'
-						? 'font-hanzi'
-						: ''}"
-				>
-					{targetWord}
-				</h2>
-
-				{#if showPinyin && phonetic}
-					<p class="mt-3 font-headline text-lg font-bold text-indigo-600">
-						{phonetic}
-					</p>
-				{/if}
-
-				<!-- Audio & Pronunciation Trigger Controls -->
-				<div class="mt-6 flex flex-wrap items-center justify-center gap-2.5">
-					<button
-						type="button"
-						onclick={handleAudio}
-						class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-4 py-2 font-headline text-sm font-bold text-indigo-700 shadow-xs transition-all hover:bg-indigo-100 hover:shadow-sm active:scale-95"
-					>
-						<Volume2 size={18} strokeWidth={2} />
-						<span>Listen</span>
-					</button>
-
-					{#if hasSpeechSupport}
+				{#if audioFirst}
+					<!-- Audio-First Listening Recall Prompt -->
+					<div class="flex flex-col items-center justify-center py-6">
 						<button
 							type="button"
-							onclick={handleToggleMic}
-							class="inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 font-headline text-sm font-bold shadow-xs transition-all active:scale-95 {isListening
-								? 'animate-pulse border-rose-300 bg-rose-50 text-rose-700 hover:bg-rose-100'
-								: 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-slate-900'}"
+							onclick={handleAudio}
+							class="group relative flex h-28 w-28 cursor-pointer items-center justify-center rounded-full border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 to-indigo-100/80 text-indigo-600 shadow-md transition-all hover:scale-105 hover:border-indigo-400 hover:bg-indigo-100 hover:shadow-lg active:scale-95"
+							aria-label="Replay audio prompt"
 						>
-							<Mic
-								size={18}
-								strokeWidth={2}
-								class={isListening ? 'text-rose-600' : 'text-slate-600'}
-							/>
-							<span>{isListening ? 'Listening...' : 'Speak'}</span>
+							<span class="absolute -inset-1 animate-ping rounded-full bg-indigo-400/20 duration-1000"></span>
+							<Volume2 size={48} strokeWidth={2.2} class="relative z-10 transition-transform group-hover:scale-110" />
 						</button>
-					{/if}
-				</div>
+					</div>
+				{:else}
+					<!-- Standard Text Prompt -->
+					<h2
+						class="font-headline text-5xl font-extrabold tracking-tight text-slate-900 sm:text-6xl {language ===
+						'chinese'
+							? 'font-hanzi'
+							: ''}"
+					>
+						{targetWord}
+					</h2>
 
-				<!-- Pronunciation Feedback Badge -->
-				{#if speechResult}
-					<div
-						class="mt-3.5 inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-center transition-all {speechResult.passed
-							? 'border-emerald-200 bg-emerald-50 text-emerald-800'
-							: 'border-amber-200 bg-amber-50 text-amber-800'}"
-					>
-						<div class="flex items-center gap-1.5 font-headline text-xs font-bold">
-							{#if speechResult.passed}
-								<Check size={14} class="stroke-[3] text-emerald-600" />
-								<span>{Math.round(speechResult.score * 100)}% Match</span>
-							{:else}
-								<RotateCcw size={14} class="text-amber-600" />
-								<span>{Math.round(speechResult.score * 100)}% · Try Again</span>
-							{/if}
+					{#if showPinyin && phonetic}
+						<p class="mt-3 font-headline text-lg font-bold text-indigo-600">
+							{phonetic}
+						</p>
+					{/if}
+
+					<!-- Audio & Pronunciation Trigger Controls -->
+					<div class="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+						<button
+							type="button"
+							onclick={handleAudio}
+							class="inline-flex cursor-pointer items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-4 py-2 font-headline text-sm font-bold text-indigo-700 shadow-xs transition-all hover:bg-indigo-100 hover:shadow-sm active:scale-95"
+						>
+							<Volume2 size={18} strokeWidth={2} />
+							<span>Listen</span>
+						</button>
+
+						{#if hasSpeechSupport}
+							<button
+								type="button"
+								onclick={handleToggleMic}
+								class="inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 font-headline text-sm font-bold shadow-xs transition-all active:scale-95 {isListening
+									? 'animate-pulse border-rose-300 bg-rose-50 text-rose-700 hover:bg-rose-100'
+									: 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-slate-900'}"
+							>
+								<Mic
+									size={18}
+									strokeWidth={2}
+									class={isListening ? 'text-rose-600' : 'text-slate-600'}
+								/>
+								<span>{isListening ? 'Listening...' : 'Speak'}</span>
+							</button>
+						{/if}
+					</div>
+
+					<!-- Pronunciation Feedback Badge -->
+					{#if speechResult}
+						<div
+							class="mt-3.5 inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-center transition-all {speechResult.passed
+								? 'border-emerald-200 bg-emerald-50 text-emerald-800'
+								: 'border-amber-200 bg-amber-50 text-amber-800'}"
+						>
+							<div class="flex items-center gap-1.5 font-headline text-xs font-bold">
+								{#if speechResult.passed}
+									<Check size={14} class="stroke-[3] text-emerald-600" />
+									<span>{Math.round(speechResult.score * 100)}% Match</span>
+								{:else}
+									<RotateCcw size={14} class="text-amber-600" />
+									<span>{Math.round(speechResult.score * 100)}% · Try Again</span>
+								{/if}
+							</div>
 						</div>
-					</div>
-				{:else if isListening}
-					<div
-						class="mt-3.5 inline-flex items-center gap-1.5 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 font-sans text-xs font-medium text-indigo-700"
-					>
-						<span class="inline-block h-2 w-2 animate-ping rounded-full bg-indigo-500"></span>
-						<span>Listening...</span>
-					</div>
+					{:else if isListening}
+						<div
+							class="mt-3.5 inline-flex items-center gap-1.5 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 font-sans text-xs font-medium text-indigo-700"
+						>
+							<span class="inline-block h-2 w-2 animate-ping rounded-full bg-indigo-500"></span>
+							<span>Listening...</span>
+						</div>
+					{/if}
 				{/if}
 			</div>
 

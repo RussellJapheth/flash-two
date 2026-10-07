@@ -38,7 +38,8 @@
 		Volume2,
 		VolumeX,
 		FolderOpen,
-		Sparkles
+		Sparkles,
+		Clock
 	} from 'lucide-svelte';
 
 	let deckId = $derived(page.params.id || '');
@@ -65,6 +66,12 @@
 	let isCurrentSaved = $state(false);
 	let isAdvancing = $state(false);
 
+	// Active recall mode options
+	let isAudioFirst = $state(page.url.searchParams.get('audioFirst') === 'true');
+	let isTimedSprint = $state(page.url.searchParams.get('timed') === 'true');
+	let sprintSecondsRemaining = $state(5);
+	let timerInterval: ReturnType<typeof setInterval> | undefined;
+
 	// Session metrics
 	let sessionCorrect = $state(0);
 	let sessionWrong = $state(0);
@@ -89,6 +96,41 @@
 			? Math.round((sessionCorrect / (sessionCorrect + sessionWrong)) * 100)
 			: 100
 	);
+
+	function startSprintTimer() {
+		stopSprintTimer();
+		if (!isTimedSprint || isFlipped || isSessionFinished || !currentWord) return;
+		sprintSecondsRemaining = 5;
+		timerInterval = setInterval(() => {
+			if (sprintSecondsRemaining > 1) {
+				sprintSecondsRemaining--;
+			} else {
+				stopSprintTimer();
+				sprintSecondsRemaining = 0;
+				if (!isFlipped && !isAdvancing) {
+					playSound('wrong');
+					isFlipped = true;
+				}
+			}
+		}, 1000);
+	}
+
+	function stopSprintTimer() {
+		if (timerInterval) {
+			clearInterval(timerInterval);
+			timerInterval = undefined;
+		}
+	}
+
+	$effect(() => {
+		if (currentIndex >= 0 && cards.length > 0) {
+			if (isFlipped) {
+				stopSprintTimer();
+			} else if (isTimedSprint && !isSessionFinished) {
+				startSprintTimer();
+			}
+		}
+	});
 
 	async function loadStudyDeck() {
 		clearAutoplay();
@@ -635,12 +677,45 @@
 					</div>
 				</div>
 
+				<!-- Active Recall Mode Toggle Bar -->
+				<div class="flex items-center justify-center gap-2.5">
+					<button
+						type="button"
+						onclick={() => (isAudioFirst = !isAudioFirst)}
+						class="inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1 font-headline text-xs font-bold transition-all active:scale-95 {isAudioFirst
+							? 'border-indigo-300 bg-indigo-50 text-indigo-700 shadow-2xs'
+							: 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}"
+					>
+						<Volume2 size={13} strokeWidth={2.2} />
+						<span>{isAudioFirst ? 'Audio-First ON' : 'Audio-First'}</span>
+					</button>
+
+					<button
+						type="button"
+						onclick={() => {
+							isTimedSprint = !isTimedSprint;
+							if (isTimedSprint) startSprintTimer();
+							else stopSprintTimer();
+						}}
+						class="inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1 font-headline text-xs font-bold transition-all active:scale-95 {isTimedSprint
+							? 'border-amber-300 bg-amber-50 text-amber-800 shadow-2xs'
+							: 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}"
+					>
+						<Clock size={13} strokeWidth={2.2} />
+						<span>{isTimedSprint ? 'Timed 5s Sprint ON' : 'Timed 5s Sprint'}</span>
+					</button>
+				</div>
+
 				<FlashCard
 					word={currentWord}
 					language={deckLanguage}
 					{isFlipped}
 					isSaved={isCurrentSaved}
 					showPinyin={showPinyinSetting}
+					audioFirst={isAudioFirst}
+					deckName={deckTitle}
+					timed={isTimedSprint}
+					timeRemaining={sprintSecondsRemaining}
 					onFlip={handleFlipCard}
 					onToggleSave={handleToggleSave}
 				/>

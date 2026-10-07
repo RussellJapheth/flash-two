@@ -297,3 +297,103 @@ export function chunkSentence(
 
 	return chunks;
 }
+
+export interface UnscrambleToken {
+	id: string;
+	text: string;
+	pinyin?: string;
+}
+
+export interface UnscrambleChallenge {
+	fullSentence: string;
+	fullPinyin?: string;
+	translation?: string;
+	tokens: UnscrambleToken[];
+	canonicalOrder: string[];
+}
+
+/**
+ * Builds sentence construction / syntax recall unscramble challenge.
+ * Tokenizes sentence into scrambled word chips with paired Pinyin for syntax recall.
+ */
+export function buildUnscrambleChallenge(
+	fullSentence: string,
+	fullPinyin?: string,
+	translation?: string,
+	lang: 'chinese' | 'french' = 'chinese'
+): UnscrambleChallenge | null {
+	const cleaned = fullSentence.trim();
+	if (!cleaned) return null;
+
+	let rawTokens: string[] = [];
+
+	if (lang === 'french') {
+		rawTokens = cleaned.split(/\s+/).filter(Boolean);
+	} else {
+		// Chinese tokenization: split into clauses or 1-3 character tokens
+		const delimiterRegex = /([，、；;！!？?。.]+)/g;
+		const parts = cleaned.split(delimiterRegex).filter(Boolean);
+
+		for (const part of parts) {
+			if (/^[，、；;！!？?。.]+$/.test(part)) {
+				if (rawTokens.length > 0) {
+					rawTokens[rawTokens.length - 1] += part;
+				} else {
+					rawTokens.push(part);
+				}
+			} else {
+				let current = part;
+				while (current.length > 0) {
+					if (current.length >= 4) {
+						rawTokens.push(current.slice(0, 2));
+						current = current.slice(2);
+					} else if (current.length === 3) {
+						rawTokens.push(current.slice(0, 2));
+						current = current.slice(2);
+					} else {
+						rawTokens.push(current);
+						current = '';
+					}
+				}
+			}
+		}
+	}
+
+	if (rawTokens.length === 0) return null;
+
+	// Align pinyin words to tokens if available
+	let pinyinWords: string[] = [];
+	if (fullPinyin && lang === 'chinese') {
+		pinyinWords = fullPinyin.trim().split(/\s+/).filter(Boolean);
+	}
+
+	const canonicalOrder = [...rawTokens];
+	const tokens: UnscrambleToken[] = rawTokens.map((t, idx) => {
+		let tokenPinyin: string | undefined = undefined;
+		if (pinyinWords.length === rawTokens.length) {
+			tokenPinyin = pinyinWords[idx];
+		} else if (pinyinWords.length > 0) {
+			const pyIdx = Math.min(idx, pinyinWords.length - 1);
+			tokenPinyin = pinyinWords[pyIdx];
+		}
+		return {
+			id: `tok-${idx}-${t}`,
+			text: t,
+			pinyin: tokenPinyin
+		};
+	});
+
+	let shuffled = shuffleArray(tokens);
+	if (shuffled.length > 1 && shuffled.map((t) => t.text).join('') === canonicalOrder.join('')) {
+		shuffled = [...shuffled].reverse();
+	}
+
+	return {
+		fullSentence: cleaned,
+		fullPinyin,
+		translation,
+		tokens: shuffled,
+		canonicalOrder
+	};
+}
+

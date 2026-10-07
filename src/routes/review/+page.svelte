@@ -21,10 +21,11 @@
 	import { playSound } from '$lib/utils/audio';
 	import { calculateReviewXP, calculateSessionBonus, addXP } from '$lib/utils/xp';
 	import type { WordRecord, WordProgress, StudyRating } from '$lib/types';
-	import { X, Brain, Flame, CircleCheckBig, Sparkles } from 'lucide-svelte';
+	import { X, Brain, Flame, CircleCheckBig, Sparkles, Volume2, Clock, Shuffle } from 'lucide-svelte';
 
 	interface ReviewItem {
 		packId: string;
+		deckName: string;
 		word: WordRecord;
 		language: 'chinese' | 'french';
 	}
@@ -36,6 +37,12 @@
 	let isCurrentSaved = $state(false);
 	let isAdvancing = $state(false);
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
+
+	// Active recall mode toggles
+	let isAudioFirst = $state(false);
+	let isTimedSprint = $state(false);
+	let sprintSecondsRemaining = $state(5);
+	let timerInterval: ReturnType<typeof setInterval> | undefined;
 
 	// Session metrics
 	let sessionCorrect = $state(0);
@@ -59,7 +66,80 @@
 			: 100
 	);
 
+	function startSprintTimer() {
+		stopSprintTimer();
+		if (!isTimedSprint || isFlipped || isSessionFinished || !currentItem) return;
+		sprintSecondsRemaining = 5;
+		timerInterval = setInterval(() => {
+			if (sprintSecondsRemaining > 1) {
+				sprintSecondsRemaining--;
+			} else {
+				stopSprintTimer();
+				sprintSecondsRemaining = 0;
+				if (!isFlipped && !isAdvancing) {
+					playSound('wrong');
+					isFlipped = true;
+				}
+			}
+		}, 1000);
+	}
+
+	function stopSprintTimer() {
+		if (timerInterval) {
+			clearInterval(timerInterval);
+			timerInterval = undefined;
+		}
+	}
+
+	$effect(() => {
+		if (currentIndex >= 0 && items.length > 0) {
+			if (isFlipped) {
+				stopSprintTimer();
+			} else if (isTimedSprint && !isSessionFinished) {
+				startSprintTimer();
+			}
+		}
+	});
+
+	/**
+	 * Interleaved stratified shuffle: mixes cards across different decks so user
+	 * doesn't review cards from only one deck sequentially.
+	 */
+	function interleaveDecks(dueItems: ReviewItem[]): ReviewItem[] {
+		const byDeck: Record<string, ReviewItem[]> = {};
+		for (const item of dueItems) {
+			if (!byDeck[item.packId]) byDeck[item.packId] = [];
+			byDeck[item.packId].push(item);
+		}
+
+		// Shuffle cards within each deck bucket first
+		const deckKeys = Object.keys(byDeck);
+		for (const key of deckKeys) {
+			for (let i = byDeck[key].length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[byDeck[key][i], byDeck[key][j]] = [byDeck[key][j], byDeck[key][i]];
+			}
+		}
+
+		// Interleave round-robin across decks
+		const result: ReviewItem[] = [];
+		let added = true;
+		let idx = 0;
+		while (added) {
+			added = false;
+			for (const key of deckKeys) {
+				if (idx < byDeck[key].length) {
+					result.push(byDeck[key][idx]);
+					added = true;
+				}
+			}
+			idx++;
+		}
+		return result;
+	}
+
 	async function loadDueCards() {
+		stopSprintTimer();
 		activeLanguage = getSavedLanguage();
 		const progress = await getAllProgress();
 		allProgress = progress;
@@ -77,6 +157,7 @@
 				if (!p || isCardDue(p)) {
 					dueItems.push({
 						packId: pack.id,
+						deckName: pack.title || `HSK ${pack.id}`,
 						word,
 						language: activeLanguage
 					});
@@ -91,6 +172,7 @@
 				if (!p || isCardDue(p)) {
 					dueItems.push({
 						packId: deck.id,
+						deckName: deck.name || 'Custom Deck',
 						word,
 						language: (deck.language as 'chinese' | 'french') || activeLanguage
 					});
@@ -98,13 +180,8 @@
 			}
 		}
 
-		// Shuffle review cards randomly
-		for (let i = dueItems.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[dueItems[i], dueItems[j]] = [dueItems[j], dueItems[i]];
-		}
-
-		items = dueItems;
+		// Apply interleaved stratified shuffle across decks
+		items = interleaveDecks(dueItems);
 		currentIndex = 0;
 		isFlipped = false;
 		isAdvancing = false;
@@ -115,6 +192,7 @@
 
 		if (items.length > 0) {
 			await updateSavedStatus();
+			if (isTimedSprint) startSprintTimer();
 		}
 	}
 
@@ -316,13 +394,46 @@
 				</button>
 			</div>
 		{:else if currentItem}
-			<div class="space-y-6">
+			<div class="space-y-4">
+				<!-- Active Recall Mode Toggle Bar -->
+				<div class="flex items-center justify-center gap-2.5">
+					<button
+						type="button"
+						onclick={() => (isAudioFirst = !isAudioFirst)}
+						class="inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1 font-headline text-xs font-bold transition-all active:scale-95 {isAudioFirst
+							? 'border-indigo-300 bg-indigo-50 text-indigo-700 shadow-2xs'
+							: 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}"
+					>
+						<Volume2 size={13} strokeWidth={2.2} />
+						<span>{isAudioFirst ? 'Audio-First ON' : 'Audio-First'}</span>
+					</button>
+
+					<button
+						type="button"
+						onclick={() => {
+							isTimedSprint = !isTimedSprint;
+							if (isTimedSprint) startSprintTimer();
+							else stopSprintTimer();
+						}}
+						class="inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1 font-headline text-xs font-bold transition-all active:scale-95 {isTimedSprint
+							? 'border-amber-300 bg-amber-50 text-amber-800 shadow-2xs'
+							: 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}"
+					>
+						<Clock size={13} strokeWidth={2.2} />
+						<span>{isTimedSprint ? 'Timed 5s Sprint ON' : 'Timed 5s Sprint'}</span>
+					</button>
+				</div>
+
 				<FlashCard
 					word={currentItem.word}
 					language={currentItem.language}
 					{isFlipped}
 					isSaved={isCurrentSaved}
 					showPinyin={true}
+					audioFirst={isAudioFirst}
+					deckName={currentItem.deckName}
+					timed={isTimedSprint}
+					timeRemaining={sprintSecondsRemaining}
 					onFlip={handleFlipCard}
 					onToggleSave={handleToggleSave}
 				/>

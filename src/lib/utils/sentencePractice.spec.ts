@@ -6,6 +6,7 @@ import {
 	renderClozeSentence,
 	shuffleArray,
 	chunkSentence,
+	buildUnscrambleChallenge,
 	BLANK_TOKEN
 } from './sentencePractice';
 import type { WordRecord } from '$lib/types';
@@ -355,3 +356,36 @@ describe('chunkSentence', () => {
 		expect(chunks[2].isFullSentence).toBe(true);
 	});
 });
+
+describe('buildUnscrambleChallenge', () => {
+	it('returns null for empty sentences', () => {
+		expect(buildUnscrambleChallenge('')).toBeNull();
+		expect(buildUnscrambleChallenge('  ')).toBeNull();
+	});
+
+	it('builds tokens and canonical order for Chinese sentence', () => {
+		const challenge = buildUnscrambleChallenge(
+			'你好！很高兴认识你。',
+			'Nǐ hǎo! Hěn gāoxìng rènshí nǐ.',
+			'Hello! Nice to meet you.',
+			'chinese'
+		);
+		expect(challenge).not.toBeNull();
+		expect(challenge?.fullSentence).toBe('你好！很高兴认识你。');
+		expect(challenge?.translation).toBe('Hello! Nice to meet you.');
+		expect(challenge?.tokens.length).toBeGreaterThan(0);
+		expect(challenge?.canonicalOrder.join('')).toBe('你好！很高兴认识你。');
+	});
+
+	it('builds word tokens for French sentence', () => {
+		const challenge = buildUnscrambleChallenge(
+			'Bonjour, comment allez-vous ?',
+			undefined,
+			'Hello, how are you?',
+			'french'
+		);
+		expect(challenge).not.toBeNull();
+		expect(challenge?.canonicalOrder).toEqual(['Bonjour,', 'comment', 'allez-vous', '?']);
+	});
+});
+

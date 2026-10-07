@@ -3,6 +3,8 @@
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 	import {
 		getAllProgress,
 		getWordProgress,
@@ -45,7 +47,19 @@
 		Wrench
 	} from 'lucide-svelte';
 
-	let activeTab = $state<'overview' | 'tools'>('overview');
+	let activeTab = $derived<'overview' | 'tools'>(
+		page.url.searchParams.get('tab') === 'tools' ? 'tools' : 'overview'
+	);
+
+	function switchTab(tab: 'overview' | 'tools') {
+		const query = tab === 'tools' ? '?tab=tools' : '';
+		// eslint-disable-next-line svelte/no-navigation-without-resolve -- query string navigation on resolved route
+		goto(`${resolve('/progress')}${query}`, {
+			replaceState: false,
+			noScroll: true,
+			keepFocus: true
+		});
+	}
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -395,10 +409,16 @@
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<!-- SEGMENTED CONTROL TAB SWITCHER -->
-	<div class="grid grid-cols-2 rounded-2xl border border-slate-200/60 bg-slate-100 p-1">
+	<div
+		class="grid grid-cols-2 rounded-2xl border border-slate-200/60 bg-slate-100 p-1"
+		role="tablist"
+		aria-label="Progress views"
+	>
 		<button
 			type="button"
-			onclick={() => (activeTab = 'overview')}
+			role="tab"
+			aria-selected={activeTab === 'overview'}
+			onclick={() => switchTab('overview')}
 			class="flex items-center justify-center gap-2 rounded-xl py-2.5 font-headline text-xs font-bold transition-all {activeTab ===
 			'overview'
 				? 'bg-white text-indigo-600 shadow-xs'
@@ -409,7 +429,9 @@
 		</button>
 		<button
 			type="button"
-			onclick={() => (activeTab = 'tools')}
+			role="tab"
+			aria-selected={activeTab === 'tools'}
+			onclick={() => switchTab('tools')}
 			class="flex items-center justify-center gap-2 rounded-xl py-2.5 font-headline text-xs font-bold transition-all {activeTab ===
 			'tools'
 				? 'bg-white text-indigo-600 shadow-xs'
@@ -438,7 +460,7 @@
 			</div>
 			<button
 				type="button"
-				onclick={() => (activeTab = 'tools')}
+				onclick={() => switchTab('tools')}
 				class="font-headline text-xs font-bold text-emerald-700 underline underline-offset-2 hover:text-emerald-800"
 			>
 				Manage Timer &rarr;

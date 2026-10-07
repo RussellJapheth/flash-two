@@ -1,4 +1,5 @@
 import type { ActiveStudyTimerState, StudyTimeData, StudyTimerStatus } from '$lib/types';
+import { isAutoStartTimerEnabled } from '$lib/utils/storage';
 
 export const FLASHCARDS_STUDY_TIME_KEY = 'flashcards_study_time_data';
 export const FLASHCARDS_ACTIVE_TIMER_KEY = 'flashcards_active_study_timer';
@@ -424,6 +425,37 @@ export function formatStudyDuration(totalSeconds: number): string {
 		return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
 	}
 	return `${minutes} mins`;
+}
+
+/**
+ * Automatically starts or resumes the study timer if the auto-start setting is enabled
+ * and the timer is currently idle or paused.
+ */
+export function triggerAutoStartStudyTimer(): ActiveStudyTimerState {
+	if (!isAutoStartTimerEnabled()) {
+		return getActiveSession();
+	}
+	const session = getActiveSession();
+	if (session.status === 'idle' || session.status === 'paused') {
+		return startStudyTimer();
+	}
+	return session;
+}
+
+/**
+ * Automatically stops the study timer and saves accumulated session time if the
+ * auto-start/stop setting is enabled and the timer is currently running or paused.
+ * Returns the recorded elapsed seconds.
+ */
+export function triggerAutoStopStudyTimer(): number {
+	if (!isAutoStartTimerEnabled()) {
+		return 0;
+	}
+	const session = getActiveSession();
+	if (session.status === 'running' || session.status === 'paused') {
+		return stopStudyTimer();
+	}
+	return 0;
 }
 
 // Auto-initialize when loaded on client

@@ -2,6 +2,7 @@
 	import { resolve } from '$app/paths';
 	import { onDestroy, onMount } from 'svelte';
 	import TopHeader from '$lib/components/TopHeader.svelte';
+	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import ParticleCanvas from '$lib/components/games/ParticleCanvas.svelte';
 	import MatchBlitzCard from '$lib/components/games/MatchBlitzCard.svelte';
 	import GameAvatar from '$lib/components/games/GameAvatar.svelte';
@@ -311,6 +312,7 @@
 
 	function startGameplay() {
 		phase = 'playing';
+		triggerAutoStartStudyTimer();
 		spawnWave();
 
 		// Main round countdown
@@ -461,6 +463,7 @@
 		cleanupTimers();
 		stopSpeech();
 		phase = 'summary';
+		triggerAutoStopStudyTimer();
 
 		const totalAttempts = correctMatches + wrongMatches;
 		const accuracy = totalAttempts > 0 ? Math.round((correctMatches / totalAttempts) * 100) : 0;
@@ -519,6 +522,7 @@
 	onDestroy(() => {
 		cleanupTimers();
 		stopSpeech();
+		triggerAutoStopStudyTimer();
 	});
 </script>
 

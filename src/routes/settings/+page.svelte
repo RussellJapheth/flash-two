@@ -11,6 +11,8 @@
 		setLeaderboardDisabled,
 		isDebugModeEnabled,
 		setDebugModeEnabled,
+		isAutoStartTimerEnabled,
+		setAutoStartTimerEnabled,
 		getAllProgress,
 		getAllCustomDecks,
 		getAllSavedWords,
@@ -46,7 +48,8 @@
 		ChevronRight,
 		UserCheck,
 		Sparkles,
-		RotateCw
+		RotateCw,
+		Timer
 	} from 'lucide-svelte';
 
 	let username = $state('');
@@ -57,6 +60,7 @@
 	let cacheMessage = $state('');
 	let leaderboardDisabled = $state(true);
 	let isDebugMode = $state(false);
+	let autoStartTimer = $state(true);
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -88,6 +92,7 @@
 		activeLanguage = getSavedLanguage();
 		leaderboardDisabled = isLeaderboardDisabled();
 		isDebugMode = isDebugModeEnabled();
+		autoStartTimer = isAutoStartTimerEnabled();
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
 	}
@@ -109,6 +114,12 @@
 		const next = !isDebugMode;
 		isDebugMode = next;
 		setDebugModeEnabled(next);
+	}
+
+	function handleToggleAutoStartTimer() {
+		const next = !autoStartTimer;
+		autoStartTimer = next;
+		setAutoStartTimerEnabled(next);
 	}
 
 	function handleLanguageChange(lang: 'chinese' | 'french') {
@@ -570,6 +581,44 @@
 			>
 				<span
 					class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out {isDebugMode
+						? 'translate-x-5'
+						: 'translate-x-0'}"
+				></span>
+			</button>
+		</div>
+
+		<!-- Auto-Start Study Timer Toggle -->
+		<div
+			class="flex w-full items-center justify-between px-5 py-4 transition-colors hover:bg-slate-50/60"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-600"
+				>
+					<Timer size={18} strokeWidth={2} />
+				</div>
+				<div class="text-left">
+					<span class="block font-headline text-sm font-bold text-slate-900"
+						>Auto-Start Study Timer</span
+					>
+					<span class="block font-sans text-xs text-slate-500"
+						>Automatically track time during card drills, reviews, and games</span
+					>
+				</div>
+			</div>
+			<button
+				type="button"
+				id="settings-auto-timer-toggle"
+				role="switch"
+				aria-checked={autoStartTimer}
+				aria-label="Auto-Start Study Timer"
+				onclick={handleToggleAutoStartTimer}
+				class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {autoStartTimer
+					? 'bg-indigo-600'
+					: 'bg-slate-200'}"
+			>
+				<span
+					class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out {autoStartTimer
 						? 'translate-x-5'
 						: 'translate-x-0'}"
 				></span>

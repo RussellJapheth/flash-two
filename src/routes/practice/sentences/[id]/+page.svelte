@@ -4,6 +4,7 @@
 	import { resolve } from '$app/paths';
 	import { onMount, onDestroy } from 'svelte';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
+	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import {
 		getAllProgress,
 		getWordProgress,
@@ -299,6 +300,9 @@
 		sessionWrong = 0;
 		sessionEarnedXP = 0;
 		resetItemState();
+		if (items.length > 0) {
+			triggerAutoStartStudyTimer();
+		}
 	}
 
 	function resetItemState() {
@@ -362,6 +366,7 @@
 				}
 				stopSpeech();
 				isSessionFinished = true;
+				triggerAutoStopStudyTimer();
 				playSound('milestone');
 			} else {
 				currentIndex++;
@@ -514,6 +519,7 @@
 		if (recordedAudioUrl) {
 			URL.revokeObjectURL(recordedAudioUrl);
 		}
+		triggerAutoStopStudyTimer();
 	});
 </script>
 

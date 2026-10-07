@@ -4,7 +4,8 @@
 	import FlashCard from '$lib/components/FlashCard.svelte';
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
-	import { onMount } from 'svelte';
+	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
+	import { onMount, onDestroy } from 'svelte';
 	import {
 		getAllProgress,
 		getWordProgress,
@@ -113,6 +114,7 @@
 
 		if (items.length > 0) {
 			await updateSavedStatus();
+			triggerAutoStartStudyTimer();
 		}
 	}
 
@@ -169,6 +171,7 @@
 					sessionEarnedXP += bonus.totalBonus;
 				}
 				isSessionFinished = true;
+				triggerAutoStopStudyTimer();
 				playSound('milestone');
 			} else {
 				if (isFlipped) {
@@ -186,6 +189,10 @@
 
 	onMount(() => {
 		loadWeakCards();
+	});
+
+	onDestroy(() => {
+		triggerAutoStopStudyTimer();
 	});
 </script>
 

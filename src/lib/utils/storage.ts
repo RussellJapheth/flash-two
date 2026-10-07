@@ -805,6 +805,21 @@ export function setDebugModeEnabled(enabled: boolean): void {
 	}
 }
 
+export const FLASHCARDS_AUTO_START_TIMER_KEY = 'flashcards_auto_start_timer';
+
+export function isAutoStartTimerEnabled(): boolean {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return true;
+	const val = localStorage.getItem(FLASHCARDS_AUTO_START_TIMER_KEY);
+	if (val === null) return true; // Default is ON (true)
+	return val === 'true';
+}
+
+export function setAutoStartTimerEnabled(enabled: boolean): void {
+	if (typeof window !== 'undefined' || typeof localStorage !== 'undefined') {
+		localStorage.setItem(FLASHCARDS_AUTO_START_TIMER_KEY, String(enabled));
+	}
+}
+
 export function recordRecentlyOpenedPack(packId: string): void {
 	if (typeof window === 'undefined' || !packId) return;
 	try {

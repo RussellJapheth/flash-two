@@ -5,6 +5,7 @@
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
 	import HalfwayToast from '$lib/components/HalfwayToast.svelte';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
+	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import { onMount, onDestroy } from 'svelte';
 	import {
 		getAllProgress,
@@ -192,6 +193,7 @@
 
 		if (items.length > 0) {
 			await updateSavedStatus();
+			triggerAutoStartStudyTimer();
 			if (isTimedSprint) startSprintTimer();
 		}
 	}
@@ -270,6 +272,7 @@
 					sessionEarnedXP += bonus.totalBonus;
 				}
 				isSessionFinished = true;
+				triggerAutoStopStudyTimer();
 				playSound('milestone');
 			} else {
 				if (isFlipped) {
@@ -291,6 +294,7 @@
 
 	onDestroy(() => {
 		if (halfwayToastTimer) clearTimeout(halfwayToastTimer);
+		triggerAutoStopStudyTimer();
 	});
 </script>
 

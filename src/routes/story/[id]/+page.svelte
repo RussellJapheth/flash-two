@@ -4,6 +4,7 @@
 	import { resolve } from '$app/paths';
 	import { onMount, onDestroy } from 'svelte';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
+	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import { BUILTIN_STORIES } from '$lib/data/stories';
 	import type { Story, StoryNode, StoryChoice } from '$lib/types';
 	import {
@@ -80,11 +81,13 @@
 		}
 		isSpeechSupported = isSpeechRecognitionSupported();
 		currentNodeId = story.startNodeId;
+		triggerAutoStartStudyTimer();
 		speakCurrentNode();
 	});
 
 	onDestroy(() => {
 		stopListening();
+		triggerAutoStopStudyTimer();
 	});
 
 	function speakCurrentNode() {
@@ -242,6 +245,7 @@
 
 		const totalAwardXP = Math.max(story.baseXP, earnedXP);
 		saveStoryCompletion(story.id, Math.round(accuracy), finalStars, totalAwardXP);
+		triggerAutoStopStudyTimer();
 		playSound('milestone');
 	}
 
@@ -259,6 +263,7 @@
 		earnedXP = 0;
 		isFinished = false;
 		finalStars = 3;
+		triggerAutoStartStudyTimer();
 		speakCurrentNode();
 	}
 

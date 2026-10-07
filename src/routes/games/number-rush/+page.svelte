@@ -2,6 +2,7 @@
 	import { resolve } from '$app/paths';
 	import { onDestroy, onMount } from 'svelte';
 	import TopHeader from '$lib/components/TopHeader.svelte';
+	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import GameCanvasFX from '$lib/components/games/GameCanvasFX.svelte';
 	import GameAvatar from '$lib/components/games/GameAvatar.svelte';
@@ -156,6 +157,7 @@
 		cleanupTimers();
 		stopRecognizer();
 		stopSpeech();
+		triggerAutoStopStudyTimer();
 	});
 
 	function stopRecognizer() {
@@ -201,6 +203,7 @@
 
 	function beginActiveRound() {
 		phase = 'playing';
+		triggerAutoStartStudyTimer();
 		roundTimeLeft = 60;
 		questionTimeLeft = 5;
 		score = 0;
@@ -497,6 +500,7 @@
 		stopRecognizer();
 		stopSpeech();
 		phase = 'summary';
+		triggerAutoStopStudyTimer();
 
 		const totalAttempts = correctCount + wrongCount;
 		const accuracy = totalAttempts > 0 ? Math.round((correctCount / totalAttempts) * 100) : 0;

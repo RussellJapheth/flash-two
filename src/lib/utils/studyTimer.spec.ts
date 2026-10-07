@@ -6,6 +6,8 @@ import {
 	stopStudyTimer,
 	resetStudyTimer,
 	reloadStudyTimerFromStorage,
+	triggerAutoStartStudyTimer,
+	triggerAutoStopStudyTimer,
 	getActiveSession,
 	getStudyTimeData,
 	recordStudySession,
@@ -14,6 +16,7 @@ import {
 	subscribeStudyTimer,
 	FLASHCARDS_ACTIVE_TIMER_KEY
 } from './studyTimer';
+import { isAutoStartTimerEnabled, setAutoStartTimerEnabled } from './storage';
 
 class LocalStorageMock {
 	private store: Record<string, string> = {};
@@ -287,6 +290,63 @@ describe('studyTimer utility suite', () => {
 			const reloaded = reloadStudyTimerFromStorage();
 			expect(reloaded.status).toBe('running');
 			expect(reloaded.elapsedSeconds).toBe(42);
+		});
+	});
+
+	describe('triggerAutoStartStudyTimer & triggerAutoStopStudyTimer', () => {
+		it('auto-starts timer when idle and preference is enabled by default', () => {
+			expect(isAutoStartTimerEnabled()).toBe(true);
+			expect(getActiveSession().status).toBe('idle');
+
+			const session = triggerAutoStartStudyTimer();
+			expect(session.status).toBe('running');
+			expect(getActiveSession().status).toBe('running');
+		});
+
+		it('does not auto-start if auto-start preference is disabled', () => {
+			setAutoStartTimerEnabled(false);
+			expect(isAutoStartTimerEnabled()).toBe(false);
+
+			const session = triggerAutoStartStudyTimer();
+			expect(session.status).toBe('idle');
+			expect(getActiveSession().status).toBe('idle');
+		});
+
+		it('resumes timer when paused', () => {
+			setAutoStartTimerEnabled(true);
+			startStudyTimer();
+			pauseStudyTimer();
+			expect(getActiveSession().status).toBe('paused');
+
+			const session = triggerAutoStartStudyTimer();
+			expect(session.status).toBe('running');
+		});
+
+		it('auto-stops and records elapsed session time when running', () => {
+			setAutoStartTimerEnabled(true);
+			triggerAutoStartStudyTimer();
+			vi.advanceTimersByTime(5100);
+
+			const stoppedSeconds = triggerAutoStopStudyTimer();
+			expect(stoppedSeconds).toBeGreaterThanOrEqual(5);
+			expect(getActiveSession().status).toBe('idle');
+			expect(getStudyTimeData().totalSeconds).toBe(stoppedSeconds);
+		});
+
+		it('does nothing on auto-stop if timer is already idle', () => {
+			setAutoStartTimerEnabled(true);
+			const stoppedSeconds = triggerAutoStopStudyTimer();
+			expect(stoppedSeconds).toBe(0);
+			expect(getActiveSession().status).toBe('idle');
+		});
+
+		it('does not auto-stop if auto-start/stop preference is disabled', () => {
+			startStudyTimer();
+			setAutoStartTimerEnabled(false);
+
+			const stoppedSeconds = triggerAutoStopStudyTimer();
+			expect(stoppedSeconds).toBe(0);
+			expect(getActiveSession().status).toBe('running');
 		});
 	});
 });

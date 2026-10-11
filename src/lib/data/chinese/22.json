@@ -1,0 +1,325 @@
+{
+	"title": "Assignment Oct 12 - 18 A",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "耶和华",
+			"Pinyin": "Yēhéhuá",
+			"Part of Speech": "Proper Noun",
+			"English Meaning": "Jehovah",
+			"Example (Chinese + Pinyin)": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "的",
+			"Pinyin": "de",
+			"Part of Speech": "Particle",
+			"English Meaning": "possessive particle ('s)",
+			"Example (Chinese + Pinyin)": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "仆人",
+			"Pinyin": "púrén",
+			"Part of Speech": "Noun",
+			"English Meaning": "servant",
+			"Example (Chinese + Pinyin)": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "不会",
+			"Pinyin": "bù huì",
+			"Part of Speech": "Verb",
+			"English Meaning": "will not / cannot",
+			"Example (Chinese + Pinyin)": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "实际",
+			"Pinyin": "shíjì",
+			"Part of Speech": "Adverb",
+			"English Meaning": "actually / in reality",
+			"Example (Chinese + Pinyin)": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "参与",
+			"Pinyin": "cānyù",
+			"Part of Speech": "Verb",
+			"English Meaning": "participate in / take part in",
+			"Example (Chinese + Pinyin)": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "战争",
+			"Pinyin": "zhànzhēng",
+			"Part of Speech": "Noun",
+			"English Meaning": "war / warfare",
+			"Example (Chinese + Pinyin)": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "但",
+			"Pinyin": "dàn",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "but / yet",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "圣经",
+			"Pinyin": "Shèngjīng",
+			"Part of Speech": "Proper Noun",
+			"English Meaning": "the Bible / Holy Scriptures",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "说",
+			"Pinyin": "shuō",
+			"Part of Speech": "Verb",
+			"English Meaning": "say / state",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "我们",
+			"Pinyin": "wǒmen",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "we / us",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "有",
+			"Pinyin": "yǒu",
+			"Part of Speech": "Verb",
+			"English Meaning": "have / there is",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "一场",
+			"Pinyin": "yì chǎng",
+			"Part of Speech": "Measure Word",
+			"English Meaning": "a / one (fight, contest)",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "搏斗",
+			"Pinyin": "bódòu",
+			"Part of Speech": "Noun",
+			"English Meaning": "fight / struggle / wrestling",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "就是",
+			"Pinyin": "jiù shì",
+			"Part of Speech": "Adverb",
+			"English Meaning": "that is / namely",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "要",
+			"Pinyin": "yào",
+			"Part of Speech": "Verb",
+			"English Meaning": "to need to / must / going to",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "对抗",
+			"Pinyin": "duìkàng",
+			"Part of Speech": "Verb",
+			"English Meaning": "fight against / resist / confront",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "撒但",
+			"Pinyin": "Sādàn",
+			"Part of Speech": "Proper Noun",
+			"English Meaning": "Satan",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "和",
+			"Pinyin": "hé",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "and / with",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "邪灵",
+			"Pinyin": "xiélíng",
+			"Part of Speech": "Noun",
+			"English Meaning": "wicked spirits / demons",
+			"Example (Chinese + Pinyin)": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "面对",
+			"Pinyin": "miànduì",
+			"Part of Speech": "Verb",
+			"English Meaning": "face / confront",
+			"Example (Chinese + Pinyin)": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "这么",
+			"Pinyin": "zhème",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "so / such / this",
+			"Example (Chinese + Pinyin)": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "强大",
+			"Pinyin": "qiángdà",
+			"Part of Speech": "Adjective",
+			"English Meaning": "powerful / formidable",
+			"Example (Chinese + Pinyin)": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "敌人",
+			"Pinyin": "dírén",
+			"Part of Speech": "Noun",
+			"English Meaning": "enemy / foe",
+			"Example (Chinese + Pinyin)": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "真的",
+			"Pinyin": "zhēnde",
+			"Part of Speech": "Adverb",
+			"English Meaning": "really / truly",
+			"Example (Chinese + Pinyin)": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+		},
+		{
+			"No": 26,
+			"Chinese Word": "胜算",
+			"Pinyin": "shèngsuàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "chance of winning / odds of victory",
+			"Example (Chinese + Pinyin)": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+		},
+		{
+			"No": 27,
+			"Chinese Word": "吗",
+			"Pinyin": "ma",
+			"Part of Speech": "Particle",
+			"English Meaning": "question particle",
+			"Example (Chinese + Pinyin)": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+		},
+		{
+			"No": 28,
+			"Chinese Word": "首先",
+			"Pinyin": "shǒuxiān",
+			"Part of Speech": "Adverb",
+			"English Meaning": "first / first of all",
+			"Example (Chinese + Pinyin)": "首先，我们必须依靠耶和华。(Shǒuxiān, wǒmen bìxū yīkào Yēhéhuá.) — First, we must rely on Jehovah."
+		},
+		{
+			"No": 29,
+			"Chinese Word": "必须",
+			"Pinyin": "bìxū",
+			"Part of Speech": "Verb",
+			"English Meaning": "must / have to",
+			"Example (Chinese + Pinyin)": "首先，我们必须依靠耶和华。(Shǒuxiān, wǒmen bìxū yīkào Yēhéhuá.) — First, we must rely on Jehovah."
+		},
+		{
+			"No": 30,
+			"Chinese Word": "依靠",
+			"Pinyin": "yīkào",
+			"Part of Speech": "Verb",
+			"English Meaning": "rely on / depend on",
+			"Example (Chinese + Pinyin)": "首先，我们必须依靠耶和华。(Shǒuxiān, wǒmen bìxū yīkào Yēhéhuá.) — First, we must rely on Jehovah."
+		},
+		{
+			"No": 31,
+			"Chinese Word": "其次",
+			"Pinyin": "qícì",
+			"Part of Speech": "Conjunction",
+			"English Meaning": "secondly / next",
+			"Example (Chinese + Pinyin)": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+		},
+		{
+			"No": 32,
+			"Chinese Word": "还要",
+			"Pinyin": "hái yào",
+			"Part of Speech": "Phrase",
+			"English Meaning": "also need to / furthermore must",
+			"Example (Chinese + Pinyin)": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+		},
+		{
+			"No": 33,
+			"Chinese Word": "知道",
+			"Pinyin": "zhīdào",
+			"Part of Speech": "Verb",
+			"English Meaning": "know / realize",
+			"Example (Chinese + Pinyin)": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+		},
+		{
+			"No": 34,
+			"Chinese Word": "会",
+			"Pinyin": "huì",
+			"Part of Speech": "Verb",
+			"English Meaning": "will / would / can",
+			"Example (Chinese + Pinyin)": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+		},
+		{
+			"No": 35,
+			"Chinese Word": "用",
+			"Pinyin": "yòng",
+			"Part of Speech": "Verb",
+			"English Meaning": "use / employ",
+			"Example (Chinese + Pinyin)": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+		},
+		{
+			"No": 36,
+			"Chinese Word": "哪些",
+			"Pinyin": "nǎxiē",
+			"Part of Speech": "Pronoun",
+			"English Meaning": "which / what",
+			"Example (Chinese + Pinyin)": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+		},
+		{
+			"No": 37,
+			"Chinese Word": "阴谋诡计",
+			"Pinyin": "yīnmóu guǐjì",
+			"Part of Speech": "Idiom",
+			"English Meaning": "crafty acts / plots and tricks / schemes",
+			"Example (Chinese + Pinyin)": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+		},
+		{
+			"No": 38,
+			"Chinese Word": "来",
+			"Pinyin": "lái",
+			"Part of Speech": "Verb",
+			"English Meaning": "to / in order to / come",
+			"Example (Chinese + Pinyin)": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+		},
+		{
+			"No": 39,
+			"Chinese Word": "攻击",
+			"Pinyin": "gōngjī",
+			"Part of Speech": "Verb",
+			"English Meaning": "attack / assault",
+			"Example (Chinese + Pinyin)": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+		},
+		{
+			"No": 40,
+			"Chinese Word": "弟兄姐妹",
+			"Pinyin": "dìxiōng jiěmèi",
+			"Part of Speech": "Noun",
+			"English Meaning": "brothers and sisters",
+			"Example (Chinese + Pinyin)": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+		}
+	]
+}

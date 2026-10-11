@@ -1,0 +1,205 @@
+{
+	"title": "Assignment Oct 12 - 18 B",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "女人",
+			"Pinyin": "nǚrén",
+			"Part of Speech": "Noun",
+			"English Meaning": "woman / female",
+			"Example (Chinese + Pinyin)": "那位女人正在图书馆安静地看书。(Nà wèi nǚrén zhèngzài túshūguǎn ānjìng de kànshū.) — That woman is quietly reading a book in the library."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "女儿",
+			"Pinyin": "nǚ'ér",
+			"Part of Speech": "Noun",
+			"English Meaning": "daughter",
+			"Example (Chinese + Pinyin)": "他的女儿今年刚满七岁。(Tā de nǚ'ér jīnnián gāng mǎn qī suì.) — His daughter just turned seven years old this year."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "女性",
+			"Pinyin": "nǚxìng",
+			"Part of Speech": "Noun",
+			"English Meaning": "female / woman",
+			"Example (Chinese + Pinyin)": "现代社会非常重视女性的权利。(Xiàndài shèhuì fēicháng zhòngshì nǚxìng de quánlì.) — Modern society attaches great importance to women's rights."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "女朋友",
+			"Pinyin": "nǚpéngyou",
+			"Part of Speech": "Noun",
+			"English Meaning": "girlfriend",
+			"Example (Chinese + Pinyin)": "他打算在周末陪女朋友看电影。(Tā dǎsuàn zài zhōumò péi nǚpéngyou kàn diànyǐng.) — He plans to accompany his girlfriend to watch a movie this weekend."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "虐待",
+			"Pinyin": "nüèdài",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "mistreat / abuse",
+			"Example (Chinese + Pinyin)": "我们坚决反对任何虐待动物的行为。(Wǒmen jiānjué fǎnduì rènhé nüèdài dòngwù de xíngwéi.) — We firmly oppose any act of abusing animals."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "绿色",
+			"Pinyin": "lǜsè",
+			"Part of Speech": "Noun / Adjective",
+			"English Meaning": "green (color)",
+			"Example (Chinese + Pinyin)": "春天到了，草地上长满了绿色的嫩芽。(Chūntiān dào le, cǎodì shang zhǎng mǎn le lǜsè de nènyá.) — Spring has arrived, and the grass is full of green sprouts."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "旅游",
+			"Pinyin": "lǚyóu",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "travel / tour",
+			"Example (Chinese + Pinyin)": "他们计划明年夏天去欧洲旅游。(Tāmen jìhuà míngnián xiàtiān qù Ōuzhōu lǚyóu.) — They plan to travel to Europe next summer."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "律师",
+			"Pinyin": "lǜshī",
+			"Part of Speech": "Noun",
+			"English Meaning": "lawyer / attorney",
+			"Example (Chinese + Pinyin)": "如果你有法律疑问，可以咨询专业律师。(Rúguǒ nǐ yǒu fǎlǜ yíwèn, kěyǐ zīxún zhuānyè lǜshī.) — If you have legal questions, you can consult a professional lawyer."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "旅客",
+			"Pinyin": "lǚkè",
+			"Part of Speech": "Noun",
+			"English Meaning": "traveler / passenger",
+			"Example (Chinese + Pinyin)": "火车站里有很多准备出发的旅客。(Huǒchēzhàn li yǒu hěn duō zhǔnbèi chūfā de lǚkè.) — There are many passengers ready to depart at the train station."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "策略",
+			"Pinyin": "cèlüè",
+			"Part of Speech": "Noun",
+			"English Meaning": "strategy / tactic",
+			"Example (Chinese + Pinyin)": "制定合理的学习策略能够提高效率。(Zhìdìng hélǐ de xuéxí cèlüè nénggòu tígāo xiàolǜ.) — Formulating a reasonable study strategy can improve efficiency."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "句子",
+			"Pinyin": "jùzi",
+			"Part of Speech": "Noun",
+			"English Meaning": "sentence",
+			"Example (Chinese + Pinyin)": "请用这个生词造一个完整的句子。(Qǐng yòng zhè ge shēngcí zào yí ge wánzhěng de jùzi.) — Please make a complete sentence using this new word."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "决定",
+			"Pinyin": "juédìng",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "decide / decision",
+			"Example (Chinese + Pinyin)": "他决定每天早起背诵十个汉语词汇。(Tā juédìng měitiān zǎoqǐ bèisòng shí ge hànyǔ cíhuì.) — He decided to wake up early every day to recite ten Chinese words."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "觉得",
+			"Pinyin": "juéde",
+			"Part of Speech": "Verb",
+			"English Meaning": "feel / think",
+			"Example (Chinese + Pinyin)": "我觉得学中文既有挑战又很有趣。(Wǒ juéde xué zhōngwén jì yǒu tiǎozhàn yòu hěn yǒuqù.) — I feel that learning Chinese is both challenging and interesting."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "举行",
+			"Pinyin": "jǔxíng",
+			"Part of Speech": "Verb",
+			"English Meaning": "hold (an event, meeting)",
+			"Example (Chinese + Pinyin)": "学校将在下周举行运动会。(Xuéxiào jiāng zài xià zhōu jǔxíng yùndònghuì.) — The school will hold a sports meet next week."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "军队",
+			"Pinyin": "jūnduì",
+			"Part of Speech": "Noun",
+			"English Meaning": "army / military",
+			"Example (Chinese + Pinyin)": "这支军队驻扎在边境地区保护安全。(Zhè zhī jūnduì zhùzhā zài biānjìng dìqū bǎohù ānquán.) — This army is stationed in the border region to safeguard security."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "去",
+			"Pinyin": "qù",
+			"Part of Speech": "Verb",
+			"English Meaning": "to go",
+			"Example (Chinese + Pinyin)": "我们打算明天下午去超市买新鲜水果。(Wǒmen dǎsuàn míngtiān xiàwǔ qù chāoshì mǎi xīnxiān shuǐguǒ.) — We plan to go to the supermarket tomorrow afternoon to buy fresh fruit."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "全部",
+			"Pinyin": "quánbù",
+			"Part of Speech": "Noun / Adverb",
+			"English Meaning": "whole / entire / all",
+			"Example (Chinese + Pinyin)": "他已经把今天的作业全部完成了。(Tā yǐjīng bǎ jīntiān de zuòyè quánbù wánchéng le.) — He has already completed all of today's homework."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "裙子",
+			"Pinyin": "qúnzi",
+			"Part of Speech": "Noun",
+			"English Meaning": "skirt / dress",
+			"Example (Chinese + Pinyin)": "这条蓝色的裙子非常漂亮。(Zhè tiáo lánsè de qúnzi fēicháng piàoliang.) — This blue skirt is very pretty."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "确实",
+			"Pinyin": "quèshí",
+			"Part of Speech": "Adverb / Adjective",
+			"English Meaning": "indeed / really / reliable",
+			"Example (Chinese + Pinyin)": "这道数学题确实需要仔细思考。(Zhè dào shùxuétí quèshí xūyào zǐxì sīkǎo.) — This math problem indeed requires careful thought."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "取消",
+			"Pinyin": "qǔxiāo",
+			"Part of Speech": "Verb",
+			"English Meaning": "cancel / call off",
+			"Example (Chinese + Pinyin)": "因为下大雨，明天的野餐活动取消了。(Yīnwèi xià dàyǔ, míngtiān de yěcān huódòng qǔxiāo le.) — Because of heavy rain, tomorrow's picnic activity has been cancelled."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "学习",
+			"Pinyin": "xuéxí",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "study / learn",
+			"Example (Chinese + Pinyin)": "认真学习是取得好成绩的关键。(Rènzhēn xuéxí shì qǔdé hǎo chéngjì de guānjiàn.) — Studying conscientiously is the key to achieving good grades."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "学生",
+			"Pinyin": "xuésheng",
+			"Part of Speech": "Noun",
+			"English Meaning": "student",
+			"Example (Chinese + Pinyin)": "教室里坐着二十位专心听讲的学生。(Jiàoshì li zuò zhe èrshí wèi zhuānxīn tīngjiǎng de xuésheng.) — Twenty students listening attentively are sitting in the classroom."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "需要",
+			"Pinyin": "xūyào",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "need / require",
+			"Example (Chinese + Pinyin)": "学好一门语言需要坚持不懈的练习。(Xuéhǎo yì mén yǔyán xūyào jiānchí-búxiè de liànxí.) — Mastering a language requires persistent practice."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "训练",
+			"Pinyin": "xùnliàn",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "train / training",
+			"Example (Chinese + Pinyin)": "运动员每天都要接受高强度的体能训练。(Yùndòngyuán měitiān dōu yào jiēshòu gāo qiángdù de tǐnéng xùnliàn.) — The athletes undergo high-intensity physical training every day."
+		},
+		{
+			"No": 25,
+			"Chinese Word": "选择",
+			"Pinyin": "xuǎnzé",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "choose / select / choice",
+			"Example (Chinese + Pinyin)": "面对人生道路，每个人都有权利做出自己的选择。(Miànduì rénshēng dàolù, měi gè rén dōu yǒu quánlì zuò chū zìjǐ de xuǎnzé.) — Facing life's path, everyone has the right to make their own choice."
+		}
+	]
+}

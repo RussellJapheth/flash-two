@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { onDestroy, onMount } from 'svelte';
 	import TopHeader from '$lib/components/TopHeader.svelte';
+	import SessionExitGuard from '$lib/components/SessionExitGuard.svelte';
 	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import ParticleCanvas from '$lib/components/games/ParticleCanvas.svelte';
 	import MatchBlitzCard from '$lib/components/games/MatchBlitzCard.svelte';
@@ -67,6 +69,17 @@
 
 	// Game Lifecycle State
 	let phase = $state<GamePhase>('lobby');
+	let exitGuard: { requestExit: (proceed: () => void) => void } | null = $state(null);
+
+	function requestExit(proceed: () => void) {
+		if (exitGuard) {
+			exitGuard.requestExit(proceed);
+		} else {
+			proceed();
+		}
+	}
+
+	const exitToGames = () => goto(resolve('/games'));
 	let availableDecks = $state<DeckOption[]>([]);
 	let selectedDeckId = $state<string>('');
 	let activeWordPool = $state<WordRecord[]>([]);
@@ -530,10 +543,19 @@
 	<title>Match Blitz - Fast 3D Vocabulary Matching Game</title>
 </svelte:head>
 
+<SessionExitGuard
+	bind:this={exitGuard}
+	active={() => phase === 'playing' || phase === 'countdown'}
+	title="Quit this round?"
+	message="Your score in this round will not be saved if you leave now."
+	confirmLabel="Quit round"
+	stayLabel="Keep playing"
+/>
+
 <div
 	class="relative flex min-h-screen flex-col overflow-hidden text-slate-900 selection:bg-indigo-500 selection:text-white"
 >
-	<TopHeader title="Match Blitz" showBack={true} />
+	<TopHeader title="Match Blitz" showBack={true} onBack={() => requestExit(exitToGames)} />
 
 	<!-- Vibrant Daytime Arcade Background Image & Soft Mask (High Visibility) -->
 	<div class="pointer-events-none absolute inset-0 z-0">

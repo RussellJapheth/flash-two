@@ -4,6 +4,7 @@
 	import { resolve } from '$app/paths';
 	import { onMount, onDestroy } from 'svelte';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
+	import SessionExitGuard from '$lib/components/SessionExitGuard.svelte';
 	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import {
 		getAllProgress,
@@ -190,6 +191,15 @@
 	let sessionWrong = $state(0);
 	let sessionEarnedXP = $state(0);
 	let isSessionFinished = $state(false);
+	let exitGuard: { requestExit: (proceed: () => void) => void } | null = $state(null);
+
+	function requestExit(proceed: () => void) {
+		if (exitGuard) {
+			exitGuard.requestExit(proceed);
+		} else {
+			proceed();
+		}
+	}
 
 	let isSpeechSupported = $state(false);
 	let isListening = $state(false);
@@ -527,6 +537,15 @@
 	<title>Sentence Practice — {deckTitle}</title>
 </svelte:head>
 
+<SessionExitGuard
+	bind:this={exitGuard}
+	active={() => !isSessionFinished && !!currentItem}
+	title="Leave this sentence practice?"
+	message="Sentences you already practiced are saved to your progress."
+	confirmLabel="Leave session"
+	stayLabel="Keep practicing"
+/>
+
 <div
 	class="relative flex min-h-screen flex-col justify-between overflow-hidden bg-linear-to-b from-indigo-100 via-indigo-50/40 to-white"
 >
@@ -541,7 +560,7 @@
 	>
 		<button
 			type="button"
-			onclick={() => goto(resolve(`/deck/${deckId}/preview`))}
+			onclick={() => requestExit(() => goto(resolve(`/deck/${deckId}/preview`)))}
 			aria-label="Exit Sentence Practice"
 			class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200 active:scale-95"
 		>

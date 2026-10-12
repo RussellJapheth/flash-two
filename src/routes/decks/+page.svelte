@@ -3,6 +3,8 @@
 	import DeckCard from '$lib/components/DeckCard.svelte';
 	import StoryCard from '$lib/components/StoryCard.svelte';
 	import DeckSpreadsheetModal from '$lib/components/DeckSpreadsheetModal.svelte';
+	import { page } from '$app/state';
+	import { openModal, closeModal } from '$lib/utils/backNav';
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
@@ -48,12 +50,10 @@
 	let allDecks = $state<DeckSummary[]>([]);
 	let rawCustomDecks = $state<CustomDeck[]>([]);
 
-	// Spreadsheet Editor Modal states
-	let isSpreadsheetModalOpen = $state(false);
+	// Spreadsheet Editor Modal state
 	let editingDeck = $state<CustomDeck | null>(null);
 
 	// Import Deck Form Modal state
-	let isImportModalOpen = $state(false);
 	let importDeckName = $state('');
 	let importDeckLang = $state<'chinese' | 'french'>('chinese');
 	let importRawText = $state('');
@@ -197,14 +197,14 @@
 
 	function openCreateDeckModal() {
 		editingDeck = null;
-		isSpreadsheetModalOpen = true;
+		openModal({ spreadsheetOpen: true });
 	}
 
 	function handleEditCustomDeck(deckSummary: DeckSummary) {
 		const target = rawCustomDecks.find((d) => d.id === deckSummary.id);
 		if (target) {
 			editingDeck = target;
-			isSpreadsheetModalOpen = true;
+			openModal({ spreadsheetOpen: true });
 		}
 	}
 
@@ -296,7 +296,7 @@
 			await saveCustomDeck(customDeck);
 			scheduleDebouncedSync();
 
-			isImportModalOpen = false;
+			closeModal();
 			importDeckName = '';
 			importRawText = '';
 			await loadDecks();
@@ -379,7 +379,7 @@
 				<!-- Import Deck Button -->
 				<button
 					type="button"
-					onclick={() => (isImportModalOpen = true)}
+					onclick={() => openModal({ importOpen: true })}
 					class="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-slate-200/80 bg-white px-3 py-1.5 font-headline text-xs font-bold text-slate-700 shadow-xs transition-colors hover:bg-slate-50 active:scale-95"
 				>
 					<FileUp size={16} strokeWidth={2} />
@@ -508,14 +508,14 @@
 
 <!-- SPREADSHEET DECK EDITOR MODAL -->
 <DeckSpreadsheetModal
-	isOpen={isSpreadsheetModalOpen}
+	isOpen={page.state.spreadsheetOpen === true}
 	deckToEdit={editingDeck}
-	onClose={() => (isSpreadsheetModalOpen = false)}
+	onClose={closeModal}
 	onSave={handleSaveCustomDeck}
 />
 
 <!-- IMPORT DECK MODAL -->
-{#if isImportModalOpen}
+{#if page.state.importOpen === true}
 	<div
 		class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm"
 	>
@@ -526,7 +526,7 @@
 				</h3>
 				<button
 					type="button"
-					onclick={() => (isImportModalOpen = false)}
+					onclick={closeModal}
 					aria-label="Close"
 					class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100 hover:text-slate-700"
 				>
@@ -610,7 +610,7 @@
 			<div class="flex gap-2 pt-2">
 				<button
 					type="button"
-					onclick={() => (isImportModalOpen = false)}
+					onclick={closeModal}
 					class="flex-1 cursor-pointer rounded-2xl bg-slate-100 py-2.5 font-headline text-xs font-bold text-slate-600 hover:bg-slate-200 active:scale-95"
 				>
 					Cancel

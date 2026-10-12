@@ -5,6 +5,7 @@
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
 	import HalfwayToast from '$lib/components/HalfwayToast.svelte';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
+	import SessionExitGuard from '$lib/components/SessionExitGuard.svelte';
 	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import { onMount, onDestroy } from 'svelte';
 	import {
@@ -53,6 +54,15 @@
 	let showHalfwayToast = $state(false);
 	let halfwayToastTimer: ReturnType<typeof setTimeout> | undefined;
 	let isSessionFinished = $state(false);
+	let exitGuard: { requestExit: (proceed: () => void) => void } | null = $state(null);
+
+	function requestExit(proceed: () => void) {
+		if (exitGuard) {
+			exitGuard.requestExit(proceed);
+		} else {
+			proceed();
+		}
+	}
 
 	let currentItem = $derived(items[currentIndex]);
 	let currentProgress = $derived(
@@ -302,13 +312,22 @@
 	<title>Spaced Review — FlashCards</title>
 </svelte:head>
 
+<SessionExitGuard
+	bind:this={exitGuard}
+	active={() => !isSessionFinished && !!currentItem}
+	title="Leave this review session?"
+	message="Cards you already reviewed are saved to your progress."
+	confirmLabel="Leave session"
+	stayLabel="Keep reviewing"
+/>
+
 <div class="flex min-h-screen flex-col justify-between bg-white">
 	<header
 		class="sticky top-0 z-20 flex items-center justify-between border-b border-slate-100 bg-white/90 px-4 py-3 shadow-xs backdrop-blur-md"
 	>
 		<button
 			type="button"
-			onclick={() => goto(resolve('/'))}
+			onclick={() => requestExit(() => goto(resolve('/')))}
 			aria-label="Exit Review Session"
 			class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200 active:scale-95"
 		>

@@ -13,6 +13,8 @@
 		Download
 	} from 'lucide-svelte';
 	import { downloadCsvTemplate } from '$lib/utils/csvTemplate';
+	import { page } from '$app/state';
+	import { openModal, closeModal } from '$lib/utils/backNav';
 
 	interface SpreadsheetRow {
 		id: string;
@@ -42,7 +44,7 @@
 	let rows = $state<SpreadsheetRow[]>([]);
 	let isSaving = $state(false);
 	let errorMessage = $state('');
-	let showPasteModal = $state(false);
+	let showPasteModal = $derived(page.state.pasteOpen === true);
 	let pasteRawText = $state('');
 
 	// Generate default blank rows
@@ -280,7 +282,7 @@
 			rows.length > 0 && rows[0].targetWord === '' ? 0 : rows.length
 		);
 		pasteRawText = '';
-		showPasteModal = false;
+		closeModal();
 	}
 
 	async function handleSave() {
@@ -439,7 +441,7 @@
 
 						<button
 							type="button"
-							onclick={() => (showPasteModal = true)}
+							onclick={() => openModal({ pasteOpen: true })}
 							class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-indigo-200 bg-indigo-50/70 px-3 py-1.5 font-headline text-xs font-bold text-indigo-700 shadow-xs hover:bg-indigo-100 active:scale-95"
 						>
 							<ClipboardPaste size={14} strokeWidth={2.25} />
@@ -673,7 +675,7 @@
 				</h4>
 				<button
 					type="button"
-					onclick={() => (showPasteModal = false)}
+					onclick={closeModal}
 					aria-label="Close"
 					class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"
 				>
@@ -711,7 +713,7 @@
 			<div class="flex gap-2 pt-2">
 				<button
 					type="button"
-					onclick={() => (showPasteModal = false)}
+					onclick={closeModal}
 					class="flex-1 cursor-pointer rounded-2xl bg-slate-100 py-2.5 font-headline text-xs font-bold text-slate-700 hover:bg-slate-200 active:scale-95"
 				>
 					Cancel

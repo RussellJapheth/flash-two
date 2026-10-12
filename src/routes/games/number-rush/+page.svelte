@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { onDestroy, onMount } from 'svelte';
 	import TopHeader from '$lib/components/TopHeader.svelte';
+	import SessionExitGuard from '$lib/components/SessionExitGuard.svelte';
 	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import GameCanvasFX from '$lib/components/games/GameCanvasFX.svelte';
@@ -48,6 +50,17 @@
 
 	// Game Configuration & State
 	let phase = $state<GamePhase>('lobby');
+	let exitGuard: { requestExit: (proceed: () => void) => void } | null = $state(null);
+
+	function requestExit(proceed: () => void) {
+		if (exitGuard) {
+			exitGuard.requestExit(proceed);
+		} else {
+			proceed();
+		}
+	}
+
+	const exitToGames = () => goto(resolve('/games'));
 	let gameMode = $state<GameMode>('visual');
 	let maxRange = $state(99); // Standard 0-99 (can scale to 999)
 	let isSpeechSupported = $state(false);
@@ -558,7 +571,16 @@
 	<title>Number Rush (数字狂飙) — FlashCards</title>
 </svelte:head>
 
-<TopHeader title="Number Rush" showBack={true} onBack={() => history.back()} />
+<SessionExitGuard
+	bind:this={exitGuard}
+	active={() => phase === 'playing' || phase === 'countdown'}
+	title="Quit this round?"
+	message="Your score in this round will not be saved if you leave now."
+	confirmLabel="Quit round"
+	stayLabel="Keep playing"
+/>
+
+<TopHeader title="Number Rush" showBack={true} onBack={() => requestExit(exitToGames)} />
 
 <main
 	class="relative flex min-h-[calc(100vh-4rem)] flex-1 flex-col justify-between overflow-hidden px-4 pt-3 pb-8"

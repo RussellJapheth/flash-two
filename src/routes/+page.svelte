@@ -5,6 +5,8 @@
 	import StreakCalendarModal from '$lib/components/StreakCalendarModal.svelte';
 	import DeckSpreadsheetModal from '$lib/components/DeckSpreadsheetModal.svelte';
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
+	import { openModal, closeModal } from '$lib/utils/backNav';
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
@@ -55,8 +57,6 @@
 	let totalWeakCount = $state(0);
 
 	let recommendedDeck = $state<DeckSummary | null>(null);
-	let isStreakModalOpen = $state(false);
-	let isSpreadsheetModalOpen = $state(false);
 	let editingDeck = $state<CustomDeck | null>(null);
 
 	let displayedRecentDecks = $derived(() => {
@@ -195,7 +195,7 @@
 		const target = rawCustomDecks.find((d) => d.id === deckSummary.id);
 		if (target) {
 			editingDeck = target;
-			isSpreadsheetModalOpen = true;
+			openModal({ spreadsheetOpen: true });
 		}
 	}
 
@@ -225,7 +225,7 @@
 <TopHeader
 	title="FlashCards"
 	streak={streakStats.currentStreak}
-	onOpenStreak={() => (isStreakModalOpen = true)}
+	onOpenStreak={() => openModal({ calendarOpen: true })}
 />
 
 <main class="flex-1 space-y-5 px-4 pt-4 pb-8">
@@ -271,7 +271,7 @@
 			<div class="flex items-center">
 				<button
 					type="button"
-					onclick={() => (isStreakModalOpen = true)}
+					onclick={() => openModal({ calendarOpen: true })}
 					class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-amber-200/80 bg-white/95 px-3.5 py-2.5 text-center shadow-xs backdrop-blur-xs transition-transform hover:scale-105 active:scale-95"
 				>
 					<Flame size={22} strokeWidth={2.25} class="fill-amber-500/20 text-amber-500" />
@@ -513,19 +513,19 @@
 
 <!-- Streak Calendar Modal -->
 <StreakCalendarModal
-	isOpen={isStreakModalOpen}
+	isOpen={page.state.calendarOpen === true}
 	streak={streakStats.currentStreak}
 	freezeCount={streakStats.freezeCount}
 	activeDates={streakStats.activeDates}
 	freezeDates={streakStats.freezeDates}
-	onClose={() => (isStreakModalOpen = false)}
+	onClose={closeModal}
 />
 
 <!-- SPREADSHEET DECK EDITOR MODAL -->
 <DeckSpreadsheetModal
-	isOpen={isSpreadsheetModalOpen}
+	isOpen={page.state.spreadsheetOpen === true}
 	deckToEdit={editingDeck}
 	initialLanguage={activeLanguage}
-	onClose={() => (isSpreadsheetModalOpen = false)}
+	onClose={closeModal}
 	onSave={handleSaveCustomDeck}
 />

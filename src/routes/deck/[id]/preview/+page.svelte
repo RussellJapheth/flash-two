@@ -6,6 +6,7 @@
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import DeckSpreadsheetModal from '$lib/components/DeckSpreadsheetModal.svelte';
+	import { openModal, closeModal } from '$lib/utils/backNav';
 	import { onMount } from 'svelte';
 	import {
 		getAllProgress,
@@ -63,7 +64,6 @@
 	let allProgress = $state<Record<string, WordProgress>>({});
 	let savedWordNos = new SvelteSet<number>();
 	let currentCustomDeck = $state<CustomDeck | null>(null);
-	let isSpreadsheetModalOpen = $state(false);
 
 	let masteredCount = $state(0);
 	let learningCount = $state(0);
@@ -317,7 +317,7 @@
 				{#if currentCustomDeck}
 					<button
 						type="button"
-						onclick={() => (isSpreadsheetModalOpen = true)}
+						onclick={() => openModal({ spreadsheetOpen: true })}
 						title="Edit Custom Deck"
 						aria-label="Edit custom deck"
 						class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-colors hover:bg-indigo-50 hover:text-indigo-600 active:scale-95"
@@ -608,7 +608,7 @@
 					{#if currentCustomDeck}
 						<button
 							type="button"
-							onclick={() => (isSpreadsheetModalOpen = true)}
+							onclick={() => openModal({ spreadsheetOpen: true })}
 							class="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-2xl bg-indigo-600 px-3 py-2.5 font-headline text-xs font-bold text-white shadow-xs hover:bg-indigo-700 active:scale-95"
 						>
 							<Plus size={15} strokeWidth={2.5} />
@@ -879,8 +879,8 @@
 
 <!-- SPREADSHEET DECK EDITOR MODAL -->
 <DeckSpreadsheetModal
-	isOpen={isSpreadsheetModalOpen}
+	isOpen={page.state.spreadsheetOpen === true}
 	deckToEdit={currentCustomDeck}
-	onClose={() => (isSpreadsheetModalOpen = false)}
+	onClose={closeModal}
 	onSave={handleSaveCustomDeck}
 />

@@ -15,6 +15,8 @@
 		Volume2
 	} from 'lucide-svelte';
 	import type { WordRecord, CustomDeck } from '$lib/types';
+	import { page } from '$app/state';
+	import { openModal, closeModal } from '$lib/utils/backNav';
 	import { getSavedLanguage } from '$lib/utils/storage';
 	import { speakWord } from '$lib/utils/audio';
 	import {
@@ -26,7 +28,7 @@
 
 	const PAGE_SIZE = 10;
 
-	let isOpen = $state(false);
+	let isOpen = $derived(page.state.dictionaryOpen === true);
 	let modalTab = $state<'search' | 'add_note'>('search');
 	let query = $state('');
 	let results = $state<WordRecord[]>([]);
@@ -71,13 +73,7 @@
 		}
 	}
 
-	function handleOpen() {
-		loadState();
-		isOpen = true;
-	}
-
-	function handleClose() {
-		isOpen = false;
+	function resetSearch() {
 		query = '';
 		results = [];
 		visibleCount = PAGE_SIZE;
@@ -86,6 +82,17 @@
 		isSearching = false;
 		savedSuccessMsg = null;
 		modalTab = 'search';
+	}
+
+	function handleOpen() {
+		resetSearch();
+		loadState();
+		openModal({ dictionaryOpen: true });
+	}
+
+	function handleClose() {
+		resetSearch();
+		closeModal();
 	}
 
 	async function handleCreateCustomNote() {

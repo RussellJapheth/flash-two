@@ -6,6 +6,7 @@
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
 	import HalfwayToast from '$lib/components/HalfwayToast.svelte';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
+	import SessionExitGuard from '$lib/components/SessionExitGuard.svelte';
 	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import { onMount, onDestroy } from 'svelte';
 	import {
@@ -81,6 +82,20 @@
 	let showHalfwayToast = $state(false);
 	let halfwayToastTimer: ReturnType<typeof setTimeout> | undefined;
 	let isSessionFinished = $state(false);
+	let exitGuard: { requestExit: (proceed: () => void) => void } | null = $state(null);
+
+	function requestExit(proceed: () => void) {
+		if (exitGuard) {
+			exitGuard.requestExit(proceed);
+		} else {
+			proceed();
+		}
+	}
+
+	function exitToPreview() {
+		clearAutoplay();
+		goto(resolve(`/deck/${deckId}/preview`));
+	}
 
 	// Autoplay state & options
 	let isAutoplay = $state(false);
@@ -484,6 +499,15 @@
 	<title>Studying {deckTitle} — FlashCards</title>
 </svelte:head>
 
+<SessionExitGuard
+	bind:this={exitGuard}
+	active={() => !isSessionFinished}
+	title="Leave this study session?"
+	message="Cards you already reviewed are saved to your progress."
+	confirmLabel="Leave session"
+	stayLabel="Keep studying"
+/>
+
 <div class="flex min-h-screen flex-col justify-between bg-white">
 	<!-- Top Session Bar -->
 	<header
@@ -491,10 +515,7 @@
 	>
 		<button
 			type="button"
-			onclick={() => {
-				clearAutoplay();
-				goto(resolve(`/deck/${deckId}/preview`));
-			}}
+			onclick={() => requestExit(exitToPreview)}
 			aria-label="Exit Study Session"
 			class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors hover:bg-slate-200 active:scale-95"
 		>

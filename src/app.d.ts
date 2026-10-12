@@ -5,7 +5,13 @@ declare global {
 		// interface Error {}
 		// interface Locals {}
 		// interface PageData {}
-		// interface PageState {}
+		interface PageState {
+			dictionaryOpen?: boolean;
+			spreadsheetOpen?: boolean;
+			pasteOpen?: boolean;
+			calendarOpen?: boolean;
+			importOpen?: boolean;
+		}
 		// interface Platform {}
 	}
 }

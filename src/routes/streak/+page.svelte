@@ -2,13 +2,14 @@
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import StreakCalendarModal from '$lib/components/StreakCalendarModal.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
+	import { page } from '$app/state';
+	import { openModal, closeModal } from '$lib/utils/backNav';
 	import { onMount } from 'svelte';
 	import { getAllProgress, computeStreakStats, getSavedUsername } from '$lib/utils/storage';
 	import type { StreakStats } from '$lib/types';
 	import { Flame, Snowflake, Hourglass, Trophy, Calendar } from 'lucide-svelte';
 
 	let username = $state('');
-	let isCalendarOpen = $state(false);
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -193,7 +194,7 @@
 			<h3 class="font-headline text-sm font-bold text-slate-900">This Week's Activity</h3>
 			<button
 				type="button"
-				onclick={() => (isCalendarOpen = true)}
+				onclick={() => openModal({ calendarOpen: true })}
 				class="cursor-pointer font-headline text-xs font-bold text-indigo-600 hover:underline"
 			>
 				View Calendar &rarr;
@@ -269,10 +270,10 @@
 </main>
 
 <StreakCalendarModal
-	isOpen={isCalendarOpen}
+	isOpen={page.state.calendarOpen === true}
 	streak={streakStats.currentStreak}
 	freezeCount={streakStats.freezeCount}
 	activeDates={streakStats.activeDates}
 	freezeDates={streakStats.freezeDates}
-	onClose={() => (isCalendarOpen = false)}
+	onClose={closeModal}
 />

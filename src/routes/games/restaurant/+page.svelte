@@ -7,6 +7,7 @@
 		type RoundResult
 	} from '$lib/components/games/restaurant/KitchenLine.svelte';
 	import KitchenScene from '$lib/components/games/restaurant/KitchenScene.svelte';
+	import SessionExitGuard from '$lib/components/SessionExitGuard.svelte';
 	import { buildRestaurantMenu } from '$lib/data/restaurantDishes';
 	import { playSound } from '$lib/utils/audio';
 	import { getGameHighScore, saveGameScore } from '$lib/utils/gameStorage';
@@ -34,6 +35,15 @@
 	let earnedXP = $state(0);
 	let accuracy = $state(0);
 	let summary = $state<RoundSummary | null>(null);
+	let exitGuard: { requestExit: (proceed: () => void) => void } | null = $state(null);
+
+	function requestExit(proceed: () => void) {
+		if (exitGuard) {
+			exitGuard.requestExit(proceed);
+		} else {
+			proceed();
+		}
+	}
 
 	const menu = buildRestaurantMenu();
 
@@ -107,6 +117,15 @@
 	/>
 </svelte:head>
 
+<SessionExitGuard
+	bind:this={exitGuard}
+	active={() => phase === 'playing' && menu.ok}
+	title="Quit this round?"
+	message="Your score in this round will not be saved if you leave now."
+	confirmLabel="Quit round"
+	stayLabel="Keep plating"
+/>
+
 {#if !menu.ok}
 	<div class="min-h-dvh bg-slate-50 font-sans text-slate-900">
 		<header
@@ -155,7 +174,7 @@
 				{soundEnabled}
 				{highScore}
 				onFinish={(result) => void recordRound(result)}
-				onExit={() => goto(resolve('/games'))}
+				onExit={() => requestExit(() => goto(resolve('/games')))}
 				onToggleSound={() => (soundEnabled = !soundEnabled)}
 			/>
 		</div>

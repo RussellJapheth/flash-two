@@ -111,6 +111,21 @@ export function normalizeChinese(str: string): string {
 	return str.trim().toLowerCase();
 }
 
+let cachedBuiltinPackWords: WordRecord[] | null = null;
+
+async function getCachedBuiltinPackWords(): Promise<WordRecord[]> {
+	if (!cachedBuiltinPackWords) {
+		const packs = await getBuiltinPacks('chinese');
+		cachedBuiltinPackWords = packs.flatMap((pack) => (Array.isArray(pack.words) ? pack.words : []));
+	}
+	return cachedBuiltinPackWords;
+}
+
+interface ScoredWord {
+	score: number;
+	word: WordRecord;
+}
+
 /**
  * Searches local packs, custom decks, and dictionary dataset for a query string.
  * Supports Chinese Characters, Pinyin, and English meanings.
@@ -122,20 +137,13 @@ export async function searchDictionary(query: string): Promise<WordRecord[]> {
 	const normQuery = trimmed.toLowerCase();
 	const normPinyinQuery = normalizePinyin(trimmed);
 	const normZhQuery = normalizeChinese(trimmed);
+	const isChinese = /[\u4e00-\u9fa5\u3400-\u4dbf]/.test(trimmed);
 
-	const results: WordRecord[] = [];
+	const scoredResults: ScoredWord[] = [];
 	const seenWords = new Set<string>();
 
-	// 1. Gather all words from preloaded packs
-	const packs = await getBuiltinPacks('chinese');
-	const allPacksWords: WordRecord[] = [];
-	for (const pack of packs) {
-		if (Array.isArray(pack.words)) {
-			allPacksWords.push(...pack.words);
-		}
-	}
-
-	// 2. Gather words from custom decks
+	// 1. Gather all words from preloaded packs & custom decks
+	const allPacksWords: WordRecord[] = [...(await getCachedBuiltinPackWords())];
 	const customDecks = await getAllCustomDecks();
 	for (const deck of customDecks) {
 		if (Array.isArray(deck.words)) {
@@ -143,7 +151,10 @@ export async function searchDictionary(query: string): Promise<WordRecord[]> {
 		}
 	}
 
-	// 3. Search local corpus
+	const singleLetterRegex =
+		normQuery.length === 1 && !isChinese ? new RegExp('\\b' + normQuery, 'i') : null;
+
+	// 2. Search local corpus
 	for (const word of allPacksWords) {
 		const zh = word['Chinese Word'] || '';
 		const py = word.Pinyin || '';
@@ -156,7 +167,9 @@ export async function searchDictionary(query: string): Promise<WordRecord[]> {
 		// Exact Chinese match
 		if (zh === normQuery || zh === normZhQuery) {
 			score += 100;
-		} else if (zh.includes(normZhQuery)) {
+		} else if (isChinese && zh.includes(normZhQuery)) {
+			score += 50;
+		} else if (normZhQuery.length >= 2 && zh.toLowerCase().includes(normZhQuery)) {
 			score += 50;
 		}
 
@@ -165,8 +178,14 @@ export async function searchDictionary(query: string): Promise<WordRecord[]> {
 			const normPy = normalizePinyin(py);
 			if (normPy === normPinyinQuery) {
 				score += 80;
-			} else if (normPy.includes(normPinyinQuery) && normPinyinQuery.length >= 2) {
+			} else if (normPinyinQuery.length >= 2 && normPy.includes(normPinyinQuery)) {
 				score += 30;
+			} else if (
+				normPinyinQuery.length === 1 &&
+				!isChinese &&
+				(normPy.startsWith(normPinyinQuery) || normPy.includes(' ' + normPinyinQuery))
+			) {
+				score += 25;
 			}
 		}
 
@@ -175,7 +194,9 @@ export async function searchDictionary(query: string): Promise<WordRecord[]> {
 			const normEng = eng.toLowerCase();
 			if (normEng === normQuery) {
 				score += 90;
-			} else if (normEng.includes(normQuery)) {
+			} else if (normQuery.length >= 2 && normEng.includes(normQuery)) {
+				score += 40;
+			} else if (singleLetterRegex && singleLetterRegex.test(normEng)) {
 				score += 40;
 			}
 		}
@@ -184,22 +205,27 @@ export async function searchDictionary(query: string): Promise<WordRecord[]> {
 			const key = `${zh}_${py}_${eng}`;
 			if (!seenWords.has(key)) {
 				seenWords.add(key);
-				results.push({ ...word, Pinyin: formatPinyin(word.Pinyin || '', zh) });
+				scoredResults.push({
+					score,
+					word: { ...word, Pinyin: formatPinyin(word.Pinyin || '', zh) }
+				});
 			}
 		}
 	}
 
 	// Sort by relevance score
-	results.sort((a, b) => {
-		const aExact =
-			a['Chinese Word'] === trimmed || a['English Meaning']?.toLowerCase() === normQuery ? 1 : 0;
-		const bExact =
-			b['Chinese Word'] === trimmed || b['English Meaning']?.toLowerCase() === normQuery ? 1 : 0;
-		return bExact - aExact;
+	scoredResults.sort((a, b) => {
+		if (b.score !== a.score) return b.score - a.score;
+		const aZhLen = a.word['Chinese Word']?.length || 99;
+		const bZhLen = b.word['Chinese Word']?.length || 99;
+		return aZhLen - bZhLen;
 	});
 
-	// 4. Search local embedded dictionary asset / dict.json if present
-	if (results.length < 5) {
+	const results = scoredResults.map((s) => s.word);
+
+	// 3. Search local embedded dictionary asset / dict.json if present
+	// Skip 125k dict.json scan for single-character non-Chinese queries (e.g. "k")
+	if (results.length < 5 && (isChinese || trimmed.length >= 2)) {
 		try {
 			const localDictResults = await searchLocalEmbeddedDictionary(trimmed);
 			for (const ext of localDictResults) {
@@ -233,70 +259,107 @@ interface RawDictEntry {
 	example?: string;
 }
 
-let cachedDictPromise: Promise<RawDictEntry[]> | null = null;
+interface IndexedDictEntry {
+	entry: RawDictEntry;
+	zh: string;
+	normPy: string;
+	normEng: string;
+}
 
-async function getEmbeddedDict(): Promise<RawDictEntry[]> {
+let cachedIndexedDict: IndexedDictEntry[] | null = null;
+let dictFetchPromise: Promise<IndexedDictEntry[]> | null = null;
+
+async function getEmbeddedDict(): Promise<IndexedDictEntry[]> {
 	if (typeof window === 'undefined') return [];
-	if (!cachedDictPromise) {
-		cachedDictPromise = fetch('/dict.json')
+	if (cachedIndexedDict) return cachedIndexedDict;
+	if (!dictFetchPromise) {
+		dictFetchPromise = fetch('/dict.json')
 			.then((res) => (res.ok ? res.json() : []))
+			.then((data: RawDictEntry[]) => {
+				if (!Array.isArray(data)) return [];
+				cachedIndexedDict = data.map((entry) => {
+					const zh = entry['Chinese Word'] || entry.simplified || entry.word || '';
+					const py = entry.Pinyin || entry.pinyin || '';
+					const eng = entry['English Meaning'] || entry.meaning || entry.definition || '';
+					return {
+						entry,
+						zh: normalizeChinese(zh),
+						normPy: normalizePinyin(py),
+						normEng: eng.toLowerCase()
+					};
+				});
+				return cachedIndexedDict;
+			})
 			.catch(() => []);
 	}
-	return cachedDictPromise;
+	return dictFetchPromise;
 }
 
 /**
  * Searches embedded local dictionary dataset (/dict.json)
  */
 async function searchLocalEmbeddedDictionary(query: string): Promise<WordRecord[]> {
-	if (typeof window === 'undefined') return [];
+	const trimmed = query.trim();
+	const isChinese = /[\u4e00-\u9fa5\u3400-\u4dbf]/.test(trimmed);
+	if (!trimmed || (!isChinese && trimmed.length < 2)) return [];
+
 	try {
 		const data = await getEmbeddedDict();
-		if (!Array.isArray(data) || data.length === 0) return [];
+		if (!data || data.length === 0) return [];
 
-		const normQuery = query.toLowerCase().trim();
-		const normPinyinQuery = normalizePinyin(query);
-		const normZhQuery = normalizeChinese(query);
+		const normQuery = trimmed.toLowerCase();
+		const normPinyinQuery = normalizePinyin(trimmed);
+		const normZhQuery = normalizeChinese(trimmed);
 
 		const matches: { score: number; entry: RawDictEntry }[] = [];
 
-		for (const entry of data) {
-			const zh = entry['Chinese Word'] || entry.simplified || entry.word || '';
-			const py = entry.Pinyin || entry.pinyin || '';
-			const eng = entry['English Meaning'] || entry.meaning || entry.definition || '';
-
+		for (let i = 0; i < data.length; i++) {
+			const item = data[i];
 			let score = 0;
-			if (zh === normQuery || zh === normZhQuery) score += 100;
-			else if (zh.includes(normZhQuery)) score += 50;
 
-			if (py) {
-				const nPy = normalizePinyin(py);
-				if (nPy === normPinyinQuery) score += 80;
-				else if (nPy.includes(normPinyinQuery) && normPinyinQuery.length >= 2) score += 30;
+			if (item.zh === normQuery || item.zh === normZhQuery) {
+				score += 100;
+			} else if (item.zh.includes(normZhQuery)) {
+				score += 50;
 			}
 
-			if (eng) {
-				const nEng = eng.toLowerCase();
-				if (nEng === normQuery) score += 90;
-				else if (nEng.includes(normQuery)) score += 40;
+			if (item.normPy) {
+				if (item.normPy === normPinyinQuery) {
+					score += 80;
+				} else if (normPinyinQuery.length >= 2 && item.normPy.includes(normPinyinQuery)) {
+					score += 30;
+				}
+			}
+
+			if (item.normEng) {
+				if (item.normEng === normQuery) {
+					score += 90;
+				} else if (normQuery.length >= 2 && item.normEng.includes(normQuery)) {
+					score += 40;
+				}
 			}
 
 			if (score > 0) {
-				matches.push({ score, entry });
+				matches.push({ score, entry: item.entry });
 			}
 		}
 
 		matches.sort((a, b) => b.score - a.score);
 
-		return matches.slice(0, 15).map((m, index) => ({
-			No: 900000 + index,
-			'Chinese Word': m.entry['Chinese Word'] || m.entry.simplified || m.entry.word || query,
-			Pinyin: formatPinyin(m.entry.Pinyin || m.entry.pinyin || ''),
-			'Part of Speech': m.entry['Part of Speech'] || m.entry.pos || 'Vocabulary',
-			'English Meaning': m.entry['English Meaning'] || m.entry.meaning || m.entry.definition || '',
-			'Example (Chinese + Pinyin)':
-				m.entry['Example (Chinese + Pinyin)'] || m.entry.example || undefined
-		}));
+		return matches.slice(0, 15).map((m, index) => {
+			const zh = m.entry['Chinese Word'] || m.entry.simplified || m.entry.word || query;
+			const rawPy = m.entry.Pinyin || m.entry.pinyin || '';
+			return {
+				No: 900000 + index,
+				'Chinese Word': zh,
+				Pinyin: formatPinyin(rawPy, zh),
+				'Part of Speech': m.entry['Part of Speech'] || m.entry.pos || 'Vocabulary',
+				'English Meaning':
+					m.entry['English Meaning'] || m.entry.meaning || m.entry.definition || '',
+				'Example (Chinese + Pinyin)':
+					m.entry['Example (Chinese + Pinyin)'] || m.entry.example || undefined
+			};
+		});
 	} catch {
 		return [];
 	}

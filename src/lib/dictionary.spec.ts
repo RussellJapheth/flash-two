@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { normalizePinyin, normalizeChinese, formatPinyin } from '$lib/utils/dictionary';
+import {
+	normalizePinyin,
+	normalizeChinese,
+	formatPinyin,
+	searchDictionary
+} from '$lib/utils/dictionary';
 
 describe('Dictionary Utils', () => {
 	it('normalizes Pinyin with tone accents correctly', () => {
@@ -30,5 +35,33 @@ describe('Dictionary Utils', () => {
 	it('applies Pinyin overrides for words with dictionary inaccuracies', () => {
 		expect(formatPinyin('yú yú', '魣鱼')).toBe('xù yú');
 		expect(formatPinyin('yú', '魣')).toBe('xù');
+	});
+
+	it('handles single-letter search without freezing or matching random word substrings', async () => {
+		const results = await searchDictionary('k');
+		expect(Array.isArray(results)).toBe(true);
+		expect(results.length).toBeGreaterThan(0);
+		for (const item of results) {
+			const eng = (item['English Meaning'] || '').toLowerCase();
+			const py = (item.Pinyin || '').toLowerCase();
+			const zh = item['Chinese Word'] || '';
+			const matchesWordBoundary = /\bk/i.test(eng);
+			const matchesPinyin = py.startsWith('k') || py.includes(' k');
+			const matchesChinese = zh.toLowerCase().includes('k');
+			expect(matchesWordBoundary || matchesPinyin || matchesChinese).toBe(true);
+		}
+	});
+
+	it('returns empty array for empty or whitespace query', async () => {
+		expect(await searchDictionary('')).toEqual([]);
+		expect(await searchDictionary('   ')).toEqual([]);
+	});
+
+	it('matches Chinese characters and multi-letter queries', async () => {
+		const zhResults = await searchDictionary('你好');
+		expect(zhResults.some((r) => r['Chinese Word'] === '你好')).toBe(true);
+
+		const pyResults = await searchDictionary('nihao');
+		expect(pyResults.some((r) => r['Chinese Word'] === '你好')).toBe(true);
 	});
 });

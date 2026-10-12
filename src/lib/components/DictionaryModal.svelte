@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import {
 		BookOpen,
 		Search,
@@ -24,10 +24,14 @@
 		removePersonalWord
 	} from '$lib/utils/dictionary';
 
+	const PAGE_SIZE = 10;
+
 	let isOpen = $state(false);
 	let modalTab = $state<'search' | 'add_note'>('search');
 	let query = $state('');
 	let results = $state<WordRecord[]>([]);
+	let visibleCount = $state(PAGE_SIZE);
+	let displayedResults = $derived(results.slice(0, visibleCount));
 	let isSearching = $state(false);
 	let currentLanguage = $state<'chinese' | 'french'>('chinese');
 	let personalDeck = $state<CustomDeck | null>(null);
@@ -45,8 +49,19 @@
 		new Set(personalDeck?.words.map((w) => w['Chinese Word'] || `${w.No}`) || [])
 	);
 
+	let savedNotesMap = $derived(
+		new Map(personalDeck?.words.map((w) => [w['Chinese Word'], w.customNote || '']) || [])
+	);
+
+	let searchTimeout: ReturnType<typeof setTimeout> | undefined;
+	let currentSearchId = 0;
+
 	onMount(() => {
 		loadState();
+	});
+
+	onDestroy(() => {
+		clearTimeout(searchTimeout);
 	});
 
 	async function loadState() {
@@ -65,6 +80,10 @@
 		isOpen = false;
 		query = '';
 		results = [];
+		visibleCount = PAGE_SIZE;
+		clearTimeout(searchTimeout);
+		currentSearchId++;
+		isSearching = false;
 		savedSuccessMsg = null;
 		modalTab = 'search';
 	}
@@ -92,28 +111,88 @@
 		modalTab = 'search';
 	}
 
-	let searchTimeout: ReturnType<typeof setTimeout>;
-
 	function handleInput(e: Event) {
 		const target = e.target as HTMLInputElement;
-		query = target.value;
+		const val = target.value;
+		query = val;
 		clearTimeout(searchTimeout);
 
-		if (!query.trim()) {
+		if (!val.trim()) {
+			currentSearchId++;
 			results = [];
+			visibleCount = PAGE_SIZE;
 			isSearching = false;
 			return;
 		}
 
 		isSearching = true;
+		const searchId = ++currentSearchId;
+
 		searchTimeout = setTimeout(async () => {
-			if (currentLanguage === 'chinese') {
-				results = await searchDictionary(query);
-			} else {
-				results = [];
+			const trimmed = val.trim();
+			if (!trimmed) {
+				if (searchId === currentSearchId) {
+					results = [];
+					visibleCount = PAGE_SIZE;
+					isSearching = false;
+				}
+				return;
 			}
-			isSearching = false;
-		}, 150);
+
+			if (currentLanguage === 'chinese') {
+				const found = await searchDictionary(trimmed);
+				if (searchId === currentSearchId) {
+					results = found;
+					visibleCount = PAGE_SIZE;
+					isSearching = false;
+				}
+			} else {
+				if (searchId === currentSearchId) {
+					results = [];
+					visibleCount = PAGE_SIZE;
+					isSearching = false;
+				}
+			}
+		}, 300);
+	}
+
+	function handleClearQuery() {
+		query = '';
+		results = [];
+		visibleCount = PAGE_SIZE;
+		clearTimeout(searchTimeout);
+		currentSearchId++;
+		isSearching = false;
+	}
+
+	function loadMore() {
+		if (visibleCount < results.length) {
+			visibleCount = Math.min(visibleCount + PAGE_SIZE, results.length);
+		}
+	}
+
+	function handleScroll(e: Event) {
+		const target = e.currentTarget as HTMLElement;
+		if (target.scrollHeight - target.scrollTop - target.clientHeight < 120) {
+			loadMore();
+		}
+	}
+
+	function observeSentinel(node: HTMLElement) {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0]?.isIntersecting) {
+					loadMore();
+				}
+			},
+			{ rootMargin: '120px' }
+		);
+		observer.observe(node);
+		return {
+			destroy() {
+				observer.disconnect();
+			}
+		};
 	}
 
 	async function toggleSave(word: WordRecord) {
@@ -150,10 +229,9 @@
 
 	function getSavedNote(word: WordRecord): string {
 		const zh = word['Chinese Word'] || '';
-		const saved = personalDeck?.words.find((w) => w['Chinese Word'] === zh);
 		return editingNotesMap[zh] !== undefined
 			? editingNotesMap[zh]
-			: saved?.customNote || word.customNote || '';
+			: savedNotesMap.get(zh) || word.customNote || '';
 	}
 
 	function updateNoteState(zh: string, val: string) {
@@ -260,7 +338,7 @@
 			{/if}
 
 			<!-- Modal Body -->
-			<div class="flex-1 space-y-4 overflow-y-auto p-5">
+			<div class="flex-1 space-y-4 overflow-y-auto p-5" onscroll={handleScroll}>
 				{#if currentLanguage === 'french'}
 					<!-- French Mode Unavailable Notice -->
 					<div class="my-6 rounded-2xl border border-amber-200/80 bg-amber-50/80 p-5 text-center">
@@ -382,10 +460,7 @@
 						{#if query}
 							<button
 								type="button"
-								onclick={() => {
-									query = '';
-									results = [];
-								}}
+								onclick={handleClearQuery}
 								class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600"
 							>
 								<X size={16} />
@@ -407,11 +482,18 @@
 						</div>
 					{:else if results.length > 0}
 						<div class="space-y-3">
-							<p class="font-headline text-xs font-bold tracking-wider text-slate-400 uppercase">
-								Results ({results.length})
-							</p>
+							<div class="flex items-center justify-between">
+								<p class="font-headline text-xs font-bold tracking-wider text-slate-400 uppercase">
+									Results ({results.length})
+								</p>
+								{#if results.length > PAGE_SIZE}
+									<span class="font-sans text-[11px] font-medium text-slate-400">
+										Showing {displayedResults.length} of {results.length}
+									</span>
+								{/if}
+							</div>
 
-							{#each results as word (word.No + '_' + (word['Chinese Word'] || ''))}
+							{#each displayedResults as word (word.No + '_' + (word['Chinese Word'] || ''))}
 								{@const zh = word['Chinese Word'] || ''}
 								{@const isSaved = savedWordKeys.has(zh)}
 								{@const note = getSavedNote(word)}
@@ -509,6 +591,18 @@
 									</div>
 								</div>
 							{/each}
+
+							{#if visibleCount < results.length}
+								<div
+									class="flex items-center justify-center py-4 text-slate-400"
+									use:observeSentinel
+								>
+									<Loader2 size={16} class="mr-2 animate-spin text-indigo-600" />
+									<span class="font-sans text-xs"
+										>Loading more words ({displayedResults.length} of {results.length})...</span
+									>
+								</div>
+							{/if}
 						</div>
 					{:else}
 						<!-- Default Empty State inside Modal -->

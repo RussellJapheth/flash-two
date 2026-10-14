@@ -890,32 +890,105 @@ export function computeStreakStats(
 
 	const freezeData = customFreezeData || getStreakFreezeData();
 	const freezeSet = new Set<string>(freezeData.usedDates || []);
+	const newlyFrozenDates: string[] = [];
 
-	// Combined valid days (practiced days + frozen days)
-	const combinedDatesSet = new Set<string>([...datesSet, ...freezeSet]);
-	const sortedCombined = Array.from(combinedDatesSet).sort().reverse();
-
-	let currentStreak = 0;
-	let longestStreak = 0;
+	function getOffsetIsoDate(isoDate: string, daysOffset: number): string {
+		const [y, m, d] = isoDate.split('-').map(Number);
+		const date = new Date(Date.UTC(y, m - 1, d + daysOffset));
+		return date.toISOString().split('T')[0];
+	}
 
 	const today = new Date().toISOString().split('T')[0];
-	const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+	const yesterday = getOffsetIsoDate(today, -1);
 
-	// Check if today or yesterday was active or frozen
-	if (sortedCombined.includes(today) || sortedCombined.includes(yesterday)) {
-		let checkDate = sortedCombined.includes(today) ? new Date() : new Date(Date.now() - 86400000);
+	// Helper to find available freezes earned in the continuous run ending on 'fromDate'
+	function getAvailableFreezesEndingOn(fromDate: string): number {
+		let check = fromDate;
+		let active = 0;
+		let used = 0;
+		while (datesSet.has(check) || freezeSet.has(check)) {
+			if (datesSet.has(check)) active++;
+			else if (freezeSet.has(check)) used++;
+			check = getOffsetIsoDate(check, -1);
+		}
+		const maxHeld = Math.min(3, Math.floor(active / 5));
+		return Math.max(0, maxHeld - used);
+	}
+
+	// Auto-freeze protection for yesterday if today is not active yet:
+	const isTodayActiveOrFrozen = datesSet.has(today) || freezeSet.has(today);
+	if (!isTodayActiveOrFrozen && !datesSet.has(yesterday) && !freezeSet.has(yesterday)) {
+		let scan = getOffsetIsoDate(yesterday, -1);
+		let gap = 1;
+		while (!datesSet.has(scan) && !freezeSet.has(scan) && gap < 3) {
+			gap++;
+			scan = getOffsetIsoDate(scan, -1);
+		}
+		if (datesSet.has(scan) || freezeSet.has(scan)) {
+			const available = getAvailableFreezesEndingOn(scan);
+			if (gap <= available) {
+				let fill = yesterday;
+				for (let g = 0; g < gap; g++) {
+					freezeSet.add(fill);
+					newlyFrozenDates.push(fill);
+					fill = getOffsetIsoDate(fill, -1);
+				}
+			}
+		}
+	}
+
+	// Count current streak backwards
+	let currentStreak = 0;
+	if (
+		datesSet.has(today) ||
+		freezeSet.has(today) ||
+		datesSet.has(yesterday) ||
+		freezeSet.has(yesterday)
+	) {
+		let checkDate = datesSet.has(today) || freezeSet.has(today) ? today : yesterday;
 		while (true) {
-			const iso = checkDate.toISOString().split('T')[0];
-			if (combinedDatesSet.has(iso)) {
+			if (datesSet.has(checkDate) || freezeSet.has(checkDate)) {
 				currentStreak++;
-				checkDate = new Date(checkDate.getTime() - 86400000);
+				checkDate = getOffsetIsoDate(checkDate, -1);
 			} else {
+				// Hit a gap! Check if gap can be auto-frozen from prior active run
+				let scan = getOffsetIsoDate(checkDate, -1);
+				let gap = 1;
+				while (!datesSet.has(scan) && !freezeSet.has(scan) && gap < 3) {
+					gap++;
+					scan = getOffsetIsoDate(scan, -1);
+				}
+				if ((datesSet.has(scan) || freezeSet.has(scan)) && gap <= 3) {
+					const available = getAvailableFreezesEndingOn(scan);
+					if (gap <= available) {
+						let fill = checkDate;
+						for (let g = 0; g < gap; g++) {
+							freezeSet.add(fill);
+							newlyFrozenDates.push(fill);
+							fill = getOffsetIsoDate(fill, -1);
+						}
+						continue;
+					}
+				}
 				break;
 			}
 		}
 	}
 
+	// Persist newly auto-frozen dates locally if running with standard local storage
+	if (!customFreezeData && typeof localStorage !== 'undefined' && newlyFrozenDates.length > 0) {
+		try {
+			saveStreakFreezeData({ usedDates: Array.from(freezeSet).sort() });
+		} catch {
+			// ignore local storage errors
+		}
+	}
+
+	// Combined valid days (practiced days + frozen days)
+	const combinedDatesSet = new Set<string>([...datesSet, ...freezeSet]);
+
 	// Longest streak calculation
+	let longestStreak = 0;
 	let running = 0;
 	const ascendingDates = Array.from(combinedDatesSet).sort();
 	for (let i = 0; i < ascendingDates.length; i++) {
@@ -944,20 +1017,19 @@ export function computeStreakStats(
 	let activeDaysInStreak = 0;
 	let usedFreezesInStreak = 0;
 	if (currentStreak > 0) {
-		let checkDate = sortedCombined.includes(today) ? new Date() : new Date(Date.now() - 86400000);
+		let checkDate = datesSet.has(today) || freezeSet.has(today) ? today : yesterday;
 		for (let s = 0; s < currentStreak; s++) {
-			const iso = checkDate.toISOString().split('T')[0];
-			if (datesSet.has(iso)) {
+			if (datesSet.has(checkDate)) {
 				activeDaysInStreak++;
-			} else if (freezeSet.has(iso)) {
+			} else if (freezeSet.has(checkDate)) {
 				usedFreezesInStreak++;
 			}
-			checkDate = new Date(checkDate.getTime() - 86400000);
+			checkDate = getOffsetIsoDate(checkDate, -1);
 		}
 	}
 
-	const earnedFreezes = Math.floor(activeDaysInStreak / 5);
-	const freezeCount = Math.min(3, Math.max(0, earnedFreezes - usedFreezesInStreak));
+	const maxHeldFreezes = Math.min(3, Math.floor(activeDaysInStreak / 5));
+	const freezeCount = Math.max(0, maxHeldFreezes - usedFreezesInStreak);
 
 	// Determine Tier
 	let tierName = 'Novice Explorer';

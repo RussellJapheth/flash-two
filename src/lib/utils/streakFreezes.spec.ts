@@ -180,4 +180,55 @@ describe('Streak Freezes Calculation & Storage', () => {
 		expect(stats.currentStreak).toBe(2);
 		expect(stats.activeDates).toEqual([yesterdayIso, todayIso].sort());
 	});
+
+	it('automatically consumes an earned streak freeze when yesterday is missed and today is not yet reviewed', () => {
+		const now = Date.now();
+		const yesterdayIso = new Date(now - 86400000).toISOString().split('T')[0];
+
+		// 5 consecutive active days: 2..6 days ago
+		const progress = createMockProgress([2, 3, 4, 5, 6]);
+		const stats = computeStreakStats(progress, { usedDates: [] });
+
+		// 5 active days earned 1 freeze, which auto-shields yesterday
+		expect(stats.currentStreak).toBe(6);
+		expect(stats.freezeDates).toContain(yesterdayIso);
+		expect(stats.freezeCount).toBe(0);
+	});
+
+	it('automatically consumes freeze when user with earned freezes missed yesterday but reviews today', () => {
+		const now = Date.now();
+		const yesterdayIso = new Date(now - 86400000).toISOString().split('T')[0];
+
+		// Active today (0) and 2..6 days ago (5 active days prior)
+		const progress = createMockProgress([0, 2, 3, 4, 5, 6]);
+		const stats = computeStreakStats(progress, { usedDates: [] });
+
+		// 6 active days earned 1 freeze, which auto-bridges yesterday
+		expect(stats.currentStreak).toBe(7);
+		expect(stats.freezeDates).toContain(yesterdayIso);
+		expect(stats.freezeCount).toBe(0);
+	});
+
+	it('preserves long streaks (e.g. 34 days) when yesterday was missed and leaves remaining freezes', () => {
+		const now = Date.now();
+		const yesterdayIso = new Date(now - 86400000).toISOString().split('T')[0];
+
+		// 34 consecutive active days ending 2 days ago
+		const progress = createMockProgress(Array.from({ length: 34 }, (_, i) => i + 2));
+		const stats = computeStreakStats(progress, { usedDates: [] });
+
+		// 34 active days earned 3 freezes (max). 1 consumed for yesterday -> 2 remaining
+		expect(stats.currentStreak).toBe(35);
+		expect(stats.freezeDates).toContain(yesterdayIso);
+		expect(stats.freezeCount).toBe(2);
+	});
+
+	it('resets streak to 0 if consecutive missed days exceed available freezes', () => {
+		// 5 active days (3..7 days ago) -> earns 1 freeze
+		// Missed 2 days ago and yesterday (2 missed days > 1 freeze)
+		const progress = createMockProgress([3, 4, 5, 6, 7]);
+		const stats = computeStreakStats(progress, { usedDates: [] });
+
+		expect(stats.currentStreak).toBe(0);
+	});
 });

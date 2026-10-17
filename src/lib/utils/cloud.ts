@@ -45,11 +45,27 @@ let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 let lastPullTime = 0;
 let currentSyncStatus: SyncStatus = 'idle';
 const listeners = new Set<(status: SyncStatus) => void>();
+const dataChangeListeners = new Set<() => void>();
 
 export function subscribeSyncStatus(fn: (status: SyncStatus) => void): () => void {
 	listeners.add(fn);
 	fn(currentSyncStatus);
 	return () => listeners.delete(fn);
+}
+
+export function subscribeDataChanged(fn: () => void): () => void {
+	dataChangeListeners.add(fn);
+	return () => dataChangeListeners.delete(fn);
+}
+
+export function notifyDataChanged(): void {
+	dataChangeListeners.forEach((fn) => {
+		try {
+			fn();
+		} catch (err) {
+			console.error('Error in data change listener:', err);
+		}
+	});
 }
 
 function updateStatus(status: SyncStatus) {
@@ -339,6 +355,7 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 		}
 
 		updateStatus('ok');
+		notifyDataChanged();
 
 		// Sync XP and Game leaderboards in the background
 		syncXPLeaderboard().catch((e) => console.warn('XP leaderboard sync error:', e));

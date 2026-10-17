@@ -12,6 +12,7 @@
 		computeLevelStats,
 		getLevelTheme
 	} from '$lib/utils/xp';
+	import { subscribeDataChanged } from '$lib/utils/cloud';
 	import type { XPLeaderboardEntry, XPStats } from '$lib/types';
 	import {
 		Trophy,
@@ -86,6 +87,10 @@
 
 	onMount(() => {
 		loadLeaderboardData();
+		const unsubscribe = subscribeDataChanged(() => {
+			loadLeaderboardData();
+		});
+		return unsubscribe;
 	});
 </script>
 

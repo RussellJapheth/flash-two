@@ -26,6 +26,7 @@
 		pullAndMerge,
 		pushData,
 		subscribeSyncStatus,
+		subscribeDataChanged,
 		checkRemoteUser,
 		type RemoteUserSummary
 	} from '$lib/utils/cloud';
@@ -329,8 +330,14 @@
 
 	onMount(() => {
 		loadSettings();
-		const unsub = subscribeSyncStatus((s) => (syncStatus = s));
-		return unsub;
+		const unsubSync = subscribeSyncStatus((s) => (syncStatus = s));
+		const unsubData = subscribeDataChanged(() => {
+			loadSettings();
+		});
+		return () => {
+			unsubSync();
+			unsubData();
+		};
 	});
 </script>
 

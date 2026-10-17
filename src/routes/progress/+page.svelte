@@ -15,6 +15,7 @@
 	import { computeLevelStats, getLevelTheme, getLocalUserXPData } from '$lib/utils/xp';
 	import { isCardMastered, isCardLearning, isCardDue } from '$lib/utils/srs';
 	import { getStudyTimeData, subscribeStudyTimer, formatTimerDisplay } from '$lib/utils/studyTimer';
+	import { subscribeDataChanged } from '$lib/utils/cloud';
 	import type { StreakStats, XPStats, StudyTimeData, ActiveStudyTimerState } from '$lib/types';
 	import { ChevronRight, MessagesSquare, BarChart3, Wrench } from 'lucide-svelte';
 
@@ -186,13 +187,17 @@
 
 	onMount(() => {
 		loadProgressStats();
-		const unsubscribe = subscribeStudyTimer((s) => {
+		const unsubTimer = subscribeStudyTimer((s) => {
 			activeTimer = s;
 			studyTimeStats = getStudyTimeData();
 		});
+		const unsubData = subscribeDataChanged(() => {
+			loadProgressStats();
+		});
 
 		return () => {
-			unsubscribe();
+			unsubTimer();
+			unsubData();
 		};
 	});
 </script>

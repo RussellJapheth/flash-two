@@ -13,7 +13,7 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { speakWord } from '$lib/utils/audio';
-	import { scheduleDebouncedSync } from '$lib/utils/cloud';
+	import { scheduleDebouncedSync, subscribeDataChanged } from '$lib/utils/cloud';
 	import type { WordRecord, StreakStats } from '$lib/types';
 	import { BookmarkIcon, Volume2, Bookmark, Search, Play } from 'lucide-svelte';
 
@@ -173,6 +173,10 @@
 
 	onMount(() => {
 		loadSaved();
+		const unsubscribe = subscribeDataChanged(() => {
+			loadSaved();
+		});
+		return unsubscribe;
 	});
 </script>
 

@@ -6,6 +6,7 @@
 	import { openModal, closeModal } from '$lib/utils/backNav';
 	import { onMount } from 'svelte';
 	import { getAllProgress, computeStreakStats, getSavedUsername } from '$lib/utils/storage';
+	import { subscribeDataChanged } from '$lib/utils/cloud';
 	import type { StreakStats } from '$lib/types';
 	import { Flame, Snowflake, Hourglass, Trophy, Calendar } from 'lucide-svelte';
 
@@ -73,6 +74,10 @@
 
 	onMount(() => {
 		loadStreakData();
+		const unsubscribe = subscribeDataChanged(() => {
+			loadStreakData();
+		});
+		return unsubscribe;
 	});
 </script>
 

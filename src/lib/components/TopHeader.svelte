@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { SyncStatus } from '$lib/types';
-	import { subscribeSyncStatus, pushData } from '$lib/utils/cloud';
+	import { subscribeSyncStatus, pushData, pullAndMerge } from '$lib/utils/cloud';
+	import { getSavedUsername } from '$lib/utils/storage';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
@@ -47,8 +48,13 @@
 		return unsubscribe;
 	});
 
-	function handleSyncClick() {
-		pushData();
+	async function handleSyncClick() {
+		const user = getSavedUsername();
+		if (user) {
+			await pullAndMerge(user);
+		} else {
+			await pushData();
+		}
 	}
 </script>
 

@@ -18,7 +18,7 @@
 	import { BUILTIN_STORIES } from '$lib/data/stories';
 	import { getAllStoryProgress } from '$lib/utils/storyStorage';
 	import { isSpeechRecognitionSupported } from '$lib/utils/speech';
-	import { scheduleDebouncedSync } from '$lib/utils/cloud';
+	import { scheduleDebouncedSync, subscribeDataChanged } from '$lib/utils/cloud';
 	import { isCardDue, isCardMastered } from '$lib/utils/srs';
 	import type {
 		DeckSummary,
@@ -325,6 +325,11 @@
 		loadDecks();
 		isSpeechSupported = isSpeechRecognitionSupported();
 		storyProgressMap = getAllStoryProgress();
+		const unsubscribe = subscribeDataChanged(() => {
+			loadDecks();
+			storyProgressMap = getAllStoryProgress();
+		});
+		return unsubscribe;
 	});
 </script>
 

@@ -15,7 +15,7 @@
 	import { speakWord } from '$lib/utils/audio';
 	import { scheduleDebouncedSync, subscribeDataChanged } from '$lib/utils/cloud';
 	import type { WordRecord, StreakStats } from '$lib/types';
-	import { BookmarkIcon, Volume2, Bookmark, Search, Play } from 'lucide-svelte';
+	import { BookmarkIcon, Volume2, Bookmark, Search, Play, ArrowRight } from 'lucide-svelte';
 
 	import { getPersonalDictionaryDeck, removePersonalWord } from '$lib/utils/dictionary';
 
@@ -187,6 +187,25 @@
 <TopHeader title="Notes & Saved Words" streak={streakStats.currentStreak} showBack={true} />
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
+	<!-- Saved Links Vault Shortcut -->
+	<a
+		href="{resolve('/notebook')}?tab=links"
+		class="shadow-card flex items-center justify-between rounded-2xl border border-indigo-100 bg-indigo-50/70 p-3.5 transition-all hover:border-indigo-300 hover:bg-indigo-50 active:scale-[0.99]"
+	>
+		<div class="flex items-center gap-2.5">
+			<div
+				class="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-xs"
+			>
+				<Bookmark size={15} strokeWidth={2.5} />
+			</div>
+			<div>
+				<h3 class="font-headline text-xs font-bold text-indigo-950">Saved Links & Videos Vault</h3>
+				<p class="text-[11px] text-indigo-700">Save and organize links shared from other apps</p>
+			</div>
+		</div>
+		<ArrowRight size={14} class="text-indigo-600" />
+	</a>
+
 	<!-- Top Overview & Study CTA -->
 	{#if savedList.length > 0}
 		<div

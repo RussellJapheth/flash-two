@@ -21,7 +21,12 @@
 		computeStreakStats,
 		clearOfflineCache
 	} from '$lib/utils/storage';
-	import { getAllNotebookNotes, saveBulkNotebookNotes } from '$lib/utils/notebookStorage';
+	import {
+		getAllNotebookNotes,
+		saveBulkNotebookNotes,
+		exportNotesAsMarkdown
+	} from '$lib/utils/notebookStorage';
+	import { getAllSavedLinks, importLinksFromJson, exportLinksAsJson } from '$lib/utils/linkStorage';
 	import {
 		pullAndMerge,
 		pushData,
@@ -50,7 +55,8 @@
 		UserCheck,
 		Sparkles,
 		RotateCw,
-		Timer
+		Timer,
+		Bookmark
 	} from 'lucide-svelte';
 
 	let username = $state('');
@@ -86,6 +92,7 @@
 	let pendingUsername = $state('');
 	let pendingUserSummary = $state<RemoteUserSummary | null>(null);
 	let suggestedUsername = $state('');
+	let dataMessage = $state('');
 
 	async function loadSettings() {
 		username = getSavedUsername();
@@ -228,6 +235,7 @@
 		const customDecks = await getAllCustomDecks();
 		const savedWords = await getAllSavedWords();
 		const notebookNotes = getAllNotebookNotes();
+		const savedLinks = getAllSavedLinks();
 		const language = getSavedLanguage();
 
 		const backup: AppBackup = {
@@ -237,6 +245,7 @@
 			customDecks,
 			savedWords,
 			notebookNotes,
+			savedLinks,
 			language,
 			username: username || undefined,
 			leaderboardDisabled: isLeaderboardDisabled()
@@ -269,6 +278,9 @@
 				if (Array.isArray(parsed.notebookNotes)) {
 					saveBulkNotebookNotes(parsed.notebookNotes);
 				}
+				if (Array.isArray(parsed.savedLinks)) {
+					importLinksFromJson(JSON.stringify(parsed.savedLinks));
+				}
 				if (parsed.username) {
 					setSavedUsername(parsed.username);
 					username = parsed.username;
@@ -289,6 +301,60 @@
 			}
 		};
 		reader.readAsText(file);
+	}
+
+	function handleExportNotesMarkdown() {
+		const notes = getAllNotebookNotes();
+		if (notes.length === 0) {
+			dataMessage = 'No notebook notes to export.';
+			setTimeout(() => (dataMessage = ''), 3000);
+			return;
+		}
+		const md = exportNotesAsMarkdown(notes);
+		const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = `flashcards-notes-${new Date().toISOString().split('T')[0]}.md`;
+		a.click();
+		URL.revokeObjectURL(url);
+		dataMessage = 'Exported notes Markdown!';
+		setTimeout(() => (dataMessage = ''), 3000);
+	}
+
+	function handleExportLinksJson() {
+		const links = getAllSavedLinks();
+		if (links.length === 0) {
+			dataMessage = 'No saved links to export.';
+			setTimeout(() => (dataMessage = ''), 3000);
+			return;
+		}
+		const json = exportLinksAsJson();
+		const blob = new Blob([json], { type: 'application/json' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = `flashcards-links-${new Date().toISOString().split('T')[0]}.json`;
+		a.click();
+		URL.revokeObjectURL(url);
+		dataMessage = 'Exported links JSON!';
+		setTimeout(() => (dataMessage = ''), 3000);
+	}
+
+	async function handleImportLinksFile(event: Event) {
+		const target = event.target as HTMLInputElement;
+		if (!target.files || target.files.length === 0) return;
+		const file = target.files[0];
+		try {
+			const text = await file.text();
+			const res = importLinksFromJson(text);
+			dataMessage = `Imported ${res.imported} links!`;
+		} catch {
+			dataMessage = 'Error importing links file.';
+		} finally {
+			target.value = '';
+			setTimeout(() => (dataMessage = ''), 3000);
+		}
 	}
 
 	async function handleClearCache() {
@@ -725,6 +791,90 @@
 				<span class="font-headline text-sm font-bold text-slate-900">Restore from File</span>
 			</div>
 			<input type="file" accept=".json" onchange={handleImportFile} class="hidden" />
+			<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
+		</label>
+
+		<!-- Notebook & Links Export/Import Section Divider -->
+		<div class="border-t border-slate-100 bg-slate-50/70 px-5 py-2.5">
+			<span class="font-headline text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+				Notebook & Saved Links Data
+			</span>
+			{#if dataMessage}
+				<span class="ml-2 font-headline text-xs font-bold text-indigo-600">{dataMessage}</span>
+			{/if}
+		</div>
+
+		<!-- Export Notes Markdown -->
+		<button
+			type="button"
+			id="settings-export-notes"
+			onclick={handleExportNotesMarkdown}
+			class="flex w-full cursor-pointer items-center justify-between px-5 py-4 transition-colors hover:bg-slate-50"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-indigo-600"
+				>
+					<BookOpen size={18} strokeWidth={2} />
+				</div>
+				<div class="text-left">
+					<span class="block font-headline text-sm font-bold text-slate-900"
+						>Export Notes (Markdown)</span
+					>
+					<span class="block font-sans text-xs text-slate-500"
+						>Download all notebook phrases and study notes</span
+					>
+				</div>
+			</div>
+			<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
+		</button>
+
+		<!-- Export Links JSON -->
+		<button
+			type="button"
+			id="settings-export-links"
+			onclick={handleExportLinksJson}
+			class="flex w-full cursor-pointer items-center justify-between px-5 py-4 transition-colors hover:bg-slate-50"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-amber-100 bg-amber-50 text-amber-600"
+				>
+					<Bookmark size={18} strokeWidth={2} />
+				</div>
+				<div class="text-left">
+					<span class="block font-headline text-sm font-bold text-slate-900"
+						>Export Saved Links (JSON)</span
+					>
+					<span class="block font-sans text-xs text-slate-500"
+						>Download all saved study links & videos as JSON</span
+					>
+				</div>
+			</div>
+			<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
+		</button>
+
+		<!-- Import Links JSON -->
+		<label
+			id="settings-import-links"
+			class="flex w-full cursor-pointer items-center justify-between px-5 py-4 transition-colors hover:bg-slate-50"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-purple-100 bg-purple-50 text-purple-600"
+				>
+					<Upload size={18} strokeWidth={2} />
+				</div>
+				<div class="text-left">
+					<span class="block font-headline text-sm font-bold text-slate-900"
+						>Import Saved Links</span
+					>
+					<span class="block font-sans text-xs text-slate-500"
+						>Import or merge saved links from a JSON file</span
+					>
+				</div>
+			</div>
+			<input type="file" accept=".json" onchange={handleImportLinksFile} class="hidden" />
 			<ChevronRight size={18} strokeWidth={2} class="text-slate-400" />
 		</label>
 

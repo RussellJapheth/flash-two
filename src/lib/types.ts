@@ -103,6 +103,32 @@ export interface AppBackup {
 	streakFreezeData?: StreakFreezeData;
 	studyTimeData?: StudyTimeData;
 	notebookNotes?: NotebookNote[];
+	savedLinks?: SavedLink[];
+}
+
+export type SavedLinkCategory = 'video' | 'article' | 'audio' | 'tool' | 'reference' | 'other';
+
+export interface SavedLinkYouTube {
+	videoId: string;
+	thumbnailUrl: string;
+	isShort?: boolean;
+}
+
+export interface SavedLink {
+	id: string;
+	url: string;
+	title: string;
+	domain: string;
+	category: SavedLinkCategory;
+	favicon?: string;
+	description?: string;
+	notes?: string;
+	tags: string[];
+	isPinned: boolean;
+	isArchived: boolean;
+	createdAt: number;
+	updatedAt: number;
+	youtube?: SavedLinkYouTube;
 }
 
 export interface NotebookNote {

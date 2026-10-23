@@ -74,7 +74,29 @@
 					"sizes": "192x192"
 				}
 			]
+		},
+		{
+			"name": "Saved Links",
+			"short_name": "Links",
+			"description": "View and manage saved study links",
+			"url": "/notebook?tab=links",
+			"icons": [
+				{
+					"src": "/icons/icon-192x192.png",
+					"sizes": "192x192"
+				}
+			]
 		}
 	],
+	"share_target": {
+		"action": "/notebook",
+		"method": "GET",
+		"enctype": "application/x-www-form-urlencoded",
+		"params": {
+			"title": "title",
+			"text": "text",
+			"url": "url"
+		}
+	},
 	"categories": ["education", "productivity"]
 }

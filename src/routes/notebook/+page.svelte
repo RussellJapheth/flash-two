@@ -1,14 +1,16 @@
 <script lang="ts">
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import { onMount } from 'svelte';
+	import { page } from '$app/state';
 	import {
 		getAllNotebookNotes,
 		saveNotebookNote,
 		deleteNotebookNote,
 		togglePinNotebookNote,
-		generatePinyin,
-		exportNotesAsMarkdown
+		generatePinyin
 	} from '$lib/utils/notebookStorage';
+	import { getAllSavedLinks, parseIncomingShare } from '$lib/utils/linkStorage';
+	import SavedLinksSection from '$lib/components/notebook/SavedLinksSection.svelte';
 	import { speakWord } from '$lib/utils/audio';
 	import type { NotebookNote } from '$lib/types';
 	import {
@@ -19,11 +21,15 @@
 		Pin,
 		Edit3,
 		Trash2,
-		Download,
 		BookOpen,
 		Sparkles,
-		Tag
+		Tag,
+		Bookmark
 	} from 'lucide-svelte';
+
+	let activeTab = $state<'notes' | 'links'>('notes');
+	let savedLinksCount = $state(0);
+	let sharedItem = $state<{ url: string; title: string; notes?: string } | null>(null);
 
 	let notes = $state<NotebookNote[]>([]);
 	let searchQuery = $state('');
@@ -43,10 +49,43 @@
 
 	function loadNotes() {
 		notes = getAllNotebookNotes();
+		savedLinksCount = getAllSavedLinks().length;
+	}
+
+	function switchTab(next: 'notes' | 'links') {
+		activeTab = next;
+		if (next === 'links') {
+			savedLinksCount = getAllSavedLinks().length;
+		}
 	}
 
 	onMount(() => {
 		loadNotes();
+
+		const params = page.url.searchParams;
+		const sharedUrl = params.get('url');
+		const sharedText = params.get('text');
+		const sharedTitle = params.get('title');
+		const tab = params.get('tab');
+
+		if (tab === 'links' || sharedUrl || sharedText || sharedTitle) {
+			activeTab = 'links';
+		}
+
+		if (sharedUrl || sharedText || sharedTitle) {
+			const parsed = parseIncomingShare({
+				url: sharedUrl,
+				text: sharedText,
+				title: sharedTitle
+			});
+			if (parsed) {
+				sharedItem = parsed;
+			}
+			if (typeof window !== 'undefined') {
+				const cleanUrl = window.location.pathname + (activeTab === 'links' ? '?tab=links' : '');
+				window.history.replaceState({}, '', cleanUrl);
+			}
+		}
 	});
 
 	// Unique list of all tags present in user's notes
@@ -152,18 +191,6 @@
 	function handleSpeak(text: string, lang: 'chinese' | 'french') {
 		speakWord(text, lang);
 	}
-
-	function handleExportMarkdown() {
-		if (notes.length === 0) return;
-		const md = exportNotesAsMarkdown(notes);
-		const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = `flashcards-notebook-${new Date().toISOString().split('T')[0]}.md`;
-		a.click();
-		URL.revokeObjectURL(url);
-	}
 </script>
 
 <svelte:head>
@@ -173,401 +200,440 @@
 <TopHeader title="Notebook" />
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
-	<!-- Top Bar: Overview & Primary Actions -->
-	<div
-		class="shadow-card flex flex-col gap-3 rounded-3xl border border-slate-200/90 bg-white p-4.5 sm:flex-row sm:items-center sm:justify-between"
+	<!-- Top Segmented Mode Switcher: Notes & Phrases vs Saved Links -->
+	<nav
+		aria-label="Notebook Section Tabs"
+		class="flex items-center gap-1 rounded-2xl border border-slate-200/90 bg-slate-100/90 p-1 shadow-xs"
 	>
-		<div>
-			<h2 class="font-headline text-lg font-extrabold tracking-tight text-slate-900">
-				Language Notebook
-			</h2>
-			<p class="font-sans text-xs text-slate-500">
-				{notes.length}
-				{notes.length === 1 ? 'phrase & note' : 'phrases & notes'} · No drills or review pressure
-			</p>
-		</div>
-
-		<div class="flex items-center gap-2">
-			{#if notes.length > 0}
-				<button
-					type="button"
-					onclick={handleExportMarkdown}
-					title="Export notes as Markdown"
-					aria-label="Export Markdown"
-					class="flex h-9 cursor-pointer items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 font-headline text-xs font-bold text-slate-700 transition-colors hover:bg-slate-50 active:scale-95"
-				>
-					<Download size={14} strokeWidth={2} />
-					<span>Export</span>
-				</button>
-			{/if}
-
-			<button
-				type="button"
-				onclick={openCreateModal}
-				class="flex h-9 cursor-pointer items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
-			>
-				<Plus size={15} strokeWidth={2.5} />
-				<span>New Note</span>
-			</button>
-		</div>
-	</div>
-
-	<!-- Search & Language Filter Controls -->
-	<div class="space-y-2.5">
-		<!-- Search Bar -->
-		<div class="relative">
-			<Search
-				size={16}
-				class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-slate-400"
-			/>
-			<input
-				type="text"
-				bind:value={searchQuery}
-				placeholder="Search phrases, notes, or tags..."
-				aria-label="Search notebook"
-				class="w-full rounded-2xl border border-slate-200/90 bg-white py-2.5 pr-9 pl-9.5 font-sans text-xs text-slate-900 placeholder-slate-400 shadow-xs focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-hidden"
-			/>
-			{#if searchQuery}
-				<button
-					type="button"
-					onclick={() => (searchQuery = '')}
-					aria-label="Clear search"
-					class="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-slate-400 hover:text-slate-600"
-				>
-					<X size={15} strokeWidth={2} />
-				</button>
-			{/if}
-		</div>
-
-		<!-- Language Filter Tabs -->
-		<div class="grid grid-cols-3 gap-1 rounded-2xl bg-slate-100 p-1">
-			<button
-				type="button"
-				onclick={() => (selectedLang = 'all')}
-				class="cursor-pointer rounded-xl py-1.5 text-center font-headline text-xs font-bold transition-all {selectedLang ===
-				'all'
-					? 'bg-white text-slate-900 shadow-xs'
-					: 'text-slate-500 hover:text-slate-800'}"
-			>
-				All
-			</button>
-			<button
-				type="button"
-				onclick={() => (selectedLang = 'chinese')}
-				class="cursor-pointer rounded-xl py-1.5 text-center font-headline text-xs font-bold transition-all {selectedLang ===
-				'chinese'
-					? 'bg-white text-indigo-600 shadow-xs'
-					: 'text-slate-500 hover:text-slate-800'}"
-			>
-				Chinese (中文)
-			</button>
-			<button
-				type="button"
-				onclick={() => (selectedLang = 'french')}
-				class="cursor-pointer rounded-xl py-1.5 text-center font-headline text-xs font-bold transition-all {selectedLang ===
-				'french'
-					? 'bg-white text-amber-600 shadow-xs'
-					: 'text-slate-500 hover:text-slate-800'}"
-			>
-				French (FR)
-			</button>
-		</div>
-
-		<!-- Tag Pills Bar (if user has tags) -->
-		{#if allTags.length > 0}
-			<div class="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-1">
-				<button
-					type="button"
-					onclick={() => (selectedTag = null)}
-					class="shrink-0 cursor-pointer rounded-full px-2.5 py-1 font-headline text-[11px] font-bold transition-colors {selectedTag ===
-					null
-						? 'bg-slate-900 text-white'
-						: 'bg-slate-100 text-slate-600 hover:bg-slate-200'}"
-				>
-					#all
-				</button>
-				{#each allTags as tag (tag)}
-					<button
-						type="button"
-						onclick={() => (selectedTag = selectedTag === tag ? null : tag)}
-						class="shrink-0 cursor-pointer rounded-full px-2.5 py-1 font-headline text-[11px] font-bold transition-colors {selectedTag ===
-						tag
-							? 'border border-indigo-200 bg-indigo-50 text-indigo-700'
-							: 'bg-slate-100 text-slate-600 hover:bg-slate-200'}"
-					>
-						#{tag}
-					</button>
-				{/each}
-			</div>
-		{/if}
-	</div>
-
-	<!-- Pinned Notes Section -->
-	{#if pinnedNotes.length > 0}
-		<div class="space-y-3 pt-1">
-			<div class="flex items-center gap-1.5">
-				<Pin size={13} class="fill-current text-amber-500" />
-				<h3 class="font-headline text-xs font-extrabold tracking-wider text-slate-500 uppercase">
-					Pinned ({pinnedNotes.length})
-				</h3>
-			</div>
-
-			<div class="space-y-3">
-				{#each pinnedNotes as note (note.id)}
-					<article
-						class="shadow-card hover:shadow-card-hover rounded-3xl border border-slate-200/90 bg-white p-5 transition-all hover:border-indigo-200"
-					>
-						<!-- Card Header: Badges & Actions -->
-						<div class="flex items-start justify-between gap-2">
-							<div class="flex flex-wrap items-center gap-1.5">
-								<span
-									class="rounded-full px-2.5 py-0.5 font-headline text-[10px] font-extrabold tracking-wider uppercase {note.language ===
-									'chinese'
-										? 'bg-indigo-50 text-indigo-700'
-										: 'bg-amber-50 text-amber-700'}"
-								>
-									{note.language === 'chinese' ? 'ZH' : 'FR'}
-								</span>
-
-								{#each note.tags as tag (tag)}
-									<span
-										class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 font-sans text-[11px] font-medium text-slate-600"
-									>
-										<Tag size={10} class="text-slate-400" />
-										<span>{tag}</span>
-									</span>
-								{/each}
-							</div>
-
-							<div class="flex items-center gap-1">
-								<button
-									type="button"
-									onclick={() => handleTogglePin(note.id)}
-									title="Unpin note"
-									aria-label="Unpin note"
-									class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-amber-500 hover:bg-amber-50"
-								>
-									<Pin size={14} class="fill-current" />
-								</button>
-								<button
-									type="button"
-									onclick={() => openEditModal(note)}
-									title="Edit note"
-									aria-label="Edit note"
-									class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"
-								>
-									<Edit3 size={14} />
-								</button>
-								<button
-									type="button"
-									onclick={() => handleDeleteNote(note.id, note.title)}
-									title="Delete note"
-									aria-label="Delete note"
-									class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-slate-400 hover:bg-rose-50 hover:text-rose-600"
-								>
-									<Trash2 size={14} />
-								</button>
-							</div>
-						</div>
-
-						<!-- Phrase & Audio Pronunciation -->
-						<div class="mt-2.5 flex items-start justify-between gap-3">
-							<div>
-								<h4
-									class="font-headline text-lg leading-snug font-extrabold text-slate-900 sm:text-xl"
-								>
-									{note.title}
-								</h4>
-								{#if note.pinyin}
-									<p class="mt-0.5 font-headline text-xs font-bold tracking-wide text-indigo-600">
-										{note.pinyin}
-									</p>
-								{/if}
-							</div>
-
-							<button
-								type="button"
-								onclick={() => handleSpeak(note.title, note.language)}
-								title="Listen to pronunciation"
-								aria-label="Play pronunciation"
-								class="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-indigo-50 text-indigo-600 transition-transform hover:bg-indigo-100 active:scale-90"
-							>
-								<Volume2 size={16} strokeWidth={2} />
-							</button>
-						</div>
-
-						<!-- Freeform Body -->
-						{#if note.content}
-							<div class="mt-3 border-t border-slate-100 pt-3">
-								<p
-									class="font-sans text-xs leading-relaxed font-normal whitespace-pre-wrap text-slate-700 sm:text-sm"
-								>
-									{note.content}
-								</p>
-							</div>
-						{/if}
-					</article>
-				{/each}
-			</div>
-		</div>
-	{/if}
-
-	<!-- Regular Notes Section -->
-	{#if regularNotes.length > 0}
-		<div class="space-y-3 pt-1">
-			{#if pinnedNotes.length > 0}
-				<h3 class="font-headline text-xs font-extrabold tracking-wider text-slate-500 uppercase">
-					Notes ({regularNotes.length})
-				</h3>
-			{/if}
-
-			<div class="space-y-3">
-				{#each regularNotes as note (note.id)}
-					<article
-						class="shadow-card hover:shadow-card-hover rounded-3xl border border-slate-200/90 bg-white p-5 transition-all hover:border-indigo-200"
-					>
-						<!-- Card Header: Badges & Actions -->
-						<div class="flex items-start justify-between gap-2">
-							<div class="flex flex-wrap items-center gap-1.5">
-								<span
-									class="rounded-full px-2.5 py-0.5 font-headline text-[10px] font-extrabold tracking-wider uppercase {note.language ===
-									'chinese'
-										? 'bg-indigo-50 text-indigo-700'
-										: 'bg-amber-50 text-amber-700'}"
-								>
-									{note.language === 'chinese' ? 'ZH' : 'FR'}
-								</span>
-
-								{#each note.tags as tag (tag)}
-									<span
-										class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 font-sans text-[11px] font-medium text-slate-600"
-									>
-										<Tag size={10} class="text-slate-400" />
-										<span>{tag}</span>
-									</span>
-								{/each}
-							</div>
-
-							<div class="flex items-center gap-1">
-								<button
-									type="button"
-									onclick={() => handleTogglePin(note.id)}
-									title="Pin note"
-									aria-label="Pin note"
-									class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-amber-500"
-								>
-									<Pin size={14} />
-								</button>
-								<button
-									type="button"
-									onclick={() => openEditModal(note)}
-									title="Edit note"
-									aria-label="Edit note"
-									class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"
-								>
-									<Edit3 size={14} />
-								</button>
-								<button
-									type="button"
-									onclick={() => handleDeleteNote(note.id, note.title)}
-									title="Delete note"
-									aria-label="Delete note"
-									class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-slate-400 hover:bg-rose-50 hover:text-rose-600"
-								>
-									<Trash2 size={14} />
-								</button>
-							</div>
-						</div>
-
-						<!-- Phrase & Audio Pronunciation -->
-						<div class="mt-2.5 flex items-start justify-between gap-3">
-							<div>
-								<h4
-									class="font-headline text-lg leading-snug font-extrabold text-slate-900 sm:text-xl"
-								>
-									{note.title}
-								</h4>
-								{#if note.pinyin}
-									<p class="mt-0.5 font-headline text-xs font-bold tracking-wide text-indigo-600">
-										{note.pinyin}
-									</p>
-								{/if}
-							</div>
-
-							<button
-								type="button"
-								onclick={() => handleSpeak(note.title, note.language)}
-								title="Listen to pronunciation"
-								aria-label="Play pronunciation"
-								class="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-indigo-50 text-indigo-600 transition-transform hover:bg-indigo-100 active:scale-90"
-							>
-								<Volume2 size={16} strokeWidth={2} />
-							</button>
-						</div>
-
-						<!-- Freeform Body -->
-						{#if note.content}
-							<div class="mt-3 border-t border-slate-100 pt-3">
-								<p
-									class="font-sans text-xs leading-relaxed font-normal whitespace-pre-wrap text-slate-700 sm:text-sm"
-								>
-									{note.content}
-								</p>
-							</div>
-						{/if}
-					</article>
-				{/each}
-			</div>
-		</div>
-	{/if}
-
-	<!-- Empty State: Zero Notes or Search Filter Empty -->
-	{#if filteredNotes.length === 0}
-		<div
-			class="shadow-card flex flex-col items-center justify-center rounded-3xl border border-slate-200/90 bg-white p-8 text-center"
+		<button
+			type="button"
+			onclick={() => switchTab('notes')}
+			class="flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-3 py-2 font-headline text-xs font-bold transition-all active:scale-95 {activeTab ===
+			'notes'
+				? 'bg-white text-indigo-600 shadow-xs'
+				: 'text-slate-500 hover:text-slate-900'}"
 		>
-			<div
-				class="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600"
-			>
-				<BookOpen size={28} strokeWidth={2} />
+			<BookOpen size={14} strokeWidth={2.25} />
+			<span>Notes & Phrases</span>
+			{#if notes.length > 0}
+				<span
+					class="py-0.2 rounded-full px-1.5 text-[10px] font-bold {activeTab === 'notes'
+						? 'bg-indigo-50 text-indigo-700'
+						: 'bg-slate-200/80 text-slate-600'}"
+				>
+					{notes.length}
+				</span>
+			{/if}
+		</button>
+
+		<button
+			type="button"
+			onclick={() => switchTab('links')}
+			class="flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-xl px-3 py-2 font-headline text-xs font-bold transition-all active:scale-95 {activeTab ===
+			'links'
+				? 'bg-white text-indigo-600 shadow-xs'
+				: 'text-slate-500 hover:text-slate-900'}"
+		>
+			<Bookmark size={14} strokeWidth={2.25} />
+			<span>Saved Links & Videos</span>
+			{#if savedLinksCount > 0}
+				<span
+					class="py-0.2 rounded-full px-1.5 text-[10px] font-bold {activeTab === 'links'
+						? 'bg-indigo-50 text-indigo-700'
+						: 'bg-slate-200/80 text-slate-600'}"
+				>
+					{savedLinksCount}
+				</span>
+			{/if}
+		</button>
+	</nav>
+
+	{#if activeTab === 'notes'}
+		<!-- Top Bar: Overview & Primary Actions -->
+		<div
+			class="shadow-card flex flex-col gap-3 rounded-3xl border border-slate-200/90 bg-white p-4.5 sm:flex-row sm:items-center sm:justify-between"
+		>
+			<div>
+				<h2 class="font-headline text-lg font-extrabold tracking-tight text-slate-900">
+					Language Notebook
+				</h2>
+				<p class="font-sans text-xs text-slate-500">
+					{notes.length}
+					{notes.length === 1 ? 'phrase & note' : 'phrases & notes'} · No drills or review pressure
+				</p>
 			</div>
 
-			{#if searchQuery || selectedTag || selectedLang !== 'all'}
-				<h3 class="mt-4 font-headline text-base font-bold text-slate-900">
-					No matching notes found
-				</h3>
-				<p class="mt-1 font-sans text-xs text-slate-500">
-					Try clearing your search query or removing the tag filter.
-				</p>
-				<button
-					type="button"
-					onclick={() => {
-						searchQuery = '';
-						selectedTag = null;
-						selectedLang = 'all';
-					}}
-					class="mt-4 cursor-pointer rounded-xl bg-slate-100 px-3.5 py-2 font-headline text-xs font-bold text-slate-700 transition-colors hover:bg-slate-200"
-				>
-					Reset Filters
-				</button>
-			{:else}
-				<h3 class="mt-4 font-headline text-base font-bold text-slate-900">
-					Your notebook is empty
-				</h3>
-				<p class="mt-1 max-w-xs font-sans text-xs leading-relaxed text-slate-500">
-					Save interesting phrases, grammar patterns, dialogues, or personal notes here. Freeform
-					text with zero review drills.
-				</p>
+			<div>
 				<button
 					type="button"
 					onclick={openCreateModal}
-					class="mt-4 flex cursor-pointer items-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
+					class="flex h-9 cursor-pointer items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
 				>
 					<Plus size={15} strokeWidth={2.5} />
-					<span>Add First Note</span>
+					<span>New Note</span>
 				</button>
+			</div>
+		</div>
+
+		<!-- Search & Language Filter Controls -->
+		<div class="space-y-2.5">
+			<!-- Search Bar -->
+			<div class="relative">
+				<Search
+					size={16}
+					class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-slate-400"
+				/>
+				<input
+					type="text"
+					bind:value={searchQuery}
+					placeholder="Search phrases, notes, or tags..."
+					aria-label="Search notebook"
+					class="w-full rounded-2xl border border-slate-200/90 bg-white py-2.5 pr-9 pl-9.5 font-sans text-xs text-slate-900 placeholder-slate-400 shadow-xs focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-hidden"
+				/>
+				{#if searchQuery}
+					<button
+						type="button"
+						onclick={() => (searchQuery = '')}
+						aria-label="Clear search"
+						class="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-slate-400 hover:text-slate-600"
+					>
+						<X size={15} strokeWidth={2} />
+					</button>
+				{/if}
+			</div>
+
+			<!-- Language Filter Tabs -->
+			<div class="grid grid-cols-3 gap-1 rounded-2xl bg-slate-100 p-1">
+				<button
+					type="button"
+					onclick={() => (selectedLang = 'all')}
+					class="cursor-pointer rounded-xl py-1.5 text-center font-headline text-xs font-bold transition-all {selectedLang ===
+					'all'
+						? 'bg-white text-slate-900 shadow-xs'
+						: 'text-slate-500 hover:text-slate-800'}"
+				>
+					All
+				</button>
+				<button
+					type="button"
+					onclick={() => (selectedLang = 'chinese')}
+					class="cursor-pointer rounded-xl py-1.5 text-center font-headline text-xs font-bold transition-all {selectedLang ===
+					'chinese'
+						? 'bg-white text-indigo-600 shadow-xs'
+						: 'text-slate-500 hover:text-slate-800'}"
+				>
+					Chinese (中文)
+				</button>
+				<button
+					type="button"
+					onclick={() => (selectedLang = 'french')}
+					class="cursor-pointer rounded-xl py-1.5 text-center font-headline text-xs font-bold transition-all {selectedLang ===
+					'french'
+						? 'bg-white text-amber-600 shadow-xs'
+						: 'text-slate-500 hover:text-slate-800'}"
+				>
+					French (FR)
+				</button>
+			</div>
+
+			<!-- Tag Pills Bar (if user has tags) -->
+			{#if allTags.length > 0}
+				<div class="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-1">
+					<button
+						type="button"
+						onclick={() => (selectedTag = null)}
+						class="shrink-0 cursor-pointer rounded-full px-2.5 py-1 font-headline text-[11px] font-bold transition-colors {selectedTag ===
+						null
+							? 'bg-slate-900 text-white'
+							: 'bg-slate-100 text-slate-600 hover:bg-slate-200'}"
+					>
+						#all
+					</button>
+					{#each allTags as tag (tag)}
+						<button
+							type="button"
+							onclick={() => (selectedTag = selectedTag === tag ? null : tag)}
+							class="shrink-0 cursor-pointer rounded-full px-2.5 py-1 font-headline text-[11px] font-bold transition-colors {selectedTag ===
+							tag
+								? 'border border-indigo-200 bg-indigo-50 text-indigo-700'
+								: 'bg-slate-100 text-slate-600 hover:bg-slate-200'}"
+						>
+							#{tag}
+						</button>
+					{/each}
+				</div>
 			{/if}
 		</div>
+
+		<!-- Pinned Notes Section -->
+		{#if pinnedNotes.length > 0}
+			<div class="space-y-3 pt-1">
+				<div class="flex items-center gap-1.5">
+					<Pin size={13} class="fill-current text-amber-500" />
+					<h3 class="font-headline text-xs font-extrabold tracking-wider text-slate-500 uppercase">
+						Pinned ({pinnedNotes.length})
+					</h3>
+				</div>
+
+				<div class="space-y-3">
+					{#each pinnedNotes as note (note.id)}
+						<article
+							class="shadow-card hover:shadow-card-hover rounded-3xl border border-slate-200/90 bg-white p-5 transition-all hover:border-indigo-200"
+						>
+							<!-- Card Header: Badges & Actions -->
+							<div class="flex items-start justify-between gap-2">
+								<div class="flex flex-wrap items-center gap-1.5">
+									<span
+										class="rounded-full px-2.5 py-0.5 font-headline text-[10px] font-extrabold tracking-wider uppercase {note.language ===
+										'chinese'
+											? 'bg-indigo-50 text-indigo-700'
+											: 'bg-amber-50 text-amber-700'}"
+									>
+										{note.language === 'chinese' ? 'ZH' : 'FR'}
+									</span>
+
+									{#each note.tags as tag (tag)}
+										<span
+											class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 font-sans text-[11px] font-medium text-slate-600"
+										>
+											<Tag size={10} class="text-slate-400" />
+											<span>{tag}</span>
+										</span>
+									{/each}
+								</div>
+
+								<div class="flex items-center gap-1">
+									<button
+										type="button"
+										onclick={() => handleTogglePin(note.id)}
+										title="Unpin note"
+										aria-label="Unpin note"
+										class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-amber-500 hover:bg-amber-50"
+									>
+										<Pin size={14} class="fill-current" />
+									</button>
+									<button
+										type="button"
+										onclick={() => openEditModal(note)}
+										title="Edit note"
+										aria-label="Edit note"
+										class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+									>
+										<Edit3 size={14} />
+									</button>
+									<button
+										type="button"
+										onclick={() => handleDeleteNote(note.id, note.title)}
+										title="Delete note"
+										aria-label="Delete note"
+										class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-slate-400 hover:bg-rose-50 hover:text-rose-600"
+									>
+										<Trash2 size={14} />
+									</button>
+								</div>
+							</div>
+
+							<!-- Phrase & Audio Pronunciation -->
+							<div class="mt-2.5 flex items-start justify-between gap-3">
+								<div>
+									<h4
+										class="font-headline text-lg leading-snug font-extrabold text-slate-900 sm:text-xl"
+									>
+										{note.title}
+									</h4>
+									{#if note.pinyin}
+										<p class="mt-0.5 font-headline text-xs font-bold tracking-wide text-indigo-600">
+											{note.pinyin}
+										</p>
+									{/if}
+								</div>
+
+								<button
+									type="button"
+									onclick={() => handleSpeak(note.title, note.language)}
+									title="Listen to pronunciation"
+									aria-label="Play pronunciation"
+									class="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-indigo-50 text-indigo-600 transition-transform hover:bg-indigo-100 active:scale-90"
+								>
+									<Volume2 size={16} strokeWidth={2} />
+								</button>
+							</div>
+
+							<!-- Freeform Body -->
+							{#if note.content}
+								<div class="mt-3 border-t border-slate-100 pt-3">
+									<p
+										class="font-sans text-xs leading-relaxed font-normal whitespace-pre-wrap text-slate-700 sm:text-sm"
+									>
+										{note.content}
+									</p>
+								</div>
+							{/if}
+						</article>
+					{/each}
+				</div>
+			</div>
+		{/if}
+
+		<!-- Regular Notes Section -->
+		{#if regularNotes.length > 0}
+			<div class="space-y-3 pt-1">
+				{#if pinnedNotes.length > 0}
+					<h3 class="font-headline text-xs font-extrabold tracking-wider text-slate-500 uppercase">
+						Notes ({regularNotes.length})
+					</h3>
+				{/if}
+
+				<div class="space-y-3">
+					{#each regularNotes as note (note.id)}
+						<article
+							class="shadow-card hover:shadow-card-hover rounded-3xl border border-slate-200/90 bg-white p-5 transition-all hover:border-indigo-200"
+						>
+							<!-- Card Header: Badges & Actions -->
+							<div class="flex items-start justify-between gap-2">
+								<div class="flex flex-wrap items-center gap-1.5">
+									<span
+										class="rounded-full px-2.5 py-0.5 font-headline text-[10px] font-extrabold tracking-wider uppercase {note.language ===
+										'chinese'
+											? 'bg-indigo-50 text-indigo-700'
+											: 'bg-amber-50 text-amber-700'}"
+									>
+										{note.language === 'chinese' ? 'ZH' : 'FR'}
+									</span>
+
+									{#each note.tags as tag (tag)}
+										<span
+											class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 font-sans text-[11px] font-medium text-slate-600"
+										>
+											<Tag size={10} class="text-slate-400" />
+											<span>{tag}</span>
+										</span>
+									{/each}
+								</div>
+
+								<div class="flex items-center gap-1">
+									<button
+										type="button"
+										onclick={() => handleTogglePin(note.id)}
+										title="Pin note"
+										aria-label="Pin note"
+										class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-amber-500"
+									>
+										<Pin size={14} />
+									</button>
+									<button
+										type="button"
+										onclick={() => openEditModal(note)}
+										title="Edit note"
+										aria-label="Edit note"
+										class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+									>
+										<Edit3 size={14} />
+									</button>
+									<button
+										type="button"
+										onclick={() => handleDeleteNote(note.id, note.title)}
+										title="Delete note"
+										aria-label="Delete note"
+										class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg text-slate-400 hover:bg-rose-50 hover:text-rose-600"
+									>
+										<Trash2 size={14} />
+									</button>
+								</div>
+							</div>
+
+							<!-- Phrase & Audio Pronunciation -->
+							<div class="mt-2.5 flex items-start justify-between gap-3">
+								<div>
+									<h4
+										class="font-headline text-lg leading-snug font-extrabold text-slate-900 sm:text-xl"
+									>
+										{note.title}
+									</h4>
+									{#if note.pinyin}
+										<p class="mt-0.5 font-headline text-xs font-bold tracking-wide text-indigo-600">
+											{note.pinyin}
+										</p>
+									{/if}
+								</div>
+
+								<button
+									type="button"
+									onclick={() => handleSpeak(note.title, note.language)}
+									title="Listen to pronunciation"
+									aria-label="Play pronunciation"
+									class="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-indigo-50 text-indigo-600 transition-transform hover:bg-indigo-100 active:scale-90"
+								>
+									<Volume2 size={16} strokeWidth={2} />
+								</button>
+							</div>
+
+							<!-- Freeform Body -->
+							{#if note.content}
+								<div class="mt-3 border-t border-slate-100 pt-3">
+									<p
+										class="font-sans text-xs leading-relaxed font-normal whitespace-pre-wrap text-slate-700 sm:text-sm"
+									>
+										{note.content}
+									</p>
+								</div>
+							{/if}
+						</article>
+					{/each}
+				</div>
+			</div>
+		{/if}
+
+		<!-- Empty State: Zero Notes or Search Filter Empty -->
+		{#if filteredNotes.length === 0}
+			<div
+				class="shadow-card flex flex-col items-center justify-center rounded-3xl border border-slate-200/90 bg-white p-8 text-center"
+			>
+				<div
+					class="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600"
+				>
+					<BookOpen size={28} strokeWidth={2} />
+				</div>
+
+				{#if searchQuery || selectedTag || selectedLang !== 'all'}
+					<h3 class="mt-4 font-headline text-base font-bold text-slate-900">
+						No matching notes found
+					</h3>
+					<p class="mt-1 font-sans text-xs text-slate-500">
+						Try clearing your search query or removing the tag filter.
+					</p>
+					<button
+						type="button"
+						onclick={() => {
+							searchQuery = '';
+							selectedTag = null;
+							selectedLang = 'all';
+						}}
+						class="mt-4 cursor-pointer rounded-xl bg-slate-100 px-3.5 py-2 font-headline text-xs font-bold text-slate-700 transition-colors hover:bg-slate-200"
+					>
+						Reset Filters
+					</button>
+				{:else}
+					<h3 class="mt-4 font-headline text-base font-bold text-slate-900">
+						Your notebook is empty
+					</h3>
+					<p class="mt-1 max-w-xs font-sans text-xs leading-relaxed text-slate-500">
+						Save interesting phrases, grammar patterns, dialogues, or personal notes here. Freeform
+						text with zero review drills.
+					</p>
+					<button
+						type="button"
+						onclick={openCreateModal}
+						class="mt-4 flex cursor-pointer items-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
+					>
+						<Plus size={15} strokeWidth={2.5} />
+						<span>Add First Note</span>
+					</button>
+				{/if}
+			</div>
+		{/if}
+	{:else}
+		<SavedLinksSection initialShare={sharedItem} />
 	{/if}
 </main>
 

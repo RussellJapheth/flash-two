@@ -6,7 +6,8 @@ import {
 	togglePinNotebookNote,
 	generatePinyin,
 	exportNotesAsMarkdown,
-	saveBulkNotebookNotes
+	saveBulkNotebookNotes,
+	parseIncomingNoteShare
 } from './notebookStorage';
 
 class LocalStorageMock {
@@ -187,5 +188,79 @@ describe('notebookStorage', () => {
 		expect(n1?.title).toBe('Local version'); // kept because local updatedAt is newer
 		const n2 = notes.find((n) => n.id === 'n-2');
 		expect(n2?.title).toBe('Cloud new note');
+	});
+
+	describe('parseIncomingNoteShare', () => {
+		it('returns null when text and title are empty or whitespace', () => {
+			expect(parseIncomingNoteShare({})).toBeNull();
+			expect(parseIncomingNoteShare({ text: '', title: '' })).toBeNull();
+			expect(parseIncomingNoteShare({ text: '   ', title: '   ' })).toBeNull();
+		});
+
+		it('parses single Chinese phrase and generates tone-marked pinyin', () => {
+			const res = parseIncomingNoteShare({ text: '你好' });
+			expect(res).not.toBeNull();
+			expect(res?.title).toBe('你好');
+			expect(res?.content).toBe('');
+			expect(res?.language).toBe('chinese');
+			expect(res?.pinyin).toBe('nǐ hǎo');
+			expect(res?.tags).toEqual(['shared']);
+		});
+
+		it('parses text with separator into title and explanation', () => {
+			const res = parseIncomingNoteShare({
+				text: '马到成功 - To achieve immediate success'
+			});
+			expect(res).not.toBeNull();
+			expect(res?.title).toBe('马到成功');
+			expect(res?.content).toBe('To achieve immediate success');
+			expect(res?.language).toBe('chinese');
+			expect(res?.pinyin).toBe('mǎ dào chéng gōng');
+		});
+
+		it('parses multi-line text with first line as title and remaining as content', () => {
+			const res = parseIncomingNoteShare({
+				text: '去超市买东西\n1. 苹果\n2. 牛奶\n3. 面包'
+			});
+			expect(res).not.toBeNull();
+			expect(res?.title).toBe('去超市买东西');
+			expect(res?.content).toBe('1. 苹果\n2. 牛奶\n3. 面包');
+			expect(res?.language).toBe('chinese');
+			expect(res?.pinyin).toBe('qù chāo shì mǎi dōng xī');
+		});
+
+		it('handles browser share where title is page name and text contains Chinese phrase', () => {
+			const res = parseIncomingNoteShare({
+				title: 'Learn Chinese Blog',
+				text: '入乡随俗\nWhen in Rome, do as the Romans do.'
+			});
+			expect(res).not.toBeNull();
+			expect(res?.title).toBe('入乡随俗');
+			expect(res?.content).toContain('When in Rome, do as the Romans do.');
+			expect(res?.content).toContain('Source: Learn Chinese Blog');
+			expect(res?.language).toBe('chinese');
+			expect(res?.pinyin).toBe('rù xiāng suí sú');
+		});
+
+		it('parses French text and detects French accents', () => {
+			const res = parseIncomingNoteShare({
+				text: 'C’est déjà très bien - That is already very good'
+			});
+			expect(res).not.toBeNull();
+			expect(res?.title).toBe('C’est déjà très bien');
+			expect(res?.content).toBe('That is already very good');
+			expect(res?.language).toBe('french');
+			expect(res?.pinyin).toBeUndefined();
+			expect(res?.tags).toEqual(['shared']);
+		});
+
+		it('respects fallbackLanguage when no Chinese or French accents present', () => {
+			const res = parseIncomingNoteShare({
+				text: 'Hello world',
+				fallbackLanguage: 'french'
+			});
+			expect(res).not.toBeNull();
+			expect(res?.language).toBe('french');
+		});
 	});
 });

@@ -7,9 +7,11 @@
 		saveNotebookNote,
 		deleteNotebookNote,
 		togglePinNotebookNote,
-		generatePinyin
+		generatePinyin,
+		parseIncomingNoteShare
 	} from '$lib/utils/notebookStorage';
 	import { getAllSavedLinks, parseIncomingShare } from '$lib/utils/linkStorage';
+	import { getSavedLanguage } from '$lib/utils/storage';
 	import SavedLinksSection from '$lib/components/notebook/SavedLinksSection.svelte';
 	import { speakWord } from '$lib/utils/audio';
 	import type { NotebookNote } from '$lib/types';
@@ -59,6 +61,17 @@
 		}
 	}
 
+	let toastMessage = $state<string | null>(null);
+	let toastTimeout: ReturnType<typeof setTimeout> | null = null;
+
+	function showToast(msg: string) {
+		if (toastTimeout) clearTimeout(toastTimeout);
+		toastMessage = msg;
+		toastTimeout = setTimeout(() => {
+			toastMessage = null;
+		}, 3000);
+	}
+
 	onMount(() => {
 		loadNotes();
 
@@ -67,24 +80,53 @@
 		const sharedText = params.get('text');
 		const sharedTitle = params.get('title');
 		const tab = params.get('tab');
+		const autosave =
+			params.get('autosave') === 'true' ||
+			params.get('autosave') === '1' ||
+			params.get('save') === 'true';
 
-		if (tab === 'links' || sharedUrl || sharedText || sharedTitle) {
+		// Parse incoming link share (requires a valid URL)
+		const parsedLink = parseIncomingShare({
+			url: sharedUrl,
+			text: sharedText,
+			title: sharedTitle
+		});
+
+		if (tab === 'links' || (parsedLink && tab !== 'notes')) {
 			activeTab = 'links';
+			if (parsedLink) {
+				sharedItem = parsedLink;
+			}
+		} else if (sharedText || sharedTitle) {
+			// Incoming share is text for Notebook notes
+			activeTab = 'notes';
+			const parsedNote = parseIncomingNoteShare({
+				text: sharedText,
+				title: sharedTitle,
+				fallbackLanguage: getSavedLanguage()
+			});
+
+			if (parsedNote) {
+				if (autosave) {
+					saveNotebookNote({
+						title: parsedNote.title,
+						content: parsedNote.content,
+						language: parsedNote.language,
+						pinyin: parsedNote.pinyin,
+						tags: parsedNote.tags
+					});
+					loadNotes();
+					showToast('Note saved to notebook!');
+				} else {
+					openCreateModal(parsedNote);
+					showToast('Shared text ready to save!');
+				}
+			}
 		}
 
-		if (sharedUrl || sharedText || sharedTitle) {
-			const parsed = parseIncomingShare({
-				url: sharedUrl,
-				text: sharedText,
-				title: sharedTitle
-			});
-			if (parsed) {
-				sharedItem = parsed;
-			}
-			if (typeof window !== 'undefined') {
-				const cleanUrl = window.location.pathname + (activeTab === 'links' ? '?tab=links' : '');
-				window.history.replaceState({}, '', cleanUrl);
-			}
+		if (typeof window !== 'undefined' && (sharedUrl || sharedText || sharedTitle || tab)) {
+			const cleanUrl = window.location.pathname + (activeTab === 'links' ? '?tab=links' : '');
+			window.history.replaceState({}, '', cleanUrl);
 		}
 	});
 
@@ -112,14 +154,21 @@
 	let pinnedNotes = $derived(filteredNotes.filter((n) => n.isPinned));
 	let regularNotes = $derived(filteredNotes.filter((n) => !n.isPinned));
 
-	function openCreateModal() {
+	function openCreateModal(prefill?: {
+		title?: string;
+		content?: string;
+		language?: 'chinese' | 'french';
+		pinyin?: string;
+		tags?: string[];
+		isPinned?: boolean;
+	}) {
 		editingId = null;
-		formTitle = '';
-		formContent = '';
-		formLang = 'chinese';
-		formPinyin = '';
-		formTags = '';
-		formIsPinned = false;
+		formTitle = prefill?.title || '';
+		formContent = prefill?.content || '';
+		formLang = prefill?.language || getSavedLanguage();
+		formPinyin = prefill?.pinyin || '';
+		formTags = (prefill?.tags || []).join(', ');
+		formIsPinned = prefill?.isPinned ?? false;
 		formError = '';
 		isModalOpen = true;
 	}
@@ -172,20 +221,25 @@
 			isPinned: formIsPinned
 		});
 
+		const wasEditing = Boolean(editingId);
 		closeModal();
 		loadNotes();
+		showToast(wasEditing ? 'Note updated!' : 'Note saved to notebook!');
 	}
 
 	function handleDeleteNote(id: string, title: string) {
 		if (confirm(`Delete "${title}" from your notebook?`)) {
 			deleteNotebookNote(id);
 			loadNotes();
+			showToast('Note deleted');
 		}
 	}
 
 	function handleTogglePin(id: string) {
 		togglePinNotebookNote(id);
 		loadNotes();
+		const note = notes.find((n) => n.id === id);
+		showToast(note?.isPinned ? 'Pinned to top ⭐' : 'Unpinned');
 	}
 
 	function handleSpeak(text: string, lang: 'chinese' | 'french') {
@@ -266,7 +320,7 @@
 			<div>
 				<button
 					type="button"
-					onclick={openCreateModal}
+					onclick={() => openCreateModal()}
 					class="flex h-9 cursor-pointer items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
 				>
 					<Plus size={15} strokeWidth={2.5} />
@@ -623,7 +677,7 @@
 					</p>
 					<button
 						type="button"
-						onclick={openCreateModal}
+						onclick={() => openCreateModal()}
 						class="mt-4 flex cursor-pointer items-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
 					>
 						<Plus size={15} strokeWidth={2.5} />
@@ -819,5 +873,16 @@
 				</button>
 			</div>
 		</div>
+	</div>
+{/if}
+
+<!-- Toast Notification -->
+{#if toastMessage}
+	<div
+		role="status"
+		aria-live="polite"
+		class="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-slate-900/90 px-4 py-2 font-headline text-xs font-bold text-white shadow-lg backdrop-blur-md transition-all"
+	>
+		{toastMessage}
 	</div>
 {/if}

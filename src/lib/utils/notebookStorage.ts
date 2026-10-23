@@ -183,3 +183,150 @@ export function exportNotesAsMarkdown(notes: NotebookNote[]): string {
 
 	return lines.join('\n');
 }
+
+export interface ParsedIncomingNoteShare {
+	title: string;
+	content: string;
+	language: 'chinese' | 'french';
+	pinyin?: string;
+	tags: string[];
+}
+
+/**
+ * Parses incoming share payload (via PWA Web Share Target) when text is shared.
+ * Intelligently separates phrase/title from explanations/translations, auto-detects
+ * Chinese vs French, generates tone-marked Pinyin for Chinese phrases, and adds a '#shared' tag.
+ */
+export function parseIncomingNoteShare(params: {
+	text?: string | null;
+	title?: string | null;
+	fallbackLanguage?: 'chinese' | 'french';
+}): ParsedIncomingNoteShare | null {
+	const rawText = (params.text || '').trim();
+	const rawTitle = (params.title || '').trim();
+
+	if (!rawText && !rawTitle) {
+		return null;
+	}
+
+	let titleCandidate: string;
+	let contentCandidate: string;
+
+	if (rawTitle && rawText && rawTitle === rawText) {
+		titleCandidate = rawText;
+	} else if (rawTitle && rawText) {
+		const textHasChinese = /[\u4e00-\u9fa5]/.test(rawText);
+		const titleHasChinese = /[\u4e00-\u9fa5]/.test(rawTitle);
+
+		if (textHasChinese && !titleHasChinese) {
+			const lines = rawText
+				.split('\n')
+				.map((l) => l.trim())
+				.filter(Boolean);
+			titleCandidate = lines[0] || rawText;
+			const remaining = lines.slice(1).join('\n');
+			const isGenericTitle = /^(note|shared|share|pleco|chrome|safari|firefox|browser)$/i.test(
+				rawTitle
+			);
+			contentCandidate = remaining
+				? isGenericTitle
+					? remaining
+					: `${remaining}\n\nSource: ${rawTitle}`
+				: isGenericTitle
+					? ''
+					: `Source: ${rawTitle}`;
+		} else if (titleHasChinese && !textHasChinese) {
+			titleCandidate = rawTitle;
+			contentCandidate = rawText;
+		} else {
+			if (rawTitle.length <= 80 && !rawTitle.includes('\n')) {
+				titleCandidate = rawTitle;
+				contentCandidate = rawText;
+			} else {
+				const lines = (rawText || rawTitle)
+					.split('\n')
+					.map((l) => l.trim())
+					.filter(Boolean);
+				titleCandidate = lines[0] || rawTitle.slice(0, 60);
+				contentCandidate = lines.slice(1).join('\n') || (rawText !== titleCandidate ? rawText : '');
+			}
+		}
+	} else {
+		const single = rawText || rawTitle;
+
+		if (single.includes('\n')) {
+			const lines = single
+				.split('\n')
+				.map((l) => l.trim())
+				.filter(Boolean);
+			titleCandidate = lines[0] || '';
+			contentCandidate = lines.slice(1).join('\n');
+		} else {
+			const sepMatch = single.match(/^(.+?)\s*(?:[-—–]|\s[:：]\s|:\s)\s*(.+)$/);
+			if (sepMatch && sepMatch[1] && sepMatch[2]) {
+				const part1 = sepMatch[1].trim();
+				const part2 = sepMatch[2].trim();
+				const p1Zh = /[\u4e00-\u9fa5]/.test(part1);
+				const p2Zh = /[\u4e00-\u9fa5]/.test(part2);
+
+				if (p2Zh && !p1Zh) {
+					titleCandidate = part2;
+					contentCandidate = part1;
+				} else {
+					titleCandidate = part1;
+					contentCandidate = part2;
+				}
+			} else if (single.length > 80) {
+				const firstSentence = single.match(/^([^。！？!?.\n]+[。！？!?.])/);
+				if (firstSentence && firstSentence[1] && firstSentence[1].length <= 80) {
+					titleCandidate = firstSentence[1].trim();
+					contentCandidate = single.slice(titleCandidate.length).trim() || single;
+				} else {
+					titleCandidate = single.slice(0, 60).trim() + '...';
+					contentCandidate = single;
+				}
+			} else {
+				titleCandidate = single;
+				contentCandidate = '';
+			}
+		}
+	}
+
+	titleCandidate = titleCandidate.trim();
+	contentCandidate = contentCandidate.trim();
+
+	if (!titleCandidate && contentCandidate) {
+		titleCandidate = contentCandidate.slice(0, 60);
+	}
+
+	const combined = `${titleCandidate} ${contentCandidate}`;
+	const hasChinese = /[\u4e00-\u9fa5]/.test(combined);
+	let language: 'chinese' | 'french';
+
+	if (hasChinese) {
+		language = 'chinese';
+	} else {
+		const hasFrenchAccents = /[éèêëàâçîïôûùœæ]/i.test(combined);
+		if (hasFrenchAccents) {
+			language = 'french';
+		} else {
+			language = params.fallbackLanguage || 'chinese';
+		}
+	}
+
+	let pinyinStr: string | undefined;
+	if (language === 'chinese' && titleCandidate) {
+		const auto = generatePinyin(titleCandidate);
+		if (auto && auto.trim()) {
+			pinyinStr = auto.trim();
+		}
+	}
+
+	return {
+		title: titleCandidate,
+		content: contentCandidate,
+		language,
+		pinyin: pinyinStr,
+		tags: ['shared']
+	};
+}

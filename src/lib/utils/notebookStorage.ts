@@ -214,6 +214,7 @@ export function parseIncomingNoteShare(params: {
 
 	if (rawTitle && rawText && rawTitle === rawText) {
 		titleCandidate = rawText;
+		contentCandidate = '';
 	} else if (rawTitle && rawText) {
 		const textHasChinese = /[\u4e00-\u9fa5]/.test(rawText);
 		const titleHasChinese = /[\u4e00-\u9fa5]/.test(rawTitle);

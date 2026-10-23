@@ -52,7 +52,38 @@ self.addEventListener('fetch', (event) => {
 		const url = new URL(event.request.url);
 		const cache = await caches.open(CACHE);
 
-		// 1. For static/build assets, serve from cache first
+		// 1. Special handling for manifest.json:
+		// Keep cached for offline use, but check network first.
+		// When an update is detected, purge stale manifest and store latest.
+		if (url.pathname === '/manifest.json') {
+			try {
+				const networkResponse = await fetch(event.request, { cache: 'no-cache' });
+				if (networkResponse && networkResponse.status === 200) {
+					const cachedResponse =
+						(await cache.match(event.request)) || (await cache.match('/manifest.json'));
+					if (cachedResponse) {
+						const [newText, oldText] = await Promise.all([
+							networkResponse.clone().text(),
+							cachedResponse.text()
+						]);
+						if (newText !== oldText) {
+							await cache.delete(event.request);
+							await cache.delete('/manifest.json');
+						}
+					}
+					await cache.put(event.request, networkResponse.clone());
+					return networkResponse;
+				}
+			} catch {
+				const cachedManifest =
+					(await cache.match(event.request)) || (await cache.match('/manifest.json'));
+				if (cachedManifest) {
+					return cachedManifest;
+				}
+			}
+		}
+
+		// 2. For static/build assets, serve from cache first
 		if (ASSETS.includes(url.pathname)) {
 			const cachedAsset = await cache.match(url.pathname);
 			if (cachedAsset) {

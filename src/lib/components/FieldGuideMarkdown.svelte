@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { parseFieldGuideMarkdown, tokenizeTextWithHanzi } from '$lib/utils/fieldGuideParser';
+	import { parseFieldGuideMarkdown } from '$lib/utils/fieldGuideParser';
 	import { speakWord } from '$lib/utils/audio';
 	import { resolve } from '$app/paths';
 	import { Volume2, Layers, ArrowRight, Lightbulb } from 'lucide-svelte';
+	import MermaidDiagram from '$lib/components/MermaidDiagram.svelte';
+	import FormattedText from '$lib/components/FormattedText.svelte';
 
 	let { markdown = '', onSelectWord } = $props<{
 		markdown: string;
@@ -17,7 +19,7 @@
 	let blocks = $derived(parseFieldGuideMarkdown(markdown));
 
 	function playAudio(text: string) {
-		speakWord(text, 'chinese');
+		speakWord(text.replace(/[^\u4e00-\u9fff]/g, ''), 'chinese');
 	}
 </script>
 
@@ -32,12 +34,12 @@
 						#
 					</div>
 					<h2 class="font-headline text-lg font-black tracking-tight text-slate-900">
-						{block.text}
+						<FormattedText text={block.text} {onSelectWord} />
 					</h2>
 				</div>
 			{:else if block.level === 3}
 				<h3 class="pt-2 font-headline text-sm font-bold tracking-tight text-slate-800">
-					{block.text}
+					<FormattedText text={block.text} {onSelectWord} />
 				</h3>
 			{/if}
 		{:else if block.type === 'deckLink'}
@@ -80,7 +82,9 @@
 								class="border-b border-slate-200/90 bg-slate-50/80 text-[11px] font-bold text-slate-700"
 							>
 								{#each block.headers as header, hIdx (hIdx)}
-									<th class="p-3 whitespace-nowrap">{header}</th>
+									<th class="p-3 whitespace-nowrap">
+										<FormattedText text={header} {onSelectWord} />
+									</th>
 								{/each}
 							</tr>
 						</thead>
@@ -89,39 +93,21 @@
 								<tr class="transition-colors hover:bg-slate-50/70">
 									{#each row as cell, cIdx (cIdx)}
 										<td class="p-3 {cIdx === 0 ? 'font-bold text-slate-900' : 'text-slate-600'}">
-											{#if /[\u4e00-\u9fff]/.test(cell)}
-												<div class="flex items-center gap-1.5">
-													<div class="inline-flex flex-wrap items-baseline gap-1">
-														{#each tokenizeTextWithHanzi(cell) as token, tIdx (tIdx)}
-															{#if token.isHanzi}
-																<button
-																	type="button"
-																	onclick={() =>
-																		onSelectWord({
-																			hanzi: token.text,
-																			english: row[row.length - 1]
-																		})}
-																	class="cursor-pointer font-headline text-sm font-bold text-indigo-700 underline decoration-indigo-300 decoration-1 underline-offset-2 transition hover:text-indigo-900 hover:decoration-indigo-600"
-																>
-																	{token.text}
-																</button>
-															{:else}
-																<span>{token.text}</span>
-															{/if}
-														{/each}
-													</div>
+											<div class="flex items-center justify-between gap-1.5">
+												<div class="inline-flex flex-wrap items-baseline gap-1">
+													<FormattedText text={cell} {onSelectWord} />
+												</div>
+												{#if /[\u4e00-\u9fff]/.test(cell)}
 													<button
 														type="button"
-														onclick={() => playAudio(cell.replace(/[^\u4e00-\u9fff]/g, ''))}
-														class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-indigo-50 hover:text-indigo-600"
+														onclick={() => playAudio(cell)}
+														class="flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-full text-slate-400 transition hover:bg-indigo-50 hover:text-indigo-600"
 														aria-label="Listen"
 													>
 														<Volume2 size={12} />
 													</button>
-												</div>
-											{:else}
-												<span>{cell}</span>
-											{/if}
+												{/if}
+											</div>
 										</td>
 									{/each}
 								</tr>
@@ -135,70 +121,40 @@
 			<div
 				class="group rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-xs transition hover:border-indigo-300"
 			>
-				<div class="flex items-start justify-between gap-2">
-					<div class="space-y-1">
-						{#if block.label}
-							<div
-								class="inline-block rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold tracking-wider text-slate-700 uppercase"
+				<div class="space-y-1.5">
+					{#if block.label}
+						<div class="flex items-center justify-between">
+							<span
+								class="inline-block rounded-md bg-slate-100 px-2 py-0.5 font-headline text-[10px] font-bold tracking-wider text-slate-700 uppercase"
 							>
-								{block.label}
-							</div>
-						{/if}
-
-						{#if block.hanzi}
-							<div class="flex items-center gap-2 pt-0.5">
-								<button
-									type="button"
-									onclick={() =>
-										onSelectWord({
-											hanzi: block.hanzi!,
-											pinyin: block.pinyin,
-											english: block.english
-										})}
-									class="cursor-pointer font-headline text-base font-bold text-slate-900 transition hover:text-indigo-600"
-								>
-									{block.hanzi}
-								</button>
+								<FormattedText text={block.label} {onSelectWord} />
+							</span>
+							{#if block.hanzi}
 								<button
 									type="button"
 									onclick={() => playAudio(block.hanzi!)}
-									class="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-indigo-50 hover:text-indigo-600"
+									class="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-indigo-50 hover:text-indigo-600"
 									aria-label="Play pronunciation"
 								>
 									<Volume2 size={13} />
 								</button>
-							</div>
-						{/if}
+							{/if}
+						</div>
+					{:else if block.hanzi}
+						<div class="flex justify-end">
+							<button
+								type="button"
+								onclick={() => playAudio(block.hanzi!)}
+								class="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-indigo-50 hover:text-indigo-600"
+								aria-label="Play pronunciation"
+							>
+								<Volume2 size={13} />
+							</button>
+						</div>
+					{/if}
 
-						{#if block.pinyin}
-							<div class="font-mono text-xs font-semibold text-cyan-700">
-								{block.pinyin}
-							</div>
-						{/if}
-
-						{#if block.english}
-							<div class="font-sans text-xs leading-relaxed text-slate-600">
-								{block.english}
-							</div>
-						{/if}
-
-						{#if !block.hanzi}
-							<div class="font-sans text-xs leading-relaxed text-slate-700">
-								{#each tokenizeTextWithHanzi(block.text) as token, tIdx (tIdx)}
-									{#if token.isHanzi}
-										<button
-											type="button"
-											onclick={() => onSelectWord({ hanzi: token.text })}
-											class="cursor-pointer font-bold text-indigo-700 underline decoration-indigo-300 underline-offset-2 hover:text-indigo-900"
-										>
-											{token.text}
-										</button>
-									{:else}
-										<span>{token.text}</span>
-									{/if}
-								{/each}
-							</div>
-						{/if}
+					<div class="font-sans text-xs leading-relaxed text-slate-700">
+						<FormattedText text={block.text} {onSelectWord} />
 					</div>
 				</div>
 			</div>
@@ -209,48 +165,17 @@
 			>
 				<Lightbulb size={16} class="mt-0.5 shrink-0 text-amber-600" />
 				<div class="leading-relaxed">
-					{#each tokenizeTextWithHanzi(block.text) as token, tIdx (tIdx)}
-						{#if token.isHanzi}
-							<button
-								type="button"
-								onclick={() => onSelectWord({ hanzi: token.text })}
-								class="cursor-pointer font-bold text-amber-900 underline decoration-amber-400 underline-offset-2 hover:text-amber-700"
-							>
-								{token.text}
-							</button>
-						{:else}
-							<span>{token.text}</span>
-						{/if}
-					{/each}
+					<FormattedText text={block.text} {onSelectWord} />
 				</div>
 			</div>
 		{:else if block.type === 'paragraph'}
-			<!-- Paragraph with inline clickable Hanzi -->
+			<!-- Paragraph with formatted text and inline clickable Hanzi -->
 			<p class="font-sans text-xs leading-relaxed text-slate-600">
-				{#each tokenizeTextWithHanzi(block.text) as token, tIdx (tIdx)}
-					{#if token.isHanzi}
-						<button
-							type="button"
-							onclick={() => onSelectWord({ hanzi: token.text })}
-							class="cursor-pointer font-bold text-indigo-700 underline decoration-indigo-300 underline-offset-2 hover:text-indigo-900"
-						>
-							{token.text}
-						</button>
-					{:else}
-						<span>{token.text}</span>
-					{/if}
-				{/each}
+				<FormattedText text={block.text} {onSelectWord} />
 			</p>
 		{:else if block.type === 'diagram'}
-			<!-- Structured Sequence Flow Diagram -->
-			<div
-				class="overflow-x-auto rounded-2xl border border-slate-200/90 bg-slate-900 p-4 font-mono text-xs text-slate-200 shadow-xs"
-			>
-				<div class="mb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-					Visual Process Flow
-				</div>
-				<pre class="whitespace-pre-wrap">{block.content}</pre>
-			</div>
+			<!-- Visual Process Flow Diagram -->
+			<MermaidDiagram content={block.content} />
 		{/if}
 	{/each}
 </div>

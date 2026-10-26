@@ -44,6 +44,7 @@
 	"dependencies": {
 		"@sveltejs/adapter-netlify": "^6.0.4",
 		"lucide-svelte": "^1.0.1",
+		"mermaid": "^12.2.0",
 		"pinyin-pro": "^3.29.4"
 	}
 }

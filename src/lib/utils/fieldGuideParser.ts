@@ -68,6 +68,67 @@ export type FieldGuideBlock =
 // Regex to extract Chinese characters
 export const HANZI_REGEX = /[\u4e00-\u9fff]+/g;
 
+export interface FormattedSegment {
+	text: string;
+	bold?: boolean;
+	italic?: boolean;
+	code?: boolean;
+	tokens: TextToken[];
+}
+
+/**
+ * Parses raw inline markdown strings into styled segments
+ * (bold, italic, code, plain text) with Hanzi tokens.
+ * Replaces LaTeX arrows and removes raw delimiter characters.
+ */
+export function parseInlineMarkdown(raw: string): FormattedSegment[] {
+	if (!raw) return [];
+
+	// Clean up latex arrows and formatting artifacts
+	const cleaned = raw.replace(/\$\s*\\rightarrow\s*\$/g, '→').replace(/\\rightarrow/g, '→');
+
+	const segments: FormattedSegment[] = [];
+	// Matches `code`, **bold**, _italic_, *italic*, or remaining plain text
+	const regex = /(`[^`]+`|\*\*[^*]+\*\*|_[^_]+_|\*[^*]+\*|[^`*_]+|[`*_])/g;
+	let match: RegExpExecArray | null;
+
+	while ((match = regex.exec(cleaned)) !== null) {
+		const token = match[0];
+		if (token.startsWith('`') && token.endsWith('`') && token.length >= 2) {
+			const inner = token.slice(1, -1);
+			segments.push({
+				text: inner,
+				code: true,
+				tokens: tokenizeTextWithHanzi(inner)
+			});
+		} else if (token.startsWith('**') && token.endsWith('**') && token.length >= 4) {
+			const inner = token.slice(2, -2);
+			segments.push({
+				text: inner,
+				bold: true,
+				tokens: tokenizeTextWithHanzi(inner)
+			});
+		} else if (
+			(token.startsWith('_') && token.endsWith('_') && token.length >= 2) ||
+			(token.startsWith('*') && token.endsWith('*') && token.length >= 2)
+		) {
+			const inner = token.slice(1, -1);
+			segments.push({
+				text: inner,
+				italic: true,
+				tokens: tokenizeTextWithHanzi(inner)
+			});
+		} else {
+			segments.push({
+				text: token,
+				tokens: tokenizeTextWithHanzi(token)
+			});
+		}
+	}
+
+	return segments;
+}
+
 /**
  * Parses raw field guide markdown into structured blocks
  */
@@ -154,7 +215,7 @@ export function parseFieldGuideMarkdown(markdown: string): FieldGuideBlock[] {
 					r
 						.split('|')
 						.slice(1, -1)
-						.map((c) => c.trim().replace(/\*\*/g, ''));
+						.map((c) => c.trim());
 
 				const headers = parseRow(tableLines[0]);
 				const isSeparator = (r: string) => /^[|\s\-:]+$/.test(r);
@@ -183,27 +244,31 @@ export function parseFieldGuideMarkdown(markdown: string): FieldGuideBlock[] {
 				const rest = labelMatch[2].trim();
 
 				// Extract Chinese, Pinyin, English if available
-				const hzMatch = rest.match(/[\u4e00-\u9fff]+/);
+				const hzBacktick = rest.match(/`([^`]+)`/);
+				const hzPlain = rest.match(/[\u4e00-\u9fff]+/);
+				const hzMatch = hzBacktick ? hzBacktick[1] : hzPlain ? hzPlain[0] : undefined;
 				const pyMatch = rest.match(/\(_([^_]+)_\)/) || rest.match(/\(([^)]+)\)/);
 				const engMatch = rest.match(/[—-]\s*([^)]+)\)?$/);
 
 				blocks.push({
 					type: 'listItem',
 					label,
-					text: rest.replace(/[`*]/g, ''),
-					hanzi: hzMatch ? hzMatch[0] : undefined,
+					text: rest,
+					hanzi: hzMatch,
 					pinyin: pyMatch ? pyMatch[1] : undefined,
 					english: engMatch ? engMatch[1].replace(/[()]/g, '').trim() : undefined
 				});
 			} else {
-				const hzMatch = itemText.match(/[\u4e00-\u9fff]+/);
+				const hzBacktick = itemText.match(/`([^`]+)`/);
+				const hzPlain = itemText.match(/[\u4e00-\u9fff]+/);
+				const hzMatch = hzBacktick ? hzBacktick[1] : hzPlain ? hzPlain[0] : undefined;
 				const pyMatch = itemText.match(/\(_([^_]+)_\)/) || itemText.match(/\(([^)]+)\)/);
 				const engMatch = itemText.match(/[—-]\s*([^)]+)\)?$/);
 
 				blocks.push({
 					type: 'listItem',
-					text: itemText.replace(/[`*]/g, ''),
-					hanzi: hzMatch ? hzMatch[0] : undefined,
+					text: itemText,
+					hanzi: hzMatch,
 					pinyin: pyMatch ? pyMatch[1] : undefined,
 					english: engMatch ? engMatch[1].replace(/[()]/g, '').trim() : undefined
 				});

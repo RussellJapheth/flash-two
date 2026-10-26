@@ -5,7 +5,11 @@ import {
 	getFieldGuidesByCategory,
 	searchFieldGuides
 } from '$lib/data/fieldGuides';
-import { parseFieldGuideMarkdown, tokenizeTextWithHanzi } from '$lib/utils/fieldGuideParser';
+import {
+	parseFieldGuideMarkdown,
+	tokenizeTextWithHanzi,
+	parseInlineMarkdown
+} from '$lib/utils/fieldGuideParser';
 
 describe('Field Guides Catalog', () => {
 	it('contains all 13 curated field guides', () => {
@@ -114,5 +118,30 @@ _Corresponding SRS Deck: Pack 24 (Field Guide: Test Connections)_
 			{ text: '很高兴认识你', isHanzi: true },
 			{ text: '!', isHanzi: false }
 		]);
+	});
+
+	it('parses inline markdown and removes raw underscores and asterisks', () => {
+		const parsed = parseInlineMarkdown('昨天 (_yesterday_) · **衣服** · `这个我不太想说`');
+		expect(parsed.length).toBeGreaterThan(0);
+
+		// Italic segment should strip underscores
+		const italicSeg = parsed.find((s) => s.italic);
+		expect(italicSeg).toBeDefined();
+		expect(italicSeg?.text).toBe('yesterday');
+
+		// Bold segment should strip asterisks
+		const boldSeg = parsed.find((s) => s.bold);
+		expect(boldSeg).toBeDefined();
+		expect(boldSeg?.text).toBe('衣服');
+		expect(boldSeg?.tokens.some((t) => t.isHanzi)).toBe(true);
+
+		// Code segment
+		const codeSeg = parsed.find((s) => s.code);
+		expect(codeSeg).toBeDefined();
+		expect(codeSeg?.text).toBe('这个我不太想说');
+
+		// Replaces latex arrow with unicode arrow
+		const withArrow = parseInlineMarkdown('谢谢 (_xièxie_) $\\rightarrow$ 不客气');
+		expect(withArrow.some((s) => s.text.includes('→'))).toBe(true);
 	});
 });

@@ -1,0 +1,432 @@
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { onMount, onDestroy } from 'svelte';
+	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
+	import SessionExitGuard from '$lib/components/SessionExitGuard.svelte';
+	import {
+		generateToneQuestion,
+		validateToneAnswer,
+		type ToneQuestion,
+		type TonePairConfig
+	} from '$lib/data/tonePairs';
+	import { playSound, speakWord } from '$lib/utils/audio';
+	import { getGameHighScore, saveGameScore } from '$lib/utils/gameStorage';
+	import { addXP, calculateGameXP } from '$lib/utils/xp';
+	import {
+		ChevronLeft,
+		Volume2,
+		VolumeX,
+		RotateCcw,
+		Sparkles,
+		Trophy,
+		Zap,
+		Headphones,
+		Eye
+	} from 'lucide-svelte';
+
+	const GAME_ID = 'tone-pairs';
+	const GAME_NAME = 'Tone Pair Lab';
+	const QUESTIONS_PER_ROUND = 10;
+
+	type Phase = 'playing' | 'results';
+	type Mode = 'visual' | 'audio';
+
+	let phase = $state<Phase>('playing');
+	let mode = $state<Mode>('visual');
+	let soundEnabled = $state(true);
+	let highScore = $state(0);
+	let isNewHighScore = $state(false);
+
+	let currentQuestion = $state<ToneQuestion | null>(null);
+	let selectedOptionId = $state<string | null>(null);
+	let isAnswerSubmitted = $state(false);
+	let isAnswerCorrect = $state(false);
+
+	let roundIndex = $state(0);
+	let correctCount = $state(0);
+	let wrongCount = $state(0);
+	let currentCombo = $state(0);
+	let maxCombo = $state(0);
+	let score = $state(0);
+
+	let earnedXP = $state(0);
+	let accuracy = $state(0);
+	let exitGuard: { requestExit: (proceed: () => void) => void } | null = $state(null);
+
+	function requestExit(proceed: () => void) {
+		if (exitGuard) {
+			exitGuard.requestExit(proceed);
+		} else {
+			proceed();
+		}
+	}
+
+	onMount(() => {
+		highScore = getGameHighScore(GAME_ID, mode);
+		triggerAutoStartStudyTimer();
+		startNewRound();
+	});
+
+	onDestroy(() => {
+		triggerAutoStopStudyTimer();
+	});
+
+	function startNewRound() {
+		phase = 'playing';
+		roundIndex = 0;
+		correctCount = 0;
+		wrongCount = 0;
+		currentCombo = 0;
+		maxCombo = 0;
+		score = 0;
+		earnedXP = 0;
+		loadNextQuestion();
+	}
+
+	function loadNextQuestion() {
+		if (roundIndex >= QUESTIONS_PER_ROUND) {
+			finishRound();
+			return;
+		}
+
+		roundIndex++;
+		currentQuestion = generateToneQuestion();
+		selectedOptionId = null;
+		isAnswerSubmitted = false;
+
+		if (soundEnabled && mode === 'audio' && currentQuestion) {
+			speakWord(currentQuestion.word.hanzi, 'chinese');
+		}
+	}
+
+	function playCurrentWord() {
+		if (!currentQuestion) return;
+		speakWord(currentQuestion.word.hanzi, 'chinese');
+	}
+
+	function submitAnswer(option: TonePairConfig) {
+		if (isAnswerSubmitted || !currentQuestion) return;
+
+		selectedOptionId = option.id;
+		isAnswerSubmitted = true;
+		isAnswerCorrect = validateToneAnswer(option.id, currentQuestion.correctPair.id);
+
+		if (isAnswerCorrect) {
+			correctCount++;
+			currentCombo++;
+			if (currentCombo > maxCombo) maxCombo = currentCombo;
+
+			const comboMultiplier = Math.min(4, 1 + Math.floor(currentCombo / 2));
+			score += 100 * comboMultiplier;
+
+			if (soundEnabled) playSound('correct');
+		} else {
+			wrongCount++;
+			currentCombo = 0;
+			if (soundEnabled) playSound('wrong');
+		}
+
+		// Also speak the word upon answering so ear reinforces the contour
+		if (soundEnabled && mode === 'visual') {
+			speakWord(currentQuestion.word.hanzi, 'chinese');
+		}
+
+		setTimeout(() => {
+			loadNextQuestion();
+		}, 1400);
+	}
+
+	async function finishRound() {
+		phase = 'results';
+		const total = correctCount + wrongCount;
+		accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+		earnedXP = calculateGameXP(correctCount, accuracy, maxCombo);
+		if (earnedXP > 0) {
+			try {
+				await addXP(earnedXP);
+			} catch (e) {
+				console.warn('Failed to award game XP:', e);
+			}
+		}
+
+		if (score > highScore) {
+			highScore = score;
+			isNewHighScore = true;
+			saveGameScore({
+				gameId: GAME_ID,
+				gameName: GAME_NAME,
+				score,
+				correct: correctCount,
+				wrong: wrongCount,
+				accuracy,
+				maxCombo,
+				mode
+			});
+		} else {
+			isNewHighScore = false;
+		}
+	}
+
+	function toggleMode(newMode: Mode) {
+		if (mode === newMode) return;
+		mode = newMode;
+		highScore = getGameHighScore(GAME_ID, mode);
+		startNewRound();
+	}
+</script>
+
+<svelte:head>
+	<title>{GAME_NAME} | Mandarin Flashcards</title>
+</svelte:head>
+
+<SessionExitGuard
+	bind:this={exitGuard}
+	active={phase === 'playing' && (correctCount > 0 || wrongCount > 0)}
+	title="Leave Tone Pair Lab?"
+	message="Exiting now will end this round. Your earned XP from completed rounds is already saved."
+	confirmLabel="Leave Lab"
+	stayLabel="Keep Practicing"
+/>
+
+<main
+	class="mx-auto flex min-h-screen w-full max-w-lg flex-col bg-slate-50 px-4 py-4 text-slate-800"
+>
+	<!-- Top Navigation & Controls -->
+	<header class="flex items-center justify-between gap-2 pb-3">
+		<button
+			type="button"
+			onclick={() => requestExit(() => goto(resolve('/games')))}
+			class="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600 shadow-xs transition hover:bg-slate-100 active:scale-95"
+			aria-label="Back to Games"
+		>
+			<ChevronLeft size={20} />
+		</button>
+
+		<!-- Mode Switcher -->
+		<div class="flex rounded-2xl border border-slate-200 bg-slate-100 p-1">
+			<button
+				type="button"
+				onclick={() => toggleMode('visual')}
+				class="flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition {mode ===
+				'visual'
+					? 'bg-white text-cyan-700 shadow-xs'
+					: 'text-slate-500 hover:text-slate-800'}"
+			>
+				<Eye size={14} />
+				Visual
+			</button>
+			<button
+				type="button"
+				onclick={() => toggleMode('audio')}
+				class="flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition {mode ===
+				'audio'
+					? 'bg-white text-cyan-700 shadow-xs'
+					: 'text-slate-500 hover:text-slate-800'}"
+			>
+				<Headphones size={14} />
+				Audio
+			</button>
+		</div>
+
+		<!-- Sound Toggle -->
+		<button
+			type="button"
+			onclick={() => (soundEnabled = !soundEnabled)}
+			class="flex h-10 w-10 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600 shadow-xs transition hover:bg-slate-100 active:scale-95"
+			aria-label={soundEnabled ? 'Mute sound' : 'Enable sound'}
+		>
+			{#if soundEnabled}
+				<Volume2 size={18} />
+			{:else}
+				<VolumeX size={18} class="text-rose-500" />
+			{/if}
+		</button>
+	</header>
+
+	{#if phase === 'playing' && currentQuestion}
+		<!-- Stats Progress Bar -->
+		<section class="mt-1 flex items-center justify-between text-xs font-bold text-slate-500">
+			<span>Question {roundIndex} / {QUESTIONS_PER_ROUND}</span>
+			<div class="flex items-center gap-3">
+				{#if currentCombo > 1}
+					<span class="flex animate-pulse items-center gap-1 font-black text-amber-600">
+						<Zap size={14} />
+						{currentCombo}x Combo
+					</span>
+				{/if}
+				<span class="font-mono text-cyan-700">{score} pts</span>
+			</div>
+		</section>
+
+		<!-- Progress Bar Line -->
+		<div class="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+			<div
+				class="h-full bg-cyan-500 transition-all duration-300"
+				style="width: {(roundIndex / QUESTIONS_PER_ROUND) * 100}%"
+			></div>
+		</div>
+
+		<!-- Main Prompt Card -->
+		<section
+			class="relative mt-4 flex flex-col items-center justify-center overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 text-center shadow-sm"
+		>
+			{#if mode === 'visual'}
+				<h2 class="text-5xl font-black tracking-tight text-slate-900">
+					{currentQuestion.word.hanzi}
+				</h2>
+				<p class="mt-2 text-base font-semibold text-slate-500">
+					{currentQuestion.word.english}
+				</p>
+			{:else}
+				<div class="py-2">
+					<button
+						type="button"
+						onclick={playCurrentWord}
+						class="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-tr from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 transition hover:scale-105 active:scale-95"
+						aria-label="Replay audio"
+					>
+						<Volume2 size={36} />
+					</button>
+					<p class="mt-3 text-xs font-bold tracking-wider text-slate-400 uppercase">
+						Listen & Identify Tone Pair
+					</p>
+				</div>
+			{/if}
+
+			<!-- Pronunciation Audio Replay Pill -->
+			<button
+				type="button"
+				onclick={playCurrentWord}
+				class="mt-4 flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-600 transition hover:bg-slate-100 active:scale-95"
+			>
+				<Volume2 size={13} />
+				Play Audio
+			</button>
+
+			<!-- Feedback Banner After Submission -->
+			{#if isAnswerSubmitted}
+				<div
+					class="mt-4 w-full rounded-2xl p-3 text-sm font-bold transition-all {isAnswerCorrect
+						? 'border border-emerald-200 bg-emerald-50 text-emerald-800'
+						: 'border border-rose-200 bg-rose-50 text-rose-800'}"
+				>
+					<div class="flex items-center justify-center gap-1.5 text-base">
+						{#if isAnswerCorrect}
+							<span>✓ Correct!</span>
+						{:else}
+							<span>✗ Answer: {currentQuestion.correctPair.name}</span>
+						{/if}
+					</div>
+					<div class="mt-1 font-sans text-xs font-normal text-slate-600">
+						{currentQuestion.word.pinyin} • {currentQuestion.correctPair.description}
+					</div>
+					<div class="mt-1 text-[11px] font-medium text-slate-500 italic">
+						💡 {currentQuestion.correctPair.rehearsalTip}
+					</div>
+				</div>
+			{/if}
+		</section>
+
+		<!-- 4 Multiple Choice Tone Options -->
+		<section class="mt-4 grid grid-cols-2 gap-3">
+			{#each currentQuestion.options as option (option.id)}
+				{@const isSelected = selectedOptionId === option.id}
+				{@const isCorrect = option.id === currentQuestion.correctPair.id}
+				{@const showCorrectHighlight = isAnswerSubmitted && isCorrect}
+				{@const showWrongHighlight = isAnswerSubmitted && isSelected && !isCorrect}
+
+				<button
+					type="button"
+					onclick={() => submitAnswer(option)}
+					disabled={isAnswerSubmitted}
+					class="group relative flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition-all active:scale-95 disabled:pointer-events-none {showCorrectHighlight
+						? 'border-emerald-500 bg-emerald-50 text-emerald-900 shadow-md ring-2 ring-emerald-400'
+						: showWrongHighlight
+							? 'border-rose-400 bg-rose-50 text-rose-900 shadow-md'
+							: 'border-slate-200 bg-white text-slate-800 hover:border-cyan-400 hover:shadow-sm'}"
+				>
+					<span class="text-xl font-black tracking-tight">{option.name}</span>
+					<span class="mt-1 text-[11px] font-medium text-slate-500">
+						{option.description}
+					</span>
+				</button>
+			{/each}
+		</section>
+	{:else if phase === 'results'}
+		<!-- Round Over / Results Summary Screen -->
+		<section
+			class="mt-6 flex flex-col items-center rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-md"
+		>
+			<div
+				class="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-tr from-amber-400 to-orange-500 text-white shadow-lg shadow-orange-500/20"
+			>
+				<Trophy size={40} />
+			</div>
+
+			<h2 class="mt-4 font-headline text-2xl font-black text-slate-900">Lab Complete!</h2>
+			<p class="font-sans text-xs text-slate-500">Tone pair pitch combinations mastered</p>
+
+			{#if isNewHighScore}
+				<div
+					class="mt-3 flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-black text-amber-800"
+				>
+					<Sparkles size={14} />
+					NEW HIGH SCORE!
+				</div>
+			{/if}
+
+			<!-- Score Grid -->
+			<div class="mt-6 grid w-full grid-cols-3 gap-2">
+				<div class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
+					<div class="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Score</div>
+					<div class="mt-1 text-lg font-black text-cyan-700">{score}</div>
+				</div>
+				<div class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
+					<div class="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Accuracy</div>
+					<div class="mt-1 text-lg font-black text-emerald-600">{accuracy}%</div>
+				</div>
+				<div class="rounded-2xl border border-slate-100 bg-slate-50 p-3">
+					<div class="text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+						Max Streak
+					</div>
+					<div class="mt-1 text-lg font-black text-amber-600">{maxCombo}x</div>
+				</div>
+			</div>
+
+			<!-- XP Reward Breakdown -->
+			<div
+				class="mt-4 flex w-full items-center justify-between rounded-2xl border border-indigo-100 bg-indigo-50/60 p-4"
+			>
+				<div class="flex items-center gap-2">
+					<Sparkles size={18} class="text-indigo-600" />
+					<div class="text-left">
+						<div class="text-xs font-bold text-indigo-950">XP Earned</div>
+						<div class="text-[11px] text-indigo-600">Mini-game economy reward</div>
+					</div>
+				</div>
+				<div class="text-xl font-black text-indigo-700">+{earnedXP} XP</div>
+			</div>
+
+			<!-- Action Buttons -->
+			<div class="mt-6 flex w-full flex-col gap-2.5">
+				<button
+					type="button"
+					onclick={startNewRound}
+					class="flex w-full items-center justify-center gap-2 rounded-2xl bg-cyan-600 py-3.5 text-sm font-bold text-white shadow-md shadow-cyan-600/20 transition hover:bg-cyan-700 active:scale-98"
+				>
+					<RotateCcw size={16} />
+					Play Another Round
+				</button>
+				<button
+					type="button"
+					onclick={() => goto(resolve('/games'))}
+					class="flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-white py-3 text-sm font-bold text-slate-700 transition hover:bg-slate-50 active:scale-98"
+				>
+					Back to Games
+				</button>
+			</div>
+		</section>
+	{/if}
+</main>

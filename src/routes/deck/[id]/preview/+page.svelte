@@ -26,6 +26,7 @@
 	import { isCardDue, isCardMastered, isCardLearning } from '$lib/utils/srs';
 	import { getDeckIcon } from '$lib/utils/deckIcons';
 	import type { WordRecord, StreakStats, WordProgress, CustomDeck } from '$lib/types';
+	import { FIELD_GUIDES } from '$lib/data/fieldGuides';
 	import {
 		Brain,
 		BookOpen,
@@ -43,7 +44,9 @@
 		Clock,
 		Pencil,
 		Trash2,
-		Plus
+		Plus,
+		Compass,
+		ArrowRight
 	} from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
@@ -60,6 +63,7 @@
 	let deckTitle = $state('Loading Deck...');
 	let deckLanguage = $state<'chinese' | 'french'>('chinese');
 	let deckIcon = $derived(getDeckIcon(deckId, deckLanguage));
+	let companionGuide = $derived(FIELD_GUIDES.find((g) => g.packId === deckId));
 	let words = $state<WordRecord[]>([]);
 	let allProgress = $state<Record<string, WordProgress>>({});
 	let savedWordNos = new SvelteSet<number>();
@@ -382,6 +386,38 @@
 			</div>
 		</div>
 	</section>
+
+	{#if companionGuide}
+		<!-- Companion Field Guide Callout -->
+		<div
+			class="relative overflow-hidden rounded-3xl border border-indigo-200/90 bg-linear-to-r from-indigo-50/90 via-violet-50/60 to-purple-50/40 p-4 shadow-xs"
+		>
+			<div class="flex items-center justify-between gap-3">
+				<div class="flex items-center gap-3">
+					<div
+						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-xs"
+					>
+						<Compass size={20} />
+					</div>
+					<div>
+						<div class="text-[10px] font-bold tracking-wider text-indigo-600 uppercase">
+							Companion Field Guide #{companionGuide.number}
+						</div>
+						<div class="font-headline text-sm font-black text-slate-900">
+							{companionGuide.title}
+						</div>
+					</div>
+				</div>
+				<a
+					href={resolve(`/guide/${companionGuide.id}`)}
+					class="flex shrink-0 items-center gap-1 rounded-2xl bg-indigo-600 px-3 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-indigo-700 active:scale-95"
+				>
+					<span>Read Guide</span>
+					<ArrowRight size={13} />
+				</a>
+			</div>
+		</div>
+	{/if}
 
 	<!-- Mode Switcher: Study Practice vs. Full Word List Table -->
 	<div class="grid grid-cols-2 gap-2 rounded-2xl bg-slate-100 p-1">

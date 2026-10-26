@@ -1,0 +1,189 @@
+{
+	"title": "Field Guide: Numbers, Prices & Practical Math",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "两块",
+			"Pinyin": "liǎng kuài",
+			"Part of Speech": "Measure Word Phrase",
+			"English Meaning": "two yuan (colloquial)",
+			"Example (Chinese + Pinyin)": "这瓶水两块钱。(Zhè píng shuǐ liǎng kuài qián.) — This bottle of water is two yuan."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "毛",
+			"Pinyin": "máo",
+			"Part of Speech": "Measure Word / Noun",
+			"English Meaning": "10 cents (0.1 yuan, dime)",
+			"Example (Chinese + Pinyin)": "一共五块五毛钱。(Yígòng wǔ kuài wǔ máo qián.) — In total five yuan and fifty cents."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "角",
+			"Pinyin": "jiǎo",
+			"Part of Speech": "Measure Word / Noun",
+			"English Meaning": "dime / 0.1 yuan (formal)",
+			"Example (Chinese + Pinyin)": "一元等于十角。(Yì yuán děngyú shí jiǎo.) — One yuan equals ten jiao."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "一共",
+			"Pinyin": "yígòng",
+			"Part of Speech": "Adverb",
+			"English Meaning": "altogether / in total",
+			"Example (Chinese + Pinyin)": "两样东西一共多少钱？(Liǎng yàng dōngxi yígòng duōshao qián?) — How much are these two items in total?"
+		},
+		{
+			"No": 5,
+			"Chinese Word": "微信支付",
+			"Pinyin": "wēixìn zhīfù",
+			"Part of Speech": "Proper Noun Phrase",
+			"English Meaning": "WeChat Pay",
+			"Example (Chinese + Pinyin)": "这里支持微信支付吗？(Zhèlǐ zhīchí wēixìn zhīfù ma?) — Do you accept WeChat Pay here?"
+		},
+		{
+			"No": 6,
+			"Chinese Word": "支付宝",
+			"Pinyin": "zhīfùbǎo",
+			"Part of Speech": "Proper Noun",
+			"English Meaning": "Alipay",
+			"Example (Chinese + Pinyin)": "我可以用支付宝付钱吗？(Wǒ kěyǐ yòng zhīfùbǎo fù qián ma?) — Can I pay with Alipay?"
+		},
+		{
+			"No": 7,
+			"Chinese Word": "找钱",
+			"Pinyin": "zhǎoqián",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to give change",
+			"Example (Chinese + Pinyin)": "请稍等，我找钱给你。(Qǐng shāoděng, wǒ zhǎoqián gěi nǐ.) — Please wait a moment, I will give you your change."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "电话号码",
+			"Pinyin": "diànhuà hàomǎ",
+			"Part of Speech": "Noun",
+			"English Meaning": "telephone number",
+			"Example (Chinese + Pinyin)": "请留一下您的电话号码。(Qǐng liú yíxià nín de diànhuà hàomǎ.) — Please leave your phone number."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "零钱",
+			"Pinyin": "língqián",
+			"Part of Speech": "Noun",
+			"English Meaning": "small change / pocket money",
+			"Example (Chinese + Pinyin)": "不好意思，我没有零钱。(Bù hǎoyìsi, wǒ méiyǒu língqián.) — Sorry, I don't have small change."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "打八折",
+			"Pinyin": "dǎ bā zhé",
+			"Part of Speech": "Phrase",
+			"English Meaning": "20% off (pay 80%)",
+			"Example (Chinese + Pinyin)": "全场衣服今天打八折。(Quánchǎng yīfu jīntiān dǎ bā zhé.) — All clothes are 20% off today."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "一百零八",
+			"Pinyin": "yì bǎi líng bā",
+			"Part of Speech": "Number Phrase",
+			"English Meaning": "108",
+			"Example (Chinese + Pinyin)": "这件衬衫售价一百零八块。(Zhè jiàn chènshān shòujià yì bǎi líng bā kuài.) — This shirt sells for 108 yuan."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "两千",
+			"Pinyin": "liǎng qiān",
+			"Part of Speech": "Number Phrase",
+			"English Meaning": "two thousand",
+			"Example (Chinese + Pinyin)": "这台电脑售价两千块。(Zhè tái diànnǎo shòujià liǎng qiān kuài.) — This computer costs two thousand yuan."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "一万",
+			"Pinyin": "yí wàn",
+			"Part of Speech": "Number Phrase",
+			"English Meaning": "ten thousand (10,000)",
+			"Example (Chinese + Pinyin)": "这个月预算是一万块。(Zhè ge yuè yùsuàn shì yí wàn kuài.) — This month's budget is 10,000 yuan."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "分",
+			"Pinyin": "fēn",
+			"Part of Speech": "Measure Word / Noun",
+			"English Meaning": "cent / penny / minute",
+			"Example (Chinese + Pinyin)": "两块零五分。(Liǎng kuài líng wǔ fēn.) — Two yuan and five cents."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "半价",
+			"Pinyin": "bànjià",
+			"Part of Speech": "Noun / Adjective",
+			"English Meaning": "half price",
+			"Example (Chinese + Pinyin)": "第二件饮品半价。(Dì èr jiàn yǐnpǐn bànjià.) — Second drink is half price."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "收费",
+			"Pinyin": "shōufèi",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "to charge a fee / fee",
+			"Example (Chinese + Pinyin)": "请问这个停车场怎么收费？(Qǐngwèn zhè ge tíngchēchǎng zěnme shōufèi?) — How does this parking lot charge?"
+		},
+		{
+			"No": 17,
+			"Chinese Word": "免费",
+			"Pinyin": "miǎnfèi",
+			"Part of Speech": "Adjective",
+			"English Meaning": "free of charge",
+			"Example (Chinese + Pinyin)": "店里的茶水是免费的。(Diàn lǐ de cháshuǐ shì miǎnfèi de.) — The tea in the store is free of charge."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "买一送一",
+			"Pinyin": "mǎi yī sòng yī",
+			"Part of Speech": "Idiom / Phrase",
+			"English Meaning": "buy one get one free",
+			"Example (Chinese + Pinyin)": "今天咖啡买一送一！(Jīntiān kāfēi mǎi yī sòng yī!) — Coffee is buy-one-get-one-free today!"
+		},
+		{
+			"No": 19,
+			"Chinese Word": "价格",
+			"Pinyin": "jiàgé",
+			"Part of Speech": "Noun",
+			"English Meaning": "price",
+			"Example (Chinese + Pinyin)": "这个合理的价格吸引了很多人。(Zhè ge hélǐ de jiàgé xīyǐn le hěn duō rén.) — This reasonable price attracted many people."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "特价",
+			"Pinyin": "tèjià",
+			"Part of Speech": "Noun",
+			"English Meaning": "special offer / sale price",
+			"Example (Chinese + Pinyin)": "新鲜草莓今天特价只要十块钱。(Xīnxiān cǎoméi jīntiān tèjià zhǐ yào shí kuài qián.) — Fresh strawberries are on sale for just 10 yuan today."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "转账",
+			"Pinyin": "zhuǎnzhàng",
+			"Part of Speech": "Verb",
+			"English Meaning": "transfer money (bank/app)",
+			"Example (Chinese + Pinyin)": "我把餐费转账给你了。(Wǒ bǎ cānfèi zhuǎnzhàng gěi nǐ le.) — I transferred the meal cost to you."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "计算器",
+			"Pinyin": "jìsuànqì",
+			"Part of Speech": "Noun",
+			"English Meaning": "calculator",
+			"Example (Chinese + Pinyin)": "请用计算器算一下总数。(Qǐng yòng jìsuànqì suàn yíxià zǒngshù.) — Please calculate the total with a calculator."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "小票",
+			"Pinyin": "xiǎopiào",
+			"Part of Speech": "Noun",
+			"English Meaning": "receipt / shopping docket",
+			"Example (Chinese + Pinyin)": "这是您的小票，请拿好。(Zhè shì nín de xiǎopiào, qǐng ná hǎo.) — Here is your receipt, please hold onto it."
+		}
+	]
+}

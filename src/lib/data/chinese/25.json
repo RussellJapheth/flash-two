@@ -1,0 +1,205 @@
+{
+	"title": "Field Guide: Ordering Food & Restaurant Adjustments",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "一杯",
+			"Pinyin": "yì bēi",
+			"Part of Speech": "Measure Word Phrase",
+			"English Meaning": "a cup of / a glass of",
+			"Example (Chinese + Pinyin)": "我想要一杯热茶。(Wǒ xiǎng yào yì bēi rè chá.) — I'd like a cup of hot tea."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "一碗",
+			"Pinyin": "yì wǎn",
+			"Part of Speech": "Measure Word Phrase",
+			"English Meaning": "a bowl of",
+			"Example (Chinese + Pinyin)": "请给我来一碗牛肉面。(Qǐng gěi wǒ lái yì wǎn niúròu miàn.) — Please bring me a bowl of beef noodles."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "一份",
+			"Pinyin": "yí fèn",
+			"Part of Speech": "Measure Word Phrase",
+			"English Meaning": "a portion of / an order of",
+			"Example (Chinese + Pinyin)": "我们要一份煎饺。(Wǒmen yào yí fèn jiānjiǎo.) — We want an order of pan-fried dumplings."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "一瓶",
+			"Pinyin": "yì píng",
+			"Part of Speech": "Measure Word Phrase",
+			"English Meaning": "a bottle of",
+			"Example (Chinese + Pinyin)": "我想要一瓶矿泉水。(Wǒ xiǎng yào yì píng kuàngquán shuǐ.) — I'd like a bottle of mineral water."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "我想要",
+			"Pinyin": "wǒ xiǎng yào",
+			"Part of Speech": "Phrase",
+			"English Meaning": "I would like (polite request)",
+			"Example (Chinese + Pinyin)": "我想要一份菜单，谢谢。(Wǒ xiǎng yào yí fèn càidān, xièxie.) — I would like a menu, thank you."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "不要辣",
+			"Pinyin": "bú yào là",
+			"Part of Speech": "Phrase",
+			"English Meaning": "no spicy / not spicy",
+			"Example (Chinese + Pinyin)": "这碗面请不要辣。(Zhè wǎn miàn qǐng bú yào là.) — Please make this bowl of noodles not spicy."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "微辣",
+			"Pinyin": "wēi là",
+			"Part of Speech": "Adjective Phrase",
+			"English Meaning": "mildly spicy / a little spicy",
+			"Example (Chinese + Pinyin)": "我们点微辣的汤底。(Wǒmen diǎn wēi là de tāngdǐ.) — We order the mildly spicy soup base."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "少冰",
+			"Pinyin": "shǎo bīng",
+			"Part of Speech": "Phrase",
+			"English Meaning": "less ice",
+			"Example (Chinese + Pinyin)": "这杯奶茶请少冰。(Zhè bēi nǎichá qǐng shǎo bīng.) — Less ice for this milk tea, please."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "去冰",
+			"Pinyin": "qù bīng",
+			"Part of Speech": "Phrase",
+			"English Meaning": "no ice",
+			"Example (Chinese + Pinyin)": "请帮我做一杯去冰的红茶。(Qǐng bāng wǒ zuò yì bēi qù bīng de hóngchá.) — Please make me a cup of black tea with no ice."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "常温",
+			"Pinyin": "chángwēn",
+			"Part of Speech": "Noun / Adjective",
+			"English Meaning": "room temperature",
+			"Example (Chinese + Pinyin)": "水要常温的，谢谢。(Shuǐ yào chángwēn de, xièxie.) — I'd like room temperature water, thanks."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "热的",
+			"Pinyin": "rè de",
+			"Part of Speech": "Phrase",
+			"English Meaning": "hot one",
+			"Example (Chinese + Pinyin)": "我要一杯热的拿铁咖啡。(Wǒ yào yì bēi rè de nátiě kāfēi.) — I want a hot latte."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "外带",
+			"Pinyin": "wàidài",
+			"Part of Speech": "Verb",
+			"English Meaning": "takeout / to take away",
+			"Example (Chinese + Pinyin)": "请问是堂食还是外带？(Qǐngwèn shì tángshí háishì wàidài?) — Excuse me, is it dine-in or takeout?"
+		},
+		{
+			"No": 13,
+			"Chinese Word": "在这里吃",
+			"Pinyin": "zài zhèlǐ chī",
+			"Part of Speech": "Phrase",
+			"English Meaning": "dine in / eat here",
+			"Example (Chinese + Pinyin)": "我们在这里吃。(Wǒmen zài zhèlǐ chī.) — We are eating here."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "稍等",
+			"Pinyin": "shāoděng",
+			"Part of Speech": "Verb",
+			"English Meaning": "wait a moment",
+			"Example (Chinese + Pinyin)": "请稍等，菜马上就来。(Qǐng shāoděng, cài mǎshàng jiù lái.) — Please wait a moment, the dishes will arrive shortly."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "忌口",
+			"Pinyin": "jìkǒu",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "dietary restrictions / avoid foods",
+			"Example (Chinese + Pinyin)": "请问你们有什么忌口吗？(Qǐngwèn nǐmen yǒu shénme jìkǒu ma?) — Do you have any dietary restrictions?"
+		},
+		{
+			"No": 16,
+			"Chinese Word": "够了",
+			"Pinyin": "gòu le",
+			"Part of Speech": "Phrase",
+			"English Meaning": "that's enough",
+			"Example (Chinese + Pinyin)": "先点这些，够了，谢谢。(Xiān diǎn zhèxiē, gòu le, xièxie.) — That's enough for now, thanks."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "还要别的吗",
+			"Pinyin": "hái yào bié de ma",
+			"Part of Speech": "Question Phrase",
+			"English Meaning": "anything else?",
+			"Example (Chinese + Pinyin)": "您好，还要别的吗？— 不要了。(Nín hǎo, hái yào bié de ma? — Bú yào le.) — Anything else? — Nothing else, thanks."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "甜度",
+			"Pinyin": "tiándù",
+			"Part of Speech": "Noun",
+			"English Meaning": "sweetness level",
+			"Example (Chinese + Pinyin)": "请问饮品需要什么甜度？(Qǐngwèn yǐnpǐn xūyào shénme tiándù?) — What sweetness level would you like for your beverage?"
+		},
+		{
+			"No": 19,
+			"Chinese Word": "半糖",
+			"Pinyin": "bàn táng",
+			"Part of Speech": "Phrase",
+			"English Meaning": "half sugar",
+			"Example (Chinese + Pinyin)": "绿茶一杯，半糖少冰。(Lǜchá yì bēi, bàn táng shǎo bīng.) — One green tea, half sugar and less ice."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "纸巾",
+			"Pinyin": "zhǐjīn",
+			"Part of Speech": "Noun",
+			"English Meaning": "napkin / tissue",
+			"Example (Chinese + Pinyin)": "麻烦给我们几张纸巾。(Máfan gěi wǒmen jǐ zhāng zhǐjīn.) — Could you please give us some napkins?"
+		},
+		{
+			"No": 21,
+			"Chinese Word": "不加香菜",
+			"Pinyin": "bù jiā xiāngcài",
+			"Part of Speech": "Phrase",
+			"English Meaning": "no cilantro / coriander",
+			"Example (Chinese + Pinyin)": "这碗牛肉粉请不加香菜。(Zhè wǎn niúrǒufěn qǐng bù jiā xiāngcài.) — Please do not add cilantro to this beef noodle soup."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "加汤",
+			"Pinyin": "jiā tāng",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "refill soup",
+			"Example (Chinese + Pinyin)": "服务员，麻烦帮我们加汤。(Fúwùyuán, máfan bāng wǒmen jiā tāng.) — Waiter, could you please refill our soup?"
+		},
+		{
+			"No": 23,
+			"Chinese Word": "免葱",
+			"Pinyin": "miǎn cōng",
+			"Part of Speech": "Phrase",
+			"English Meaning": "omit green onions",
+			"Example (Chinese + Pinyin)": "面里免葱，谢谢师傅。(Miàn lǐ miǎn cōng, xièxie shīfu.) — Omit scallions in the noodles, thanks chef."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "结账",
+			"Pinyin": "jiézhàng",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "settle the bill",
+			"Example (Chinese + Pinyin)": "你好，请问在哪里结账？(Nǐ hǎo, qǐngwèn zài nǎlǐ jiézhàng?) — Hello, where do I settle the bill?"
+		},
+		{
+			"No": 25,
+			"Chinese Word": "分单",
+			"Pinyin": "fēndān",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "split the bill",
+			"Example (Chinese + Pinyin)": "请问可以分单付款吗？(Qǐngwèn kěyǐ fēndān fùkuǎn ma?) — Can we split the bill to pay?"
+		}
+	]
+}

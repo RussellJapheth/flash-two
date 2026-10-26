@@ -1,0 +1,189 @@
+{
+	"title": "Field Guide: Conversation Rescue & Repair Loops",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "没听懂",
+			"Pinyin": "méi tīngdǒng",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "did not understand / didn't catch that",
+			"Example (Chinese + Pinyin)": "不好意思，我刚才没听懂。(Bù hǎoyìsi, wǒ gāngcái méi tīngdǒng.) — Sorry, I didn't understand just now."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "请再说一遍",
+			"Pinyin": "qǐng zài shuō yí biàn",
+			"Part of Speech": "Phrase",
+			"English Meaning": "please say it once more",
+			"Example (Chinese + Pinyin)": "信号不太好，请再说一遍。(Xìnhào bú tài hǎo, qǐng zài shuō yí biàn.) — Bad signal, please say that one more time."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "说慢一点",
+			"Pinyin": "shuō màn yìdiǎnr",
+			"Part of Speech": "Phrase",
+			"English Meaning": "speak a bit slower",
+			"Example (Chinese + Pinyin)": "我的中文不太好，请说慢一点。(Wǒ de zhōngwén bú tài hǎo, qǐng shuō màn yìdiǎnr.) — My Chinese isn't great, please speak slower."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "怎么说",
+			"Pinyin": "zěnme shuō",
+			"Part of Speech": "Question Phrase",
+			"English Meaning": "how do you say...",
+			"Example (Chinese + Pinyin)": "请问这个用中文怎么说？(Qǐngwèn zhè ge yòng zhōngwén zěnme shuō?) — Excuse me, how do you say this in Chinese?"
+		},
+		{
+			"No": 5,
+			"Chinese Word": "写下来",
+			"Pinyin": "xiě xiàlái",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to write it down",
+			"Example (Chinese + Pinyin)": "可以麻烦您帮我写下来吗？(Kěyǐ máfan nín bāng wǒ xiě xiàlái ma?) — Could you please write that down for me?"
+		},
+		{
+			"No": 6,
+			"Chinese Word": "打字",
+			"Pinyin": "dǎzì",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to type characters",
+			"Example (Chinese + Pinyin)": "可以打字给我看一下吗？(Kěyǐ dǎzì gěi wǒ kàn yíxià ma?) — Could you type it on your phone so I can see?"
+		},
+		{
+			"No": 7,
+			"Chinese Word": "你的意思是",
+			"Pinyin": "nǐ de yìsi shì",
+			"Part of Speech": "Phrase",
+			"English Meaning": "do you mean... / your meaning is",
+			"Example (Chinese + Pinyin)": "你的意思是明天不上课，对吗？(Nǐ de yìsi shì míngtiān bú shàngkè, duì ma?) — Your meaning is there's no class tomorrow, right?"
+		},
+		{
+			"No": 8,
+			"Chinese Word": "不知道怎么说",
+			"Pinyin": "bù zhīdào zěnme shuō",
+			"Part of Speech": "Phrase",
+			"English Meaning": "don't know how to explain",
+			"Example (Chinese + Pinyin)": "我想表达，但不知道怎么说。(Wǒ xiǎng biǎodá, dàn bù zhīdào zěnme shuō.) — I want to express it, but don't know how to say it."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "一句一句地说",
+			"Pinyin": "yí jù yí jù de shuō",
+			"Part of Speech": "Phrase",
+			"English Meaning": "speak sentence by sentence",
+			"Example (Chinese + Pinyin)": "可以一句一句地说吗？(Kěyǐ yí jù yí jù de shuō ma?) — Could you go sentence by sentence?"
+		},
+		{
+			"No": 10,
+			"Chinese Word": "怎么拼",
+			"Pinyin": "zěnme pīn",
+			"Part of Speech": "Question Phrase",
+			"English Meaning": "how do you spell it (in pinyin)?",
+			"Example (Chinese + Pinyin)": "请问这个字怎么拼？(Qǐngwèn zhè ge zì zěnme pīn?) — Excuse me, how is this character spelled?"
+		},
+		{
+			"No": 11,
+			"Chinese Word": "什么意思",
+			"Pinyin": "shénme yìsi",
+			"Part of Speech": "Question Phrase",
+			"English Meaning": "what does it mean?",
+			"Example (Chinese + Pinyin)": "请问这个词是什么意思？(Qǐngwèn zhè ge cí shì shénme yìsi?) — What does this vocabulary word mean?"
+		},
+		{
+			"No": 12,
+			"Chinese Word": "听清楚",
+			"Pinyin": "tīng qīngchu",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "hear clearly",
+			"Example (Chinese + Pinyin)": "环境有点吵，我没听清楚。(Huánjìng yǒudiǎnr chǎo, wǒ méi tīng qīngchu.) — It's noisy here, I didn't hear clearly."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "懂了",
+			"Pinyin": "dǒng le",
+			"Part of Speech": "Phrase",
+			"English Meaning": "understood / got it now",
+			"Example (Chinese + Pinyin)": "谢谢你的耐心解释，我现在懂了。(Xièxie nǐ de nàixīn jiěshì, wǒ xiànzài dǒng le.) — Thanks for your patient explanation, I get it now."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "对吗",
+			"Pinyin": "duì ma",
+			"Part of Speech": "Question Phrase",
+			"English Meaning": "is that correct? / right?",
+			"Example (Chinese + Pinyin)": "你是说九点半在大门见，对吗？(Nǐ shì shuō jiǔ diǎn bàn zài dàmén jiàn, duì ma?) — You said meet at 9:30 at the gate, right?"
+		},
+		{
+			"No": 15,
+			"Chinese Word": "等等我",
+			"Pinyin": "děngděng wǒ",
+			"Part of Speech": "Phrase",
+			"English Meaning": "wait for me",
+			"Example (Chinese + Pinyin)": "走得太快了，等等我！(Zǒu de tài kuài le, děngděng wǒ!) — You're walking too fast, wait for me!"
+		},
+		{
+			"No": 16,
+			"Chinese Word": "稍等一下",
+			"Pinyin": "shāoděng yíxià",
+			"Part of Speech": "Phrase",
+			"English Meaning": "just a brief moment",
+			"Example (Chinese + Pinyin)": "请稍等一下，我查一下地图。(Qǐng shāoděng yíxià, wǒ chá yíxià dìtú.) — Just a moment, let me check the map."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "手势",
+			"Pinyin": "shǒushì",
+			"Part of Speech": "Noun",
+			"English Meaning": "gesture / hand signal",
+			"Example (Chinese + Pinyin)": "听不懂的时候可以用手势比划。(Tīng bù dǒng de shíhou kěyǐ yòng shǒushì bǐhua.) — When you don't understand, you can gesture."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "指一下",
+			"Pinyin": "zhǐ yíxià",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "point at it",
+			"Example (Chinese + Pinyin)": "请在菜单上指一下你想要的菜。(Qǐng zài càidān shang zhǐ yíxià nǐ xiǎng yào de cài.) — Please point to the dish you want on the menu."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "发音",
+			"Pinyin": "fāyīn",
+			"Part of Speech": "Noun / Verb",
+			"English Meaning": "pronunciation / to pronounce",
+			"Example (Chinese + Pinyin)": "我的发音对不对？(Wǒ de fāyīn duì bu duì?) — Is my pronunciation correct?"
+		},
+		{
+			"No": 20,
+			"Chinese Word": "再说一次",
+			"Pinyin": "zài shuō yí cì",
+			"Part of Speech": "Phrase",
+			"English Meaning": "say it once again",
+			"Example (Chinese + Pinyin)": "不好意思，麻烦再说一次。(Bù hǎoyìsi, máfan zài shuō yí cì.) — Excuse me, please say it one more time."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "听力",
+			"Pinyin": "tīnglì",
+			"Part of Speech": "Noun",
+			"English Meaning": "listening ability / comprehension",
+			"Example (Chinese + Pinyin)": "每天听中文播客可以提高听力。(Měitiān tīng zhōngwén bōkè kěyǐ tígāo tīnglì.) — Listening to Chinese podcasts daily improves listening skills."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "重复",
+			"Pinyin": "chóngfù",
+			"Part of Speech": "Verb",
+			"English Meaning": "to repeat",
+			"Example (Chinese + Pinyin)": "老师把刚才的重点重复了一遍。(Lǎoshī bǎ gāngcái de zhòngdiǎn chóngfù le yí biàn.) — The teacher repeated the key point just mentioned."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "清楚",
+			"Pinyin": "qīngchu",
+			"Part of Speech": "Adjective",
+			"English Meaning": "clear / distinct",
+			"Example (Chinese + Pinyin)": "现在声音非常清楚了。(Xiànzài shēngyīn fēicháng qīngchu le.) — The audio is very clear now."
+		}
+	]
+}

@@ -1,0 +1,165 @@
+{
+	"title": "Field Guide: Everyday Home & Living Spaces",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "吃饱了",
+			"Pinyin": "chī bǎo le",
+			"Part of Speech": "Phrase",
+			"English Meaning": "full / ate until full",
+			"Example (Chinese + Pinyin)": "我已经吃饱了，谢谢。(Wǒ yǐjīng chī bǎo le, xièxie.) — I am already full, thank you."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "关灯",
+			"Pinyin": "guān dēng",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to turn off the light",
+			"Example (Chinese + Pinyin)": "睡觉前别忘了关灯。(Shuìjiào qián bié wàng le guān dēng.) — Don't forget to turn off the light before sleeping."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "开门",
+			"Pinyin": "kāi mén",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to open the door",
+			"Example (Chinese + Pinyin)": "请去开门。(Qǐng qù kāi mén.) — Please go open the door."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "沙发",
+			"Pinyin": "shāfā",
+			"Part of Speech": "Noun",
+			"English Meaning": "sofa / couch",
+			"Example (Chinese + Pinyin)": "躺在舒服的沙发上休息。(Tǎng zài shūfu de shāfā shang xiūxi.) — Lying on the comfortable couch resting."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "拖鞋",
+			"Pinyin": "tuōxié",
+			"Part of Speech": "Noun",
+			"English Meaning": "slippers",
+			"Example (Chinese + Pinyin)": "进屋请换上干净的拖鞋。(Jìn wū qǐng huàn shang gānjìng de tuōxié.) — Please switch into clean slippers upon entering."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "毛巾",
+			"Pinyin": "máojīn",
+			"Part of Speech": "Noun",
+			"English Meaning": "towel",
+			"Example (Chinese + Pinyin)": "这条新毛巾吸水性特别好。(Zhè tiáo xīn máojīn xīshuǐ xìng tèbié hǎo.) — This new towel is very absorbent."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "倒水",
+			"Pinyin": "dào shuǐ",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to pour water",
+			"Example (Chinese + Pinyin)": "请帮客人倒水。(Qǐng bāng kèrén dào shuǐ.) — Please pour water for the guest."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "洗手",
+			"Pinyin": "xǐ shǒu",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to wash hands",
+			"Example (Chinese + Pinyin)": "饭前一定要先洗手。(Fàn qián yídìng yào xiān xǐ shǒu.) — Be sure to wash hands before meals."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "微波炉",
+			"Pinyin": "wēibōlú",
+			"Part of Speech": "Noun",
+			"English Meaning": "microwave oven",
+			"Example (Chinese + Pinyin)": "把冷饭放进微波炉热两分钟。(Bǎ lěng fàn fàng jìn wēibōlú rè liǎng fēnzhōng.) — Heat cold rice in the microwave for two minutes."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "出门",
+			"Pinyin": "chūmén",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to go out / leave home",
+			"Example (Chinese + Pinyin)": "出门记得带钥匙和手机。(Chūmén jìde dài yàoshi hé shǒujī.) — Remember to take your keys and phone when going out."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "衣柜",
+			"Pinyin": "yīguì",
+			"Part of Speech": "Noun",
+			"English Meaning": "wardrobe / clothes closet",
+			"Example (Chinese + Pinyin)": "洗干净的外套挂在衣柜里。(Xǐ gānjìng de wàitào guà zài yīguì lǐ.) — Hang clean jackets in the wardrobe."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "鞋架",
+			"Pinyin": "xiéjià",
+			"Part of Speech": "Noun",
+			"English Meaning": "shoe rack",
+			"Example (Chinese + Pinyin)": "进门把鞋子整齐地放在鞋架上。(Jìnmén bǎ xiézi zhěngqí de fàng zài xiéjià shang.) — Place shoes neatly on the shoe rack upon entering."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "被子",
+			"Pinyin": "bèizi",
+			"Part of Speech": "Noun",
+			"English Meaning": "quilt / blanket",
+			"Example (Chinese + Pinyin)": "冬天睡觉盖厚一点的被子。(Dōngtiān shuìjiào gài hòu yìdiǎnr de bèizi.) — Sleep under a thicker quilt in winter."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "枕头",
+			"Pinyin": "zhěntou",
+			"Part of Speech": "Noun",
+			"English Meaning": "pillow",
+			"Example (Chinese + Pinyin)": "这个记忆棉枕头很舒服。(Zhè ge jìyìmián zhěntou hěn shūfu.) — This memory foam pillow is very comfortable."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "镜子",
+			"Pinyin": "jìngzi",
+			"Part of Speech": "Noun",
+			"English Meaning": "mirror",
+			"Example (Chinese + Pinyin)": "出门前在穿衣镜子前整理一下。(Chūmén qián zài chuānyī jìngzi qián zhěnglǐ yíxià.) — Tidy up before the full-length mirror before heading out."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "扫地",
+			"Pinyin": "sǎo dì",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "sweep the floor",
+			"Example (Chinese + Pinyin)": "吃完晚饭后弟弟负责扫地。(Chī wán wǎnfàn hòu dìdi fùzé sǎo dì.) — Younger brother sweeps the floor after dinner."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "拖地",
+			"Pinyin": "tuō dì",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "mop the floor",
+			"Example (Chinese + Pinyin)": "地板弄脏了，我来拖地。(Dìbǎn nòng zāng le, wǒ lái tuō dì.) — The floor got dirty, I will mop it."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "倒垃圾",
+			"Pinyin": "dào lājī",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "take out the trash",
+			"Example (Chinese + Pinyin)": "下楼顺便倒垃圾。(Xià lóu shùnbiàn dào lājī.) — Take out the trash on your way downstairs."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "晾衣服",
+			"Pinyin": "liàng yīfu",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "hang clothes to dry",
+			"Example (Chinese + Pinyin)": "衣服洗好了，拿到阳台去晾衣服。(Yīfu xǐ hǎo le, ná dào yángtái qù liàng yīfu.) — Clothes are washed, bring them to the balcony to dry."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "开水壶",
+			"Pinyin": "kāishuǐhú",
+			"Part of Speech": "Noun",
+			"English Meaning": "electric kettle / water boiler",
+			"Example (Chinese + Pinyin)": "用电开水壶烧一壶热水。(Yòng diàn kāishuǐhú shāo yì hú rèshuǐ.) — Boil a pot of hot water with the electric kettle."
+		}
+	]
+}

@@ -1,0 +1,197 @@
+{
+	"title": "Field Guide: Conversational Particles & Nuance",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "吧",
+			"Pinyin": "ba",
+			"Part of Speech": "Particle",
+			"English Meaning": "suggestion / softening particle",
+			"Example (Chinese + Pinyin)": "我们先吃饭吧。(Wǒmen xiān chīfàn ba.) — Let's eat first."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "呢",
+			"Pinyin": "ne",
+			"Part of Speech": "Particle",
+			"English Meaning": "bounce-back / continuing topic particle",
+			"Example (Chinese + Pinyin)": "我很好，你呢？(Wǒ hěn hǎo, nǐ ne?) — I'm good, and you?"
+		},
+		{
+			"No": 3,
+			"Chinese Word": "啊",
+			"Pinyin": "a",
+			"Part of Speech": "Particle",
+			"English Meaning": "enthusiasm / confirmation particle",
+			"Example (Chinese + Pinyin)": "好啊，我们一起去！(Hǎo a, wǒmen yìqǐ qù!) — Great, let's go together!"
+		},
+		{
+			"No": 4,
+			"Chinese Word": "先坐吧",
+			"Pinyin": "xiān zuò ba",
+			"Part of Speech": "Phrase",
+			"English Meaning": "have a seat first",
+			"Example (Chinese + Pinyin)": "请进，你先坐吧。(Qǐng jìn, nǐ xiān zuò ba.) — Please come in, have a seat first."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "我们走吧",
+			"Pinyin": "wǒmen zǒu ba",
+			"Part of Speech": "Phrase",
+			"English Meaning": "let's get going / let's leave",
+			"Example (Chinese + Pinyin)": "时间到了，我们走吧。(Shíjiān dào le, wǒmen zǒu ba.) — It's time, let's go."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "对吧",
+			"Pinyin": "duì ba",
+			"Part of Speech": "Phrase",
+			"English Meaning": "right? / isn't that so?",
+			"Example (Chinese + Pinyin)": "你是明天下午到，对吧？(Nǐ shì míngtiān xiàwǔ dào, duì ba?) — You arrive tomorrow afternoon, right?"
+		},
+		{
+			"No": 7,
+			"Chinese Word": "是吧",
+			"Pinyin": "shì ba",
+			"Part of Speech": "Phrase",
+			"English Meaning": "yeah? / is that right?",
+			"Example (Chinese + Pinyin)": "这家餐厅挺好吃的，是吧？(Zhè jiā cāntīng tǐng hǎochī de, shì ba?) — This restaurant is quite tasty, right?"
+		},
+		{
+			"No": 8,
+			"Chinese Word": "行吧",
+			"Pinyin": "xíng ba",
+			"Part of Speech": "Phrase",
+			"English Meaning": "alright then / fair enough",
+			"Example (Chinese + Pinyin)": "行吧，那就按你说的办。(Xíng ba, nà jiù àn nǐ shuō de bàn.) — Alright then, let's do it your way."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "太好了",
+			"Pinyin": "tài hǎo le",
+			"Part of Speech": "Exclamation Phrase",
+			"English Meaning": "wonderful! / that's great!",
+			"Example (Chinese + Pinyin)": "你明天能来？太好了！(Nǐ míngtiān néng lái? Tài hǎo le!) — You can come tomorrow? Fantastic!"
+		},
+		{
+			"No": 10,
+			"Chinese Word": "看情况吧",
+			"Pinyin": "kàn qíngkuàng ba",
+			"Part of Speech": "Phrase",
+			"English Meaning": "we'll see / depends on situation",
+			"Example (Chinese + Pinyin)": "周末去不去爬山？— 看情况吧。(Zhōumò qù bu qù páshān? — Kàn qíngkuàng ba.) — Hiking this weekend? — We'll see how it goes."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "这样啊",
+			"Pinyin": "zhèyàng a",
+			"Part of Speech": "Phrase",
+			"English Meaning": "I see / so that's how it is",
+			"Example (Chinese + Pinyin)": "原来是这样啊，我明白了。(Yuánlái shì zhèyàng a, wǒ míngbai le.) — Oh so that's how it is, I understand now."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "没事啊",
+			"Pinyin": "méishì a",
+			"Part of Speech": "Phrase",
+			"English Meaning": "no problem at all / don't worry",
+			"Example (Chinese + Pinyin)": "没事啊，不用客气。(Méishì a, bú yòng kèqi.) — No problem at all, don't mention it."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "快点吧",
+			"Pinyin": "kuài diǎnr ba",
+			"Part of Speech": "Phrase",
+			"English Meaning": "hurry up a bit",
+			"Example (Chinese + Pinyin)": "快点吧，电影要开始了。(Kuài diǎnr ba, diànyǐng yào kāishǐ le.) — Hurry up a bit, the movie is starting."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "知道了",
+			"Pinyin": "zhīdào le",
+			"Part of Speech": "Phrase",
+			"English Meaning": "got it / understood",
+			"Example (Chinese + Pinyin)": "妈妈提醒的事情我都知道了。(Māma tíxǐng de shìqing wǒ dōu zhīdào le.) — I got everything mom reminded me of."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "行啊",
+			"Pinyin": "xíng a",
+			"Part of Speech": "Phrase",
+			"English Meaning": "sounds good / sure thing",
+			"Example (Chinese + Pinyin)": "明晚一起吃饭？— 行啊！(Míngwǎn yìqǐ chīfàn? — Xíng a!) — Dinner tomorrow night? — Sure thing!"
+		},
+		{
+			"No": 16,
+			"Chinese Word": "好吧",
+			"Pinyin": "hǎo ba",
+			"Part of Speech": "Phrase",
+			"English Meaning": "okay then / fine",
+			"Example (Chinese + Pinyin)": "好吧，那我先回去了。(Hǎo ba, nà wǒ xiān huíqù le.) — Okay then, I'll head back first."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "去哪儿呢",
+			"Pinyin": "qù nǎr ne",
+			"Part of Speech": "Question Phrase",
+			"English Meaning": "where are you headed? / where to go?",
+			"Example (Chinese + Pinyin)": "放假大家都在商量去哪儿呢。(Fàngjià dàjiā dōu zài shāngliang qù nǎr ne.) — Everyone is discussing where to go during break."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "怎么说呢",
+			"Pinyin": "zěnme shuō ne",
+			"Part of Speech": "Phrase",
+			"English Meaning": "how should I put it...",
+			"Example (Chinese + Pinyin)": "怎么说呢，感觉还行吧。(Zěnme shuō ne, gǎnjué hái xíng ba.) — How should I put it, felt just okay."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "谁说的啊",
+			"Pinyin": "shéi shuō de a",
+			"Part of Speech": "Phrase",
+			"English Meaning": "who said that?!",
+			"Example (Chinese + Pinyin)": "谁说的啊，根本没有这回事。(Shéi shuō de a, gēnběn méiyǒu zhè huí shì.) — Who said that?! That's not the case at all."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "差不多吧",
+			"Pinyin": "chàbuduō ba",
+			"Part of Speech": "Phrase",
+			"English Meaning": "pretty much / about right",
+			"Example (Chinese + Pinyin)": "准备工作做得差不多吧。(Zhǔnbèi gōngzuò zuò de chàbuduō ba.) — The preparations are pretty much done."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "再说吧",
+			"Pinyin": "zàishuō ba",
+			"Part of Speech": "Phrase",
+			"English Meaning": "let's talk later / decide later",
+			"Example (Chinese + Pinyin)": "这件事我们明天开会再说吧。(Zhè jiàn shì wǒmen míngtiān kāihuì zàishuō ba.) — Let's discuss this matter in tomorrow's meeting."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "真香啊",
+			"Pinyin": "zhēn xiāng a",
+			"Part of Speech": "Exclamation Phrase",
+			"English Meaning": "smells so good!",
+			"Example (Chinese + Pinyin)": "这盘红烧肉真香啊！(Zhè pán hóngshāoròu zhēn xiāng a!) — This braised pork smells so good!"
+		},
+		{
+			"No": 23,
+			"Chinese Word": "想什么呢",
+			"Pinyin": "xiǎng shénme ne",
+			"Part of Speech": "Question Phrase",
+			"English Meaning": "what are you daydreaming about?",
+			"Example (Chinese + Pinyin)": "你一个人坐在这里想什么呢？(Nǐ yí ge rén zuò zài zhèlǐ xiǎng shénme ne?) — Sitting here alone, what are you thinking about?"
+		},
+		{
+			"No": 24,
+			"Chinese Word": "算了",
+			"Pinyin": "suàn le",
+			"Part of Speech": "Interjection",
+			"English Meaning": "forget it / drop it",
+			"Example (Chinese + Pinyin)": "既然买不到票，那就算了吧。(Jìrán mǎi bú dào piào, nà jiù suàn le ba.) — Since tickets are sold out, let's forget it."
+		}
+	]
+}

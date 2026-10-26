@@ -1,0 +1,197 @@
+{
+	"title": "Field Guide: Shopping, Sizing & Garments",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "衬衫",
+			"Pinyin": "chènshān",
+			"Part of Speech": "Noun",
+			"English Meaning": "shirt / button-up shirt",
+			"Example (Chinese + Pinyin)": "我想要试一下这件白衬衫。(Wǒ xiǎng yào shì yíxià zhè jiàn bái chènshān.) — I'd like to try on this white shirt."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "外套",
+			"Pinyin": "wàitào",
+			"Part of Speech": "Noun",
+			"English Meaning": "coat / jacket",
+			"Example (Chinese + Pinyin)": "有中号的蓝色外套吗？(Yǒu zhōnghào de lánsè wàitào ma?) — Do you have this blue jacket in medium?"
+		},
+		{
+			"No": 3,
+			"Chinese Word": "裤子",
+			"Pinyin": "kùzi",
+			"Part of Speech": "Noun",
+			"English Meaning": "pants / trousers",
+			"Example (Chinese + Pinyin)": "这条裤子有点长。(Zhè tiáo kùzi yǒudiǎnr cháng.) — These pants are a bit long."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "大号",
+			"Pinyin": "dàhào",
+			"Part of Speech": "Noun",
+			"English Meaning": "large size (L)",
+			"Example (Chinese + Pinyin)": "请问这件衣服有大号吗？(Qǐngwèn zhè jiàn yīfu yǒu dàhào ma?) — Do you have a large in this garment?"
+		},
+		{
+			"No": 5,
+			"Chinese Word": "中号",
+			"Pinyin": "zhōnghào",
+			"Part of Speech": "Noun",
+			"English Meaning": "medium size (M)",
+			"Example (Chinese + Pinyin)": "我觉得中号最合身。(Wǒ juéde zhōnghào zuì héshēn.) — I think medium fits the best."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "小号",
+			"Pinyin": "xiǎohào",
+			"Part of Speech": "Noun",
+			"English Meaning": "small size (S)",
+			"Example (Chinese + Pinyin)": "这个款式有小号吗？(Zhè ge kuǎnshì yǒu xiǎohào ma?) — Does this style come in small?"
+		},
+		{
+			"No": 7,
+			"Chinese Word": "试穿",
+			"Pinyin": "shìchuān",
+			"Part of Speech": "Verb",
+			"English Meaning": "to try on (clothes)",
+			"Example (Chinese + Pinyin)": "我可以试穿一下这双鞋吗？(Wǒ kěyǐ shìchuān yíxià zhè shuāng xié ma?) — May I try on this pair of shoes?"
+		},
+		{
+			"No": 8,
+			"Chinese Word": "试衣间",
+			"Pinyin": "shìyījiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "fitting room / dressing room",
+			"Example (Chinese + Pinyin)": "请问试衣间在哪里？(Qǐngwèn shìyījiān zài nǎlǐ?) — Where is the fitting room?"
+		},
+		{
+			"No": 9,
+			"Chinese Word": "合身",
+			"Pinyin": "héshēn",
+			"Part of Speech": "Adjective",
+			"English Meaning": "well-fitting / fits well",
+			"Example (Chinese + Pinyin)": "大小正合适，非常合身。(Dàxiǎo zhèng héshì, fēicháng héshēn.) — The size is just right, it fits very well."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "打折",
+			"Pinyin": "dǎzhé",
+			"Part of Speech": "Verb",
+			"English Meaning": "to give a discount",
+			"Example (Chinese + Pinyin)": "请问这件外套今天打折吗？(Qǐngwèn zhè jiàn wàitào jīntiān dǎzhé ma?) — Is this jacket on discount today?"
+		},
+		{
+			"No": 11,
+			"Chinese Word": "便宜一点",
+			"Pinyin": "piányi yìdiǎnr",
+			"Part of Speech": "Phrase",
+			"English Meaning": "a little cheaper",
+			"Example (Chinese + Pinyin)": "老板，能不能便宜一点？(Lǎobǎn, néng bu néng piányi yìdiǎnr?) — Boss, can you make it a bit cheaper?"
+		},
+		{
+			"No": 12,
+			"Chinese Word": "现金",
+			"Pinyin": "xiànjīn",
+			"Part of Speech": "Noun",
+			"English Meaning": "cash",
+			"Example (Chinese + Pinyin)": "请问这里可以付现金吗？(Qǐngwèn zhèlǐ kěyǐ fù xiànjīn ma?) — May I pay with cash here?"
+		},
+		{
+			"No": 13,
+			"Chinese Word": "换一件",
+			"Pinyin": "huàn yí jiàn",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "exchange for another piece",
+			"Example (Chinese + Pinyin)": "这件有点脏，能换一件吗？(Zhè jiàn yǒudiǎnr zāng, néng huàn yí jiàn ma?) — This one has a smudge, could I swap it for another?"
+		},
+		{
+			"No": 14,
+			"Chinese Word": "宽松",
+			"Pinyin": "kuānsōng",
+			"Part of Speech": "Adjective",
+			"English Meaning": "loose / roomy",
+			"Example (Chinese + Pinyin)": "我喜欢宽松一点的版型。(Wǒ xǐhuan kuānsōng yìdiǎnr de bǎnxíng.) — I prefer a looser cut."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "紧",
+			"Pinyin": "jǐn",
+			"Part of Speech": "Adjective",
+			"English Meaning": "tight",
+			"Example (Chinese + Pinyin)": "腰部感觉稍微有一点紧。(Yāobù gǎnjué shāowēi yǒu yìdiǎnr jǐn.) — The waist feels a little bit tight."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "纯棉",
+			"Pinyin": "chúnmián",
+			"Part of Speech": "Noun / Adjective",
+			"English Meaning": "100% cotton / pure cotton",
+			"Example (Chinese + Pinyin)": "这件T恤是纯棉的，很舒服。(Zhè jiàn T-xù shì chúnmián de, hěn shūfu.) — This T-shirt is 100% cotton, very comfortable."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "一双鞋",
+			"Pinyin": "yì shuāng xié",
+			"Part of Speech": "Phrase",
+			"English Meaning": "a pair of shoes",
+			"Example (Chinese + Pinyin)": "我想买一双鞋。(Wǒ xiǎng mǎi yì shuāng xié.) — I want to buy a pair of shoes."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "收银台",
+			"Pinyin": "shōuyíntái",
+			"Part of Speech": "Noun",
+			"English Meaning": "checkout counter / cashier",
+			"Example (Chinese + Pinyin)": "收银台在靠近门口的地方。(Shōuyíntái zài kàojìn ménkǒu de dìfang.) — The cash register is near the exit."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "发票",
+			"Pinyin": "fāpiào",
+			"Part of Speech": "Noun",
+			"English Meaning": "official receipt / tax invoice",
+			"Example (Chinese + Pinyin)": "请帮我开一张发票。(Qǐng bāng wǒ kāi yì zhāng fāpiào.) — Please provide an official invoice for me."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "退换",
+			"Pinyin": "tuìhuàn",
+			"Part of Speech": "Verb",
+			"English Meaning": "return or exchange",
+			"Example (Chinese + Pinyin)": "七天之内可以凭小票退换。(Qī tiān zhīnèi kěyǐ píng xiǎopiào tuìhuàn.) — You can return or exchange within 7 days with receipt."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "合适",
+			"Pinyin": "héshì",
+			"Part of Speech": "Adjective",
+			"English Meaning": "suitable / fitting",
+			"Example (Chinese + Pinyin)": "你觉得这条裙子合适吗？(Nǐ juéde zhè tiáo qúnzi héshì ma?) — Do you think this skirt is suitable?"
+		},
+		{
+			"No": 22,
+			"Chinese Word": "标价",
+			"Pinyin": "biāojià",
+			"Part of Speech": "Noun",
+			"English Meaning": "marked price / tag price",
+			"Example (Chinese + Pinyin)": "请看领子后面的标价。(Qǐng kàn lǐngzi hòumian de biāojià.) — Please look at the tag price behind the collar."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "特大号",
+			"Pinyin": "tèdàhào",
+			"Part of Speech": "Noun",
+			"English Meaning": "extra large (XL)",
+			"Example (Chinese + Pinyin)": "这件外套有特大号的吗？(Zhè jiàn wàitào yǒu tèdàhào de ma?) — Is this coat available in extra large?"
+		},
+		{
+			"No": 24,
+			"Chinese Word": "保修",
+			"Pinyin": "bǎoxiū",
+			"Part of Speech": "Verb / Noun",
+			"English Meaning": "warranty / guarantee",
+			"Example (Chinese + Pinyin)": "电子手表全国联保保修一年。(Diànzǐ shǒubiǎo quánguó liánbǎo bǎoxiū yì nián.) — Electronic watch has one-year nationwide warranty."
+		}
+	]
+}

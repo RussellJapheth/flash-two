@@ -4,6 +4,7 @@
 	import StoryCard from '$lib/components/StoryCard.svelte';
 	import DeckSpreadsheetModal from '$lib/components/DeckSpreadsheetModal.svelte';
 	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
 	import { openModal, closeModal } from '$lib/utils/backNav';
 	import { onMount } from 'svelte';
 	import {
@@ -27,13 +28,29 @@
 		StreakStats,
 		StoryCompletionRecord
 	} from '$lib/types';
-	import { Plus, FileUp, Search, FolderOpen, X, Download, BookOpen, Layers } from 'lucide-svelte';
+	import {
+		Plus,
+		FileUp,
+		Search,
+		FolderOpen,
+		X,
+		Download,
+		BookOpen,
+		Layers,
+		Compass,
+		Clock,
+		ArrowRight
+	} from 'lucide-svelte';
 	import { downloadCsvTemplate } from '$lib/utils/csvTemplate';
+	import { searchFieldGuides } from '$lib/data/fieldGuides';
 
-	let activeTab = $state<'flashcards' | 'stories'>('flashcards');
+	let activeTab = $state<'flashcards' | 'stories' | 'guides'>('flashcards');
 	let storyFilterLang = $state<'all' | 'chinese' | 'french'>('all');
 	let storyProgressMap = $state<Record<string, StoryCompletionRecord>>({});
 	let isSpeechSupported = $state(false);
+	let guideCategory = $state<'all' | 'conversation' | 'survival' | 'pronunciation' | 'grammar'>(
+		'all'
+	);
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -321,7 +338,13 @@
 		})
 	);
 
+	let filteredGuides = $derived(searchFieldGuides(searchQuery, guideCategory));
+
 	onMount(() => {
+		const tabParam = page.url.searchParams.get('tab');
+		if (tabParam === 'guides' || tabParam === 'stories' || tabParam === 'flashcards') {
+			activeTab = tabParam;
+		}
 		loadDecks();
 		isSpeechSupported = isSpeechRecognitionSupported();
 		storyProgressMap = getAllStoryProgress();
@@ -340,29 +363,40 @@
 <TopHeader title="My Decks" streak={streakStats.currentStreak} />
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
-	<!-- Tab Switcher: Flashcards vs Stories -->
-	<div class="grid grid-cols-2 rounded-2xl bg-slate-100 p-1">
+	<!-- Tab Switcher: Flashcards vs Stories vs Field Guides -->
+	<div class="grid grid-cols-3 rounded-2xl bg-slate-100 p-1">
 		<button
 			type="button"
 			onclick={() => (activeTab = 'flashcards')}
-			class="flex cursor-pointer items-center justify-center gap-1.5 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeTab ===
+			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
 			'flashcards'
 				? 'bg-white text-slate-900 shadow-xs'
 				: 'text-slate-500 hover:text-slate-800'}"
 		>
-			<Layers size={15} strokeWidth={2.25} />
-			<span>Flashcard Decks</span>
+			<Layers size={14} strokeWidth={2.25} />
+			<span>Flashcards</span>
 		</button>
 		<button
 			type="button"
 			onclick={() => (activeTab = 'stories')}
-			class="flex cursor-pointer items-center justify-center gap-1.5 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeTab ===
+			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
 			'stories'
 				? 'bg-white text-slate-900 shadow-xs'
 				: 'text-slate-500 hover:text-slate-800'}"
 		>
-			<BookOpen size={15} strokeWidth={2.25} />
-			<span>Interactive Stories</span>
+			<BookOpen size={14} strokeWidth={2.25} />
+			<span>Stories</span>
+		</button>
+		<button
+			type="button"
+			onclick={() => (activeTab = 'guides')}
+			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
+			'guides'
+				? 'bg-white text-slate-900 shadow-xs'
+				: 'text-slate-500 hover:text-slate-800'}"
+		>
+			<Compass size={14} strokeWidth={2.25} />
+			<span>Field Guides</span>
 		</button>
 	</div>
 
@@ -446,7 +480,7 @@
 				{/each}
 			{/if}
 		</div>
-	{:else}
+	{:else if activeTab === 'stories'}
 		<!-- STORIES TAB -->
 		<div class="flex items-center justify-between">
 			<div class="flex items-center gap-1.5">
@@ -505,6 +539,134 @@
 						progress={storyProgressMap[story.id]}
 						speechSupported={isSpeechSupported}
 					/>
+				{/each}
+			{/if}
+		</div>
+	{:else}
+		<!-- FIELD GUIDES TAB -->
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-1.5">
+				<Compass size={18} strokeWidth={2.25} class="text-indigo-600" />
+				<h3 class="font-headline text-sm font-bold text-slate-900">Curriculum Field Guides</h3>
+			</div>
+
+			<span class="font-headline text-xs font-bold text-slate-500">
+				{filteredGuides.length} Guides
+			</span>
+		</div>
+
+		<!-- Search Input -->
+		<div class="relative">
+			<Search size={18} strokeWidth={2} class="absolute top-2.5 left-3.5 text-slate-400" />
+			<input
+				type="text"
+				placeholder="Search field guides, grammar, pinyin..."
+				bind:value={searchQuery}
+				class="w-full rounded-2xl border border-slate-200/80 bg-white py-2 pr-4 pl-10 font-sans text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none"
+			/>
+		</div>
+
+		<!-- Filter Chips -->
+		<div class="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-1">
+			{#each ['all', 'conversation', 'survival', 'pronunciation', 'grammar'] as cat (cat)}
+				<button
+					type="button"
+					onclick={() => (guideCategory = cat as typeof guideCategory)}
+					class="cursor-pointer rounded-xl px-3.5 py-1.5 font-headline text-xs font-bold capitalize transition-all {guideCategory ===
+					cat
+						? 'bg-indigo-600 text-white shadow-xs'
+						: 'border border-slate-200/60 bg-white text-slate-600 hover:bg-slate-50'}"
+				>
+					{cat}
+				</button>
+			{/each}
+		</div>
+
+		<!-- Field Guides List -->
+		<div class="space-y-3 pt-1">
+			{#if filteredGuides.length === 0}
+				<div
+					class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 p-8 text-center text-slate-500"
+				>
+					<Compass size={36} strokeWidth={1.5} class="mb-2 text-slate-400" />
+					<p class="font-headline text-sm font-bold text-slate-800">No field guides found</p>
+					<p class="mt-1 font-sans text-xs text-slate-400">
+						Try clearing the search query or selecting another category.
+					</p>
+				</div>
+			{:else}
+				{#each filteredGuides as guide (guide.id)}
+					<div
+						class="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-4 shadow-xs transition-all hover:border-indigo-300 hover:shadow-md"
+					>
+						<!-- Top badge row -->
+						<div class="flex items-center justify-between">
+							<div class="flex items-center gap-2">
+								<span
+									class="rounded-full bg-slate-100 px-2.5 py-0.5 font-headline text-[11px] font-black text-slate-700"
+								>
+									#{guide.number.toString().padStart(2, '0')}
+								</span>
+								<span
+									class="rounded-full px-2.5 py-0.5 font-headline text-[10px] font-bold tracking-wider uppercase {guide.badgeBg} {guide.badgeText}"
+								>
+									{guide.category}
+								</span>
+							</div>
+
+							<span class="flex items-center gap-1 font-sans text-xs text-slate-500">
+								<Clock size={12} />
+								{guide.durationMinutes} min read
+							</span>
+						</div>
+
+						<!-- Title & Subtitle -->
+						<div class="mt-3">
+							<h4
+								class="font-headline text-base font-black tracking-tight text-slate-900 transition-colors group-hover:text-indigo-600"
+							>
+								{guide.title}
+							</h4>
+							<p class="mt-1 font-sans text-xs leading-relaxed text-slate-600">
+								{guide.subtitle}
+							</p>
+						</div>
+
+						<!-- Key Vocab Preview Chips -->
+						{#if guide.keyVocab && guide.keyVocab.length > 0}
+							<div class="mt-3 flex flex-wrap items-center gap-1.5">
+								<span class="text-[10px] font-bold tracking-wider text-slate-400 uppercase"
+									>Key Words:</span
+								>
+								{#each guide.keyVocab.slice(0, 4) as v (v.hanzi)}
+									<span
+										class="rounded-lg bg-slate-100 px-2 py-0.5 font-headline text-xs font-bold text-slate-700"
+									>
+										{v.hanzi}
+									</span>
+								{/each}
+							</div>
+						{/if}
+
+						<!-- Bottom action row -->
+						<div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+							<a
+								href={resolve(`/deck/${guide.packId}`)}
+								class="flex items-center gap-1 text-[11px] font-bold text-slate-500 transition hover:text-indigo-600"
+							>
+								<Layers size={13} />
+								<span>{guide.packTitle.split(':')[0]}</span>
+							</a>
+
+							<a
+								href={resolve(`/guide/${guide.id}`)}
+								class="inline-flex cursor-pointer items-center gap-1.5 rounded-2xl bg-indigo-600 px-3.5 py-1.5 font-headline text-xs font-bold text-white shadow-xs transition hover:bg-indigo-700 active:scale-95"
+							>
+								<span>Read Field Guide</span>
+								<ArrowRight size={13} />
+							</a>
+						</div>
+					</div>
 				{/each}
 			{/if}
 		</div>

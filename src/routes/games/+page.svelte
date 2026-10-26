@@ -115,6 +115,24 @@
 			scoreBadgeBg: 'bg-orange-50 text-orange-800',
 			rank1Gradient: 'from-amber-200 to-amber-300 text-amber-950',
 			rank1Border: 'border-amber-300'
+		},
+		{
+			id: 'tone-pairs',
+			gameId: 'tone-pairs',
+			gameTitle: 'Tone Pair Lab',
+			mode: 'visual',
+			title: 'Tone Pairs',
+			tag: 'Pitches',
+			accentGradient:
+				'bg-linear-to-r from-cyan-500/85 via-teal-500/80 to-blue-600/80 text-white shadow-lg shadow-cyan-500/10',
+			borderClass: 'border-white/60',
+			glowClass: 'bg-white/20',
+			badgeBg: 'bg-white/25 border border-white/60 text-white',
+			badgeText: 'text-cyan-100',
+			scoreColor: 'text-cyan-600',
+			scoreBadgeBg: 'bg-cyan-50 text-cyan-800',
+			rank1Gradient: 'from-amber-200 to-amber-300 text-amber-950',
+			rank1Border: 'border-amber-300'
 		}
 	];
 
@@ -442,6 +460,36 @@
 
 			<div
 				class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-linear-to-r from-amber-500 to-orange-600 text-white shadow-md shadow-orange-500/25 transition-all group-hover:scale-105 group-hover:brightness-110"
+			>
+				<Play size={18} strokeWidth={2.75} />
+			</div>
+		</a>
+
+		<!-- Tone Pair Lab Card -->
+		<a
+			href={resolve('/games/tone-pairs')}
+			id="game-tone-pairs-card"
+			class="group shadow-card hover:shadow-card-hover relative flex items-center justify-between overflow-hidden rounded-3xl border border-cyan-200 bg-linear-to-r from-white via-cyan-50/40 to-blue-50/30 p-4 transition-all hover:-translate-y-0.5 hover:border-cyan-400 active:scale-[0.98]"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-white/80 bg-linear-to-tr from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20 transition-transform duration-300 group-hover:scale-105"
+				>
+					<Headphones size={28} />
+				</div>
+
+				<div class="space-y-1">
+					<h4 class="font-headline text-base font-black tracking-tight text-slate-900">
+						Tone Pair Lab
+					</h4>
+					<p class="font-sans text-xs text-slate-500">
+						Master all 16 two-syllable pitch combinations • Visual & Audio modes
+					</p>
+				</div>
+			</div>
+
+			<div
+				class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-linear-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/25 transition-all group-hover:scale-105 group-hover:brightness-110"
 			>
 				<Play size={18} strokeWidth={2.75} />
 			</div>

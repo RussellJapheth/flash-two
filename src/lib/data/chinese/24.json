@@ -1,0 +1,197 @@
+{
+	"title": "Field Guide: Self-Introductions & Social Connections",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "来自",
+			"Pinyin": "láizì",
+			"Part of Speech": "Verb",
+			"English Meaning": "to come from",
+			"Example (Chinese + Pinyin)": "我来自伦敦。(Wǒ láizì Lúndūn.) — I come from London."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "哪国人",
+			"Pinyin": "nǎ guó rén",
+			"Part of Speech": "Noun / Question Phrase",
+			"English Meaning": "which country / nationality",
+			"Example (Chinese + Pinyin)": "你是哪国人？(Nǐ shì nǎ guó rén?) — What is your nationality?"
+		},
+		{
+			"No": 3,
+			"Chinese Word": "大卫",
+			"Pinyin": "Dàwèi",
+			"Part of Speech": "Proper Noun",
+			"English Meaning": "David",
+			"Example (Chinese + Pinyin)": "我叫大卫，很高兴认识你。(Wǒ jiào Dàwèi, hěn gāoxìng rènshí nǐ.) — My name is David, nice to meet you."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "李明",
+			"Pinyin": "Lǐ Míng",
+			"Part of Speech": "Proper Noun",
+			"English Meaning": "Li Ming",
+			"Example (Chinese + Pinyin)": "李明是我的中文老师。(Lǐ Míng shì wǒ de zhōngwén lǎoshī.) — Li Ming is my Chinese teacher."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "大学生",
+			"Pinyin": "dàxuéshēng",
+			"Part of Speech": "Noun",
+			"English Meaning": "university student / college student",
+			"Example (Chinese + Pinyin)": "我是大学生，我学中文。(Wǒ shì dàxuéshēng, wǒ xué zhōngwén.) — I am a university student, I study Chinese."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "公司",
+			"Pinyin": "gōngsī",
+			"Part of Speech": "Noun",
+			"English Meaning": "company / firm",
+			"Example (Chinese + Pinyin)": "我在一家国际公司工作。(Wǒ zài yì jiā guójì gōngsī gōngzuò.) — I work at an international company."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "听音乐",
+			"Pinyin": "tīng yīnyuè",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to listen to music",
+			"Example (Chinese + Pinyin)": "周末我喜欢在家听音乐。(Zhōumò wǒ xǐhuan zài jiā tīng yīnyuè.) — On weekends I like listening to music at home."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "三十多岁",
+			"Pinyin": "sānshí duō suì",
+			"Part of Speech": "Phrase",
+			"English Meaning": "in one's thirties / thirty-something",
+			"Example (Chinese + Pinyin)": "他三十多岁，是一名医生。(Tā sānshí duō suì, shì yì míng yīshēng.) — He is in his thirties and is a doctor."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "结婚",
+			"Pinyin": "jiéhūn",
+			"Part of Speech": "Verb",
+			"English Meaning": "to marry / to get married",
+			"Example (Chinese + Pinyin)": "你结婚了吗？— 还没有。(Nǐ jiéhūn le ma? — Hái méiyǒu.) — Are you married? — Not yet."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "还在想",
+			"Pinyin": "hái zài xiǎng",
+			"Part of Speech": "Phrase",
+			"English Meaning": "still thinking / still deciding",
+			"Example (Chinese + Pinyin)": "你为什么学中文？— 我还在想。(Nǐ wèishénme xué zhōngwén? — Wǒ hái zài xiǎng.) — Why are you learning Chinese? — I'm still thinking about it."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "聊点别的",
+			"Pinyin": "liáo diǎnr bié de",
+			"Part of Speech": "Phrase",
+			"English Meaning": "talk about something else",
+			"Example (Chinese + Pinyin)": "我们聊点别的吧，今天天气真好。(Wǒmen liáo diǎnr bié de ba, jīntiān tiānqì zhēn hǎo.) — Let's talk about something else, the weather today is really nice."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "不太想说",
+			"Pinyin": "bú tài xiǎng shuō",
+			"Part of Speech": "Phrase",
+			"English Meaning": "prefer not to say / rather not say",
+			"Example (Chinese + Pinyin)": "这个我不太想说，不好意思。(Zhège wǒ bú tài xiǎng shuō, bù hǎoyìsi.) — I'd rather not say this, sorry."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "语言",
+			"Pinyin": "yǔyán",
+			"Part of Speech": "Noun",
+			"English Meaning": "language",
+			"Example (Chinese + Pinyin)": "你会说什么语言？(Nǐ huì shuō shénme yǔyán?) — What languages can you speak?"
+		},
+		{
+			"No": 14,
+			"Chinese Word": "英语",
+			"Pinyin": "yīngyǔ",
+			"Part of Speech": "Noun",
+			"English Meaning": "English language",
+			"Example (Chinese + Pinyin)": "我会说英语和一点中文。(Wǒ huì shuō yīngyǔ hé yìdiǎnr zhōngwén.) — I can speak English and a little Chinese."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "日语",
+			"Pinyin": "rìyǔ",
+			"Part of Speech": "Noun",
+			"English Meaning": "Japanese language",
+			"Example (Chinese + Pinyin)": "她也会说一点日语。(Tā yě huì shuō yìdiǎnr rìyǔ.) — She can also speak a little Japanese."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "汉语",
+			"Pinyin": "hànyǔ",
+			"Part of Speech": "Noun",
+			"English Meaning": "Mandarin / Chinese language",
+			"Example (Chinese + Pinyin)": "我们班都在学汉语。(Wǒmen bān dōu zài xué hànyǔ.) — Our class is all studying Mandarin."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "英国人",
+			"Pinyin": "yīngguó rén",
+			"Part of Speech": "Noun",
+			"English Meaning": "British person",
+			"Example (Chinese + Pinyin)": "我是英国人，来自伦敦。(Wǒ shì yīngguó rén, láizì Lúndūn.) — I am British, from London."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "加拿大人",
+			"Pinyin": "jiānádà rén",
+			"Part of Speech": "Noun",
+			"English Meaning": "Canadian person",
+			"Example (Chinese + Pinyin)": "他是加拿大人，在上海工作。(Tā shì jiānádà rén, zài Shànghǎi gōngzuò.) — He is Canadian, working in Shanghai."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "新加坡人",
+			"Pinyin": "xīnjiāpō rén",
+			"Part of Speech": "Noun",
+			"English Meaning": "Singaporean person",
+			"Example (Chinese + Pinyin)": "她是新加坡人，英语很好。(Tā shì xīnjiāpō rén, yīngyǔ hěn hǎo.) — She is Singaporean, her English is great."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "多大",
+			"Pinyin": "duō dà",
+			"Part of Speech": "Question Phrase",
+			"English Meaning": "how old",
+			"Example (Chinese + Pinyin)": "请问你多大了？(Qǐngwèn nǐ duō dà le?) — May I ask how old you are?"
+		},
+		{
+			"No": 21,
+			"Chinese Word": "专业",
+			"Pinyin": "zhuānyè",
+			"Part of Speech": "Noun",
+			"English Meaning": "major / specialty",
+			"Example (Chinese + Pinyin)": "你的大学专业是什么？(Nǐ de dàxué zhuānyè shì shénme?) — What is your college major?"
+		},
+		{
+			"No": 22,
+			"Chinese Word": "年级",
+			"Pinyin": "niánjí",
+			"Part of Speech": "Noun",
+			"English Meaning": "grade level / school year",
+			"Example (Chinese + Pinyin)": "你现在读几年级？(Nǐ xiànzài dú jǐ niánjí?) — What school year are you in right now?"
+		},
+		{
+			"No": 23,
+			"Chinese Word": "室友",
+			"Pinyin": "shìyǒu",
+			"Part of Speech": "Noun",
+			"English Meaning": "roommate",
+			"Example (Chinese + Pinyin)": "我和室友一起租房。(Wǒ hé shìyǒu yìqǐ zūfáng.) — I rent an apartment with my roommate."
+		},
+		{
+			"No": 24,
+			"Chinese Word": "同行",
+			"Pinyin": "tóngháng",
+			"Part of Speech": "Noun",
+			"English Meaning": "person of same trade / peer",
+			"Example (Chinese + Pinyin)": "很高兴在会上遇到同行。(Hěn gāoxìng zài huì shang yùdào tóngháng.) — Glad to meet peers in the industry at the conference."
+		}
+	]
+}

@@ -1,0 +1,149 @@
+{
+	"title": "Field Guide: Tone Pairs Lab (16 Pitches & Sandhi)",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "欢迎",
+			"Pinyin": "huānyíng",
+			"Part of Speech": "Verb",
+			"English Meaning": "to welcome (Tone 1-2 pair)",
+			"Example (Chinese + Pinyin)": "热烈欢迎新同学加入！(Rèliè huānyíng xīn tóngxué jiārù!) — Warmly welcome new classmates joining!"
+		},
+		{
+			"No": 2,
+			"Chinese Word": "面包",
+			"Pinyin": "miànbāo",
+			"Part of Speech": "Noun",
+			"English Meaning": "bread (Tone 4-1 / 1-4 pair)",
+			"Example (Chinese + Pinyin)": "早餐吃一片烤面包和鸡蛋。(Zǎocān chī yí piàn kǎo miànbāo hé jīdàn.) — Eat a slice of toast and an egg for breakfast."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "首都",
+			"Pinyin": "shǒudū",
+			"Part of Speech": "Noun",
+			"English Meaning": "capital city (Tone 3-1 pair)",
+			"Example (Chinese + Pinyin)": "北京是中国的首都。(Běijīng shì Zhōngguó de shǒudū.) — Beijing is the capital of China."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "简单",
+			"Pinyin": "jiǎndān",
+			"Part of Speech": "Adjective",
+			"English Meaning": "simple / uncomplicated (Tone 3-2 pair)",
+			"Example (Chinese + Pinyin)": "这个句子其实非常简单。(Zhè ge jùzi qíshí fēicháng jiǎndān.) — This sentence is actually very simple."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "语法",
+			"Pinyin": "yǔfǎ",
+			"Part of Speech": "Noun",
+			"English Meaning": "grammar (Tone 3-4 pair)",
+			"Example (Chinese + Pinyin)": "掌握基础的汉语语法规则。(Zhǎowò jīchǔ de hànyǔ yǔfǎ guīzé.) — Master fundamental Chinese grammar rules."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "汉字",
+			"Pinyin": "hànzì",
+			"Part of Speech": "Noun",
+			"English Meaning": "Chinese characters (Tone 4-3 pair)",
+			"Example (Chinese + Pinyin)": "学习书写常用汉字很实用。(Xuéxí shūxiě chángyòng hànzì hěn shíyòng.) — Learning to write common Chinese characters is very practical."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "一样",
+			"Pinyin": "yí yàng",
+			"Part of Speech": "Adjective / Phrase",
+			"English Meaning": "same / alike (一 Tone 2 sandhi)",
+			"Example (Chinese + Pinyin)": "这两件衣服的质量完全一样。(Zhè liǎng jiàn yīfu de zhìliàng wánquán yí yàng.) — The quality of these two garments is completely identical."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "不是",
+			"Pinyin": "bú shì",
+			"Part of Speech": "Phrase",
+			"English Meaning": "is not (不 Tone 2 sandhi)",
+			"Example (Chinese + Pinyin)": "他不是本地人，是从南方来的。(Tā bú shì běndì rén, shì cóng nánfāng lái de.) — He is not a local, he came from the south."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "不要",
+			"Pinyin": "bú yào",
+			"Part of Speech": "Phrase",
+			"English Meaning": "do not / don't want (不 Tone 2 sandhi)",
+			"Example (Chinese + Pinyin)": "过马路时千万不要看手机。(Guò mǎlù shí qiānwàn bú yào kàn shǒujī.) — Definitely do not look at your phone when crossing the street."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "一起",
+			"Pinyin": "yìqǐ",
+			"Part of Speech": "Adverb",
+			"English Meaning": "together (一 Tone 4 sandhi)",
+			"Example (Chinese + Pinyin)": "周末大家一起去公园散步。(Zhōumò dàjiā yìqǐ qù gōngyuán sànbù.) — On weekends everyone goes walking in the park together."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "一块儿",
+			"Pinyin": "yíkuàir",
+			"Part of Speech": "Adverb",
+			"English Meaning": "together (colloquial)",
+			"Example (Chinese + Pinyin)": "走吧，我们一块儿去食堂。(Zǒu ba, wǒmen yíkuàir qù shítáng.) — Let's go, we'll head to the cafeteria together."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "声调",
+			"Pinyin": "shēngdiào",
+			"Part of Speech": "Noun",
+			"English Meaning": "tone (phonetics)",
+			"Example (Chinese + Pinyin)": "掌握四个声调对汉语听力很重要。(Zhǎowò sì ge shēngdiào duì hànyǔ tīnglì hěn zhòngyào.) — Mastering the four tones is essential for Chinese listening."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "轻声",
+			"Pinyin": "qīngshēng",
+			"Part of Speech": "Noun",
+			"English Meaning": "neutral tone / light tone",
+			"Example (Chinese + Pinyin)": "汉语中很多词的第二个字念轻声。(Hànyǔ zhōng hěn duō cí de dì èr ge zì niàn qīngshēng.) — In Chinese many words' second character is read in neutral tone."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "变调",
+			"Pinyin": "biàndiào",
+			"Part of Speech": "Noun",
+			"English Meaning": "tone sandhi / tone change",
+			"Example (Chinese + Pinyin)": "第三声连续出现时会发生变调。(Dì sān shēng liánxù chūxiàn shí huì fāshēng biàndiào.) — When third tones appear consecutively, tone sandhi occurs."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "黑板",
+			"Pinyin": "hēibǎn",
+			"Part of Speech": "Noun",
+			"English Meaning": "blackboard (Tone 1-3 pair)",
+			"Example (Chinese + Pinyin)": "老师在黑板上写了生词。(Lǎoshī zài hēibǎn shang xiě le shēngcí.) — The teacher wrote new words on the blackboard."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "啤酒",
+			"Pinyin": "píjiǔ",
+			"Part of Speech": "Noun",
+			"English Meaning": "beer (Tone 2-3 pair)",
+			"Example (Chinese + Pinyin)": "来一瓶冰镇啤酒。(Lái yì píng bīngzhèn píjiǔ.) — Bring a bottle of iced beer."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "许多",
+			"Pinyin": "xǔduō",
+			"Part of Speech": "Adjective",
+			"English Meaning": "many / plenty (Tone 3-1 pair)",
+			"Example (Chinese + Pinyin)": "公园里有许多人在散步。(Gōngyuán lǐ yǒu xǔduō rén zài sànbù.) — There are many people walking in the park."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "努力",
+			"Pinyin": "nǔlì",
+			"Part of Speech": "Adjective / Verb",
+			"English Meaning": "hard-working / strive (Tone 3-4 pair)",
+			"Example (Chinese + Pinyin)": "只要努力就能学好中文。(Zhǐyào nǔlì jiù néng xué hǎo zhōngwén.) — As long as you work hard you can master Chinese."
+		}
+	]
+}

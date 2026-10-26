@@ -1,0 +1,157 @@
+{
+	"title": "Field Guide: 7-Day Travel Survival & Wayfinding",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "地址",
+			"Pinyin": "dìzhǐ",
+			"Part of Speech": "Noun",
+			"English Meaning": "address",
+			"Example (Chinese + Pinyin)": "这是我要去的具体地址。(Zhè shì wǒ yào qù de jùtǐ dìzhǐ.) — This is the specific address I want to go to."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "多长时间",
+			"Pinyin": "duō cháng shíjiān",
+			"Part of Speech": "Question Phrase",
+			"English Meaning": "how long (duration)",
+			"Example (Chinese + Pinyin)": "开车到机场大概要多长时间？(Kāichē dào jīchǎng dàgài yào duō cháng shíjiān?) — About how long does driving to the airport take?"
+		},
+		{
+			"No": 3,
+			"Chinese Word": "房卡",
+			"Pinyin": "fángkǎ",
+			"Part of Speech": "Noun",
+			"English Meaning": "room keycard",
+			"Example (Chinese + Pinyin)": "这是您的房卡，电梯需要刷卡。(Zhè shì nín de fángkǎ, diàntī xūyào shuākǎ.) — Here is your room card, elevator requires tapping."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "押金",
+			"Pinyin": "yājīn",
+			"Part of Speech": "Noun",
+			"English Meaning": "security deposit",
+			"Example (Chinese + Pinyin)": "入住需要交两百块押金。(Rùzhù xūyào jiāo liǎng bǎi kuài yājīn.) — Checking in requires a 200 yuan deposit."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "早餐",
+			"Pinyin": "zǎocān",
+			"Part of Speech": "Noun",
+			"English Meaning": "breakfast",
+			"Example (Chinese + Pinyin)": "请问明天的早餐几点开始？(Qǐngwèn míngtiān de zǎocān jǐ diǎn kāishǐ?) — What time does breakfast start tomorrow?"
+		},
+		{
+			"No": 6,
+			"Chinese Word": "往左拐",
+			"Pinyin": "wǎng zuǒ guǎi",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "turn left",
+			"Example (Chinese + Pinyin)": "走到十字路口往左拐。(Zǒu dào shízì lùkǒu wǎng zuǒ guǎi.) — Walk to the intersection and turn left."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "往右拐",
+			"Pinyin": "wǎng yòu guǎi",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "turn right",
+			"Example (Chinese + Pinyin)": "穿过马路然后往右拐。(Chuānguò mǎlù ránhòu wǎng yòu guǎi.) — Cross the street then turn right."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "往直走",
+			"Pinyin": "wǎng zhí zǒu",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "go straight ahead",
+			"Example (Chinese + Pinyin)": "沿着这条街一直往直走五百米。(Yánzhe zhè tiáo jiē yìzhí wǎng zhí zǒu wǔ bǎi mǐ.) — Walk straight ahead along this street for 500 meters."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "到了",
+			"Pinyin": "dào le",
+			"Part of Speech": "Phrase",
+			"English Meaning": "arrived / here we are",
+			"Example (Chinese + Pinyin)": "师傅，就在前面路口停，到了。(Shīfu, jiù zài qiánmian lùkǒu tíng, dào le.) — Driver, please stop at the front intersection, we're here."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "寄存",
+			"Pinyin": "jìcún",
+			"Part of Speech": "Verb",
+			"English Meaning": "to store / check luggage",
+			"Example (Chinese + Pinyin)": "车站有寄存大件行李的地方吗？(Chēzhàn yǒu jìcún dàjiàn xíngli de dìfang ma?) — Is there a luggage storage area at the station?"
+		},
+		{
+			"No": 11,
+			"Chinese Word": "问路",
+			"Pinyin": "wèn lù",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "to ask for directions",
+			"Example (Chinese + Pinyin)": "路不熟的时候找警察问路最安全。(Lù bù shú de shíhou zhǎo jǐngchá wèn lù zuì ānquán.) — When unfamiliar with the route, asking police for directions is safest."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "登机口",
+			"Pinyin": "dēngjīkǒu",
+			"Part of Speech": "Noun",
+			"English Meaning": "boarding gate",
+			"Example (Chinese + Pinyin)": "您的航班在十六号登机口登机。(Nín de hángbān zài shíliù hào dēngjīkǒu dēngjī.) — Your flight is boarding at gate 16."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "高铁",
+			"Pinyin": "gāotiě",
+			"Part of Speech": "Noun",
+			"English Meaning": "high-speed rail (bullet train)",
+			"Example (Chinese + Pinyin)": "从北京坐高铁到上海只要四个多小时。(Cóng Běijīng zuò gāotiě dào Shànghǎi zhǐ yào sì ge duō xiǎoshí.) — High-speed rail from Beijing to Shanghai takes only 4+ hours."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "一卡通",
+			"Pinyin": "yīkǎtōng",
+			"Part of Speech": "Noun",
+			"English Meaning": "transit smart card (metro card)",
+			"Example (Chinese + Pinyin)": "刷交通一卡通坐地铁非常方便。(Shuā jiāotōng yīkǎtōng zuò dìtiě fēicháng fāngbiàn.) — Tapping the transit metro card is very convenient."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "应急",
+			"Pinyin": "yìngjí",
+			"Part of Speech": "Verb / Adjective",
+			"English Meaning": "emergency / contingency",
+			"Example (Chinese + Pinyin)": "出门旅行随身带上应急药品。(Chūmén lǚxíng suíshēn dài shang yìngjí yàopǐn.) — Carry contingency medicines when traveling."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "检票口",
+			"Pinyin": "jiǎnpiàokǒu",
+			"Part of Speech": "Noun",
+			"English Meaning": "ticket check gate",
+			"Example (Chinese + Pinyin)": "发车前十五分钟开始在三号检票口检票。(Fāchē qián shíwǔ fēnzhōng kāishǐ zài sān hào jiǎnpiàokǒu jiǎnpiào.) — Ticket checking starts 15 minutes before departure at gate 3."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "换乘",
+			"Pinyin": "huànchéng",
+			"Part of Speech": "Verb",
+			"English Meaning": "transfer / change train or bus",
+			"Example (Chinese + Pinyin)": "在下一站换乘地铁二号线。(Zài xià yí zhàn huànchéng dìtiě èr hào xiàn.) — Transfer to Metro Line 2 at the next station."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "出站口",
+			"Pinyin": "chūzhànkǒu",
+			"Part of Speech": "Noun",
+			"English Meaning": "station exit gate",
+			"Example (Chinese + Pinyin)": "我们在火车站南出站口碰头。(Wǒmen zài huǒchēzhàn nán chūzhànkǒu pèngtóu.) — We'll meet at the south exit gate of the train station."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "问询处",
+			"Pinyin": "wènxúnchù",
+			"Part of Speech": "Noun",
+			"English Meaning": "information / inquiry desk",
+			"Example (Chinese + Pinyin)": "如有遗失物品请去大厅问询处。(Rú yǒu yíshī wùpǐn qǐng qù dàtīng wènxúnchù.) — For lost items, please visit the hall information desk."
+		}
+	]
+}

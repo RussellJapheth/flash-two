@@ -1,0 +1,165 @@
+{
+	"title": "Field Guide: Polite Reactions & Social Courtesies",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "请问",
+			"Pinyin": "qǐngwèn",
+			"Part of Speech": "Phrase",
+			"English Meaning": "excuse me / may I ask",
+			"Example (Chinese + Pinyin)": "请问洗手间在哪儿？(Qǐngwèn xǐshǒujiān zài nǎr?) — Excuse me, where is the restroom?"
+		},
+		{
+			"No": 2,
+			"Chinese Word": "是吗",
+			"Pinyin": "shì ma",
+			"Part of Speech": "Question Phrase",
+			"English Meaning": "is that so?",
+			"Example (Chinese + Pinyin)": "明天会降温？是吗，那我多穿点。(Míngtiān huì jiàngwēn? Shì ma, nà wǒ duō chuān diǎnr.) — Temperature dropping tomorrow? Is that so, I'll bundle up."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "不用了",
+			"Pinyin": "bú yòng le",
+			"Part of Speech": "Phrase",
+			"English Meaning": "no need / no thank you",
+			"Example (Chinese + Pinyin)": "要喝水吗？— 不用了，谢谢。(Yào hē shuǐ ma? — Bú yòng le, xièxie.) — Want water? — No thank you."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "我想一下",
+			"Pinyin": "wǒ xiǎng yíxià",
+			"Part of Speech": "Phrase",
+			"English Meaning": "let me think / let me consider",
+			"Example (Chinese + Pinyin)": "这个提议很好，让我想一下。(Zhè ge tíyì hěn hǎo, ràng wǒ xiǎng yíxià.) — Good suggestion, let me think about it."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "麻烦你",
+			"Pinyin": "máfan nǐ",
+			"Part of Speech": "Phrase",
+			"English Meaning": "could you please / bother you to",
+			"Example (Chinese + Pinyin)": "麻烦你帮我递一下那本书。(Máfan nǐ bāng wǒ dì yíxià nà běn shū.) — Could you bother to pass me that book?"
+		},
+		{
+			"No": 6,
+			"Chinese Word": "借过",
+			"Pinyin": "jièguò",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "excuse me (passing by in crowd)",
+			"Example (Chinese + Pinyin)": "借过借过，请大家让一让。(Jièguò jièguò, qǐng dàjiā ràng yí ràng.) — Excuse me passing through, please let me pass."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "干杯",
+			"Pinyin": "gānbēi",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "cheers! / bottoms up",
+			"Example (Chinese + Pinyin)": "为了我们的友谊，干杯！(Wèile wǒmen de yǒuyì, gānbēi!) — Cheers to our friendship!"
+		},
+		{
+			"No": 8,
+			"Chinese Word": "哪里哪里",
+			"Pinyin": "nǎlǐ nǎlǐ",
+			"Part of Speech": "Phrase",
+			"English Meaning": "not at all / humble deflection",
+			"Example (Chinese + Pinyin)": "您的中文讲得真好！— 哪里哪里，还在学。(Nín de zhōngwén jiǎng de zhēn hǎo! — Nǎlǐ nǎlǐ, hái zài xué.) — Your Chinese is great! — Not at all, still learning."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "打扰了",
+			"Pinyin": "dǎrǎo le",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "sorry to disturb you",
+			"Example (Chinese + Pinyin)": "不好意思打扰了，我想问个路。(Bù hǎoyìsi dǎrǎo le, wǒ xiǎng wèn ge lù.) — Sorry to disturb you, I wanted to ask for directions."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "祝贺",
+			"Pinyin": "zhùhè",
+			"Part of Speech": "Verb",
+			"English Meaning": "to congratulate",
+			"Example (Chinese + Pinyin)": "祝贺你顺利通过了考试！(Zhùhè nǐ shùnlì tōngguò le kǎoshì!) — Congratulations on passing your exam smoothly!"
+		},
+		{
+			"No": 11,
+			"Chinese Word": "保重",
+			"Pinyin": "bǎozhòng",
+			"Part of Speech": "Verb",
+			"English Meaning": "take care of yourself",
+			"Example (Chinese + Pinyin)": "天气变冷了，多保重身体。(Tiānqì biàn lěng le, duō bǎozhòng shēntǐ.) — Weather is getting colder, take care of your health."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "慢走",
+			"Pinyin": "màn zǒu",
+			"Part of Speech": "Phrase",
+			"English Meaning": "take care on your way out (host to guest)",
+			"Example (Chinese + Pinyin)": "吃好喝好了，您慢走，常来啊！(Chī hǎo hē hǎo le, nín màn zǒu, cháng lái a!) — Hope you enjoyed it, take care, come again!"
+		},
+		{
+			"No": 13,
+			"Chinese Word": "请慢用",
+			"Pinyin": "qǐng màn yòng",
+			"Part of Speech": "Phrase",
+			"English Meaning": "please enjoy your meal",
+			"Example (Chinese + Pinyin)": "您的菜齐了，请慢用。(Nín de cài qí le, qǐng màn yòng.) — All your dishes are here, please enjoy your meal."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "抱歉",
+			"Pinyin": "bàoqiàn",
+			"Part of Speech": "Adjective / Verb",
+			"English Meaning": "apologetic / sorry",
+			"Example (Chinese + Pinyin)": "非常抱歉让您久等了。(Fēicháng bàoqiàn ràng nín jiǔděng le.) — Very sorry to have kept you waiting so long."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "客气",
+			"Pinyin": "kèqi",
+			"Part of Speech": "Adjective",
+			"English Meaning": "polite / courteous",
+			"Example (Chinese + Pinyin)": "都是老朋友了，别那么客气。(Dōu shì lǎo péngyou le, bié nàme kèqi.) — We're old friends, don't be so formal."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "一路顺风",
+			"Pinyin": "yílù shùnfēng",
+			"Part of Speech": "Idiom",
+			"English Meaning": "have a pleasant journey / bon voyage",
+			"Example (Chinese + Pinyin)": "明天坐飞机回国？祝你一路顺风！(Míngtiān zuò fēijī huíguó? Zhù nǐ yílù shùnfēng!) — Flying home tomorrow? Bon voyage!"
+		},
+		{
+			"No": 17,
+			"Chinese Word": "欢迎光临",
+			"Pinyin": "huānyíng guānglín",
+			"Part of Speech": "Phrase",
+			"English Meaning": "welcome to our store!",
+			"Example (Chinese + Pinyin)": "欢迎光临，请问几位？(Huānyíng guānglín, qǐngwèn jǐ wèi?) — Welcome, table for how many?"
+		},
+		{
+			"No": 18,
+			"Chinese Word": "请多指教",
+			"Pinyin": "qǐng duō zhǐjiào",
+			"Part of Speech": "Phrase",
+			"English Meaning": "please give me guidance",
+			"Example (Chinese + Pinyin)": "我是新来的实习生，请多指教。(Wǒ shì xīn lái de shíxíshēng, qǐng duō zhǐjiào.) — I am a new intern, please give me your guidance."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "随时效劳",
+			"Pinyin": "suíshí xiàoláo",
+			"Part of Speech": "Phrase",
+			"English Meaning": "at your service anytime",
+			"Example (Chinese + Pinyin)": "有什么需要帮忙的，随时效劳。(Yǒu shénme xūyào bāngmáng de, suíshí xiàoláo.) — Whatever help you need, at your service anytime."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "多谢",
+			"Pinyin": "duōxiè",
+			"Part of Speech": "Phrase",
+			"English Meaning": "many thanks",
+			"Example (Chinese + Pinyin)": "及时提醒，多谢多谢！(Jíshí tíxǐng, duōxiè duōxiè!) — Timely reminder, many thanks!"
+		}
+	]
+}

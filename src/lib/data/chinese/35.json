@@ -1,0 +1,165 @@
+{
+	"title": "Field Guide: Pinyin Typing & Syllable Mechanics",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "拼音输入法",
+			"Pinyin": "pīnyīn shūrùfǎ",
+			"Part of Speech": "Noun Phrase",
+			"English Meaning": "Pinyin Input Method (IME)",
+			"Example (Chinese + Pinyin)": "在手机上切换到拼音输入法。(Zài shǒujī shang qiēhuàn dào pīnyīn shūrùfǎ.) — Switch to the Pinyin input method on your phone."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "候选词",
+			"Pinyin": "hòuxuǎncí",
+			"Part of Speech": "Noun",
+			"English Meaning": "candidate word",
+			"Example (Chinese + Pinyin)": "从候选词列表里挑选正确的汉字。(Cóng hòuxuǎncí lièbiǎo lǐ tiāoxuǎn zhèngquè de hànzì.) — Pick the correct Chinese character from the candidate list."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "翻页",
+			"Pinyin": "fānyè",
+			"Part of Speech": "Verb Phrase",
+			"English Meaning": "page down / next candidate page",
+			"Example (Chinese + Pinyin)": "按加号键或者等号键翻页选字。(Àn jiāhào jiàn huòzhě děnghào jiàn fānyè xuǎnzì.) — Press plus or equals key to page through candidate characters."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "标点符号",
+			"Pinyin": "biāodiǎn fúhào",
+			"Part of Speech": "Noun",
+			"English Meaning": "punctuation marks",
+			"Example (Chinese + Pinyin)": "中文标点符号占一个完整的汉字空格。(Zhōngwén biāodiǎn fúhào zhàn yí ge wánzhěng de hànzì kònggé.) — Chinese punctuation marks take up a full character width."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "逗号",
+			"Pinyin": "dòuhào",
+			"Part of Speech": "Noun",
+			"English Meaning": "comma (，)",
+			"Example (Chinese + Pinyin)": "在句子短暂停顿处输入中文逗号。(Zài jùzi duǎnzàn tíngdùn chù shūrù zhōngwén dòuhào.) — Enter a Chinese comma at brief pauses in a sentence."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "句号",
+			"Pinyin": "jùhào",
+			"Part of Speech": "Noun",
+			"English Meaning": "full stop / period (。)",
+			"Example (Chinese + Pinyin)": "每句话写完整后记得打上句号。(Měi jù huà xiě wánzhěng hòu jìde dǎ shang jùhào.) — Remember to put a period after completing each sentence."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "问号",
+			"Pinyin": "wènhào",
+			"Part of Speech": "Noun",
+			"English Meaning": "question mark (？)",
+			"Example (Chinese + Pinyin)": "疑问句结尾要使用中文问号。(Yíwènjù jiéwěi yào shǐyòng zhōngwén wènhào.) — Use a Chinese question mark at the end of interrogative sentences."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "叹号",
+			"Pinyin": "tànhào",
+			"Part of Speech": "Noun",
+			"English Meaning": "exclamation mark (！)",
+			"Example (Chinese + Pinyin)": "感叹情绪强烈的句子用叹号结尾。(Gǎntàn qíngxù qiángliè de jùzi yòng tànhào jiéwěi.) — Use exclamation marks at the end of strong emotive sentences."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "空格键",
+			"Pinyin": "kònggéjiàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "spacebar",
+			"Example (Chinese + Pinyin)": "按空格键直接确认第一个候选词。(Àn kònggéjiàn zhíjiē quèrèn dì yī ge hòuxuǎncí.) — Press the spacebar to confirm the first candidate word directly."
+		},
+		{
+			"No": 10,
+			"Chinese Word": "回车键",
+			"Pinyin": "huíchējiàn",
+			"Part of Speech": "Noun",
+			"English Meaning": "enter / return key",
+			"Example (Chinese + Pinyin)": "按回车键可以直接输出英文字母。(Àn huíchējiàn kěyǐ zhíjiē shūchū yīngwén zìmǔ.) — Press enter key to output English letters directly."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "字母",
+			"Pinyin": "zìmǔ",
+			"Part of Speech": "Noun",
+			"English Meaning": "letters / alphabet",
+			"Example (Chinese + Pinyin)": "拼音由英文字母组成。(Pīnyīn yóu yīngwén zìmǔ zǔchéng.) — Pinyin is composed of English letters."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "声母",
+			"Pinyin": "shēngmǔ",
+			"Part of Speech": "Noun",
+			"English Meaning": "initials (consonants)",
+			"Example (Chinese + Pinyin)": "普通话拼音一共有二十一个声母。(Pǔtōnghuà pīnyīn yígòng yǒu èrshíyī ge shēngmǔ.) — Standard Mandarin pinyin has 21 initials in total."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "韵母",
+			"Pinyin": "yùnmǔ",
+			"Part of Speech": "Noun",
+			"English Meaning": "finals (vowels)",
+			"Example (Chinese + Pinyin)": "练习好单韵母和复韵母的发音。(Liànxí hǎo dān yùnmǔ hé fù yùnmǔ de fāyīn.) — Practice pronunciation of simple and compound finals well."
+		},
+		{
+			"No": 14,
+			"Chinese Word": "整词输入",
+			"Pinyin": "zhěngcí shūrù",
+			"Part of Speech": "Noun Phrase",
+			"English Meaning": "whole-word typing",
+			"Example (Chinese + Pinyin)": "采用整词输入可以大大提高打字准确率。(Cǎiyòng zhěngcí shūrù kěyǐ dàdà tígāo dǎzì zhǔnquèlǜ.) — Typing whole words greatly improves character recognition accuracy."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "隔音符号",
+			"Pinyin": "géyīn fúhào",
+			"Part of Speech": "Noun",
+			"English Meaning": "apostrophe syllable separator",
+			"Example (Chinese + Pinyin)": "输入西安时在两个音节中间加上隔音符号。(Shūrù Xī'ān shí zài liǎng ge yīnjié zhōngjiān jiā shang géyīn fúhào.) — Add an apostrophe delimiter between syllables when typing Xi'an."
+		},
+		{
+			"No": 16,
+			"Chinese Word": "错别字",
+			"Pinyin": "cuòbiézì",
+			"Part of Speech": "Noun",
+			"English Meaning": "typo / miswritten character",
+			"Example (Chinese + Pinyin)": "发信息前多检查一遍避免错别字。(Fā xìnxī qián duō jiǎnchá yí biàn bìmiǎn cuòbiézì.) — Proofread before sending messages to avoid typos."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "单字",
+			"Pinyin": "dānzì",
+			"Part of Speech": "Noun",
+			"English Meaning": "single character",
+			"Example (Chinese + Pinyin)": "初学打字不要只打单字。(Chūxué dǎzì bú yào zhǐ dǎ dānzì.) — Beginners should avoid typing single characters only."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "联想词",
+			"Pinyin": "liánxiǎngcí",
+			"Part of Speech": "Noun",
+			"English Meaning": "predictive text / associative phrase",
+			"Example (Chinese + Pinyin)": "输入法会自动提供常用的联想词。(Shūrùfǎ huì zìdòng tígōng chángyòng de liánxiǎngcí.) — The input method automatically offers common predictive phrases."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "语音输入",
+			"Pinyin": "yǔyīn shūrù",
+			"Part of Speech": "Noun Phrase",
+			"English Meaning": "voice input / speech-to-text",
+			"Example (Chinese + Pinyin)": "手忙的时候可以用语音输入发消息。(Shǒu máng de shíhou kěyǐ yòng yǔyīn shūrù fā xiāoxi.) — When hands are busy you can use voice input to send messages."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "简拼",
+			"Pinyin": "jiǎnpīn",
+			"Part of Speech": "Noun",
+			"English Meaning": "abbreviated pinyin initials",
+			"Example (Chinese + Pinyin)": "输入每个字的声母简拼即可出词。(Shūrù měi ge zì de shēngmǔ jiǎnpīn jíkě chū cí.) — Typing just the initials of each word will suggest the phrase."
+		}
+	]
+}

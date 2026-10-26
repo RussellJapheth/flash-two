@@ -1,0 +1,189 @@
+{
+	"title": "Field Guide: Relative Time & Weekly Planning",
+	"words": [
+		{
+			"No": 1,
+			"Chinese Word": "前天",
+			"Pinyin": "qiántiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "the day before yesterday",
+			"Example (Chinese + Pinyin)": "我是前天晚上到北京的。(Wǒ shì qiántiān wǎnshang dào Běijīng de.) — I arrived in Beijing the night before yesterday."
+		},
+		{
+			"No": 2,
+			"Chinese Word": "后天",
+			"Pinyin": "hòutiān",
+			"Part of Speech": "Noun",
+			"English Meaning": "the day after tomorrow",
+			"Example (Chinese + Pinyin)": "后天上午我们有一场考试。(Hòutiān shàngwǔ wǒmen yǒu yì chǎng kǎoshì.) — We have an exam the morning after tomorrow."
+		},
+		{
+			"No": 3,
+			"Chinese Word": "上个星期",
+			"Pinyin": "shàng ge xīngqī",
+			"Part of Speech": "Noun Phrase",
+			"English Meaning": "last week",
+			"Example (Chinese + Pinyin)": "上个星期我去了上海出差。(Shàng ge xīngqī wǒ qù le Shànghǎi chūchāi.) — Last week I went on a business trip to Shanghai."
+		},
+		{
+			"No": 4,
+			"Chinese Word": "下个星期",
+			"Pinyin": "xià ge xīngqī",
+			"Part of Speech": "Noun Phrase",
+			"English Meaning": "next week",
+			"Example (Chinese + Pinyin)": "下个星期我们去看电影吧。(Xià ge xīngqī wǒmen qù kàn diànyǐng ba.) — Let's go watch a movie next week."
+		},
+		{
+			"No": 5,
+			"Chinese Word": "上个月",
+			"Pinyin": "shàng ge yuè",
+			"Part of Speech": "Noun Phrase",
+			"English Meaning": "last month",
+			"Example (Chinese + Pinyin)": "上个月天气特别热。(Shàng ge yuè tiānqì tèbié rè.) — Last month the weather was especially hot."
+		},
+		{
+			"No": 6,
+			"Chinese Word": "下个月",
+			"Pinyin": "xià ge yuè",
+			"Part of Speech": "Noun Phrase",
+			"English Meaning": "next month",
+			"Example (Chinese + Pinyin)": "下个月姐姐要来北京看我。(Xià ge yuè jiějie yào lái Běijīng kàn wǒ.) — Next month my elder sister will visit me in Beijing."
+		},
+		{
+			"No": 7,
+			"Chinese Word": "前年",
+			"Pinyin": "qiánnián",
+			"Part of Speech": "Noun",
+			"English Meaning": "the year before last",
+			"Example (Chinese + Pinyin)": "我是前年开始学中文的。(Wǒ shì qiánnián kāishǐ xué zhōngwén de.) — I started learning Chinese the year before last."
+		},
+		{
+			"No": 8,
+			"Chinese Word": "后年",
+			"Pinyin": "hòunián",
+			"Part of Speech": "Noun",
+			"English Meaning": "the year after next",
+			"Example (Chinese + Pinyin)": "他打算后年大学毕业。(Tā dǎsuàn hòunián dàxué bìyè.) — He plans to graduate from university the year after next."
+		},
+		{
+			"No": 9,
+			"Chinese Word": "平时",
+			"Pinyin": "píngshí",
+			"Part of Speech": "Noun",
+			"English Meaning": "normally / usually / weekdays",
+			"Example (Chinese + Pinyin)": "你平时几点下班？(Nǐ píngshí jǐ diǎn xiàbān?) — What time do you normally get off work?"
+		},
+		{
+			"No": 10,
+			"Chinese Word": "以前",
+			"Pinyin": "yǐqián",
+			"Part of Speech": "Noun / Time Word",
+			"English Meaning": "before / previously",
+			"Example (Chinese + Pinyin)": "我以前在伦敦住过两年。(Wǒ yǐqián zài Lúndūn zhù guo liǎng nián.) — I lived in London for two years previously."
+		},
+		{
+			"No": 11,
+			"Chinese Word": "以后",
+			"Pinyin": "yǐhòu",
+			"Part of Speech": "Noun / Time Word",
+			"English Meaning": "after / in the future",
+			"Example (Chinese + Pinyin)": "吃完饭以后我们去散步。(Chī wán fàn yǐhòu wǒmen qù sànbù.) — After finishing the meal we'll go for a walk."
+		},
+		{
+			"No": 12,
+			"Chinese Word": "有时候",
+			"Pinyin": "yǒu shíhou",
+			"Part of Speech": "Adverb Phrase",
+			"English Meaning": "sometimes",
+			"Example (Chinese + Pinyin)": "我平时做饭，有时候点外卖。(Wǒ píngshí zuòfàn, yǒu shíhou diǎn wàimài.) — I usually cook, sometimes order takeout."
+		},
+		{
+			"No": 13,
+			"Chinese Word": "有空",
+			"Pinyin": "yǒu kòng",
+			"Part of Speech": "Phrase",
+			"English Meaning": "to have free time / available",
+			"Example (Chinese + Pinyin)": "你今天晚上有空吗？(Nǐ jīntiān wǎnshang yǒu kòng ma?) — Are you free tonight?"
+		},
+		{
+			"No": 14,
+			"Chinese Word": "没空",
+			"Pinyin": "méi kòng",
+			"Part of Speech": "Phrase",
+			"English Meaning": "not available / no free time",
+			"Example (Chinese + Pinyin)": "真不好意思，我明天一整天都没空。(Zhēn bù hǎoyìsi, wǒ míngtiān yì zhěng tiān dōu méi kòng.) — Really sorry, I have no free time all day tomorrow."
+		},
+		{
+			"No": 15,
+			"Chinese Word": "改天",
+			"Pinyin": "gǎitiān",
+			"Part of Speech": "Adverb",
+			"English Meaning": "another day / some other time",
+			"Example (Chinese + Pinyin)": "今天太匆忙了，改天再聚吧！(Jīntiān tài cōngmáng le, gǎitiān zài jù ba!) — Today is too rushed, let's meet another day!"
+		},
+		{
+			"No": 16,
+			"Chinese Word": "提前",
+			"Pinyin": "tíqián",
+			"Part of Speech": "Verb / Adverb",
+			"English Meaning": "in advance / ahead of schedule",
+			"Example (Chinese + Pinyin)": "我们需要提前半小时到达车站。(Wǒmen xūyào tíqián bàn xiǎoshí dàodá chēzhàn.) — We need to arrive at the station half an hour early."
+		},
+		{
+			"No": 17,
+			"Chinese Word": "推迟",
+			"Pinyin": "tuīchí",
+			"Part of Speech": "Verb",
+			"English Meaning": "to postpone / delay",
+			"Example (Chinese + Pinyin)": "因为下雨，活动推迟到下周。(Yīnwèi xiàyǔ, huódòng tuīchí dào xià zhōu.) — Due to rain, the event is postponed until next week."
+		},
+		{
+			"No": 18,
+			"Chinese Word": "马上",
+			"Pinyin": "mǎshàng",
+			"Part of Speech": "Adverb",
+			"English Meaning": "right away / immediately",
+			"Example (Chinese + Pinyin)": "我马上就到楼下了。(Wǒ mǎshàng jiù dào lóuxià le.) — I'll be downstairs immediately."
+		},
+		{
+			"No": 19,
+			"Chinese Word": "刚",
+			"Pinyin": "gāng",
+			"Part of Speech": "Adverb",
+			"English Meaning": "just now / just",
+			"Example (Chinese + Pinyin)": "我刚从超市买菜回来。(Wǒ gāng cóng chāoshì mǎi cài huílái.) — I just returned from grocery shopping at the supermarket."
+		},
+		{
+			"No": 20,
+			"Chinese Word": "已经",
+			"Pinyin": "yǐjīng",
+			"Part of Speech": "Adverb",
+			"English Meaning": "already",
+			"Example (Chinese + Pinyin)": "火车已经进站了。(Huǒchē yǐjīng jìnzhàn le.) — The train has already entered the station."
+		},
+		{
+			"No": 21,
+			"Chinese Word": "一会儿",
+			"Pinyin": "yíhuìr",
+			"Part of Speech": "Time Word / Noun",
+			"English Meaning": "a short while / in a moment",
+			"Example (Chinese + Pinyin)": "我休息一会儿就继续写作业。(Wǒ xiūxi yíhuìr jiù jìxù xiě zuòyè.) — I'll rest a moment then continue homework."
+		},
+		{
+			"No": 22,
+			"Chinese Word": "稍后",
+			"Pinyin": "shāohòu",
+			"Part of Speech": "Adverb",
+			"English Meaning": "a little later / shortly",
+			"Example (Chinese + Pinyin)": "我稍后给您回电话。(Wǒ shāohòu gěi nín huí diànhuà.) — I will call you back shortly."
+		},
+		{
+			"No": 23,
+			"Chinese Word": "定期",
+			"Pinyin": "dìngqī",
+			"Part of Speech": "Adverb / Adjective",
+			"English Meaning": "regularly / at regular intervals",
+			"Example (Chinese + Pinyin)": "汽车需要定期保养。(Qìchē xūyào dìngqī bǎoyǎng.) — Cars need regular maintenance."
+		}
+	]
+}

@@ -363,17 +363,17 @@
 			</div>
 		</div>
 
-		<!-- Number Rush Card with 3D Game Icon & Glassmorphic Highlights -->
+		<!-- Number Rush Card with Vector Game Icon -->
 		<a
 			href={resolve('/games/number-rush')}
 			id="game-number-rush-card"
 			class="group shadow-card hover:shadow-card-hover relative flex items-center justify-between overflow-hidden rounded-3xl border border-sky-100 bg-linear-to-r from-white via-sky-50/40 to-indigo-50/30 p-4 transition-all hover:-translate-y-0.5 hover:border-sky-300 active:scale-[0.98]"
 		>
 			<div class="flex items-center gap-3.5">
-				<!-- 3D Game Icon -->
+				<!-- Vector Game Icon -->
 				<div class="relative shrink-0">
 					<img
-						src="/images/number-rush-icon.jpg"
+						src="/images/number-rush-icon.svg"
 						alt="Number Rush"
 						class="h-16 w-16 rounded-2xl border border-white/80 object-cover shadow-md shadow-sky-500/20 transition-transform duration-300 group-hover:scale-105"
 					/>
@@ -396,17 +396,17 @@
 			</div>
 		</a>
 
-		<!-- Match Blitz Card with 3D Visual Accent -->
+		<!-- Match Blitz Card with Vector Game Icon -->
 		<a
 			href={resolve('/games/match-blitz')}
 			id="game-match-blitz-card"
 			class="group shadow-card hover:shadow-card-hover relative flex items-center justify-between overflow-hidden rounded-3xl border border-emerald-100 bg-linear-to-r from-white via-emerald-50/40 to-teal-50/30 p-4 transition-all hover:-translate-y-0.5 hover:border-emerald-300 active:scale-[0.98]"
 		>
 			<div class="flex items-center gap-3.5">
-				<!-- 3D Game Icon -->
+				<!-- Vector Game Icon -->
 				<div class="relative shrink-0">
 					<img
-						src="/images/match-blitz-icon.jpg"
+						src="/images/match-blitz-icon.svg"
 						alt="Match Blitz"
 						class="h-16 w-16 rounded-2xl border border-white/80 object-cover shadow-md shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-105"
 					/>
@@ -417,7 +417,7 @@
 						Match Blitz
 					</h4>
 					<p class="font-sans text-xs text-slate-500">
-						Fast-paced 3D tile matching • Multiplier streaks & wave rush
+						Fast-paced tile matching • Multiplier streaks & wave rush
 					</p>
 				</div>
 			</div>

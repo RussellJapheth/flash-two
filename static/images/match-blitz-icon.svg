@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <!-- Emerald-Teal Match Arcade Gradient -->
+    <linearGradient id="mb-bg" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="55%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+
+    <!-- Top Gloss Sheen -->
+    <linearGradient id="mb-gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Gold Sparkle / Multiplier Gradient -->
+    <linearGradient id="mb-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+
+    <!-- Card Drop Shadow -->
+    <filter id="mb-shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#064E3B" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Base Squircle -->
+  <rect width="64" height="64" rx="16" fill="url(#mb-bg)"/>
+
+  <!-- Top Sheen Highlight -->
+  <rect x="1" y="1" width="62" height="28" rx="15" fill="url(#mb-gloss)"/>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="15.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.2"/>
+
+  <!-- Sparkle Particle Accents in Background -->
+  <path d="M11 15 L12 18 L15 19 L12 20 L11 23 L10 20 L7 19 L10 18 Z" fill="#A7F3D0" fill-opacity="0.8"/>
+  <path d="M53 44 L54 46 L56 47 L54 48 L53 50 L52 48 L50 47 L52 46 Z" fill="#A7F3D0" fill-opacity="0.8"/>
+
+  <!-- Left Matching Tile (Angled -5deg: Hanzi '中') -->
+  <g filter="url(#mb-shadow)" transform="rotate(-6 22 28)">
+    <rect x="12" y="15" width="20" height="26" rx="6" fill="#FFFFFF" fill-opacity="0.96"/>
+    <!-- Hanzi '中' -->
+    <rect x="16.5" y="22" width="11" height="8" rx="1" fill="none" stroke="#059669" stroke-width="2.25"/>
+    <line x1="22" y1="18.5" x2="22" y2="33.5" stroke="#059669" stroke-width="2.25" stroke-linecap="round"/>
+  </g>
+
+  <!-- Right Matching Tile (Angled +6deg: Pinyin 'zhōng' / Match Target) -->
+  <g filter="url(#mb-shadow)" transform="rotate(6 42 28)">
+    <rect x="32" y="15" width="20" height="26" rx="6" fill="#FFFFFF" fill-opacity="0.96"/>
+    <!-- Matching Tile Accent: Level Tone Bar & Pinyin 'zh' -->
+    <line x1="38" y1="21" x2="46" y2="21" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="42" y="32" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9" font-weight="900" fill="#047857" text-anchor="middle">zhōng</text>
+  </g>
+
+  <!-- Central Match Blitz Spark (Golden 4-point star burst connecting both tiles) -->
+  <g filter="url(#mb-shadow)">
+    <path d="M32 18 L34 25 L41 27 L34 29 L32 36 L30 29 L23 27 L30 25 Z" 
+          fill="url(#mb-gold)" stroke="#B45309" stroke-width="0.75"/>
+    <circle cx="32" cy="27" r="2" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Multiplier Streak Pill (Bottom: '2x COMBO') -->
+  <g filter="url(#mb-shadow)">
+    <rect x="18" y="44" width="28" height="11" rx="5.5" fill="#064E3B" fill-opacity="0.6"/>
+    <text x="32" y="52.5" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="7.5" font-weight="900" letter-spacing="0.5" fill="#FDE047" text-anchor="middle">2x COMBO</text>
+  </g>
+</svg>

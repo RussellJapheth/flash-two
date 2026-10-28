@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg25" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#C2410C"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg25)"/>
+  <!-- Steaming bowl & chopsticks -->
+  <path d="M16 30C16 41 23 48 32 48C41 48 48 41 48 30H16Z" fill="#FFFFFF"/>
+  <rect x="26" y="48" width="12" height="3" rx="1.5" fill="#FFFFFF"/>
+  <!-- Steam lines -->
+  <path d="M25 24C23 20 27 16 25 12" stroke="#FED7AA" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M32 24C30 20 34 16 32 12" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M39 24C37 20 41 16 39 12" stroke="#FED7AA" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <!-- Chopsticks -->
+  <line x1="42" y1="16" x2="18" y2="38" stroke="#FDE047" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

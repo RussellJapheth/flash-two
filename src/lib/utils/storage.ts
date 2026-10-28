@@ -842,6 +842,41 @@ export function getRecentlyOpenedPackIds(): string[] {
 	}
 }
 
+// Deck Archiving
+const FLASHCARDS_ARCHIVED_DECKS = 'flashcards_archived_decks';
+
+export function getArchivedDeckIds(): string[] {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return [];
+	try {
+		const raw = localStorage.getItem(FLASHCARDS_ARCHIVED_DECKS);
+		if (!raw) return [];
+		const list: unknown = JSON.parse(raw);
+		return Array.isArray(list) ? list.filter((id): id is string => typeof id === 'string') : [];
+	} catch {
+		return [];
+	}
+}
+
+export function setDeckArchived(deckId: string, archived: boolean): void {
+	if ((typeof window === 'undefined' && typeof localStorage === 'undefined') || !deckId) return;
+	try {
+		const current = new Set(getArchivedDeckIds());
+		if (archived) {
+			current.add(deckId);
+		} else {
+			current.delete(deckId);
+		}
+		localStorage.setItem(FLASHCARDS_ARCHIVED_DECKS, JSON.stringify(Array.from(current)));
+	} catch (e) {
+		console.warn('Failed to update archived deck:', e);
+	}
+}
+
+export function isDeckArchived(deckId: string): boolean {
+	const current = new Set(getArchivedDeckIds());
+	return current.has(deckId);
+}
+
 // Streak Computation
 
 export function computeStreakStats(

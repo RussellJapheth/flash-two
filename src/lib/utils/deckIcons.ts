@@ -135,6 +135,90 @@ const DECK_ICONS_MAP: Record<string, DeckIconInfo> = {
 		accentColor: '#0891B2',
 		bgColor: '#ECFEFF'
 	},
+	'chinese-22': {
+		imageSrc: '/images/decks/chinese-22.svg',
+		alt: 'Assignment A Icon',
+		accentColor: '#4F46E5',
+		bgColor: '#EEF2FF'
+	},
+	'chinese-23': {
+		imageSrc: '/images/decks/chinese-23.svg',
+		alt: 'Assignment B Icon',
+		accentColor: '#8B5CF6',
+		bgColor: '#F5F3FF'
+	},
+	'chinese-24': {
+		imageSrc: '/images/decks/chinese-24.svg',
+		alt: 'Self-Introductions & Social Connections Icon',
+		accentColor: '#3B82F6',
+		bgColor: '#EFF6FF'
+	},
+	'chinese-25': {
+		imageSrc: '/images/decks/chinese-25.svg',
+		alt: 'Ordering Food & Restaurant Adjustments Icon',
+		accentColor: '#F97316',
+		bgColor: '#FFF7ED'
+	},
+	'chinese-26': {
+		imageSrc: '/images/decks/chinese-26.svg',
+		alt: 'Shopping, Sizing & Garments Icon',
+		accentColor: '#EC4899',
+		bgColor: '#FDF2F8'
+	},
+	'chinese-27': {
+		imageSrc: '/images/decks/chinese-27.svg',
+		alt: 'Conversational Particles & Nuance Icon',
+		accentColor: '#14B8A6',
+		bgColor: '#F0FDFA'
+	},
+	'chinese-28': {
+		imageSrc: '/images/decks/chinese-28.svg',
+		alt: 'Conversation Rescue & Repair Loops Icon',
+		accentColor: '#EF4444',
+		bgColor: '#FEF2F2'
+	},
+	'chinese-29': {
+		imageSrc: '/images/decks/chinese-29.svg',
+		alt: 'Numbers, Prices & Practical Math Icon',
+		accentColor: '#EAB308',
+		bgColor: '#FEFCE8'
+	},
+	'chinese-30': {
+		imageSrc: '/images/decks/chinese-30.svg',
+		alt: 'Relative Time & Weekly Planning Icon',
+		accentColor: '#0284C7',
+		bgColor: '#F0F9FF'
+	},
+	'chinese-31': {
+		imageSrc: '/images/decks/chinese-31.svg',
+		alt: 'Everyday Home & Living Spaces Icon',
+		accentColor: '#10B981',
+		bgColor: '#ECFDF5'
+	},
+	'chinese-32': {
+		imageSrc: '/images/decks/chinese-32.svg',
+		alt: 'Polite Reactions & Social Courtesies Icon',
+		accentColor: '#F59E0B',
+		bgColor: '#FFFBEB'
+	},
+	'chinese-33': {
+		imageSrc: '/images/decks/chinese-33.svg',
+		alt: '7-Day Travel Survival & Wayfinding Icon',
+		accentColor: '#1E40AF',
+		bgColor: '#EFF6FF'
+	},
+	'chinese-34': {
+		imageSrc: '/images/decks/chinese-34.svg',
+		alt: 'Tone Pairs Lab Icon',
+		accentColor: '#06B6D4',
+		bgColor: '#ECFEFF'
+	},
+	'chinese-35': {
+		imageSrc: '/images/decks/chinese-35.svg',
+		alt: 'Pinyin Typing & Syllable Mechanics Icon',
+		accentColor: '#6366F1',
+		bgColor: '#EEF2FF'
+	},
 	'french-1': {
 		imageSrc: '/images/decks/french-1.svg',
 		alt: 'French Greetings & Essentials Icon',

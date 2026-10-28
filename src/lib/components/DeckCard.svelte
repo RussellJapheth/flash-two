@@ -3,18 +3,22 @@
 	import { resolve } from '$app/paths';
 	import { recordRecentlyOpenedPack } from '$lib/utils/storage';
 	import { getDeckIcon } from '$lib/utils/deckIcons';
-	import { Play, Pencil, Trash2 } from 'lucide-svelte';
+	import { Play, Pencil, Trash2, Archive, ArchiveRestore } from 'lucide-svelte';
 
 	let {
 		deck,
 		onSelect = () => {},
 		onEdit,
-		onDelete
+		onDelete,
+		onArchive,
+		onUnarchive
 	} = $props<{
 		deck: DeckSummary;
 		onSelect?: (deck: DeckSummary) => void;
 		onEdit?: (deck: DeckSummary) => void;
 		onDelete?: (deck: DeckSummary) => void;
+		onArchive?: (deck: DeckSummary) => void;
+		onUnarchive?: (deck: DeckSummary) => void;
 	}>();
 
 	let progressPercent = $derived(
@@ -107,6 +111,36 @@
 					class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-slate-400 transition-colors hover:bg-rose-50 hover:text-rose-600 active:scale-95"
 				>
 					<Trash2 size={15} strokeWidth={2} />
+				</button>
+			{/if}
+
+			{#if deck.isArchived && onUnarchive}
+				<button
+					type="button"
+					onclick={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						onUnarchive(deck);
+					}}
+					title="Restore / Unarchive deck"
+					aria-label="Unarchive {deck.title}"
+					class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-emerald-600 transition-colors hover:bg-emerald-50 active:scale-95"
+				>
+					<ArchiveRestore size={15} strokeWidth={2} />
+				</button>
+			{:else if !deck.isArchived && onArchive}
+				<button
+					type="button"
+					onclick={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						onArchive(deck);
+					}}
+					title="Archive deck"
+					aria-label="Archive {deck.title}"
+					class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 active:scale-95"
+				>
+					<Archive size={15} strokeWidth={2} />
 				</button>
 			{/if}
 

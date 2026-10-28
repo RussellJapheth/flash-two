@@ -45,6 +45,7 @@ export interface CustomDeck {
 	language?: 'chinese' | 'french';
 	createdAt?: number;
 	isPersonalDictionary?: boolean;
+	isArchived?: boolean;
 }
 
 export interface SavedWord {
@@ -177,6 +178,7 @@ export interface DeckSummary {
 	dueCards: number;
 	accuracy: number;
 	isCustom: boolean;
+	isArchived?: boolean;
 }
 
 export interface StreakStats {

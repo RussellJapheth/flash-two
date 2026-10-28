@@ -14,10 +14,19 @@ export interface TonePairWord {
 	english: string;
 }
 
+export const TONE_SYMBOLS: Record<LexicalTone, string> = {
+	1: '¯',
+	2: 'ˊ',
+	3: 'ˇ',
+	4: 'ˋ'
+};
+
 export interface TonePairConfig {
 	id: string; // e.g. '1-1', '2-4'
 	tone1: LexicalTone;
 	tone2: LexicalTone;
+	symbol1: string;
+	symbol2: string;
 	name: string;
 	pitchContour1: [number, number]; // [start, end] on 1-5 scale
 	pitchContour2: [number, number];
@@ -26,7 +35,19 @@ export interface TonePairConfig {
 	words: TonePairWord[];
 }
 
-export const TONE_PAIRS: TonePairConfig[] = [
+interface RawTonePairConfig {
+	id: string;
+	tone1: LexicalTone;
+	tone2: LexicalTone;
+	name?: string;
+	pitchContour1: [number, number];
+	pitchContour2: [number, number];
+	description: string;
+	rehearsalTip: string;
+	words: TonePairWord[];
+}
+
+const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 	// Tone 1 First
 	{
 		id: '1-1',
@@ -305,6 +326,13 @@ export const TONE_PAIRS: TonePairConfig[] = [
 		]
 	}
 ];
+
+export const TONE_PAIRS: TonePairConfig[] = RAW_TONE_PAIRS.map((pair) => ({
+	...pair,
+	symbol1: TONE_SYMBOLS[pair.tone1],
+	symbol2: TONE_SYMBOLS[pair.tone2],
+	name: `Tone ${pair.tone1} (${TONE_SYMBOLS[pair.tone1]}) + Tone ${pair.tone2} (${TONE_SYMBOLS[pair.tone2]})`
+}));
 
 export interface ToneQuestion {
 	word: TonePairWord;

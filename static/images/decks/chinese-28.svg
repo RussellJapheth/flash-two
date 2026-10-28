@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg28" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EF4444"/>
+      <stop offset="100%" stop-color="#B91C1C"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg28)"/>
+  <!-- Lifebuoy / Rescue Ring -->
+  <circle cx="32" cy="32" r="18" fill="#FFFFFF"/>
+  <circle cx="32" cy="32" r="9" fill="#B91C1C"/>
+  <path d="M32 14V23M32 41V50M14 32H23M41 32H50" stroke="#EF4444" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="32" cy="32" r="4" fill="#FFFFFF"/>
+</svg>

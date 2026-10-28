@@ -21,6 +21,7 @@
 		Sparkles,
 		Trophy,
 		Zap,
+		Flame,
 		Headphones,
 		Eye
 	} from 'lucide-svelte';
@@ -246,50 +247,75 @@
 	</header>
 
 	{#if phase === 'playing' && currentQuestion}
-		<!-- Stats Progress Bar -->
-		<section class="mt-1 flex items-center justify-between text-xs font-bold text-slate-500">
-			<span>Question {roundIndex} / {QUESTIONS_PER_ROUND}</span>
-			<div class="flex items-center gap-3">
+		<!-- Game HUD Header with Icon, Question Counter, Combo & Points -->
+		<section
+			class="mt-1 flex items-center justify-between rounded-2xl border border-slate-200/90 bg-white p-2.5 shadow-xs"
+		>
+			<div class="flex items-center gap-2">
+				<img
+					src="/images/tone-pairs-icon.jpg"
+					alt="Tone Pair Lab"
+					class="h-8 w-8 rounded-xl object-cover shadow-xs"
+				/>
+				<div>
+					<div class="font-headline text-xs font-extrabold tracking-tight text-slate-900">
+						Round {roundIndex}
+						<span class="font-normal text-slate-400">/ {QUESTIONS_PER_ROUND}</span>
+					</div>
+					<div class="text-[10px] font-bold text-cyan-600 uppercase">Tone Pair Lab</div>
+				</div>
+			</div>
+
+			<div class="flex items-center gap-2">
 				{#if currentCombo > 1}
-					<span class="flex animate-pulse items-center gap-1 font-black text-amber-600">
-						<Zap size={14} />
-						{currentCombo}x Combo
+					<span
+						class="flex animate-bounce items-center gap-1 rounded-full bg-linear-to-r from-amber-500 to-orange-500 px-2.5 py-0.5 text-[11px] font-black text-white shadow-xs"
+					>
+						<Flame size={12} class="fill-current" />
+						{currentCombo}x
 					</span>
 				{/if}
-				<span class="font-mono text-cyan-700">{score} pts</span>
+				<div
+					class="flex items-center gap-1 rounded-xl border border-cyan-200 bg-cyan-50/80 px-2.5 py-1 font-mono text-xs font-black text-cyan-700"
+				>
+					<Zap size={13} class="fill-cyan-500 text-cyan-600" />
+					<span>{score}</span>
+				</div>
 			</div>
 		</section>
 
 		<!-- Progress Bar Line -->
-		<div class="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+		<div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-200 shadow-inner">
 			<div
-				class="h-full bg-cyan-500 transition-all duration-300"
+				class="h-full bg-linear-to-r from-cyan-500 to-blue-600 transition-all duration-300 ease-out"
 				style="width: {(roundIndex / QUESTIONS_PER_ROUND) * 100}%"
 			></div>
 		</div>
 
-		<!-- Main Prompt Card -->
+		<!-- Main Prompt Card with Arcade Frame -->
 		<section
-			class="relative mt-4 flex flex-col items-center justify-center overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 text-center shadow-sm"
+			class="shadow-card relative mt-3.5 flex flex-col items-center justify-center overflow-hidden rounded-3xl border border-cyan-100 bg-linear-to-b from-white via-cyan-50/20 to-blue-50/20 p-6 text-center"
 		>
 			{#if mode === 'visual'}
-				<h2 class="text-5xl font-black tracking-tight text-slate-900">
-					{currentQuestion.word.hanzi}
-				</h2>
-				<p class="mt-2 text-base font-semibold text-slate-500">
-					{currentQuestion.word.english}
-				</p>
+				<div class="relative py-1">
+					<h2 class="text-5xl font-black tracking-tight text-slate-900 drop-shadow-xs">
+						{currentQuestion.word.hanzi}
+					</h2>
+					<p class="mt-2 text-base font-bold text-slate-500">
+						{currentQuestion.word.english}
+					</p>
+				</div>
 			{:else}
-				<div class="py-2">
+				<div class="py-3">
 					<button
 						type="button"
 						onclick={playCurrentWord}
-						class="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-tr from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 transition hover:scale-105 active:scale-95"
+						class="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-tr from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30 transition hover:scale-105 active:scale-95"
 						aria-label="Replay audio"
 					>
 						<Volume2 size={36} />
 					</button>
-					<p class="mt-3 text-xs font-bold tracking-wider text-slate-400 uppercase">
+					<p class="mt-3 text-xs font-bold tracking-wider text-cyan-700 uppercase">
 						Listen & Identify Tone Pair
 					</p>
 				</div>
@@ -299,27 +325,35 @@
 			<button
 				type="button"
 				onclick={playCurrentWord}
-				class="mt-4 flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-600 transition hover:bg-slate-100 active:scale-95"
+				class="mt-3 flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-bold text-slate-700 shadow-xs transition hover:bg-slate-50 active:scale-95"
 			>
-				<Volume2 size={13} />
-				Play Audio
+				<Volume2 size={13} class="text-cyan-600" />
+				<span>Listen (Replay)</span>
 			</button>
 
 			<!-- Feedback Banner After Submission -->
 			{#if isAnswerSubmitted}
 				<div
 					class="mt-4 w-full rounded-2xl p-3 text-sm font-bold transition-all {isAnswerCorrect
-						? 'border border-emerald-200 bg-emerald-50 text-emerald-800'
-						: 'border border-rose-200 bg-rose-50 text-rose-800'}"
+						? 'border-2 border-emerald-300 bg-emerald-50 text-emerald-900 shadow-xs'
+						: 'border-2 border-rose-300 bg-rose-50 text-rose-900 shadow-xs'}"
 				>
-					<div class="flex items-center justify-center gap-1.5 text-base">
+					<div class="flex items-center justify-center gap-2 text-base">
 						{#if isAnswerCorrect}
-							<span>✓ Correct!</span>
+							<span class="flex items-center gap-1 font-black text-emerald-700">✓ Correct!</span>
+							<span class="font-headline font-bold text-slate-800">
+								Tone {currentQuestion.correctPair.tone1} ({currentQuestion.correctPair.symbol1}) +
+								Tone {currentQuestion.correctPair.tone2} ({currentQuestion.correctPair.symbol2})
+							</span>
 						{:else}
-							<span>✗ Answer: {currentQuestion.correctPair.name}</span>
+							<span class="flex items-center gap-1 font-black text-rose-700">✗ Answer:</span>
+							<span class="font-headline font-bold text-slate-800">
+								Tone {currentQuestion.correctPair.tone1} ({currentQuestion.correctPair.symbol1}) +
+								Tone {currentQuestion.correctPair.tone2} ({currentQuestion.correctPair.symbol2})
+							</span>
 						{/if}
 					</div>
-					<div class="mt-1 font-sans text-xs font-normal text-slate-600">
+					<div class="mt-1 font-sans text-xs font-medium text-slate-600">
 						{currentQuestion.word.pinyin} • {currentQuestion.correctPair.description}
 					</div>
 					<div class="mt-1 text-[11px] font-medium text-slate-500 italic">
@@ -329,8 +363,8 @@
 			{/if}
 		</section>
 
-		<!-- 4 Multiple Choice Tone Options -->
-		<section class="mt-4 grid grid-cols-2 gap-3">
+		<!-- 4 Tactile Arcade Multiple Choice Tone Options with Tone Symbols -->
+		<section class="mt-3.5 grid grid-cols-2 gap-3">
 			{#each currentQuestion.options as option (option.id)}
 				{@const isSelected = selectedOptionId === option.id}
 				{@const isCorrect = option.id === currentQuestion.correctPair.id}
@@ -341,16 +375,48 @@
 					type="button"
 					onclick={() => submitAnswer(option)}
 					disabled={isAnswerSubmitted}
-					class="group relative flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition-all active:scale-95 disabled:pointer-events-none {showCorrectHighlight
-						? 'border-emerald-500 bg-emerald-50 text-emerald-900 shadow-md ring-2 ring-emerald-400'
+					class="group relative flex flex-col items-center justify-center rounded-2xl border-2 border-b-4 p-3.5 text-center transition-all active:translate-y-0.5 active:border-b-2 disabled:pointer-events-none {showCorrectHighlight
+						? 'border-emerald-500 bg-emerald-50 text-emerald-950 shadow-md ring-2 ring-emerald-400'
 						: showWrongHighlight
-							? 'border-rose-400 bg-rose-50 text-rose-900 shadow-md'
-							: 'border-slate-200 bg-white text-slate-800 hover:border-cyan-400 hover:shadow-sm'}"
+							? 'border-rose-500 bg-rose-50 text-rose-950 shadow-md'
+							: 'border-slate-200 bg-white text-slate-800 shadow-xs hover:border-cyan-400 hover:bg-cyan-50/20'}"
 				>
-					<span class="text-xl font-black tracking-tight">{option.name}</span>
-					<span class="mt-1 text-[11px] font-medium text-slate-500">
-						{option.description}
-					</span>
+					<!-- Dual Tone Badges with Specific Tone Symbols (¯, ˊ, ˇ, ˋ) -->
+					<div class="flex items-center justify-center gap-1.5 sm:gap-2">
+						<div class="flex items-center gap-1">
+							<span class="font-headline text-sm font-black text-slate-900 sm:text-base"
+								>T{option.tone1}</span
+							>
+							<span
+								class="inline-flex h-6 w-6 items-center justify-center rounded-lg bg-cyan-100 font-mono text-sm font-black text-cyan-800 shadow-2xs ring-1 ring-cyan-300 sm:h-7 sm:w-7 sm:text-base"
+							>
+								{option.symbol1}
+							</span>
+						</div>
+						<span class="text-xs font-bold text-slate-300">+</span>
+						<div class="flex items-center gap-1">
+							<span class="font-headline text-sm font-black text-slate-900 sm:text-base"
+								>T{option.tone2}</span
+							>
+							<span
+								class="inline-flex h-6 w-6 items-center justify-center rounded-lg bg-cyan-100 font-mono text-sm font-black text-cyan-800 shadow-2xs ring-1 ring-cyan-300 sm:h-7 sm:w-7 sm:text-base"
+							>
+								{option.symbol2}
+							</span>
+						</div>
+					</div>
+
+					<div
+						class="mt-2 flex items-center justify-center gap-1.5 text-[10px] font-medium text-slate-500"
+					>
+						<span
+							class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[9px] font-bold text-slate-600"
+						>
+							{option.pitchContour1[0]}-{option.pitchContour1[1]} · {option
+								.pitchContour2[0]}-{option.pitchContour2[1]}
+						</span>
+						<span class="truncate">{option.description}</span>
+					</div>
 				</button>
 			{/each}
 		</section>

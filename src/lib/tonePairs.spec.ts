@@ -15,6 +15,13 @@ describe('Tone Pairs Lab Data & Game Logic', () => {
 
 		const actualIds = TONE_PAIRS.map((p) => p.id);
 		expect(actualIds.sort()).toEqual(expectedCombos.sort());
+
+		for (const p of TONE_PAIRS) {
+			expect(p.symbol1).toBeDefined();
+			expect(p.symbol2).toBeDefined();
+			expect(p.name).toContain(p.symbol1);
+			expect(p.name).toContain(p.symbol2);
+		}
 	});
 
 	it('ensures each tone pair has valid pitch contours and non-empty vocabulary', () => {

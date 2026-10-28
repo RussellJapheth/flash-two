@@ -472,10 +472,13 @@
 			class="group shadow-card hover:shadow-card-hover relative flex items-center justify-between overflow-hidden rounded-3xl border border-cyan-200 bg-linear-to-r from-white via-cyan-50/40 to-blue-50/30 p-4 transition-all hover:-translate-y-0.5 hover:border-cyan-400 active:scale-[0.98]"
 		>
 			<div class="flex items-center gap-3.5">
-				<div
-					class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-white/80 bg-linear-to-tr from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20 transition-transform duration-300 group-hover:scale-105"
-				>
-					<Headphones size={28} />
+				<!-- 3D Tone Pair Lab Icon -->
+				<div class="relative shrink-0">
+					<img
+						src="/images/tone-pairs-icon.jpg"
+						alt="Tone Pair Lab"
+						class="h-16 w-16 rounded-2xl border border-white/80 object-cover shadow-md shadow-cyan-500/20 transition-transform duration-300 group-hover:scale-105"
+					/>
 				</div>
 
 				<div class="space-y-1">

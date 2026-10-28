@@ -18,7 +18,9 @@
 		computeStreakStats,
 		recordRecentlyOpenedPack,
 		isWordSaved,
-		toggleSavedWord
+		toggleSavedWord,
+		isDeckArchived,
+		setDeckArchived
 	} from '$lib/utils/storage';
 	import { speakWord } from '$lib/utils/audio';
 	import { buildCloze } from '$lib/utils/sentencePractice';
@@ -46,7 +48,9 @@
 		Trash2,
 		Plus,
 		Compass,
-		ArrowRight
+		ArrowRight,
+		Archive,
+		ArchiveRestore
 	} from 'lucide-svelte';
 
 	let streakStats = $state<StreakStats>({
@@ -68,6 +72,7 @@
 	let allProgress = $state<Record<string, WordProgress>>({});
 	let savedWordNos = new SvelteSet<number>();
 	let currentCustomDeck = $state<CustomDeck | null>(null);
+	let isArchived = $state(false);
 
 	let masteredCount = $state(0);
 	let learningCount = $state(0);
@@ -102,6 +107,7 @@
 		const progress = await getAllProgress();
 		allProgress = progress;
 		streakStats = computeStreakStats(progress);
+		isArchived = isDeckArchived(deckId);
 
 		let foundWords: WordRecord[] = [];
 		let title = 'Vocabulary Pack';
@@ -242,6 +248,12 @@
 		}
 	}
 
+	function toggleArchive() {
+		setDeckArchived(deckId, !isArchived);
+		isArchived = !isArchived;
+		scheduleDebouncedSync();
+	}
+
 	let filteredTableWords = $derived(
 		words.filter((w) => {
 			const target = deckLanguage === 'chinese' ? w['Chinese Word'] || '' : w['French Word'] || '';
@@ -339,6 +351,24 @@
 						<Trash2 size={15} strokeWidth={2} />
 					</button>
 				{/if}
+
+				<button
+					type="button"
+					onclick={toggleArchive}
+					title={isArchived ? 'Restore / Unarchive Deck' : 'Archive Deck'}
+					aria-label={isArchived ? 'Unarchive deck' : 'Archive deck'}
+					class="flex h-8 cursor-pointer items-center gap-1 rounded-xl border px-2.5 font-headline text-xs font-bold transition-all active:scale-95 {isArchived
+						? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+						: 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'}"
+				>
+					{#if isArchived}
+						<ArchiveRestore size={13} strokeWidth={2} />
+						<span>Archived</span>
+					{:else}
+						<Archive size={13} strokeWidth={2} />
+						<span>Archive</span>
+					{/if}
+				</button>
 
 				<span class="font-headline text-xs font-bold text-slate-500">
 					{words.length} Cards

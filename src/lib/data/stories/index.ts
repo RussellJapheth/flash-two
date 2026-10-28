@@ -217,6 +217,367 @@ export const BUILTIN_STORIES: Story[] = [
 		}
 	},
 	{
+		id: 'little-panda-apple',
+		title: "The Little Panda's Red Apple",
+		subtitle: '小熊猫的红苹果 · Children’s story of sharing fruit in the bamboo forest',
+		language: 'chinese',
+		difficulty: 'Beginner',
+		durationMinutes: 2,
+		requiresVoice: false,
+		baseXP: 35,
+		bgImageUrl: '/images/stories/panda-apple-bg.jpg',
+		coverImageUrl: '/images/stories/panda-apple-bg.jpg',
+		characters: {
+			panda: {
+				id: 'panda',
+				name: 'Little Panda',
+				avatarUrl: '/images/stories/avatars/panda.jpg',
+				role: 'Bamboo Forest Friend'
+			}
+		},
+		startNodeId: 'node-panda-intro',
+		summaryVocabulary: [
+			{ word: '小熊猫', pinyin: 'xiǎo xióngmāo', meaning: 'Little panda' },
+			{ word: '红苹果', pinyin: 'hóng píngguǒ', meaning: 'Red apple' },
+			{ word: '小兔子', pinyin: 'xiǎo tùzi', meaning: 'Little bunny' },
+			{ word: '一起吃', pinyin: 'yìqǐ chī', meaning: 'Eat together' },
+			{ word: '很甜', pinyin: 'hěn tián', meaning: 'Very sweet' }
+		],
+		nodes: {
+			'node-panda-intro': {
+				id: 'node-panda-intro',
+				speakerId: 'panda',
+				text: '你好！我是小熊猫。今天我在竹林里找到一个大苹果，红红的！',
+				pinyin:
+					'Nǐ hǎo! Wǒ shì xiǎo xióngmāo. Jīntiān wǒ zài zhúlín lǐ zhǎodào yí gè dà píngguǒ, hónghóng de!',
+				translation:
+					'Hello! I am Little Panda. Today I found a big, red apple in the bamboo forest!',
+				audioText: '你好！我是小熊猫。今天我在竹林里找到一个大苹果，红红的！',
+				type: 'choice',
+				choices: [
+					{
+						id: 'choice-hello-panda',
+						text: '你好，小熊猫！苹果看起来真大！',
+						pinyin: 'Nǐ hǎo, xiǎo xióngmāo! Píngguǒ kàn qǐlái zhēn dà!',
+						translation: 'Hello, Little Panda! The apple looks so big!',
+						nextNodeId: 'node-bunny-arrives',
+						isOptimal: true,
+						feedback: 'Little Panda wiggles his ears and beams happily!',
+						xpReward: 10
+					},
+					{
+						id: 'choice-eat-it',
+						text: '快点吃吧！',
+						pinyin: 'Kuài diǎn chī ba!',
+						translation: 'Eat it quickly!',
+						nextNodeId: 'node-bunny-arrives',
+						isOptimal: false,
+						feedback: 'Little Panda chuckles and hugs the apple tight.',
+						xpReward: 5
+					}
+				]
+			},
+			'node-bunny-arrives': {
+				id: 'node-bunny-arrives',
+				speakerId: 'panda',
+				text: '看！小兔子一蹦一跳跑过来了。小兔子看着大苹果，小声说：“我好饿啊。”',
+				pinyin:
+					'Kàn! Xiǎo tùzi yí bèng yí tiào pǎo guòlái le. Xiǎo tùzi kàn zhe dà píngguǒ, xiǎoshēng shuō: "Wǒ hǎo è a."',
+				translation:
+					'Look! Little Bunny hops over. Little Bunny looks at the big apple and whispers: "I am so hungry."',
+				audioText: '看！小兔子一蹦一跳跑过来了。小兔子看着大苹果，小声说：“我好饿啊。”',
+				type: 'cloze',
+				cloze: {
+					sentence: '小兔子肚子很 {blank}。',
+					pinyin: 'Xiǎo tùzi dùzi hěn {blank}.',
+					translation: 'Little Bunny’s tummy is very {blank}.',
+					options: ['饿', '大', '红', '冷'],
+					optionPinyins: {
+						饿: 'è',
+						大: 'dà',
+						红: 'hóng',
+						冷: 'lěng'
+					},
+					optionTranslations: {
+						饿: 'hungry',
+						大: 'big',
+						红: 'red',
+						冷: 'cold'
+					},
+					correctOption: '饿',
+					nextNodeId: 'node-share-apple'
+				}
+			},
+			'node-share-apple': {
+				id: 'node-share-apple',
+				speakerId: 'panda',
+				text: '小熊猫想了想，把大苹果轻轻切成了两半：“给你一半！我们一起吃吧！”',
+				pinyin:
+					'Xiǎo xióngmāo xiǎng le xiǎng, bǎ dà píngguǒ qīngqīng qiē chéng le liǎng bàn: "Gěi nǐ yíbàn! Wǒmen yìqǐ chī ba!"',
+				translation:
+					'Little Panda thought for a moment, gently cut the big apple into halves: "Here is half for you! Let us eat together!"',
+				audioText: '小熊猫想了想，把大苹果轻轻切成了两半：“给你一半！我们一起吃吧！”',
+				type: 'choice',
+				choices: [
+					{
+						id: 'choice-thank-panda',
+						text: '谢谢你，小熊猫！你真好！',
+						pinyin: 'Xièxie nǐ, xiǎo xióngmāo! Nǐ zhēn hǎo!',
+						translation: 'Thank you, Little Panda! You are so kind!',
+						nextNodeId: 'node-apple-taste',
+						isOptimal: true,
+						feedback: 'Little Bunny takes the half apple with both paws and jumps with joy!',
+						xpReward: 10
+					},
+					{
+						id: 'choice-eat-together',
+						text: '苹果一人一半！',
+						pinyin: 'Píngguǒ yì rén yíbàn!',
+						translation: 'Half an apple each!',
+						nextNodeId: 'node-apple-taste',
+						isOptimal: true,
+						feedback: 'Both friends crunch happily into their crisp apples!',
+						xpReward: 8
+					}
+				]
+			},
+			'node-apple-taste': {
+				id: 'node-apple-taste',
+				speakerId: 'panda',
+				text: '咔嚓！咔嚓！苹果红红的、脆脆的，咬一口真舒服！',
+				pinyin: 'Kāchā! Kāchā! Píngguǒ hónghóng de, cuìcuì de, yǎo yì kǒu zhēn shūfu!',
+				translation: 'Crunch! Crunch! The apple is red and crisp. Taking a bite feels wonderful!',
+				audioText: '咔嚓！咔嚓！苹果红红的、脆脆的，咬一口真舒服！',
+				type: 'cloze',
+				cloze: {
+					sentence: '红苹果吃起来真 {blank}。',
+					pinyin: 'Hóng píngguǒ chī qǐlái zhēn {blank}.',
+					translation: 'The red apple tastes so {blank}.',
+					options: ['甜', '苦', '辣', '累'],
+					optionPinyins: {
+						甜: 'tián',
+						苦: 'kǔ',
+						辣: 'là',
+						累: 'lèi'
+					},
+					optionTranslations: {
+						甜: 'sweet',
+						苦: 'bitter',
+						辣: 'spicy',
+						累: 'tired'
+					},
+					correctOption: '甜',
+					nextNodeId: 'node-happy-ending'
+				}
+			},
+			'node-happy-ending': {
+				id: 'node-happy-ending',
+				speakerId: 'panda',
+				text: '吃饱啦！小熊猫和小兔子手拉手，在阳光下的竹林里做游戏。有朋友分享真快乐！',
+				pinyin:
+					'Chī bǎo la! Xiǎo xióngmāo hé xiǎo tùzi shǒu lā shǒu, zài yángguāng xià de zhúlín lǐ zuò yóuxì. Yǒu péngyou fēnxiǎng zhēn kuàilè!',
+				translation:
+					'Full and happy! Little Panda and Little Bunny hold paws and play games in the sunny bamboo forest. Sharing with a friend brings true joy!',
+				audioText: '吃饱啦！小熊猫和小兔子手拉手，在阳光下的竹林里做游戏。有朋友分享真快乐！',
+				type: 'dialogue'
+			}
+		}
+	},
+	{
+		id: 'milktea-quest',
+		title: 'The Bubble Tea Quest',
+		subtitle: '奶茶店大作战 · Order customized boba with sweetness, ice, and toppings',
+		language: 'chinese',
+		difficulty: 'Beginner',
+		durationMinutes: 3,
+		requiresVoice: true,
+		baseXP: 45,
+		bgImageUrl: '/images/stories/milktea-shop-bg.jpg',
+		coverImageUrl: '/images/stories/milktea-shop-bg.jpg',
+		characters: {
+			barista: {
+				id: 'barista',
+				name: 'Barista Xiao Fang',
+				avatarUrl: '/images/stories/avatars/barista.jpg',
+				role: 'Boba Tea Specialist'
+			}
+		},
+		startNodeId: 'node-tea-welcome',
+		summaryVocabulary: [
+			{ word: '珍珠奶茶', pinyin: 'zhēnzhū nǎichá', meaning: 'Bubble tea / Pearl milk tea' },
+			{ word: '少冰', pinyin: 'shǎo bīng', meaning: 'Less ice' },
+			{ word: '半糖', pinyin: 'bàn táng', meaning: 'Half sugar (50%)' },
+			{ word: '椰果', pinyin: 'yēguǒ', meaning: 'Coconut jelly' },
+			{ word: '打包', pinyin: 'dǎbāo', meaning: 'Takeaway / To go' }
+		],
+		nodes: {
+			'node-tea-welcome': {
+				id: 'node-tea-welcome',
+				speakerId: 'barista',
+				text: '您好，欢迎光临开心奶茶！请问今天想喝点什么？',
+				pinyin: 'Nǐn hǎo, huānyíng guānglín Kāixīn Nǎichá! Qǐngwèn jīntiān xiǎng hē diǎn shénme?',
+				translation: 'Hello, welcome to Happy Milk Tea! What would you like to drink today?',
+				audioText: '您好，欢迎光临开心奶茶！请问今天想喝点什么？',
+				type: 'choice',
+				choices: [
+					{
+						id: 'choice-order-boba',
+						text: '你好，我要一杯经典珍珠奶茶。',
+						pinyin: 'Nǐ hǎo, wǒ yào yì bēi jīngdiǎn zhēnzhū nǎichá.',
+						translation: 'Hello, I want one cup of classic pearl milk tea.',
+						nextNodeId: 'node-ice-preference',
+						isOptimal: true,
+						feedback: 'Classic pick! Xiao Fang taps your order onto the touchscreen register.',
+						xpReward: 10
+					},
+					{
+						id: 'choice-recommend',
+						text: '你们有什么推荐的？',
+						pinyin: 'Nǐmen yǒu shénme tuījiàn de?',
+						translation: 'What do you recommend?',
+						nextNodeId: 'node-ice-preference',
+						isOptimal: true,
+						feedback: 'Xiao Fang smiles: "Our brown sugar boba milk tea is top seller!"',
+						xpReward: 8
+					}
+				]
+			},
+			'node-ice-preference': {
+				id: 'node-ice-preference',
+				speakerId: 'barista',
+				text: '没问题！请问温度要常温、去冰还是少冰？',
+				pinyin: 'Méi wèntí! Qǐngwèn wēndù yào chángwēn, qù bīng háishì shǎo bīng?',
+				translation: 'No problem! For temperature, would you like room temp, no ice, or less ice?',
+				audioText: '没问题！请问温度要常温、去冰还是少冰？',
+				type: 'cloze',
+				cloze: {
+					sentence: '请帮我做 {blank}。',
+					pinyin: 'Qǐng bāng wǒ zuò {blank}.',
+					translation: 'Please make it with {blank}.',
+					options: ['少冰', '米饭', '书包', '筷子'],
+					optionPinyins: {
+						少冰: 'shǎo bīng',
+						米饭: 'mǐfàn',
+						书包: 'shūbāo',
+						筷子: 'kuàizi'
+					},
+					optionTranslations: {
+						少冰: 'less ice',
+						米饭: 'cooked rice',
+						书包: 'backpack',
+						筷子: 'chopsticks'
+					},
+					correctOption: '少冰',
+					nextNodeId: 'node-sweetness'
+				}
+			},
+			'node-sweetness': {
+				id: 'node-sweetness',
+				speakerId: 'barista',
+				text: '好的，少冰！那甜度要全糖、半糖，还是微糖呢？',
+				pinyin: 'Hǎo de, shǎo bīng! Nà tiándù yào quán táng, bàn táng, háishì wēi táng ne?',
+				translation: 'Alright, less ice! And for sweetness: full sugar, half sugar, or low sugar?',
+				audioText: '好的，少冰！那甜度要全糖、半糖，还是微糖呢？',
+				type: 'choice',
+				choices: [
+					{
+						id: 'choice-half-sugar',
+						text: '半糖就好，五分甜，不会太甜。',
+						pinyin: 'Bàn táng jiù hǎo, wǔ fēn tián, bú huì tài tián.',
+						translation: 'Half sugar is good, 50% sweetness, not too sweet.',
+						nextNodeId: 'node-toppings',
+						isOptimal: true,
+						feedback: 'Expert tea orderer! Xiao Fang notes 50% sweetness on your ticket.',
+						xpReward: 10
+					},
+					{
+						id: 'choice-low-sugar',
+						text: '微糖，三分甜，健康一点。',
+						pinyin: 'Wēi táng, sān fēn tián, jiànkāng yì diǎn.',
+						translation: 'Slight sweetness, 30% sugar, a bit healthier.',
+						nextNodeId: 'node-toppings',
+						isOptimal: true,
+						feedback: 'Balanced and crisp choice!',
+						xpReward: 10
+					}
+				]
+			},
+			'node-toppings': {
+				id: 'node-toppings',
+				speakerId: 'barista',
+				text: '除了珍珠，要不要额外加一份椰果或者布丁？今天加料半价！',
+				pinyin:
+					'Chúle zhēnzhū, yào bu yào éwài jiā yí fèn yēguǒ huòzhě bùdīng? Jīntiān jiā liào bànjià!',
+				translation:
+					'Besides boba pearls, would you like extra coconut jelly or pudding? Toppings are half-off today!',
+				audioText: '除了珍珠，要不要额外加一份椰果或者布丁？今天加料半价！',
+				type: 'choice',
+				choices: [
+					{
+						id: 'choice-add-jelly',
+						text: '好呀，加一份椰果，谢谢！',
+						pinyin: 'Hǎo ya, jiā yí fèn yēguǒ, xièxie!',
+						translation: 'Great, add coconut jelly please, thanks!',
+						nextNodeId: 'node-payment',
+						isOptimal: true,
+						feedback: 'Double toppings! The texture combination will be delicious.',
+						xpReward: 10
+					},
+					{
+						id: 'choice-just-boba',
+						text: '不用了，珍珠就够了。',
+						pinyin: 'Bú yòng le, zhēnzhū jiù gòu le.',
+						translation: 'No need, boba pearls are enough.',
+						nextNodeId: 'node-payment',
+						isOptimal: false,
+						feedback: 'Staying loyal to pure classic pearls!',
+						xpReward: 5
+					}
+				]
+			},
+			'node-payment': {
+				id: 'node-payment',
+				speakerId: 'barista',
+				text: '好的！一共是十八块。打包带走还是在这里喝？',
+				pinyin: 'Hǎo de! Yígòng shì shíbā kuài. Dǎbāo dàizǒu háishì zài zhèlǐ hē?',
+				translation: 'Alright! Total is 18 yuan. Takeaway or drink here?',
+				audioText: '好的！一共是十八块。打包带走还是在这里喝？',
+				type: 'cloze',
+				cloze: {
+					sentence: '请帮我 {blank} 带走，我扫码支付。',
+					pinyin: 'Qǐng bāng wǒ {blank} dàizǒu, wǒ sǎomǎ zhīfù.',
+					translation: 'Please help me pack it for {blank}, I will scan QR code to pay.',
+					options: ['打包', '游泳', '开会', '洗澡'],
+					optionPinyins: {
+						打包: 'dǎbāo',
+						游泳: 'yóuyǒng',
+						开会: 'kāihuì',
+						洗澡: 'xǐzǎo'
+					},
+					optionTranslations: {
+						打包: 'takeaway / pack',
+						游泳: 'swim',
+						开会: 'attend meeting',
+						洗澡: 'take bath'
+					},
+					correctOption: '打包',
+					nextNodeId: 'node-tea-ready'
+				}
+			},
+			'node-tea-ready': {
+				id: 'node-tea-ready',
+				speakerId: 'barista',
+				text: '哔！付款成功！您的八号珍奶好了，请拿好吸管。喝前记得摇一摇，祝您好心情！',
+				pinyin:
+					'Bì! Fùkuǎn chénggōng! Nín de bā hào zhēnnǎi hǎo le, qǐng ná hǎo xīguǎn. Hē qián jìde yáo yi yáo, zhù nín hǎo xīnqíng!',
+				translation:
+					'Beep! Payment successful! Your #8 boba tea is ready, please take a straw. Remember to shake before drinking, enjoy your day!',
+				audioText: '哔！付款成功！您的八号珍奶好了，请拿好吸管。喝前记得摇一摇，祝您好心情！',
+				type: 'dialogue'
+			}
+		}
+	},
+	{
 		id: 'beijing-subway',
 		title: 'Transfer at Beijing Subway',
 		subtitle: '北京地铁换乘 · Ask for directions & recharge transit pass',

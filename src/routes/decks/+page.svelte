@@ -14,7 +14,9 @@
 		getAllCustomDecks,
 		saveCustomDeck,
 		deleteCustomDeck,
-		computeStreakStats
+		computeStreakStats,
+		isDeckArchived,
+		setDeckArchived
 	} from '$lib/utils/storage';
 	import { BUILTIN_STORIES } from '$lib/data/stories';
 	import { getAllStoryProgress } from '$lib/utils/storyStorage';
@@ -39,7 +41,8 @@
 		Layers,
 		Compass,
 		Clock,
-		ArrowRight
+		ArrowRight,
+		Archive
 	} from 'lucide-svelte';
 	import { downloadCsvTemplate } from '$lib/utils/csvTemplate';
 	import { searchFieldGuides } from '$lib/data/fieldGuides';
@@ -62,7 +65,7 @@
 		freezeDates: []
 	});
 
-	let filterType = $state<'all' | 'chinese' | 'french' | 'custom'>('all');
+	let filterType = $state<'all' | 'chinese' | 'french' | 'custom' | 'archived'>('all');
 	let searchQuery = $state('');
 	let allDecks = $state<DeckSummary[]>([]);
 	let rawCustomDecks = $state<CustomDeck[]>([]);
@@ -119,7 +122,8 @@
 				learningCards: learning,
 				dueCards: due,
 				accuracy,
-				isCustom: false
+				isCustom: false,
+				isArchived: isDeckArchived(pack.id)
 			});
 		}
 
@@ -155,7 +159,8 @@
 				learningCards: learning,
 				dueCards: due,
 				accuracy,
-				isCustom: false
+				isCustom: false,
+				isArchived: isDeckArchived(pack.id)
 			});
 		}
 
@@ -191,18 +196,27 @@
 				learningCards: learning,
 				dueCards: due,
 				accuracy,
-				isCustom: true
+				isCustom: true,
+				isArchived: isDeckArchived(deck.id)
 			});
 		}
 
 		allDecks = summaries;
 	}
 
+	let archivedDecksCount = $derived(allDecks.filter((d) => d.isArchived).length);
+
 	let filteredDecks = $derived(
 		allDecks.filter((deck) => {
-			if (filterType === 'chinese' && (deck.language !== 'chinese' || deck.isCustom)) return false;
-			if (filterType === 'french' && (deck.language !== 'french' || deck.isCustom)) return false;
-			if (filterType === 'custom' && !deck.isCustom) return false;
+			if (filterType === 'archived') {
+				if (!deck.isArchived) return false;
+			} else {
+				if (deck.isArchived) return false;
+				if (filterType === 'chinese' && (deck.language !== 'chinese' || deck.isCustom))
+					return false;
+				if (filterType === 'french' && (deck.language !== 'french' || deck.isCustom)) return false;
+				if (filterType === 'custom' && !deck.isCustom) return false;
+			}
 
 			if (searchQuery.trim()) {
 				const q = searchQuery.toLowerCase();
@@ -234,9 +248,22 @@
 	async function handleDeleteCustomDeck(id: string) {
 		if (confirm('Are you sure you want to delete this custom deck?')) {
 			await deleteCustomDeck(id);
+			setDeckArchived(id, false);
 			scheduleDebouncedSync();
 			await loadDecks();
 		}
+	}
+
+	async function handleArchiveDeck(deckSummary: DeckSummary) {
+		setDeckArchived(deckSummary.id, true);
+		scheduleDebouncedSync();
+		await loadDecks();
+	}
+
+	async function handleUnarchiveDeck(deckSummary: DeckSummary) {
+		setDeckArchived(deckSummary.id, false);
+		scheduleDebouncedSync();
+		await loadDecks();
 	}
 
 	async function handleImportDeck() {
@@ -444,7 +471,7 @@
 
 		<!-- Filter Chips (Segmented Pill Pattern) -->
 		<div class="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-1">
-			{#each ['all', 'chinese', 'french', 'custom'] as f (f)}
+			{#each ['all', 'chinese', 'french', 'custom', 'archived'] as f (f)}
 				<button
 					type="button"
 					onclick={() => (filterType = f as typeof filterType)}
@@ -453,7 +480,14 @@
 						? 'bg-indigo-600 text-white shadow-xs'
 						: 'border border-slate-200/60 bg-white text-slate-600 hover:bg-slate-50'}"
 				>
-					{f}
+					{#if f === 'archived'}
+						<span class="flex items-center gap-1">
+							<Archive size={13} />
+							<span>Archived ({archivedDecksCount})</span>
+						</span>
+					{:else}
+						{f}
+					{/if}
 				</button>
 			{/each}
 		</div>
@@ -465,9 +499,13 @@
 					class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 p-8 text-center text-slate-500"
 				>
 					<FolderOpen size={36} strokeWidth={1.5} class="mb-2 text-slate-400" />
-					<p class="font-headline text-sm font-bold text-slate-800">No decks found</p>
+					<p class="font-headline text-sm font-bold text-slate-800">
+						{filterType === 'archived' ? 'No archived decks' : 'No decks found'}
+					</p>
 					<p class="mt-1 font-sans text-xs text-slate-400">
-						Try another filter or create a new custom deck.
+						{filterType === 'archived'
+							? 'Archive decks to keep your active list clean.'
+							: 'Try another filter or create a new custom deck.'}
 					</p>
 				</div>
 			{:else}
@@ -476,6 +514,8 @@
 						{deck}
 						onEdit={deck.isCustom ? handleEditCustomDeck : undefined}
 						onDelete={deck.isCustom ? (d) => handleDeleteCustomDeck(d.id) : undefined}
+						onArchive={handleArchiveDeck}
+						onUnarchive={handleUnarchiveDeck}
 					/>
 				{/each}
 			{/if}

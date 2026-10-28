@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import FlashCard from '$lib/components/FlashCard.svelte';
@@ -41,7 +42,10 @@
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
 
 	// Active recall mode toggles
-	let isAudioFirst = $state(false);
+	let isAudioFirst = $state(
+		page.url.searchParams.get('audioFirst') === 'true' ||
+			page.url.searchParams.get('mode') === 'audio'
+	);
 	let isTimedSprint = $state(false);
 	let sprintSecondsRemaining = $state(5);
 	let timerInterval: ReturnType<typeof setInterval> | undefined;

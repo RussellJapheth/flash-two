@@ -20,7 +20,8 @@
 		getSavedLanguage,
 		setSavedLanguage,
 		getRecentlyOpenedPackIds,
-		isLeaderboardDisabled
+		isLeaderboardDisabled,
+		isDeckArchived
 	} from '$lib/utils/storage';
 	import { computeLevelStats, getLocalUserXPData, isCloudSyncEnabled } from '$lib/utils/xp';
 	import { scheduleDebouncedSync, subscribeDataChanged } from '$lib/utils/cloud';
@@ -33,8 +34,26 @@
 		ArrowRight,
 		Sparkles,
 		BookOpen,
-		Trophy
+		Trophy,
+		MessagesSquare,
+		Volume2,
+		Gamepad2,
+		Brain
 	} from 'lucide-svelte';
+
+	interface RecommendedActivity {
+		id: string;
+		title: string;
+		subtitle: string;
+		badgeText: string;
+		href: string;
+		actionLabel: string;
+		icon: typeof PlayCircle;
+		deckProgress?: {
+			mastered: number;
+			total: number;
+		};
+	}
 
 	let username = $state('Russell');
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
@@ -56,7 +75,7 @@
 	let recentPackIds = $state<string[]>([]);
 	let totalWeakCount = $state(0);
 
-	let recommendedDeck = $state<DeckSummary | null>(null);
+	let recommendedActivity = $state<RecommendedActivity | null>(null);
 	let editingDeck = $state<CustomDeck | null>(null);
 
 	let displayedRecentDecks = $derived(() => {
@@ -134,7 +153,8 @@
 				learningCards: learning,
 				dueCards: due,
 				accuracy,
-				isCustom: false
+				isCustom: false,
+				isArchived: isDeckArchived(pack.id)
 			});
 		}
 
@@ -171,18 +191,161 @@
 				learningCards: learning,
 				dueCards: due,
 				accuracy,
-				isCustom: true
+				isCustom: true,
+				isArchived: isDeckArchived(deck.id)
 			});
 		}
 
 		deckSummaries = summaries;
 		totalWeakCount = weakAccumulator;
 
-		// Recommended deck: first deck with due cards or first deck
-		recommendedDeck =
-			summaries.find((d) => d.dueCards > 0 && d.masteredCards < d.totalCards) ||
-			summaries[0] ||
-			null;
+		// Build Recommended Activity Pool to alternate across diverse features:
+		// 1. Last deck worked on (or primary vocabulary deck)
+		// 2. Sentence practice on deck
+		// 3. Audio-first listening practice
+		// 4. Arcade game (Tone Pair Lab / Match Blitz)
+		// 5. Interleaved spaced review (if cards due)
+		// 6. Difficult words drill (if weak cards)
+		// 7. Interactive story (if Chinese)
+		const activeDecks = summaries.filter((d) => !d.isArchived);
+		let targetDeck: DeckSummary | null = null;
+		for (const id of recentPackIds) {
+			const match = activeDecks.find((d) => d.id === id);
+			if (match) {
+				targetDeck = match;
+				break;
+			}
+		}
+		if (!targetDeck) {
+			const dueDecks = activeDecks.filter((d) => d.dueCards > 0 && d.masteredCards < d.totalCards);
+			const unmasteredDecks = activeDecks.filter((d) => d.masteredCards < d.totalCards);
+			targetDeck = dueDecks[0] || unmasteredDecks[0] || activeDecks[0] || null;
+		}
+
+		const activities: RecommendedActivity[] = [];
+
+		if (targetDeck) {
+			// 1. Last Deck Worked On / Priority Deck
+			activities.push({
+				id: `deck-${targetDeck.id}`,
+				title: targetDeck.title,
+				subtitle: 'Review vocabulary flashcards with active recall and spaced repetition.',
+				badgeText: `${targetDeck.dueCards} cards ready`,
+				href: `/deck/${targetDeck.id}/preview`,
+				actionLabel: 'Start Session',
+				icon: PlayCircle,
+				deckProgress: {
+					mastered: targetDeck.masteredCards,
+					total: targetDeck.totalCards
+				}
+			});
+
+			// 2. Sentence Practice
+			activities.push({
+				id: `sentences-${targetDeck.id}`,
+				title: `Sentence Drill: ${targetDeck.title}`,
+				subtitle: 'Practice cloze fill-ins, speech recognition chunks, and unscramble drills.',
+				badgeText: 'Context & Cloze',
+				href: `/practice/sentences/${targetDeck.id}`,
+				actionLabel: 'Practice Sentences',
+				icon: MessagesSquare
+			});
+
+			// 3. Listening Practice (Audio-First)
+			activities.push({
+				id: `listening-${targetDeck.id}`,
+				title: `Audio-First Recall: ${targetDeck.title}`,
+				subtitle: 'Listen to native pronunciation before revealing characters and meanings.',
+				badgeText: 'Audio-First',
+				href: `/study/${targetDeck.id}?mode=srs&audioFirst=true`,
+				actionLabel: 'Start Listening Drill',
+				icon: Volume2
+			});
+		}
+
+		// 4. Arcade Games
+		if (activeLanguage === 'chinese') {
+			activities.push({
+				id: 'arcade-tone-pairs',
+				title: 'Tone Pair Lab',
+				subtitle: 'Master all 16 two-syllable pitch combinations with interactive contours.',
+				badgeText: '16 Pitch Pairs',
+				href: '/games/tone-pairs',
+				actionLabel: 'Play Tone Pairs',
+				icon: Gamepad2
+			});
+		}
+
+		activities.push({
+			id: 'arcade-match-blitz',
+			title: 'Match Blitz',
+			subtitle: 'Speed tile-matching race with combo streaks and multiplier bonuses.',
+			badgeText: 'Speed Combo',
+			href: '/games/match-blitz',
+			actionLabel: 'Play Match Blitz',
+			icon: Gamepad2
+		});
+
+		// 5. Spaced Review
+		const totalDueCards = summaries.reduce((acc, d) => acc + (d.isArchived ? 0 : d.dueCards), 0);
+		if (totalDueCards > 0) {
+			activities.push({
+				id: 'spaced-review-global',
+				title: 'Interleaved Spaced Review',
+				subtitle:
+					'Review due cards shuffled across all your decks to optimize long-term retention.',
+				badgeText: `${totalDueCards} cards due`,
+				href: '/review',
+				actionLabel: 'Review Due Cards',
+				icon: Brain
+			});
+		}
+
+		// 6. Difficult Words Practice (if any weak cards)
+		if (weakAccumulator > 0) {
+			activities.push({
+				id: 'difficult-words',
+				title: 'Difficult Words Practice',
+				subtitle: `${weakAccumulator} ${weakAccumulator === 1 ? 'word needs' : 'words need'} targeted reinforcement.`,
+				badgeText: `${weakAccumulator} weak cards`,
+				href: '/practice',
+				actionLabel: 'Practice Weak Words',
+				icon: Dumbbell
+			});
+		}
+
+		// 7. Interactive Story (for Chinese)
+		if (activeLanguage === 'chinese') {
+			activities.push({
+				id: 'story-panda',
+				title: "The Little Panda's Red Apple",
+				subtitle: 'Follow illustrated story dialogue, speech scoring, and comprehension questions.',
+				badgeText: 'Voiced Story',
+				href: '/story/little-panda-apple',
+				actionLabel: 'Read Story',
+				icon: BookOpen
+			});
+		}
+
+		if (activities.length > 0) {
+			let storedOffset = 0;
+			if (typeof localStorage !== 'undefined') {
+				storedOffset = parseInt(
+					localStorage.getItem('flashcards_recommended_activity_offset') ||
+						localStorage.getItem('flashcards_recommended_offset') ||
+						'0',
+					10
+				);
+				if (isNaN(storedOffset)) storedOffset = 0;
+				localStorage.setItem(
+					'flashcards_recommended_activity_offset',
+					String((storedOffset + 1) % activities.length)
+				);
+			}
+			recommendedActivity = activities[storedOffset % activities.length] || activities[0];
+		} else {
+			recommendedActivity = null;
+		}
 	}
 
 	function switchLanguage(lang: 'chinese' | 'french') {
@@ -288,55 +451,65 @@
 	</section>
 
 	<!-- 2. RECOMMENDED NEXT ACTION (PRIMARY CTA) -->
-	{#if recommendedDeck}
-		{@const deckProgressPercent =
-			recommendedDeck.totalCards > 0
-				? Math.round((recommendedDeck.masteredCards / recommendedDeck.totalCards) * 100)
-				: 0}
+	{#if recommendedActivity}
+		{@const Icon = recommendedActivity.icon}
 		<section
-			class="shadow-card hover:shadow-card-hover relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-5 transition-all hover:border-emerald-200"
+			class="shadow-card hover:shadow-card-hover relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-5 transition-all hover:border-indigo-200"
 		>
 			<div class="mb-2.5 flex items-center justify-between">
 				<div
-					class="inline-flex items-center gap-1.5 rounded-full border border-emerald-200/60 bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-emerald-800"
+					class="inline-flex items-center gap-1.5 rounded-full border border-indigo-200/60 bg-indigo-50 px-2.5 py-0.5 text-xs font-bold text-indigo-800"
 				>
-					<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-600"></span>
+					<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-indigo-600"></span>
 					<span>RECOMMENDED DRILL</span>
 				</div>
 				<span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-600">
-					{recommendedDeck.dueCards} cards ready
+					{recommendedActivity.badgeText}
 				</span>
 			</div>
 
 			<h3 class="font-headline text-lg font-extrabold tracking-tight text-slate-900">
-				{recommendedDeck.title}
+				{recommendedActivity.title}
 			</h3>
 
-			<div class="mt-2 mb-4 space-y-1.5">
-				<div class="flex justify-between text-xs font-medium text-slate-500">
-					<span>Mastery</span>
-					<span class="font-semibold text-slate-700"
-						>{recommendedDeck.masteredCards} / {recommendedDeck.totalCards} ({deckProgressPercent}%)</span
-					>
+			<p class="mt-1 font-sans text-xs text-slate-500">
+				{recommendedActivity.subtitle}
+			</p>
+
+			{#if recommendedActivity.deckProgress}
+				{@const deckProgressPercent =
+					recommendedActivity.deckProgress.total > 0
+						? Math.round(
+								(recommendedActivity.deckProgress.mastered /
+									recommendedActivity.deckProgress.total) *
+									100
+							)
+						: 0}
+				<div class="mt-2.5 mb-4 space-y-1.5">
+					<div class="flex justify-between text-xs font-medium text-slate-500">
+						<span>Mastery</span>
+						<span class="font-semibold text-slate-700"
+							>{recommendedActivity.deckProgress.mastered} / {recommendedActivity.deckProgress
+								.total} ({deckProgressPercent}%)</span
+						>
+					</div>
+					<ProgressBar
+						value={recommendedActivity.deckProgress.mastered}
+						max={recommendedActivity.deckProgress.total}
+						variant="emerald"
+						height="h-2"
+					/>
 				</div>
-				<ProgressBar
-					value={recommendedDeck.masteredCards}
-					max={recommendedDeck.totalCards}
-					variant="emerald"
-					height="h-2"
-				/>
-			</div>
+			{:else}
+				<div class="h-4"></div>
+			{/if}
 
 			<a
-				href={resolve(`/deck/${recommendedDeck.id}/preview`)}
+				href={resolve(recommendedActivity.href as '/')}
 				class="group flex h-12 w-full cursor-pointer items-center justify-center gap-2.5 rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-600/30 active:scale-[0.98]"
 			>
-				<PlayCircle
-					size={19}
-					strokeWidth={2.25}
-					class="transition-transform group-hover:scale-110"
-				/>
-				<span>Start Session</span>
+				<Icon size={19} strokeWidth={2.25} class="transition-transform group-hover:scale-110" />
+				<span>{recommendedActivity.actionLabel}</span>
 			</a>
 		</section>
 	{/if}

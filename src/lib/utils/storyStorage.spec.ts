@@ -63,4 +63,18 @@ describe('Story Progress & Storage Utilities', () => {
 		expect(progress).toBeNull();
 		expect(getLocalUserXPData().totalXP).toBe(initialXP);
 	});
+
+	it('includes Little Panda and Bubble Tea stories for Chinese', async () => {
+		const { BUILTIN_STORIES } = await import('$lib/data/stories');
+		const panda = BUILTIN_STORIES.find((s) => s.id === 'little-panda-apple');
+		expect(panda).toBeDefined();
+		expect(panda?.language).toBe('chinese');
+		expect(panda?.difficulty).toBe('Beginner');
+		expect(panda?.characters.panda).toBeDefined();
+
+		const milktea = BUILTIN_STORIES.find((s) => s.id === 'milktea-quest');
+		expect(milktea).toBeDefined();
+		expect(milktea?.language).toBe('chinese');
+		expect(milktea?.characters.barista).toBeDefined();
+	});
 });

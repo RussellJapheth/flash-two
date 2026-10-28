@@ -16,6 +16,7 @@
 	} from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { SvelteSet } from 'svelte/reactivity';
+	import TextbookAvatar from '$lib/components/TextbookAvatar.svelte';
 
 	let { lesson, guide } = $props<{
 		lesson: TextbookLesson;
@@ -124,21 +125,6 @@
 			}
 		}
 	}
-
-	function getToneBadgeColor(tone?: number): string {
-		switch (tone) {
-			case 1:
-				return 'bg-rose-50 text-rose-700 border-rose-200';
-			case 2:
-				return 'bg-emerald-50 text-emerald-700 border-emerald-200';
-			case 3:
-				return 'bg-indigo-50 text-indigo-700 border-indigo-200';
-			case 4:
-				return 'bg-amber-50 text-amber-700 border-amber-200';
-			default:
-				return 'bg-slate-100 text-slate-700 border-slate-200';
-		}
-	}
 </script>
 
 <div class="space-y-6">
@@ -147,11 +133,7 @@
 		class="shadow-card relative overflow-hidden rounded-3xl border-2 border-indigo-200 bg-linear-to-b from-indigo-50 via-white to-amber-50/40 p-5"
 	>
 		<div class="flex items-start gap-3.5">
-			<div
-				class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-2 border-indigo-300 bg-white text-3xl shadow-xs"
-			>
-				{lesson.characterHost.avatarEmoji}
-			</div>
+			<TextbookAvatar name={lesson.characterHost.name} size="lg" />
 			<div class="space-y-1">
 				<div class="flex items-center gap-2">
 					<span
@@ -195,12 +177,7 @@
 		<div class="space-y-3 pt-1">
 			{#each lesson.scene.dialogue as turn, idx (idx)}
 				<div class="flex items-start gap-2.5 {idx % 2 === 1 ? 'flex-row-reverse text-right' : ''}">
-					<div
-						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-xl shadow-xs"
-						title={turn.speaker}
-					>
-						{turn.avatarEmoji}
-					</div>
+					<TextbookAvatar name={turn.speaker} size="md" />
 
 					<!-- Speech Bubble -->
 					<button
@@ -271,15 +248,6 @@
 
 						<div class="flex items-center gap-2">
 							<span class="font-mono text-sm font-bold text-indigo-700">{word.pinyin}</span>
-							{#if word.toneNumber}
-								<span
-									class="rounded-md border px-1.5 py-0.5 font-headline text-[10px] font-extrabold {getToneBadgeColor(
-										word.toneNumber
-									)}"
-								>
-									Tone {word.toneNumber}
-								</span>
-							{/if}
 						</div>
 
 						<p class="font-sans text-xs font-semibold text-slate-800">{word.english}</p>
@@ -400,7 +368,7 @@
 								type="button"
 								onclick={() => handleSelectHanzi(pair.hanzi)}
 								disabled={matchedPairs.has(pair.hanzi)}
-								class="flex cursor-pointer items-center gap-1.5 rounded-xl border-2 px-3 py-1.5 font-headline text-sm font-bold transition-all {matchedPairs.has(
+								class="flex cursor-pointer items-center gap-2 rounded-xl border-2 px-3 py-1.5 transition-all {matchedPairs.has(
 									pair.hanzi
 								)
 									? 'border-emerald-200 bg-emerald-50 text-emerald-700 opacity-60'
@@ -408,7 +376,16 @@
 										? 'border-indigo-600 bg-indigo-600 text-white shadow-xs'
 										: 'border-slate-200 bg-white text-slate-800 hover:border-indigo-300'}"
 							>
-								<span>{pair.hanzi}</span>
+								<span class="font-headline text-sm font-bold">{pair.hanzi}</span>
+								<span
+									class="font-mono text-xs font-semibold {selectedHanzi === pair.hanzi
+										? 'text-indigo-100'
+										: matchedPairs.has(pair.hanzi)
+											? 'text-emerald-600'
+											: 'text-indigo-600'}"
+								>
+									{pair.pinyin}
+								</span>
 								{#if matchedPairs.has(pair.hanzi)}
 									<Check size={13} strokeWidth={3} />
 								{/if}
@@ -441,9 +418,14 @@
 									{pair.english}
 								</span>
 								{#if matchedPairs.has(pair.hanzi)}
-									<span class="font-headline text-xs font-bold text-emerald-700">
-										{pair.hanzi}
-									</span>
+									<div class="mt-1 flex flex-col items-center">
+										<span class="font-headline text-xs font-bold text-emerald-700">
+											{pair.hanzi}
+										</span>
+										<span class="font-mono text-[10px] font-semibold text-emerald-600">
+											{pair.pinyin}
+										</span>
+									</div>
 								{/if}
 							</button>
 						{/each}
@@ -471,8 +453,16 @@
 				</div>
 
 				<!-- Target Sentence Prompt -->
-				<div class="rounded-xl border border-slate-200 bg-white p-2.5 text-xs text-slate-700">
-					<span class="font-bold">Target:</span> "{wr.sentenceEnglish}"
+				<div
+					class="space-y-1 rounded-xl border border-slate-200 bg-white p-2.5 text-xs text-slate-700"
+				>
+					<div class="flex items-center gap-1.5">
+						<span class="font-bold text-slate-900">Target:</span>
+						<span class="font-medium text-slate-800">"{wr.sentenceEnglish}"</span>
+					</div>
+					<div class="font-mono text-[11px] font-semibold text-indigo-600">
+						Pinyin guide: {wr.sentencePinyin}
+					</div>
 				</div>
 
 				<!-- User's Assembled Sentence Track -->
@@ -491,10 +481,15 @@
 							<button
 								type="button"
 								onclick={() => handleRemoveWord(idx)}
-								class="cursor-pointer rounded-xl border border-indigo-200 bg-indigo-50 px-3 py-1 font-headline text-sm font-bold text-indigo-700 hover:bg-rose-50 hover:text-rose-600 active:scale-95"
+								class="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-indigo-200 bg-indigo-50 px-3 py-1 font-headline text-sm font-bold text-indigo-700 transition-all hover:bg-rose-50 hover:text-rose-600 active:scale-95"
 								title="Tap to remove"
 							>
-								{word}
+								<span>{word}</span>
+								{#if wr.wordPinyinMap?.[word]}
+									<span class="font-mono text-[10px] font-medium opacity-80">
+										{wr.wordPinyinMap[word]}
+									</span>
+								{/if}
 							</button>
 						{/each}
 					{/if}
@@ -508,9 +503,14 @@
 								type="button"
 								onclick={() => handleTapWord(word)}
 								disabled={check2Status === 'correct'}
-								class="cursor-pointer rounded-xl border-2 border-slate-200 bg-white px-3.5 py-1.5 font-headline text-sm font-bold text-slate-800 shadow-xs transition-all hover:border-indigo-400 active:scale-95"
+								class="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-3.5 py-1.5 font-headline text-sm font-bold text-slate-800 shadow-xs transition-all hover:border-indigo-400 active:scale-95"
 							>
-								{word}
+								<span>{word}</span>
+								{#if wr.wordPinyinMap?.[word]}
+									<span class="font-mono text-[10px] font-medium text-indigo-600">
+										{wr.wordPinyinMap[word]}
+									</span>
+								{/if}
 							</button>
 						{/each}
 					</div>

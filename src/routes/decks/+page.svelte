@@ -49,6 +49,19 @@
 	import { normalizePinyin } from '$lib/utils/dictionary';
 
 	let activeTab = $state<'flashcards' | 'stories' | 'guides'>('flashcards');
+
+	function switchTab(tab: 'flashcards' | 'stories' | 'guides') {
+		activeTab = tab;
+		try {
+			sessionStorage.setItem('flashcards_decks_active_tab', tab);
+			localStorage.setItem('flashcards_decks_active_tab', tab);
+			const url = new URL(window.location.href);
+			url.searchParams.set('tab', tab);
+			history.replaceState(history.state, '', url.toString());
+		} catch {
+			// Ignore storage/history errors
+		}
+	}
 	let storyFilterLang = $state<'all' | 'chinese' | 'french'>('all');
 	let storyProgressMap = $state<Record<string, StoryCompletionRecord>>({});
 	let isSpeechSupported = $state(false);
@@ -427,6 +440,23 @@
 		const tabParam = page.url.searchParams.get('tab');
 		if (tabParam === 'guides' || tabParam === 'stories' || tabParam === 'flashcards') {
 			activeTab = tabParam;
+			try {
+				sessionStorage.setItem('flashcards_decks_active_tab', tabParam);
+				localStorage.setItem('flashcards_decks_active_tab', tabParam);
+			} catch {
+				// Ignore storage errors in restricted contexts
+			}
+		} else {
+			try {
+				const savedTab =
+					sessionStorage.getItem('flashcards_decks_active_tab') ||
+					localStorage.getItem('flashcards_decks_active_tab');
+				if (savedTab === 'guides' || savedTab === 'stories' || savedTab === 'flashcards') {
+					activeTab = savedTab;
+				}
+			} catch {
+				// Ignore storage errors in restricted contexts
+			}
 		}
 		loadDecks();
 		isSpeechSupported = isSpeechRecognitionSupported();
@@ -450,7 +480,7 @@
 	<div class="grid grid-cols-3 rounded-2xl bg-slate-100 p-1">
 		<button
 			type="button"
-			onclick={() => (activeTab = 'flashcards')}
+			onclick={() => switchTab('flashcards')}
 			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
 			'flashcards'
 				? 'bg-white text-slate-900 shadow-xs'
@@ -461,7 +491,7 @@
 		</button>
 		<button
 			type="button"
-			onclick={() => (activeTab = 'stories')}
+			onclick={() => switchTab('stories')}
 			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
 			'stories'
 				? 'bg-white text-slate-900 shadow-xs'
@@ -472,7 +502,7 @@
 		</button>
 		<button
 			type="button"
-			onclick={() => (activeTab = 'guides')}
+			onclick={() => switchTab('guides')}
 			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
 			'guides'
 				? 'bg-white text-slate-900 shadow-xs'

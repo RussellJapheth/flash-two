@@ -154,6 +154,24 @@ describe('Epic 3: Field Guide Lessons & Progress Tracking', () => {
 			expect(lesson?.miniCheck.length).toBe(2);
 			expect(lesson?.scene.dialogue.length).toBeGreaterThanOrEqual(2);
 			expect(lesson?.xpReward).toBeGreaterThanOrEqual(10);
+
+			// Test mini-check 1 picture match pairs have pinyin
+			const pictureMatch = lesson?.miniCheck[0]?.pictureMatch;
+			expect(pictureMatch).toBeDefined();
+			expect(pictureMatch?.pairs.length).toBeGreaterThanOrEqual(2);
+			for (const pair of pictureMatch!.pairs) {
+				expect(pair.hanzi.length).toBeGreaterThan(0);
+				expect(pair.pinyin.length).toBeGreaterThan(0);
+			}
+
+			// Test mini-check 2 word reorder pairs characters with pinyin in wordPinyinMap
+			const wordReorder = lesson?.miniCheck[1]?.wordReorder;
+			expect(wordReorder).toBeDefined();
+			expect(wordReorder?.wordPinyinMap).toBeDefined();
+			for (const word of wordReorder!.shuffledWords) {
+				expect(wordReorder!.wordPinyinMap![word]).toBeDefined();
+				expect(wordReorder!.wordPinyinMap![word].length).toBeGreaterThan(0);
+			}
 		}
 	});
 

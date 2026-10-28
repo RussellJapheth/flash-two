@@ -324,6 +324,7 @@ export interface WordReorderItem {
 	sentencePinyin: string;
 	sentenceEnglish: string;
 	shuffledWords: string[];
+	wordPinyinMap?: Record<string, string>;
 }
 
 export interface TextbookMiniCheck {

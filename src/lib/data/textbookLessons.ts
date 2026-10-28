@@ -109,7 +109,12 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '我 来自 伦敦',
 					sentencePinyin: 'Wǒ láizì Lúndūn',
 					sentenceEnglish: 'I come from London.',
-					shuffledWords: ['伦敦', '我', '来自']
+					shuffledWords: ['伦敦', '我', '来自'],
+					wordPinyinMap: {
+						我: 'wǒ',
+						来自: 'láizì',
+						伦敦: 'Lúndūn'
+					}
 				}
 			}
 		],
@@ -224,7 +229,12 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '我要 一碗 牛肉面',
 					sentencePinyin: 'Wǒ yào yī wǎn niúròumiàn',
 					sentenceEnglish: 'I want a bowl of beef noodles.',
-					shuffledWords: ['牛肉面', '我要', '一碗']
+					shuffledWords: ['牛肉面', '我要', '一碗'],
+					wordPinyinMap: {
+						我要: 'wǒ yào',
+						一碗: 'yī wǎn',
+						牛肉面: 'niúròumiàn'
+					}
 				}
 			}
 		],
@@ -339,7 +349,12 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '可以 试一下 吗',
 					sentencePinyin: 'Kěyǐ shì yíxià ma',
 					sentenceEnglish: 'May I try it on?',
-					shuffledWords: ['吗', '可以', '试一下']
+					shuffledWords: ['吗', '可以', '试一下'],
+					wordPinyinMap: {
+						可以: 'kěyǐ',
+						试一下: 'shì yíxià',
+						吗: 'ma'
+					}
 				}
 			}
 		],
@@ -453,7 +468,12 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '我们 一起 走吧',
 					sentencePinyin: 'Wǒmen yìqǐ zǒu ba',
 					sentenceEnglish: "Let's go together!",
-					shuffledWords: ['走吧', '一起', '我们']
+					shuffledWords: ['走吧', '一起', '我们'],
+					wordPinyinMap: {
+						我们: 'wǒmen',
+						一起: 'yìqǐ',
+						走吧: 'zǒu ba'
+					}
 				}
 			}
 		],
@@ -579,7 +599,12 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '请 说慢 一点儿',
 					sentencePinyin: 'Qǐng shuō màn yìdiǎnr',
 					sentenceEnglish: 'Please speak a little slower.',
-					shuffledWords: ['一点儿', '请', '说慢']
+					shuffledWords: ['一点儿', '请', '说慢'],
+					wordPinyinMap: {
+						请: 'qǐng',
+						说慢: 'shuō màn',
+						一点儿: 'yìdiǎnr'
+					}
 				}
 			}
 		],
@@ -692,7 +717,12 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '现在 几点 了',
 					sentencePinyin: 'Xiànzài jǐ diǎn le',
 					sentenceEnglish: 'What time is it now?',
-					shuffledWords: ['了', '现在', '几点']
+					shuffledWords: ['了', '现在', '几点'],
+					wordPinyinMap: {
+						现在: 'xiànzài',
+						几点: 'jǐ diǎn',
+						了: 'le'
+					}
 				}
 			}
 		],
@@ -798,7 +828,14 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '明天 我 想 去 公园',
 					sentencePinyin: 'Míngtiān wǒ xiǎng qù gōngyuán',
 					sentenceEnglish: 'Tomorrow I want to go to the park.',
-					shuffledWords: ['公园', '明天', '想', '去', '我']
+					shuffledWords: ['公园', '明天', '想', '去', '我'],
+					wordPinyinMap: {
+						明天: 'míngtiān',
+						我: 'wǒ',
+						想: 'xiǎng',
+						去: 'qù',
+						公园: 'gōngyuán'
+					}
 				}
 			}
 		],
@@ -903,7 +940,12 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '记得 关灯 谢谢',
 					sentencePinyin: 'Jìde guān dēng xièxie',
 					sentenceEnglish: 'Remember to turn off lights, thank you.',
-					shuffledWords: ['关灯', '谢谢', '记得']
+					shuffledWords: ['关灯', '谢谢', '记得'],
+					wordPinyinMap: {
+						记得: 'jìde',
+						关灯: 'guān dēng',
+						谢谢: 'xièxie'
+					}
 				}
 			}
 		],
@@ -1018,7 +1060,11 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '不客气 没关系',
 					sentencePinyin: 'Bú kèqi, méi guānxi',
 					sentenceEnglish: 'You are welcome, no worries.',
-					shuffledWords: ['没关系', '不客气']
+					shuffledWords: ['没关系', '不客气'],
+					wordPinyinMap: {
+						不客气: 'bú kèqi',
+						没关系: 'méi guānxi'
+					}
 				}
 			}
 		],
@@ -1137,7 +1183,12 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '在 哪个 检票口',
 					sentencePinyin: 'Zài nǎge jiǎnpiàokǒu',
 					sentenceEnglish: 'At which ticket gate?',
-					shuffledWords: ['检票口', '在', '哪个']
+					shuffledWords: ['检票口', '在', '哪个'],
+					wordPinyinMap: {
+						在: 'zài',
+						哪个: 'nǎge',
+						检票口: 'jiǎnpiàokǒu'
+					}
 				}
 			}
 		],
@@ -1234,7 +1285,12 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '今天 吃 面包',
 					sentencePinyin: 'Jīntiān chī miànbāo',
 					sentenceEnglish: 'Today eat bread.',
-					shuffledWords: ['面包', '今天', '吃']
+					shuffledWords: ['面包', '今天', '吃'],
+					wordPinyinMap: {
+						今天: 'jīntiān',
+						吃: 'chī',
+						面包: 'miànbāo'
+					}
 				}
 			}
 		],
@@ -1332,7 +1388,12 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '我 不是 学生',
 					sentencePinyin: 'Wǒ bú shì xuésheng',
 					sentenceEnglish: 'I am not a student.',
-					shuffledWords: ['学生', '我', '不是']
+					shuffledWords: ['学生', '我', '不是'],
+					wordPinyinMap: {
+						我: 'wǒ',
+						不是: 'bú shì',
+						学生: 'xuésheng'
+					}
 				}
 			}
 		],
@@ -1437,7 +1498,12 @@ export const TEXTBOOK_LESSONS: TextbookLesson[] = [
 					sentenceHanzi: '我要 一杯 绿茶',
 					sentencePinyin: 'Wǒ yào yì bēi lǜchá',
 					sentenceEnglish: 'I want a cup of green tea.',
-					shuffledWords: ['绿茶', '我要', '一杯']
+					shuffledWords: ['绿茶', '我要', '一杯'],
+					wordPinyinMap: {
+						我要: 'wǒ yào',
+						一杯: 'yì bēi',
+						绿茶: 'lǜchá'
+					}
 				}
 			}
 		],

@@ -84,3 +84,12 @@ A comprehensive task list for enhancing learning depth across Decks, Stories, an
   - Deck content search matching.
   - Story vocabulary extraction.
   - Field guide textbook lesson parsing and progress tracking.
+
+---
+
+## Epic 5: Field Guide Textbook & Decks Polish
+
+- [x] Illustrated avatars for textbook lessons: replace emojis with artistic storybook vector avatars ([TextbookAvatar.svelte](file:///home/russell/projects/experiments/flash-two/src/lib/components/TextbookAvatar.svelte)).
+- [x] Pair characters with pinyin in all mini-checks (picture match bank and matched cards, word reorder prompt and chips).
+- [x] Remove misleading single "Tone .." badge from multi-tone spotlight vocabulary words.
+- [x] Restore and persist active tab (`flashcards` | `stories` | `guides`) on the decks page across back navigation.

@@ -56,6 +56,35 @@ export function saveStreakFreezeData(data: StreakFreezeData): void {
 	}
 }
 
+const COMPLETED_LESSONS_KEY = 'flashcards_completed_lessons';
+
+export function getCompletedLessons(): string[] {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') {
+		return [];
+	}
+	try {
+		const raw = localStorage.getItem(COMPLETED_LESSONS_KEY);
+		if (!raw) return [];
+		const parsed = JSON.parse(raw);
+		return Array.isArray(parsed) ? parsed : [];
+	} catch {
+		return [];
+	}
+}
+
+export function markLessonCompleted(lessonId: string): boolean {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return false;
+	try {
+		const list = getCompletedLessons();
+		if (list.includes(lessonId)) return false;
+		list.push(lessonId);
+		localStorage.setItem(COMPLETED_LESSONS_KEY, JSON.stringify(list));
+		return true;
+	} catch {
+		return false;
+	}
+}
+
 interface RawPackData {
 	title?: string;
 	words?: WordRecord[];

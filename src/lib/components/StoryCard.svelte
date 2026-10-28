@@ -94,6 +94,25 @@
 			</div>
 		</div>
 
+		<!-- Key Vocabulary Pill Shelf -->
+		{#if story.summaryVocabulary && story.summaryVocabulary.length > 0}
+			<div class="mt-2.5 flex flex-wrap items-center gap-1.5">
+				{#each story.summaryVocabulary.slice(0, 5) as vocab (vocab.word)}
+					<span
+						class="inline-flex items-center gap-1 rounded-lg border border-slate-200/80 bg-slate-50 px-2 py-0.5 font-headline text-[10px] font-semibold text-slate-700"
+						title="{vocab.meaning}{vocab.pinyin ? ` (${vocab.pinyin})` : ''}"
+					>
+						<span>{vocab.word}</span>
+						{#if vocab.frequency && vocab.frequency > 1}
+							<span class="rounded bg-slate-200/80 px-1 text-[9px] font-bold text-slate-500">
+								×{vocab.frequency}
+							</span>
+						{/if}
+					</span>
+				{/each}
+			</div>
+		{/if}
+
 		<!-- Meta Pills (Voice mode + Star rating) -->
 		<div
 			class="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3"

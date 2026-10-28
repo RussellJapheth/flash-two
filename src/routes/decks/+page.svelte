@@ -46,6 +46,7 @@
 	} from 'lucide-svelte';
 	import { downloadCsvTemplate } from '$lib/utils/csvTemplate';
 	import { searchFieldGuides } from '$lib/data/fieldGuides';
+	import { normalizePinyin } from '$lib/utils/dictionary';
 
 	let activeTab = $state<'flashcards' | 'stories' | 'guides'>('flashcards');
 	let storyFilterLang = $state<'all' | 'chinese' | 'french'>('all');
@@ -123,7 +124,13 @@
 				dueCards: due,
 				accuracy,
 				isCustom: false,
-				isArchived: isDeckArchived(pack.id)
+				isArchived: isDeckArchived(pack.id),
+				indexedWords: pack.words.map((w) => ({
+					word: w['Chinese Word'] || '',
+					pinyin: w.Pinyin || '',
+					meaning: w['English Meaning'] || '',
+					acceptableAnswers: w['Acceptable Answers'] || []
+				}))
 			});
 		}
 
@@ -160,7 +167,13 @@
 				dueCards: due,
 				accuracy,
 				isCustom: false,
-				isArchived: isDeckArchived(pack.id)
+				isArchived: isDeckArchived(pack.id),
+				indexedWords: pack.words.map((w) => ({
+					word: w['French Word'] || '',
+					pinyin: '',
+					meaning: w['English Meaning'] || '',
+					acceptableAnswers: w['Acceptable Answers'] || []
+				}))
 			});
 		}
 
@@ -197,7 +210,13 @@
 				dueCards: due,
 				accuracy,
 				isCustom: true,
-				isArchived: isDeckArchived(deck.id)
+				isArchived: isDeckArchived(deck.id),
+				indexedWords: deck.words.map((w) => ({
+					word: w['Chinese Word'] || w['French Word'] || '',
+					pinyin: w.Pinyin || '',
+					meaning: w['English Meaning'] || '',
+					acceptableAnswers: w['Acceptable Answers'] || []
+				}))
 			});
 		}
 
@@ -207,23 +226,53 @@
 	let archivedDecksCount = $derived(allDecks.filter((d) => d.isArchived).length);
 
 	let filteredDecks = $derived(
-		allDecks.filter((deck) => {
-			if (filterType === 'archived') {
-				if (!deck.isArchived) return false;
-			} else {
-				if (deck.isArchived) return false;
-				if (filterType === 'chinese' && (deck.language !== 'chinese' || deck.isCustom))
-					return false;
-				if (filterType === 'french' && (deck.language !== 'french' || deck.isCustom)) return false;
-				if (filterType === 'custom' && !deck.isCustom) return false;
-			}
+		allDecks
+			.filter((deck) => {
+				if (filterType === 'archived') {
+					if (!deck.isArchived) return false;
+				} else {
+					if (deck.isArchived) return false;
+					if (filterType === 'chinese' && (deck.language !== 'chinese' || deck.isCustom))
+						return false;
+					if (filterType === 'french' && (deck.language !== 'french' || deck.isCustom))
+						return false;
+					if (filterType === 'custom' && !deck.isCustom) return false;
+				}
+				return true;
+			})
+			.map((deck) => {
+				const q = searchQuery.trim().toLowerCase();
+				if (!q) {
+					return { ...deck, matchedSnippet: undefined };
+				}
 
-			if (searchQuery.trim()) {
-				const q = searchQuery.toLowerCase();
-				return deck.title.toLowerCase().includes(q);
-			}
-			return true;
-		})
+				if (deck.title.toLowerCase().includes(q)) {
+					return { ...deck, matchedSnippet: undefined };
+				}
+
+				const normQ = normalizePinyin(q);
+				const matchedWord = deck.indexedWords?.find((w) => {
+					if (w.word && w.word.toLowerCase().includes(q)) return true;
+					if (w.pinyin) {
+						if (w.pinyin.toLowerCase().includes(q)) return true;
+						if (normQ && normalizePinyin(w.pinyin).includes(normQ)) return true;
+					}
+					if (w.meaning && w.meaning.toLowerCase().includes(q)) return true;
+					if (w.acceptableAnswers && w.acceptableAnswers.some((a) => a.toLowerCase().includes(q)))
+						return true;
+					return false;
+				});
+
+				if (matchedWord) {
+					const snippet = matchedWord.pinyin
+						? `Matches: ${matchedWord.word} (${matchedWord.pinyin})`
+						: `Matches: ${matchedWord.word} — ${matchedWord.meaning}`;
+					return { ...deck, matchedSnippet: snippet };
+				}
+
+				return null;
+			})
+			.filter((deck): deck is DeckSummary => deck !== null)
 	);
 
 	function openCreateDeckModal() {
@@ -355,10 +404,17 @@
 			if (storyFilterLang === 'french' && s.language !== 'french') return false;
 			if (searchQuery.trim()) {
 				const q = searchQuery.toLowerCase();
+				const matchesVocab = s.summaryVocabulary?.some(
+					(v) =>
+						v.word.toLowerCase().includes(q) ||
+						(v.pinyin && v.pinyin.toLowerCase().includes(q)) ||
+						v.meaning.toLowerCase().includes(q)
+				);
 				return (
 					s.title.toLowerCase().includes(q) ||
 					s.subtitle.toLowerCase().includes(q) ||
-					s.difficulty.toLowerCase().includes(q)
+					s.difficulty.toLowerCase().includes(q) ||
+					Boolean(matchesVocab)
 				);
 			}
 			return true;
@@ -463,7 +519,7 @@
 			<Search size={18} strokeWidth={2} class="absolute top-2.5 left-3.5 text-slate-400" />
 			<input
 				type="text"
-				placeholder="Search decks..."
+				placeholder="Search decks by title, word, pinyin, or meaning..."
 				bind:value={searchQuery}
 				class="w-full rounded-2xl border border-slate-200/80 bg-white py-2 pr-4 pl-10 font-sans text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none"
 			/>
@@ -505,7 +561,7 @@
 					<p class="mt-1 font-sans text-xs text-slate-400">
 						{filterType === 'archived'
 							? 'Archive decks to keep your active list clean.'
-							: 'Try another filter or create a new custom deck.'}
+							: 'Try searching by title, character, pinyin, or English translation.'}
 					</p>
 				</div>
 			{:else}
@@ -538,7 +594,7 @@
 			<Search size={18} strokeWidth={2} class="absolute top-2.5 left-3.5 text-slate-400" />
 			<input
 				type="text"
-				placeholder="Search stories, topics..."
+				placeholder="Search stories by title, topic, or vocabulary..."
 				bind:value={searchQuery}
 				class="w-full rounded-2xl border border-slate-200/80 bg-white py-2 pr-4 pl-10 font-sans text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none"
 			/>

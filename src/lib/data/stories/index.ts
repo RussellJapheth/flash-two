@@ -22,10 +22,30 @@ export const BUILTIN_STORIES: Story[] = [
 		},
 		startNodeId: 'node-welcome',
 		summaryVocabulary: [
-			{ word: '欢迎光临', pinyin: 'huānyíng guānglín', meaning: 'Welcome' },
-			{ word: '牛肉面', pinyin: 'niúròu miàn', meaning: 'Beef noodles' },
-			{ word: '香菜', pinyin: 'xiāngcài', meaning: 'Cilantro / Coriander' },
-			{ word: '微信支付', pinyin: 'wēixìn zhīfù', meaning: 'WeChat Pay' }
+			{
+				word: '欢迎光临',
+				pinyin: 'huānyíng guānglín',
+				meaning: 'Welcome',
+				contextSentence: '欢迎光临！请问几位？'
+			},
+			{
+				word: '牛肉面',
+				pinyin: 'niúròu miàn',
+				meaning: 'Beef noodles',
+				contextSentence: '我想吃一碗牛肉面。'
+			},
+			{
+				word: '香菜',
+				pinyin: 'xiāngcài',
+				meaning: 'Cilantro / Coriander',
+				contextSentence: '不要香菜，谢谢！'
+			},
+			{
+				word: '微信支付',
+				pinyin: 'wēixìn zhīfù',
+				meaning: 'WeChat Pay',
+				contextSentence: '微信支付可以吗？'
+			}
 		],
 		nodes: {
 			'node-welcome': {
@@ -237,11 +257,36 @@ export const BUILTIN_STORIES: Story[] = [
 		},
 		startNodeId: 'node-panda-intro',
 		summaryVocabulary: [
-			{ word: '小熊猫', pinyin: 'xiǎo xióngmāo', meaning: 'Little panda' },
-			{ word: '红苹果', pinyin: 'hóng píngguǒ', meaning: 'Red apple' },
-			{ word: '小兔子', pinyin: 'xiǎo tùzi', meaning: 'Little bunny' },
-			{ word: '一起吃', pinyin: 'yìqǐ chī', meaning: 'Eat together' },
-			{ word: '很甜', pinyin: 'hěn tián', meaning: 'Very sweet' }
+			{
+				word: '小熊猫',
+				pinyin: 'xiǎo xióngmāo',
+				meaning: 'Little panda',
+				contextSentence: '你好！我是小熊猫。'
+			},
+			{
+				word: '红苹果',
+				pinyin: 'hóng píngguǒ',
+				meaning: 'Red apple',
+				contextSentence: '在竹林里找到一个大苹果，红红的！'
+			},
+			{
+				word: '小兔子',
+				pinyin: 'xiǎo tùzi',
+				meaning: 'Little bunny',
+				contextSentence: '小兔子跳了过来：我也想吃！'
+			},
+			{
+				word: '一起吃',
+				pinyin: 'yìqǐ chī',
+				meaning: 'Eat together',
+				contextSentence: '我们一起吃苹果吧！'
+			},
+			{
+				word: '很甜',
+				pinyin: 'hěn tián',
+				meaning: 'Very sweet',
+				contextSentence: '这个苹果真甜！'
+			}
 		],
 		nodes: {
 			'node-panda-intro': {
@@ -404,11 +449,36 @@ export const BUILTIN_STORIES: Story[] = [
 		},
 		startNodeId: 'node-tea-welcome',
 		summaryVocabulary: [
-			{ word: '珍珠奶茶', pinyin: 'zhēnzhū nǎichá', meaning: 'Bubble tea / Pearl milk tea' },
-			{ word: '少冰', pinyin: 'shǎo bīng', meaning: 'Less ice' },
-			{ word: '半糖', pinyin: 'bàn táng', meaning: 'Half sugar (50%)' },
-			{ word: '椰果', pinyin: 'yēguǒ', meaning: 'Coconut jelly' },
-			{ word: '打包', pinyin: 'dǎbāo', meaning: 'Takeaway / To go' }
+			{
+				word: '珍珠奶茶',
+				pinyin: 'zhēnzhū nǎichá',
+				meaning: 'Bubble tea / Pearl milk tea',
+				contextSentence: '我想喝一杯珍珠奶茶。'
+			},
+			{
+				word: '少冰',
+				pinyin: 'shǎo bīng',
+				meaning: 'Less ice',
+				contextSentence: '少冰，微糖可以吗？'
+			},
+			{
+				word: '半糖',
+				pinyin: 'bàn táng',
+				meaning: 'Half sugar (50%)',
+				contextSentence: '我要半糖，不要太甜。'
+			},
+			{
+				word: '椰果',
+				pinyin: 'yēguǒ',
+				meaning: 'Coconut jelly',
+				contextSentence: '还可以加一份椰果吗？'
+			},
+			{
+				word: '打包',
+				pinyin: 'dǎbāo',
+				meaning: 'Takeaway / To go',
+				contextSentence: '在这里喝还是打包？打包带走。'
+			}
 		],
 		nodes: {
 			'node-tea-welcome': {
@@ -598,10 +668,30 @@ export const BUILTIN_STORIES: Story[] = [
 		},
 		startNodeId: 'node-subway-start',
 		summaryVocabulary: [
-			{ word: '地铁站', pinyin: 'dìtiě zhàn', meaning: 'Subway station' },
-			{ word: '换乘', pinyin: 'huànchéng', meaning: 'Transfer / Change lines' },
-			{ word: '一卡通', pinyin: 'yīkǎtōng', meaning: 'Transit pass' },
-			{ word: '充值', pinyin: 'chōngzhí', meaning: 'Recharge / Top up' }
+			{
+				word: '地铁站',
+				pinyin: 'dìtiě zhàn',
+				meaning: 'Subway station',
+				contextSentence: '请问去王府井地铁站怎么走？'
+			},
+			{
+				word: '换乘',
+				pinyin: 'huànchéng',
+				meaning: 'Transfer / Change lines',
+				contextSentence: '在前门站换乘2号线。'
+			},
+			{
+				word: '一卡通',
+				pinyin: 'yīkǎtōng',
+				meaning: 'Transit pass',
+				contextSentence: '我的一卡通余额不足了。'
+			},
+			{
+				word: '充值',
+				pinyin: 'chōngzhí',
+				meaning: 'Recharge / Top up',
+				contextSentence: '请帮我充值五十元。'
+			}
 		],
 		nodes: {
 			'node-subway-start': {
@@ -765,10 +855,26 @@ export const BUILTIN_STORIES: Story[] = [
 		},
 		startNodeId: 'node-fr-welcome',
 		summaryVocabulary: [
-			{ word: 'Bonjour', meaning: 'Hello / Good morning' },
-			{ word: 'Une baguette tradition', meaning: 'A traditional baguette' },
-			{ word: "S'il vous plaît", meaning: 'Please' },
-			{ word: 'Par carte', meaning: 'By credit card' }
+			{
+				word: 'Bonjour',
+				meaning: 'Hello / Good morning',
+				contextSentence: 'Bonjour ! Qu’est-ce qui vous ferait plaisir aujourd’hui ?'
+			},
+			{
+				word: 'Une baguette tradition',
+				meaning: 'A traditional baguette',
+				contextSentence: "Une baguette tradition, s'il vous plaît."
+			},
+			{
+				word: "S'il vous plaît",
+				meaning: 'Please',
+				contextSentence: "Deux croissants au beurre, s'il vous plaît."
+			},
+			{
+				word: 'Par carte',
+				meaning: 'By credit card',
+				contextSentence: 'Je peux payer par carte ?'
+			}
 		],
 		nodes: {
 			'node-fr-welcome': {
@@ -878,11 +984,36 @@ export const BUILTIN_STORIES: Story[] = [
 		},
 		startNodeId: 'node-tea-welcome',
 		summaryVocabulary: [
-			{ word: '奶茶', pinyin: 'nǎichá', meaning: 'Milk tea' },
-			{ word: '微糖', pinyin: 'wēi táng', meaning: 'Low sugar (30%)' },
-			{ word: '去冰', pinyin: 'qù bīng', meaning: 'No ice' },
-			{ word: '珍珠', pinyin: 'zhēnzhū', meaning: 'Tapioca pearls / Boba' },
-			{ word: '打包', pinyin: 'dǎbāo', meaning: 'To take out / To go' }
+			{
+				word: '奶茶',
+				pinyin: 'nǎichá',
+				meaning: 'Milk tea',
+				contextSentence: '我要一杯招牌珍珠奶茶。'
+			},
+			{
+				word: '微糖',
+				pinyin: 'wēi táng',
+				meaning: 'Low sugar (30%)',
+				contextSentence: '微糖，少冰，谢谢。'
+			},
+			{
+				word: '去冰',
+				pinyin: 'qù bīng',
+				meaning: 'No ice',
+				contextSentence: '请问要正常冰还是去冰？'
+			},
+			{
+				word: '珍珠',
+				pinyin: 'zhēnzhū',
+				meaning: 'Tapioca pearls / Boba',
+				contextSentence: '多加一份黑糖珍珠。'
+			},
+			{
+				word: '打包',
+				pinyin: 'dǎbāo',
+				meaning: 'To take out / To go',
+				contextSentence: '在这喝还是打包带走？'
+			}
 		],
 		nodes: {
 			'node-tea-welcome': {
@@ -1044,11 +1175,36 @@ export const BUILTIN_STORIES: Story[] = [
 		},
 		startNodeId: 'node-fruit-welcome',
 		summaryVocabulary: [
-			{ word: '斤', pinyin: 'jīn', meaning: '500g (Chinese half-kilo)' },
-			{ word: '新鲜', pinyin: 'xīnxiān', meaning: 'Fresh' },
-			{ word: '便宜', pinyin: 'piányi', meaning: 'Cheap / Inexpensive' },
-			{ word: '称', pinyin: 'chēng', meaning: 'To weigh' },
-			{ word: '扫码', pinyin: 'sǎomǎ', meaning: 'Scan QR code' }
+			{
+				word: '斤',
+				pinyin: 'jīn',
+				meaning: '500g (Chinese half-kilo)',
+				contextSentence: '老板，这个苹果多少钱一斤？'
+			},
+			{
+				word: '新鲜',
+				pinyin: 'xīnxiān',
+				meaning: 'Fresh',
+				contextSentence: '新到的海南芒果，特别新鲜！'
+			},
+			{
+				word: '便宜',
+				pinyin: 'piányi',
+				meaning: 'Cheap / Inexpensive',
+				contextSentence: '能便宜一点吗？算你八块一斤！'
+			},
+			{
+				word: '称',
+				pinyin: 'chēng',
+				meaning: 'To weigh',
+				contextSentence: '老板，帮我称两斤。'
+			},
+			{
+				word: '扫码',
+				pinyin: 'sǎomǎ',
+				meaning: 'Scan QR code',
+				contextSentence: '扫码支付，已经付过了。'
+			}
 		],
 		nodes: {
 			'node-fruit-welcome': {
@@ -1220,3 +1376,43 @@ export const BUILTIN_STORIES: Story[] = [
 		}
 	}
 ];
+
+/**
+ * Calculates word frequency / appearance counter across all nodes of a story scenario.
+ */
+export function calculateStoryVocabFrequency(story: Story, word: string): number {
+	let count = 0;
+	const lowerWord = word.toLowerCase();
+	for (const node of Object.values(story.nodes)) {
+		if (node.text && node.text.toLowerCase().includes(lowerWord)) count++;
+		if (node.choices) {
+			for (const c of node.choices) {
+				if (c.text && c.text.toLowerCase().includes(lowerWord)) count++;
+			}
+		}
+		if (node.cloze) {
+			if (node.cloze.sentence && node.cloze.sentence.toLowerCase().includes(lowerWord)) count++;
+			if (node.cloze.options && node.cloze.options.some((o) => o.toLowerCase().includes(lowerWord)))
+				count++;
+		}
+		if (node.expectedSpeech) {
+			if (
+				node.expectedSpeech.target &&
+				node.expectedSpeech.target.toLowerCase().includes(lowerWord)
+			)
+				count++;
+		}
+	}
+	return Math.max(1, count);
+}
+
+// Compute frequency for all story vocabulary items
+for (const story of BUILTIN_STORIES) {
+	if (story.summaryVocabulary) {
+		for (const item of story.summaryVocabulary) {
+			if (item.frequency === undefined) {
+				item.frequency = calculateStoryVocabFrequency(story, item.word);
+			}
+		}
+	}
+}

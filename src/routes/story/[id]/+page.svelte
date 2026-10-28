@@ -3,10 +3,11 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { onMount, onDestroy } from 'svelte';
+	import { SvelteSet } from 'svelte/reactivity';
 	import StudyTimer from '$lib/components/StudyTimer.svelte';
 	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import { BUILTIN_STORIES } from '$lib/data/stories';
-	import type { Story, StoryNode, StoryChoice } from '$lib/types';
+	import type { Story, StoryNode, StoryChoice, WordProgress, WordRecord } from '$lib/types';
 	import {
 		isSpeechRecognitionSupported,
 		startSpeechRecognition,
@@ -15,6 +16,14 @@
 		type SpeechEvaluationResult
 	} from '$lib/utils/speech';
 	import { saveStoryCompletion } from '$lib/utils/storyStorage';
+	import {
+		getAllProgress,
+		getAllCustomDecks,
+		saveCustomDeck,
+		getBuiltinPacks,
+		getWordProgress
+	} from '$lib/utils/storage';
+	import { isCardMastered } from '$lib/utils/srs';
 	import { speakText, playSound } from '$lib/utils/audio';
 	import {
 		ChevronLeft,
@@ -27,7 +36,10 @@
 		RotateCcw,
 		Languages,
 		Check,
-		ArrowRight
+		ArrowRight,
+		BookMarked,
+		X,
+		Layers
 	} from 'lucide-svelte';
 
 	let storyId = $derived(page.params.id);
@@ -74,6 +86,93 @@
 		return story.characters[currentNode.speakerId] || null;
 	});
 
+	// Pre-Story Vocab & Mastery State
+	let showVocabPreview = $state(false);
+	let allUserProgress = $state<Record<string, WordProgress>>({});
+	const masteredWordsSet = new SvelteSet<string>();
+
+	async function loadVocabMastery() {
+		allUserProgress = await getAllProgress();
+		masteredWordsSet.clear();
+
+		if (story?.summaryVocabulary) {
+			const builtinPacks = await getBuiltinPacks(story.language);
+			const customDecks = await getAllCustomDecks();
+
+			for (const item of story.summaryVocabulary) {
+				const wordText = item.word.toLowerCase();
+				let foundMastered = false;
+
+				for (const pack of builtinPacks) {
+					for (const w of pack.words) {
+						const wText = (w['Chinese Word'] || w['French Word'] || '').toLowerCase();
+						if (wText === wordText) {
+							const p = getWordProgress(allUserProgress, pack.id, w.No, story.language);
+							if (p && isCardMastered(p)) {
+								foundMastered = true;
+								break;
+							}
+						}
+					}
+					if (foundMastered) break;
+				}
+
+				if (!foundMastered) {
+					for (const deck of customDecks) {
+						for (const w of deck.words) {
+							const wText = (w['Chinese Word'] || w['French Word'] || '').toLowerCase();
+							if (wText === wordText) {
+								const p = getWordProgress(allUserProgress, deck.id, w.No, story.language);
+								if (p && isCardMastered(p)) {
+									foundMastered = true;
+									break;
+								}
+							}
+						}
+						if (foundMastered) break;
+					}
+				}
+
+				if (foundMastered) {
+					masteredWordsSet.add(item.word);
+				}
+			}
+		}
+	}
+
+	async function handlePracticeStoryVocab() {
+		if (!story || !story.summaryVocabulary || story.summaryVocabulary.length === 0) return;
+		const deckId = `story-vocab-${story.id}`;
+		const customDecks = await getAllCustomDecks();
+		let targetDeck = customDecks.find((d) => d.id === deckId);
+
+		const words: WordRecord[] = story.summaryVocabulary.map((v, idx) => ({
+			No: idx + 1,
+			'Chinese Word': story.language === 'chinese' ? v.word : undefined,
+			'French Word': story.language === 'french' ? v.word : undefined,
+			Pinyin: v.pinyin,
+			'Part of Speech': 'Story Vocab',
+			'English Meaning': v.meaning,
+			'Example (Chinese + Pinyin)': story.language === 'chinese' ? v.contextSentence : undefined,
+			'Example (French)': story.language === 'french' ? v.contextSentence : undefined
+		}));
+
+		if (!targetDeck) {
+			targetDeck = {
+				id: deckId,
+				name: `${story.title} · Vocab`,
+				language: story.language,
+				words,
+				createdAt: Date.now()
+			};
+		} else {
+			targetDeck.words = words;
+		}
+
+		await saveCustomDeck(targetDeck);
+		goto(resolve(`/study/${deckId}?mode=all`));
+	}
+
 	onMount(() => {
 		if (!story) {
 			goto(resolve('/decks'), { replaceState: true });
@@ -83,6 +182,7 @@
 		currentNodeId = story.startNodeId;
 		triggerAutoStartStudyTimer();
 		speakCurrentNode();
+		loadVocabMastery();
 	});
 
 	onDestroy(() => {
@@ -245,6 +345,7 @@
 
 		const totalAwardXP = Math.max(story.baseXP, earnedXP);
 		saveStoryCompletion(story.id, Math.round(accuracy), finalStars, totalAwardXP);
+		loadVocabMastery();
 		triggerAutoStopStudyTimer();
 		playSound('milestone');
 	}
@@ -325,6 +426,20 @@
 						title="Toggle Pinyin"
 					>
 						拼
+					</button>
+				{/if}
+
+				{#if story.summaryVocabulary && story.summaryVocabulary.length > 0}
+					<button
+						type="button"
+						onclick={() => (showVocabPreview = !showVocabPreview)}
+						class="flex items-center gap-1 rounded-lg px-2.5 py-1 font-headline text-[11px] font-bold transition-colors {showVocabPreview
+							? 'bg-indigo-600 text-white shadow-xs'
+							: 'bg-slate-100 text-slate-600 hover:bg-slate-200'}"
+						title="Pre-Story Key Vocabulary Preview"
+					>
+						<BookMarked size={13} />
+						<span>Vocab</span>
 					</button>
 				{/if}
 
@@ -773,19 +888,71 @@
 					</div>
 
 					{#if story.summaryVocabulary && story.summaryVocabulary.length > 0}
-						<div class="rounded-2xl border border-slate-100 bg-slate-50 p-3.5 text-left">
-							<p
-								class="font-headline text-[11px] font-bold tracking-wider text-slate-400 uppercase"
-							>
-								Vocabulary Practiced
-							</p>
-							<div class="mt-2 space-y-1.5">
+						<div class="space-y-2 rounded-2xl border border-slate-100 bg-slate-50 p-3.5 text-left">
+							<div class="flex items-center justify-between">
+								<p
+									class="font-headline text-[11px] font-bold tracking-wider text-slate-400 uppercase"
+								>
+									Vocabulary Breakdown
+								</p>
+								<div class="flex items-center gap-2 text-[10px] font-bold">
+									<span class="rounded-full bg-emerald-100/90 px-2 py-0.5 text-emerald-700">
+										{story.summaryVocabulary.filter((v) => masteredWordsSet.has(v.word)).length} Mastered
+									</span>
+									<span class="rounded-full bg-indigo-100/90 px-2 py-0.5 text-indigo-700">
+										{story.summaryVocabulary.filter((v) => !masteredWordsSet.has(v.word)).length} Encountered
+									</span>
+								</div>
+							</div>
+
+							<div class="max-h-40 space-y-1.5 overflow-y-auto pr-1">
 								{#each story.summaryVocabulary as vocab (vocab.word)}
-									<div class="flex items-center justify-between text-xs">
-										<span class="font-headline font-bold text-slate-900">{vocab.word}</span>
-										<span class="font-sans text-slate-500">{vocab.meaning}</span>
+									<div
+										class="flex items-center justify-between rounded-xl border border-slate-200/60 bg-white p-2 text-xs"
+									>
+										<div class="flex min-w-0 items-center gap-1.5">
+											<span class="font-headline font-bold text-slate-900">{vocab.word}</span>
+											{#if vocab.pinyin}
+												<span class="font-mono text-[10px] text-slate-400">{vocab.pinyin}</span>
+											{/if}
+											<span class="truncate font-sans text-[11px] text-slate-500"
+												>— {vocab.meaning}</span
+											>
+										</div>
+										<div class="flex shrink-0 items-center gap-1.5">
+											<span
+												class="rounded-full px-2 py-0.5 text-[9px] font-bold {masteredWordsSet.has(
+													vocab.word
+												)
+													? 'border border-emerald-200 bg-emerald-50 text-emerald-700'
+													: 'border border-indigo-200 bg-indigo-50 text-indigo-700'}"
+											>
+												{masteredWordsSet.has(vocab.word) ? 'Mastered' : 'Encountered'}
+											</span>
+											<button
+												type="button"
+												onclick={() => speakText(vocab.word, story?.language || 'chinese')}
+												class="flex h-6 w-6 cursor-pointer items-center justify-center rounded-lg text-slate-400 transition-colors hover:text-indigo-600 active:scale-95"
+												title="Pronounce"
+												aria-label="Pronounce {vocab.word}"
+											>
+												<Volume2 size={13} />
+											</button>
+										</div>
 									</div>
 								{/each}
+							</div>
+
+							<!-- Practice Story Vocab Button -->
+							<div class="pt-1.5">
+								<button
+									type="button"
+									onclick={handlePracticeStoryVocab}
+									class="flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-2xl border border-indigo-200 bg-white py-2.5 font-headline text-xs font-bold text-indigo-700 shadow-xs transition-colors hover:bg-indigo-50 active:scale-95"
+								>
+									<Layers size={14} class="text-indigo-600" />
+									<span>Practice Story Vocab (SRS)</span>
+								</button>
 							</div>
 						</div>
 					{/if}
@@ -807,6 +974,102 @@
 							<span>Back to Decks</span>
 							<ArrowRight size={14} />
 						</a>
+					</div>
+				</div>
+			</div>
+		{/if}
+
+		<!-- PRE-STORY VOCAB PREVIEW MODAL / DRAWER -->
+		{#if showVocabPreview && story.summaryVocabulary && story.summaryVocabulary.length > 0}
+			<div
+				class="fixed inset-0 z-50 flex items-end justify-center bg-slate-900/60 p-0 backdrop-blur-xs sm:items-center sm:p-4"
+			>
+				<div
+					class="flex max-h-[85vh] w-full max-w-lg flex-col overflow-hidden rounded-t-3xl border border-slate-200/80 bg-white p-5 shadow-2xl sm:rounded-3xl"
+				>
+					<div class="flex items-center justify-between border-b border-slate-100 pb-3">
+						<div class="flex items-center gap-2">
+							<BookMarked size={20} class="text-indigo-600" />
+							<div>
+								<h3 class="font-headline text-base font-extrabold text-slate-900">
+									Key Vocabulary Preview
+								</h3>
+								<p class="font-sans text-[11px] text-slate-500">
+									Core target words for {story.title}
+								</p>
+							</div>
+						</div>
+						<button
+							type="button"
+							onclick={() => (showVocabPreview = false)}
+							class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-slate-200 active:scale-95"
+							aria-label="Close"
+						>
+							<X size={16} />
+						</button>
+					</div>
+
+					<div class="space-y-2.5 overflow-y-auto py-3">
+						{#each story.summaryVocabulary as vocab (vocab.word)}
+							<div
+								class="flex items-start justify-between gap-3 rounded-2xl border border-slate-200/80 bg-slate-50 p-3"
+							>
+								<div class="space-y-1">
+									<div class="flex items-center gap-2">
+										<span class="font-headline text-base font-black text-slate-900">
+											{vocab.word}
+										</span>
+										{#if vocab.pinyin}
+											<span class="font-mono text-xs font-semibold text-indigo-600">
+												{vocab.pinyin}
+											</span>
+										{/if}
+										{#if vocab.frequency && vocab.frequency > 1}
+											<span
+												class="rounded-full bg-slate-200/80 px-2 py-0.5 text-[9px] font-bold text-slate-600"
+											>
+												Appears ×{vocab.frequency}
+											</span>
+										{/if}
+									</div>
+									<p class="font-sans text-xs font-medium text-slate-600">{vocab.meaning}</p>
+									{#if vocab.contextSentence}
+										<p class="font-sans text-[11px] text-slate-400 italic">
+											"{vocab.contextSentence}"
+										</p>
+									{/if}
+								</div>
+
+								<button
+									type="button"
+									onclick={() => speakText(vocab.word, story?.language || 'chinese')}
+									class="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 active:scale-95"
+									title="Listen pronunciation"
+									aria-label="Listen {vocab.word}"
+								>
+									<Volume2 size={15} />
+								</button>
+							</div>
+						{/each}
+					</div>
+
+					<div class="flex items-center gap-2 border-t border-slate-100 pt-3">
+						<button
+							type="button"
+							onclick={handlePracticeStoryVocab}
+							class="flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-2xl border border-indigo-200 bg-indigo-50 py-2.5 font-headline text-xs font-bold text-indigo-700 hover:bg-indigo-100 active:scale-95"
+						>
+							<Layers size={14} />
+							<span>Practice Story Vocab (SRS)</span>
+						</button>
+						<button
+							type="button"
+							onclick={() => (showVocabPreview = false)}
+							class="flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-2xl bg-indigo-600 py-2.5 font-headline text-xs font-bold text-white shadow-xs hover:bg-indigo-700 active:scale-95"
+						>
+							<span>Start Story</span>
+							<ArrowRight size={14} />
+						</button>
 					</div>
 				</div>
 			</div>

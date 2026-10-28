@@ -3,8 +3,10 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { getFieldGuideById } from '$lib/data/fieldGuides';
+	import { getTextbookLesson } from '$lib/data/textbookLessons';
 	import WordLookupModal from '$lib/components/WordLookupModal.svelte';
 	import FieldGuideMarkdown from '$lib/components/FieldGuideMarkdown.svelte';
+	import TextbookLessonView from '$lib/components/TextbookLessonView.svelte';
 	import {
 		ChevronLeft,
 		BookOpen,
@@ -17,6 +19,8 @@
 
 	let guideId = $derived(page.params.id || '');
 	let guide = $derived(getFieldGuideById(guideId));
+	let lesson = $derived(getTextbookLesson(guideId));
+	let activeMode = $state<'textbook' | 'reference'>('textbook');
 
 	let selectedWord = $state<{
 		hanzi: string;
@@ -123,75 +127,115 @@
 				</div>
 			</section>
 
-			<!-- Quick Vocabulary Chips (Click to Lookup / Save to Notes) -->
-			{#if guide.keyVocab && guide.keyVocab.length > 0}
-				<section class="space-y-2.5 rounded-3xl border border-slate-200/80 bg-white p-4 shadow-xs">
-					<div class="flex items-center justify-between">
-						<div class="flex items-center gap-1.5 font-headline text-xs font-bold text-slate-900">
-							<Sparkles size={14} class="text-amber-500" />
-							<span>High-Yield Vocabulary</span>
-						</div>
-						<span class="text-[10px] font-semibold text-slate-400">
-							Tap word to lookup or save
+			<!-- Interactive Mode Toggle (Textbook Lesson vs Reference Guide) -->
+			<div class="flex rounded-2xl border border-slate-200/80 bg-slate-100 p-1">
+				<button
+					type="button"
+					onclick={() => (activeMode = 'textbook')}
+					class="flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeMode ===
+					'textbook'
+						? 'bg-white text-indigo-700 shadow-xs'
+						: 'text-slate-600 hover:text-slate-900'}"
+				>
+					<span>Textbook Lesson</span>
+					{#if lesson}
+						<span
+							class="rounded-full bg-indigo-100 px-1.5 py-0.5 text-[9px] font-extrabold text-indigo-700"
+						>
+							Interactive
 						</span>
-					</div>
+					{/if}
+				</button>
+				<button
+					type="button"
+					onclick={() => (activeMode = 'reference')}
+					class="flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeMode ===
+					'reference'
+						? 'bg-white text-slate-900 shadow-xs'
+						: 'text-slate-600 hover:text-slate-900'}"
+				>
+					<span>Reference Guide</span>
+					<span class="rounded-full bg-slate-200 px-1.5 py-0.5 text-[9px] font-bold text-slate-600">
+						Notes
+					</span>
+				</button>
+			</div>
 
-					<div class="flex flex-wrap gap-2">
-						{#each guide.keyVocab as item (item.hanzi)}
-							<button
-								type="button"
-								onclick={() => openLookup(item)}
-								class="group flex cursor-pointer items-center gap-1.5 rounded-2xl border border-slate-200/90 bg-slate-50 px-3 py-1.5 transition-all hover:border-indigo-300 hover:bg-indigo-50/50 active:scale-95"
-							>
-								<span
-									class="font-headline text-sm font-bold text-slate-900 group-hover:text-indigo-600"
+			{#if activeMode === 'textbook' && lesson}
+				<TextbookLessonView {lesson} {guide} />
+			{:else}
+				<!-- Quick Vocabulary Chips (Click to Lookup / Save to Notes) -->
+				{#if guide.keyVocab && guide.keyVocab.length > 0}
+					<section
+						class="space-y-2.5 rounded-3xl border border-slate-200/80 bg-white p-4 shadow-xs"
+					>
+						<div class="flex items-center justify-between">
+							<div class="flex items-center gap-1.5 font-headline text-xs font-bold text-slate-900">
+								<Sparkles size={14} class="text-amber-500" />
+								<span>High-Yield Vocabulary</span>
+							</div>
+							<span class="text-[10px] font-semibold text-slate-400">
+								Tap word to lookup or save
+							</span>
+						</div>
+
+						<div class="flex flex-wrap gap-2">
+							{#each guide.keyVocab as item (item.hanzi)}
+								<button
+									type="button"
+									onclick={() => openLookup(item)}
+									class="group flex cursor-pointer items-center gap-1.5 rounded-2xl border border-slate-200/90 bg-slate-50 px-3 py-1.5 transition-all hover:border-indigo-300 hover:bg-indigo-50/50 active:scale-95"
 								>
-									{item.hanzi}
-								</span>
-								<span class="font-mono text-xs text-slate-500">
-									{item.pinyin}
-								</span>
-							</button>
-						{/each}
+									<span
+										class="font-headline text-sm font-bold text-slate-900 group-hover:text-indigo-600"
+									>
+										{item.hanzi}
+									</span>
+									<span class="font-mono text-xs text-slate-500">
+										{item.pinyin}
+									</span>
+								</button>
+							{/each}
+						</div>
+					</section>
+				{/if}
+
+				<!-- Rich Markdown Content -->
+				<section class="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-xs">
+					<FieldGuideMarkdown markdown={guide.markdownContent} onSelectWord={openLookup} />
+				</section>
+
+				<!-- Wrap-Up & Next Step SRS Deck Action -->
+				<section
+					class="rounded-3xl border border-slate-200/80 bg-linear-to-r from-indigo-50 to-purple-50 p-5 shadow-xs"
+				>
+					<div class="flex items-start gap-3">
+						<div
+							class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-xs"
+						>
+							<CheckCircle2 size={20} />
+						</div>
+						<div class="space-y-1">
+							<h4 class="font-headline text-sm font-black text-slate-900">
+								Ready to test your memory?
+							</h4>
+							<p class="font-sans text-xs leading-relaxed text-slate-600">
+								Lock this field guide's high-frequency vocabulary into long-term memory with SRS
+								flashcards and cloze sentence practice.
+							</p>
+							<div class="pt-2">
+								<a
+									href={resolve(`/deck/${guide.packId}`)}
+									class="inline-flex items-center gap-1.5 rounded-2xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-indigo-700 active:scale-95"
+								>
+									<span>Start SRS Flashcards ({guide.packTitle.split(':')[0]})</span>
+									<ArrowRight size={14} />
+								</a>
+							</div>
+						</div>
 					</div>
 				</section>
 			{/if}
-
-			<!-- Rich Markdown Content -->
-			<section class="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-xs">
-				<FieldGuideMarkdown markdown={guide.markdownContent} onSelectWord={openLookup} />
-			</section>
-
-			<!-- Wrap-Up & Next Step SRS Deck Action -->
-			<section
-				class="rounded-3xl border border-slate-200/80 bg-linear-to-r from-indigo-50 to-purple-50 p-5 shadow-xs"
-			>
-				<div class="flex items-start gap-3">
-					<div
-						class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-xs"
-					>
-						<CheckCircle2 size={20} />
-					</div>
-					<div class="space-y-1">
-						<h4 class="font-headline text-sm font-black text-slate-900">
-							Ready to test your memory?
-						</h4>
-						<p class="font-sans text-xs leading-relaxed text-slate-600">
-							Lock this field guide's high-frequency vocabulary into long-term memory with SRS
-							flashcards and cloze sentence practice.
-						</p>
-						<div class="pt-2">
-							<a
-								href={resolve(`/deck/${guide.packId}`)}
-								class="inline-flex items-center gap-1.5 rounded-2xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-indigo-700 active:scale-95"
-							>
-								<span>Start SRS Flashcards ({guide.packTitle.split(':')[0]})</span>
-								<ArrowRight size={14} />
-							</a>
-						</div>
-					</div>
-				</div>
-			</section>
 		</div>
 	</main>
 {/if}

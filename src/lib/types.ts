@@ -179,6 +179,13 @@ export interface DeckSummary {
 	accuracy: number;
 	isCustom: boolean;
 	isArchived?: boolean;
+	matchedSnippet?: string;
+	indexedWords?: Array<{
+		word: string;
+		pinyin?: string;
+		meaning: string;
+		acceptableAnswers?: string[];
+	}>;
 }
 
 export interface StreakStats {
@@ -253,11 +260,15 @@ export interface Story {
 	characters: Record<string, StoryCharacter>;
 	startNodeId: string;
 	nodes: Record<string, StoryNode>;
-	summaryVocabulary?: {
-		word: string;
-		pinyin?: string;
-		meaning: string;
-	}[];
+	summaryVocabulary?: StoryVocabularyItem[];
+}
+
+export interface StoryVocabularyItem {
+	word: string;
+	pinyin?: string;
+	meaning: string;
+	contextSentence?: string;
+	frequency?: number;
 }
 
 export interface StoryCompletionRecord {
@@ -267,4 +278,80 @@ export interface StoryCompletionRecord {
 	stars: number; // 1-3
 	timesPlayed: number;
 	xpEarned: number;
+}
+
+export interface TextbookDialogueTurn {
+	speaker: string;
+	avatarEmoji: string;
+	hanzi: string;
+	pinyin: string;
+	english: string;
+	audioText?: string;
+}
+
+export interface TextbookSpotlightWord {
+	hanzi: string;
+	pinyin: string;
+	english: string;
+	mnemonic: string;
+	toneNumber?: 1 | 2 | 3 | 4 | 5;
+}
+
+export interface TextbookPatternSlot {
+	label: string;
+	example: string;
+	pinyin?: string;
+}
+
+export interface TextbookPatternBox {
+	title: string;
+	formula: string;
+	slots: TextbookPatternSlot[];
+	notes: string;
+}
+
+export type MiniCheckType = 'picture-match' | 'word-reorder';
+
+export interface PictureMatchItem {
+	hanzi: string;
+	pinyin: string;
+	english: string;
+	imageEmoji: string;
+}
+
+export interface WordReorderItem {
+	sentenceHanzi: string;
+	sentencePinyin: string;
+	sentenceEnglish: string;
+	shuffledWords: string[];
+}
+
+export interface TextbookMiniCheck {
+	type: MiniCheckType;
+	prompt: string;
+	pictureMatch?: {
+		pairs: PictureMatchItem[];
+	};
+	wordReorder?: WordReorderItem;
+}
+
+export interface TextbookLesson {
+	id: string;
+	guideId: string;
+	title: string;
+	subtitle: string;
+	unitBadge: string;
+	characterHost: {
+		name: string;
+		avatarEmoji: string;
+		intro: string;
+	};
+	scene: {
+		setting: string;
+		dialogue: TextbookDialogueTurn[];
+	};
+	spotlightWords: TextbookSpotlightWord[];
+	patternBox: TextbookPatternBox;
+	miniCheck: TextbookMiniCheck[];
+	xpReward: number; // 10-15 XP
 }

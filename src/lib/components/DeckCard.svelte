@@ -68,6 +68,15 @@
 						<span class="font-semibold text-emerald-600">{deck.accuracy}% acc</span>
 					{/if}
 				</div>
+				{#if deck.matchedSnippet}
+					<div class="mt-1">
+						<span
+							class="inline-flex items-center gap-1 rounded-full border border-indigo-100 bg-indigo-50 px-2 py-0.5 font-headline text-[10px] font-bold text-indigo-700"
+						>
+							{deck.matchedSnippet}
+						</span>
+					</div>
+				{/if}
 			</div>
 		</div>
 

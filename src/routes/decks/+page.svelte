@@ -681,6 +681,29 @@
 			</span>
 		</div>
 
+		<!-- Textbook Course Promotion Banner -->
+		<a
+			href={resolve('/textbook')}
+			class="flex items-center justify-between rounded-2xl border border-indigo-200 bg-linear-to-r from-indigo-50 to-violet-50 p-3.5 shadow-xs transition-transform hover:border-indigo-300 active:scale-[0.99]"
+		>
+			<div class="flex items-center gap-3">
+				<div
+					class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-xs"
+				>
+					<BookOpen size={18} />
+				</div>
+				<div>
+					<div class="font-headline text-xs font-bold text-indigo-950">
+						The Ideal Mandarin Textbook
+					</div>
+					<div class="text-[11px] text-indigo-700/80">
+						36 Units from Zero to Conversational Fluency
+					</div>
+				</div>
+			</div>
+			<ArrowRight size={16} class="text-indigo-600" />
+		</a>
+
 		<!-- Search Input -->
 		<div class="relative">
 			<Search size={18} strokeWidth={2} class="absolute top-2.5 left-3.5 text-slate-400" />

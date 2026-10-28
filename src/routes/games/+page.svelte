@@ -469,15 +469,15 @@
 		<a
 			href={resolve('/games/tone-pairs')}
 			id="game-tone-pairs-card"
-			class="group shadow-card hover:shadow-card-hover relative flex items-center justify-between overflow-hidden rounded-3xl border border-cyan-200 bg-linear-to-r from-white via-cyan-50/40 to-blue-50/30 p-4 transition-all hover:-translate-y-0.5 hover:border-cyan-400 active:scale-[0.98]"
+			class="group shadow-card hover:shadow-card-hover relative flex items-center justify-between overflow-hidden rounded-3xl border border-indigo-100 bg-linear-to-r from-white via-indigo-50/30 to-purple-50/20 p-4 transition-all hover:-translate-y-0.5 hover:border-indigo-300 active:scale-[0.98]"
 		>
 			<div class="flex items-center gap-3.5">
-				<!-- 3D Tone Pair Lab Icon -->
+				<!-- Tone Pair Lab Icon -->
 				<div class="relative shrink-0">
 					<img
-						src="/images/tone-pairs-icon.jpg"
+						src="/images/tone-pairs-icon.svg"
 						alt="Tone Pair Lab"
-						class="h-16 w-16 rounded-2xl border border-white/80 object-cover shadow-md shadow-cyan-500/20 transition-transform duration-300 group-hover:scale-105"
+						class="h-16 w-16 rounded-2xl border border-white/80 object-cover shadow-md shadow-indigo-500/20 transition-transform duration-300 group-hover:scale-105"
 					/>
 				</div>
 
@@ -492,7 +492,7 @@
 			</div>
 
 			<div
-				class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-linear-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/25 transition-all group-hover:scale-105 group-hover:brightness-110"
+				class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-linear-to-r from-indigo-500 to-indigo-700 text-white shadow-md shadow-indigo-500/25 transition-all group-hover:scale-105 group-hover:brightness-110"
 			>
 				<Play size={18} strokeWidth={2.75} />
 			</div>

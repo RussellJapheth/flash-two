@@ -271,7 +271,7 @@
 		>
 			<div class="flex items-center gap-2">
 				<img
-					src="/images/tone-pairs-icon.jpg"
+					src="/images/tone-pairs-icon.svg"
 					alt="Tone Pair Lab"
 					class="h-8 w-8 rounded-xl object-cover shadow-xs"
 				/>

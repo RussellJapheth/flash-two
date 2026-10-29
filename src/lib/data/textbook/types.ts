@@ -9,6 +9,8 @@ export interface PronunciationLabItem {
 export interface TextbookDialogueTurn {
 	speaker: string;
 	avatarEmoji: string;
+	avatarUrl?: string;
+	role?: string;
 	hanzi: string;
 	pinyin: string;
 	english: string;
@@ -101,9 +103,16 @@ export interface TextbookUnitData {
 	subtitle: string;
 	milestoneGoal: string; // ACTFL Can-Do statement
 	estimatedMinutes: number;
+	sceneIllustration?: {
+		imageUrl: string;
+		alt: string;
+		caption?: string;
+	};
 	characterHost: {
 		name: string;
 		avatarEmoji: string;
+		avatarUrl?: string;
+		role?: string;
 		intro: string;
 	};
 	pronunciationLab?: {
@@ -127,4 +136,5 @@ export interface TextbookPartMeta {
 	stage: string;
 	goal: string;
 	color: string;
+	illustrationUrl: string;
 }

@@ -7,6 +7,9 @@ import { PART_5_UNITS } from './part5';
 import { PART_6_UNITS } from './part6';
 
 export * from './types';
+export * from './grammarHub';
+export * from './pronunciationHub';
+export * from './pragmaticsHub';
 
 export const TEXTBOOK_PARTS: TextbookPartMeta[] = [
 	{
@@ -16,7 +19,8 @@ export const TEXTBOOK_PARTS: TextbookPartMeta[] = [
 		unitsRange: 'Units 1–4',
 		stage: 'Absolute Beginner',
 		goal: 'Master Pinyin, 4 tones + neutral tone, tone sandhi, and hold first greetings & introductions without scripts.',
-		color: 'from-blue-600 to-indigo-600'
+		color: 'from-blue-600 to-indigo-600',
+		illustrationUrl: '/images/textbook/part1-foundations.jpg'
 	},
 	{
 		partNumber: 2,
@@ -25,7 +29,8 @@ export const TEXTBOOK_PARTS: TextbookPartMeta[] = [
 		unitsRange: 'Units 5–10',
 		stage: 'Beginner',
 		goal: 'Handle numbers, schedules, family, ordering food, market shopping, directions, and invitations.',
-		color: 'from-indigo-600 to-violet-600'
+		color: 'from-indigo-600 to-violet-600',
+		illustrationUrl: '/images/textbook/part2-market.jpg'
 	},
 	{
 		partNumber: 3,
@@ -34,7 +39,8 @@ export const TEXTBOOK_PARTS: TextbookPartMeta[] = [
 		unitsRange: 'Units 11–16',
 		stage: 'Elementary',
 		goal: 'Routines with 正在, work/study, hobbies, health/pharmacies, travel with 过, and solving unexpected hitches.',
-		color: 'from-emerald-600 to-teal-600'
+		color: 'from-emerald-600 to-teal-600',
+		illustrationUrl: '/images/textbook/part3-daily.jpg'
 	},
 	{
 		partNumber: 4,
@@ -43,7 +49,8 @@ export const TEXTBOOK_PARTS: TextbookPartMeta[] = [
 		unitsRange: 'Units 17–22',
 		stage: 'Lower Intermediate',
 		goal: 'Narrate anecdotes, explain motivations with 为了, compare with 比/没有, manage feelings, and steer discussions.',
-		color: 'from-amber-600 to-orange-600'
+		color: 'from-amber-600 to-orange-600',
+		illustrationUrl: '/images/textbook/part4-teahouse.jpg'
 	},
 	{
 		partNumber: 5,
@@ -52,7 +59,8 @@ export const TEXTBOOK_PARTS: TextbookPartMeta[] = [
 		unitsRange: 'Units 23–28',
 		stage: 'Intermediate',
 		goal: 'Native colloquial contractions (啥/咋), modal particles (嘛/呗), collocations, face/hospitality, and problem resolution.',
-		color: 'from-rose-600 to-pink-600'
+		color: 'from-rose-600 to-pink-600',
+		illustrationUrl: '/images/textbook/part5-park.jpg'
 	},
 	{
 		partNumber: 6,
@@ -61,7 +69,8 @@ export const TEXTBOOK_PARTS: TextbookPartMeta[] = [
 		unitsRange: 'Units 29–36',
 		stage: 'Upper Intermediate',
 		goal: 'News analysis, AI/technology ethics, cultural depth, workplace strategy, formal debates, keynotes, and lifelong fluency.',
-		color: 'from-purple-600 to-indigo-700'
+		color: 'from-purple-600 to-indigo-700',
+		illustrationUrl: '/images/textbook/part6-library.jpg'
 	}
 ];
 
@@ -127,4 +136,19 @@ export function searchAllTextbookUnits(query: string): TextbookUnitData[] {
 			)
 		);
 	});
+}
+
+export function getUnitSceneIllustration(unit: TextbookUnitData): {
+	imageUrl: string;
+	alt: string;
+	caption?: string;
+} {
+	if (unit.sceneIllustration) return unit.sceneIllustration;
+	const part = TEXTBOOK_PARTS.find((p) => p.partNumber === unit.partNumber);
+	const imageUrl = part?.illustrationUrl || '/images/textbook/part1-foundations.jpg';
+	return {
+		imageUrl,
+		alt: `${unit.partTitle} Scene - ${unit.chineseTitle} (${unit.title})`,
+		caption: `${unit.partTitle} · ${unit.stage}`
+	};
 }

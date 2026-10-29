@@ -59,11 +59,11 @@
 		},
 		{
 			"No": 8,
-			"Chinese Word": "往直走",
-			"Pinyin": "wǎng zhí zǒu",
+			"Chinese Word": "一直往前走",
+			"Pinyin": "yìzhí wǎng qián zǒu",
 			"Part of Speech": "Verb Phrase",
 			"English Meaning": "go straight ahead",
-			"Example (Chinese + Pinyin)": "沿着这条街一直往直走五百米。(Yánzhe zhè tiáo jiē yìzhí wǎng zhí zǒu wǔ bǎi mǐ.) — Walk straight ahead along this street for 500 meters."
+			"Example (Chinese + Pinyin)": "沿着这条街一直往前走五百米。(Yánzhe zhè tiáo jiē yìzhí wǎng qián zǒu wǔ bǎi mǐ.) — Walk straight ahead along this street for 500 meters."
 		},
 		{
 			"No": 9,
@@ -71,7 +71,7 @@
 			"Pinyin": "dào le",
 			"Part of Speech": "Phrase",
 			"English Meaning": "arrived / here we are",
-			"Example (Chinese + Pinyin)": "师傅，就在前面路口停，到了。(Shīfu, jiù zài qiánmian lùkǒu tíng, dào le.) — Driver, please stop at the front intersection, we're here."
+			"Example (Chinese + Pinyin)": "师傅，就在前面路口停一下，到了。(Shīfu, jiù zài qiánmian lùkǒu tíng yíxià, dào le.) — Driver, please stop at the front intersection, we're here."
 		},
 		{
 			"No": 10,

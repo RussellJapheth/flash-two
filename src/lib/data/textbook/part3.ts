@@ -983,11 +983,11 @@ export const PART_3_UNITS: TextbookUnitData[] = [
 			{
 				speaker: 'David',
 				avatarEmoji: '👱',
-				hanzi: '明天下午我完全有空，太谢谢你的理解了！',
-				pinyin: 'Míngtiān xiàwǔ wǒ wánquán yǒu kòng, tài xièxie nǐ de lǐjiě le!',
+				hanzi: '明天下午我完全有空，非常感谢你的理解！',
+				pinyin: 'Míngtiān xiàwǔ wǒ wánquán yǒu kòng, fēicháng gǎnxiè nǐ de lǐjiě!',
 				english:
-					'Tomorrow afternoon I am completely free; thank you so much for your understanding!',
-				audioText: '明天下午我完全有空，太谢谢你的理解了！'
+					'Tomorrow afternoon I am completely free; thank you very much for your understanding!',
+				audioText: '明天下午我完全有空，非常感谢你的理解！'
 			}
 		],
 		spotlightWords: [

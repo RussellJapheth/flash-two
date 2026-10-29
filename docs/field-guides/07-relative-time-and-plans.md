@@ -24,7 +24,7 @@ qiántiān      zuótiān       jīntiān       míngtiān      hòutiān
 
 ## 2. Sentence Architecture: Where Does Time Go?
 
-In Mandarin, time words **NEVER** go at the end of a sentence. They occur before the verb, either before or after the subject:
+In Mandarin, point-in-time words (when an event happens) **never** go at the end of a sentence (unlike English). They occur before the verb, either before or after the subject (note: duration phrases like 三个小时 follow the verb):
 
 $$\text{Subject} + \mathbf{\text{Time}} + \text{Verb} + \text{Object}$$
 $$\text{or } \mathbf{\text{Time}} + \text{Subject} + \text{Verb} + \text{Object}$$

@@ -25,7 +25,7 @@ _Corresponding SRS Deck: Pack 33 (Field Guide: 7-Day Travel Survival & Wayfindin
 
 ## 3. Wayfinding & Navigation (问路)
 
-- **Go straight**: `一直往直走。` (_Yìzhí wǎng zhí zǒu._)
+- **Go straight**: `一直往前走。` (_Yìzhí wǎng qián zǒu._)
 - **Turn left**: `走到路口往左拐。` (_Wǎng zuǒ guǎi._)
 - **Turn right**: `过马路然后往右拐。` (_Wǎng yòu guǎi._)
 - **Transit transfers**: `换乘地铁二号线。` (_Huànchéng dìtiě èr hào xiàn._)

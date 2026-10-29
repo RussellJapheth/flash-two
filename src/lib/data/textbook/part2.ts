@@ -808,10 +808,10 @@ export const PART_2_UNITS: TextbookUnitData[] = [
 			{
 				speaker: 'David',
 				avatarEmoji: '👱',
-				hanzi: '太清楚了，非常感谢您！',
-				pinyin: 'Tài qīngchu le, fēicháng gǎnxiè nín!',
-				english: 'So clear, thank you very much!',
-				audioText: '太清楚了，非常感谢您！'
+				hanzi: '明白了，非常感谢您！',
+				pinyin: 'Míngbai le, fēicháng gǎnxiè nín!',
+				english: 'Understood, thank you very much!',
+				audioText: '明白了，非常感谢您！'
 			}
 		],
 		spotlightWords: [
@@ -871,7 +871,7 @@ export const PART_2_UNITS: TextbookUnitData[] = [
 		miniCheck: {
 			comprehension: {
 				question: 'How do you say "It is right opposite the bank" in Chinese?',
-				options: ['就在对面银行。', '就在银行对面。', '在银行左转。', '银行往直走。'],
+				options: ['就在对面银行。', '就在银行对面。', '在银行左转。', '银行往前走。'],
 				correctIndex: 1,
 				explanation:
 					'The location noun comes first, followed by the relative position word: 银行 (bank) + 对面 (opposite).'

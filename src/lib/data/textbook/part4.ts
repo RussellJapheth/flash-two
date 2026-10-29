@@ -255,11 +255,11 @@ export const PART_4_UNITS: TextbookUnitData[] = [
 			{
 				speaker: 'Linna',
 				avatarEmoji: '👩‍💼',
-				hanzi: '真有毅力！既然你目标这么明确，就一定要坚持下去。',
-				pinyin: 'Zhēn yǒu yìlì! Jìrán nǐ mùbiāo zhème míngquè, jiù yídìng yào jiānchí xiàqù.',
+				hanzi: '真有毅力！既然你的目标这么明确，就一定要坚持下去。',
+				pinyin: 'Zhēn yǒu yìlì! Jìrán nǐ de mùbiāo zhème míngquè, jiù yídìng yào jiānchí xiàqù.',
 				english:
 					'You really have perseverance! Since your goals are so clear, you must keep at it.',
-				audioText: '真有毅力！既然你目标这么明确，就一定要坚持下去。'
+				audioText: '真有毅力！既然你的目标这么明确，就一定要坚持下去。'
 			},
 			{
 				speaker: 'David',
@@ -426,10 +426,10 @@ export const PART_4_UNITS: TextbookUnitData[] = [
 			{
 				speaker: 'Wang Lin',
 				avatarEmoji: '👩‍🔬',
-				hanzi: '大卫，你看完那部新中国电影了吗？你觉得怎么样？',
-				pinyin: 'Dàwèi, nǐ kànwán nà bù xīn zhōngguó diànyǐng le ma? Nǐ juéde zěnmeyàng?',
+				hanzi: '大卫，你看完那部新的中国电影了吗？你觉得怎么样？',
+				pinyin: 'Dàwèi, nǐ kànwán nà bù xīn de Zhōngguó diànyǐng le ma? Nǐ juéde zěnmeyàng?',
 				english: 'David, did you finish watching that new Chinese film? What did you think?',
-				audioText: '大卫，你看完那部新中国电影了吗？你觉得怎么样？'
+				audioText: '大卫，你看完那部新的中国电影了吗？你觉得怎么样？'
 			},
 			{
 				speaker: 'David',
@@ -974,12 +974,12 @@ export const PART_4_UNITS: TextbookUnitData[] = [
 			{
 				speaker: 'David',
 				avatarEmoji: '👱',
-				hanzi: '噢！你的意思是举一反三就像“触类旁通”一样，可以举反例推导，对吗？',
+				hanzi: '噢！你的意思是举一反三就像“触类旁通”一样，可以由此及彼类推，对吗？',
 				pinyin:
-					'Ò! Nǐ de yìsi shì jǔ yī fǎn sān jiù xiàng “chù lèi páng tōng” yíyàng, kěyǐ jǔ fǎnlì tuīdǎo, duì ma?',
+					'Ò! Nǐ de yìsi shì jǔ yī fǎn sān jiù xiàng “chù lèi páng tōng” yíyàng, kěyǐ yóucǐ jíbǐ lèituī, duì ma?',
 				english:
-					'Oh! Your meaning is that it is like understanding by analogy, deducing from one example, right?',
-				audioText: '噢！你的意思是举一反三就像“触类旁通”一样，可以举反例推导，对吗？'
+					'Oh! Your meaning is that like understanding by analogy, one can deduce other instances from one principle, right?',
+				audioText: '噢！你的意思是举一反三就像“触类旁通”一样，可以由此及彼类推，对吗？'
 			},
 			{
 				speaker: 'Teacher Li',

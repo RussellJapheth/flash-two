@@ -62,7 +62,7 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 		words: [
 			{ hanzi: '今天', pinyin: 'jīntiān', english: 'today' },
 			{ hanzi: '飞机', pinyin: 'fēijī', english: 'airplane' },
-			{ hanzi: '喝茶', pinyin: 'hēchá', english: 'drink tea' },
+			{ hanzi: '参加', pinyin: 'cānjiā', english: 'participate / join' },
 			{ hanzi: '新鲜', pinyin: 'xīnxiān', english: 'fresh' }
 		]
 	},
@@ -97,7 +97,7 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 			{ hanzi: '开始', pinyin: 'kāishǐ', english: 'begin / start' },
 			{ hanzi: '黑板', pinyin: 'hēibǎn', english: 'blackboard' },
 			{ hanzi: '身体', pinyin: 'shēntǐ', english: 'body / health' },
-			{ hanzi: '声音', pinyin: 'shēngyīn', english: 'voice / sound' }
+			{ hanzi: '机场', pinyin: 'jīchǎng', english: 'airport' }
 		]
 	},
 	{
@@ -111,7 +111,7 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 		rehearsalTip:
 			'Both start from the same high pitch! Syllable 1 stays level, syllable 2 dives sharply downward.',
 		words: [
-			{ hanzi: '面包', pinyin: 'miànbāo', english: 'bread' },
+			{ hanzi: '开会', pinyin: 'kāihuì', english: 'hold meeting' },
 			{ hanzi: '安静', pinyin: 'ānjìng', english: 'quiet' },
 			{ hanzi: '方便', pinyin: 'fāngbiàn', english: 'convenient' },
 			{ hanzi: '干净', pinyin: 'gānjìng', english: 'clean' }
@@ -129,7 +129,7 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 		description: 'Rising + High Level',
 		rehearsalTip: 'Rise upward with syllable 1 and seamlessly latch onto syllable 2 at the peak.',
 		words: [
-			{ hanzi: '银行', pinyin: 'yínháng', english: 'bank' },
+			{ hanzi: '时间', pinyin: 'shíjiān', english: 'time' },
 			{ hanzi: '明天', pinyin: 'míngtiān', english: 'tomorrow' },
 			{ hanzi: '南方', pinyin: 'nánfāng', english: 'south' },
 			{ hanzi: '国家', pinyin: 'guójiā', english: 'country' }
@@ -165,8 +165,8 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 		words: [
 			{ hanzi: '苹果', pinyin: 'píngguǒ', english: 'apple' },
 			{ hanzi: '啤酒', pinyin: 'píjiǔ', english: 'beer' },
-			{ hanzi: '离开', pinyin: 'líkāi', english: 'depart / leave' },
-			{ hanzi: '盘子', pinyin: 'pánzi', english: 'plate' }
+			{ hanzi: '游泳', pinyin: 'yóuyǒng', english: 'swim / swimming' },
+			{ hanzi: '牛奶', pinyin: 'niúnǎi', english: 'milk' }
 		]
 	},
 	{
@@ -180,7 +180,7 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 		rehearsalTip:
 			'Syllable 1 rises to peak 5; syllable 2 attacks from peak 5 and drops sharply to level 1.',
 		words: [
-			{ hanzi: '时间', pinyin: 'shíjiān', english: 'time' },
+			{ hanzi: '环境', pinyin: 'huánjìng', english: 'environment' },
 			{ hanzi: '服务', pinyin: 'fúwù', english: 'service' },
 			{ hanzi: '文化', pinyin: 'wénhuà', english: 'culture' },
 			{ hanzi: '决定', pinyin: 'juédìng', english: 'decision' }
@@ -215,10 +215,10 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 		description: 'Half-Third (Low) + Rising',
 		rehearsalTip: 'Stay low on syllable 1 (2-1), then cleanly rise from mid to high on syllable 2.',
 		words: [
-			{ hanzi: '简单', pinyin: 'jiǎndān', english: 'simple' },
+			{ hanzi: '以前', pinyin: 'yǐqián', english: 'before / previously' },
 			{ hanzi: '旅行', pinyin: 'lǚxíng', english: 'travel' },
-			{ hanzi: '产生', pinyin: 'chǎnshēng', english: 'produce' },
-			{ hanzi: '准确', pinyin: 'zhǔnquè', english: 'accurate' }
+			{ hanzi: '检查', pinyin: 'jiǎnchá', english: 'inspect / check' },
+			{ hanzi: '选择', pinyin: 'xuǎnzé', english: 'choose / select' }
 		]
 	},
 	{
@@ -249,7 +249,7 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 		rehearsalTip:
 			'Drop low for syllable 1 (2-1), then reset high to 5 and punch down firmly for syllable 2.',
 		words: [
-			{ hanzi: '语法', pinyin: 'yǔfǎ', english: 'grammar' },
+			{ hanzi: '准确', pinyin: 'zhǔnquè', english: 'accurate' },
 			{ hanzi: '努力', pinyin: 'nǔlì', english: 'hardworking / strive' },
 			{ hanzi: '写信', pinyin: 'xiěxìn', english: 'write letters' },
 			{ hanzi: '主要', pinyin: 'zhǔyào', english: 'primary / main' }
@@ -268,10 +268,10 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 		rehearsalTip:
 			'Drop sharply from 5 to 1 on syllable 1, then climb back up to high 5 for a level syllable 2.',
 		words: [
-			{ hanzi: '问题', pinyin: 'wèntí', english: 'question / problem' },
-			{ hanzi: '开会', pinyin: 'kāihuì', english: 'hold meeting' },
-			{ hanzi: '参加', pinyin: 'cānjiā', english: 'participate' },
-			{ hanzi: '大家', pinyin: 'dàjiā', english: 'everyone' }
+			{ hanzi: '面包', pinyin: 'miànbāo', english: 'bread' },
+			{ hanzi: '大家', pinyin: 'dàjiā', english: 'everyone' },
+			{ hanzi: '毕业', pinyin: 'bìyè', english: 'graduate' },
+			{ hanzi: '互相', pinyin: 'hùxiāng', english: 'mutually / each other' }
 		]
 	},
 	{
@@ -285,7 +285,7 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 		rehearsalTip:
 			'V-shaped overall movement: sharp downward plunge (5-1) followed by a smooth upward rise (3-5).',
 		words: [
-			{ hanzi: '跑步', pinyin: 'pǎobù', english: 'run / jog' },
+			{ hanzi: '问题', pinyin: 'wèntí', english: 'question / problem' },
 			{ hanzi: '复习', pinyin: 'fùxí', english: 'review / revise' },
 			{ hanzi: '特别', pinyin: 'tèbié', english: 'special / especially' },
 			{ hanzi: '地图', pinyin: 'dìtú', english: 'map' }
@@ -302,7 +302,7 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 		rehearsalTip:
 			'Fall with firm energy on syllable 1; keep syllable 2 settled comfortably in your low vocal range.',
 		words: [
-			{ hanzi: '汉字', pinyin: 'hànzì', english: 'Chinese characters' },
+			{ hanzi: '跳舞', pinyin: 'tiàowǔ', english: 'dance' },
 			{ hanzi: '办法', pinyin: 'bànfǎ', english: 'method / solution' },
 			{ hanzi: '电脑', pinyin: 'diànnǎo', english: 'computer' },
 			{ hanzi: '电影', pinyin: 'diànyǐng', english: 'movie' }
@@ -322,7 +322,7 @@ const RAW_TONE_PAIRS: RawTonePairConfig[] = [
 			{ hanzi: '再见', pinyin: 'zàijiàn', english: 'goodbye' },
 			{ hanzi: '电视', pinyin: 'diànshì', english: 'television' },
 			{ hanzi: '运动', pinyin: 'yùndòng', english: 'sports / exercise' },
-			{ hanzi: '问候', pinyin: 'wènhòu', english: 'send greetings' }
+			{ hanzi: '汉字', pinyin: 'hànzì', english: 'Chinese characters' }
 		]
 	}
 ];

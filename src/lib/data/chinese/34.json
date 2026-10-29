@@ -14,7 +14,7 @@
 			"Chinese Word": "面包",
 			"Pinyin": "miànbāo",
 			"Part of Speech": "Noun",
-			"English Meaning": "bread (Tone 4-1 / 1-4 pair)",
+			"English Meaning": "bread (Tone 4-1 pair)",
 			"Example (Chinese + Pinyin)": "早餐吃一片烤面包和鸡蛋。(Zǎocān chī yí piàn kǎo miànbāo hé jīdàn.) — Eat a slice of toast and an egg for breakfast."
 		},
 		{
@@ -30,7 +30,7 @@
 			"Chinese Word": "简单",
 			"Pinyin": "jiǎndān",
 			"Part of Speech": "Adjective",
-			"English Meaning": "simple / uncomplicated (Tone 3-2 pair)",
+			"English Meaning": "simple / uncomplicated (Tone 3-1 pair)",
 			"Example (Chinese + Pinyin)": "这个句子其实非常简单。(Zhè ge jùzi qíshí fēicháng jiǎndān.) — This sentence is actually very simple."
 		},
 		{
@@ -38,15 +38,15 @@
 			"Chinese Word": "语法",
 			"Pinyin": "yǔfǎ",
 			"Part of Speech": "Noun",
-			"English Meaning": "grammar (Tone 3-4 pair)",
-			"Example (Chinese + Pinyin)": "掌握基础的汉语语法规则。(Zhǎowò jīchǔ de hànyǔ yǔfǎ guīzé.) — Master fundamental Chinese grammar rules."
+			"English Meaning": "grammar (Tone 3-3 pair, sandhi to 2-3)",
+			"Example (Chinese + Pinyin)": "掌握基础的汉语语法规则。(Zhǎngwò jīchǔ de hànyǔ yǔfǎ guīzé.) — Master fundamental Chinese grammar rules."
 		},
 		{
 			"No": 6,
 			"Chinese Word": "汉字",
 			"Pinyin": "hànzì",
 			"Part of Speech": "Noun",
-			"English Meaning": "Chinese characters (Tone 4-3 pair)",
+			"English Meaning": "Chinese characters (Tone 4-4 pair)",
 			"Example (Chinese + Pinyin)": "学习书写常用汉字很实用。(Xuéxí shūxiě chángyòng hànzì hěn shíyòng.) — Learning to write common Chinese characters is very practical."
 		},
 		{
@@ -95,7 +95,7 @@
 			"Pinyin": "shēngdiào",
 			"Part of Speech": "Noun",
 			"English Meaning": "tone (phonetics)",
-			"Example (Chinese + Pinyin)": "掌握四个声调对汉语听力很重要。(Zhǎowò sì ge shēngdiào duì hànyǔ tīnglì hěn zhòngyào.) — Mastering the four tones is essential for Chinese listening."
+			"Example (Chinese + Pinyin)": "掌握四个声调对汉语听力很重要。(Zhǎngwò sì ge shēngdiào duì hànyǔ tīnglì hěn zhòngyào.) — Mastering the four tones is essential for Chinese listening."
 		},
 		{
 			"No": 13,

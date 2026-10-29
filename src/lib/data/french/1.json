@@ -5,7 +5,6 @@
 			"French Word": "bonjour",
 			"Part of Speech": "Noun / Interjection",
 			"English Meaning": "hello / good morning",
-			"Acceptable Answers": ["merci"],
 			"Example (French)": "Bonjour, comment ça va ?",
 			"No": 1
 		},

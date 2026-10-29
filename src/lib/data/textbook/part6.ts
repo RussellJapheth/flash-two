@@ -136,7 +136,7 @@ export const PART_6_UNITS: TextbookUnitData[] = [
 			tip: 'In intellectual, business, or academic conversations, replace casual 对啊 with 确实如此 (Quèshí rúcǐ = Indeed that is the case). It projects erudition and elegance.',
 			naturalExample: {
 				hanzi: '确实如此，我们必须重视这个问题。',
-				pinyin: 'Quèshí rúcǐ, wǒmen bìxū zhòngshì zhè ge wènshuí.',
+				pinyin: 'Quèshí rúcǐ, wǒmen bìxū zhòngshì zhè ge wèntí.',
 				english: 'Indeed so, we must attach high importance to this issue.'
 			}
 		},
@@ -830,13 +830,13 @@ export const PART_6_UNITS: TextbookUnitData[] = [
 				speaker: 'David',
 				avatarEmoji: '👱',
 				hanzi:
-					'要是在五年前，我可能会犹豫；但站在今天全面权衡利弊之后，我依然会选择它。因为编程训练了我严谨的逻辑框架。',
+					'要是在五年前，我可能会犹豫；但站在今天全面权衡利弊之后，我依然会选择它。因为编程培养了我严谨的逻辑思维。',
 				pinyin:
-					'Yàoshi zài wǔ nián qián, wǒ kěnéng huì yóuyù; dàn zhàn zài jīntiān quánmiàn quánhéng lìbì zhīhòu, wǒ yīrán huì xuǎnzé tā. Yīnwèi biānchéng xùnliàn le wǒ yánjǐn de luóji kuàngjià.',
+					'Yàoshi zài wǔ nián qián, wǒ kěnéng huì yóuyù; dàn zhàn zài jīntiān quánmiàn quánhéng lìbì zhīhòu, wǒ yīrán huì xuǎnzé tā. Yīnwèi biānchéng péiyǎng le wǒ yánjǐn de luóji sīwéi.',
 				english:
-					'If it were five years ago, I might have hesitated; but standing today after comprehensively weighing advantages and disadvantages, I would still choose it. Because programming trained my rigorous logical framework.',
+					'If it were five years ago, I might have hesitated; but standing today after comprehensively weighing advantages and disadvantages, I would still choose it. Because programming cultivated my rigorous logical thinking.',
 				audioText:
-					'要是在五年前，我可能会犹豫；但站在今天全面权衡利弊之后，我依然会选择它。因为编程训练了我严谨的逻辑框架。'
+					'要是在五年前，我可能会犹豫；但站在今天全面权衡利弊之后，我依然会选择它。因为编程培养了我严谨的逻辑思维。'
 			},
 			{
 				speaker: 'Teacher Li',
@@ -1221,25 +1221,25 @@ export const PART_6_UNITS: TextbookUnitData[] = [
 				speaker: 'David',
 				avatarEmoji: '👱',
 				hanzi:
-					'回过头来看，最初刚下飞机时，我甚至连“请问洗手间在哪里”都要在心里默背三遍。在这一年里，我从结结巴巴的生存对话，走到了今天能和大家探讨人工智能与中国哲学。',
+					'回过头来看，刚下飞机时，我甚至连“请问洗手间在哪里”都要在心里默背三遍。在这一年里，我从结结巴巴的日常生存对话，走到了今天能和大家探讨人工智能与中国哲学。',
 				pinyin:
-					'Huí guò tóu lái kàn, zuìchū gāng xià fēijī shí, wǒ shènzhì lián “qǐngwèn xǐshǒujiān zài nǎlǐ” dōu yào zài xīnlǐ mòbèi sān biàn. Zài zhè yì nián lǐ, wǒ cóng jiējiēbābā de shēngcún duìhuà, zǒudào le jīntiān néng hé dàjiā tǎolùn réngōngzhìnéng yǔ zhōngguó zhéxué.',
+					'Huí guò tóu lái kàn, gāng xià fēijī shí, wǒ shènzhì lián “qǐngwèn xǐshǒujiān zài nǎlǐ” dōu yào zài xīnlǐ mòbèi sān biàn. Zài zhè yì nián lǐ, wǒ cóng jiējiēbābā de rìcháng shēngcún duìhuà, zǒudào le jīntiān néng hé dàjiā tǎolùn réngōngzhìnéng yǔ zhōngguó zhéxué.',
 				english:
-					'Looking back in hindsight, when I first stepped off the plane, I even had to silently rehearse “Where is the restroom” three times in my head. In this year, I progressed from stammering survival exchanges to discussing artificial intelligence and Chinese philosophy with all of you today.',
+					'Looking back in hindsight, when I first stepped off the plane, I even had to silently rehearse “Where is the restroom” three times in my head. In this year, I progressed from stammering daily survival exchanges to discussing artificial intelligence and Chinese philosophy with all of you today.',
 				audioText:
-					'回过头来看，最初刚下飞机时，我甚至连“请问洗手间在哪里”都要在心里默背三遍。在这一年里，我从结结巴巴的生存对话，走到了今天能和大家探讨人工智能与中国哲学。'
+					'回过头来看，刚下飞机时，我甚至连“请问洗手间在哪里”都要在心里默背三遍。在这一年里，我从结结巴巴的日常生存对话，走到了今天能和大家探讨人工智能与中国哲学。'
 			},
 			{
 				speaker: 'David',
 				avatarEmoji: '👱',
 				hanzi:
-					'语言不仅是一门工具，更是一扇通向不同思维维度的窗户。我不仅学会了汉语，更结识了像你这样一生的挚友。',
+					'语言不仅是一门工具，更是一扇通向不同思维维度的窗户。我不仅学会了汉语，更结识了像你这样一辈子的挚友。',
 				pinyin:
-					'Yǔyán bùjǐn shì yì mén gōngjù, gèng shì yí shàn tōngxiàng bùtóng sīwéi wéidù de chuānghu. Wǒ bùjǐn xuéhuì le hànyǔ, gèng jiéshí le xiàng nǐ zhèyàng yìshēng de zhìyǒu.',
+					'Yǔyán bùjǐn shì yì mén gōngjù, gèng shì yí shàn tōngxiàng bùtóng sīwéi wéidù de chuānghu. Wǒ bùjǐn xuéhuì le hànyǔ, gèng jiéshí le xiàng nǐ zhèyàng yíbèizi de zhìyǒu.',
 				english:
 					'Language is not only a tool, but even more a window opening onto different dimensions of thinking. I not only mastered Chinese, but also became acquainted with lifelong friends like you.',
 				audioText:
-					'语言不仅是一门工具，更是一扇通向不同思维维度的窗户。我不仅学会了汉语，更结识了像你这样一生的挚友。'
+					'语言不仅是一门工具，更是一扇通向不同思维维度的窗户。我不仅学会了汉语，更结识了像你这样一辈子的挚友。'
 			},
 			{
 				speaker: 'Xiao Ming',

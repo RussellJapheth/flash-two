@@ -90,7 +90,7 @@ export const BUILTIN_STORIES: Story[] = [
 				type: 'cloze',
 				cloze: {
 					sentence: '我想吃一碗 {blank}。',
-					pinyin: 'Wǒ xiǎng chī yī wǎn {blank}.',
+					pinyin: 'Wǒ xiǎng chī yì wǎn {blank}.',
 					translation: 'I would like a bowl of {blank}.',
 					options: ['牛肉面', '苹果', '飞机', '喝水'],
 					optionPinyins: {
@@ -113,7 +113,7 @@ export const BUILTIN_STORIES: Story[] = [
 				id: 'node-spicy-pref',
 				speakerId: 'chef',
 				text: '好咧！一碗牛肉面。要不要辣？',
-				pinyin: 'Hǎo lie! Yī wǎn niúròumiàn. Yào bu yào là?',
+				pinyin: 'Hǎo lie! Yì wǎn niúròumiàn. Yào bu yào là?',
 				translation: 'Alright! One bowl of beef noodles. Do you want it spicy?',
 				audioText: '好咧！一碗牛肉面。要不要辣？',
 				type: 'choice',
@@ -147,13 +147,13 @@ export const BUILTIN_STORIES: Story[] = [
 				type: 'speech',
 				expectedSpeech: {
 					target: '请不要放香菜',
-					pinyin: 'Qǐng bù yào fàng xiāngcài',
+					pinyin: 'Qǐng bú yào fàng xiāngcài',
 					keywords: ['香菜', '不要'],
 					fallbackChoices: [
 						{
 							id: 'fb-nocilantro',
 							text: '请不要放香菜。',
-							pinyin: 'Qǐng bù yào fàng xiāngcài.',
+							pinyin: 'Qǐng bú yào fàng xiāngcài.',
 							translation: 'Please do not put cilantro.',
 							nextNodeId: 'node-cooking',
 							isOptimal: true,
@@ -178,7 +178,7 @@ export const BUILTIN_STORIES: Story[] = [
 				id: 'node-cooking',
 				speakerId: 'chef',
 				text: '没问题，不放香菜！面马上煮好！',
-				pinyin: 'Méi wèntí, bù fàng xiāngcài! Miàn mǎshàng zhǔ hǎo!',
+				pinyin: 'Méi wèntí, bú fàng xiāngcài! Miàn mǎshàng zhǔ hǎo!',
 				translation: 'No problem, no cilantro! The noodles will be ready right away!',
 				audioText: '没问题，不放香菜！面马上煮好！',
 				type: 'dialogue',
@@ -485,7 +485,7 @@ export const BUILTIN_STORIES: Story[] = [
 				id: 'node-tea-welcome',
 				speakerId: 'barista',
 				text: '您好，欢迎光临开心奶茶！请问今天想喝点什么？',
-				pinyin: 'Nǐn hǎo, huānyíng guānglín Kāixīn Nǎichá! Qǐngwèn jīntiān xiǎng hē diǎn shénme?',
+				pinyin: 'Nín hǎo, huānyíng guānglín Kāixīn Nǎichá! Qǐngwèn jīntiān xiǎng hē diǎn shénme?',
 				translation: 'Hello, welcome to Happy Milk Tea! What would you like to drink today?',
 				audioText: '您好，欢迎光临开心奶茶！请问今天想喝点什么？',
 				type: 'choice',
@@ -698,7 +698,7 @@ export const BUILTIN_STORIES: Story[] = [
 				id: 'node-subway-start',
 				speakerId: 'attendant',
 				text: '您好！请问需要什么帮助？',
-				pinyin: 'Nínhǎo! Qǐngwèn xūyào shénme bāngzhù?',
+				pinyin: 'Nín hǎo! Qǐngwèn xūyào shénme bāngzhù?',
 				translation: 'Hello! How may I assist you?',
 				audioText: '您好！请问需要什么帮助？',
 				type: 'speech',
@@ -913,8 +913,8 @@ export const BUILTIN_STORIES: Story[] = [
 				audioText: 'Très bien, deux croissants tout chauds ! Et avec ceci ?',
 				type: 'speech',
 				expectedSpeech: {
-					target: 'Une baguette tradition bien cuite sil vous plait',
-					keywords: ['baguette', 'tradition', 'plait'],
+					target: "Une baguette tradition bien cuite s'il vous plaît",
+					keywords: ['baguette', 'tradition', 'plait', 'plaît'],
 					fallbackChoices: [
 						{
 							id: 'fr-fb-baguette',
@@ -1020,7 +1020,7 @@ export const BUILTIN_STORIES: Story[] = [
 				id: 'node-tea-welcome',
 				speakerId: 'barista',
 				text: '您好！欢迎光临，请问想喝点什么？',
-				pinyin: 'Nínhǎo! Huānyíng guānglín, qǐngwèn xiǎng hē diǎn shénme?',
+				pinyin: 'Nín hǎo! Huānyíng guānglín, qǐngwèn xiǎng hē diǎn shénme?',
 				translation: 'Hello! Welcome, what would you like to drink?',
 				audioText: '您好！欢迎光临，请问想喝点什么？',
 				type: 'choice',
@@ -1028,7 +1028,7 @@ export const BUILTIN_STORIES: Story[] = [
 					{
 						id: 'choice-tea-boba',
 						text: '我要一杯招牌珍珠奶茶。',
-						pinyin: 'Wǒ yào yī bēi zhāopai zhēnzhū nǎichá.',
+						pinyin: 'Wǒ yào yì bēi zhāopai zhēnzhū nǎichá.',
 						translation: 'I would like a cup of signature boba milk tea.',
 						nextNodeId: 'node-tea-size-ice',
 						isOptimal: true,
@@ -1038,7 +1038,7 @@ export const BUILTIN_STORIES: Story[] = [
 					{
 						id: 'choice-tea-water',
 						text: '给我倒一杯热水。',
-						pinyin: 'Gěi wǒ dào yī bēi rèshuǐ.',
+						pinyin: 'Gěi wǒ dào yì bēi rèshuǐ.',
 						translation: 'Pour me a glass of hot water.',
 						nextNodeId: 'node-tea-size-ice',
 						isOptimal: false,

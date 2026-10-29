@@ -583,14 +583,14 @@ export const PART_1_UNITS: TextbookUnitData[] = [
 				'吗 turns any statement into a yes/no question. Keep 吗 light, neutral, and level.',
 			items: [
 				{
-					pinyin: '你是学生吗？',
+					pinyin: 'Nǐ shì xuésheng ma?',
 					hanzi: '你是学生吗？',
 					tone: 'Statement + 吗 = Question',
 					audioText: '你是学生吗？',
 					tip: 'Do not raise your pitch dramatically at the end; let 吗 float neutrally.'
 				},
 				{
-					pinyin: '你是哪国人？',
+					pinyin: 'Nǐ shì nǎ guó rén?',
 					hanzi: '你是哪国人？',
 					tone: 'Question Word Question (no 吗!)',
 					audioText: '你是哪国人？',

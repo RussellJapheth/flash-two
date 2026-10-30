@@ -24,8 +24,11 @@
 	}>();
 
 	let containerEl = $state<HTMLDivElement | null>(null);
+	// 180ms perceptual lead time aligns highlight with sound onset rather than trailing behind
+	const SYNC_LEAD_SEC = 0.18;
+	let syncTime = $derived(currentTime + SYNC_LEAD_SEC);
 	let activeIndex = $derived(
-		segments.findIndex((s: PodcastSegment) => currentTime >= s.start && currentTime < s.end)
+		segments.findIndex((s: PodcastSegment) => syncTime >= s.start && syncTime < s.end)
 	);
 
 	let lastScrolledIndex = -1;
@@ -126,8 +129,7 @@
 				{#if segment.words && segment.words.length > 0}
 					<div class="flex flex-wrap items-baseline gap-x-1 gap-y-2">
 						{#each segment.words as word (word.word + word.start)}
-							{@const isWordActive =
-								isActive && currentTime >= word.start && currentTime < word.end}
+							{@const isWordActive = isActive && syncTime >= word.start && syncTime < word.end}
 							{@const isPunct = /^[，。！？、,.!?…—\s]+$/.test(word.word)}
 
 							{#if isPunct}

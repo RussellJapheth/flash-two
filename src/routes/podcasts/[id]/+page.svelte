@@ -59,7 +59,31 @@
 		}
 	});
 
+	let animFrameId: number | null = null;
+
+	function syncPlaybackLoop() {
+		if (audioEl && isPlaying) {
+			currentTime = audioEl.currentTime;
+
+			// Save position periodically (every ~3s)
+			if (episode && Math.floor(currentTime) % 3 === 0) {
+				updatePodcastPlaybackPosition(episode.id, currentTime);
+			}
+
+			// Trigger completion when audio reaches 95%
+			if (episode && duration > 0 && currentTime >= duration * 0.95 && !hasAwardedThisSession) {
+				completeEpisode();
+			}
+
+			animFrameId = requestAnimationFrame(syncPlaybackLoop);
+		}
+	}
+
 	onDestroy(() => {
+		if (animFrameId) {
+			cancelAnimationFrame(animFrameId);
+			animFrameId = null;
+		}
 		triggerAutoStopStudyTimer();
 		if (episode && currentTime > 0) {
 			updatePodcastPlaybackPosition(episode.id, currentTime);
@@ -69,25 +93,21 @@
 	function handleTimeUpdate() {
 		if (!audioEl) return;
 		currentTime = audioEl.currentTime;
-
-		// Save position periodically (every ~3s)
-		if (episode && Math.floor(currentTime) % 3 === 0) {
-			updatePodcastPlaybackPosition(episode.id, currentTime);
-		}
-
-		// Trigger completion when audio reaches 95%
-		if (episode && duration > 0 && currentTime >= duration * 0.95 && !hasAwardedThisSession) {
-			completeEpisode();
-		}
 	}
 
 	function handlePlay() {
 		isPlaying = true;
 		triggerAutoStartStudyTimer();
+		if (animFrameId) cancelAnimationFrame(animFrameId);
+		animFrameId = requestAnimationFrame(syncPlaybackLoop);
 	}
 
 	function handlePause() {
 		isPlaying = false;
+		if (animFrameId) {
+			cancelAnimationFrame(animFrameId);
+			animFrameId = null;
+		}
 		triggerAutoStopStudyTimer();
 		if (episode) {
 			updatePodcastPlaybackPosition(episode.id, currentTime);
@@ -96,6 +116,10 @@
 
 	function handleEnded() {
 		isPlaying = false;
+		if (animFrameId) {
+			cancelAnimationFrame(animFrameId);
+			animFrameId = null;
+		}
 		triggerAutoStopStudyTimer();
 		if (episode && !hasAwardedThisSession) {
 			completeEpisode();

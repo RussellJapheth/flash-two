@@ -24,6 +24,7 @@
 			const q = searchQuery.toLowerCase().trim();
 			return (
 				ep.title.toLowerCase().includes(q) ||
+				(ep.titleEn && ep.titleEn.toLowerCase().includes(q)) ||
 				(ep.titlePinyin && ep.titlePinyin.toLowerCase().includes(q)) ||
 				ep.description.toLowerCase().includes(q) ||
 				ep.speakers.some((s) => s.name.toLowerCase().includes(q)) ||
@@ -35,12 +36,14 @@
 	let totalCompleted = $derived(Object.values(progressMap).filter((p) => p.completed).length);
 </script>
 
-<div class="min-h-screen bg-slate-50 pb-24 text-slate-900">
-	<div class="mx-auto flex min-h-screen flex-col sm:max-w-md sm:bg-white sm:shadow-lg">
+<div
+	class="min-h-screen bg-linear-to-br from-sky-50/70 via-slate-50 to-indigo-50/40 pb-24 text-slate-900"
+>
+	<div class="mx-auto flex min-h-screen max-w-4xl flex-col">
 		<!-- Top App Header -->
 		<TopHeader title="Podcasts" showBack={true} />
 
-		<main class="flex-1 space-y-4 px-4 py-4">
+		<main class="flex-1 space-y-6 px-4 py-6">
 			<!-- Hero Card with Scenic Mountain Backdrop matching Mockup -->
 			<div
 				class="shadow-card relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-6"
@@ -52,80 +55,11 @@
 					class="absolute inset-0 h-full w-full object-cover object-[72%_center]"
 				/>
 				<div
-					class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent"
+					class="absolute inset-0 bg-gradient-to-r from-white/50 via-white/30 to-transparent"
 				></div>
 
 				<!-- Content Layer -->
-				<div class="relative z-10">
-					<!-- Top Row: LEARN ANYWHERE Pill & Headphone Circle -->
-					<div class="flex items-center justify-between">
-						<span
-							class="inline-flex items-center gap-1.5 rounded-full border border-sky-200/80 bg-white/80 px-3.5 py-1 font-headline text-[10px] font-extrabold tracking-wider text-sky-600 uppercase shadow-xs backdrop-blur-md"
-						>
-							<Headphones class="h-3 w-3 text-sky-600" />
-							LEARN ANYWHERE
-						</span>
-
-						<div
-							class="flex h-13 w-13 items-center justify-center rounded-full border border-white/60 bg-indigo-400/25 text-white shadow-sm backdrop-blur-md"
-						>
-							<Headphones class="h-6 w-6 stroke-[2]" />
-						</div>
-					</div>
-
-					<!-- Title -->
-					<h1 class="mt-4 font-headline text-3xl font-black tracking-tight text-slate-900">
-						Graded <span
-							class="bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-500 bg-clip-text text-transparent"
-							>Podcasts</span
-						>
-					</h1>
-
-					<!-- Description -->
-					<p
-						class="mt-2 max-w-[280px] font-sans text-xs leading-relaxed font-medium text-slate-600"
-					>
-						Listen to expert-led conversations and build your language skills, one episode at a
-						time.
-					</p>
-
-					<!-- Stats Row -->
-					<div class="mt-6 flex flex-wrap items-center gap-3 text-xs font-bold text-slate-700">
-						<!-- Episode count -->
-						<div class="flex items-center gap-2">
-							<div
-								class="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-blue-600"
-							>
-								<Mic class="h-3.5 w-3.5" />
-							</div>
-							<span class="font-headline font-bold text-slate-800"
-								>{BUILTIN_PODCASTS.length} Episodes</span
-							>
-						</div>
-
-						<div class="h-4 w-px bg-slate-300/80"></div>
-
-						<!-- Completed count -->
-						<div class="flex items-center gap-2">
-							<div
-								class="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-500 text-white shadow-xs"
-							>
-								<Check class="h-3.5 w-3.5 stroke-[3]" />
-							</div>
-							<span class="font-headline font-bold text-slate-800"
-								>{totalCompleted > 0 ? `${totalCompleted} Completed` : 'Completed'}</span
-							>
-						</div>
-
-						<div class="h-4 w-px bg-slate-300/80"></div>
-
-						<!-- Earn XP -->
-						<div class="flex items-center gap-1.5">
-							<span class="text-base select-none">⭐</span>
-							<span class="font-headline font-bold text-amber-500">Earn XP</span>
-						</div>
-					</div>
-				</div>
+				<div class="relative z-10 min-h-30">&nbsp;</div>
 			</div>
 
 			<!-- Search Bar -->

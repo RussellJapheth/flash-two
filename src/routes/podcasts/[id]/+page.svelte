@@ -222,12 +222,12 @@
 						<ArrowLeft class="h-5 w-5" />
 					</button>
 
-					<div class="max-w-[170px] truncate">
+					<div class="max-w-[200px] truncate">
 						<h1 class="truncate font-headline text-sm font-black text-slate-900">
-							{episode.title}
+							{episode.titleEn || episode.title}
 						</h1>
-						<p class="truncate font-mono text-[10px] font-medium text-indigo-600">
-							{episode.titlePinyin}
+						<p class="truncate font-mono text-[10px] font-medium text-slate-500">
+							{episode.title} • {episode.titlePinyin}
 						</p>
 					</div>
 				</div>

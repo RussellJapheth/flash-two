@@ -392,6 +392,7 @@ export interface PodcastSpeaker {
 export interface PodcastEpisode {
 	id: string;
 	title: string;
+	titleEn?: string;
 	titlePinyin?: string;
 	description: string;
 	level: PodcastLevel;
@@ -408,6 +409,7 @@ export interface PodcastEpisode {
 	}[];
 	segments: PodcastSegment[];
 	xpReward: number;
+	coverImage?: string;
 }
 
 export interface PodcastProgress {

@@ -515,92 +515,6 @@
 		</section>
 	{/if}
 
-	<!-- MANDARIN TEXTBOOK COURSE BANNER -->
-	{#if activeLanguage === 'chinese'}
-		<section class="space-y-2">
-			<h3 class="font-headline text-xs font-bold tracking-wider text-slate-500 uppercase">
-				Structured Course
-			</h3>
-			<a
-				href={resolve('/textbook')}
-				class="shadow-card hover:shadow-card-hover group relative flex cursor-pointer items-center justify-between overflow-hidden rounded-3xl border border-indigo-200/80 bg-linear-to-r from-indigo-50/80 via-white to-violet-50/50 p-4.5 transition-all hover:-translate-y-0.5 hover:border-indigo-300 active:scale-[0.98]"
-			>
-				<div class="flex items-center gap-3.5">
-					<div
-						class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-indigo-200/70 bg-indigo-50 text-indigo-600 transition-transform group-hover:scale-105"
-					>
-						<BookOpen size={22} strokeWidth={2.25} />
-					</div>
-					<div>
-						<div class="flex items-center gap-1.5">
-							<span
-								class="rounded-full border border-indigo-200/60 bg-indigo-50 px-2 py-0.5 font-headline text-[10px] font-bold text-indigo-700"
-							>
-								36 UNITS · ZERO TO FLUENCY
-							</span>
-						</div>
-						<h4 class="font-headline text-base font-extrabold text-slate-900">Mandarin Textbook</h4>
-						<p class="font-body text-xs text-slate-500">
-							Pronunciation, authentic dialogues, grammar, and XP checks
-						</p>
-					</div>
-				</div>
-
-				<div
-					class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 transition-colors group-hover:bg-indigo-600 group-hover:text-white"
-				>
-					<ArrowRight
-						size={16}
-						strokeWidth={2.5}
-						class="transition-transform group-hover:translate-x-0.5"
-					/>
-				</div>
-			</a>
-		</section>
-
-		<!-- GRADED AUDIO PODCASTS BANNER -->
-		<section class="space-y-2">
-			<h3 class="font-headline text-xs font-bold tracking-wider text-slate-500 uppercase">
-				Listening Immersion
-			</h3>
-			<a
-				href={resolve('/podcasts')}
-				class="shadow-card hover:shadow-card-hover group relative flex cursor-pointer items-center justify-between overflow-hidden rounded-3xl border border-indigo-200/80 bg-linear-to-r from-indigo-50/80 via-white to-amber-50/40 p-4.5 transition-all hover:-translate-y-0.5 hover:border-indigo-300 active:scale-[0.98]"
-			>
-				<div class="flex items-center gap-3.5">
-					<div
-						class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-indigo-200/70 bg-indigo-50 text-indigo-600 transition-transform group-hover:scale-105"
-					>
-						<Headphones size={22} strokeWidth={2.25} />
-					</div>
-					<div>
-						<div class="flex items-center gap-1.5">
-							<span
-								class="rounded-full border border-indigo-200/60 bg-indigo-50 px-2 py-0.5 font-headline text-[10px] font-bold text-indigo-700"
-							>
-								SYNCED TRANSCRIPTS · GRADED TIERS
-							</span>
-						</div>
-						<h4 class="font-headline text-base font-extrabold text-slate-900">Graded Podcasts</h4>
-						<p class="font-body text-xs text-slate-500">
-							Natural dialogues with live word highlighting & vocabulary save
-						</p>
-					</div>
-				</div>
-
-				<div
-					class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 transition-colors group-hover:bg-indigo-600 group-hover:text-white"
-				>
-					<ArrowRight
-						size={16}
-						strokeWidth={2.5}
-						class="transition-transform group-hover:translate-x-0.5"
-					/>
-				</div>
-			</a>
-		</section>
-	{/if}
-
 	<!-- 3. WHAT NEEDS ATTENTION (PRACTICE HUB) -->
 	<section class="space-y-2">
 		<h3 class="font-headline text-xs font-bold tracking-wider text-slate-500 uppercase">
@@ -646,9 +560,86 @@
 		</a>
 	</section>
 
+	<!-- MANDARIN TEXTBOOK COURSE BANNER -->
+	{#if activeLanguage === 'chinese'}
+		<section class="space-y-2">
+			<h3 class="font-headline text-xs font-bold tracking-wider text-slate-500 uppercase">
+				Structured Course
+			</h3>
+			<a
+				href={resolve('/textbook')}
+				class="shadow-card hover:shadow-card-hover group relative flex cursor-pointer items-center justify-between overflow-hidden rounded-3xl border border-indigo-200/80 bg-linear-to-r from-indigo-50/80 via-white to-violet-50/50 p-4.5 transition-all hover:-translate-y-0.5 hover:border-indigo-300 active:scale-[0.98]"
+			>
+				<div class="flex items-center gap-3.5">
+					<div
+						class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-indigo-200/70 bg-indigo-50 text-indigo-600 transition-transform group-hover:scale-105"
+					>
+						<BookOpen size={22} strokeWidth={2.25} />
+					</div>
+					<div>
+						<div class="flex items-center gap-1.5"></div>
+						<h4 class="font-headline text-base font-extrabold text-slate-900">Mandarin Textbook</h4>
+						<p class="font-body text-xs text-slate-500">
+							Pronunciation, authentic dialogues, grammar, and XP checks
+						</p>
+					</div>
+				</div>
+
+				<div
+					class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 transition-colors group-hover:bg-indigo-600 group-hover:text-white"
+				>
+					<ArrowRight
+						size={16}
+						strokeWidth={2.5}
+						class="transition-transform group-hover:translate-x-0.5"
+					/>
+				</div>
+			</a>
+		</section>
+
+		<!-- GRADED AUDIO PODCASTS BANNER -->
+		<section class="space-y-2">
+			<h3 class="font-headline text-xs font-bold tracking-wider text-slate-500 uppercase">
+				Listening Immersion
+			</h3>
+			<a
+				href={resolve('/podcasts')}
+				class="shadow-card hover:shadow-card-hover group relative flex cursor-pointer items-center justify-between overflow-hidden rounded-3xl border border-indigo-200/80 bg-linear-to-r from-indigo-50/80 via-white to-amber-50/40 p-4.5 transition-all hover:-translate-y-0.5 hover:border-indigo-300 active:scale-[0.98]"
+			>
+				<div class="flex items-center gap-3.5">
+					<div
+						class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-indigo-200/70 bg-indigo-50 text-indigo-600 transition-transform group-hover:scale-105"
+					>
+						<Headphones size={22} strokeWidth={2.25} />
+					</div>
+					<div>
+						<div class="flex items-center gap-1.5"></div>
+						<h4 class="font-headline text-base font-extrabold text-slate-900">Graded Podcasts</h4>
+						<p class="font-body text-xs text-slate-500">
+							Natural dialogues with live word highlighting & vocabulary save
+						</p>
+					</div>
+				</div>
+
+				<div
+					class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-700 transition-colors group-hover:bg-indigo-600 group-hover:text-white"
+				>
+					<ArrowRight
+						size={16}
+						strokeWidth={2.5}
+						class="transition-transform group-hover:translate-x-0.5"
+					/>
+				</div>
+			</a>
+		</section>
+	{/if}
+
 	<!-- XP LEADERBOARD PROMOTION CARD -->
 	{#if !leaderboardsDisabled}
 		<section class="space-y-2">
+			<h3 class="font-headline text-xs font-bold tracking-wider text-slate-500 uppercase">
+				GLOBAL RANKINGS
+			</h3>
 			<a
 				href={resolve('/leaderboard')}
 				class="shadow-card hover:shadow-card-hover group relative flex cursor-pointer items-center justify-between overflow-hidden rounded-3xl border border-amber-200/80 bg-gradient-to-r from-amber-50/70 via-white to-amber-50/40 p-4.5 transition-all hover:-translate-y-0.5 hover:border-amber-300 active:scale-[0.98]"
@@ -661,11 +652,6 @@
 					</div>
 					<div>
 						<div class="flex items-center gap-1.5">
-							<span
-								class="rounded-full bg-amber-100/90 px-2 py-0.5 font-headline text-[10px] font-bold text-amber-900"
-							>
-								GLOBAL RANKINGS
-							</span>
 							{#if isCloudUser && xpStats}
 								<span
 									class="rounded-full border px-2 py-0.5 font-headline text-[10px] font-bold {xpStats

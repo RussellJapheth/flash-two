@@ -5,6 +5,7 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 	{
 		id: 'morning-coffee',
 		title: '早晨的咖啡店',
+		titleEn: 'Morning Coffee Shop',
 		titlePinyin: 'Zǎochén de Kāfēidiàn',
 		description: '敏敏在街角咖啡店点一杯热咖啡，与热情的咖啡师练习日常点单和移动支付。',
 		level: 'beginner',
@@ -13,6 +14,7 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 		audioUrl: '/audio/podcasts/morning-coffee.mp3',
 		audioFormat: 'mp3',
 		fileSizeBytes: 301869,
+		coverImage: '/images/podcasts/morning-coffee.jpg',
 		speakers: [
 			{
 				id: 'minmin',
@@ -716,6 +718,7 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 	{
 		id: 'shanghai-metro',
 		title: '上海地铁奇遇',
+		titleEn: 'Shanghai Metro Adventure',
 		titlePinyin: 'Shànghǎi Dìtiě Qíyù',
 		description: '大卫在人民广场换乘站向热情的王阿姨问路，体验高效便捷的上海轨道交通。',
 		level: 'intermediate',
@@ -724,6 +727,7 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 		audioUrl: '/audio/podcasts/shanghai-metro.mp3',
 		audioFormat: 'mp3',
 		fileSizeBytes: 320685,
+		coverImage: '/images/podcasts/shanghai-metro.jpg',
 		speakers: [
 			{
 				id: 'dawei',

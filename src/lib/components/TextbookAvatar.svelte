@@ -50,8 +50,18 @@
 	function getAvatarType(charName: string, charRole: string): AvatarType {
 		const target = `${charName} ${charRole}`.toLowerCase();
 
-		if (target.includes('xiao ming') || target.includes('小明')) return 'xiao-ming';
+		// Specific character names have highest priority for 100% consistency
+		if (target.includes('minmin') || target.includes('敏敏')) return 'xiao-ming';
+		if (target.includes('xiaoli') || target.includes('小李')) return 'friend';
 		if (target.includes('david') || target.includes('大卫')) return 'david';
+		if (
+			target.includes('wang') ||
+			target.includes('王阿姨') ||
+			target.includes('auntie mei') ||
+			target.includes('梅阿姨')
+		)
+			return 'auntie-mei';
+		if (target.includes('xiao ming') || target.includes('小明')) return 'xiao-ming';
 		if (
 			target.includes('linna') ||
 			target.includes('琳娜') ||

@@ -5,7 +5,7 @@
 	import { getAllPodcastProgress } from '$lib/utils/podcastStorage';
 	import type { PodcastLevel, PodcastProgress } from '$lib/types';
 	import { onMount } from 'svelte';
-	import { Search, Headphones, Sparkles } from 'lucide-svelte';
+	import { Search, Headphones, Mic, Check } from 'lucide-svelte';
 
 	let searchQuery = $state('');
 	let selectedLevel = $state<PodcastLevel | 'all'>('all');
@@ -41,50 +41,89 @@
 		<TopHeader title="Podcasts" showBack={true} />
 
 		<main class="flex-1 space-y-4 px-4 py-4">
-			<!-- Hero Card -->
+			<!-- Hero Card with Scenic Mountain Backdrop matching Mockup -->
 			<div
-				class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 p-5 text-white shadow-md shadow-indigo-900/10"
+				class="shadow-card relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-6"
 			>
-				<div class="flex items-start justify-between">
-					<div>
-						<span
-							class="inline-flex items-center gap-1 rounded-full bg-white/10 px-2.5 py-0.5 font-headline text-[10px] font-bold tracking-wider text-indigo-200 uppercase backdrop-blur-sm"
-						>
-							<Headphones class="h-3 w-3" />
-							Audio Immersion
-						</span>
-						<h1 class="mt-2 font-headline text-xl font-black tracking-tight text-white">
-							Graded Podcasts
-						</h1>
-						<p class="mt-1 text-xs leading-relaxed text-indigo-200/90">
-							Pre-baked native conversations with live synchronized transcripts.
-						</p>
-					</div>
-
-					<div
-						class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-md"
-					>
-						<Headphones class="h-6 w-6 text-indigo-300" />
-					</div>
-				</div>
-
-				<!-- Stats Ribbon -->
+				<!-- Background Landscape Image with Soft Light Gradient -->
+				<img
+					src="/images/podcast-hero.jpg"
+					alt="Scenic Alpine Mountain Lake"
+					class="absolute inset-0 h-full w-full object-cover object-[72%_center]"
+				/>
 				<div
-					class="mt-4 flex items-center gap-3 border-t border-white/10 pt-3 text-xs font-medium text-indigo-100"
-				>
-					<div class="flex items-center gap-1.5">
-						<span class="font-bold text-white">{BUILTIN_PODCASTS.length}</span>
-						<span class="text-indigo-300">Episodes</span>
+					class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent"
+				></div>
+
+				<!-- Content Layer -->
+				<div class="relative z-10">
+					<!-- Top Row: LEARN ANYWHERE Pill & Headphone Circle -->
+					<div class="flex items-center justify-between">
+						<span
+							class="inline-flex items-center gap-1.5 rounded-full border border-sky-200/80 bg-white/80 px-3.5 py-1 font-headline text-[10px] font-extrabold tracking-wider text-sky-600 uppercase shadow-xs backdrop-blur-md"
+						>
+							<Headphones class="h-3 w-3 text-sky-600" />
+							LEARN ANYWHERE
+						</span>
+
+						<div
+							class="flex h-13 w-13 items-center justify-center rounded-full border border-white/60 bg-indigo-400/25 text-white shadow-sm backdrop-blur-md"
+						>
+							<Headphones class="h-6 w-6 stroke-[2]" />
+						</div>
 					</div>
-					<span class="text-indigo-400">•</span>
-					<div class="flex items-center gap-1.5">
-						<span class="font-bold text-white">{totalCompleted}</span>
-						<span class="text-indigo-300">Completed</span>
-					</div>
-					<span class="text-indigo-400">•</span>
-					<div class="flex items-center gap-1 text-amber-300">
-						<Sparkles class="h-3.5 w-3.5" />
-						<span>Earn XP</span>
+
+					<!-- Title -->
+					<h1 class="mt-4 font-headline text-3xl font-black tracking-tight text-slate-900">
+						Graded <span
+							class="bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-500 bg-clip-text text-transparent"
+							>Podcasts</span
+						>
+					</h1>
+
+					<!-- Description -->
+					<p
+						class="mt-2 max-w-[280px] font-sans text-xs leading-relaxed font-medium text-slate-600"
+					>
+						Listen to expert-led conversations and build your language skills, one episode at a
+						time.
+					</p>
+
+					<!-- Stats Row -->
+					<div class="mt-6 flex flex-wrap items-center gap-3 text-xs font-bold text-slate-700">
+						<!-- Episode count -->
+						<div class="flex items-center gap-2">
+							<div
+								class="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-blue-600"
+							>
+								<Mic class="h-3.5 w-3.5" />
+							</div>
+							<span class="font-headline font-bold text-slate-800"
+								>{BUILTIN_PODCASTS.length} Episodes</span
+							>
+						</div>
+
+						<div class="h-4 w-px bg-slate-300/80"></div>
+
+						<!-- Completed count -->
+						<div class="flex items-center gap-2">
+							<div
+								class="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-500 text-white shadow-xs"
+							>
+								<Check class="h-3.5 w-3.5 stroke-[3]" />
+							</div>
+							<span class="font-headline font-bold text-slate-800"
+								>{totalCompleted > 0 ? `${totalCompleted} Completed` : 'Completed'}</span
+							>
+						</div>
+
+						<div class="h-4 w-px bg-slate-300/80"></div>
+
+						<!-- Earn XP -->
+						<div class="flex items-center gap-1.5">
+							<span class="text-base select-none">⭐</span>
+							<span class="font-headline font-bold text-amber-500">Earn XP</span>
+						</div>
 					</div>
 				</div>
 			</div>

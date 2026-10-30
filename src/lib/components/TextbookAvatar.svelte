@@ -4,7 +4,7 @@
 		role?: string;
 		avatarUrl?: string;
 		avatarEmoji?: string;
-		size?: 'sm' | 'md' | 'lg' | 'xl';
+		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 		className?: string;
 	}
 
@@ -19,6 +19,7 @@
 
 	// Size dimension classes
 	const sizeClasses: Record<string, string> = {
+		xs: 'w-5 h-5',
 		sm: 'w-9 h-9',
 		md: 'w-11 h-11',
 		lg: 'w-14 h-14',
@@ -70,7 +71,11 @@
 			target.includes('clerk') ||
 			target.includes('林阿姨') ||
 			target.includes('摊主') ||
-			target.includes('收银员')
+			target.includes('收银员') ||
+			target.includes('barista') ||
+			target.includes('咖啡师') ||
+			target.includes('xiaoli') ||
+			target.includes('小李')
 		)
 			return 'shopkeeper';
 		if (
@@ -90,7 +95,13 @@
 			target.includes('司机')
 		)
 			return 'driver';
-		if (target.includes('auntie mei') || target.includes('梅阿姨')) return 'auntie-mei';
+		if (
+			target.includes('auntie mei') ||
+			target.includes('梅阿姨') ||
+			target.includes('wang') ||
+			target.includes('王阿姨')
+		)
+			return 'auntie-mei';
 		if (
 			target.includes('mom') ||
 			target.includes('mommy') ||
@@ -142,7 +153,9 @@
 			target.includes('guest') ||
 			target.includes('student') ||
 			target.includes('小丽') ||
-			target.includes('小宇')
+			target.includes('小宇') ||
+			target.includes('敏敏') ||
+			target.includes('minmin')
 		)
 			return 'friend';
 

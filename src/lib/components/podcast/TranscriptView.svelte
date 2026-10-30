@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PodcastSegment, PodcastWord } from '$lib/types';
 	import { Play } from 'lucide-svelte';
+	import TextbookAvatar from '$lib/components/TextbookAvatar.svelte';
 
 	let {
 		segments = [],
@@ -80,13 +81,11 @@
 			<!-- Speaker Header -->
 			<div class="mb-2 flex items-center justify-between">
 				<div class="flex items-center gap-2">
-					<span
-						class="flex h-7 w-7 items-center justify-center rounded-full text-sm {isActive
-							? 'bg-indigo-600 text-white shadow-sm'
-							: 'bg-slate-100 text-slate-700'}"
-					>
-						{segment.speakerAvatar || '👤'}
-					</span>
+					<TextbookAvatar
+						name={segment.speakerName}
+						size="xs"
+						className="h-7 w-7 rounded-full border border-white shadow-xs"
+					/>
 					<span
 						class="font-headline text-xs font-bold {isActive
 							? 'font-extrabold text-indigo-900'

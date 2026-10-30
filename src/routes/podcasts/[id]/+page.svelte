@@ -15,6 +15,7 @@
 	import AudioPlayerBar from '$lib/components/podcast/AudioPlayerBar.svelte';
 	import TranscriptView from '$lib/components/podcast/TranscriptView.svelte';
 	import WordLookupModal from '$lib/components/WordLookupModal.svelte';
+	import TextbookAvatar from '$lib/components/TextbookAvatar.svelte';
 	import { ArrowLeft, Languages, Type, Sparkles, CheckCircle2, RotateCcw } from 'lucide-svelte';
 
 	let episodeId = $derived(page.params.id);
@@ -272,10 +273,15 @@
 					<div class="flex items-center gap-1.5">
 						{#each episode.speakers as speaker (speaker.id)}
 							<span
-								class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-700"
+								class="inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 shadow-xs"
 							>
-								<span>{speaker.avatarEmoji || '👤'}</span>
-								<span>{speaker.name}</span>
+								<TextbookAvatar
+									name={speaker.name}
+									role={speaker.role}
+									size="xs"
+									className="h-5 w-5 rounded-full border border-white shadow-xs"
+								/>
+								<span class="font-headline font-semibold text-slate-800">{speaker.name}</span>
 							</span>
 						{/each}
 					</div>

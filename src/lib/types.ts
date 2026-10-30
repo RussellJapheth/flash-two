@@ -356,3 +356,64 @@ export interface TextbookLesson {
 	miniCheck: TextbookMiniCheck[];
 	xpReward: number; // 10-15 XP
 }
+
+export type PodcastLevel = 'beginner' | 'intermediate' | 'advanced';
+
+export interface PodcastWord {
+	word: string;
+	pinyin?: string;
+	en: string;
+	start: number; // seconds
+	end: number; // seconds
+}
+
+export interface PodcastSegment {
+	id: string;
+	speakerId: string;
+	speakerName: string;
+	speakerAvatar?: string;
+	start: number; // seconds
+	end: number; // seconds
+	text: string;
+	pinyin?: string;
+	en: string;
+	words?: PodcastWord[];
+}
+
+export interface PodcastSpeaker {
+	id: string;
+	name: string;
+	role?: string;
+	avatarEmoji?: string;
+	pitch?: number;
+	speed?: number;
+}
+
+export interface PodcastEpisode {
+	id: string;
+	title: string;
+	titlePinyin?: string;
+	description: string;
+	level: PodcastLevel;
+	hskLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+	duration: number; // total duration in seconds
+	audioUrl: string;
+	audioFormat: 'opus' | 'm4a' | 'mp3';
+	fileSizeBytes: number;
+	speakers: PodcastSpeaker[];
+	keyVocabulary: {
+		word: string;
+		pinyin: string;
+		meaning: string;
+	}[];
+	segments: PodcastSegment[];
+	xpReward: number;
+}
+
+export interface PodcastProgress {
+	episodeId: string;
+	completed: boolean;
+	lastPositionSec: number;
+	listenedDurationSec: number;
+	completedAt?: number;
+}

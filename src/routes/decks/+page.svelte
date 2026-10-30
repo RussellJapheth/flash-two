@@ -42,6 +42,7 @@
 		Compass,
 		Clock,
 		ArrowRight,
+		Headphones,
 		Archive
 	} from 'lucide-svelte';
 	import { downloadCsvTemplate } from '$lib/utils/csvTemplate';
@@ -618,6 +619,27 @@
 				{filteredStories.length} Scenarios
 			</span>
 		</div>
+
+		<!-- Podcast Audio Immersion Banner -->
+		<a
+			href={resolve('/podcasts')}
+			class="flex items-center justify-between rounded-2xl border border-indigo-200 bg-linear-to-r from-indigo-50 to-amber-50/40 p-3.5 shadow-xs transition-transform hover:border-indigo-300 active:scale-[0.99]"
+		>
+			<div class="flex items-center gap-3">
+				<div
+					class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-xs"
+				>
+					<Headphones size={18} />
+				</div>
+				<div>
+					<div class="font-headline text-xs font-bold text-indigo-950">Graded Audio Podcasts</div>
+					<div class="text-[11px] text-indigo-700/80">
+						Listen with live synced transcripts & vocabulary popups
+					</div>
+				</div>
+			</div>
+			<ArrowRight size={16} class="text-indigo-600" />
+		</a>
 
 		<!-- Search Input -->
 		<div class="relative">

@@ -17,7 +17,8 @@
 			page.url.pathname === '/practice' ||
 			page.url.pathname.startsWith('/games/') ||
 			page.url.pathname.startsWith('/story/') ||
-			(page.url.pathname.startsWith('/textbook/') && page.url.pathname !== '/textbook')
+			(page.url.pathname.startsWith('/textbook/') && page.url.pathname !== '/textbook') ||
+			(page.url.pathname.startsWith('/podcasts/') && page.url.pathname !== '/podcasts')
 	);
 
 	onMount(() => {

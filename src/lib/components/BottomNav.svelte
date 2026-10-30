@@ -10,6 +10,7 @@
 		BarChart3,
 		Gamepad2,
 		Settings,
+		Headphones,
 		X
 	} from 'lucide-svelte';
 
@@ -23,6 +24,7 @@
 	] as const;
 
 	const moreMenuItems = [
+		{ href: '/podcasts', icon: Headphones, label: 'Podcasts', desc: 'Graded native audio' },
 		{ href: '/progress', icon: BarChart3, label: 'Progress', desc: 'Stats, streaks & XP' },
 		{ href: '/games', icon: Gamepad2, label: 'Games', desc: 'Tone pairs & arcade' },
 		{ href: '/settings', icon: Settings, label: 'Settings', desc: 'Preferences & backup' }

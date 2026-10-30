@@ -93,3 +93,27 @@ A comprehensive task list for enhancing learning depth across Decks, Stories, an
 - [x] Pair characters with pinyin in all mini-checks (picture match bank and matched cards, word reorder prompt and chips).
 - [x] Remove misleading single "Tone .." badge from multi-tone spotlight vocabulary words.
 - [x] Restore and persist active tab (`flashcards` | `stories` | `guides`) on the decks page across back navigation.
+
+---
+
+## Epic 6: Graded Podcasts with Live Synced Transcripts
+
+### Phase 1: Pipeline & Data Model
+
+- [x] Define `PodcastEpisode`, `PodcastSegment`, `PodcastWord`, `PodcastProgress` types in `src/lib/types.ts`.
+- [x] Create generator script `scripts/bake/generate_podcast.py` for pre-baking audio, calculating word/sentence timestamps, and compressing to lightweight audio files (`static/audio/podcasts/`).
+- [x] Author starter episodes across difficulty levels (Beginner, Intermediate).
+
+### Phase 2: Reactive Player & Storage
+
+- [x] Implement `src/lib/utils/podcastStorage.ts` for playback position persistence, completion records, and XP rewards.
+- [x] Connect with central XP system (`addXP`) and `StudyTimer`.
+- [x] Write comprehensive unit tests in `src/lib/utils/podcastStorage.spec.ts` and `src/lib/podcasts.spec.ts`.
+
+### Phase 3: Player UI & Live Transcripts
+
+- [x] Create `src/lib/components/podcast/AudioPlayerBar.svelte` with scrubber, speed controls, jump buttons.
+- [x] Create `src/lib/components/podcast/TranscriptView.svelte` with auto-scrolling synced highlight and tap-to-seek/lookup.
+- [x] Build catalog page at `src/routes/podcasts/+page.svelte` and player page at `src/routes/podcasts/[id]/+page.svelte`.
+- [x] Connect with `WordLookupModal` for instant word definitions and custom deck export.
+- [x] Add Podcast discovery links in `BottomNav.svelte`, `src/routes/+page.svelte`, and `src/routes/decks/+page.svelte`.

@@ -7,6 +7,13 @@ import type { NotebookNote } from '$lib/types';
 import { pinyin } from 'pinyin-pro';
 
 export const NOTEBOOK_STORAGE_KEY = 'flashcards_notebook_notes';
+export const NOTEBOOK_UPDATED_EVENT = 'flashcards-notebook-updated';
+
+function notifyNotebookUpdated(): void {
+	if (typeof window !== 'undefined') {
+		window.dispatchEvent(new CustomEvent(NOTEBOOK_UPDATED_EVENT));
+	}
+}
 
 /**
  * Returns all saved notebook notes, sorted with pinned notes first, then most recently updated.
@@ -76,11 +83,11 @@ export function saveNotebookNote(input: {
 	} else {
 		all.unshift(noteToSave);
 	}
-
 	if (typeof localStorage !== 'undefined') {
 		localStorage.setItem(NOTEBOOK_STORAGE_KEY, JSON.stringify(all));
 	}
 
+	notifyNotebookUpdated();
 	return noteToSave;
 }
 
@@ -106,6 +113,7 @@ export function saveBulkNotebookNotes(notes: NotebookNote[]): void {
 	if (typeof localStorage !== 'undefined') {
 		localStorage.setItem(NOTEBOOK_STORAGE_KEY, JSON.stringify(merged));
 	}
+	notifyNotebookUpdated();
 }
 
 /**
@@ -119,6 +127,7 @@ export function deleteNotebookNote(id: string): boolean {
 	if (typeof localStorage !== 'undefined') {
 		localStorage.setItem(NOTEBOOK_STORAGE_KEY, JSON.stringify(filtered));
 	}
+	notifyNotebookUpdated();
 	return true;
 }
 
@@ -136,6 +145,7 @@ export function togglePinNotebookNote(id: string): boolean {
 	if (typeof localStorage !== 'undefined') {
 		localStorage.setItem(NOTEBOOK_STORAGE_KEY, JSON.stringify(all));
 	}
+	notifyNotebookUpdated();
 	return true;
 }
 

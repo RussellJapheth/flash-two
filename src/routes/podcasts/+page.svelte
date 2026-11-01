@@ -5,7 +5,7 @@
 	import { getAllPodcastProgress } from '$lib/utils/podcastStorage';
 	import type { PodcastLevel, PodcastProgress } from '$lib/types';
 	import { onMount } from 'svelte';
-	import { Search, Headphones, Mic, Check } from 'lucide-svelte';
+	import { Search, Headphones } from 'lucide-svelte';
 
 	let searchQuery = $state('');
 	let selectedLevel = $state<PodcastLevel | 'all'>('all');
@@ -32,8 +32,6 @@
 			);
 		})
 	);
-
-	let totalCompleted = $derived(Object.values(progressMap).filter((p) => p.completed).length);
 </script>
 
 <div

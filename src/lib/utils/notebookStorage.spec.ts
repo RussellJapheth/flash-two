@@ -7,7 +7,8 @@ import {
 	generatePinyin,
 	exportNotesAsMarkdown,
 	saveBulkNotebookNotes,
-	parseIncomingNoteShare
+	parseIncomingNoteShare,
+	NOTEBOOK_UPDATED_EVENT
 } from './notebookStorage';
 
 class LocalStorageMock {
@@ -134,6 +135,37 @@ describe('notebookStorage', () => {
 
 		expect(generatePinyin('')).toBe('');
 		expect(generatePinyin('   ')).toBe('');
+	});
+
+	it('dispatches NOTEBOOK_UPDATED_EVENT on save, delete, and pin toggle when window exists', () => {
+		let eventFiredCount = 0;
+		const target = new EventTarget();
+		const originalWindow = globalThis.window;
+		(globalThis as unknown as { window: EventTarget }).window = target;
+
+		const handler = () => {
+			eventFiredCount++;
+		};
+		target.addEventListener(NOTEBOOK_UPDATED_EVENT, handler);
+
+		const note = saveNotebookNote({
+			title: '新词',
+			content: 'New vocabulary'
+		});
+		expect(eventFiredCount).toBe(1);
+
+		togglePinNotebookNote(note.id);
+		expect(eventFiredCount).toBe(2);
+
+		deleteNotebookNote(note.id);
+		expect(eventFiredCount).toBe(3);
+
+		target.removeEventListener(NOTEBOOK_UPDATED_EVENT, handler);
+		if (originalWindow !== undefined) {
+			globalThis.window = originalWindow;
+		} else {
+			delete (globalThis as unknown as { window?: EventTarget }).window;
+		}
 	});
 
 	it('exports notes as markdown string', () => {

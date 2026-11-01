@@ -8,7 +8,9 @@
 		deleteNotebookNote,
 		togglePinNotebookNote,
 		generatePinyin,
-		parseIncomingNoteShare
+		parseIncomingNoteShare,
+		NOTEBOOK_UPDATED_EVENT,
+		NOTEBOOK_STORAGE_KEY
 	} from '$lib/utils/notebookStorage';
 	import { getAllSavedLinks, parseIncomingShare } from '$lib/utils/linkStorage';
 	import { getSavedLanguage } from '$lib/utils/storage';
@@ -124,10 +126,29 @@
 			}
 		}
 
+		const handleUpdate = () => loadNotes();
+		const handleStorage = (e: StorageEvent) => {
+			if (e.key === NOTEBOOK_STORAGE_KEY) {
+				loadNotes();
+			}
+		};
+
+		if (typeof window !== 'undefined') {
+			window.addEventListener(NOTEBOOK_UPDATED_EVENT, handleUpdate);
+			window.addEventListener('storage', handleStorage);
+		}
+
 		if (typeof window !== 'undefined' && (sharedUrl || sharedText || sharedTitle || tab)) {
 			const cleanUrl = window.location.pathname + (activeTab === 'links' ? '?tab=links' : '');
 			window.history.replaceState({}, '', cleanUrl);
 		}
+
+		return () => {
+			if (typeof window !== 'undefined') {
+				window.removeEventListener(NOTEBOOK_UPDATED_EVENT, handleUpdate);
+				window.removeEventListener('storage', handleStorage);
+			}
+		};
 	});
 
 	// Unique list of all tags present in user's notes

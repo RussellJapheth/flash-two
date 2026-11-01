@@ -25,6 +25,7 @@
 		savePersonalWord,
 		removePersonalWord
 	} from '$lib/utils/dictionary';
+	import { saveNotebookNote, generatePinyin } from '$lib/utils/notebookStorage';
 
 	const PAGE_SIZE = 10;
 
@@ -98,17 +99,34 @@
 	async function handleCreateCustomNote() {
 		if (!customWord.trim() && !customNoteText.trim()) return;
 
+		const title = customWord.trim() || 'Note';
+		const noteParts = [customMeaning.trim(), customNoteText.trim()].filter(Boolean);
+		const content = noteParts.join('\n\n');
+		const py =
+			customPinyin.trim() ||
+			(currentLanguage === 'chinese' ? generatePinyin(title) || undefined : undefined);
+
+		// 1. Persist to Notebook Notes
+		saveNotebookNote({
+			title,
+			content,
+			language: currentLanguage,
+			pinyin: py,
+			tags: ['Dictionary', 'Custom Note']
+		});
+
+		// 2. Also persist to Personal Dictionary Deck
 		const wordRecord: WordRecord = {
 			No: Date.now(),
-			'Chinese Word': customWord.trim() || 'Note',
-			Pinyin: customPinyin.trim() || undefined,
+			'Chinese Word': title,
+			Pinyin: py,
 			'Part of Speech': 'Personal Note',
 			'English Meaning': customMeaning.trim() || 'Custom Note',
 			customNote: customNoteText.trim()
 		};
 
 		personalDeck = await savePersonalWord(wordRecord, customNoteText.trim());
-		showToast(`Saved note "${wordRecord['Chinese Word']}" to Personal Dictionary!`);
+		showToast(`Saved note "${title}" to Notebook!`);
 
 		// Reset form
 		customWord = '';
@@ -224,6 +242,15 @@
 
 		const note = editingNotesMap[zh];
 		personalDeck = await savePersonalWord(word, note);
+		if (note && note.trim()) {
+			saveNotebookNote({
+				title: zh,
+				content: [word['English Meaning'], note.trim()].filter(Boolean).join('\n\n'),
+				language: 'chinese',
+				pinyin: word.Pinyin,
+				tags: ['Dictionary']
+			});
+		}
 		showToast(`Updated note for "${zh}"`);
 	}
 
@@ -442,7 +469,7 @@
 							class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-indigo-600 py-3 font-headline text-xs font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 active:scale-[0.98]"
 						>
 							<FileText size={16} />
-							<span>Save Note to Personal Dictionary</span>
+							<span>Save Note to Notebook</span>
 						</button>
 					</form>
 				{:else}

@@ -26,6 +26,7 @@
 		removePersonalWord
 	} from '$lib/utils/dictionary';
 	import { saveNotebookNote, generatePinyin } from '$lib/utils/notebookStorage';
+	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 
 	const PAGE_SIZE = 10;
 
@@ -126,6 +127,7 @@
 		};
 
 		personalDeck = await savePersonalWord(wordRecord, customNoteText.trim());
+		scheduleDebouncedSync();
 		showToast(`Saved note "${title}" to Notebook!`);
 
 		// Reset form
@@ -228,10 +230,12 @@
 
 		if (isSaved) {
 			personalDeck = await removePersonalWord(zh);
+			scheduleDebouncedSync();
 			showToast(`Removed "${zh}" from Personal Dictionary`);
 		} else {
 			const note = editingNotesMap[zh] ?? word.customNote;
 			personalDeck = await savePersonalWord(word, note);
+			scheduleDebouncedSync();
 			showToast(`Saved "${zh}" to Personal Dictionary!`);
 		}
 	}
@@ -251,6 +255,7 @@
 				tags: ['Dictionary']
 			});
 		}
+		scheduleDebouncedSync();
 		showToast(`Updated note for "${zh}"`);
 	}
 

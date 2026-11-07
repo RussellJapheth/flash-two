@@ -7,11 +7,38 @@ import type { NotebookNote } from '$lib/types';
 import { pinyin } from 'pinyin-pro';
 
 export const NOTEBOOK_STORAGE_KEY = 'flashcards_notebook_notes';
+export const NOTEBOOK_DELETED_KEY = 'flashcards_notebook_deleted';
 export const NOTEBOOK_UPDATED_EVENT = 'flashcards-notebook-updated';
 
 function notifyNotebookUpdated(): void {
 	if (typeof window !== 'undefined') {
 		window.dispatchEvent(new CustomEvent(NOTEBOOK_UPDATED_EVENT));
+	}
+}
+
+export function getDeletedNotebookNotes(): Record<string, number> {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') {
+		return {};
+	}
+	try {
+		const raw = localStorage.getItem(NOTEBOOK_DELETED_KEY);
+		if (!raw) return {};
+		const parsed = JSON.parse(raw);
+		if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+			return parsed as Record<string, number>;
+		}
+		return {};
+	} catch {
+		return {};
+	}
+}
+
+export function saveDeletedNotebookNotes(deleted: Record<string, number>): void {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return;
+	try {
+		localStorage.setItem(NOTEBOOK_DELETED_KEY, JSON.stringify(deleted));
+	} catch (e) {
+		console.error('Failed to save deleted notebook notes:', e);
 	}
 }
 
@@ -85,6 +112,11 @@ export function saveNotebookNote(input: {
 	}
 	if (typeof localStorage !== 'undefined') {
 		localStorage.setItem(NOTEBOOK_STORAGE_KEY, JSON.stringify(all));
+		const deleted = getDeletedNotebookNotes();
+		if (deleted[noteId]) {
+			delete deleted[noteId];
+			saveDeletedNotebookNotes(deleted);
+		}
 	}
 
 	notifyNotebookUpdated();
@@ -94,23 +126,49 @@ export function saveNotebookNote(input: {
 /**
  * Saves multiple notebook notes (e.g. during backup restore or cloud pull).
  */
-export function saveBulkNotebookNotes(notes: NotebookNote[]): void {
+export function saveBulkNotebookNotes(
+	notes: NotebookNote[],
+	remoteDeleted?: Record<string, number>
+): void {
 	if (!Array.isArray(notes)) return;
 	const existing = getAllNotebookNotes();
+	const mergedDeleted: Record<string, number> = { ...getDeletedNotebookNotes() };
+
+	if (remoteDeleted && typeof remoteDeleted === 'object') {
+		for (const [id, ts] of Object.entries(remoteDeleted)) {
+			if (typeof ts === 'number') {
+				mergedDeleted[id] = Math.max(mergedDeleted[id] || 0, ts);
+			}
+		}
+	}
+
 	const noteMap = new Map<string, NotebookNote>();
 
 	for (const note of existing) {
 		noteMap.set(note.id, note);
 	}
 	for (const note of notes) {
+		if (!note || !note.id) continue;
 		const prev = noteMap.get(note.id);
 		if (!prev || (note.updatedAt || 0) >= (prev.updatedAt || 0)) {
 			noteMap.set(note.id, note);
 		}
 	}
 
-	const merged = Array.from(noteMap.values());
+	const merged: NotebookNote[] = [];
+	for (const note of noteMap.values()) {
+		const delTs = mergedDeleted[note.id] || 0;
+		if (delTs > (note.updatedAt || 0)) {
+			continue;
+		}
+		if (delTs > 0 && (note.updatedAt || 0) >= delTs) {
+			delete mergedDeleted[note.id];
+		}
+		merged.push(note);
+	}
+
 	if (typeof localStorage !== 'undefined') {
+		saveDeletedNotebookNotes(mergedDeleted);
 		localStorage.setItem(NOTEBOOK_STORAGE_KEY, JSON.stringify(merged));
 	}
 	notifyNotebookUpdated();
@@ -126,6 +184,9 @@ export function deleteNotebookNote(id: string): boolean {
 
 	if (typeof localStorage !== 'undefined') {
 		localStorage.setItem(NOTEBOOK_STORAGE_KEY, JSON.stringify(filtered));
+		const deleted = getDeletedNotebookNotes();
+		deleted[id] = Date.now();
+		saveDeletedNotebookNotes(deleted);
 	}
 	notifyNotebookUpdated();
 	return true;

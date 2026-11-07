@@ -26,10 +26,16 @@
 		saveBulkNotebookNotes,
 		exportNotesAsMarkdown
 	} from '$lib/utils/notebookStorage';
-	import { getAllSavedLinks, importLinksFromJson, exportLinksAsJson } from '$lib/utils/linkStorage';
+	import {
+		getAllSavedLinks,
+		saveBulkSavedLinks,
+		importLinksFromJson,
+		exportLinksAsJson
+	} from '$lib/utils/linkStorage';
 	import {
 		pullAndMerge,
 		pushData,
+		scheduleDebouncedSync,
 		subscribeSyncStatus,
 		subscribeDataChanged,
 		checkRemoteUser,
@@ -281,10 +287,10 @@
 					for (const d of parsed.customDecks) await saveCustomDeck(d);
 				}
 				if (Array.isArray(parsed.notebookNotes)) {
-					saveBulkNotebookNotes(parsed.notebookNotes);
+					saveBulkNotebookNotes(parsed.notebookNotes, parsed.deletedNotebookNotes);
 				}
 				if (Array.isArray(parsed.savedLinks)) {
-					importLinksFromJson(JSON.stringify(parsed.savedLinks));
+					saveBulkSavedLinks(parsed.savedLinks, parsed.deletedSavedLinks);
 				}
 				if (parsed.username) {
 					setSavedUsername(parsed.username);
@@ -353,6 +359,7 @@
 		try {
 			const text = await file.text();
 			const res = importLinksFromJson(text);
+			scheduleDebouncedSync();
 			dataMessage = `Imported ${res.imported} links!`;
 		} catch {
 			dataMessage = 'Error importing links file.';

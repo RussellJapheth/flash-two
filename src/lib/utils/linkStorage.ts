@@ -1,6 +1,40 @@
 import type { SavedLink, SavedLinkCategory, SavedLinkYouTube } from '$lib/types';
 
 export const SAVED_LINKS_STORAGE_KEY = 'flashcards_saved_links';
+export const SAVED_LINKS_DELETED_KEY = 'flashcards_saved_links_deleted';
+export const SAVED_LINKS_UPDATED_EVENT = 'flashcards-saved-links-updated';
+
+function notifySavedLinksUpdated(): void {
+	if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+		window.dispatchEvent(new CustomEvent(SAVED_LINKS_UPDATED_EVENT));
+	}
+}
+
+export function getDeletedSavedLinks(): Record<string, number> {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') {
+		return {};
+	}
+	try {
+		const raw = localStorage.getItem(SAVED_LINKS_DELETED_KEY);
+		if (!raw) return {};
+		const parsed = JSON.parse(raw);
+		if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+			return parsed as Record<string, number>;
+		}
+		return {};
+	} catch {
+		return {};
+	}
+}
+
+export function saveDeletedSavedLinks(deleted: Record<string, number>): void {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return;
+	try {
+		localStorage.setItem(SAVED_LINKS_DELETED_KEY, JSON.stringify(deleted));
+	} catch (e) {
+		console.error('Failed to save deleted links:', e);
+	}
+}
 
 /**
  * Extracts YouTube Video ID and thumbnail if the URL belongs to YouTube.
@@ -280,16 +314,110 @@ export function saveSavedLink(input: {
 		all.unshift(record);
 	}
 
+	const deleted = getDeletedSavedLinks();
+	if (deleted[linkId]) {
+		delete deleted[linkId];
+		saveDeletedSavedLinks(deleted);
+	}
+
 	persistSavedLinks(all);
 	return record;
+}
+
+/**
+ * Merges multiple saved links (e.g. during cloud pull or backup restore),
+ * keeping newer edits by updatedAt and respecting deletion tombstones.
+ */
+export function saveBulkSavedLinks(
+	links: SavedLink[],
+	remoteDeleted?: Record<string, number>
+): void {
+	if (!Array.isArray(links)) return;
+	const existing = getAllSavedLinks();
+	const mergedDeleted: Record<string, number> = { ...getDeletedSavedLinks() };
+
+	if (remoteDeleted && typeof remoteDeleted === 'object') {
+		for (const [id, ts] of Object.entries(remoteDeleted)) {
+			if (typeof ts === 'number') {
+				mergedDeleted[id] = Math.max(mergedDeleted[id] || 0, ts);
+			}
+		}
+	}
+
+	const linkMap = new Map<string, SavedLink>();
+	const urlToId = new Map<string, string>();
+
+	for (const link of existing) {
+		linkMap.set(link.id, link);
+		if (link.url) urlToId.set(link.url, link.id);
+	}
+
+	for (const item of links) {
+		if (!item || !item.url) continue;
+		const cleanUrl = item.url.trim();
+		const matchId = linkMap.has(item.id) ? item.id : urlToId.get(cleanUrl);
+		const prev = matchId ? linkMap.get(matchId) : undefined;
+		const itemUpdated = Number(item.updatedAt) || Number(item.createdAt) || 0;
+		const prevUpdated = prev ? Number(prev.updatedAt) || Number(prev.createdAt) || 0 : -1;
+
+		if (!prev || itemUpdated >= prevUpdated) {
+			const idToUse =
+				matchId || item.id || `link-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+			const domain = item.domain || extractDomain(cleanUrl);
+			const youtube = item.youtube || extractYouTubeInfo(cleanUrl);
+			const validItem: SavedLink = {
+				id: idToUse,
+				url: cleanUrl,
+				title: item.title || `Saved Link (${domain})`,
+				domain,
+				category: item.category || (youtube ? 'video' : detectCategory(cleanUrl)),
+				favicon:
+					item.favicon ||
+					`https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`,
+				description: item.description,
+				notes: item.notes,
+				tags: Array.isArray(item.tags)
+					? item.tags.map((t) => String(t).trim().toLowerCase()).filter(Boolean)
+					: [],
+				isPinned: Boolean(item.isPinned),
+				isArchived: Boolean(item.isArchived),
+				createdAt: Number(item.createdAt) || itemUpdated || Date.now(),
+				updatedAt: itemUpdated || Date.now(),
+				youtube
+			};
+			linkMap.set(idToUse, validItem);
+			urlToId.set(cleanUrl, idToUse);
+		}
+	}
+
+	const merged: SavedLink[] = [];
+	for (const link of linkMap.values()) {
+		const delTs = mergedDeleted[link.id] || 0;
+		if (delTs > (link.updatedAt || 0)) {
+			continue;
+		}
+		if (delTs > 0 && (link.updatedAt || 0) >= delTs) {
+			delete mergedDeleted[link.id];
+		}
+		merged.push(link);
+	}
+
+	saveDeletedSavedLinks(mergedDeleted);
+	persistSavedLinks(merged);
 }
 
 /**
  * Deletes a saved link by ID.
  */
 export function deleteSavedLink(id: string): void {
-	const all = getAllSavedLinks().filter((l) => l.id !== id);
-	persistSavedLinks(all);
+	const existing = getAllSavedLinks();
+	const filtered = existing.filter((l) => l.id !== id);
+	if (filtered.length !== existing.length) {
+		const deleted = getDeletedSavedLinks();
+		deleted[id] = Date.now();
+		saveDeletedSavedLinks(deleted);
+	}
+	persistSavedLinks(filtered);
 }
 
 /**
@@ -402,6 +530,7 @@ function persistSavedLinks(links: SavedLink[]): void {
 	}
 	try {
 		localStorage.setItem(SAVED_LINKS_STORAGE_KEY, JSON.stringify(links));
+		notifySavedLinksUpdated();
 	} catch (e) {
 		console.error('Failed to persist saved links:', e);
 	}

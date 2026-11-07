@@ -2,6 +2,7 @@
 	import { Volume2, Bookmark, Check, BookOpen, X, Loader2 } from 'lucide-svelte';
 	import { speakWord } from '$lib/utils/audio';
 	import { saveNotebookNote } from '$lib/utils/notebookStorage';
+	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { openModal } from '$lib/utils/backNav';
 	import { searchDictionary } from '$lib/utils/dictionary';
 	import { pinyin } from 'pinyin-pro';
@@ -70,6 +71,7 @@
 			pinyin: displayPinyin,
 			tags: ['Field Guide', 'Vocabulary']
 		});
+		scheduleDebouncedSync();
 		isSaved = true;
 		saveFeedback = 'Saved to Notebook!';
 		setTimeout(() => {

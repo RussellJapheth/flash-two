@@ -39,6 +39,12 @@ import {
 	CURRENT_XP_VERSION
 } from './xp';
 import { syncPendingGameScores } from './gameStorage';
+import {
+	getAllNotebookNotes,
+	saveBulkNotebookNotes,
+	getDeletedNotebookNotes
+} from './notebookStorage';
+import { getAllSavedLinks, saveBulkSavedLinks, getDeletedSavedLinks } from './linkStorage';
 import { API_BASE_URL } from './apiBase';
 
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
@@ -103,8 +109,11 @@ export async function checkRemoteUser(username: string): Promise<RemoteUserSumma
 				: 0;
 		const totalXP = remoteData.xpData?.totalXP || 0;
 		const deckCount = Array.isArray(remoteData.customDecks) ? remoteData.customDecks.length : 0;
+		const noteCount = Array.isArray(remoteData.notebookNotes) ? remoteData.notebookNotes.length : 0;
+		const linkCount = Array.isArray(remoteData.savedLinks) ? remoteData.savedLinks.length : 0;
 
-		const hasExistingData = totalXP > 0 || reviewCount > 0 || deckCount > 0;
+		const hasExistingData =
+			totalXP > 0 || reviewCount > 0 || deckCount > 0 || noteCount > 0 || linkCount > 0;
 
 		return {
 			exists: hasExistingData,
@@ -354,6 +363,63 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 			localHadNewData = true;
 		}
 
+		// 7. Merge Notebook Notes & Phrases
+		const localNotes = getAllNotebookNotes();
+		const localDeletedNotes = getDeletedNotebookNotes();
+		const remoteNotes = Array.isArray(remoteData.notebookNotes) ? remoteData.notebookNotes : [];
+		const remoteDeletedNotes =
+			remoteData.deletedNotebookNotes && typeof remoteData.deletedNotebookNotes === 'object'
+				? remoteData.deletedNotebookNotes
+				: {};
+
+		if (remoteNotes.length > 0 || Object.keys(remoteDeletedNotes).length > 0) {
+			saveBulkNotebookNotes(remoteNotes, remoteDeletedNotes);
+		}
+
+		const remoteNoteMap = new Map(remoteNotes.map((n) => [n.id, n]));
+		for (const localNote of localNotes) {
+			const remDeletedAt = remoteDeletedNotes[localNote.id] || 0;
+			if (remDeletedAt > (localNote.updatedAt || 0)) continue;
+			const remNote = remoteNoteMap.get(localNote.id);
+			if (!remNote || (localNote.updatedAt || 0) > (remNote.updatedAt || 0)) {
+				localHadNewData = true;
+			}
+		}
+		for (const [delId, delTime] of Object.entries(localDeletedNotes)) {
+			if ((remoteDeletedNotes[delId] || 0) < delTime) {
+				localHadNewData = true;
+			}
+		}
+
+		// 8. Merge Saved Links & Videos
+		const localLinks = getAllSavedLinks();
+		const localDeletedLinks = getDeletedSavedLinks();
+		const remoteLinks = Array.isArray(remoteData.savedLinks) ? remoteData.savedLinks : [];
+		const remoteDeletedLinks =
+			remoteData.deletedSavedLinks && typeof remoteData.deletedSavedLinks === 'object'
+				? remoteData.deletedSavedLinks
+				: {};
+
+		if (remoteLinks.length > 0 || Object.keys(remoteDeletedLinks).length > 0) {
+			saveBulkSavedLinks(remoteLinks, remoteDeletedLinks);
+		}
+
+		const remoteLinkMap = new Map(remoteLinks.map((l) => [l.id, l]));
+		const remoteLinkUrlMap = new Map(remoteLinks.map((l) => [l.url, l]));
+		for (const localLink of localLinks) {
+			const remDeletedAt = remoteDeletedLinks[localLink.id] || 0;
+			if (remDeletedAt > (localLink.updatedAt || 0)) continue;
+			const remLink = remoteLinkMap.get(localLink.id) || remoteLinkUrlMap.get(localLink.url);
+			if (!remLink || (localLink.updatedAt || 0) > (remLink.updatedAt || 0)) {
+				localHadNewData = true;
+			}
+		}
+		for (const [delId, delTime] of Object.entries(localDeletedLinks)) {
+			if ((remoteDeletedLinks[delId] || 0) < delTime) {
+				localHadNewData = true;
+			}
+		}
+
 		updateStatus('ok');
 		notifyDataChanged();
 
@@ -361,7 +427,7 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 		syncXPLeaderboard().catch((e) => console.warn('XP leaderboard sync error:', e));
 		syncPendingGameScores().catch((e) => console.warn('Game leaderboard sync error:', e));
 
-		// 7. Two-way convergence: if local had newer/additional data, push merged state to remote
+		// 9. Two-way convergence: if local had newer/additional data, push merged state to remote
 		if (localHadNewData) {
 			scheduleDebouncedSync(1000);
 		}
@@ -396,6 +462,10 @@ export async function pushData(username?: string): Promise<boolean> {
 		const xpData = getLocalUserXPData();
 		const leaderboardDisabled = isLeaderboardDisabled();
 		const streakFreezeData = getStreakFreezeData();
+		const notebookNotes = getAllNotebookNotes();
+		const savedLinks = getAllSavedLinks();
+		const deletedNotebookNotes = getDeletedNotebookNotes();
+		const deletedSavedLinks = getDeletedSavedLinks();
 
 		const payload: AppBackup = {
 			version: 1,
@@ -407,7 +477,11 @@ export async function pushData(username?: string): Promise<boolean> {
 			username: user,
 			xpData,
 			leaderboardDisabled,
-			streakFreezeData
+			streakFreezeData,
+			notebookNotes,
+			savedLinks,
+			deletedNotebookNotes,
+			deletedSavedLinks
 		};
 
 		const res = await fetch(`${API_BASE_URL}/users/${encodeURIComponent(user)}`, {

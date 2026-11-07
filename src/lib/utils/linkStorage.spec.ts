@@ -6,6 +6,7 @@ import {
 	parseIncomingShare,
 	getAllSavedLinks,
 	saveSavedLink,
+	saveBulkSavedLinks,
 	deleteSavedLink,
 	togglePinLink,
 	toggleArchiveLink,
@@ -203,6 +204,57 @@ describe('linkStorage utility', () => {
 			const result = importLinksFromJson(json);
 			expect(result.imported).toBe(2);
 			expect(getAllSavedLinks().length).toBe(2);
+		});
+
+		it('merges bulk saved links and respects deletion tombstones', () => {
+			const localLink = saveSavedLink({
+				id: 'link-1',
+				url: 'https://youtu.be/dQw4w9WgXcQ',
+				title: 'Local Newer Title'
+			});
+
+			saveBulkSavedLinks([
+				{
+					id: 'link-1',
+					url: 'https://youtu.be/dQw4w9WgXcQ',
+					title: 'Cloud Older Title',
+					domain: 'youtu.be',
+					category: 'video',
+					tags: [],
+					isPinned: false,
+					isArchived: false,
+					createdAt: 1000,
+					updatedAt: 1000
+				},
+				{
+					id: 'link-2',
+					url: 'https://svelte.dev',
+					title: 'Svelte Docs',
+					domain: 'svelte.dev',
+					category: 'other',
+					tags: ['dev'],
+					isPinned: true,
+					isArchived: false,
+					createdAt: 2000,
+					updatedAt: 2000
+				}
+			]);
+
+			let links = getAllSavedLinks();
+			expect(links.length).toBe(2);
+			expect(links.find((l) => l.id === 'link-1')?.title).toBe('Local Newer Title');
+			expect(links.find((l) => l.id === 'link-2')?.title).toBe('Svelte Docs');
+
+			// Delete link-1 and ensure older remote copy does not resurrect it
+			deleteSavedLink('link-1');
+			saveBulkSavedLinks([
+				{
+					...localLink,
+					updatedAt: localLink.updatedAt - 100
+				}
+			]);
+			links = getAllSavedLinks();
+			expect(links.find((l) => l.id === 'link-1')).toBeUndefined();
 		});
 	});
 });

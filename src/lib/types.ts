@@ -105,6 +105,8 @@ export interface AppBackup {
 	studyTimeData?: StudyTimeData;
 	notebookNotes?: NotebookNote[];
 	savedLinks?: SavedLink[];
+	deletedNotebookNotes?: Record<string, number>;
+	deletedSavedLinks?: Record<string, number>;
 }
 
 export type SavedLinkCategory = 'video' | 'article' | 'audio' | 'tool' | 'reference' | 'other';

@@ -8,8 +8,11 @@
 		toggleArchiveLink,
 		extractDomain,
 		extractYouTubeInfo,
-		detectCategory
+		detectCategory,
+		SAVED_LINKS_UPDATED_EVENT,
+		SAVED_LINKS_STORAGE_KEY
 	} from '$lib/utils/linkStorage';
+	import { scheduleDebouncedSync, subscribeDataChanged } from '$lib/utils/cloud';
 	import type { SavedLink, SavedLinkCategory } from '$lib/types';
 	import {
 		Plus,
@@ -147,6 +150,29 @@
 			openAddModal(initialShare);
 			showToast('Shared link ready to save!');
 		}
+
+		const handleUpdate = () => refreshList();
+		const handleStorage = (e: StorageEvent) => {
+			if (e.key === SAVED_LINKS_STORAGE_KEY) {
+				refreshList();
+			}
+		};
+		const unsubData = subscribeDataChanged(() => {
+			refreshList();
+		});
+
+		if (typeof window !== 'undefined') {
+			window.addEventListener(SAVED_LINKS_UPDATED_EVENT, handleUpdate);
+			window.addEventListener('storage', handleStorage);
+		}
+
+		return () => {
+			unsubData();
+			if (typeof window !== 'undefined') {
+				window.removeEventListener(SAVED_LINKS_UPDATED_EVENT, handleUpdate);
+				window.removeEventListener('storage', handleStorage);
+			}
+		};
 	});
 
 	function openAddModal(prefill?: { url?: string; title?: string; notes?: string }) {
@@ -234,6 +260,7 @@
 			isPinned: formIsPinned
 		});
 
+		scheduleDebouncedSync();
 		refreshList();
 		isModalOpen = false;
 		showToast(editingId ? 'Link updated!' : 'Link saved to vault!');
@@ -241,18 +268,21 @@
 
 	function handleDelete(id: string) {
 		deleteSavedLink(id);
+		scheduleDebouncedSync();
 		refreshList();
 		showToast('Link removed');
 	}
 
 	function handleTogglePin(id: string) {
 		const pinned = togglePinLink(id);
+		scheduleDebouncedSync();
 		refreshList();
 		showToast(pinned ? 'Pinned to top ⭐' : 'Unpinned');
 	}
 
 	function handleToggleArchive(id: string) {
 		const archived = toggleArchiveLink(id);
+		scheduleDebouncedSync();
 		refreshList();
 		showToast(archived ? 'Archived link 📦' : 'Restored from archive');
 	}

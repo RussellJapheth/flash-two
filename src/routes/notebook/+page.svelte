@@ -12,8 +12,14 @@
 		NOTEBOOK_UPDATED_EVENT,
 		NOTEBOOK_STORAGE_KEY
 	} from '$lib/utils/notebookStorage';
-	import { getAllSavedLinks, parseIncomingShare } from '$lib/utils/linkStorage';
+	import {
+		getAllSavedLinks,
+		parseIncomingShare,
+		SAVED_LINKS_UPDATED_EVENT,
+		SAVED_LINKS_STORAGE_KEY
+	} from '$lib/utils/linkStorage';
 	import { getSavedLanguage } from '$lib/utils/storage';
+	import { scheduleDebouncedSync, subscribeDataChanged } from '$lib/utils/cloud';
 	import SavedLinksSection from '$lib/components/notebook/SavedLinksSection.svelte';
 	import { speakWord } from '$lib/utils/audio';
 	import type { NotebookNote } from '$lib/types';
@@ -28,7 +34,8 @@
 		BookOpen,
 		Sparkles,
 		Tag,
-		Bookmark
+		Bookmark,
+		ChevronDown
 	} from 'lucide-svelte';
 
 	let activeTab = $state<'notes' | 'links'>('notes');
@@ -117,6 +124,7 @@
 						pinyin: parsedNote.pinyin,
 						tags: parsedNote.tags
 					});
+					scheduleDebouncedSync();
 					loadNotes();
 					showToast('Note saved to notebook!');
 				} else {
@@ -128,13 +136,17 @@
 
 		const handleUpdate = () => loadNotes();
 		const handleStorage = (e: StorageEvent) => {
-			if (e.key === NOTEBOOK_STORAGE_KEY) {
+			if (e.key === NOTEBOOK_STORAGE_KEY || e.key === SAVED_LINKS_STORAGE_KEY) {
 				loadNotes();
 			}
 		};
+		const unsubData = subscribeDataChanged(() => {
+			loadNotes();
+		});
 
 		if (typeof window !== 'undefined') {
 			window.addEventListener(NOTEBOOK_UPDATED_EVENT, handleUpdate);
+			window.addEventListener(SAVED_LINKS_UPDATED_EVENT, handleUpdate);
 			window.addEventListener('storage', handleStorage);
 		}
 
@@ -144,8 +156,10 @@
 		}
 
 		return () => {
+			unsubData();
 			if (typeof window !== 'undefined') {
 				window.removeEventListener(NOTEBOOK_UPDATED_EVENT, handleUpdate);
+				window.removeEventListener(SAVED_LINKS_UPDATED_EVENT, handleUpdate);
 				window.removeEventListener('storage', handleStorage);
 			}
 		};
@@ -243,6 +257,7 @@
 		});
 
 		const wasEditing = Boolean(editingId);
+		scheduleDebouncedSync();
 		closeModal();
 		loadNotes();
 		showToast(wasEditing ? 'Note updated!' : 'Note saved to notebook!');
@@ -251,6 +266,7 @@
 	function handleDeleteNote(id: string, title: string) {
 		if (confirm(`Delete "${title}" from your notebook?`)) {
 			deleteNotebookNote(id);
+			scheduleDebouncedSync();
 			loadNotes();
 			showToast('Note deleted');
 		}
@@ -258,6 +274,7 @@
 
 	function handleTogglePin(id: string) {
 		togglePinNotebookNote(id);
+		scheduleDebouncedSync();
 		loadNotes();
 		const note = notes.find((n) => n.id === id);
 		showToast(note?.isPinned ? 'Pinned to top ⭐' : 'Unpinned');
@@ -536,13 +553,36 @@
 
 							<!-- Freeform Body -->
 							{#if note.content}
-								<div class="mt-3 border-t border-slate-100 pt-3">
-									<p
-										class="font-sans text-xs leading-relaxed font-normal whitespace-pre-wrap text-slate-700 sm:text-sm"
+								<details class="group mt-3 border-t border-slate-100 pt-2.5">
+									<summary
+										class="flex cursor-pointer list-none items-center justify-between gap-2 rounded-xl py-1 text-left select-none [&::-webkit-details-marker]:hidden"
 									>
-										{note.content}
-									</p>
-								</div>
+										<span
+											class="line-clamp-1 flex-1 font-sans text-xs text-slate-500 group-open:font-headline group-open:font-bold group-open:text-slate-700"
+										>
+											<span class="group-open:hidden">{note.content}</span>
+											<span class="hidden group-open:inline">Explanation & Notes</span>
+										</span>
+										<span
+											class="inline-flex shrink-0 items-center gap-1 rounded-lg bg-slate-100 px-2 py-1 font-headline text-[11px] font-bold text-slate-600 transition-colors group-open:bg-indigo-50 group-open:text-indigo-600 hover:bg-slate-200"
+										>
+											<span class="group-open:hidden">Expand</span>
+											<span class="hidden group-open:inline">Collapse</span>
+											<ChevronDown
+												size={13}
+												aria-hidden="true"
+												class="transition-transform duration-200 group-open:rotate-180"
+											/>
+										</span>
+									</summary>
+									<div class="mt-2.5 rounded-2xl bg-slate-50/80 p-3.5">
+										<p
+											class="font-sans text-xs leading-relaxed font-normal whitespace-pre-wrap text-slate-700 sm:text-sm"
+										>
+											{note.content}
+										</p>
+									</div>
+								</details>
 							{/if}
 						</article>
 					{/each}
@@ -645,13 +685,36 @@
 
 							<!-- Freeform Body -->
 							{#if note.content}
-								<div class="mt-3 border-t border-slate-100 pt-3">
-									<p
-										class="font-sans text-xs leading-relaxed font-normal whitespace-pre-wrap text-slate-700 sm:text-sm"
+								<details class="group mt-3 border-t border-slate-100 pt-2.5">
+									<summary
+										class="flex cursor-pointer list-none items-center justify-between gap-2 rounded-xl py-1 text-left select-none [&::-webkit-details-marker]:hidden"
 									>
-										{note.content}
-									</p>
-								</div>
+										<span
+											class="line-clamp-1 flex-1 font-sans text-xs text-slate-500 group-open:font-headline group-open:font-bold group-open:text-slate-700"
+										>
+											<span class="group-open:hidden">{note.content}</span>
+											<span class="hidden group-open:inline">Explanation & Notes</span>
+										</span>
+										<span
+											class="inline-flex shrink-0 items-center gap-1 rounded-lg bg-slate-100 px-2 py-1 font-headline text-[11px] font-bold text-slate-600 transition-colors group-open:bg-indigo-50 group-open:text-indigo-600 hover:bg-slate-200"
+										>
+											<span class="group-open:hidden">Expand</span>
+											<span class="hidden group-open:inline">Collapse</span>
+											<ChevronDown
+												size={13}
+												aria-hidden="true"
+												class="transition-transform duration-200 group-open:rotate-180"
+											/>
+										</span>
+									</summary>
+									<div class="mt-2.5 rounded-2xl bg-slate-50/80 p-3.5">
+										<p
+											class="font-sans text-xs leading-relaxed font-normal whitespace-pre-wrap text-slate-700 sm:text-sm"
+										>
+											{note.content}
+										</p>
+									</div>
+								</details>
 							{/if}
 						</article>
 					{/each}

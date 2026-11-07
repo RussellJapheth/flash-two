@@ -222,6 +222,26 @@ describe('notebookStorage', () => {
 		expect(n2?.title).toBe('Cloud new note');
 	});
 
+	it('respects deletion tombstones during bulk merge', () => {
+		const created = saveNotebookNote({
+			id: 'n-del',
+			title: 'Will be deleted',
+			content: 'Temporary'
+		});
+		const oldUpdatedAt = created.updatedAt;
+		deleteNotebookNote('n-del');
+		expect(getAllNotebookNotes().length).toBe(0);
+
+		// Attempting to merge older cloud copy should not resurrect deleted note
+		saveBulkNotebookNotes([
+			{
+				...created,
+				updatedAt: oldUpdatedAt - 100
+			}
+		]);
+		expect(getAllNotebookNotes().length).toBe(0);
+	});
+
 	describe('parseIncomingNoteShare', () => {
 		it('returns null when text and title are empty or whitespace', () => {
 			expect(parseIncomingNoteShare({})).toBeNull();

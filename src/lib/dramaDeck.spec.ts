@@ -26,7 +26,10 @@ describe('Drama Custom Deck', () => {
 	it('covers all target vocabulary in example sentences and supports cloze practice', () => {
 		for (const word of DRAMA_CUSTOM_DECK.words) {
 			const cloze = buildCloze(word, 'chinese');
-			expect(cloze, `Card ${word.No} (${word['Chinese Word']}) should support cloze`).not.toBeNull();
+			expect(
+				cloze,
+				`Card ${word.No} (${word['Chinese Word']}) should support cloze`
+			).not.toBeNull();
 			expect(cloze?.targetWord).toBe(word['Chinese Word']);
 			expect(cloze?.displaySentence).toContain('{blank}');
 		}
@@ -48,5 +51,45 @@ describe('Drama Custom Deck', () => {
 		const shuffledNos = shuffled.map((c) => c.No);
 		const originalNos = Array.from({ length: 41 }, (_, i) => i + 1);
 		expect(shuffledNos).not.toEqual(originalNos);
+	});
+
+	it('ensures Pinyin contains romanized pronunciation and English Meaning contains translation', () => {
+		const card1 = DRAMA_CUSTOM_DECK.words[0];
+		expect(card1['Chinese Word']).toBe('不过');
+		expect(card1.Pinyin).toBe('búguò');
+		expect(card1['English Meaning']).toBe('however / but');
+
+		// No card should have English words in Pinyin or tone marks in English Meaning
+		const toneRegex = /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/;
+		for (const word of DRAMA_CUSTOM_DECK.words) {
+			expect(
+				toneRegex.test(word['English Meaning']),
+				`English Meaning should not have tone marks for ${word['Chinese Word']}`
+			).toBe(false);
+			expect(
+				word.Pinyin?.includes('however'),
+				`Pinyin should not contain English words for ${word['Chinese Word']}`
+			).toBe(false);
+		}
+	});
+
+	it('ensures Pinyin contains romanized pronunciation and English Meaning contains translation', () => {
+		const card1 = DRAMA_CUSTOM_DECK.words[0];
+		expect(card1['Chinese Word']).toBe('不过');
+		expect(card1.Pinyin).toBe('búguò');
+		expect(card1['English Meaning']).toBe('however / but');
+
+		// No card should have English words in Pinyin or tone marks in English Meaning
+		const toneRegex = /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/;
+		for (const word of DRAMA_CUSTOM_DECK.words) {
+			expect(
+				toneRegex.test(word['English Meaning']),
+				`English Meaning should not have tone marks for ${word['Chinese Word']}`
+			).toBe(false);
+			expect(
+				word.Pinyin?.includes('however'),
+				`Pinyin should not contain English words for ${word['Chinese Word']}`
+			).toBe(false);
+		}
 	});
 });

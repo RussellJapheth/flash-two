@@ -216,9 +216,21 @@
 
 		if (lines.length === 0) return;
 
+		// Skip header line if present
+		const firstLower = lines[0].toLowerCase();
+		const isHeader =
+			firstLower.startsWith('word') ||
+			firstLower.startsWith('"word"') ||
+			firstLower.includes('phonetic') ||
+			firstLower.includes('pinyin') ||
+			firstLower.includes('meaning');
+
+		const dataLines = isHeader ? lines.slice(1) : lines;
+		if (dataLines.length === 0) return;
+
 		const parsedRows: SpreadsheetRow[] = [];
 
-		for (const line of lines) {
+		for (const line of dataLines) {
 			// Tab-delimited (Google Sheets / Excel) or Comma-delimited (CSV)
 			const tokens = line.includes('\t')
 				? line.split('\t').map((t) => t.trim())
@@ -242,6 +254,15 @@
 			} else if (tokens.length >= 3) {
 				phonetic = tokens[1] || '';
 				meaning = tokens[2] || '';
+
+				// Auto-detect swapped phonetic and meaning
+				const toneRegex = /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/;
+				if (toneRegex.test(meaning) && !toneRegex.test(phonetic)) {
+					const temp = phonetic;
+					phonetic = meaning;
+					meaning = temp;
+				}
+
 				if (tokens.length >= 4) {
 					partOfSpeech = tokens[3] || 'noun';
 				}

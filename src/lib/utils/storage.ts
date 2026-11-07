@@ -540,7 +540,7 @@ export async function getAllProgress(): Promise<Record<string, WordProgress>> {
 					};
 				}
 				if (keysToDelete.length > 0) {
-					deleteProgressKeys(keysToDelete).catch(() => { });
+					deleteProgressKeys(keysToDelete).catch(() => {});
 				}
 				resolve(result);
 			};
@@ -596,7 +596,8 @@ export async function getAllCustomDecks(): Promise<CustomDeck[]> {
 				const existing = (request.result as CustomDeck[]) || [];
 				let alreadySeeded = false;
 				try {
-					alreadySeeded = typeof localStorage !== 'undefined' && localStorage.getItem(SEED_DRAMA_KEY) === 'true';
+					alreadySeeded =
+						typeof localStorage !== 'undefined' && localStorage.getItem(SEED_DRAMA_KEY) === 'true';
 				} catch {
 					// Ignore storage errors
 				}
@@ -605,6 +606,62 @@ export async function getAllCustomDecks(): Promise<CustomDeck[]> {
 					(d) => d.id === DRAMA_CUSTOM_DECK.id || d.name.toLowerCase() === 'drama'
 				);
 
+				// Repair any existing decks with swapped pinyin/meaning or unstripped CSV headers
+				const toneRegex = /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/;
+				for (const deck of existing) {
+					let deckModified = false;
+
+					// If this is the drama deck, ensure canonical 41-word set
+					if (deck.id === DRAMA_CUSTOM_DECK.id || deck.name.toLowerCase() === 'drama') {
+						const isCorrupted =
+							deck.words.length !== DRAMA_CUSTOM_DECK.words.length ||
+							deck.words[0]?.['Chinese Word']?.toLowerCase() === 'word' ||
+							deck.words.some(
+								(w) =>
+									(w.Pinyin && w.Pinyin.includes('however')) ||
+									(w['English Meaning'] && toneRegex.test(w['English Meaning']))
+							);
+
+						if (isCorrupted) {
+							deck.words = DRAMA_CUSTOM_DECK.words;
+							deckModified = true;
+						}
+					} else {
+						// Strip header row if card 1 is CSV header
+						if (
+							deck.words.length > 1 &&
+							deck.words[0]?.['Chinese Word']?.toLowerCase() === 'word' &&
+							(deck.words[0]?.['Part of Speech']?.toLowerCase().includes('part of speech') ||
+								deck.words[0]?.['English Meaning']?.toLowerCase().includes('meaning'))
+						) {
+							deck.words = deck.words.slice(1).map((w, idx) => ({ ...w, No: idx + 1 }));
+							deckModified = true;
+						}
+
+						// Repair swapped Pinyin and English Meaning
+						for (const w of deck.words) {
+							if (
+								w['English Meaning'] &&
+								toneRegex.test(w['English Meaning']) &&
+								(!w.Pinyin || !toneRegex.test(w.Pinyin))
+							) {
+								const temp = w.Pinyin || '';
+								w.Pinyin = w['English Meaning'];
+								w['English Meaning'] = temp;
+								deckModified = true;
+							}
+						}
+					}
+
+					if (deckModified) {
+						try {
+							store.put(deck);
+						} catch {
+							// ignore write error
+						}
+					}
+				}
+
 				if (!hasDrama && !alreadySeeded) {
 					try {
 						store.put(DRAMA_CUSTOM_DECK);
@@ -612,7 +669,9 @@ export async function getAllCustomDecks(): Promise<CustomDeck[]> {
 							if (typeof localStorage !== 'undefined') {
 								localStorage.setItem(SEED_DRAMA_KEY, 'true');
 							}
-						} catch { }
+						} catch {
+							// ignore localStorage write errors
+						}
 						resolve([DRAMA_CUSTOM_DECK, ...existing]);
 						return;
 					} catch {
@@ -673,7 +732,9 @@ export async function deleteCustomDeck(id: string): Promise<void> {
 			if (typeof localStorage !== 'undefined') {
 				localStorage.setItem(SEED_DRAMA_KEY, 'true');
 			}
-		} catch { }
+		} catch {
+			// ignore localStorage write errors
+		}
 	}
 	const db = await getDB();
 	return new Promise((resolve, reject) => {

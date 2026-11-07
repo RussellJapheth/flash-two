@@ -360,18 +360,67 @@
 					'Example (French)': item['Example (French)'] || item.example
 				}));
 			} else {
-				// Parse CSV (Word, Meaning, Phonetic, POS, Example)
-				const lines = trimmed
-					.split('\n')
+				// Parse CSV (supports standard template: Word, Phonetic, English Meaning, Part of Speech, Example)
+				const rawLines = trimmed
+					.split(/\r?\n/)
 					.map((l) => l.trim())
 					.filter((l) => l.length > 0);
-				words = lines.map((line, idx) => {
+
+				if (rawLines.length === 0) throw new Error('No valid rows found');
+
+				// Check if first line is a header row
+				const firstLineLower = rawLines[0].toLowerCase();
+				const isHeader =
+					firstLineLower.startsWith('word') ||
+					firstLineLower.startsWith('"word"') ||
+					firstLineLower.includes('phonetic') ||
+					firstLineLower.includes('pinyin') ||
+					firstLineLower.includes('meaning');
+
+				let headerCols: string[] = [];
+				let dataLines = rawLines;
+				if (isHeader) {
+					headerCols = rawLines[0].split(',').map((h) => h.trim().toLowerCase());
+					dataLines = rawLines.slice(1);
+				}
+
+				// Standard template column indices: Word (0), Phonetic (1), English Meaning (2), Part of Speech (3), Example (4)
+				let phoneticIdx = 1;
+				let meaningIdx = 2;
+				let posIdx = 3;
+				let exampleIdx = 4;
+
+				if (headerCols.length >= 2) {
+					const pIdx = headerCols.findIndex((c) => c.includes('phonetic') || c.includes('pinyin'));
+					const mIdx = headerCols.findIndex(
+						(c) => c.includes('meaning') || c.includes('translation') || c.includes('english')
+					);
+					const posColIdx = headerCols.findIndex(
+						(c) => c.includes('part of speech') || c.includes('pos')
+					);
+					const exColIdx = headerCols.findIndex((c) => c.includes('example'));
+
+					if (pIdx !== -1) phoneticIdx = pIdx;
+					if (mIdx !== -1) meaningIdx = mIdx;
+					if (posColIdx !== -1) posIdx = posColIdx;
+					if (exColIdx !== -1) exampleIdx = exColIdx;
+				}
+
+				words = dataLines.map((line, idx) => {
 					const parts = line.split(',').map((p) => p.trim());
 					const targetWord = parts[0] || '';
-					const meaning = parts[1] || '';
-					const phonetic = parts[2] || '';
-					const pos = parts[3] || 'noun';
-					const example = parts[4] || '';
+					let phonetic = parts[phoneticIdx] || '';
+					let meaning = parts[meaningIdx] || '';
+					const pos = parts[posIdx] || 'noun';
+					const example = parts.slice(exampleIdx).join(', ') || parts[exampleIdx] || '';
+
+					// Auto-detect swapped phonetic and meaning when no explicit header
+					const toneRegex = /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/;
+					if (!isHeader && toneRegex.test(meaning) && !toneRegex.test(phonetic)) {
+						const temp = phonetic;
+						phonetic = meaning;
+						meaning = temp;
+					}
 
 					return {
 						No: idx + 1,

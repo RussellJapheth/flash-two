@@ -231,4 +231,59 @@ describe('Streak Freezes Calculation & Storage', () => {
 
 		expect(stats.currentStreak).toBe(0);
 	});
+
+	it('refills a consumed freeze after completing 5 active practice days', () => {
+		const now = Date.now();
+		const freezeIso = new Date(now - 6 * 86400000).toISOString().split('T')[0];
+
+		// 15 days active (7..21 days ago) -> reaches full 3 freezes
+		// 6 days ago: missed and frozen -> drops to 2 freezes
+		// 5 days active (1..5 days ago) -> refills back to 3 freezes!
+		const activeDays = [
+			...Array.from({ length: 5 }, (_, i) => i + 1), // 1..5
+			...Array.from({ length: 15 }, (_, i) => i + 7) // 7..21
+		];
+		const progress = createMockProgress(activeDays);
+		const freezeData: StreakFreezeData = {
+			usedDates: [freezeIso]
+		};
+
+		const stats = computeStreakStats(progress, freezeData);
+		expect(stats.currentStreak).toBe(21); // 20 active days + 1 frozen day
+		expect(stats.freezeDates).toContain(freezeIso);
+		expect(stats.freezeCount).toBe(3); // Refilled back to full 3 freezes
+	});
+
+	it('refills multiple freezes repeatedly across long streaks', () => {
+		const now = Date.now();
+		// Earn 1 freeze (days 20..24 ago)
+		// Freeze day 19
+		// Refill 1 freeze (days 14..18 ago)
+		// Freeze day 13
+		// Refill 1 freeze (days 8..12 ago)
+		// Freeze day 7
+		// Refill 1 freeze (days 2..6 ago)
+		// Missed yesterday (day 1 ago) -> should auto-freeze using the refilled freeze!
+		const freeze1 = new Date(now - 19 * 86400000).toISOString().split('T')[0];
+		const freeze2 = new Date(now - 13 * 86400000).toISOString().split('T')[0];
+		const freeze3 = new Date(now - 7 * 86400000).toISOString().split('T')[0];
+		const yesterdayIso = new Date(now - 86400000).toISOString().split('T')[0];
+
+		const activeDays = [
+			...Array.from({ length: 5 }, (_, i) => i + 2), // 2..6
+			...Array.from({ length: 5 }, (_, i) => i + 8), // 8..12
+			...Array.from({ length: 5 }, (_, i) => i + 14), // 14..18
+			...Array.from({ length: 5 }, (_, i) => i + 20) // 20..24
+		];
+		const progress = createMockProgress(activeDays);
+		const freezeData: StreakFreezeData = {
+			usedDates: [freeze1, freeze2, freeze3]
+		};
+
+		const stats = computeStreakStats(progress, freezeData);
+		// 4th freeze (yesterday) is successfully shielded by refilled freeze!
+		expect(stats.freezeDates).toContain(yesterdayIso);
+		expect(stats.currentStreak).toBe(24); // 20 active + 4 frozen
+		expect(stats.freezeCount).toBe(0); // 4th freeze used, 0 remaining
+	});
 });

@@ -1067,17 +1067,34 @@ export function computeStreakStats(
 	const yesterday = getOffsetIsoDate(today, -1);
 
 	// Helper to find available freezes earned in the continuous run ending on 'fromDate'
+	// Simulates inventory chronologically: max 3 held, refills +1 freeze per 5 active practice days.
 	function getAvailableFreezesEndingOn(fromDate: string): number {
-		let check = fromDate;
-		let active = 0;
-		let used = 0;
-		while (datesSet.has(check) || freezeSet.has(check)) {
-			if (datesSet.has(check)) active++;
-			else if (freezeSet.has(check)) used++;
-			check = getOffsetIsoDate(check, -1);
+		let start = fromDate;
+		while (
+			datesSet.has(getOffsetIsoDate(start, -1)) ||
+			freezeSet.has(getOffsetIsoDate(start, -1))
+		) {
+			start = getOffsetIsoDate(start, -1);
 		}
-		const maxHeld = Math.min(3, Math.floor(active / 5));
-		return Math.max(0, maxHeld - used);
+		let inventory = 0;
+		let activeProgress = 0;
+		let curr = start;
+		while (curr <= fromDate) {
+			if (datesSet.has(curr)) {
+				if (inventory < 3) {
+					activeProgress++;
+					if (activeProgress >= 5) {
+						inventory++;
+						activeProgress = 0;
+					}
+				}
+			} else if (freezeSet.has(curr)) {
+				inventory = Math.max(0, inventory - 1);
+				activeProgress = 0;
+			}
+			curr = getOffsetIsoDate(curr, 1);
+		}
+		return inventory;
 	}
 
 	// Auto-freeze protection for yesterday if today is not active yet:
@@ -1177,24 +1194,12 @@ export function computeStreakStats(
 	if (currentStreak > longestStreak) longestStreak = currentStreak;
 
 	// Calculate earned streak freezes:
-	// Starts at 0, earns 1 more every 5 consecutive days (max 3 streak freezes).
-	// Count active practice days vs used freeze days in the current streak window:
-	let activeDaysInStreak = 0;
-	let usedFreezesInStreak = 0;
+	// Starts at 0, earns/refills 1 more every 5 consecutive active days (max 3 streak freezes).
+	let freezeCount = 0;
 	if (currentStreak > 0) {
-		let checkDate = datesSet.has(today) || freezeSet.has(today) ? today : yesterday;
-		for (let s = 0; s < currentStreak; s++) {
-			if (datesSet.has(checkDate)) {
-				activeDaysInStreak++;
-			} else if (freezeSet.has(checkDate)) {
-				usedFreezesInStreak++;
-			}
-			checkDate = getOffsetIsoDate(checkDate, -1);
-		}
+		const streakEndDate = datesSet.has(today) || freezeSet.has(today) ? today : yesterday;
+		freezeCount = getAvailableFreezesEndingOn(streakEndDate);
 	}
-
-	const maxHeldFreezes = Math.min(3, Math.floor(activeDaysInStreak / 5));
-	const freezeCount = Math.max(0, maxHeldFreezes - usedFreezesInStreak);
 
 	// Determine Tier
 	let tierName = 'Novice Explorer';

@@ -41,7 +41,8 @@
 		VolumeX,
 		FolderOpen,
 		Sparkles,
-		Clock
+		Clock,
+		Shuffle
 	} from 'lucide-svelte';
 
 	let deckId = $derived(page.params.id || '');
@@ -58,6 +59,12 @@
 			: 10
 	);
 	let showPinyinSetting = $derived(page.url.searchParams.get('pinyin') !== '0');
+	let shouldShuffle = $state(
+		page.url.searchParams.get('shuffle') !== '0' &&
+			page.url.searchParams.get('shuffle') !== 'false' &&
+			page.url.searchParams.get('noShuffle') !== '1' &&
+			page.url.searchParams.get('noShuffle') !== 'true'
+	);
 
 	let deckTitle = $state('Study Session');
 	let deckLanguage = $state<'chinese' | 'french'>('chinese');
@@ -223,10 +230,12 @@
 			filtered = [...rawWords];
 		}
 
-		// Shuffle cards: prioritise cards that have not already been studied
-		filtered = prioritizeAndShuffleCards(filtered, (card) =>
-			getWordProgress(progress, deckId, card.No, lang)
-		);
+		// Shuffle cards if enabled: prioritise cards that have not already been studied
+		if (shouldShuffle) {
+			filtered = prioritizeAndShuffleCards(filtered, (card) =>
+				getWordProgress(progress, deckId, card.No, lang)
+			);
+		}
 
 		// Apply card limit if set
 		if (cardLimit > 0 && filtered.length > cardLimit) {
@@ -387,6 +396,22 @@
 		}
 	}
 
+	function toggleShuffle() {
+		shouldShuffle = !shouldShuffle;
+		if (cards.length > 0 && currentIndex < cards.length) {
+			const studied = cards.slice(0, currentIndex);
+			let unstudied = cards.slice(currentIndex);
+			if (shouldShuffle) {
+				unstudied = prioritizeAndShuffleCards(unstudied, (card) =>
+					getWordProgress(allProgress, deckId, card.No, deckLanguage)
+				);
+			} else {
+				unstudied.sort((a, b) => a.No - b.No);
+			}
+			cards = [...studied, ...unstudied];
+		}
+	}
+
 	async function runAutoplayStep() {
 		clearAutoplay();
 		if (!isAutoplay || isSessionFinished || !currentWord) return;
@@ -535,6 +560,22 @@
 		<div class="flex items-center gap-1.5">
 			<!-- Discreet Study Timer -->
 			<StudyTimer compact={true} />
+
+			<!-- Shuffle Mode Toggle Button -->
+			<button
+				type="button"
+				onclick={toggleShuffle}
+				title={shouldShuffle
+					? 'Shuffle enabled (click for original deck order)'
+					: 'Sequential order (click to shuffle cards)'}
+				class="flex h-8 items-center gap-1 rounded-full px-2.5 font-headline text-xs font-bold transition-all active:scale-95 {shouldShuffle
+					? 'bg-indigo-600 text-white shadow-xs shadow-indigo-600/30'
+					: 'border border-slate-200/90 bg-slate-50 text-slate-700 hover:bg-slate-100'}"
+				aria-label={shouldShuffle ? 'Disable card shuffle' : 'Enable card shuffle'}
+			>
+				<Shuffle size={13} strokeWidth={2.25} />
+				<span class="xs:inline hidden sm:inline">{shouldShuffle ? 'Shuffle' : 'Order'}</span>
+			</button>
 
 			<!-- Autoplay Toggle Button -->
 			<button

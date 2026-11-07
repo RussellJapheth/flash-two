@@ -86,6 +86,7 @@
 	let studyMode = $state<'srs' | 'all' | 'learning' | 'weak'>('srs');
 	let cardLimit = $state<number>(10);
 	let showPinyin = $state(true);
+	let shuffleCards = $state(true);
 
 	// Table Search & Filters
 	let tableSearch = $state('');
@@ -551,6 +552,30 @@
 				</div>
 			</div>
 
+			<!-- Shuffle Cards Toggle -->
+			<div class="flex items-center justify-between pt-1">
+				<div>
+					<p class="font-headline text-xs font-bold text-slate-900">Shuffle Cards</p>
+					<p class="font-sans text-[11px] text-slate-500">
+						{shuffleCards ? 'Randomize card drill order' : 'Practice cards in original deck order'}
+					</p>
+				</div>
+				<button
+					type="button"
+					onclick={() => (shuffleCards = !shuffleCards)}
+					class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out {shuffleCards
+						? 'bg-indigo-600'
+						: 'bg-slate-200'}"
+					aria-label="Toggle Shuffle Cards"
+				>
+					<span
+						class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-xs ring-0 transition duration-200 ease-in-out {shuffleCards
+							? 'translate-x-5'
+							: 'translate-x-0'}"
+					></span>
+				</button>
+			</div>
+
 			<!-- Show Pinyin / Phonetic Toggle -->
 			{#if deckLanguage === 'chinese'}
 				<div class="flex items-center justify-between pt-1">
@@ -582,7 +607,7 @@
 		<div class="space-y-2.5">
 			<a
 				href={resolve(
-					`/study/${deckId}?mode=${studyMode}&limit=${cardLimit}&pinyin=${showPinyin ? '1' : '0'}`
+					`/study/${deckId}?mode=${studyMode}&limit=${cardLimit}&pinyin=${showPinyin ? '1' : '0'}&shuffle=${shuffleCards ? '1' : '0'}`
 				)}
 				class="flex h-13 w-full cursor-pointer items-center justify-center gap-2.5 rounded-2xl bg-indigo-600 font-headline text-sm font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 hover:shadow-lg active:scale-[0.98]"
 			>
@@ -592,7 +617,7 @@
 
 			<a
 				href={resolve(
-					`/study/${deckId}?mode=${studyMode}&limit=${cardLimit}&pinyin=${showPinyin ? '1' : '0'}&autoplay=1`
+					`/study/${deckId}?mode=${studyMode}&limit=${cardLimit}&pinyin=${showPinyin ? '1' : '0'}&autoplay=1&shuffle=${shuffleCards ? '1' : '0'}`
 				)}
 				class="flex h-12 w-full cursor-pointer items-center justify-center gap-2.5 rounded-2xl border border-indigo-200/90 bg-indigo-50/70 font-headline text-sm font-bold text-indigo-700 transition-all hover:bg-indigo-100/80 active:scale-[0.98]"
 			>
@@ -621,7 +646,7 @@
 					</div>
 				</div>
 				<a
-					href={resolve(`/practice/sentences/${deckId}`)}
+					href={resolve(`/practice/sentences/${deckId}?shuffle=${shuffleCards ? '1' : '0'}`)}
 					class="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-2xl bg-indigo-600 px-4 py-2.5 font-headline text-xs font-bold text-white shadow-xs transition-all hover:bg-indigo-700 active:scale-[0.98] {words.length ===
 						0 || sentencePracticeCount === 0
 						? 'pointer-events-none opacity-40'
@@ -641,7 +666,9 @@
 							: 'word sentences'}
 					</span>
 					<a
-						href={resolve(`/practice/sentences/${deckId}?mode=mastered`)}
+						href={resolve(
+							`/practice/sentences/${deckId}?mode=mastered&shuffle=${shuffleCards ? '1' : '0'}`
+						)}
 						class="inline-flex cursor-pointer items-center gap-1 rounded-xl border border-indigo-300 bg-white px-3 py-1.5 font-headline text-xs font-bold text-indigo-700 shadow-2xs transition-all hover:bg-indigo-50 active:scale-95"
 					>
 						<CheckCircle2 size={13} strokeWidth={2.25} class="text-emerald-600" />

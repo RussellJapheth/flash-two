@@ -540,7 +540,7 @@ export async function getAllProgress(): Promise<Record<string, WordProgress>> {
 					};
 				}
 				if (keysToDelete.length > 0) {
-					deleteProgressKeys(keysToDelete).catch(() => {});
+					deleteProgressKeys(keysToDelete).catch(() => { });
 				}
 				resolve(result);
 			};
@@ -578,20 +578,53 @@ export async function saveBulkProgress(records: Record<string, WordProgress>): P
 	});
 }
 
+import { DRAMA_CUSTOM_DECK } from '$lib/data/dramaDeck';
+export { DRAMA_CUSTOM_DECK };
+
 // Custom Decks CRUD
+const SEED_DRAMA_KEY = 'flashcards_seeded_drama_v1';
+
 export async function getAllCustomDecks(): Promise<CustomDeck[]> {
-	if (typeof window === 'undefined') return [];
+	if (typeof window === 'undefined') return [DRAMA_CUSTOM_DECK];
 	try {
 		const db = await getDB();
 		return new Promise((resolve) => {
-			const tx = db.transaction('custom_decks', 'readonly');
+			const tx = db.transaction('custom_decks', 'readwrite');
 			const store = tx.objectStore('custom_decks');
 			const request = store.getAll();
-			request.onsuccess = () => resolve(request.result || []);
-			request.onerror = () => resolve([]);
+			request.onsuccess = () => {
+				const existing = (request.result as CustomDeck[]) || [];
+				let alreadySeeded = false;
+				try {
+					alreadySeeded = typeof localStorage !== 'undefined' && localStorage.getItem(SEED_DRAMA_KEY) === 'true';
+				} catch {
+					// Ignore storage errors
+				}
+
+				const hasDrama = existing.some(
+					(d) => d.id === DRAMA_CUSTOM_DECK.id || d.name.toLowerCase() === 'drama'
+				);
+
+				if (!hasDrama && !alreadySeeded) {
+					try {
+						store.put(DRAMA_CUSTOM_DECK);
+						try {
+							if (typeof localStorage !== 'undefined') {
+								localStorage.setItem(SEED_DRAMA_KEY, 'true');
+							}
+						} catch { }
+						resolve([DRAMA_CUSTOM_DECK, ...existing]);
+						return;
+					} catch {
+						// Fallback if write fails
+					}
+				}
+				resolve(existing.length > 0 ? existing : [DRAMA_CUSTOM_DECK]);
+			};
+			request.onerror = () => resolve([DRAMA_CUSTOM_DECK]);
 		});
 	} catch {
-		return [];
+		return [DRAMA_CUSTOM_DECK];
 	}
 }
 
@@ -635,6 +668,13 @@ export async function saveCustomDeck(deck: CustomDeck): Promise<void> {
 
 export async function deleteCustomDeck(id: string): Promise<void> {
 	if (typeof window === 'undefined') return;
+	if (id === DRAMA_CUSTOM_DECK.id) {
+		try {
+			if (typeof localStorage !== 'undefined') {
+				localStorage.setItem(SEED_DRAMA_KEY, 'true');
+			}
+		} catch { }
+	}
 	const db = await getDB();
 	return new Promise((resolve, reject) => {
 		const tx = db.transaction(['custom_decks', 'progress_store', 'saved_words'], 'readwrite');

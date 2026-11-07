@@ -214,6 +214,12 @@
 	);
 
 	let isMasteredOnly = $derived(page.url.searchParams.get('mode') === 'mastered');
+	let shouldShuffle = $derived(
+		page.url.searchParams.get('shuffle') !== '0' &&
+			page.url.searchParams.get('shuffle') !== 'false' &&
+			page.url.searchParams.get('noShuffle') !== '1' &&
+			page.url.searchParams.get('noShuffle') !== 'true'
+	);
 
 	async function loadSession() {
 		stopSpeech();
@@ -302,8 +308,8 @@
 			});
 		}
 
-		const shuffled = shuffleArray(built);
-		items = deckId === 'mastered' || isMasteredOnly ? shuffled.slice(0, 10) : shuffled;
+		const ordered = shouldShuffle ? shuffleArray(built) : [...built];
+		items = deckId === 'mastered' || isMasteredOnly ? ordered.slice(0, 10) : ordered;
 		currentIndex = 0;
 		isSessionFinished = false;
 		sessionCorrect = 0;

@@ -694,13 +694,13 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 						pinyin: 'xià cì',
 						en: 'next time',
 						start: 35.4,
-						end: 36.0
+						end: 36
 					},
 					{
 						word: '光临',
 						pinyin: 'guāng lín',
 						en: 'presence / visit',
-						start: 36.0,
+						start: 36,
 						end: 36.6
 					},
 					{
@@ -985,13 +985,13 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 						pinyin: 'xiàn zài',
 						en: '',
 						start: 10.52,
-						end: 11.0
+						end: 11
 					},
 					{
 						word: '正是',
 						pinyin: 'zhèng shì',
 						en: '',
-						start: 11.0,
+						start: 11,
 						end: 11.47
 					},
 					{
@@ -1132,13 +1132,13 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 						pinyin: 'jiù',
 						en: '',
 						start: 17.75,
-						end: 18.0
+						end: 18
 					},
 					{
 						word: '有',
 						pinyin: 'yǒu',
 						en: '',
-						start: 18.0,
+						start: 18,
 						end: 18.24
 					},
 					{
@@ -1535,5 +1535,3119 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 			}
 		],
 		xpReward: 25
+	},
+	{
+		id: 'weekend-night-market',
+		title: '周末夜市寻味',
+		titleEn: 'Weekend Night Market Food Adventure',
+		titlePinyin: 'Zhōumò Yèshì Xúnwèi',
+		description:
+			'敏敏和大卫在热闹的周末夜市品尝热腾腾的手工水饺与茉莉花茶，练习日常点餐、口味偏好与移动支付。',
+		level: 'beginner',
+		hskLevel: 1,
+		duration: 156.72,
+		audioUrl: '/audio/podcasts/weekend-night-market.mp3',
+		audioFormat: 'mp3',
+		fileSizeBytes: 1254573,
+		coverImage: '/images/podcasts/weekend-night-market.jpg',
+		speakers: [
+			{
+				id: 'minmin',
+				name: '敏敏',
+				role: '顾客 / 朋友 (Friend)',
+				avatarEmoji: '👧'
+			},
+			{
+				id: 'dawei',
+				name: '大卫',
+				role: '留学生 / 朋友 (Friend)',
+				avatarEmoji: '🎒'
+			},
+			{
+				id: 'laoban',
+				name: '王老板',
+				role: '水饺馆老板 (Stall Owner)',
+				avatarEmoji: '👨‍🍳'
+			}
+		],
+		keyVocabulary: [
+			{
+				word: '夜市',
+				pinyin: 'yèshì',
+				meaning: 'night market'
+			},
+			{
+				word: '小吃',
+				pinyin: 'xiǎochī',
+				meaning: 'snacks / street food'
+			},
+			{
+				word: '水饺',
+				pinyin: 'shuǐjiǎo',
+				meaning: 'boiled dumplings'
+			},
+			{
+				word: '盘',
+				pinyin: 'pán',
+				meaning: 'plate (measure word)'
+			},
+			{
+				word: '味道',
+				pinyin: 'wèidào',
+				meaning: 'flavor / taste'
+			},
+			{
+				word: '饱',
+				pinyin: 'bǎo',
+				meaning: 'full (not hungry)'
+			},
+			{
+				word: '请客',
+				pinyin: 'qǐngkè',
+				meaning: 'to treat (someone)'
+			},
+			{
+				word: '散步',
+				pinyin: 'sànbù',
+				meaning: 'to take a walk'
+			}
+		],
+		segments: [
+			{
+				id: 'weekend-night-market-seg-1',
+				speakerId: 'minmin',
+				speakerName: '敏敏',
+				speakerAvatar: '👧',
+				start: 0.5,
+				end: 4.77,
+				text: '大卫，快看！这个夜市好热闹啊。',
+				pinyin: 'Dàwèi, kuài kàn! Zhè ge yèshì hǎo rènao a.',
+				en: 'David, look! This night market is so lively.',
+				words: [
+					{
+						word: '大卫',
+						pinyin: 'dà wèi',
+						en: '',
+						start: 0.5,
+						end: 1.21
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 1.21,
+						end: 1.25
+					},
+					{
+						word: '快',
+						pinyin: 'kuài',
+						en: '',
+						start: 1.21,
+						end: 1.57
+					},
+					{
+						word: '看',
+						pinyin: 'kàn',
+						en: '',
+						start: 1.57,
+						end: 1.92
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 1.92,
+						end: 1.96
+					},
+					{
+						word: '这个',
+						pinyin: 'zhè ge',
+						en: '',
+						start: 1.92,
+						end: 2.64
+					},
+					{
+						word: '夜市',
+						pinyin: 'yè shì',
+						en: 'night market',
+						start: 2.64,
+						end: 3.35
+					},
+					{
+						word: '好',
+						pinyin: 'hǎo',
+						en: '',
+						start: 3.35,
+						end: 3.7
+					},
+					{
+						word: '热闹',
+						pinyin: 'rè nào',
+						en: 'lively',
+						start: 3.7,
+						end: 4.42
+					},
+					{
+						word: '啊',
+						pinyin: 'a',
+						en: '',
+						start: 4.42,
+						end: 4.77
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 4.77,
+						end: 4.81
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-2',
+				speakerId: 'dawei',
+				speakerName: '大卫',
+				speakerAvatar: '🎒',
+				start: 5.22,
+				end: 11.27,
+				text: '哇，真的！到处都是好吃的小吃。你现在饿不饿？',
+				pinyin: 'Wa, zhēnde! Dàochù dōu shì hǎochī de xiǎochī. Nǐ xiànzài è bu è?',
+				en: 'Wow, really! Delicious snacks are everywhere. Are you hungry right now?',
+				words: [
+					{
+						word: '哇',
+						pinyin: 'wa',
+						en: '',
+						start: 5.22,
+						end: 5.56
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 5.56,
+						end: 5.6
+					},
+					{
+						word: '真的',
+						pinyin: 'zhēn de',
+						en: '',
+						start: 5.56,
+						end: 6.23
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 6.23,
+						end: 6.27
+					},
+					{
+						word: '到处',
+						pinyin: 'dào chù',
+						en: 'everywhere',
+						start: 6.23,
+						end: 6.9
+					},
+					{
+						word: '都',
+						pinyin: 'dōu',
+						en: '',
+						start: 6.9,
+						end: 7.24
+					},
+					{
+						word: '是',
+						pinyin: 'shì',
+						en: '',
+						start: 7.24,
+						end: 7.57
+					},
+					{
+						word: '好吃',
+						pinyin: 'hǎo chī',
+						en: '',
+						start: 7.57,
+						end: 8.24
+					},
+					{
+						word: '的',
+						pinyin: 'de',
+						en: '',
+						start: 8.24,
+						end: 8.58
+					},
+					{
+						word: '小吃',
+						pinyin: 'xiǎo chī',
+						en: 'snacks / street food',
+						start: 8.58,
+						end: 9.25
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 9.25,
+						end: 9.29
+					},
+					{
+						word: '你',
+						pinyin: 'nǐ',
+						en: '',
+						start: 9.25,
+						end: 9.59
+					},
+					{
+						word: '现在',
+						pinyin: 'xiàn zài',
+						en: '',
+						start: 9.59,
+						end: 10.26
+					},
+					{
+						word: '饿',
+						pinyin: 'è',
+						en: '',
+						start: 10.26,
+						end: 10.6
+					},
+					{
+						word: '不',
+						pinyin: 'bù',
+						en: '',
+						start: 10.6,
+						end: 10.93
+					},
+					{
+						word: '饿',
+						pinyin: 'è',
+						en: '',
+						start: 10.93,
+						end: 11.27
+					},
+					{
+						word: '？',
+						pinyin: '',
+						en: '',
+						start: 11.27,
+						end: 11.31
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-3',
+				speakerId: 'minmin',
+				speakerName: '敏敏',
+				speakerAvatar: '👧',
+				start: 11.72,
+				end: 17.91,
+				text: '我很饿。今天走了一整天路，现在特别想吃热热的东西。',
+				pinyin:
+					'Wǒ hěn è. Jīntiān zǒu le yì zhěng tiān lù, xiànzài tèbié xiǎng chī rèrè de dōngxi.',
+				en: "I'm very hungry. I walked all day today, now I really want to eat hot food.",
+				words: [
+					{
+						word: '我',
+						pinyin: 'wǒ',
+						en: '',
+						start: 11.72,
+						end: 12.0
+					},
+					{
+						word: '很',
+						pinyin: 'hěn',
+						en: '',
+						start: 12.0,
+						end: 12.28
+					},
+					{
+						word: '饿',
+						pinyin: 'è',
+						en: '',
+						start: 12.28,
+						end: 12.56
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 12.56,
+						end: 12.6
+					},
+					{
+						word: '今天',
+						pinyin: 'jīn tiān',
+						en: '',
+						start: 12.56,
+						end: 13.13
+					},
+					{
+						word: '走',
+						pinyin: 'zǒu',
+						en: '',
+						start: 13.13,
+						end: 13.41
+					},
+					{
+						word: '了',
+						pinyin: 'le',
+						en: '',
+						start: 13.41,
+						end: 13.69
+					},
+					{
+						word: '一整天',
+						pinyin: 'yī zhěng tiān',
+						en: '',
+						start: 13.69,
+						end: 14.53
+					},
+					{
+						word: '路',
+						pinyin: 'lù',
+						en: '',
+						start: 14.53,
+						end: 14.82
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 14.82,
+						end: 14.86
+					},
+					{
+						word: '现在',
+						pinyin: 'xiàn zài',
+						en: '',
+						start: 14.82,
+						end: 15.38
+					},
+					{
+						word: '特别',
+						pinyin: 'tè bié',
+						en: 'especially',
+						start: 15.38,
+						end: 15.94
+					},
+					{
+						word: '想',
+						pinyin: 'xiǎng',
+						en: '',
+						start: 15.94,
+						end: 16.22
+					},
+					{
+						word: '吃',
+						pinyin: 'chī',
+						en: '',
+						start: 16.22,
+						end: 16.5
+					},
+					{
+						word: '热热',
+						pinyin: 'rè rè',
+						en: '',
+						start: 16.5,
+						end: 17.07
+					},
+					{
+						word: '的',
+						pinyin: 'de',
+						en: '',
+						start: 17.07,
+						end: 17.35
+					},
+					{
+						word: '东西',
+						pinyin: 'dōng xī',
+						en: '',
+						start: 17.35,
+						end: 17.91
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 17.91,
+						end: 17.95
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-4',
+				speakerId: 'dawei',
+				speakerName: '大卫',
+				speakerAvatar: '🎒',
+				start: 18.36,
+				end: 22.99,
+				text: '你看前面有一家手工水饺馆，门口排着好多人呢。',
+				pinyin: 'Nǐ kàn qiánmiàn yǒu yì jiā shǒugōng shuǐjiǎoguǎn, ménkǒu pái zhe hǎoduō rén ne.',
+				en: "Look up ahead, there's a handmade dumpling shop with lots of people queuing at the door.",
+				words: [
+					{
+						word: '你',
+						pinyin: 'nǐ',
+						en: '',
+						start: 18.36,
+						end: 18.59
+					},
+					{
+						word: '看',
+						pinyin: 'kàn',
+						en: '',
+						start: 18.59,
+						end: 18.82
+					},
+					{
+						word: '前面',
+						pinyin: 'qián miàn',
+						en: 'ahead',
+						start: 18.82,
+						end: 19.29
+					},
+					{
+						word: '有',
+						pinyin: 'yǒu',
+						en: '',
+						start: 19.29,
+						end: 19.52
+					},
+					{
+						word: '一家',
+						pinyin: 'yī jiā',
+						en: '',
+						start: 19.52,
+						end: 19.98
+					},
+					{
+						word: '手工',
+						pinyin: 'shǒu gōng',
+						en: '',
+						start: 19.98,
+						end: 20.44
+					},
+					{
+						word: '水饺',
+						pinyin: 'shuǐ jiǎo',
+						en: 'boiled dumplings',
+						start: 20.44,
+						end: 20.91
+					},
+					{
+						word: '馆',
+						pinyin: 'guǎn',
+						en: '',
+						start: 20.91,
+						end: 21.14
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 21.14,
+						end: 21.18
+					},
+					{
+						word: '门口',
+						pinyin: 'mén kǒu',
+						en: '',
+						start: 21.14,
+						end: 21.6
+					},
+					{
+						word: '排',
+						pinyin: 'pái',
+						en: '',
+						start: 21.6,
+						end: 21.83
+					},
+					{
+						word: '着',
+						pinyin: 'zhe',
+						en: '',
+						start: 21.83,
+						end: 22.07
+					},
+					{
+						word: '好多',
+						pinyin: 'hǎo duō',
+						en: '',
+						start: 22.07,
+						end: 22.53
+					},
+					{
+						word: '人',
+						pinyin: 'rén',
+						en: '',
+						start: 22.53,
+						end: 22.76
+					},
+					{
+						word: '呢',
+						pinyin: 'ne',
+						en: '',
+						start: 22.76,
+						end: 22.99
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 22.99,
+						end: 23.03
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-5',
+				speakerId: 'minmin',
+				speakerName: '敏敏',
+				speakerAvatar: '👧',
+				start: 23.44,
+				end: 29.94,
+				text: '那家店很有名！听说水饺皮很薄，馅很大，味道特别好。',
+				pinyin:
+					'Nà jiā diàn hěn yǒumíng! Tīngshuō shuǐjiǎo pí hěn báo, xiàn hěn dà, wèidào tèbié hǎo.',
+				en: 'That shop is famous! I hear their dumpling skins are thin, fillings are large, and taste great.',
+				words: [
+					{
+						word: '那家店',
+						pinyin: 'nà jiā diàn',
+						en: '',
+						start: 23.44,
+						end: 24.37
+					},
+					{
+						word: '很',
+						pinyin: 'hěn',
+						en: '',
+						start: 24.37,
+						end: 24.68
+					},
+					{
+						word: '有名',
+						pinyin: 'yǒu míng',
+						en: 'famous',
+						start: 24.68,
+						end: 25.3
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 25.3,
+						end: 25.34
+					},
+					{
+						word: '听说',
+						pinyin: 'tīng shuō',
+						en: '',
+						start: 25.3,
+						end: 25.92
+					},
+					{
+						word: '水饺',
+						pinyin: 'shuǐ jiǎo',
+						en: 'boiled dumplings',
+						start: 25.92,
+						end: 26.54
+					},
+					{
+						word: '皮',
+						pinyin: 'pí',
+						en: '',
+						start: 26.54,
+						end: 26.85
+					},
+					{
+						word: '很',
+						pinyin: 'hěn',
+						en: '',
+						start: 26.85,
+						end: 27.16
+					},
+					{
+						word: '薄',
+						pinyin: 'báo',
+						en: '',
+						start: 27.16,
+						end: 27.47
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 27.47,
+						end: 27.51
+					},
+					{
+						word: '馅',
+						pinyin: 'xiàn',
+						en: '',
+						start: 27.47,
+						end: 27.78
+					},
+					{
+						word: '很大',
+						pinyin: 'hěn dà',
+						en: '',
+						start: 27.78,
+						end: 28.4
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 28.4,
+						end: 28.44
+					},
+					{
+						word: '味道',
+						pinyin: 'wèi dào',
+						en: 'flavor / taste',
+						start: 28.4,
+						end: 29.01
+					},
+					{
+						word: '特别',
+						pinyin: 'tè bié',
+						en: '',
+						start: 29.01,
+						end: 29.63
+					},
+					{
+						word: '好',
+						pinyin: 'hǎo',
+						en: '',
+						start: 29.63,
+						end: 29.94
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 29.94,
+						end: 29.98
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-6',
+				speakerId: 'dawei',
+				speakerName: '大卫',
+				speakerAvatar: '🎒',
+				start: 30.39,
+				end: 35.05,
+				text: '太好了！正好有两个空座位，我们快坐下吧。',
+				pinyin: 'Tài hǎo le! Zhènghǎo yǒu liǎng gè kòng zuòwèi, wǒmen kuài zuòxià ba.',
+				en: "Great! There happen to be two empty seats, let's take a seat quickly.",
+				words: [
+					{
+						word: '太好了',
+						pinyin: 'tài hǎo le',
+						en: '',
+						start: 30.39,
+						end: 31.21
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 31.21,
+						end: 31.25
+					},
+					{
+						word: '正好',
+						pinyin: 'zhèng hǎo',
+						en: 'just / happen to',
+						start: 31.21,
+						end: 31.76
+					},
+					{
+						word: '有',
+						pinyin: 'yǒu',
+						en: '',
+						start: 31.76,
+						end: 32.03
+					},
+					{
+						word: '两个',
+						pinyin: 'liǎng gè',
+						en: '',
+						start: 32.03,
+						end: 32.58
+					},
+					{
+						word: '空座位',
+						pinyin: 'kōng zuò wèi',
+						en: 'empty seat',
+						start: 32.58,
+						end: 33.4
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 33.4,
+						end: 33.44
+					},
+					{
+						word: '我们',
+						pinyin: 'wǒ men',
+						en: '',
+						start: 33.4,
+						end: 33.95
+					},
+					{
+						word: '快',
+						pinyin: 'kuài',
+						en: '',
+						start: 33.95,
+						end: 34.22
+					},
+					{
+						word: '坐下',
+						pinyin: 'zuò xià',
+						en: 'sit down',
+						start: 34.22,
+						end: 34.77
+					},
+					{
+						word: '吧',
+						pinyin: 'ba',
+						en: '',
+						start: 34.77,
+						end: 35.05
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 35.05,
+						end: 35.09
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-7',
+				speakerId: 'laoban',
+				speakerName: '王老板',
+				speakerAvatar: '👨‍🍳',
+				start: 35.5,
+				end: 42.03,
+				text: '两位晚上好！欢迎光临。请问今天想吃点什么水饺？',
+				pinyin:
+					'Liǎng wèi wǎnshang hǎo! Huānyíng guānglín. Qǐngwèn jīntiān xiǎng chī diǎn shénme shuǐjiǎo?',
+				en: 'Good evening to you both! Welcome. What kind of dumplings would you like to eat today?',
+				words: [
+					{
+						word: '两位',
+						pinyin: 'liǎng wèi',
+						en: 'both of you',
+						start: 35.5,
+						end: 36.15
+					},
+					{
+						word: '晚上',
+						pinyin: 'wǎn shàng',
+						en: '',
+						start: 36.15,
+						end: 36.81
+					},
+					{
+						word: '好',
+						pinyin: 'hǎo',
+						en: '',
+						start: 36.81,
+						end: 37.13
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 37.13,
+						end: 37.17
+					},
+					{
+						word: '欢迎光临',
+						pinyin: 'huān yíng guāng lín',
+						en: 'welcome',
+						start: 37.13,
+						end: 38.44
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 38.44,
+						end: 38.48
+					},
+					{
+						word: '请问',
+						pinyin: 'qǐng wèn',
+						en: '',
+						start: 38.44,
+						end: 39.09
+					},
+					{
+						word: '今天',
+						pinyin: 'jīn tiān',
+						en: '',
+						start: 39.09,
+						end: 39.74
+					},
+					{
+						word: '想',
+						pinyin: 'xiǎng',
+						en: '',
+						start: 39.74,
+						end: 40.07
+					},
+					{
+						word: '吃',
+						pinyin: 'chī',
+						en: '',
+						start: 40.07,
+						end: 40.4
+					},
+					{
+						word: '点',
+						pinyin: 'diǎn',
+						en: '',
+						start: 40.4,
+						end: 40.72
+					},
+					{
+						word: '什么',
+						pinyin: 'shén me',
+						en: '',
+						start: 40.72,
+						end: 41.38
+					},
+					{
+						word: '水饺',
+						pinyin: 'shuǐ jiǎo',
+						en: 'boiled dumplings',
+						start: 41.38,
+						end: 42.03
+					},
+					{
+						word: '？',
+						pinyin: '',
+						en: '',
+						start: 42.03,
+						end: 42.07
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-8',
+				speakerId: 'minmin',
+				speakerName: '敏敏',
+				speakerAvatar: '👧',
+				start: 42.48,
+				end: 46.25,
+				text: '老板您好，请问你们有哪些口味？',
+				pinyin: 'Lǎobǎn nín hǎo, qǐngwèn nǐmen yǒu nǎxiē kǒuwèi?',
+				en: 'Hello boss, may I ask what flavors do you have?',
+				words: [
+					{
+						word: '老板',
+						pinyin: 'lǎo bǎn',
+						en: 'boss / shopkeeper',
+						start: 42.48,
+						end: 43.06
+					},
+					{
+						word: '您好',
+						pinyin: 'nín hǎo',
+						en: '',
+						start: 43.06,
+						end: 43.64
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 43.64,
+						end: 43.68
+					},
+					{
+						word: '请问',
+						pinyin: 'qǐng wèn',
+						en: 'excuse me',
+						start: 43.64,
+						end: 44.22
+					},
+					{
+						word: '你们',
+						pinyin: 'nǐ men',
+						en: '',
+						start: 44.22,
+						end: 44.8
+					},
+					{
+						word: '有',
+						pinyin: 'yǒu',
+						en: '',
+						start: 44.8,
+						end: 45.09
+					},
+					{
+						word: '哪些',
+						pinyin: 'nǎ xiē',
+						en: '',
+						start: 45.09,
+						end: 45.67
+					},
+					{
+						word: '口味',
+						pinyin: 'kǒu wèi',
+						en: 'flavors / taste',
+						start: 45.67,
+						end: 46.25
+					},
+					{
+						word: '？',
+						pinyin: '',
+						en: '',
+						start: 46.25,
+						end: 46.29
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-9',
+				speakerId: 'laoban',
+				speakerName: '王老板',
+				speakerAvatar: '👨‍🍳',
+				start: 46.7,
+				end: 52.12,
+				text: '我们有猪肉大葱、牛肉白菜，还有新鲜的素三鲜。',
+				pinyin: 'Wǒmen yǒu zhūròu dàcōng, niúròu báicài, hái yǒu xīnxiān de sù sānxiān.',
+				en: 'We have pork with scallion, beef with Chinese cabbage, and fresh vegetarian three-delicacies.',
+				words: [
+					{
+						word: '我们',
+						pinyin: 'wǒ men',
+						en: '',
+						start: 46.7,
+						end: 47.27
+					},
+					{
+						word: '有',
+						pinyin: 'yǒu',
+						en: '',
+						start: 47.27,
+						end: 47.56
+					},
+					{
+						word: '猪肉',
+						pinyin: 'zhū ròu',
+						en: 'pork',
+						start: 47.56,
+						end: 48.13
+					},
+					{
+						word: '大葱',
+						pinyin: 'dà cōng',
+						en: '',
+						start: 48.13,
+						end: 48.7
+					},
+					{
+						word: '、',
+						pinyin: '',
+						en: '',
+						start: 48.7,
+						end: 48.74
+					},
+					{
+						word: '牛肉',
+						pinyin: 'niú ròu',
+						en: 'beef',
+						start: 48.7,
+						end: 49.27
+					},
+					{
+						word: '白菜',
+						pinyin: 'bái cài',
+						en: '',
+						start: 49.27,
+						end: 49.84
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 49.84,
+						end: 49.88
+					},
+					{
+						word: '还有',
+						pinyin: 'hái yǒu',
+						en: '',
+						start: 49.84,
+						end: 50.41
+					},
+					{
+						word: '新鲜',
+						pinyin: 'xīn xiān',
+						en: 'fresh',
+						start: 50.41,
+						end: 50.98
+					},
+					{
+						word: '的',
+						pinyin: 'de',
+						en: '',
+						start: 50.98,
+						end: 51.27
+					},
+					{
+						word: '素',
+						pinyin: 'sù',
+						en: '',
+						start: 51.27,
+						end: 51.55
+					},
+					{
+						word: '三鲜',
+						pinyin: 'sān xiān',
+						en: '',
+						start: 51.55,
+						end: 52.12
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 52.12,
+						end: 52.16
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-10',
+				speakerId: 'dawei',
+				speakerName: '大卫',
+				speakerAvatar: '🎒',
+				start: 52.57,
+				end: 57.87,
+				text: '敏敏，你想吃哪一种？我两种肉的都想尝一尝。',
+				pinyin: 'Mǐnmǐn, nǐ xiǎng chī nǎ yì zhǒng? Wǒ liǎng zhǒng ròu de dōu xiǎng cháng yi cháng.',
+				en: 'Minmin, which one do you want? I want to taste both meat varieties.',
+				words: [
+					{
+						word: '敏敏',
+						pinyin: 'mǐn mǐn',
+						en: '',
+						start: 52.57,
+						end: 53.16
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 53.16,
+						end: 53.2
+					},
+					{
+						word: '你',
+						pinyin: 'nǐ',
+						en: '',
+						start: 53.16,
+						end: 53.45
+					},
+					{
+						word: '想',
+						pinyin: 'xiǎng',
+						en: '',
+						start: 53.45,
+						end: 53.75
+					},
+					{
+						word: '吃',
+						pinyin: 'chī',
+						en: '',
+						start: 53.75,
+						end: 54.04
+					},
+					{
+						word: '哪',
+						pinyin: 'nǎ',
+						en: '',
+						start: 54.04,
+						end: 54.34
+					},
+					{
+						word: '一种',
+						pinyin: 'yī zhǒng',
+						en: '',
+						start: 54.34,
+						end: 54.93
+					},
+					{
+						word: '？',
+						pinyin: '',
+						en: '',
+						start: 54.93,
+						end: 54.97
+					},
+					{
+						word: '我',
+						pinyin: 'wǒ',
+						en: '',
+						start: 54.93,
+						end: 55.22
+					},
+					{
+						word: '两种',
+						pinyin: 'liǎng zhǒng',
+						en: '',
+						start: 55.22,
+						end: 55.81
+					},
+					{
+						word: '肉',
+						pinyin: 'ròu',
+						en: '',
+						start: 55.81,
+						end: 56.11
+					},
+					{
+						word: '的',
+						pinyin: 'de',
+						en: '',
+						start: 56.11,
+						end: 56.4
+					},
+					{
+						word: '都',
+						pinyin: 'dōu',
+						en: '',
+						start: 56.4,
+						end: 56.7
+					},
+					{
+						word: '想',
+						pinyin: 'xiǎng',
+						en: '',
+						start: 56.7,
+						end: 56.99
+					},
+					{
+						word: '尝一尝',
+						pinyin: 'cháng yī cháng',
+						en: 'taste / try',
+						start: 56.99,
+						end: 57.87
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 57.87,
+						end: 57.91
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-11',
+				speakerId: 'minmin',
+				speakerName: '敏敏',
+				speakerAvatar: '👧',
+				start: 58.32,
+				end: 63.79,
+				text: '那我们要一盘猪肉大葱的，再要一盘牛肉白菜的，好不好？',
+				pinyin:
+					'Nà wǒmen yào yì pán zhūròu dàcōng de, zài yào yì pán niúròu báicài de, hǎo bu hǎo?',
+				en: "Then let's get one plate of pork scallion, and one plate of beef cabbage, sounds good?",
+				words: [
+					{
+						word: '那',
+						pinyin: 'nà',
+						en: '',
+						start: 58.32,
+						end: 58.56
+					},
+					{
+						word: '我们',
+						pinyin: 'wǒ men',
+						en: '',
+						start: 58.56,
+						end: 59.03
+					},
+					{
+						word: '要',
+						pinyin: 'yào',
+						en: '',
+						start: 59.03,
+						end: 59.27
+					},
+					{
+						word: '一盘',
+						pinyin: 'yī pán',
+						en: 'one plate',
+						start: 59.27,
+						end: 59.75
+					},
+					{
+						word: '猪肉',
+						pinyin: 'zhū ròu',
+						en: '',
+						start: 59.75,
+						end: 60.22
+					},
+					{
+						word: '大葱',
+						pinyin: 'dà cōng',
+						en: '',
+						start: 60.22,
+						end: 60.7
+					},
+					{
+						word: '的',
+						pinyin: 'de',
+						en: '',
+						start: 60.7,
+						end: 60.94
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 60.94,
+						end: 60.98
+					},
+					{
+						word: '再要',
+						pinyin: 'zài yào',
+						en: '',
+						start: 60.94,
+						end: 61.41
+					},
+					{
+						word: '一盘',
+						pinyin: 'yī pán',
+						en: 'one plate',
+						start: 61.41,
+						end: 61.89
+					},
+					{
+						word: '牛肉',
+						pinyin: 'niú ròu',
+						en: '',
+						start: 61.89,
+						end: 62.36
+					},
+					{
+						word: '白菜',
+						pinyin: 'bái cài',
+						en: '',
+						start: 62.36,
+						end: 62.84
+					},
+					{
+						word: '的',
+						pinyin: 'de',
+						en: '',
+						start: 62.84,
+						end: 63.08
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 63.08,
+						end: 63.12
+					},
+					{
+						word: '好不好',
+						pinyin: 'hǎo bù hǎo',
+						en: 'is that okay?',
+						start: 63.08,
+						end: 63.79
+					},
+					{
+						word: '？',
+						pinyin: '',
+						en: '',
+						start: 63.79,
+						end: 63.83
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-12',
+				speakerId: 'dawei',
+				speakerName: '大卫',
+				speakerAvatar: '🎒',
+				start: 64.24,
+				end: 69.38,
+				text: '好主意！老板，请给我们来这两盘，一共多少钱？',
+				pinyin: 'Hǎo zhǔyi! Lǎobǎn, qǐng gěi wǒmen lái zhè liǎng pán, yígòng duōshao qián?',
+				en: 'Great idea! Boss, please bring us these two plates, how much is it in total?',
+				words: [
+					{
+						word: '好',
+						pinyin: 'hǎo',
+						en: '',
+						start: 64.24,
+						end: 64.53
+					},
+					{
+						word: '主意',
+						pinyin: 'zhǔ yì',
+						en: '',
+						start: 64.53,
+						end: 65.1
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 65.1,
+						end: 65.14
+					},
+					{
+						word: '老板',
+						pinyin: 'lǎo bǎn',
+						en: '',
+						start: 65.1,
+						end: 65.67
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 65.67,
+						end: 65.71
+					},
+					{
+						word: '请',
+						pinyin: 'qǐng',
+						en: '',
+						start: 65.67,
+						end: 65.95
+					},
+					{
+						word: '给',
+						pinyin: 'gěi',
+						en: '',
+						start: 65.95,
+						end: 66.24
+					},
+					{
+						word: '我们',
+						pinyin: 'wǒ men',
+						en: '',
+						start: 66.24,
+						end: 66.81
+					},
+					{
+						word: '来',
+						pinyin: 'lái',
+						en: '',
+						start: 66.81,
+						end: 67.09
+					},
+					{
+						word: '这',
+						pinyin: 'zhè',
+						en: '',
+						start: 67.09,
+						end: 67.38
+					},
+					{
+						word: '两盘',
+						pinyin: 'liǎng pán',
+						en: '',
+						start: 67.38,
+						end: 67.95
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 67.95,
+						end: 67.99
+					},
+					{
+						word: '一共',
+						pinyin: 'yī gòng',
+						en: 'in total',
+						start: 67.95,
+						end: 68.52
+					},
+					{
+						word: '多少',
+						pinyin: 'duō shǎo',
+						en: '',
+						start: 68.52,
+						end: 69.09
+					},
+					{
+						word: '钱',
+						pinyin: 'qián',
+						en: '',
+						start: 69.09,
+						end: 69.38
+					},
+					{
+						word: '？',
+						pinyin: '',
+						en: '',
+						start: 69.38,
+						end: 69.42
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-13',
+				speakerId: 'laoban',
+				speakerName: '王老板',
+				speakerAvatar: '👨‍🍳',
+				start: 69.83,
+				end: 78.09,
+				text: '猪肉水饺二十块，牛肉水饺二十四块，一共四十四块钱。要不要辣椒和醋？',
+				pinyin:
+					'Zhūròu shuǐjiǎo èrshí kuài, niúròu shuǐjiǎo èrshísì kuài, yígòng sìshísì kuài qián. Yào bu yào làjiāo hé cù?',
+				en: 'Pork dumplings are 20 yuan, beef dumplings are 24 yuan, total 44 yuan. Do you want chili and vinegar?',
+				words: [
+					{
+						word: '猪肉',
+						pinyin: 'zhū ròu',
+						en: '',
+						start: 69.83,
+						end: 70.4
+					},
+					{
+						word: '水饺',
+						pinyin: 'shuǐ jiǎo',
+						en: 'boiled dumplings',
+						start: 70.4,
+						end: 70.97
+					},
+					{
+						word: '二十块',
+						pinyin: 'èr shí kuài',
+						en: '',
+						start: 70.97,
+						end: 71.82
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 71.82,
+						end: 71.86
+					},
+					{
+						word: '牛肉',
+						pinyin: 'niú ròu',
+						en: '',
+						start: 71.82,
+						end: 72.39
+					},
+					{
+						word: '水饺',
+						pinyin: 'shuǐ jiǎo',
+						en: 'boiled dumplings',
+						start: 72.39,
+						end: 72.96
+					},
+					{
+						word: '二十四块',
+						pinyin: 'èr shí sì kuài',
+						en: '',
+						start: 72.96,
+						end: 74.1
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 74.1,
+						end: 74.14
+					},
+					{
+						word: '一共',
+						pinyin: 'yī gòng',
+						en: '',
+						start: 74.1,
+						end: 74.67
+					},
+					{
+						word: '四十四',
+						pinyin: 'sì shí sì',
+						en: '',
+						start: 74.67,
+						end: 75.52
+					},
+					{
+						word: '块钱',
+						pinyin: 'kuài qián',
+						en: '',
+						start: 75.52,
+						end: 76.09
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 76.09,
+						end: 76.13
+					},
+					{
+						word: '要',
+						pinyin: 'yào',
+						en: '',
+						start: 76.09,
+						end: 76.38
+					},
+					{
+						word: '不要',
+						pinyin: 'bú yào',
+						en: '',
+						start: 76.38,
+						end: 76.95
+					},
+					{
+						word: '辣椒',
+						pinyin: 'là jiāo',
+						en: 'chili',
+						start: 76.95,
+						end: 77.52
+					},
+					{
+						word: '和',
+						pinyin: 'hé',
+						en: '',
+						start: 77.52,
+						end: 77.8
+					},
+					{
+						word: '醋',
+						pinyin: 'cù',
+						en: 'vinegar',
+						start: 77.8,
+						end: 78.09
+					},
+					{
+						word: '？',
+						pinyin: '',
+						en: '',
+						start: 78.09,
+						end: 78.13
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-14',
+				speakerId: 'minmin',
+				speakerName: '敏敏',
+				speakerAvatar: '👧',
+				start: 78.54,
+				end: 83.65,
+				text: '要一点醋，但是不要太辣，一点点辣椒油就可以。',
+				pinyin: 'Yào yìdiǎn cù, dànshì bú yào tài là, yìdiǎndiǎn làjiāoyóu jiù kěyǐ.',
+				en: 'A little vinegar, but not too spicy, just a tiny bit of chili oil is fine.',
+				words: [
+					{
+						word: '要',
+						pinyin: 'yào',
+						en: '',
+						start: 78.54,
+						end: 78.81
+					},
+					{
+						word: '一点',
+						pinyin: 'yì diǎn',
+						en: 'a little',
+						start: 78.81,
+						end: 79.35
+					},
+					{
+						word: '醋',
+						pinyin: 'cù',
+						en: '',
+						start: 79.35,
+						end: 79.62
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 79.62,
+						end: 79.66
+					},
+					{
+						word: '但是',
+						pinyin: 'dàn shì',
+						en: 'but',
+						start: 79.62,
+						end: 80.15
+					},
+					{
+						word: '不要',
+						pinyin: 'bú yào',
+						en: '',
+						start: 80.15,
+						end: 80.69
+					},
+					{
+						word: '太辣',
+						pinyin: 'tài là',
+						en: '',
+						start: 80.69,
+						end: 81.23
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 81.23,
+						end: 81.27
+					},
+					{
+						word: '一点点',
+						pinyin: 'yì diǎn diǎn',
+						en: '',
+						start: 81.23,
+						end: 82.04
+					},
+					{
+						word: '辣椒油',
+						pinyin: 'là jiāo yóu',
+						en: '',
+						start: 82.04,
+						end: 82.84
+					},
+					{
+						word: '就',
+						pinyin: 'jiù',
+						en: '',
+						start: 82.84,
+						end: 83.11
+					},
+					{
+						word: '可以',
+						pinyin: 'kě yǐ',
+						en: 'okay / acceptable',
+						start: 83.11,
+						end: 83.65
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 83.65,
+						end: 83.69
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-15',
+				speakerId: 'dawei',
+				speakerName: '大卫',
+				speakerAvatar: '🎒',
+				start: 84.1,
+				end: 87.82,
+				text: '老板，店里有热茶或者饮料吗？',
+				pinyin: 'Lǎobǎn, diàn lǐ yǒu rè chá huòzhě yǐnliào ma?',
+				en: 'Boss, do you have hot tea or drinks in the shop?',
+				words: [
+					{
+						word: '老板',
+						pinyin: 'lǎo bǎn',
+						en: '',
+						start: 84.1,
+						end: 84.72
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 84.72,
+						end: 84.76
+					},
+					{
+						word: '店里',
+						pinyin: 'diàn lǐ',
+						en: '',
+						start: 84.72,
+						end: 85.34
+					},
+					{
+						word: '有',
+						pinyin: 'yǒu',
+						en: '',
+						start: 85.34,
+						end: 85.65
+					},
+					{
+						word: '热茶',
+						pinyin: 'rè chá',
+						en: 'hot tea',
+						start: 85.65,
+						end: 86.27
+					},
+					{
+						word: '或者',
+						pinyin: 'huò zhě',
+						en: 'or',
+						start: 86.27,
+						end: 86.89
+					},
+					{
+						word: '饮料',
+						pinyin: 'yǐn liào',
+						en: 'beverage',
+						start: 86.89,
+						end: 87.51
+					},
+					{
+						word: '吗',
+						pinyin: 'ma',
+						en: '',
+						start: 87.51,
+						end: 87.82
+					},
+					{
+						word: '？',
+						pinyin: '',
+						en: '',
+						start: 87.82,
+						end: 87.86
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-16',
+				speakerId: 'laoban',
+				speakerName: '王老板',
+				speakerAvatar: '👨‍🍳',
+				start: 88.27,
+				end: 94.97,
+				text: '有热茉莉花茶，免费喝！茶壶和杯子在桌子上，请慢用。',
+				pinyin: 'Yǒu rè mòlìhuā chá, miǎnfèi hē! Cháhú hé bēizi zài zhuōzi shang, qǐng màn yòng.',
+				en: 'We have hot jasmine tea, free of charge! Teapot and cups are on the table, please enjoy.',
+				words: [
+					{
+						word: '有',
+						pinyin: 'yǒu',
+						en: '',
+						start: 88.27,
+						end: 88.59
+					},
+					{
+						word: '热',
+						pinyin: 'rè',
+						en: '',
+						start: 88.59,
+						end: 88.91
+					},
+					{
+						word: '茉莉花茶',
+						pinyin: 'mò lì huā chá',
+						en: 'jasmine tea',
+						start: 88.91,
+						end: 90.18
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 90.18,
+						end: 90.22
+					},
+					{
+						word: '免费',
+						pinyin: 'miǎn fèi',
+						en: 'free',
+						start: 90.18,
+						end: 90.82
+					},
+					{
+						word: '喝',
+						pinyin: 'hē',
+						en: '',
+						start: 90.82,
+						end: 91.14
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 91.14,
+						end: 91.18
+					},
+					{
+						word: '茶壶',
+						pinyin: 'chá hú',
+						en: '',
+						start: 91.14,
+						end: 91.78
+					},
+					{
+						word: '和',
+						pinyin: 'hé',
+						en: '',
+						start: 91.78,
+						end: 92.1
+					},
+					{
+						word: '杯子',
+						pinyin: 'bēi zi',
+						en: '',
+						start: 92.1,
+						end: 92.73
+					},
+					{
+						word: '在',
+						pinyin: 'zài',
+						en: '',
+						start: 92.73,
+						end: 93.05
+					},
+					{
+						word: '桌子',
+						pinyin: 'zhuō zi',
+						en: '',
+						start: 93.05,
+						end: 93.69
+					},
+					{
+						word: '上',
+						pinyin: 'shàng',
+						en: '',
+						start: 93.69,
+						end: 94.01
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 94.01,
+						end: 94.05
+					},
+					{
+						word: '请',
+						pinyin: 'qǐng',
+						en: '',
+						start: 94.01,
+						end: 94.33
+					},
+					{
+						word: '慢用',
+						pinyin: 'màn yòng',
+						en: 'enjoy your meal',
+						start: 94.33,
+						end: 94.97
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 94.97,
+						end: 95.01
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-17',
+				speakerId: 'minmin',
+				speakerName: '敏敏',
+				speakerAvatar: '👧',
+				start: 95.42,
+				end: 101.49,
+				text: '水饺热气腾腾地上来了，真香啊！大卫，快趁热吃。',
+				pinyin: 'Shuǐjiǎo rèqì téngtēng de shànglái le, zhēn xiāng a! Dàwèi, kuài chènrè chī.',
+				en: "The dumplings arrived piping hot, smells wonderful! David, eat them while they're hot.",
+				words: [
+					{
+						word: '水饺',
+						pinyin: 'shuǐ jiǎo',
+						en: 'boiled dumplings',
+						start: 95.42,
+						end: 96.06
+					},
+					{
+						word: '热气腾腾',
+						pinyin: 'rè qì téng téng',
+						en: '',
+						start: 96.06,
+						end: 97.34
+					},
+					{
+						word: '地上',
+						pinyin: 'dì shàng',
+						en: '',
+						start: 97.34,
+						end: 97.98
+					},
+					{
+						word: '来',
+						pinyin: 'lái',
+						en: '',
+						start: 97.98,
+						end: 98.3
+					},
+					{
+						word: '了',
+						pinyin: 'le',
+						en: '',
+						start: 98.3,
+						end: 98.62
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 98.62,
+						end: 98.66
+					},
+					{
+						word: '真香',
+						pinyin: 'zhēn xiāng',
+						en: 'smells so good',
+						start: 98.62,
+						end: 99.25
+					},
+					{
+						word: '啊',
+						pinyin: 'a',
+						en: '',
+						start: 99.25,
+						end: 99.57
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 99.57,
+						end: 99.61
+					},
+					{
+						word: '大卫',
+						pinyin: 'dà wèi',
+						en: '',
+						start: 99.57,
+						end: 100.21
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 100.21,
+						end: 100.25
+					},
+					{
+						word: '快',
+						pinyin: 'kuài',
+						en: '',
+						start: 100.21,
+						end: 100.53
+					},
+					{
+						word: '趁热',
+						pinyin: 'chèn rè',
+						en: '',
+						start: 100.53,
+						end: 101.17
+					},
+					{
+						word: '吃',
+						pinyin: 'chī',
+						en: '',
+						start: 101.17,
+						end: 101.49
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 101.49,
+						end: 101.53
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-18',
+				speakerId: 'dawei',
+				speakerName: '大卫',
+				speakerAvatar: '🎒',
+				start: 101.94,
+				end: 107.41,
+				text: '小心烫！哇，这个牛肉水饺鲜嫩多汁，太好吃了！',
+				pinyin: 'Xiǎoxīn tàng! Wa, zhè ge niúròu shuǐjiǎo xiānnèn duōzhī, tài hǎochī le!',
+				en: "Careful, it's hot! Wow, this beef dumpling is tender and juicy, so delicious!",
+				words: [
+					{
+						word: '小心',
+						pinyin: 'xiǎo xīn',
+						en: '',
+						start: 101.94,
+						end: 102.55
+					},
+					{
+						word: '烫',
+						pinyin: 'tàng',
+						en: '',
+						start: 102.55,
+						end: 102.85
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 102.85,
+						end: 102.89
+					},
+					{
+						word: '哇',
+						pinyin: 'wa',
+						en: '',
+						start: 102.85,
+						end: 103.16
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 103.16,
+						end: 103.2
+					},
+					{
+						word: '这个',
+						pinyin: 'zhè ge',
+						en: '',
+						start: 103.16,
+						end: 103.76
+					},
+					{
+						word: '牛肉',
+						pinyin: 'niú ròu',
+						en: '',
+						start: 103.76,
+						end: 104.37
+					},
+					{
+						word: '水饺',
+						pinyin: 'shuǐ jiǎo',
+						en: 'boiled dumplings',
+						start: 104.37,
+						end: 104.98
+					},
+					{
+						word: '鲜嫩',
+						pinyin: 'xiān nèn',
+						en: 'fresh and tender',
+						start: 104.98,
+						end: 105.59
+					},
+					{
+						word: '多汁',
+						pinyin: 'duō zhī',
+						en: '',
+						start: 105.59,
+						end: 106.2
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 106.2,
+						end: 106.24
+					},
+					{
+						word: '太',
+						pinyin: 'tài',
+						en: '',
+						start: 106.2,
+						end: 106.5
+					},
+					{
+						word: '好吃',
+						pinyin: 'hǎo chī',
+						en: '',
+						start: 106.5,
+						end: 107.11
+					},
+					{
+						word: '了',
+						pinyin: 'le',
+						en: '',
+						start: 107.11,
+						end: 107.41
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 107.41,
+						end: 107.45
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-19',
+				speakerId: 'minmin',
+				speakerName: '敏敏',
+				speakerAvatar: '👧',
+				start: 107.86,
+				end: 113.55,
+				text: '猪肉大葱的也很香。配上一口热茶，感觉真舒服。',
+				pinyin: 'Zhūròu dàcōng de yě hěn xiāng. Pèishang yì kǒu rè chá, gǎnjué zhēn shūfu.',
+				en: 'The pork and scallion one is also very tasty. Paired with a sip of hot tea, it feels so comfortable.',
+				words: [
+					{
+						word: '猪肉',
+						pinyin: 'zhū ròu',
+						en: '',
+						start: 107.86,
+						end: 108.46
+					},
+					{
+						word: '大葱',
+						pinyin: 'dà cōng',
+						en: '',
+						start: 108.46,
+						end: 109.06
+					},
+					{
+						word: '的',
+						pinyin: 'de',
+						en: '',
+						start: 109.06,
+						end: 109.36
+					},
+					{
+						word: '也',
+						pinyin: 'yě',
+						en: '',
+						start: 109.36,
+						end: 109.66
+					},
+					{
+						word: '很',
+						pinyin: 'hěn',
+						en: '',
+						start: 109.66,
+						end: 109.96
+					},
+					{
+						word: '香',
+						pinyin: 'xiāng',
+						en: '',
+						start: 109.96,
+						end: 110.25
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 110.25,
+						end: 110.29
+					},
+					{
+						word: '配',
+						pinyin: 'pèi',
+						en: '',
+						start: 110.25,
+						end: 110.55
+					},
+					{
+						word: '上',
+						pinyin: 'shàng',
+						en: '',
+						start: 110.55,
+						end: 110.85
+					},
+					{
+						word: '一口',
+						pinyin: 'yī kǒu',
+						en: '',
+						start: 110.85,
+						end: 111.45
+					},
+					{
+						word: '热茶',
+						pinyin: 'rè chá',
+						en: '',
+						start: 111.45,
+						end: 112.05
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 112.05,
+						end: 112.09
+					},
+					{
+						word: '感觉',
+						pinyin: 'gǎn jué',
+						en: 'feels / sensation',
+						start: 112.05,
+						end: 112.65
+					},
+					{
+						word: '真',
+						pinyin: 'zhēn',
+						en: '',
+						start: 112.65,
+						end: 112.95
+					},
+					{
+						word: '舒服',
+						pinyin: 'shū fú',
+						en: 'comfortable',
+						start: 112.95,
+						end: 113.55
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 113.55,
+						end: 113.59
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-20',
+				speakerId: 'dawei',
+				speakerName: '大卫',
+				speakerAvatar: '🎒',
+				start: 114.0,
+				end: 119.35,
+				text: '我吃得好饱，肚子圆圆的。今天这顿晚饭太棒了。',
+				pinyin: 'Wǒ chī de hǎo bǎo, dùzi yuányuán de. Jīntiān zhè dùn wǎnfàn tài bàng le.',
+				en: "I ate so much and I'm so full, my belly is round. This dinner tonight was wonderful.",
+				words: [
+					{
+						word: '我',
+						pinyin: 'wǒ',
+						en: '',
+						start: 114.0,
+						end: 114.28
+					},
+					{
+						word: '吃',
+						pinyin: 'chī',
+						en: '',
+						start: 114.28,
+						end: 114.56
+					},
+					{
+						word: '得',
+						pinyin: 'dé',
+						en: '',
+						start: 114.56,
+						end: 114.85
+					},
+					{
+						word: '好',
+						pinyin: 'hǎo',
+						en: '',
+						start: 114.85,
+						end: 115.13
+					},
+					{
+						word: '饱',
+						pinyin: 'bǎo',
+						en: 'full (not hungry)',
+						start: 115.13,
+						end: 115.41
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 115.41,
+						end: 115.45
+					},
+					{
+						word: '肚子',
+						pinyin: 'dǔ zi',
+						en: '',
+						start: 115.41,
+						end: 115.97
+					},
+					{
+						word: '圆圆的',
+						pinyin: 'yuán yuán de',
+						en: '',
+						start: 115.97,
+						end: 116.82
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 116.82,
+						end: 116.86
+					},
+					{
+						word: '今天',
+						pinyin: 'jīn tiān',
+						en: '',
+						start: 116.82,
+						end: 117.38
+					},
+					{
+						word: '这顿',
+						pinyin: 'zhè dùn',
+						en: '',
+						start: 117.38,
+						end: 117.94
+					},
+					{
+						word: '晚饭',
+						pinyin: 'wǎn fàn',
+						en: 'dinner',
+						start: 117.94,
+						end: 118.51
+					},
+					{
+						word: '太棒了',
+						pinyin: 'tài bàng le',
+						en: 'terrific / wonderful',
+						start: 118.51,
+						end: 119.35
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 119.35,
+						end: 119.39
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-21',
+				speakerId: 'minmin',
+				speakerName: '敏敏',
+				speakerAvatar: '👧',
+				start: 119.8,
+				end: 124.58,
+				text: '老板，我们吃好了！我用微信扫码付钱。',
+				pinyin: 'Lǎobǎn, wǒmen chī hǎo le! Wǒ yòng Wēixìn sǎomǎ fù qián.',
+				en: "Boss, we're all done! I'll scan the code with WeChat to pay.",
+				words: [
+					{
+						word: '老板',
+						pinyin: 'lǎo bǎn',
+						en: '',
+						start: 119.8,
+						end: 120.44
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 120.44,
+						end: 120.48
+					},
+					{
+						word: '我们',
+						pinyin: 'wǒ men',
+						en: '',
+						start: 120.44,
+						end: 121.07
+					},
+					{
+						word: '吃',
+						pinyin: 'chī',
+						en: '',
+						start: 121.07,
+						end: 121.39
+					},
+					{
+						word: '好',
+						pinyin: 'hǎo',
+						en: '',
+						start: 121.39,
+						end: 121.71
+					},
+					{
+						word: '了',
+						pinyin: 'le',
+						en: '',
+						start: 121.71,
+						end: 122.03
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 122.03,
+						end: 122.07
+					},
+					{
+						word: '我用',
+						pinyin: 'wǒ yòng',
+						en: '',
+						start: 122.03,
+						end: 122.67
+					},
+					{
+						word: '微信',
+						pinyin: 'wēi xìn',
+						en: '',
+						start: 122.67,
+						end: 123.3
+					},
+					{
+						word: '扫码',
+						pinyin: 'sǎo mǎ',
+						en: 'scan code',
+						start: 123.3,
+						end: 123.94
+					},
+					{
+						word: '付钱',
+						pinyin: 'fù qián',
+						en: 'pay money',
+						start: 123.94,
+						end: 124.58
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 124.58,
+						end: 124.62
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-22',
+				speakerId: 'dawei',
+				speakerName: '大卫',
+				speakerAvatar: '🎒',
+				start: 125.03,
+				end: 130.74,
+				text: '哎，等等，今天让我来请客吧！你平时经常帮我练习中文。',
+				pinyin:
+					'Āi, děngděng, jīntiān ràng wǒ lái qǐngkè ba! Nǐ píngshí jīngcháng bāng wǒ liànxí Zhōngwén.',
+				en: 'Hey, wait, let me treat today! You always help me practice Chinese.',
+				words: [
+					{
+						word: '哎',
+						pinyin: 'āi',
+						en: '',
+						start: 125.03,
+						end: 125.29
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 125.29,
+						end: 125.33
+					},
+					{
+						word: '等等',
+						pinyin: 'děng děng',
+						en: '',
+						start: 125.29,
+						end: 125.81
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 125.81,
+						end: 125.85
+					},
+					{
+						word: '今天',
+						pinyin: 'jīn tiān',
+						en: '',
+						start: 125.81,
+						end: 126.33
+					},
+					{
+						word: '让',
+						pinyin: 'ràng',
+						en: '',
+						start: 126.33,
+						end: 126.59
+					},
+					{
+						word: '我',
+						pinyin: 'wǒ',
+						en: '',
+						start: 126.59,
+						end: 126.85
+					},
+					{
+						word: '来',
+						pinyin: 'lái',
+						en: '',
+						start: 126.85,
+						end: 127.11
+					},
+					{
+						word: '请客',
+						pinyin: 'qǐng kè',
+						en: 'to treat (someone)',
+						start: 127.11,
+						end: 127.63
+					},
+					{
+						word: '吧',
+						pinyin: 'ba',
+						en: '',
+						start: 127.63,
+						end: 127.89
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 127.89,
+						end: 127.93
+					},
+					{
+						word: '你',
+						pinyin: 'nǐ',
+						en: '',
+						start: 127.89,
+						end: 128.15
+					},
+					{
+						word: '平时',
+						pinyin: 'píng shí',
+						en: 'usually',
+						start: 128.15,
+						end: 128.66
+					},
+					{
+						word: '经常',
+						pinyin: 'jīng cháng',
+						en: '',
+						start: 128.66,
+						end: 129.18
+					},
+					{
+						word: '帮',
+						pinyin: 'bāng',
+						en: '',
+						start: 129.18,
+						end: 129.44
+					},
+					{
+						word: '我',
+						pinyin: 'wǒ',
+						en: '',
+						start: 129.44,
+						end: 129.7
+					},
+					{
+						word: '练习',
+						pinyin: 'liàn xí',
+						en: 'practice',
+						start: 129.7,
+						end: 130.22
+					},
+					{
+						word: '中文',
+						pinyin: 'zhōng wén',
+						en: '',
+						start: 130.22,
+						end: 130.74
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 130.74,
+						end: 130.78
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-23',
+				speakerId: 'minmin',
+				speakerName: '敏敏',
+				speakerAvatar: '👧',
+				start: 131.19,
+				end: 137.21,
+				text: '哈哈，我已经扫过码付款啦！下次周末换你请客吧。',
+				pinyin: 'Hāhā, wǒ yǐjīng sǎo guò mǎ fùkuǎn la! Xià cì zhōumò huàn nǐ qǐngkè ba.',
+				en: "Haha, I've already scanned the code and paid! Next weekend it's your turn to treat.",
+				words: [
+					{
+						word: '哈哈',
+						pinyin: 'hā hā',
+						en: '',
+						start: 131.19,
+						end: 131.79
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 131.79,
+						end: 131.83
+					},
+					{
+						word: '我',
+						pinyin: 'wǒ',
+						en: '',
+						start: 131.79,
+						end: 132.09
+					},
+					{
+						word: '已经',
+						pinyin: 'yǐ jīng',
+						en: 'already',
+						start: 132.09,
+						end: 132.7
+					},
+					{
+						word: '扫过',
+						pinyin: 'sǎo guò',
+						en: '',
+						start: 132.7,
+						end: 133.3
+					},
+					{
+						word: '码',
+						pinyin: 'mǎ',
+						en: '',
+						start: 133.3,
+						end: 133.6
+					},
+					{
+						word: '付款',
+						pinyin: 'fù kuǎn',
+						en: 'pay',
+						start: 133.6,
+						end: 134.2
+					},
+					{
+						word: '啦',
+						pinyin: 'la',
+						en: '',
+						start: 134.2,
+						end: 134.5
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 134.5,
+						end: 134.54
+					},
+					{
+						word: '下次',
+						pinyin: 'xià cì',
+						en: '',
+						start: 134.5,
+						end: 135.11
+					},
+					{
+						word: '周末',
+						pinyin: 'zhōu mò',
+						en: '',
+						start: 135.11,
+						end: 135.71
+					},
+					{
+						word: '换',
+						pinyin: 'huàn',
+						en: '',
+						start: 135.71,
+						end: 136.01
+					},
+					{
+						word: '你',
+						pinyin: 'nǐ',
+						en: '',
+						start: 136.01,
+						end: 136.31
+					},
+					{
+						word: '请客',
+						pinyin: 'qǐng kè',
+						en: 'to treat (someone)',
+						start: 136.31,
+						end: 136.91
+					},
+					{
+						word: '吧',
+						pinyin: 'ba',
+						en: '',
+						start: 136.91,
+						end: 137.21
+					},
+					{
+						word: '。',
+						pinyin: '',
+						en: '',
+						start: 137.21,
+						end: 137.25
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-24',
+				speakerId: 'dawei',
+				speakerName: '大卫',
+				speakerAvatar: '🎒',
+				start: 137.66,
+				end: 143.85,
+				text: '没问题，一言为定！明天星期天，我们还去附近的公园散步吗？',
+				pinyin:
+					'Méi wèntí, yì yán wéi dìng! Míngtiān xīngqītiān, wǒmen hái qù fùjìn de gōngyuán sànbù ma?',
+				en: "No problem, that's a deal! Tomorrow is Sunday, are we still going for a walk in the nearby park?",
+				words: [
+					{
+						word: '没',
+						pinyin: 'méi',
+						en: '',
+						start: 137.66,
+						end: 137.92
+					},
+					{
+						word: '问题',
+						pinyin: 'wèn tí',
+						en: '',
+						start: 137.92,
+						end: 138.43
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 138.43,
+						end: 138.47
+					},
+					{
+						word: '一言为定',
+						pinyin: 'yī yán wéi dìng',
+						en: "it's a deal / settled",
+						start: 138.43,
+						end: 139.47
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 139.47,
+						end: 139.51
+					},
+					{
+						word: '明天',
+						pinyin: 'míng tiān',
+						en: '',
+						start: 139.47,
+						end: 139.98
+					},
+					{
+						word: '星期天',
+						pinyin: 'xīng qī tiān',
+						en: '',
+						start: 139.98,
+						end: 140.76
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 140.76,
+						end: 140.8
+					},
+					{
+						word: '我们',
+						pinyin: 'wǒ men',
+						en: '',
+						start: 140.76,
+						end: 141.27
+					},
+					{
+						word: '还',
+						pinyin: 'hái',
+						en: '',
+						start: 141.27,
+						end: 141.53
+					},
+					{
+						word: '去',
+						pinyin: 'qù',
+						en: '',
+						start: 141.53,
+						end: 141.79
+					},
+					{
+						word: '附近',
+						pinyin: 'fù jìn',
+						en: 'nearby',
+						start: 141.79,
+						end: 142.3
+					},
+					{
+						word: '的',
+						pinyin: 'de',
+						en: '',
+						start: 142.3,
+						end: 142.56
+					},
+					{
+						word: '公园',
+						pinyin: 'gōng yuán',
+						en: '',
+						start: 142.56,
+						end: 143.08
+					},
+					{
+						word: '散步',
+						pinyin: 'sàn bù',
+						en: 'to take a walk',
+						start: 143.08,
+						end: 143.59
+					},
+					{
+						word: '吗',
+						pinyin: 'ma',
+						en: '',
+						start: 143.59,
+						end: 143.85
+					},
+					{
+						word: '？',
+						pinyin: '',
+						en: '',
+						start: 143.85,
+						end: 143.89
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-25',
+				speakerId: 'minmin',
+				speakerName: '敏敏',
+				speakerAvatar: '👧',
+				start: 144.3,
+				end: 150.78,
+				text: '当然去！明天天气很晴朗，我们早上九点在公园大门见！',
+				pinyin:
+					'Dāngrán qù! Míngtiān tiānqì hěn qínglǎng, wǒmen zǎoshang jiǔ diǎn zài gōngyuán dàmén jiàn!',
+				en: "Of course! The weather tomorrow is sunny, let's meet at 9:00 AM at the park gate!",
+				words: [
+					{
+						word: '当然',
+						pinyin: 'dāng rán',
+						en: '',
+						start: 144.3,
+						end: 144.89
+					},
+					{
+						word: '去',
+						pinyin: 'qù',
+						en: '',
+						start: 144.89,
+						end: 145.18
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 145.18,
+						end: 145.22
+					},
+					{
+						word: '明天',
+						pinyin: 'míng tiān',
+						en: '',
+						start: 145.18,
+						end: 145.77
+					},
+					{
+						word: '天气',
+						pinyin: 'tiān qì',
+						en: '',
+						start: 145.77,
+						end: 146.36
+					},
+					{
+						word: '很',
+						pinyin: 'hěn',
+						en: '',
+						start: 146.36,
+						end: 146.66
+					},
+					{
+						word: '晴朗',
+						pinyin: 'qíng lǎng',
+						en: 'sunny / clear',
+						start: 146.66,
+						end: 147.25
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 147.25,
+						end: 147.29
+					},
+					{
+						word: '我们',
+						pinyin: 'wǒ men',
+						en: '',
+						start: 147.25,
+						end: 147.83
+					},
+					{
+						word: '早上',
+						pinyin: 'zǎo shàng',
+						en: '',
+						start: 147.83,
+						end: 148.42
+					},
+					{
+						word: '九点',
+						pinyin: 'jiǔ diǎn',
+						en: "9 o'clock",
+						start: 148.42,
+						end: 149.01
+					},
+					{
+						word: '在',
+						pinyin: 'zài',
+						en: '',
+						start: 149.01,
+						end: 149.31
+					},
+					{
+						word: '公园',
+						pinyin: 'gōng yuán',
+						en: '',
+						start: 149.31,
+						end: 149.9
+					},
+					{
+						word: '大门',
+						pinyin: 'dà mén',
+						en: 'main gate',
+						start: 149.9,
+						end: 150.49
+					},
+					{
+						word: '见',
+						pinyin: 'jiàn',
+						en: '',
+						start: 150.49,
+						end: 150.78
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 150.78,
+						end: 150.82
+					}
+				]
+			},
+			{
+				id: 'weekend-night-market-seg-26',
+				speakerId: 'dawei',
+				speakerName: '大卫',
+				speakerAvatar: '🎒',
+				start: 151.23,
+				end: 155.67,
+				text: '太棒了！今晚走回家好好休息，明天见！',
+				pinyin: 'Tài bàng le! Jīnwǎn zǒu huí jiā hǎohāo xiūxi, míngtiān jiàn!',
+				en: "Awesome! Let's walk home and get a good rest tonight, see you tomorrow!",
+				words: [
+					{
+						word: '太棒了',
+						pinyin: 'tài bàng le',
+						en: '',
+						start: 151.23,
+						end: 152.12
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 152.12,
+						end: 152.16
+					},
+					{
+						word: '今晚',
+						pinyin: 'jīn wǎn',
+						en: '',
+						start: 152.12,
+						end: 152.71
+					},
+					{
+						word: '走',
+						pinyin: 'zǒu',
+						en: '',
+						start: 152.71,
+						end: 153.01
+					},
+					{
+						word: '回家',
+						pinyin: 'huí jiā',
+						en: 'go home',
+						start: 153.01,
+						end: 153.6
+					},
+					{
+						word: '好好',
+						pinyin: 'hǎo hǎo',
+						en: '',
+						start: 153.6,
+						end: 154.19
+					},
+					{
+						word: '休息',
+						pinyin: 'xiū xī',
+						en: '',
+						start: 154.19,
+						end: 154.78
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 154.78,
+						end: 154.82
+					},
+					{
+						word: '明天',
+						pinyin: 'míng tiān',
+						en: '',
+						start: 154.78,
+						end: 155.37
+					},
+					{
+						word: '见',
+						pinyin: 'jiàn',
+						en: '',
+						start: 155.37,
+						end: 155.67
+					},
+					{
+						word: '！',
+						pinyin: '',
+						en: '',
+						start: 155.67,
+						end: 155.71
+					}
+				]
+			}
+		],
+		xpReward: 30
 	}
 ];

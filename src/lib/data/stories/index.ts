@@ -41,10 +41,10 @@ export const BUILTIN_STORIES: Story[] = [
 				contextSentence: '不要香菜，谢谢！'
 			},
 			{
-				word: '微信支付',
-				pinyin: 'wēixìn zhīfù',
-				meaning: 'WeChat Pay',
-				contextSentence: '微信支付可以吗？'
+				word: '微信付钱',
+				pinyin: 'wēixìn fù qián',
+				meaning: 'Pay with WeChat',
+				contextSentence: '可以微信付钱吗？'
 			}
 		],
 		nodes: {
@@ -205,9 +205,9 @@ export const BUILTIN_STORIES: Story[] = [
 				choices: [
 					{
 						id: 'choice-wechat',
-						text: '可以微信支付吗？',
-						pinyin: 'Kěyǐ wēixìn zhīfù ma?',
-						translation: 'Can I pay with WeChat Pay?',
+						text: '可以微信付钱吗？',
+						pinyin: 'Kěyǐ wēixìn fù qián ma?',
+						translation: 'Can I pay with WeChat?',
 						nextNodeId: 'node-finish',
 						isOptimal: true,
 						feedback: 'Chef points to the QR code on the counter with a smile.',
@@ -614,8 +614,8 @@ export const BUILTIN_STORIES: Story[] = [
 				audioText: '好的！一共是十八块。打包带走还是在这里喝？',
 				type: 'cloze',
 				cloze: {
-					sentence: '请帮我 {blank} 带走，我扫码支付。',
-					pinyin: 'Qǐng bāng wǒ {blank} dàizǒu, wǒ sǎomǎ zhīfù.',
+					sentence: '请帮我 {blank} 带走，我扫码付钱。',
+					pinyin: 'Qǐng bāng wǒ {blank} dàizǒu, wǒ sǎomǎ fù qián.',
 					translation: 'Please help me pack it for {blank}, I will scan QR code to pay.',
 					options: ['打包', '游泳', '开会', '洗澡'],
 					optionPinyins: {
@@ -734,12 +734,12 @@ export const BUILTIN_STORIES: Story[] = [
 			'node-subway-direction': {
 				id: 'node-subway-direction',
 				speakerId: 'attendant',
-				text: '去工人体育场请乘坐3号线，前面走到底上电梯就是站台。',
+				text: '去工人体育场请坐3号线，前面走到底上电梯就是站台。',
 				pinyin:
-					'Qù Gōngrén Tǐyùchǎng qǐng chéngzuò sān hào xiàn, qiánmiàn zǒu dàodǐ shàng diàntī jiùshì zhàntái.',
+					'Qù Gōngrén Tǐyùchǎng qǐng zuò sān hào xiàn, qiánmiàn zǒu dàodǐ shàng diàntī jiùshì zhàntái.',
 				translation:
 					'To go to Workers’ Stadium, please take Line 3. Walk straight to the end and take the escalator to the platform.',
-				audioText: '去工人体育场请乘坐3号线，前面走到底上电梯就是站台。',
+				audioText: '去工人体育场请坐3号线，前面走到底上电梯就是站台。',
 				type: 'choice',
 				choices: [
 					{
@@ -767,11 +767,12 @@ export const BUILTIN_STORIES: Story[] = [
 			'node-subway-transfer-info': {
 				id: 'node-subway-transfer-info',
 				speakerId: 'attendant',
-				text: '不用换乘，直达两站就到！请记得检查交通卡余额。',
-				pinyin: 'Búyòng huànchéng, zhídá liǎng zhàn jiù dào! Qǐng jìde jiǎnchá jiāotōngkǎ yú’é.',
+				text: '不用换乘，坐两站就到！请检查一下交通卡里还有没有钱。',
+				pinyin:
+					'Búyòng huànchéng, zuò liǎng zhàn jiù dào! Qǐng jiǎnchá yíxià jiāotōngkǎ lǐ hái yǒu méiyǒu qián.',
 				translation:
 					'No transfer needed, direct in two stops! Please remember to check your transit card balance.',
-				audioText: '不用换乘，直达两站就到！请记得检查交通卡余额。',
+				audioText: '不用换乘，坐两站就到！请检查一下交通卡里还有没有钱。',
 				type: 'cloze',
 				cloze: {
 					sentence: '我想给我的交通卡 {blank} 五十块。',
@@ -797,10 +798,10 @@ export const BUILTIN_STORIES: Story[] = [
 			'node-subway-topup-prompt': {
 				id: 'node-subway-topup-prompt',
 				speakerId: 'attendant',
-				text: '进站前请确认交通卡有足够余额哦。',
-				pinyin: 'Jìnzhàn qián qǐng quèrèn jiāotōngkǎ yǒu zúgòu yú’é o.',
-				translation: 'Please make sure your transit card has enough balance before entering.',
-				audioText: '进站前请确认交通卡有足够余额哦。',
+				text: '进站前请看看交通卡里还有没有钱哦。',
+				pinyin: 'Jìnzhàn qián qǐng kànkan jiāotōngkǎ lǐ hái yǒu méiyǒu qián o.',
+				translation: 'Please make sure your transit card has enough money before entering.',
+				audioText: '进站前请看看交通卡里还有没有钱哦。',
 				type: 'cloze',
 				cloze: {
 					sentence: '我想给我的交通卡 {blank} 五十块。',
@@ -1100,9 +1101,9 @@ export const BUILTIN_STORIES: Story[] = [
 						},
 						{
 							id: 'fb-no-topping',
-							text: '不用加任何配料。',
-							pinyin: 'Búyòng jiā rènhé pèiliào.',
-							translation: 'No need to add any toppings.',
+							text: '什么都不用加。',
+							pinyin: 'Shénme dōu bú yòng jiā.',
+							translation: 'No need to add anything.',
 							nextNodeId: 'node-tea-bag-cloze',
 							isOptimal: false,
 							feedback: 'Keeping it simple.',
@@ -1203,7 +1204,7 @@ export const BUILTIN_STORIES: Story[] = [
 				word: '扫码',
 				pinyin: 'sǎomǎ',
 				meaning: 'Scan QR code',
-				contextSentence: '扫码支付，已经付过了。'
+				contextSentence: '扫码付钱，已经付过了。'
 			}
 		],
 		nodes: {
@@ -1352,8 +1353,8 @@ export const BUILTIN_STORIES: Story[] = [
 				choices: [
 					{
 						id: 'choice-fruit-scan',
-						text: '谢谢阿姨，我扫码付款。',
-						pinyin: 'Xièxie āyí, wǒ sǎomǎ fùkuǎn.',
+						text: '谢谢阿姨，我扫码付钱。',
+						pinyin: 'Xièxie āyí, wǒ sǎomǎ fù qián.',
 						translation: 'Thank you Auntie, I will scan the QR code to pay.',
 						nextNodeId: 'node-fruit-end',
 						isOptimal: true,

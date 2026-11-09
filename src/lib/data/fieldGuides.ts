@@ -290,7 +290,7 @@ export const FIELD_GUIDES: FieldGuide[] = [
 				english: '5 yuan (spoken)',
 				context: '只要五块钱。'
 			},
-			{ hanzi: '扫码', pinyin: 'sǎomǎ', english: 'scan QR code', context: '请扫码付款。' },
+			{ hanzi: '扫码', pinyin: 'sǎomǎ', english: 'scan QR code', context: '请扫码付钱。' },
 			{
 				hanzi: '打八折',
 				pinyin: 'dǎ bā zhé',

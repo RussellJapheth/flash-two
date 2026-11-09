@@ -702,8 +702,8 @@ export const PART_2_UNITS: TextbookUnitData[] = [
 				prompt: 'What do you say?',
 				options: [
 					{
-						hanzi: '老板，可以扫码支付吗？',
-						pinyin: 'Lǎobǎn, kěyǐ sǎomǎ zhīfù ma?',
+						hanzi: '老板，可以扫码付钱吗？',
+						pinyin: 'Lǎobǎn, kěyǐ sǎomǎ fù qián ma?',
 						english: 'Boss, can I pay by scanning a code?',
 						isCorrect: true,
 						feedback: 'Flawless! Modern, practical, native phrasing.'

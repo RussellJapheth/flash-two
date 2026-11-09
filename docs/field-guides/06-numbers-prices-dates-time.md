@@ -31,7 +31,7 @@ In spoken Chinese, **零** is spoken **only once** for consecutive missing place
 
 China is largely cashless; you will use QR codes for transit, dining, and shops:
 
-- `请扫码付款。` (_Qǐng sǎomǎ fùkuǎn._ — Please scan the QR code to pay.)
+- `请扫码付钱。` (_Qǐng sǎomǎ fù qián._ — Please scan the QR code to pay.)
 - `微信支付` (_wēixìn zhīfù_ — WeChat Pay) / `支付宝` (_zhīfùbǎo_ — Alipay)
 - `一共多少钱？` (_Yígòng duōshao qián?_ — How much in total?)
 - `找钱` (_zhǎoqián_ — give change) / `零钱` (_língqián_ — small change)

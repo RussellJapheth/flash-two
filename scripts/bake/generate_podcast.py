@@ -30,7 +30,7 @@ EPISODES = [
         "titleEn": "Morning Coffee Shop",
         "titlePinyin": "Zǎochén de Kāfēidiàn",
         "coverImage": "/images/podcasts/morning-coffee.jpg",
-        "description": "敏敏在街角咖啡店点一杯热咖啡，与热情的咖啡师练习日常点单和移动支付。",
+        "description": "敏敏在街角咖啡店点一杯热咖啡，与热情的咖啡师练习日常点单和微信付钱。",
         "level": "beginner",
         "hskLevel": 1,
         "xpReward": 20,
@@ -55,7 +55,7 @@ EPISODES = [
             {"word": "咖啡", "pinyin": "kāfēi", "meaning": "coffee"},
             {"word": "热", "pinyin": "rè", "meaning": "hot"},
             {"word": "大杯", "pinyin": "dà bēi", "meaning": "large cup"},
-            {"word": "支付", "pinyin": "zhīfù", "meaning": "to pay"},
+            {"word": "付钱", "pinyin": "fù qián", "meaning": "to pay"},
             {"word": "微信", "pinyin": "wēixìn", "meaning": "WeChat"},
             {"word": "愉快", "pinyin": "yúkuài", "meaning": "pleasant / happy"}
         ],
@@ -111,13 +111,13 @@ EPISODES = [
             },
             {
                 "speakerId": "minmin",
-                "text": "我用微信支付可以吗？",
-                "pinyin": "Wǒ yòng Wēixìn zhīfù kěyǐ ma?",
+                "text": "我用微信付钱可以吗？",
+                "pinyin": "Wǒ yòng Wēixìn fù qián kěyǐ ma?",
                 "en": "Can I pay using WeChat?",
                 "words": [
                     {"word": "我用", "pinyin": "wǒ yòng", "en": "I use"},
                     {"word": "微信", "pinyin": "wēixìn", "en": "WeChat"},
-                    {"word": "支付", "pinyin": "zhīfù", "en": "pay"},
+                    {"word": "付钱", "pinyin": "fù qián", "en": "pay money"},
                     {"word": "可以吗", "pinyin": "kěyǐ ma", "en": "is it okay?"}
                 ]
             },
@@ -243,20 +243,20 @@ EPISODES = [
             },
             {
                 "speakerId": "dawei",
-                "text": "太好了，站台上的换乘指示牌非常清晰明了。",
-                "pinyin": "Tài hǎo le, zhàntái shang de huànchéng zhǐshìpái fēicháng qīngxī míngliǎo.",
-                "en": "That's wonderful, the transfer directional signs on the platform are very clear.",
+                "text": "太好了，站台上的指示牌非常清楚。",
+                "pinyin": "Tài hǎo le, zhàntái shang de zhǐshìpái fēicháng qīngchu.",
+                "en": "That's wonderful, the signs on the platform are very clear.",
                 "words": [
                     {"word": "站台", "pinyin": "zhàntái", "en": "platform"},
-                    {"word": "指示牌", "pinyin": "zhǐshìpái", "en": "signboard / signs"},
-                    {"word": "清晰明了", "pinyin": "qīngxī míngliǎo", "en": "clear and easy to understand"}
+                    {"word": "指示牌", "pinyin": "zhǐshìpái", "en": "signs"},
+                    {"word": "非常清楚", "pinyin": "fēicháng qīngchu", "en": "very clear"}
                 ]
             },
             {
                 "speakerId": "wangayi",
-                "text": "对呀！上海地铁四通八达。要是遇到问题，随时问身穿红色马甲的志愿者。",
-                "pinyin": "Duì ya! Shànghǎi dìtiě sì tōng bā dá. Yàoshi yù dào wèntí, suíshí wèn shēn chuān hóngsè mǎjiǎ de zhìyuànzhě.",
-                "en": "That's right! The Shanghai metro connects in every direction. If you hit any issue, ask the volunteers in red vests anytime.",
+                "text": "对呀！上海地铁四通八达。要是遇到问题，可以问穿红马甲的志愿者。",
+                "pinyin": "Duì ya! Shànghǎi dìtiě sì tōng bā dá. Yàoshi yù dào wèntí, kěyǐ wèn chuān hóng mǎjiǎ de zhìyuànzhě.",
+                "en": "That's right! The Shanghai metro connects in every direction. If you have any questions, ask the volunteers in red vests.",
                 "words": [
                     {"word": "四通八达", "pinyin": "sì tōng bā dá", "en": "connected everywhere"},
                     {"word": "要是", "pinyin": "yàoshi", "en": "if"},
@@ -265,13 +265,13 @@ EPISODES = [
             },
             {
                 "speakerId": "dawei",
-                "text": "非常感谢您的热情指引，祝您生活愉快！",
-                "pinyin": "Fēicháng gǎnxiè nín de rèqíng zhǐyǐn, zhù nín shēnghuó yúkuài!",
-                "en": "Thank you so much for your warm guidance, wish you a lovely day!",
+                "text": "非常感谢您的热心帮忙，祝您今天愉快！",
+                "pinyin": "Fēicháng gǎnxiè nín de rèxīn bāngmáng, zhù nín jīntiān yúkuài!",
+                "en": "Thank you so much for your kind help, wish you a lovely day!",
                 "words": [
                     {"word": "非常感谢", "pinyin": "fēicháng gǎnxiè", "en": "thank you very much"},
-                    {"word": "热情", "pinyin": "rèqíng", "en": "warm / enthusiastic"},
-                    {"word": "指引", "pinyin": "zhǐyǐn", "en": "guidance / direction"}
+                    {"word": "热心帮忙", "pinyin": "rèxīn bāngmáng", "en": "warm help"},
+                    {"word": "今天愉快", "pinyin": "jīntiān yúkuài", "en": "have a pleasant day"}
                 ]
             }
         ]

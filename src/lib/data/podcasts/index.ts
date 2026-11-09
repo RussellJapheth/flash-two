@@ -7,13 +7,13 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 		title: '早晨的咖啡店',
 		titleEn: 'Morning Coffee Shop',
 		titlePinyin: 'Zǎochén de Kāfēidiàn',
-		description: '敏敏在街角咖啡店点一杯热咖啡，与热情的咖啡师练习日常点单和移动支付。',
+		description: '敏敏在街角咖啡店点一杯热咖啡，与热情的咖啡师练习日常点单和微信付钱。',
 		level: 'beginner',
 		hskLevel: 1,
-		duration: 37.65,
+		duration: 37.86,
 		audioUrl: '/audio/podcasts/morning-coffee.mp3',
 		audioFormat: 'mp3',
-		fileSizeBytes: 301869,
+		fileSizeBytes: 303597,
 		coverImage: '/images/podcasts/morning-coffee.jpg',
 		speakers: [
 			{
@@ -46,8 +46,8 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				meaning: 'large cup'
 			},
 			{
-				word: '支付',
-				pinyin: 'zhīfù',
+				word: '付钱',
+				pinyin: 'fù qián',
 				meaning: 'to pay'
 			},
 			{
@@ -365,9 +365,9 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
 				start: 18.5,
-				end: 20.95,
-				text: '我用微信支付可以吗？',
-				pinyin: 'Wǒ yòng Wēixìn zhīfù kěyǐ ma?',
+				end: 21.16,
+				text: '我用微信付钱可以吗？',
+				pinyin: 'Wǒ yòng Wēixìn fù qián kěyǐ ma?',
 				en: 'Can I pay using WeChat?',
 				words: [
 					{
@@ -375,42 +375,42 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 						pinyin: 'wǒ yòng',
 						en: 'I use',
 						start: 18.5,
-						end: 19.04
+						end: 19.09
 					},
 					{
 						word: '微信',
 						pinyin: 'wēi xìn',
 						en: 'WeChat',
-						start: 19.04,
-						end: 19.59
+						start: 19.09,
+						end: 19.68
 					},
 					{
-						word: '支付',
-						pinyin: 'zhī fù',
+						word: '付钱',
+						pinyin: 'fù qián',
 						en: 'to pay',
-						start: 19.59,
-						end: 20.13
+						start: 19.68,
+						end: 20.28
 					},
 					{
 						word: '可以',
 						pinyin: 'kě yǐ',
 						en: '',
-						start: 20.13,
-						end: 20.68
+						start: 20.28,
+						end: 20.87
 					},
 					{
 						word: '吗',
 						pinyin: 'ma',
 						en: '',
-						start: 20.68,
-						end: 20.95
+						start: 20.87,
+						end: 21.16
 					},
 					{
 						word: '？',
 						pinyin: '',
 						en: '',
-						start: 20.95,
-						end: 20.99
+						start: 21.16,
+						end: 21.2
 					}
 				]
 			},
@@ -419,8 +419,8 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'xiaoli',
 				speakerName: '小李',
 				speakerAvatar: '☕',
-				start: 21.4,
-				end: 27.42,
+				start: 21.61,
+				end: 27.63,
 				text: '当然可以。请扫这里。您的咖啡好了，请慢用！',
 				pinyin: 'Dāngrán kěyǐ. Qǐng sǎo zhèlǐ. Nín de kāfēi hǎo le, qǐng màn yòng!',
 				en: 'Of course. Please scan here. Your coffee is ready, enjoy!',
@@ -429,113 +429,113 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 						word: '当然',
 						pinyin: 'dāng rán',
 						en: '',
-						start: 21.4,
-						end: 22.11
+						start: 21.61,
+						end: 22.32
 					},
 					{
 						word: '可以',
 						pinyin: 'kě yǐ',
 						en: '',
-						start: 22.11,
-						end: 22.82
+						start: 22.32,
+						end: 23.03
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 22.82,
-						end: 22.86
+						start: 23.03,
+						end: 23.07
 					},
 					{
 						word: '请',
 						pinyin: 'qǐng',
 						en: '',
-						start: 22.82,
-						end: 23.17
+						start: 23.03,
+						end: 23.38
 					},
 					{
 						word: '扫',
 						pinyin: 'sǎo',
 						en: '',
-						start: 23.17,
-						end: 23.53
+						start: 23.38,
+						end: 23.74
 					},
 					{
 						word: '这里',
 						pinyin: 'zhè lǐ',
 						en: 'here',
-						start: 23.53,
-						end: 24.23
+						start: 23.74,
+						end: 24.44
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 24.23,
-						end: 24.27
+						start: 24.44,
+						end: 24.48
 					},
 					{
 						word: '您',
 						pinyin: 'nín',
 						en: '',
-						start: 24.23,
-						end: 24.59
+						start: 24.44,
+						end: 24.8
 					},
 					{
 						word: '的',
 						pinyin: 'de',
 						en: '',
-						start: 24.59,
-						end: 24.94
+						start: 24.8,
+						end: 25.15
 					},
 					{
 						word: '咖啡',
 						pinyin: 'kā fēi',
 						en: 'coffee',
-						start: 24.94,
-						end: 25.65
+						start: 25.15,
+						end: 25.86
 					},
 					{
 						word: '好',
 						pinyin: 'hǎo',
 						en: '',
-						start: 25.65,
-						end: 26.01
+						start: 25.86,
+						end: 26.22
 					},
 					{
 						word: '了',
 						pinyin: 'le',
 						en: '',
-						start: 26.01,
-						end: 26.36
+						start: 26.22,
+						end: 26.57
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 26.36,
-						end: 26.4
+						start: 26.57,
+						end: 26.61
 					},
 					{
 						word: '请',
 						pinyin: 'qǐng',
 						en: '',
-						start: 26.36,
-						end: 26.72
+						start: 26.57,
+						end: 26.93
 					},
 					{
 						word: '慢用',
 						pinyin: 'màn yòng',
 						en: 'enjoy your food/drink',
-						start: 26.72,
-						end: 27.42
+						start: 26.93,
+						end: 27.63
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 27.42,
-						end: 27.46
+						start: 27.63,
+						end: 27.67
 					}
 				]
 			},
@@ -544,8 +544,8 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'minmin',
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
-				start: 27.87,
-				end: 32.24,
+				start: 28.08,
+				end: 32.45,
 				text: '太香了，谢谢！祝你今天过得愉快。',
 				pinyin: 'Tài xiāng le, xièxie! Zhù nǐ jīntiān guò de yúkuài.',
 				en: 'Smells so fragrant, thank you! Wish you a pleasant day.',
@@ -554,78 +554,78 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 						word: '太香',
 						pinyin: 'tài xiāng',
 						en: '',
-						start: 27.87,
-						end: 28.54
+						start: 28.08,
+						end: 28.75
 					},
 					{
 						word: '了',
 						pinyin: 'le',
 						en: '',
-						start: 28.54,
-						end: 28.88
+						start: 28.75,
+						end: 29.09
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 28.88,
-						end: 28.92
+						start: 29.09,
+						end: 29.13
 					},
 					{
 						word: '谢谢',
 						pinyin: 'xiè xiè',
 						en: '',
-						start: 28.88,
-						end: 29.55
+						start: 29.09,
+						end: 29.76
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 29.55,
-						end: 29.59
+						start: 29.76,
+						end: 29.8
 					},
 					{
 						word: '祝',
 						pinyin: 'zhù',
 						en: '',
-						start: 29.55,
-						end: 29.89
+						start: 29.76,
+						end: 30.1
 					},
 					{
 						word: '你',
 						pinyin: 'nǐ',
 						en: '',
-						start: 29.89,
-						end: 30.22
+						start: 30.1,
+						end: 30.43
 					},
 					{
 						word: '今天',
 						pinyin: 'jīn tiān',
 						en: 'today',
-						start: 30.22,
-						end: 30.89
+						start: 30.43,
+						end: 31.1
 					},
 					{
 						word: '过得',
 						pinyin: 'guò dé',
 						en: '',
-						start: 30.89,
-						end: 31.57
+						start: 31.1,
+						end: 31.78
 					},
 					{
 						word: '愉快',
 						pinyin: 'yú kuài',
 						en: 'pleasant / happy',
-						start: 31.57,
-						end: 32.24
+						start: 31.78,
+						end: 32.45
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 32.24,
-						end: 32.28
+						start: 32.45,
+						end: 32.49
 					}
 				]
 			},
@@ -634,8 +634,8 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'xiaoli',
 				speakerName: '小李',
 				speakerAvatar: '☕',
-				start: 32.69,
-				end: 36.6,
+				start: 32.9,
+				end: 36.81,
 				text: '也祝你今天愉快，欢迎下次光临！',
 				pinyin: 'Yě zhù nǐ jīntiān yúkuài, huānyíng xià cì guānglín!',
 				en: 'Wish you a happy day too, welcome back next time!',
@@ -644,71 +644,71 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 						word: '也',
 						pinyin: 'yě',
 						en: '',
-						start: 32.69,
-						end: 32.99
+						start: 32.9,
+						end: 33.2
 					},
 					{
 						word: '祝',
 						pinyin: 'zhù',
 						en: '',
-						start: 32.99,
-						end: 33.29
+						start: 33.2,
+						end: 33.5
 					},
 					{
 						word: '你',
 						pinyin: 'nǐ',
 						en: '',
-						start: 33.29,
-						end: 33.59
+						start: 33.5,
+						end: 33.8
 					},
 					{
 						word: '今天',
 						pinyin: 'jīn tiān',
 						en: '',
-						start: 33.59,
-						end: 34.19
+						start: 33.8,
+						end: 34.4
 					},
 					{
 						word: '愉快',
 						pinyin: 'yú kuài',
 						en: 'pleasant / happy',
-						start: 34.19,
-						end: 34.8
+						start: 34.4,
+						end: 35.01
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 34.8,
-						end: 34.84
+						start: 35.01,
+						end: 35.05
 					},
 					{
 						word: '欢迎',
 						pinyin: 'huān yíng',
 						en: 'welcome',
-						start: 34.8,
-						end: 35.4
+						start: 35.01,
+						end: 35.61
 					},
 					{
 						word: '下次',
 						pinyin: 'xià cì',
 						en: 'next time',
-						start: 35.4,
-						end: 36
+						start: 35.61,
+						end: 36.21
 					},
 					{
 						word: '光临',
 						pinyin: 'guāng lín',
 						en: 'presence / visit',
-						start: 36,
-						end: 36.6
+						start: 36.21,
+						end: 36.81
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 36.6,
-						end: 36.64
+						start: 36.81,
+						end: 36.85
 					}
 				]
 			}
@@ -723,10 +723,10 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 		description: '大卫在人民广场换乘站向热情的王阿姨问路，体验高效便捷的上海轨道交通。',
 		level: 'intermediate',
 		hskLevel: 3,
-		duration: 39.99,
+		duration: 38.26,
 		audioUrl: '/audio/podcasts/shanghai-metro.mp3',
 		audioFormat: 'mp3',
-		fileSizeBytes: 320685,
+		fileSizeBytes: 306861,
 		coverImage: '/images/podcasts/shanghai-metro.jpg',
 		speakers: [
 			{
@@ -985,13 +985,13 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 						pinyin: 'xiàn zài',
 						en: '',
 						start: 10.52,
-						end: 11
+						end: 11.0
 					},
 					{
 						word: '正是',
 						pinyin: 'zhèng shì',
 						en: '',
-						start: 11,
+						start: 11.0,
 						end: 11.47
 					},
 					{
@@ -1132,13 +1132,13 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 						pinyin: 'jiù',
 						en: '',
 						start: 17.75,
-						end: 18
+						end: 18.0
 					},
 					{
 						word: '有',
 						pinyin: 'yǒu',
 						en: '',
-						start: 18,
+						start: 18.0,
 						end: 18.24
 					},
 					{
@@ -1212,94 +1212,73 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
 				start: 21.17,
-				end: 25.85,
-				text: '太好了，站台上的换乘指示牌非常清晰明了。',
-				pinyin: 'Tài hǎo le, zhàntái shang de huànchéng zhǐshìpái fēicháng qīngxī míngliǎo.',
-				en: "That's wonderful, the transfer directional signs on the platform are very clear.",
+				end: 24.72,
+				text: '太好了，站台上的指示牌非常清楚。',
+				pinyin: 'Tài hǎo le, zhàntái shang de zhǐshìpái fēicháng qīngchu.',
+				en: "That's wonderful, the signs on the platform are very clear.",
 				words: [
 					{
 						word: '太好了',
 						pinyin: 'tài hǎo le',
 						en: '',
 						start: 21.17,
-						end: 21.95
+						end: 21.93
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 21.95,
-						end: 21.99
+						start: 21.93,
+						end: 21.97
 					},
 					{
 						word: '站台',
 						pinyin: 'zhàn tái',
 						en: 'platform',
-						start: 21.95,
-						end: 22.47
+						start: 21.93,
+						end: 22.44
 					},
 					{
 						word: '上',
 						pinyin: 'shàng',
 						en: '',
-						start: 22.47,
-						end: 22.73
+						start: 22.44,
+						end: 22.69
 					},
 					{
 						word: '的',
 						pinyin: 'de',
 						en: '',
-						start: 22.73,
-						end: 22.99
-					},
-					{
-						word: '换乘',
-						pinyin: 'huàn chéng',
-						en: 'to transfer',
-						start: 22.99,
-						end: 23.51
+						start: 22.69,
+						end: 22.95
 					},
 					{
 						word: '指示牌',
 						pinyin: 'zhǐ shì pái',
-						en: 'signboard / signs',
-						start: 23.51,
-						end: 24.29
+						en: 'signs',
+						start: 22.95,
+						end: 23.71
 					},
 					{
 						word: '非常',
 						pinyin: 'fēi cháng',
 						en: '',
-						start: 24.29,
-						end: 24.81
+						start: 23.71,
+						end: 24.21
 					},
 					{
-						word: '清晰',
-						pinyin: 'qīng xī',
+						word: '清楚',
+						pinyin: 'qīng chǔ',
 						en: '',
-						start: 24.81,
-						end: 25.33
-					},
-					{
-						word: '明',
-						pinyin: 'míng',
-						en: '',
-						start: 25.33,
-						end: 25.59
-					},
-					{
-						word: '了',
-						pinyin: 'le',
-						en: '',
-						start: 25.59,
-						end: 25.85
+						start: 24.21,
+						end: 24.72
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 25.85,
-						end: 25.89
+						start: 24.72,
+						end: 24.76
 					}
 				]
 			},
@@ -1308,145 +1287,131 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'wangayi',
 				speakerName: '王阿姨',
 				speakerAvatar: '👵',
-				start: 26.3,
-				end: 34.77,
-				text: '对呀！上海地铁四通八达。要是遇到问题，随时问身穿红色马甲的志愿者。',
+				start: 25.17,
+				end: 33.11,
+				text: '对呀！上海地铁四通八达。要是遇到问题，可以问穿红马甲的志愿者。',
 				pinyin:
-					'Duì ya! Shànghǎi dìtiě sì tōng bā dá. Yàoshi yù dào wèntí, suíshí wèn shēn chuān hóngsè mǎjiǎ de zhìyuànzhě.',
-				en: "That's right! The Shanghai metro connects in every direction. If you hit any issue, ask the volunteers in red vests anytime.",
+					'Duì ya! Shànghǎi dìtiě sì tōng bā dá. Yàoshi yù dào wèntí, kěyǐ wèn chuān hóng mǎjiǎ de zhìyuànzhě.',
+				en: "That's right! The Shanghai metro connects in every direction. If you have any questions, ask the volunteers in red vests.",
 				words: [
 					{
 						word: '对',
 						pinyin: 'duì',
 						en: '',
-						start: 26.3,
-						end: 26.59
+						start: 25.17,
+						end: 25.46
 					},
 					{
 						word: '呀',
 						pinyin: 'ya',
 						en: '',
-						start: 26.59,
-						end: 26.88
+						start: 25.46,
+						end: 25.76
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 26.88,
-						end: 26.92
+						start: 25.76,
+						end: 25.8
 					},
 					{
 						word: '上海',
 						pinyin: 'shàng hǎi',
 						en: '',
-						start: 26.88,
-						end: 27.47
+						start: 25.76,
+						end: 26.35
 					},
 					{
 						word: '地铁',
 						pinyin: 'dì tiě',
 						en: 'subway / metro',
-						start: 27.47,
-						end: 28.05
+						start: 26.35,
+						end: 26.94
 					},
 					{
 						word: '四通八达',
 						pinyin: 'sì tōng bā dá',
 						en: 'accessible in all directions',
-						start: 28.05,
-						end: 29.22
+						start: 26.94,
+						end: 28.11
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 29.22,
-						end: 29.26
+						start: 28.11,
+						end: 28.15
 					},
 					{
 						word: '要是',
 						pinyin: 'yào shì',
 						en: 'if',
-						start: 29.22,
-						end: 29.81
+						start: 28.11,
+						end: 28.7
 					},
 					{
 						word: '遇到',
 						pinyin: 'yù dào',
 						en: '',
-						start: 29.81,
-						end: 30.39
+						start: 28.7,
+						end: 29.29
 					},
 					{
 						word: '问题',
 						pinyin: 'wèn tí',
 						en: '',
-						start: 30.39,
-						end: 30.97
+						start: 29.29,
+						end: 29.88
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 30.97,
-						end: 31.01
+						start: 29.88,
+						end: 29.92
 					},
 					{
-						word: '随时',
-						pinyin: 'suí shí',
+						word: '可以',
+						pinyin: 'kě yǐ',
 						en: '',
-						start: 30.97,
-						end: 31.56
+						start: 29.88,
+						end: 30.47
 					},
 					{
-						word: '问',
-						pinyin: 'wèn',
+						word: '问穿',
+						pinyin: 'wèn chuān',
 						en: '',
-						start: 31.56,
-						end: 31.85
+						start: 30.47,
+						end: 31.05
 					},
 					{
-						word: '身穿',
-						pinyin: 'shēn chuān',
+						word: '红马甲',
+						pinyin: 'hóng mǎ jiǎ',
 						en: '',
-						start: 31.85,
-						end: 32.43
-					},
-					{
-						word: '红色',
-						pinyin: 'hóng sè',
-						en: '',
-						start: 32.43,
-						end: 33.02
-					},
-					{
-						word: '马甲',
-						pinyin: 'mǎ jiǎ',
-						en: '',
-						start: 33.02,
-						end: 33.6
+						start: 31.05,
+						end: 31.94
 					},
 					{
 						word: '的',
 						pinyin: 'de',
 						en: '',
-						start: 33.6,
-						end: 33.9
+						start: 31.94,
+						end: 32.23
 					},
 					{
 						word: '志愿者',
 						pinyin: 'zhì yuàn zhě',
 						en: 'volunteer',
-						start: 33.9,
-						end: 34.77
+						start: 32.23,
+						end: 33.11
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 34.77,
-						end: 34.81
+						start: 33.11,
+						end: 33.15
 					}
 				]
 			},
@@ -1455,81 +1420,81 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'dawei',
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
-				start: 35.22,
-				end: 38.94,
-				text: '非常感谢您的热情指引，祝您生活愉快！',
-				pinyin: 'Fēicháng gǎnxiè nín de rèqíng zhǐyǐn, zhù nín shēnghuó yúkuài!',
-				en: 'Thank you so much for your warm guidance, wish you a lovely day!',
+				start: 33.56,
+				end: 37.21,
+				text: '非常感谢您的热心帮忙，祝您今天愉快！',
+				pinyin: 'Fēicháng gǎnxiè nín de rèxīn bāngmáng, zhù nín jīntiān yúkuài!',
+				en: 'Thank you so much for your kind help, wish you a lovely day!',
 				words: [
 					{
 						word: '非常',
 						pinyin: 'fēi cháng',
 						en: '',
-						start: 35.22,
-						end: 35.69
+						start: 33.56,
+						end: 34.02
 					},
 					{
 						word: '感谢您',
 						pinyin: 'gǎn xiè nín',
 						en: '',
-						start: 35.69,
-						end: 36.38
+						start: 34.02,
+						end: 34.7
 					},
 					{
 						word: '的',
 						pinyin: 'de',
 						en: '',
-						start: 36.38,
-						end: 36.62
+						start: 34.7,
+						end: 34.93
 					},
 					{
-						word: '热情',
-						pinyin: 'rè qíng',
-						en: 'warm / enthusiastic',
-						start: 36.62,
-						end: 37.08
+						word: '热心',
+						pinyin: 'rè xīn',
+						en: '',
+						start: 34.93,
+						end: 35.38
 					},
 					{
-						word: '指引',
-						pinyin: 'zhǐ yǐn',
-						en: 'guidance / direction',
-						start: 37.08,
-						end: 37.55
+						word: '帮忙',
+						pinyin: 'bāng máng',
+						en: '',
+						start: 35.38,
+						end: 35.84
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 37.55,
-						end: 37.59
+						start: 35.84,
+						end: 35.88
 					},
 					{
 						word: '祝您',
 						pinyin: 'zhù nín',
 						en: '',
-						start: 37.55,
-						end: 38.01
+						start: 35.84,
+						end: 36.3
 					},
 					{
-						word: '生活',
-						pinyin: 'shēng huó',
+						word: '今天',
+						pinyin: 'jīn tiān',
 						en: '',
-						start: 38.01,
-						end: 38.48
+						start: 36.3,
+						end: 36.75
 					},
 					{
 						word: '愉快',
 						pinyin: 'yú kuài',
 						en: '',
-						start: 38.48,
-						end: 38.94
+						start: 36.75,
+						end: 37.21
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 38.94,
-						end: 38.98
+						start: 37.21,
+						end: 37.25
 					}
 				]
 			}
@@ -3120,20 +3085,20 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 						pinyin: 'lǎo bǎn',
 						en: '',
 						start: 76.37,
-						end: 77.0
+						end: 77
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 77.0,
+						start: 77,
 						end: 77.04
 					},
 					{
 						word: '店里',
 						pinyin: 'diàn lǐ',
 						en: '',
-						start: 77.0,
+						start: 77,
 						end: 77.64
 					},
 					{

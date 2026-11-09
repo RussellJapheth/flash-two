@@ -278,11 +278,11 @@ EPISODES = [
     },
     {
         "id": "weekend-night-market",
-        "title": "周末夜市寻味",
-        "titleEn": "Weekend Night Market Food Adventure",
-        "titlePinyin": "Zhōumò Yèshì Xúnwèi",
+        "title": "周末去夜市",
+        "titleEn": "Weekend at the Night Market",
+        "titlePinyin": "Zhōumò Qù Yèshì",
         "coverImage": "/images/podcasts/weekend-night-market.jpg",
-        "description": "敏敏和大卫在热闹的周末夜市品尝热腾腾的手工水饺与茉莉花茶，练习日常点餐、口味偏好与移动支付。",
+        "description": "敏敏和大卫在热闹的夜市吃饺子、喝热茶，练习日常点餐、付钱和周末计划。",
         "level": "beginner",
         "hskLevel": 1,
         "xpReward": 30,
@@ -305,7 +305,7 @@ EPISODES = [
             {
                 "id": "laoban",
                 "name": "王老板",
-                "role": "水饺馆老板 (Stall Owner)",
+                "role": "饺子店老板 (Shop Owner)",
                 "avatarEmoji": "👨‍🍳",
                 "voice": "zh-CN-YunxiNeural"
             }
@@ -313,9 +313,9 @@ EPISODES = [
         "keyVocabulary": [
             {"word": "夜市", "pinyin": "yèshì", "meaning": "night market"},
             {"word": "小吃", "pinyin": "xiǎochī", "meaning": "snacks / street food"},
-            {"word": "水饺", "pinyin": "shuǐjiǎo", "meaning": "boiled dumplings"},
+            {"word": "饺子", "pinyin": "jiǎozi", "meaning": "dumplings"},
             {"word": "盘", "pinyin": "pán", "meaning": "plate (measure word)"},
-            {"word": "味道", "pinyin": "wèidào", "meaning": "flavor / taste"},
+            {"word": "热茶", "pinyin": "rè chá", "meaning": "hot tea"},
             {"word": "饱", "pinyin": "bǎo", "meaning": "full (not hungry)"},
             {"word": "请客", "pinyin": "qǐngkè", "meaning": "to treat (someone)"},
             {"word": "散步", "pinyin": "sànbù", "meaning": "to take a walk"}
@@ -327,114 +327,115 @@ EPISODES = [
                 "pinyin": "Dàwèi, kuài kàn! Zhè ge yèshì hǎo rènao a.",
                 "en": "David, look! This night market is so lively.",
                 "words": [
-                    {"word": "快看", "pinyin": "kuài kàn", "en": "quick look"},
+                    {"word": "快看", "pinyin": "kuài kàn", "en": "look"},
                     {"word": "夜市", "pinyin": "yèshì", "en": "night market"},
                     {"word": "热闹", "pinyin": "rènao", "en": "lively"}
                 ]
             },
             {
                 "speakerId": "dawei",
-                "text": "哇，真的！到处都是好吃的小吃。你现在饿不饿？",
-                "pinyin": "Wa, zhēnde! Dàochù dōu shì hǎochī de xiǎochī. Nǐ xiànzài è bu è?",
-                "en": "Wow, really! Delicious snacks are everywhere. Are you hungry right now?",
+                "text": "哇，真的！这里有很多好吃的小吃。你饿不饿？",
+                "pinyin": "Wa, zhēnde! Zhèlǐ yǒu hěn duō hǎochī de xiǎochī. Nǐ è bu è?",
+                "en": "Wow, really! There are lots of delicious snacks here. Are you hungry?",
                 "words": [
-                    {"word": "到处", "pinyin": "dàochù", "en": "everywhere"},
+                    {"word": "很多", "pinyin": "hěn duō", "en": "a lot of"},
                     {"word": "小吃", "pinyin": "xiǎochī", "en": "snacks"},
                     {"word": "饿不饿", "pinyin": "è bu è", "en": "hungry or not"}
                 ]
             },
             {
                 "speakerId": "minmin",
-                "text": "我很饿。今天走了一整天路，现在特别想吃热热的东西。",
-                "pinyin": "Wǒ hěn è. Jīntiān zǒu le yì zhěng tiān lù, xiànzài tèbié xiǎng chī rèrè de dōngxi.",
-                "en": "I'm very hungry. I walked all day today, now I really want to eat hot food.",
+                "text": "我很饿。今天走了很多路，现在很想吃热的东西。",
+                "pinyin": "Wǒ hěn è. Jīntiān zǒu le hěn duō lù, xiànzài hěn xiǎng chī rè de dōngxi.",
+                "en": "I'm very hungry. I walked a lot today, now I really want to eat hot food.",
                 "words": [
-                    {"word": "走了一整天", "pinyin": "zǒu le yì zhěng tiān", "en": "walked all day"},
-                    {"word": "特别", "pinyin": "tèbié", "en": "especially"},
-                    {"word": "热热的", "pinyin": "rèrè de", "en": "warm / hot"}
+                    {"word": "很多路", "pinyin": "hěn duō lù", "en": "a lot of walking"},
+                    {"word": "想吃", "pinyin": "xiǎng chī", "en": "want to eat"},
+                    {"word": "热的", "pinyin": "rè de", "en": "hot"}
                 ]
             },
             {
                 "speakerId": "dawei",
-                "text": "你看前面有一家手工水饺馆，门口排着好多人呢。",
-                "pinyin": "Nǐ kàn qiánmiàn yǒu yì jiā shǒugōng shuǐjiǎoguǎn, ménkǒu pái zhe hǎoduō rén ne.",
-                "en": "Look up ahead, there's a handmade dumpling shop with lots of people queuing at the door.",
+                "text": "你看，前面有一家饺子店，很多人在排队。",
+                "pinyin": "Nǐ kàn, qiánmiàn yǒu yì jiā jiǎozidiàn, hěn duō rén zài páiduì.",
+                "en": "Look, up ahead there's a dumpling shop, many people are waiting in line.",
                 "words": [
                     {"word": "前面", "pinyin": "qiánmiàn", "en": "ahead"},
-                    {"word": "手工水饺", "pinyin": "shǒugōng shuǐjiǎo", "en": "handmade dumplings"},
-                    {"word": "排队", "pinyin": "páiduì", "en": "queue / line up"}
+                    {"word": "饺子店", "pinyin": "jiǎozidiàn", "en": "dumpling shop"},
+                    {"word": "排队", "pinyin": "páiduì", "en": "line up"}
                 ]
             },
             {
                 "speakerId": "minmin",
-                "text": "那家店很有名！听说水饺皮很薄，馅很大，味道特别好。",
-                "pinyin": "Nà jiā diàn hěn yǒumíng! Tīngshuō shuǐjiǎo pí hěn báo, xiàn hěn dà, wèidào tèbié hǎo.",
-                "en": "That shop is famous! I hear their dumpling skins are thin, fillings are large, and taste great.",
+                "text": "那家店很有名！听说那里的饺子很好吃。",
+                "pinyin": "Nà jiā diàn hěn yǒumíng! Tīngshuō nàlǐ de jiǎozi hěn hǎochī.",
+                "en": "That shop is very famous! I hear the dumplings there are delicious.",
                 "words": [
                     {"word": "有名", "pinyin": "yǒumíng", "en": "famous"},
-                    {"word": "水饺皮", "pinyin": "shuǐjiǎo pí", "en": "dumpling wrapper"},
-                    {"word": "味道", "pinyin": "wèidào", "en": "taste / flavor"}
+                    {"word": "听说", "pinyin": "tīngshuō", "en": "hear that"},
+                    {"word": "好吃", "pinyin": "hǎochī", "en": "delicious"}
                 ]
             },
             {
                 "speakerId": "dawei",
-                "text": "太好了！正好有两个空座位，我们快坐下吧。",
-                "pinyin": "Tài hǎo le! Zhènghǎo yǒu liǎng gè kòng zuòwèi, wǒmen kuài zuòxià ba.",
-                "en": "Great! There happen to be two empty seats, let's take a seat quickly.",
+                "text": "太好了！正好有两个位子，我们快坐下吧。",
+                "pinyin": "Tài hǎo le! Zhènghǎo yǒu liǎng gè wèizi, wǒmen kuài zuòxià ba.",
+                "en": "Great! There happen to be two seats, let's sit down quickly.",
                 "words": [
-                    {"word": "正好", "pinyin": "zhènghǎo", "en": "just / happen to"},
-                    {"word": "空座位", "pinyin": "kòng zuòwèi", "en": "empty seat"},
+                    {"word": "正好", "pinyin": "zhènghǎo", "en": "just happens to be"},
+                    {"word": "位子", "pinyin": "wèizi", "en": "seat"},
                     {"word": "坐下", "pinyin": "zuòxià", "en": "sit down"}
                 ]
             },
             {
                 "speakerId": "laoban",
-                "text": "两位晚上好！欢迎光临。请问今天想吃点什么水饺？",
-                "pinyin": "Liǎng wèi wǎnshang hǎo! Huānyíng guānglín. Qǐngwèn jīntiān xiǎng chī diǎn shénme shuǐjiǎo?",
-                "en": "Good evening to you both! Welcome. What kind of dumplings would you like to eat today?",
+                "text": "两位晚上好！欢迎光临。请问想吃什么饺子？",
+                "pinyin": "Liǎng wèi wǎnshang hǎo! Huānyíng guānglín. Qǐngwèn xiǎng chī shénme jiǎozi?",
+                "en": "Good evening to you both! Welcome. What kind of dumplings would you like to eat?",
                 "words": [
                     {"word": "两位", "pinyin": "liǎng wèi", "en": "both of you"},
                     {"word": "欢迎光临", "pinyin": "huānyíng guānglín", "en": "welcome"},
-                    {"word": "水饺", "pinyin": "shuǐjiǎo", "en": "dumplings"}
+                    {"word": "饺子", "pinyin": "jiǎozi", "en": "dumplings"}
                 ]
             },
             {
                 "speakerId": "minmin",
-                "text": "老板您好，请问你们有哪些口味？",
-                "pinyin": "Lǎobǎn nín hǎo, qǐngwèn nǐmen yǒu nǎxiē kǒuwèi?",
-                "en": "Hello boss, may I ask what flavors do you have?",
+                "text": "老板您好，请问你们有什么饺子？",
+                "pinyin": "Lǎobǎn nín hǎo, qǐngwèn nǐmen yǒu shénme jiǎozi?",
+                "en": "Hello boss, may I ask what dumplings do you have?",
                 "words": [
                     {"word": "老板", "pinyin": "lǎobǎn", "en": "boss / shopkeeper"},
-                    {"word": "请问", "pinyin": "qǐngwèn", "en": "excuse me"},
-                    {"word": "口味", "pinyin": "kǒuwèi", "en": "flavors / taste"}
+                    {"word": "请问", "pinyin": "qǐngwèn", "en": "excuse me / may I ask"},
+                    {"word": "什么", "pinyin": "shénme", "en": "what"}
                 ]
             },
             {
                 "speakerId": "laoban",
-                "text": "我们有猪肉大葱、牛肉白菜，还有新鲜的素三鲜。",
-                "pinyin": "Wǒmen yǒu zhūròu dàcōng, niúròu báicài, hái yǒu xīnxiān de sù sānxiān.",
-                "en": "We have pork with scallion, beef with Chinese cabbage, and fresh vegetarian three-delicacies.",
+                "text": "我们有猪肉白菜的、牛肉的，还有鸡蛋蔬菜的。",
+                "pinyin": "Wǒmen yǒu zhūròu báicài de, niúròu de, hái yǒu jīdàn shūcài de.",
+                "en": "We have pork with cabbage, beef, and also egg with vegetables.",
                 "words": [
                     {"word": "猪肉", "pinyin": "zhūròu", "en": "pork"},
                     {"word": "牛肉", "pinyin": "niúròu", "en": "beef"},
-                    {"word": "新鲜", "pinyin": "xīnxiān", "en": "fresh"}
+                    {"word": "鸡蛋", "pinyin": "jīdàn", "en": "egg"},
+                    {"word": "蔬菜", "pinyin": "shūcài", "en": "vegetable"}
                 ]
             },
             {
                 "speakerId": "dawei",
-                "text": "敏敏，你想吃哪一种？我两种肉的都想尝一尝。",
-                "pinyin": "Mǐnmǐn, nǐ xiǎng chī nǎ yì zhǒng? Wǒ liǎng zhǒng ròu de dōu xiǎng cháng yi cháng.",
-                "en": "Minmin, which one do you want? I want to taste both meat varieties.",
+                "text": "敏敏，你想吃哪种？我都想尝一尝。",
+                "pinyin": "Mǐnmǐn, nǐ xiǎng chī nǎ zhǒng? Wǒ dōu xiǎng cháng yi cháng.",
+                "en": "Minmin, which kind do you want to eat? I want to taste both.",
                 "words": [
-                    {"word": "哪一种", "pinyin": "nǎ yì zhǒng", "en": "which one"},
+                    {"word": "哪种", "pinyin": "nǎ zhǒng", "en": "which kind"},
                     {"word": "尝一尝", "pinyin": "cháng yi cháng", "en": "taste / try"}
                 ]
             },
             {
                 "speakerId": "minmin",
-                "text": "那我们要一盘猪肉大葱的，再要一盘牛肉白菜的，好不好？",
-                "pinyin": "Nà wǒmen yào yì pán zhūròu dàcōng de, zài yào yì pán niúròu báicài de, hǎo bu hǎo?",
-                "en": "Then let's get one plate of pork scallion, and one plate of beef cabbage, sounds good?",
+                "text": "那我们要一盘猪肉的，再要一盘牛肉的，好不好？",
+                "pinyin": "Nà wǒmen yào yì pán zhūròu de, zài yào yì pán niúròu de, hǎo bu hǎo?",
+                "en": "Then let's have one plate of pork, and another plate of beef, okay?",
                 "words": [
                     {"word": "一盘", "pinyin": "yì pán", "en": "one plate"},
                     {"word": "好不好", "pinyin": "hǎo bu hǎo", "en": "is that okay?"}
@@ -442,165 +443,164 @@ EPISODES = [
             },
             {
                 "speakerId": "dawei",
-                "text": "好主意！老板，请给我们来这两盘，一共多少钱？",
-                "pinyin": "Hǎo zhǔyi! Lǎobǎn, qǐng gěi wǒmen lái zhè liǎng pán, yígòng duōshao qián?",
-                "en": "Great idea! Boss, please bring us these two plates, how much is it in total?",
+                "text": "好！老板，我们要这两盘，一共多少钱？",
+                "pinyin": "Hǎo! Lǎobǎn, wǒmen yào zhè liǎng pán, yígòng duōshao qián?",
+                "en": "Great! Boss, we'd like these two plates, how much altogether?",
                 "words": [
-                    {"word": "好主意", "pinyin": "hǎo zhǔyi", "en": "good idea"},
-                    {"word": "一共", "pinyin": "yígòng", "en": "in total"},
+                    {"word": "要", "pinyin": "yào", "en": "want / take"},
+                    {"word": "一共", "pinyin": "yígòng", "en": "altogether"},
                     {"word": "多少钱", "pinyin": "duōshao qián", "en": "how much money"}
                 ]
             },
             {
                 "speakerId": "laoban",
-                "text": "猪肉水饺二十块，牛肉水饺二十四块，一共四十四块钱。要不要辣椒和醋？",
-                "pinyin": "Zhūròu shuǐjiǎo èrshí kuài, niúròu shuǐjiǎo èrshísì kuài, yígòng sìshísì kuài qián. Yào bu yào làjiāo hé cù?",
+                "text": "猪肉饺子二十块，牛肉饺子二十四块，一共四十四块钱。要不要辣椒和醋？",
+                "pinyin": "Zhūròu jiǎozi èrshí kuài, niúròu jiǎozi èrshísì kuài, yígòng sìshísì kuài qián. Yào bu yào làjiāo hé cù?",
                 "en": "Pork dumplings are 20 yuan, beef dumplings are 24 yuan, total 44 yuan. Do you want chili and vinegar?",
                 "words": [
-                    {"word": "四十四块", "pinyin": "sìshísì kuài", "en": "44 yuan"},
+                    {"word": "块", "pinyin": "kuài", "en": "yuan (measure for money)"},
                     {"word": "辣椒", "pinyin": "làjiāo", "en": "chili"},
                     {"word": "醋", "pinyin": "cù", "en": "vinegar"}
                 ]
             },
             {
                 "speakerId": "minmin",
-                "text": "要一点醋，但是不要太辣，一点点辣椒油就可以。",
-                "pinyin": "Yào yìdiǎn cù, dànshì bú yào tài là, yìdiǎndiǎn làjiāoyóu jiù kěyǐ.",
-                "en": "A little vinegar, but not too spicy, just a tiny bit of chili oil is fine.",
+                "text": "要一点醋，不要太辣，少放一点辣就可以。",
+                "pinyin": "Yào yìdiǎn cù, bú yào tài là, shǎo fàng yìdiǎn là jiù kěyǐ.",
+                "en": "A little vinegar, not too spicy, just put a little bit of spicy is fine.",
                 "words": [
-                    {"word": "一点", "pinyin": "yìdiǎn", "en": "a little"},
-                    {"word": "但是", "pinyin": "dànshì", "en": "but"},
-                    {"word": "可以", "pinyin": "kěyǐ", "en": "okay / acceptable"}
+                    {"word": "不要", "pinyin": "bú yào", "en": "don't want"},
+                    {"word": "太辣", "pinyin": "tài là", "en": "too spicy"},
+                    {"word": "少放", "pinyin": "shǎo fàng", "en": "put less"},
+                    {"word": "可以", "pinyin": "kěyǐ", "en": "fine / okay"}
                 ]
             },
             {
                 "speakerId": "dawei",
-                "text": "老板，店里有热茶或者饮料吗？",
-                "pinyin": "Lǎobǎn, diàn lǐ yǒu rè chá huòzhě yǐnliào ma?",
-                "en": "Boss, do you have hot tea or drinks in the shop?",
+                "text": "老板，店里有热茶或者水吗？",
+                "pinyin": "Lǎobǎn, diàn lǐ yǒu rè chá huòzhě shuǐ ma?",
+                "en": "Boss, do you have hot tea or water in the shop?",
                 "words": [
                     {"word": "热茶", "pinyin": "rè chá", "en": "hot tea"},
                     {"word": "或者", "pinyin": "huòzhě", "en": "or"},
-                    {"word": "饮料", "pinyin": "yǐnliào", "en": "beverage"}
+                    {"word": "水", "pinyin": "shuǐ", "en": "water"}
                 ]
             },
             {
                 "speakerId": "laoban",
-                "text": "有热茉莉花茶，免费喝！茶壶和杯子在桌子上，请慢用。",
-                "pinyin": "Yǒu rè mòlìhuā chá, miǎnfèi hē! Cháhú hé bēizi zài zhuōzi shang, qǐng màn yòng.",
-                "en": "We have hot jasmine tea, free of charge! Teapot and cups are on the table, please enjoy.",
+                "text": "有热茶，是免费的！桌子上有茶和杯子，请慢用。",
+                "pinyin": "Yǒu rè chá, shì miǎnfèi de! Zhuōzi shang yǒu chá hé bēizi, qǐng màn yòng.",
+                "en": "We have hot tea, it's free! There is tea and cups on the table, please enjoy.",
                 "words": [
-                    {"word": "茉莉花茶", "pinyin": "mòlìhuā chá", "en": "jasmine tea"},
                     {"word": "免费", "pinyin": "miǎnfèi", "en": "free"},
+                    {"word": "桌子", "pinyin": "zhuōzi", "en": "table"},
+                    {"word": "杯子", "pinyin": "bēizi", "en": "cups"},
                     {"word": "慢用", "pinyin": "màn yòng", "en": "enjoy your meal"}
                 ]
             },
             {
                 "speakerId": "minmin",
-                "text": "水饺热气腾腾地上来了，真香啊！大卫，快趁热吃。",
-                "pinyin": "Shuǐjiǎo rèqì téngtēng de shànglái le, zhēn xiāng a! Dàwèi, kuài chènrè chī.",
-                "en": "The dumplings arrived piping hot, smells wonderful! David, eat them while they're hot.",
+                "text": "饺子来啦，好香啊！大卫，快趁热吃。",
+                "pinyin": "Jiǎozi lái la, hǎo xiāng a! Dàwèi, kuài chènrè chī.",
+                "en": "The dumplings are here, smells so good! David, eat while they're hot.",
                 "words": [
-                    {"word": "真香", "pinyin": "zhēn xiāng", "en": "smells so good"},
+                    {"word": "好香", "pinyin": "hǎo xiāng", "en": "smells so good"},
                     {"word": "趁热吃", "pinyin": "chènrè chī", "en": "eat while hot"}
                 ]
             },
             {
                 "speakerId": "dawei",
-                "text": "小心烫！哇，这个牛肉水饺鲜嫩多汁，太好吃了！",
-                "pinyin": "Xiǎoxīn tàng! Wa, zhè ge niúròu shuǐjiǎo xiānnèn duōzhī, tài hǎochī le!",
-                "en": "Careful, it's hot! Wow, this beef dumpling is tender and juicy, so delicious!",
+                "text": "小心烫！哇，这个牛肉饺子太好吃了！",
+                "pinyin": "Xiǎoxīn tàng! Wa, zhè ge niúròu jiǎozi tài hǎochī le!",
+                "en": "Careful, it's hot! Wow, this beef dumpling is so delicious!",
                 "words": [
                     {"word": "小心烫", "pinyin": "xiǎoxīn tàng", "en": "careful it's hot"},
-                    {"word": "鲜嫩", "pinyin": "xiānnèn", "en": "fresh and tender"},
-                    {"word": "太好吃了", "pinyin": "tài hǎochī le", "en": "extremely delicious"}
+                    {"word": "太好吃了", "pinyin": "tài hǎochī le", "en": "very delicious"}
                 ]
             },
             {
                 "speakerId": "minmin",
-                "text": "猪肉大葱的也很香。配上一口热茶，感觉真舒服。",
-                "pinyin": "Zhūròu dàcōng de yě hěn xiāng. Pèishang yì kǒu rè chá, gǎnjué zhēn shūfu.",
-                "en": "The pork and scallion one is also very tasty. Paired with a sip of hot tea, it feels so comfortable.",
+                "text": "猪肉的也很香。喝一口热茶，真舒服！",
+                "pinyin": "Zhūròu de yě hěn xiāng. Hē yì kǒu rè chá, zhēn shūfu!",
+                "en": "The pork one is also very tasty. Drinking a sip of hot tea feels so comfortable!",
                 "words": [
-                    {"word": "配上", "pinyin": "pèishang", "en": "paired with"},
-                    {"word": "感觉", "pinyin": "gǎnjué", "en": "feels / sensation"},
+                    {"word": "喝一口", "pinyin": "hē yì kǒu", "en": "drink a sip"},
                     {"word": "舒服", "pinyin": "shūfu", "en": "comfortable"}
                 ]
             },
             {
                 "speakerId": "dawei",
-                "text": "我吃得好饱，肚子圆圆的。今天这顿晚饭太棒了。",
-                "pinyin": "Wǒ chī de hǎo bǎo, dùzi yuányuán de. Jīntiān zhè dùn wǎnfàn tài bàng le.",
-                "en": "I ate so much and I'm so full, my belly is round. This dinner tonight was wonderful.",
+                "text": "我吃得好饱！今天的晚饭太好吃了。",
+                "pinyin": "Wǒ chī de hǎo bǎo! Jīntiān de wǎnfàn tài hǎochī le.",
+                "en": "I'm so full! Tonight's dinner was delicious.",
                 "words": [
                     {"word": "好饱", "pinyin": "hǎo bǎo", "en": "very full"},
-                    {"word": "晚饭", "pinyin": "wǎnfàn", "en": "dinner"},
-                    {"word": "太棒了", "pinyin": "tài bàng le", "en": "terrific / wonderful"}
+                    {"word": "晚饭", "pinyin": "wǎnfàn", "en": "dinner"}
                 ]
             },
             {
                 "speakerId": "minmin",
-                "text": "老板，我们吃好了！我用微信扫码付钱。",
-                "pinyin": "Lǎobǎn, wǒmen chī hǎo le! Wǒ yòng Wēixìn sǎomǎ fù qián.",
-                "en": "Boss, we're all done! I'll scan the code with WeChat to pay.",
+                "text": "老板，我们吃好了！我用微信付钱。",
+                "pinyin": "Lǎobǎn, wǒmen chī hǎo le! Wǒ yòng Wēixìn fù qián.",
+                "en": "Boss, we're finished eating! I'll pay with WeChat.",
                 "words": [
-                    {"word": "吃好了", "pinyin": "chī hǎo le", "en": "finished eating"},
-                    {"word": "扫码", "pinyin": "sǎomǎ", "en": "scan code"},
+                    {"word": "吃好", "pinyin": "chī hǎo", "en": "finished eating"},
+                    {"word": "微信", "pinyin": "wēixìn", "en": "WeChat"},
                     {"word": "付钱", "pinyin": "fù qián", "en": "pay money"}
                 ]
             },
             {
                 "speakerId": "dawei",
-                "text": "哎，等等，今天让我来请客吧！你平时经常帮我练习中文。",
-                "pinyin": "Āi, děngděng, jīntiān ràng wǒ lái qǐngkè ba! Nǐ píngshí jīngcháng bāng wǒ liànxí Zhōngwén.",
-                "en": "Hey, wait, let me treat today! You always help me practice Chinese.",
+                "text": "等等，今天我请客！你经常帮我学中文。",
+                "pinyin": "Děngděng, jīntiān wǒ qǐngkè! Nǐ jīngcháng bāng wǒ xué Zhōngwén.",
+                "en": "Wait, I'll treat today! You often help me learn Chinese.",
                 "words": [
-                    {"word": "请客", "pinyin": "qǐngkè", "en": "treat / pay for others"},
-                    {"word": "平时", "pinyin": "píngshí", "en": "usually"},
-                    {"word": "练习", "pinyin": "liànxí", "en": "practice"}
+                    {"word": "等等", "pinyin": "děngděng", "en": "wait a moment"},
+                    {"word": "请客", "pinyin": "qǐngkè", "en": "treat / pay"},
+                    {"word": "经常", "pinyin": "jīngcháng", "en": "often"},
+                    {"word": "学中文", "pinyin": "xué Zhōngwén", "en": "learn Chinese"}
                 ]
             },
             {
                 "speakerId": "minmin",
-                "text": "哈哈，我已经扫过码付款啦！下次周末换你请客吧。",
-                "pinyin": "Hāhā, wǒ yǐjīng sǎo guò mǎ fùkuǎn la! Xià cì zhōumò huàn nǐ qǐngkè ba.",
-                "en": "Haha, I've already scanned the code and paid! Next weekend it's your turn to treat.",
+                "text": "哈哈，我已经付钱了！下次你请客吧。",
+                "pinyin": "Hāhā, wǒ yǐjīng fù qián le! Xià cì nǐ qǐngkè ba.",
+                "en": "Haha, I already paid! Next time it's your turn to treat.",
                 "words": [
                     {"word": "已经", "pinyin": "yǐjīng", "en": "already"},
-                    {"word": "付款", "pinyin": "fùkuǎn", "en": "pay"},
-                    {"word": "换你", "pinyin": "huàn nǐ", "en": "your turn"}
+                    {"word": "下次", "pinyin": "xià cì", "en": "next time"}
                 ]
             },
             {
                 "speakerId": "dawei",
-                "text": "没问题，一言为定！明天星期天，我们还去附近的公园散步吗？",
-                "pinyin": "Méi wèntí, yì yán wéi dìng! Míngtiān xīngqītiān, wǒmen hái qù fùjìn de gōngyuán sànbù ma?",
-                "en": "No problem, that's a deal! Tomorrow is Sunday, are we still going for a walk in the nearby park?",
+                "text": "好啊，没问题！明天是星期天，我们去公园散步吗？",
+                "pinyin": "Hǎo a, méi wèntí! Míngtiān shì xīngqītiān, wǒmen qù gōngyuán sànbù ma?",
+                "en": "Sure, no problem! Tomorrow is Sunday, shall we go to the park for a walk?",
                 "words": [
-                    {"word": "一言为定", "pinyin": "yì yán wéi dìng", "en": "it's a deal / settled"},
-                    {"word": "附近", "pinyin": "fùjìn", "en": "nearby"},
+                    {"word": "没问题", "pinyin": "méi wèntí", "en": "no problem"},
+                    {"word": "星期天", "pinyin": "xīngqītiān", "en": "Sunday"},
                     {"word": "散步", "pinyin": "sànbù", "en": "take a walk"}
                 ]
             },
             {
                 "speakerId": "minmin",
-                "text": "当然去！明天天气很晴朗，我们早上九点在公园大门见！",
-                "pinyin": "Dāngrán qù! Míngtiān tiānqì hěn qínglǎng, wǒmen zǎoshang jiǔ diǎn zài gōngyuán dàmén jiàn!",
-                "en": "Of course! The weather tomorrow is sunny, let's meet at 9:00 AM at the park gate!",
+                "text": "当然去！明天天气很好，我们早上九点在公园门口见！",
+                "pinyin": "Dāngrán qù! Míngtiān tiānqì hěn hǎo, wǒmen zǎoshang jiǔ diǎn zài gōngyuán ménkǒu jiàn!",
+                "en": "Of course! The weather tomorrow is great, let's meet at 9:00 AM at the park entrance!",
                 "words": [
-                    {"word": "晴朗", "pinyin": "qínglǎng", "en": "sunny / clear"},
-                    {"word": "九点", "pinyin": "jiǔ diǎn", "en": "9 o'clock"},
-                    {"word": "大门", "pinyin": "dàmén", "en": "main gate"}
+                    {"word": "当然", "pinyin": "dāngrán", "en": "of course"},
+                    {"word": "天气很好", "pinyin": "tiānqì hěn hǎo", "en": "weather is very good"},
+                    {"word": "门口", "pinyin": "ménkǒu", "en": "entrance / gate"}
                 ]
             },
             {
                 "speakerId": "dawei",
-                "text": "太棒了！今晚走回家好好休息，明天见！",
-                "pinyin": "Tài bàng le! Jīnwǎn zǒu huí jiā hǎohāo xiūxi, míngtiān jiàn!",
-                "en": "Awesome! Let's walk home and get a good rest tonight, see you tomorrow!",
+                "text": "太好了！回家好好休息，明天见！",
+                "pinyin": "Tài hǎo le! Huí jiā hǎohāo xiūxi, míngtiān jiàn!",
+                "en": "Great! Go home and rest well, see you tomorrow!",
                 "words": [
-                    {"word": "回家", "pinyin": "huí jiā", "en": "go home"},
-                    {"word": "好好休息", "pinyin": "hǎohāo xiūxi", "en": "rest well"},
+                    {"word": "太好了", "pinyin": "tài hǎo le", "en": "wonderful"},
+                    {"word": "休息", "pinyin": "xiūxi", "en": "rest"},
                     {"word": "明天见", "pinyin": "míngtiān jiàn", "en": "see you tomorrow"}
                 ]
             }

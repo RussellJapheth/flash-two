@@ -1538,17 +1538,16 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 	},
 	{
 		id: 'weekend-night-market',
-		title: '周末夜市寻味',
-		titleEn: 'Weekend Night Market Food Adventure',
-		titlePinyin: 'Zhōumò Yèshì Xúnwèi',
-		description:
-			'敏敏和大卫在热闹的周末夜市品尝热腾腾的手工水饺与茉莉花茶，练习日常点餐、口味偏好与移动支付。',
+		title: '周末去夜市',
+		titleEn: 'Weekend at the Night Market',
+		titlePinyin: 'Zhōumò Qù Yèshì',
+		description: '敏敏和大卫在热闹的夜市吃饺子、喝热茶，练习日常点餐、付钱和周末计划。',
 		level: 'beginner',
 		hskLevel: 1,
-		duration: 156.72,
+		duration: 138.86,
 		audioUrl: '/audio/podcasts/weekend-night-market.mp3',
 		audioFormat: 'mp3',
-		fileSizeBytes: 1254573,
+		fileSizeBytes: 1111725,
 		coverImage: '/images/podcasts/weekend-night-market.jpg',
 		speakers: [
 			{
@@ -1566,7 +1565,7 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 			{
 				id: 'laoban',
 				name: '王老板',
-				role: '水饺馆老板 (Stall Owner)',
+				role: '饺子店老板 (Shop Owner)',
 				avatarEmoji: '👨‍🍳'
 			}
 		],
@@ -1582,9 +1581,9 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				meaning: 'snacks / street food'
 			},
 			{
-				word: '水饺',
-				pinyin: 'shuǐjiǎo',
-				meaning: 'boiled dumplings'
+				word: '饺子',
+				pinyin: 'jiǎozi',
+				meaning: 'dumplings'
 			},
 			{
 				word: '盘',
@@ -1592,9 +1591,9 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				meaning: 'plate (measure word)'
 			},
 			{
-				word: '味道',
-				pinyin: 'wèidào',
-				meaning: 'flavor / taste'
+				word: '热茶',
+				pinyin: 'rè chá',
+				meaning: 'hot tea'
 			},
 			{
 				word: '饱',
@@ -1709,129 +1708,122 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
 				start: 5.22,
-				end: 11.27,
-				text: '哇，真的！到处都是好吃的小吃。你现在饿不饿？',
-				pinyin: 'Wa, zhēnde! Dàochù dōu shì hǎochī de xiǎochī. Nǐ xiànzài è bu è?',
-				en: 'Wow, really! Delicious snacks are everywhere. Are you hungry right now?',
+				end: 10.88,
+				text: '哇，真的！这里有很多好吃的小吃。你饿不饿？',
+				pinyin: 'Wa, zhēnde! Zhèlǐ yǒu hěn duō hǎochī de xiǎochī. Nǐ è bu è?',
+				en: 'Wow, really! There are lots of delicious snacks here. Are you hungry?',
 				words: [
 					{
 						word: '哇',
 						pinyin: 'wa',
 						en: '',
 						start: 5.22,
-						end: 5.56
+						end: 5.55
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 5.56,
-						end: 5.6
+						start: 5.55,
+						end: 5.59
 					},
 					{
 						word: '真的',
 						pinyin: 'zhēn de',
 						en: '',
-						start: 5.56,
-						end: 6.23
+						start: 5.55,
+						end: 6.22
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 6.23,
-						end: 6.27
+						start: 6.22,
+						end: 6.26
 					},
 					{
-						word: '到处',
-						pinyin: 'dào chù',
-						en: 'everywhere',
-						start: 6.23,
-						end: 6.9
-					},
-					{
-						word: '都',
-						pinyin: 'dōu',
+						word: '这里',
+						pinyin: 'zhè lǐ',
 						en: '',
-						start: 6.9,
-						end: 7.24
+						start: 6.22,
+						end: 6.89
 					},
 					{
-						word: '是',
-						pinyin: 'shì',
+						word: '有',
+						pinyin: 'yǒu',
 						en: '',
-						start: 7.24,
-						end: 7.57
+						start: 6.89,
+						end: 7.22
+					},
+					{
+						word: '很多',
+						pinyin: 'hěn duō',
+						en: 'a lot of',
+						start: 7.22,
+						end: 7.89
 					},
 					{
 						word: '好吃',
 						pinyin: 'hǎo chī',
 						en: '',
-						start: 7.57,
-						end: 8.24
+						start: 7.89,
+						end: 8.55
 					},
 					{
 						word: '的',
 						pinyin: 'de',
 						en: '',
-						start: 8.24,
-						end: 8.58
+						start: 8.55,
+						end: 8.88
 					},
 					{
 						word: '小吃',
 						pinyin: 'xiǎo chī',
 						en: 'snacks / street food',
-						start: 8.58,
-						end: 9.25
+						start: 8.88,
+						end: 9.55
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 9.25,
-						end: 9.29
+						start: 9.55,
+						end: 9.59
 					},
 					{
 						word: '你',
 						pinyin: 'nǐ',
 						en: '',
-						start: 9.25,
-						end: 9.59
-					},
-					{
-						word: '现在',
-						pinyin: 'xiàn zài',
-						en: '',
-						start: 9.59,
-						end: 10.26
+						start: 9.55,
+						end: 9.88
 					},
 					{
 						word: '饿',
 						pinyin: 'è',
 						en: '',
-						start: 10.26,
-						end: 10.6
+						start: 9.88,
+						end: 10.22
 					},
 					{
 						word: '不',
 						pinyin: 'bù',
 						en: '',
-						start: 10.6,
-						end: 10.93
+						start: 10.22,
+						end: 10.55
 					},
 					{
 						word: '饿',
 						pinyin: 'è',
 						en: '',
-						start: 10.93,
-						end: 11.27
+						start: 10.55,
+						end: 10.88
 					},
 					{
 						word: '？',
 						pinyin: '',
 						en: '',
-						start: 11.27,
-						end: 11.31
+						start: 10.88,
+						end: 10.92
 					}
 				]
 			},
@@ -1840,138 +1832,137 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'minmin',
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
-				start: 11.72,
-				end: 17.91,
-				text: '我很饿。今天走了一整天路，现在特别想吃热热的东西。',
-				pinyin:
-					'Wǒ hěn è. Jīntiān zǒu le yì zhěng tiān lù, xiànzài tèbié xiǎng chī rèrè de dōngxi.',
-				en: "I'm very hungry. I walked all day today, now I really want to eat hot food.",
+				start: 11.33,
+				end: 16.83,
+				text: '我很饿。今天走了很多路，现在很想吃热的东西。',
+				pinyin: 'Wǒ hěn è. Jīntiān zǒu le hěn duō lù, xiànzài hěn xiǎng chī rè de dōngxi.',
+				en: "I'm very hungry. I walked a lot today, now I really want to eat hot food.",
 				words: [
 					{
 						word: '我',
 						pinyin: 'wǒ',
 						en: '',
-						start: 11.72,
-						end: 12.0
+						start: 11.33,
+						end: 11.62
 					},
 					{
 						word: '很',
 						pinyin: 'hěn',
 						en: '',
-						start: 12.0,
-						end: 12.28
+						start: 11.62,
+						end: 11.91
 					},
 					{
 						word: '饿',
 						pinyin: 'è',
 						en: '',
-						start: 12.28,
-						end: 12.56
+						start: 11.91,
+						end: 12.2
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 12.56,
-						end: 12.6
+						start: 12.2,
+						end: 12.24
 					},
 					{
 						word: '今天',
 						pinyin: 'jīn tiān',
 						en: '',
-						start: 12.56,
-						end: 13.13
+						start: 12.2,
+						end: 12.78
 					},
 					{
 						word: '走',
 						pinyin: 'zǒu',
 						en: '',
-						start: 13.13,
-						end: 13.41
+						start: 12.78,
+						end: 13.07
 					},
 					{
 						word: '了',
 						pinyin: 'le',
 						en: '',
-						start: 13.41,
-						end: 13.69
+						start: 13.07,
+						end: 13.35
 					},
 					{
-						word: '一整天',
-						pinyin: 'yī zhěng tiān',
+						word: '很多',
+						pinyin: 'hěn duō',
 						en: '',
-						start: 13.69,
-						end: 14.53
+						start: 13.35,
+						end: 13.93
 					},
 					{
 						word: '路',
 						pinyin: 'lù',
 						en: '',
-						start: 14.53,
-						end: 14.82
+						start: 13.93,
+						end: 14.22
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 14.82,
-						end: 14.86
+						start: 14.22,
+						end: 14.26
 					},
 					{
 						word: '现在',
 						pinyin: 'xiàn zài',
 						en: '',
-						start: 14.82,
-						end: 15.38
+						start: 14.22,
+						end: 14.8
 					},
 					{
-						word: '特别',
-						pinyin: 'tè bié',
-						en: 'especially',
-						start: 15.38,
-						end: 15.94
+						word: '很',
+						pinyin: 'hěn',
+						en: '',
+						start: 14.8,
+						end: 15.09
 					},
 					{
 						word: '想',
 						pinyin: 'xiǎng',
 						en: '',
-						start: 15.94,
-						end: 16.22
+						start: 15.09,
+						end: 15.38
 					},
 					{
 						word: '吃',
 						pinyin: 'chī',
 						en: '',
-						start: 16.22,
-						end: 16.5
+						start: 15.38,
+						end: 15.67
 					},
 					{
-						word: '热热',
-						pinyin: 'rè rè',
+						word: '热',
+						pinyin: 'rè',
 						en: '',
-						start: 16.5,
-						end: 17.07
+						start: 15.67,
+						end: 15.96
 					},
 					{
 						word: '的',
 						pinyin: 'de',
 						en: '',
-						start: 17.07,
-						end: 17.35
+						start: 15.96,
+						end: 16.25
 					},
 					{
 						word: '东西',
 						pinyin: 'dōng xī',
 						en: '',
-						start: 17.35,
-						end: 17.91
+						start: 16.25,
+						end: 16.83
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 17.91,
-						end: 17.95
+						start: 16.83,
+						end: 16.87
 					}
 				]
 			},
@@ -1980,123 +1971,109 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'dawei',
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
-				start: 18.36,
-				end: 22.99,
-				text: '你看前面有一家手工水饺馆，门口排着好多人呢。',
-				pinyin: 'Nǐ kàn qiánmiàn yǒu yì jiā shǒugōng shuǐjiǎoguǎn, ménkǒu pái zhe hǎoduō rén ne.',
-				en: "Look up ahead, there's a handmade dumpling shop with lots of people queuing at the door.",
+				start: 17.28,
+				end: 21.36,
+				text: '你看，前面有一家饺子店，很多人在排队。',
+				pinyin: 'Nǐ kàn, qiánmiàn yǒu yì jiā jiǎozidiàn, hěn duō rén zài páiduì.',
+				en: "Look, up ahead there's a dumpling shop, many people are waiting in line.",
 				words: [
 					{
 						word: '你',
 						pinyin: 'nǐ',
 						en: '',
-						start: 18.36,
-						end: 18.59
+						start: 17.28,
+						end: 17.54
 					},
 					{
 						word: '看',
 						pinyin: 'kàn',
 						en: '',
-						start: 18.59,
-						end: 18.82
-					},
-					{
-						word: '前面',
-						pinyin: 'qián miàn',
-						en: 'ahead',
-						start: 18.82,
-						end: 19.29
-					},
-					{
-						word: '有',
-						pinyin: 'yǒu',
-						en: '',
-						start: 19.29,
-						end: 19.52
-					},
-					{
-						word: '一家',
-						pinyin: 'yī jiā',
-						en: '',
-						start: 19.52,
-						end: 19.98
-					},
-					{
-						word: '手工',
-						pinyin: 'shǒu gōng',
-						en: '',
-						start: 19.98,
-						end: 20.44
-					},
-					{
-						word: '水饺',
-						pinyin: 'shuǐ jiǎo',
-						en: 'boiled dumplings',
-						start: 20.44,
-						end: 20.91
-					},
-					{
-						word: '馆',
-						pinyin: 'guǎn',
-						en: '',
-						start: 20.91,
-						end: 21.14
+						start: 17.54,
+						end: 17.79
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 21.14,
-						end: 21.18
+						start: 17.79,
+						end: 17.83
 					},
 					{
-						word: '门口',
-						pinyin: 'mén kǒu',
-						en: '',
-						start: 21.14,
-						end: 21.6
+						word: '前面',
+						pinyin: 'qián miàn',
+						en: 'ahead',
+						start: 17.79,
+						end: 18.3
 					},
 					{
-						word: '排',
-						pinyin: 'pái',
+						word: '有',
+						pinyin: 'yǒu',
 						en: '',
-						start: 21.6,
-						end: 21.83
+						start: 18.3,
+						end: 18.55
 					},
 					{
-						word: '着',
-						pinyin: 'zhe',
+						word: '一家',
+						pinyin: 'yī jiā',
 						en: '',
-						start: 21.83,
-						end: 22.07
+						start: 18.55,
+						end: 19.07
 					},
 					{
-						word: '好多',
-						pinyin: 'hǎo duō',
+						word: '饺子',
+						pinyin: 'jiǎo zi',
+						en: 'dumplings',
+						start: 19.07,
+						end: 19.58
+					},
+					{
+						word: '店',
+						pinyin: 'diàn',
 						en: '',
-						start: 22.07,
-						end: 22.53
+						start: 19.58,
+						end: 19.83
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 19.83,
+						end: 19.87
+					},
+					{
+						word: '很多',
+						pinyin: 'hěn duō',
+						en: '',
+						start: 19.83,
+						end: 20.34
 					},
 					{
 						word: '人',
 						pinyin: 'rén',
 						en: '',
-						start: 22.53,
-						end: 22.76
+						start: 20.34,
+						end: 20.6
 					},
 					{
-						word: '呢',
-						pinyin: 'ne',
+						word: '在',
+						pinyin: 'zài',
 						en: '',
-						start: 22.76,
-						end: 22.99
+						start: 20.6,
+						end: 20.85
+					},
+					{
+						word: '排队',
+						pinyin: 'pái duì',
+						en: 'line up',
+						start: 20.85,
+						end: 21.36
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 22.99,
-						end: 23.03
+						start: 21.36,
+						end: 21.4
 					}
 				]
 			},
@@ -2105,131 +2082,88 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'minmin',
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
-				start: 23.44,
-				end: 29.94,
-				text: '那家店很有名！听说水饺皮很薄，馅很大，味道特别好。',
-				pinyin:
-					'Nà jiā diàn hěn yǒumíng! Tīngshuō shuǐjiǎo pí hěn báo, xiàn hěn dà, wèidào tèbié hǎo.',
-				en: 'That shop is famous! I hear their dumpling skins are thin, fillings are large, and taste great.',
+				start: 21.81,
+				end: 26.49,
+				text: '那家店很有名！听说那里的饺子很好吃。',
+				pinyin: 'Nà jiā diàn hěn yǒumíng! Tīngshuō nàlǐ de jiǎozi hěn hǎochī.',
+				en: 'That shop is very famous! I hear the dumplings there are delicious.',
 				words: [
 					{
 						word: '那家店',
 						pinyin: 'nà jiā diàn',
 						en: '',
-						start: 23.44,
-						end: 24.37
+						start: 21.81,
+						end: 22.69
 					},
 					{
 						word: '很',
 						pinyin: 'hěn',
 						en: '',
-						start: 24.37,
-						end: 24.68
+						start: 22.69,
+						end: 22.98
 					},
 					{
 						word: '有名',
 						pinyin: 'yǒu míng',
 						en: 'famous',
-						start: 24.68,
-						end: 25.3
+						start: 22.98,
+						end: 23.57
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 25.3,
-						end: 25.34
+						start: 23.57,
+						end: 23.61
 					},
 					{
 						word: '听说',
 						pinyin: 'tīng shuō',
-						en: '',
-						start: 25.3,
-						end: 25.92
+						en: 'hear that',
+						start: 23.57,
+						end: 24.15
 					},
 					{
-						word: '水饺',
-						pinyin: 'shuǐ jiǎo',
-						en: 'boiled dumplings',
-						start: 25.92,
-						end: 26.54
+						word: '那里',
+						pinyin: 'nà lǐ',
+						en: '',
+						start: 24.15,
+						end: 24.74
 					},
 					{
-						word: '皮',
-						pinyin: 'pí',
+						word: '的',
+						pinyin: 'de',
 						en: '',
-						start: 26.54,
-						end: 26.85
+						start: 24.74,
+						end: 25.03
+					},
+					{
+						word: '饺子',
+						pinyin: 'jiǎo zi',
+						en: 'dumplings',
+						start: 25.03,
+						end: 25.61
 					},
 					{
 						word: '很',
 						pinyin: 'hěn',
 						en: '',
-						start: 26.85,
-						end: 27.16
+						start: 25.61,
+						end: 25.91
 					},
 					{
-						word: '薄',
-						pinyin: 'báo',
-						en: '',
-						start: 27.16,
-						end: 27.47
-					},
-					{
-						word: '，',
-						pinyin: '',
-						en: '',
-						start: 27.47,
-						end: 27.51
-					},
-					{
-						word: '馅',
-						pinyin: 'xiàn',
-						en: '',
-						start: 27.47,
-						end: 27.78
-					},
-					{
-						word: '很大',
-						pinyin: 'hěn dà',
-						en: '',
-						start: 27.78,
-						end: 28.4
-					},
-					{
-						word: '，',
-						pinyin: '',
-						en: '',
-						start: 28.4,
-						end: 28.44
-					},
-					{
-						word: '味道',
-						pinyin: 'wèi dào',
-						en: 'flavor / taste',
-						start: 28.4,
-						end: 29.01
-					},
-					{
-						word: '特别',
-						pinyin: 'tè bié',
-						en: '',
-						start: 29.01,
-						end: 29.63
-					},
-					{
-						word: '好',
-						pinyin: 'hǎo',
-						en: '',
-						start: 29.63,
-						end: 29.94
+						word: '好吃',
+						pinyin: 'hǎo chī',
+						en: 'delicious',
+						start: 25.91,
+						end: 26.49
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 29.94,
-						end: 29.98
+						start: 26.49,
+						end: 26.53
 					}
 				]
 			},
@@ -2238,95 +2172,95 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'dawei',
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
-				start: 30.39,
-				end: 35.05,
-				text: '太好了！正好有两个空座位，我们快坐下吧。',
-				pinyin: 'Tài hǎo le! Zhènghǎo yǒu liǎng gè kòng zuòwèi, wǒmen kuài zuòxià ba.',
-				en: "Great! There happen to be two empty seats, let's take a seat quickly.",
+				start: 26.94,
+				end: 31.38,
+				text: '太好了！正好有两个位子，我们快坐下吧。',
+				pinyin: 'Tài hǎo le! Zhènghǎo yǒu liǎng gè wèizi, wǒmen kuài zuòxià ba.',
+				en: "Great! There happen to be two seats, let's sit down quickly.",
 				words: [
 					{
 						word: '太好了',
 						pinyin: 'tài hǎo le',
 						en: '',
-						start: 30.39,
-						end: 31.21
+						start: 26.94,
+						end: 27.77
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 31.21,
-						end: 31.25
+						start: 27.77,
+						end: 27.81
 					},
 					{
 						word: '正好',
 						pinyin: 'zhèng hǎo',
-						en: 'just / happen to',
-						start: 31.21,
-						end: 31.76
+						en: 'just happens to be',
+						start: 27.77,
+						end: 28.33
 					},
 					{
 						word: '有',
 						pinyin: 'yǒu',
 						en: '',
-						start: 31.76,
-						end: 32.03
+						start: 28.33,
+						end: 28.61
 					},
 					{
 						word: '两个',
 						pinyin: 'liǎng gè',
 						en: '',
-						start: 32.03,
-						end: 32.58
+						start: 28.61,
+						end: 29.16
 					},
 					{
-						word: '空座位',
-						pinyin: 'kōng zuò wèi',
-						en: 'empty seat',
-						start: 32.58,
-						end: 33.4
+						word: '位子',
+						pinyin: 'wèi zi',
+						en: 'seat',
+						start: 29.16,
+						end: 29.71
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 33.4,
-						end: 33.44
+						start: 29.71,
+						end: 29.75
 					},
 					{
 						word: '我们',
 						pinyin: 'wǒ men',
 						en: '',
-						start: 33.4,
-						end: 33.95
+						start: 29.71,
+						end: 30.27
 					},
 					{
 						word: '快',
 						pinyin: 'kuài',
 						en: '',
-						start: 33.95,
-						end: 34.22
+						start: 30.27,
+						end: 30.55
 					},
 					{
 						word: '坐下',
 						pinyin: 'zuò xià',
 						en: 'sit down',
-						start: 34.22,
-						end: 34.77
+						start: 30.55,
+						end: 31.1
 					},
 					{
 						word: '吧',
 						pinyin: 'ba',
 						en: '',
-						start: 34.77,
-						end: 35.05
+						start: 31.1,
+						end: 31.38
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 35.05,
-						end: 35.09
+						start: 31.38,
+						end: 31.42
 					}
 				]
 			},
@@ -2335,110 +2269,95 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'laoban',
 				speakerName: '王老板',
 				speakerAvatar: '👨‍🍳',
-				start: 35.5,
-				end: 42.03,
-				text: '两位晚上好！欢迎光临。请问今天想吃点什么水饺？',
-				pinyin:
-					'Liǎng wèi wǎnshang hǎo! Huānyíng guānglín. Qǐngwèn jīntiān xiǎng chī diǎn shénme shuǐjiǎo?',
-				en: 'Good evening to you both! Welcome. What kind of dumplings would you like to eat today?',
+				start: 31.83,
+				end: 37.9,
+				text: '两位晚上好！欢迎光临。请问想吃什么饺子？',
+				pinyin: 'Liǎng wèi wǎnshang hǎo! Huānyíng guānglín. Qǐngwèn xiǎng chī shénme jiǎozi?',
+				en: 'Good evening to you both! Welcome. What kind of dumplings would you like to eat?',
 				words: [
 					{
 						word: '两位',
 						pinyin: 'liǎng wèi',
 						en: 'both of you',
-						start: 35.5,
-						end: 36.15
+						start: 31.83,
+						end: 32.54
 					},
 					{
 						word: '晚上',
 						pinyin: 'wǎn shàng',
 						en: '',
-						start: 36.15,
-						end: 36.81
+						start: 32.54,
+						end: 33.26
 					},
 					{
 						word: '好',
 						pinyin: 'hǎo',
 						en: '',
-						start: 36.81,
-						end: 37.13
+						start: 33.26,
+						end: 33.62
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 37.13,
-						end: 37.17
+						start: 33.62,
+						end: 33.66
 					},
 					{
 						word: '欢迎光临',
 						pinyin: 'huān yíng guāng lín',
 						en: 'welcome',
-						start: 37.13,
-						end: 38.44
+						start: 33.62,
+						end: 35.04
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 38.44,
-						end: 38.48
+						start: 35.04,
+						end: 35.08
 					},
 					{
 						word: '请问',
 						pinyin: 'qǐng wèn',
 						en: '',
-						start: 38.44,
-						end: 39.09
-					},
-					{
-						word: '今天',
-						pinyin: 'jīn tiān',
-						en: '',
-						start: 39.09,
-						end: 39.74
+						start: 35.04,
+						end: 35.76
 					},
 					{
 						word: '想',
 						pinyin: 'xiǎng',
 						en: '',
-						start: 39.74,
-						end: 40.07
+						start: 35.76,
+						end: 36.12
 					},
 					{
 						word: '吃',
 						pinyin: 'chī',
 						en: '',
-						start: 40.07,
-						end: 40.4
-					},
-					{
-						word: '点',
-						pinyin: 'diǎn',
-						en: '',
-						start: 40.4,
-						end: 40.72
+						start: 36.12,
+						end: 36.47
 					},
 					{
 						word: '什么',
 						pinyin: 'shén me',
 						en: '',
-						start: 40.72,
-						end: 41.38
+						start: 36.47,
+						end: 37.19
 					},
 					{
-						word: '水饺',
-						pinyin: 'shuǐ jiǎo',
-						en: 'boiled dumplings',
-						start: 41.38,
-						end: 42.03
+						word: '饺子',
+						pinyin: 'jiǎo zi',
+						en: 'dumplings',
+						start: 37.19,
+						end: 37.9
 					},
 					{
 						word: '？',
 						pinyin: '',
 						en: '',
-						start: 42.03,
-						end: 42.07
+						start: 37.9,
+						end: 37.94
 					}
 				]
 			},
@@ -2447,74 +2366,74 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'minmin',
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
-				start: 42.48,
-				end: 46.25,
-				text: '老板您好，请问你们有哪些口味？',
-				pinyin: 'Lǎobǎn nín hǎo, qǐngwèn nǐmen yǒu nǎxiē kǒuwèi?',
-				en: 'Hello boss, may I ask what flavors do you have?',
+				start: 38.35,
+				end: 41.95,
+				text: '老板您好，请问你们有什么饺子？',
+				pinyin: 'Lǎobǎn nín hǎo, qǐngwèn nǐmen yǒu shénme jiǎozi?',
+				en: 'Hello boss, may I ask what dumplings do you have?',
 				words: [
 					{
 						word: '老板',
 						pinyin: 'lǎo bǎn',
 						en: 'boss / shopkeeper',
-						start: 42.48,
-						end: 43.06
+						start: 38.35,
+						end: 38.9
 					},
 					{
 						word: '您好',
 						pinyin: 'nín hǎo',
 						en: '',
-						start: 43.06,
-						end: 43.64
+						start: 38.9,
+						end: 39.46
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 43.64,
-						end: 43.68
+						start: 39.46,
+						end: 39.5
 					},
 					{
 						word: '请问',
 						pinyin: 'qǐng wèn',
-						en: 'excuse me',
-						start: 43.64,
-						end: 44.22
+						en: 'excuse me / may I ask',
+						start: 39.46,
+						end: 40.01
 					},
 					{
 						word: '你们',
 						pinyin: 'nǐ men',
 						en: '',
-						start: 44.22,
-						end: 44.8
+						start: 40.01,
+						end: 40.57
 					},
 					{
 						word: '有',
 						pinyin: 'yǒu',
 						en: '',
-						start: 44.8,
-						end: 45.09
+						start: 40.57,
+						end: 40.84
 					},
 					{
-						word: '哪些',
-						pinyin: 'nǎ xiē',
-						en: '',
-						start: 45.09,
-						end: 45.67
+						word: '什么',
+						pinyin: 'shén me',
+						en: 'what',
+						start: 40.84,
+						end: 41.4
 					},
 					{
-						word: '口味',
-						pinyin: 'kǒu wèi',
-						en: 'flavors / taste',
-						start: 45.67,
-						end: 46.25
+						word: '饺子',
+						pinyin: 'jiǎo zi',
+						en: 'dumplings',
+						start: 41.4,
+						end: 41.95
 					},
 					{
 						word: '？',
 						pinyin: '',
 						en: '',
-						start: 46.25,
-						end: 46.29
+						start: 41.95,
+						end: 41.99
 					}
 				]
 			},
@@ -2523,109 +2442,109 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'laoban',
 				speakerName: '王老板',
 				speakerAvatar: '👨‍🍳',
-				start: 46.7,
-				end: 52.12,
-				text: '我们有猪肉大葱、牛肉白菜，还有新鲜的素三鲜。',
-				pinyin: 'Wǒmen yǒu zhūròu dàcōng, niúròu báicài, hái yǒu xīnxiān de sù sānxiān.',
-				en: 'We have pork with scallion, beef with Chinese cabbage, and fresh vegetarian three-delicacies.',
+				start: 42.4,
+				end: 47.37,
+				text: '我们有猪肉白菜的、牛肉的，还有鸡蛋蔬菜的。',
+				pinyin: 'Wǒmen yǒu zhūròu báicài de, niúròu de, hái yǒu jīdàn shūcài de.',
+				en: 'We have pork with cabbage, beef, and also egg with vegetables.',
 				words: [
 					{
 						word: '我们',
 						pinyin: 'wǒ men',
 						en: '',
-						start: 46.7,
-						end: 47.27
+						start: 42.4,
+						end: 42.95
 					},
 					{
 						word: '有',
 						pinyin: 'yǒu',
 						en: '',
-						start: 47.27,
-						end: 47.56
+						start: 42.95,
+						end: 43.23
 					},
 					{
 						word: '猪肉',
 						pinyin: 'zhū ròu',
 						en: 'pork',
-						start: 47.56,
-						end: 48.13
-					},
-					{
-						word: '大葱',
-						pinyin: 'dà cōng',
-						en: '',
-						start: 48.13,
-						end: 48.7
-					},
-					{
-						word: '、',
-						pinyin: '',
-						en: '',
-						start: 48.7,
-						end: 48.74
-					},
-					{
-						word: '牛肉',
-						pinyin: 'niú ròu',
-						en: 'beef',
-						start: 48.7,
-						end: 49.27
+						start: 43.23,
+						end: 43.78
 					},
 					{
 						word: '白菜',
 						pinyin: 'bái cài',
 						en: '',
-						start: 49.27,
-						end: 49.84
-					},
-					{
-						word: '，',
-						pinyin: '',
-						en: '',
-						start: 49.84,
-						end: 49.88
-					},
-					{
-						word: '还有',
-						pinyin: 'hái yǒu',
-						en: '',
-						start: 49.84,
-						end: 50.41
-					},
-					{
-						word: '新鲜',
-						pinyin: 'xīn xiān',
-						en: 'fresh',
-						start: 50.41,
-						end: 50.98
+						start: 43.78,
+						end: 44.33
 					},
 					{
 						word: '的',
 						pinyin: 'de',
 						en: '',
-						start: 50.98,
-						end: 51.27
+						start: 44.33,
+						end: 44.61
 					},
 					{
-						word: '素',
-						pinyin: 'sù',
+						word: '、',
+						pinyin: '',
 						en: '',
-						start: 51.27,
-						end: 51.55
+						start: 44.61,
+						end: 44.65
 					},
 					{
-						word: '三鲜',
-						pinyin: 'sān xiān',
+						word: '牛肉',
+						pinyin: 'niú ròu',
+						en: 'beef',
+						start: 44.61,
+						end: 45.16
+					},
+					{
+						word: '的',
+						pinyin: 'de',
 						en: '',
-						start: 51.55,
-						end: 52.12
+						start: 45.16,
+						end: 45.44
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 45.44,
+						end: 45.48
+					},
+					{
+						word: '还有',
+						pinyin: 'hái yǒu',
+						en: '',
+						start: 45.44,
+						end: 45.99
+					},
+					{
+						word: '鸡蛋',
+						pinyin: 'jī dàn',
+						en: 'egg',
+						start: 45.99,
+						end: 46.54
+					},
+					{
+						word: '蔬菜',
+						pinyin: 'shū cài',
+						en: 'vegetable',
+						start: 46.54,
+						end: 47.09
+					},
+					{
+						word: '的',
+						pinyin: 'de',
+						en: '',
+						start: 47.09,
+						end: 47.37
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 52.12,
-						end: 52.16
+						start: 47.37,
+						end: 47.41
 					}
 				]
 			},
@@ -2634,123 +2553,95 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'dawei',
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
-				start: 52.57,
-				end: 57.87,
-				text: '敏敏，你想吃哪一种？我两种肉的都想尝一尝。',
-				pinyin: 'Mǐnmǐn, nǐ xiǎng chī nǎ yì zhǒng? Wǒ liǎng zhǒng ròu de dōu xiǎng cháng yi cháng.',
-				en: 'Minmin, which one do you want? I want to taste both meat varieties.',
+				start: 47.82,
+				end: 51.97,
+				text: '敏敏，你想吃哪种？我都想尝一尝。',
+				pinyin: 'Mǐnmǐn, nǐ xiǎng chī nǎ zhǒng? Wǒ dōu xiǎng cháng yi cháng.',
+				en: 'Minmin, which kind do you want to eat? I want to taste both.',
 				words: [
 					{
 						word: '敏敏',
 						pinyin: 'mǐn mǐn',
 						en: '',
-						start: 52.57,
-						end: 53.16
+						start: 47.82,
+						end: 48.46
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 53.16,
-						end: 53.2
+						start: 48.46,
+						end: 48.5
 					},
 					{
 						word: '你',
 						pinyin: 'nǐ',
 						en: '',
-						start: 53.16,
-						end: 53.45
+						start: 48.46,
+						end: 48.78
 					},
 					{
 						word: '想',
 						pinyin: 'xiǎng',
 						en: '',
-						start: 53.45,
-						end: 53.75
+						start: 48.78,
+						end: 49.1
 					},
 					{
 						word: '吃',
 						pinyin: 'chī',
 						en: '',
-						start: 53.75,
-						end: 54.04
+						start: 49.1,
+						end: 49.42
 					},
 					{
-						word: '哪',
-						pinyin: 'nǎ',
-						en: '',
-						start: 54.04,
-						end: 54.34
-					},
-					{
-						word: '一种',
-						pinyin: 'yī zhǒng',
-						en: '',
-						start: 54.34,
-						end: 54.93
+						word: '哪种',
+						pinyin: 'nǎ zhǒng',
+						en: 'which kind',
+						start: 49.42,
+						end: 50.06
 					},
 					{
 						word: '？',
 						pinyin: '',
 						en: '',
-						start: 54.93,
-						end: 54.97
+						start: 50.06,
+						end: 50.1
 					},
 					{
 						word: '我',
 						pinyin: 'wǒ',
 						en: '',
-						start: 54.93,
-						end: 55.22
-					},
-					{
-						word: '两种',
-						pinyin: 'liǎng zhǒng',
-						en: '',
-						start: 55.22,
-						end: 55.81
-					},
-					{
-						word: '肉',
-						pinyin: 'ròu',
-						en: '',
-						start: 55.81,
-						end: 56.11
-					},
-					{
-						word: '的',
-						pinyin: 'de',
-						en: '',
-						start: 56.11,
-						end: 56.4
+						start: 50.06,
+						end: 50.38
 					},
 					{
 						word: '都',
 						pinyin: 'dōu',
 						en: '',
-						start: 56.4,
-						end: 56.7
+						start: 50.38,
+						end: 50.69
 					},
 					{
 						word: '想',
 						pinyin: 'xiǎng',
 						en: '',
-						start: 56.7,
-						end: 56.99
+						start: 50.69,
+						end: 51.01
 					},
 					{
 						word: '尝一尝',
 						pinyin: 'cháng yī cháng',
 						en: 'taste / try',
-						start: 56.99,
-						end: 57.87
+						start: 51.01,
+						end: 51.97
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 57.87,
-						end: 57.91
+						start: 51.97,
+						end: 52.01
 					}
 				]
 			},
@@ -2759,124 +2650,109 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'minmin',
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
-				start: 58.32,
-				end: 63.79,
-				text: '那我们要一盘猪肉大葱的，再要一盘牛肉白菜的，好不好？',
-				pinyin:
-					'Nà wǒmen yào yì pán zhūròu dàcōng de, zài yào yì pán niúròu báicài de, hǎo bu hǎo?',
-				en: "Then let's get one plate of pork scallion, and one plate of beef cabbage, sounds good?",
+				start: 52.42,
+				end: 57.12,
+				text: '那我们要一盘猪肉的，再要一盘牛肉的，好不好？',
+				pinyin: 'Nà wǒmen yào yì pán zhūròu de, zài yào yì pán niúròu de, hǎo bu hǎo?',
+				en: "Then let's have one plate of pork, and another plate of beef, okay?",
 				words: [
 					{
 						word: '那',
 						pinyin: 'nà',
 						en: '',
-						start: 58.32,
-						end: 58.56
+						start: 52.42,
+						end: 52.67
 					},
 					{
 						word: '我们',
 						pinyin: 'wǒ men',
 						en: '',
-						start: 58.56,
-						end: 59.03
+						start: 52.67,
+						end: 53.16
 					},
 					{
 						word: '要',
 						pinyin: 'yào',
 						en: '',
-						start: 59.03,
-						end: 59.27
+						start: 53.16,
+						end: 53.41
 					},
 					{
 						word: '一盘',
 						pinyin: 'yī pán',
 						en: 'one plate',
-						start: 59.27,
-						end: 59.75
+						start: 53.41,
+						end: 53.91
 					},
 					{
 						word: '猪肉',
 						pinyin: 'zhū ròu',
 						en: '',
-						start: 59.75,
-						end: 60.22
-					},
-					{
-						word: '大葱',
-						pinyin: 'dà cōng',
-						en: '',
-						start: 60.22,
-						end: 60.7
+						start: 53.91,
+						end: 54.4
 					},
 					{
 						word: '的',
 						pinyin: 'de',
 						en: '',
-						start: 60.7,
-						end: 60.94
+						start: 54.4,
+						end: 54.65
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 60.94,
-						end: 60.98
+						start: 54.65,
+						end: 54.69
 					},
 					{
 						word: '再要',
 						pinyin: 'zài yào',
 						en: '',
-						start: 60.94,
-						end: 61.41
+						start: 54.65,
+						end: 55.14
 					},
 					{
 						word: '一盘',
 						pinyin: 'yī pán',
 						en: 'one plate',
-						start: 61.41,
-						end: 61.89
+						start: 55.14,
+						end: 55.64
 					},
 					{
 						word: '牛肉',
 						pinyin: 'niú ròu',
 						en: '',
-						start: 61.89,
-						end: 62.36
-					},
-					{
-						word: '白菜',
-						pinyin: 'bái cài',
-						en: '',
-						start: 62.36,
-						end: 62.84
+						start: 55.64,
+						end: 56.13
 					},
 					{
 						word: '的',
 						pinyin: 'de',
 						en: '',
-						start: 62.84,
-						end: 63.08
+						start: 56.13,
+						end: 56.38
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 63.08,
-						end: 63.12
+						start: 56.38,
+						end: 56.42
 					},
 					{
 						word: '好不好',
 						pinyin: 'hǎo bù hǎo',
 						en: 'is that okay?',
-						start: 63.08,
-						end: 63.79
+						start: 56.38,
+						end: 57.12
 					},
 					{
 						word: '？',
 						pinyin: '',
 						en: '',
-						start: 63.79,
-						end: 63.83
+						start: 57.12,
+						end: 57.16
 					}
 				]
 			},
@@ -2885,123 +2761,102 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'dawei',
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
-				start: 64.24,
-				end: 69.38,
-				text: '好主意！老板，请给我们来这两盘，一共多少钱？',
-				pinyin: 'Hǎo zhǔyi! Lǎobǎn, qǐng gěi wǒmen lái zhè liǎng pán, yígòng duōshao qián?',
-				en: 'Great idea! Boss, please bring us these two plates, how much is it in total?',
+				start: 57.57,
+				end: 62.11,
+				text: '好！老板，我们要这两盘，一共多少钱？',
+				pinyin: 'Hǎo! Lǎobǎn, wǒmen yào zhè liǎng pán, yígòng duōshao qián?',
+				en: "Great! Boss, we'd like these two plates, how much altogether?",
 				words: [
 					{
 						word: '好',
 						pinyin: 'hǎo',
 						en: '',
-						start: 64.24,
-						end: 64.53
-					},
-					{
-						word: '主意',
-						pinyin: 'zhǔ yì',
-						en: '',
-						start: 64.53,
-						end: 65.1
+						start: 57.57,
+						end: 57.89
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 65.1,
-						end: 65.14
+						start: 57.89,
+						end: 57.93
 					},
 					{
 						word: '老板',
 						pinyin: 'lǎo bǎn',
 						en: '',
-						start: 65.1,
-						end: 65.67
+						start: 57.89,
+						end: 58.54
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 65.67,
-						end: 65.71
-					},
-					{
-						word: '请',
-						pinyin: 'qǐng',
-						en: '',
-						start: 65.67,
-						end: 65.95
-					},
-					{
-						word: '给',
-						pinyin: 'gěi',
-						en: '',
-						start: 65.95,
-						end: 66.24
+						start: 58.54,
+						end: 58.58
 					},
 					{
 						word: '我们',
 						pinyin: 'wǒ men',
 						en: '',
-						start: 66.24,
-						end: 66.81
+						start: 58.54,
+						end: 59.19
 					},
 					{
-						word: '来',
-						pinyin: 'lái',
-						en: '',
-						start: 66.81,
-						end: 67.09
+						word: '要',
+						pinyin: 'yào',
+						en: 'want / take',
+						start: 59.19,
+						end: 59.51
 					},
 					{
 						word: '这',
 						pinyin: 'zhè',
 						en: '',
-						start: 67.09,
-						end: 67.38
+						start: 59.51,
+						end: 59.84
 					},
 					{
 						word: '两盘',
 						pinyin: 'liǎng pán',
 						en: '',
-						start: 67.38,
-						end: 67.95
+						start: 59.84,
+						end: 60.49
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 67.95,
-						end: 67.99
+						start: 60.49,
+						end: 60.53
 					},
 					{
 						word: '一共',
 						pinyin: 'yī gòng',
-						en: 'in total',
-						start: 67.95,
-						end: 68.52
+						en: 'altogether',
+						start: 60.49,
+						end: 61.13
 					},
 					{
 						word: '多少',
 						pinyin: 'duō shǎo',
 						en: '',
-						start: 68.52,
-						end: 69.09
+						start: 61.13,
+						end: 61.78
 					},
 					{
 						word: '钱',
 						pinyin: 'qián',
 						en: '',
-						start: 69.09,
-						end: 69.38
+						start: 61.78,
+						end: 62.11
 					},
 					{
 						word: '？',
 						pinyin: '',
 						en: '',
-						start: 69.38,
-						end: 69.42
+						start: 62.11,
+						end: 62.15
 					}
 				]
 			},
@@ -3010,138 +2865,138 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'laoban',
 				speakerName: '王老板',
 				speakerAvatar: '👨‍🍳',
-				start: 69.83,
-				end: 78.09,
-				text: '猪肉水饺二十块，牛肉水饺二十四块，一共四十四块钱。要不要辣椒和醋？',
+				start: 62.56,
+				end: 70.84,
+				text: '猪肉饺子二十块，牛肉饺子二十四块，一共四十四块钱。要不要辣椒和醋？',
 				pinyin:
-					'Zhūròu shuǐjiǎo èrshí kuài, niúròu shuǐjiǎo èrshísì kuài, yígòng sìshísì kuài qián. Yào bu yào làjiāo hé cù?',
+					'Zhūròu jiǎozi èrshí kuài, niúròu jiǎozi èrshísì kuài, yígòng sìshísì kuài qián. Yào bu yào làjiāo hé cù?',
 				en: 'Pork dumplings are 20 yuan, beef dumplings are 24 yuan, total 44 yuan. Do you want chili and vinegar?',
 				words: [
 					{
 						word: '猪肉',
 						pinyin: 'zhū ròu',
 						en: '',
-						start: 69.83,
-						end: 70.4
+						start: 62.56,
+						end: 63.13
 					},
 					{
-						word: '水饺',
-						pinyin: 'shuǐ jiǎo',
-						en: 'boiled dumplings',
-						start: 70.4,
-						end: 70.97
+						word: '饺子',
+						pinyin: 'jiǎo zi',
+						en: 'dumplings',
+						start: 63.13,
+						end: 63.7
 					},
 					{
 						word: '二十块',
 						pinyin: 'èr shí kuài',
 						en: '',
-						start: 70.97,
-						end: 71.82
+						start: 63.7,
+						end: 64.56
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 71.82,
-						end: 71.86
+						start: 64.56,
+						end: 64.6
 					},
 					{
 						word: '牛肉',
 						pinyin: 'niú ròu',
 						en: '',
-						start: 71.82,
-						end: 72.39
+						start: 64.56,
+						end: 65.13
 					},
 					{
-						word: '水饺',
-						pinyin: 'shuǐ jiǎo',
-						en: 'boiled dumplings',
-						start: 72.39,
-						end: 72.96
+						word: '饺子',
+						pinyin: 'jiǎo zi',
+						en: 'dumplings',
+						start: 65.13,
+						end: 65.7
 					},
 					{
 						word: '二十四块',
 						pinyin: 'èr shí sì kuài',
 						en: '',
-						start: 72.96,
-						end: 74.1
+						start: 65.7,
+						end: 66.84
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 74.1,
-						end: 74.14
+						start: 66.84,
+						end: 66.88
 					},
 					{
 						word: '一共',
 						pinyin: 'yī gòng',
 						en: '',
-						start: 74.1,
-						end: 74.67
+						start: 66.84,
+						end: 67.41
 					},
 					{
 						word: '四十四',
 						pinyin: 'sì shí sì',
 						en: '',
-						start: 74.67,
-						end: 75.52
+						start: 67.41,
+						end: 68.27
 					},
 					{
 						word: '块钱',
 						pinyin: 'kuài qián',
 						en: '',
-						start: 75.52,
-						end: 76.09
+						start: 68.27,
+						end: 68.84
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 76.09,
-						end: 76.13
+						start: 68.84,
+						end: 68.88
 					},
 					{
 						word: '要',
 						pinyin: 'yào',
 						en: '',
-						start: 76.09,
-						end: 76.38
+						start: 68.84,
+						end: 69.13
 					},
 					{
 						word: '不要',
 						pinyin: 'bú yào',
 						en: '',
-						start: 76.38,
-						end: 76.95
+						start: 69.13,
+						end: 69.7
 					},
 					{
 						word: '辣椒',
 						pinyin: 'là jiāo',
 						en: 'chili',
-						start: 76.95,
-						end: 77.52
+						start: 69.7,
+						end: 70.27
 					},
 					{
 						word: '和',
 						pinyin: 'hé',
 						en: '',
-						start: 77.52,
-						end: 77.8
+						start: 70.27,
+						end: 70.55
 					},
 					{
 						word: '醋',
 						pinyin: 'cù',
 						en: 'vinegar',
-						start: 77.8,
-						end: 78.09
+						start: 70.55,
+						end: 70.84
 					},
 					{
 						word: '？',
 						pinyin: '',
 						en: '',
-						start: 78.09,
-						end: 78.13
+						start: 70.84,
+						end: 70.88
 					}
 				]
 			},
@@ -3150,102 +3005,102 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'minmin',
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
-				start: 78.54,
-				end: 83.65,
-				text: '要一点醋，但是不要太辣，一点点辣椒油就可以。',
-				pinyin: 'Yào yìdiǎn cù, dànshì bú yào tài là, yìdiǎndiǎn làjiāoyóu jiù kěyǐ.',
-				en: 'A little vinegar, but not too spicy, just a tiny bit of chili oil is fine.',
+				start: 71.29,
+				end: 75.92,
+				text: '要一点醋，不要太辣，少放一点辣就可以。',
+				pinyin: 'Yào yìdiǎn cù, bú yào tài là, shǎo fàng yìdiǎn là jiù kěyǐ.',
+				en: 'A little vinegar, not too spicy, just put a little bit of spicy is fine.',
 				words: [
 					{
 						word: '要',
 						pinyin: 'yào',
 						en: '',
-						start: 78.54,
-						end: 78.81
+						start: 71.29,
+						end: 71.58
 					},
 					{
 						word: '一点',
 						pinyin: 'yì diǎn',
-						en: 'a little',
-						start: 78.81,
-						end: 79.35
+						en: '',
+						start: 71.58,
+						end: 72.16
 					},
 					{
 						word: '醋',
 						pinyin: 'cù',
 						en: '',
-						start: 79.35,
-						end: 79.62
+						start: 72.16,
+						end: 72.45
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 79.62,
-						end: 79.66
-					},
-					{
-						word: '但是',
-						pinyin: 'dàn shì',
-						en: 'but',
-						start: 79.62,
-						end: 80.15
+						start: 72.45,
+						end: 72.49
 					},
 					{
 						word: '不要',
 						pinyin: 'bú yào',
-						en: '',
-						start: 80.15,
-						end: 80.69
+						en: "don't want",
+						start: 72.45,
+						end: 73.03
 					},
 					{
 						word: '太辣',
 						pinyin: 'tài là',
-						en: '',
-						start: 80.69,
-						end: 81.23
+						en: 'too spicy',
+						start: 73.03,
+						end: 73.61
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 81.23,
-						end: 81.27
+						start: 73.61,
+						end: 73.65
 					},
 					{
-						word: '一点点',
-						pinyin: 'yì diǎn diǎn',
-						en: '',
-						start: 81.23,
-						end: 82.04
+						word: '少放',
+						pinyin: 'shǎo fàng',
+						en: 'put less',
+						start: 73.61,
+						end: 74.18
 					},
 					{
-						word: '辣椒油',
-						pinyin: 'là jiāo yóu',
+						word: '一点',
+						pinyin: 'yì diǎn',
 						en: '',
-						start: 82.04,
-						end: 82.84
+						start: 74.18,
+						end: 74.76
+					},
+					{
+						word: '辣',
+						pinyin: 'là',
+						en: '',
+						start: 74.76,
+						end: 75.05
 					},
 					{
 						word: '就',
 						pinyin: 'jiù',
 						en: '',
-						start: 82.84,
-						end: 83.11
+						start: 75.05,
+						end: 75.34
 					},
 					{
 						word: '可以',
 						pinyin: 'kě yǐ',
-						en: 'okay / acceptable',
-						start: 83.11,
-						end: 83.65
+						en: 'fine / okay',
+						start: 75.34,
+						end: 75.92
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 83.65,
-						end: 83.69
+						start: 75.92,
+						end: 75.96
 					}
 				]
 			},
@@ -3254,74 +3109,74 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'dawei',
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
-				start: 84.1,
-				end: 87.82,
-				text: '老板，店里有热茶或者饮料吗？',
-				pinyin: 'Lǎobǎn, diàn lǐ yǒu rè chá huòzhě yǐnliào ma?',
-				en: 'Boss, do you have hot tea or drinks in the shop?',
+				start: 76.37,
+				end: 79.85,
+				text: '老板，店里有热茶或者水吗？',
+				pinyin: 'Lǎobǎn, diàn lǐ yǒu rè chá huòzhě shuǐ ma?',
+				en: 'Boss, do you have hot tea or water in the shop?',
 				words: [
 					{
 						word: '老板',
 						pinyin: 'lǎo bǎn',
 						en: '',
-						start: 84.1,
-						end: 84.72
+						start: 76.37,
+						end: 77.0
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 84.72,
-						end: 84.76
+						start: 77.0,
+						end: 77.04
 					},
 					{
 						word: '店里',
 						pinyin: 'diàn lǐ',
 						en: '',
-						start: 84.72,
-						end: 85.34
+						start: 77.0,
+						end: 77.64
 					},
 					{
 						word: '有',
 						pinyin: 'yǒu',
 						en: '',
-						start: 85.34,
-						end: 85.65
+						start: 77.64,
+						end: 77.95
 					},
 					{
 						word: '热茶',
 						pinyin: 'rè chá',
 						en: 'hot tea',
-						start: 85.65,
-						end: 86.27
+						start: 77.95,
+						end: 78.58
 					},
 					{
 						word: '或者',
 						pinyin: 'huò zhě',
 						en: 'or',
-						start: 86.27,
-						end: 86.89
+						start: 78.58,
+						end: 79.22
 					},
 					{
-						word: '饮料',
-						pinyin: 'yǐn liào',
-						en: 'beverage',
-						start: 86.89,
-						end: 87.51
+						word: '水',
+						pinyin: 'shuǐ',
+						en: 'water',
+						start: 79.22,
+						end: 79.53
 					},
 					{
 						word: '吗',
 						pinyin: 'ma',
 						en: '',
-						start: 87.51,
-						end: 87.82
+						start: 79.53,
+						end: 79.85
 					},
 					{
 						word: '？',
 						pinyin: '',
 						en: '',
-						start: 87.82,
-						end: 87.86
+						start: 79.85,
+						end: 79.89
 					}
 				]
 			},
@@ -3330,130 +3185,130 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'laoban',
 				speakerName: '王老板',
 				speakerAvatar: '👨‍🍳',
-				start: 88.27,
-				end: 94.97,
-				text: '有热茉莉花茶，免费喝！茶壶和杯子在桌子上，请慢用。',
-				pinyin: 'Yǒu rè mòlìhuā chá, miǎnfèi hē! Cháhú hé bēizi zài zhuōzi shang, qǐng màn yòng.',
-				en: 'We have hot jasmine tea, free of charge! Teapot and cups are on the table, please enjoy.',
+				start: 80.3,
+				end: 86.56,
+				text: '有热茶，是免费的！桌子上有茶和杯子，请慢用。',
+				pinyin: 'Yǒu rè chá, shì miǎnfèi de! Zhuōzi shang yǒu chá hé bēizi, qǐng màn yòng.',
+				en: "We have hot tea, it's free! There is tea and cups on the table, please enjoy.",
 				words: [
 					{
 						word: '有',
 						pinyin: 'yǒu',
 						en: '',
-						start: 88.27,
-						end: 88.59
+						start: 80.3,
+						end: 80.65
 					},
 					{
-						word: '热',
-						pinyin: 'rè',
-						en: '',
-						start: 88.59,
-						end: 88.91
-					},
-					{
-						word: '茉莉花茶',
-						pinyin: 'mò lì huā chá',
-						en: 'jasmine tea',
-						start: 88.91,
-						end: 90.18
+						word: '热茶',
+						pinyin: 'rè chá',
+						en: 'hot tea',
+						start: 80.65,
+						end: 81.34
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 90.18,
-						end: 90.22
+						start: 81.34,
+						end: 81.38
+					},
+					{
+						word: '是',
+						pinyin: 'shì',
+						en: '',
+						start: 81.34,
+						end: 81.69
 					},
 					{
 						word: '免费',
 						pinyin: 'miǎn fèi',
 						en: 'free',
-						start: 90.18,
-						end: 90.82
+						start: 81.69,
+						end: 82.39
 					},
 					{
-						word: '喝',
-						pinyin: 'hē',
+						word: '的',
+						pinyin: 'de',
 						en: '',
-						start: 90.82,
-						end: 91.14
+						start: 82.39,
+						end: 82.74
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 91.14,
-						end: 91.18
-					},
-					{
-						word: '茶壶',
-						pinyin: 'chá hú',
-						en: '',
-						start: 91.14,
-						end: 91.78
-					},
-					{
-						word: '和',
-						pinyin: 'hé',
-						en: '',
-						start: 91.78,
-						end: 92.1
-					},
-					{
-						word: '杯子',
-						pinyin: 'bēi zi',
-						en: '',
-						start: 92.1,
-						end: 92.73
-					},
-					{
-						word: '在',
-						pinyin: 'zài',
-						en: '',
-						start: 92.73,
-						end: 93.05
+						start: 82.74,
+						end: 82.78
 					},
 					{
 						word: '桌子',
 						pinyin: 'zhuō zi',
-						en: '',
-						start: 93.05,
-						end: 93.69
+						en: 'table',
+						start: 82.74,
+						end: 83.43
 					},
 					{
 						word: '上',
 						pinyin: 'shàng',
 						en: '',
-						start: 93.69,
-						end: 94.01
+						start: 83.43,
+						end: 83.78
+					},
+					{
+						word: '有',
+						pinyin: 'yǒu',
+						en: '',
+						start: 83.78,
+						end: 84.13
+					},
+					{
+						word: '茶',
+						pinyin: 'chá',
+						en: '',
+						start: 84.13,
+						end: 84.48
+					},
+					{
+						word: '和',
+						pinyin: 'hé',
+						en: '',
+						start: 84.48,
+						end: 84.82
+					},
+					{
+						word: '杯子',
+						pinyin: 'bēi zi',
+						en: 'cups',
+						start: 84.82,
+						end: 85.52
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 94.01,
-						end: 94.05
+						start: 85.52,
+						end: 85.56
 					},
 					{
 						word: '请',
 						pinyin: 'qǐng',
 						en: '',
-						start: 94.01,
-						end: 94.33
+						start: 85.52,
+						end: 85.87
 					},
 					{
 						word: '慢用',
 						pinyin: 'màn yòng',
 						en: 'enjoy your meal',
-						start: 94.33,
-						end: 94.97
+						start: 85.87,
+						end: 86.56
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 94.97,
-						end: 95.01
+						start: 86.56,
+						end: 86.6
 					}
 				]
 			},
@@ -3462,116 +3317,102 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'minmin',
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
-				start: 95.42,
-				end: 101.49,
-				text: '水饺热气腾腾地上来了，真香啊！大卫，快趁热吃。',
-				pinyin: 'Shuǐjiǎo rèqì téngtēng de shànglái le, zhēn xiāng a! Dàwèi, kuài chènrè chī.',
-				en: "The dumplings arrived piping hot, smells wonderful! David, eat them while they're hot.",
+				start: 87.01,
+				end: 91.91,
+				text: '饺子来啦，好香啊！大卫，快趁热吃。',
+				pinyin: 'Jiǎozi lái la, hǎo xiāng a! Dàwèi, kuài chènrè chī.',
+				en: "The dumplings are here, smells so good! David, eat while they're hot.",
 				words: [
 					{
-						word: '水饺',
-						pinyin: 'shuǐ jiǎo',
-						en: 'boiled dumplings',
-						start: 95.42,
-						end: 96.06
-					},
-					{
-						word: '热气腾腾',
-						pinyin: 'rè qì téng téng',
-						en: '',
-						start: 96.06,
-						end: 97.34
-					},
-					{
-						word: '地上',
-						pinyin: 'dì shàng',
-						en: '',
-						start: 97.34,
-						end: 97.98
+						word: '饺子',
+						pinyin: 'jiǎo zi',
+						en: 'dumplings',
+						start: 87.01,
+						end: 87.76
 					},
 					{
 						word: '来',
 						pinyin: 'lái',
 						en: '',
-						start: 97.98,
-						end: 98.3
+						start: 87.76,
+						end: 88.14
 					},
 					{
-						word: '了',
-						pinyin: 'le',
+						word: '啦',
+						pinyin: 'la',
 						en: '',
-						start: 98.3,
-						end: 98.62
+						start: 88.14,
+						end: 88.52
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 98.62,
-						end: 98.66
+						start: 88.52,
+						end: 88.56
 					},
 					{
-						word: '真香',
-						pinyin: 'zhēn xiāng',
+						word: '好香',
+						pinyin: 'hǎo xiāng',
 						en: 'smells so good',
-						start: 98.62,
-						end: 99.25
+						start: 88.52,
+						end: 89.27
 					},
 					{
 						word: '啊',
 						pinyin: 'a',
 						en: '',
-						start: 99.25,
-						end: 99.57
+						start: 89.27,
+						end: 89.65
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 99.57,
-						end: 99.61
+						start: 89.65,
+						end: 89.69
 					},
 					{
 						word: '大卫',
 						pinyin: 'dà wèi',
 						en: '',
-						start: 99.57,
-						end: 100.21
+						start: 89.65,
+						end: 90.4
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 100.21,
-						end: 100.25
+						start: 90.4,
+						end: 90.44
 					},
 					{
 						word: '快',
 						pinyin: 'kuài',
 						en: '',
-						start: 100.21,
-						end: 100.53
+						start: 90.4,
+						end: 90.78
 					},
 					{
 						word: '趁热',
 						pinyin: 'chèn rè',
 						en: '',
-						start: 100.53,
-						end: 101.17
+						start: 90.78,
+						end: 91.53
 					},
 					{
 						word: '吃',
 						pinyin: 'chī',
 						en: '',
-						start: 101.17,
-						end: 101.49
+						start: 91.53,
+						end: 91.91
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 101.49,
-						end: 101.53
+						start: 91.91,
+						end: 91.95
 					}
 				]
 			},
@@ -3580,116 +3421,95 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'dawei',
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
-				start: 101.94,
-				end: 107.41,
-				text: '小心烫！哇，这个牛肉水饺鲜嫩多汁，太好吃了！',
-				pinyin: 'Xiǎoxīn tàng! Wa, zhè ge niúròu shuǐjiǎo xiānnèn duōzhī, tài hǎochī le!',
-				en: "Careful, it's hot! Wow, this beef dumpling is tender and juicy, so delicious!",
+				start: 92.36,
+				end: 96.73,
+				text: '小心烫！哇，这个牛肉饺子太好吃了！',
+				pinyin: 'Xiǎoxīn tàng! Wa, zhè ge niúròu jiǎozi tài hǎochī le!',
+				en: "Careful, it's hot! Wow, this beef dumpling is so delicious!",
 				words: [
 					{
 						word: '小心',
 						pinyin: 'xiǎo xīn',
 						en: '',
-						start: 101.94,
-						end: 102.55
+						start: 92.36,
+						end: 92.98
 					},
 					{
 						word: '烫',
 						pinyin: 'tàng',
 						en: '',
-						start: 102.55,
-						end: 102.85
+						start: 92.98,
+						end: 93.3
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 102.85,
-						end: 102.89
+						start: 93.3,
+						end: 93.34
 					},
 					{
 						word: '哇',
 						pinyin: 'wa',
 						en: '',
-						start: 102.85,
-						end: 103.16
+						start: 93.3,
+						end: 93.61
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 103.16,
-						end: 103.2
+						start: 93.61,
+						end: 93.65
 					},
 					{
 						word: '这个',
 						pinyin: 'zhè ge',
 						en: '',
-						start: 103.16,
-						end: 103.76
+						start: 93.61,
+						end: 94.23
 					},
 					{
 						word: '牛肉',
 						pinyin: 'niú ròu',
 						en: '',
-						start: 103.76,
-						end: 104.37
+						start: 94.23,
+						end: 94.86
 					},
 					{
-						word: '水饺',
-						pinyin: 'shuǐ jiǎo',
-						en: 'boiled dumplings',
-						start: 104.37,
-						end: 104.98
-					},
-					{
-						word: '鲜嫩',
-						pinyin: 'xiān nèn',
-						en: 'fresh and tender',
-						start: 104.98,
-						end: 105.59
-					},
-					{
-						word: '多汁',
-						pinyin: 'duō zhī',
-						en: '',
-						start: 105.59,
-						end: 106.2
-					},
-					{
-						word: '，',
-						pinyin: '',
-						en: '',
-						start: 106.2,
-						end: 106.24
+						word: '饺子',
+						pinyin: 'jiǎo zi',
+						en: 'dumplings',
+						start: 94.86,
+						end: 95.48
 					},
 					{
 						word: '太',
 						pinyin: 'tài',
 						en: '',
-						start: 106.2,
-						end: 106.5
+						start: 95.48,
+						end: 95.79
 					},
 					{
 						word: '好吃',
 						pinyin: 'hǎo chī',
 						en: '',
-						start: 106.5,
-						end: 107.11
+						start: 95.79,
+						end: 96.42
 					},
 					{
 						word: '了',
 						pinyin: 'le',
 						en: '',
-						start: 107.11,
-						end: 107.41
+						start: 96.42,
+						end: 96.73
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 107.41,
-						end: 107.45
+						start: 96.73,
+						end: 96.77
 					}
 				]
 			},
@@ -3698,123 +3518,102 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'minmin',
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
-				start: 107.86,
-				end: 113.55,
-				text: '猪肉大葱的也很香。配上一口热茶，感觉真舒服。',
-				pinyin: 'Zhūròu dàcōng de yě hěn xiāng. Pèishang yì kǒu rè chá, gǎnjué zhēn shūfu.',
-				en: 'The pork and scallion one is also very tasty. Paired with a sip of hot tea, it feels so comfortable.',
+				start: 97.18,
+				end: 101.86,
+				text: '猪肉的也很香。喝一口热茶，真舒服！',
+				pinyin: 'Zhūròu de yě hěn xiāng. Hē yì kǒu rè chá, zhēn shūfu!',
+				en: 'The pork one is also very tasty. Drinking a sip of hot tea feels so comfortable!',
 				words: [
 					{
 						word: '猪肉',
 						pinyin: 'zhū ròu',
 						en: '',
-						start: 107.86,
-						end: 108.46
-					},
-					{
-						word: '大葱',
-						pinyin: 'dà cōng',
-						en: '',
-						start: 108.46,
-						end: 109.06
+						start: 97.18,
+						end: 97.85
 					},
 					{
 						word: '的',
 						pinyin: 'de',
 						en: '',
-						start: 109.06,
-						end: 109.36
+						start: 97.85,
+						end: 98.18
 					},
 					{
 						word: '也',
 						pinyin: 'yě',
 						en: '',
-						start: 109.36,
-						end: 109.66
+						start: 98.18,
+						end: 98.52
 					},
 					{
 						word: '很',
 						pinyin: 'hěn',
 						en: '',
-						start: 109.66,
-						end: 109.96
+						start: 98.52,
+						end: 98.85
 					},
 					{
 						word: '香',
 						pinyin: 'xiāng',
 						en: '',
-						start: 109.96,
-						end: 110.25
+						start: 98.85,
+						end: 99.19
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 110.25,
-						end: 110.29
+						start: 99.19,
+						end: 99.23
 					},
 					{
-						word: '配',
-						pinyin: 'pèi',
+						word: '喝',
+						pinyin: 'hē',
 						en: '',
-						start: 110.25,
-						end: 110.55
-					},
-					{
-						word: '上',
-						pinyin: 'shàng',
-						en: '',
-						start: 110.55,
-						end: 110.85
+						start: 99.19,
+						end: 99.52
 					},
 					{
 						word: '一口',
 						pinyin: 'yī kǒu',
 						en: '',
-						start: 110.85,
-						end: 111.45
+						start: 99.52,
+						end: 100.19
 					},
 					{
 						word: '热茶',
 						pinyin: 'rè chá',
-						en: '',
-						start: 111.45,
-						end: 112.05
+						en: 'hot tea',
+						start: 100.19,
+						end: 100.86
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 112.05,
-						end: 112.09
-					},
-					{
-						word: '感觉',
-						pinyin: 'gǎn jué',
-						en: 'feels / sensation',
-						start: 112.05,
-						end: 112.65
+						start: 100.86,
+						end: 100.9
 					},
 					{
 						word: '真',
 						pinyin: 'zhēn',
 						en: '',
-						start: 112.65,
-						end: 112.95
+						start: 100.86,
+						end: 101.19
 					},
 					{
 						word: '舒服',
 						pinyin: 'shū fú',
 						en: 'comfortable',
-						start: 112.95,
-						end: 113.55
+						start: 101.19,
+						end: 101.86
 					},
 					{
-						word: '。',
+						word: '！',
 						pinyin: '',
 						en: '',
-						start: 113.55,
-						end: 113.59
+						start: 101.86,
+						end: 101.9
 					}
 				]
 			},
@@ -3823,109 +3622,102 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'dawei',
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
-				start: 114.0,
-				end: 119.35,
-				text: '我吃得好饱，肚子圆圆的。今天这顿晚饭太棒了。',
-				pinyin: 'Wǒ chī de hǎo bǎo, dùzi yuányuán de. Jīntiān zhè dùn wǎnfàn tài bàng le.',
-				en: "I ate so much and I'm so full, my belly is round. This dinner tonight was wonderful.",
+				start: 102.31,
+				end: 106.44,
+				text: '我吃得好饱！今天的晚饭太好吃了。',
+				pinyin: 'Wǒ chī de hǎo bǎo! Jīntiān de wǎnfàn tài hǎochī le.',
+				en: "I'm so full! Tonight's dinner was delicious.",
 				words: [
 					{
 						word: '我',
 						pinyin: 'wǒ',
 						en: '',
-						start: 114.0,
-						end: 114.28
+						start: 102.31,
+						end: 102.6
 					},
 					{
 						word: '吃',
 						pinyin: 'chī',
 						en: '',
-						start: 114.28,
-						end: 114.56
+						start: 102.6,
+						end: 102.9
 					},
 					{
 						word: '得',
 						pinyin: 'dé',
 						en: '',
-						start: 114.56,
-						end: 114.85
+						start: 102.9,
+						end: 103.19
 					},
 					{
 						word: '好',
 						pinyin: 'hǎo',
 						en: '',
-						start: 114.85,
-						end: 115.13
+						start: 103.19,
+						end: 103.49
 					},
 					{
 						word: '饱',
 						pinyin: 'bǎo',
 						en: 'full (not hungry)',
-						start: 115.13,
-						end: 115.41
+						start: 103.49,
+						end: 103.78
 					},
 					{
-						word: '，',
+						word: '！',
 						pinyin: '',
 						en: '',
-						start: 115.41,
-						end: 115.45
-					},
-					{
-						word: '肚子',
-						pinyin: 'dǔ zi',
-						en: '',
-						start: 115.41,
-						end: 115.97
-					},
-					{
-						word: '圆圆的',
-						pinyin: 'yuán yuán de',
-						en: '',
-						start: 115.97,
-						end: 116.82
-					},
-					{
-						word: '。',
-						pinyin: '',
-						en: '',
-						start: 116.82,
-						end: 116.86
+						start: 103.78,
+						end: 103.82
 					},
 					{
 						word: '今天',
 						pinyin: 'jīn tiān',
 						en: '',
-						start: 116.82,
-						end: 117.38
+						start: 103.78,
+						end: 104.37
 					},
 					{
-						word: '这顿',
-						pinyin: 'zhè dùn',
+						word: '的',
+						pinyin: 'de',
 						en: '',
-						start: 117.38,
-						end: 117.94
+						start: 104.37,
+						end: 104.67
 					},
 					{
 						word: '晚饭',
 						pinyin: 'wǎn fàn',
 						en: 'dinner',
-						start: 117.94,
-						end: 118.51
+						start: 104.67,
+						end: 105.26
 					},
 					{
-						word: '太棒了',
-						pinyin: 'tài bàng le',
-						en: 'terrific / wonderful',
-						start: 118.51,
-						end: 119.35
+						word: '太',
+						pinyin: 'tài',
+						en: '',
+						start: 105.26,
+						end: 105.55
+					},
+					{
+						word: '好吃',
+						pinyin: 'hǎo chī',
+						en: '',
+						start: 105.55,
+						end: 106.14
+					},
+					{
+						word: '了',
+						pinyin: 'le',
+						en: '',
+						start: 106.14,
+						end: 106.44
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 119.35,
-						end: 119.39
+						start: 106.44,
+						end: 106.48
 					}
 				]
 			},
@@ -3934,95 +3726,88 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'minmin',
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
-				start: 119.8,
-				end: 124.58,
-				text: '老板，我们吃好了！我用微信扫码付钱。',
-				pinyin: 'Lǎobǎn, wǒmen chī hǎo le! Wǒ yòng Wēixìn sǎomǎ fù qián.',
-				en: "Boss, we're all done! I'll scan the code with WeChat to pay.",
+				start: 106.89,
+				end: 111.16,
+				text: '老板，我们吃好了！我用微信付钱。',
+				pinyin: 'Lǎobǎn, wǒmen chī hǎo le! Wǒ yòng Wēixìn fù qián.',
+				en: "Boss, we're finished eating! I'll pay with WeChat.",
 				words: [
 					{
 						word: '老板',
 						pinyin: 'lǎo bǎn',
 						en: '',
-						start: 119.8,
-						end: 120.44
+						start: 106.89,
+						end: 107.55
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 120.44,
-						end: 120.48
+						start: 107.55,
+						end: 107.59
 					},
 					{
 						word: '我们',
 						pinyin: 'wǒ men',
 						en: '',
-						start: 120.44,
-						end: 121.07
+						start: 107.55,
+						end: 108.2
 					},
 					{
 						word: '吃',
 						pinyin: 'chī',
 						en: '',
-						start: 121.07,
-						end: 121.39
+						start: 108.2,
+						end: 108.53
 					},
 					{
 						word: '好',
 						pinyin: 'hǎo',
 						en: '',
-						start: 121.39,
-						end: 121.71
+						start: 108.53,
+						end: 108.86
 					},
 					{
 						word: '了',
 						pinyin: 'le',
 						en: '',
-						start: 121.71,
-						end: 122.03
+						start: 108.86,
+						end: 109.19
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 122.03,
-						end: 122.07
+						start: 109.19,
+						end: 109.23
 					},
 					{
 						word: '我用',
 						pinyin: 'wǒ yòng',
 						en: '',
-						start: 122.03,
-						end: 122.67
+						start: 109.19,
+						end: 109.85
 					},
 					{
 						word: '微信',
 						pinyin: 'wēi xìn',
-						en: '',
-						start: 122.67,
-						end: 123.3
-					},
-					{
-						word: '扫码',
-						pinyin: 'sǎo mǎ',
-						en: 'scan code',
-						start: 123.3,
-						end: 123.94
+						en: 'WeChat',
+						start: 109.85,
+						end: 110.5
 					},
 					{
 						word: '付钱',
 						pinyin: 'fù qián',
 						en: 'pay money',
-						start: 123.94,
-						end: 124.58
+						start: 110.5,
+						end: 111.16
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 124.58,
-						end: 124.62
+						start: 111.16,
+						end: 111.2
 					}
 				]
 			},
@@ -4031,145 +3816,95 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'dawei',
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
-				start: 125.03,
-				end: 130.74,
-				text: '哎，等等，今天让我来请客吧！你平时经常帮我练习中文。',
-				pinyin:
-					'Āi, děngděng, jīntiān ràng wǒ lái qǐngkè ba! Nǐ píngshí jīngcháng bāng wǒ liànxí Zhōngwén.',
-				en: 'Hey, wait, let me treat today! You always help me practice Chinese.',
+				start: 111.61,
+				end: 115.83,
+				text: '等等，今天我请客！你经常帮我学中文。',
+				pinyin: 'Děngděng, jīntiān wǒ qǐngkè! Nǐ jīngcháng bāng wǒ xué Zhōngwén.',
+				en: "Wait, I'll treat today! You often help me learn Chinese.",
 				words: [
-					{
-						word: '哎',
-						pinyin: 'āi',
-						en: '',
-						start: 125.03,
-						end: 125.29
-					},
-					{
-						word: '，',
-						pinyin: '',
-						en: '',
-						start: 125.29,
-						end: 125.33
-					},
 					{
 						word: '等等',
 						pinyin: 'děng děng',
-						en: '',
-						start: 125.29,
-						end: 125.81
+						en: 'wait a moment',
+						start: 111.61,
+						end: 112.17
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 125.81,
-						end: 125.85
+						start: 112.17,
+						end: 112.21
 					},
 					{
 						word: '今天',
 						pinyin: 'jīn tiān',
 						en: '',
-						start: 125.81,
-						end: 126.33
-					},
-					{
-						word: '让',
-						pinyin: 'ràng',
-						en: '',
-						start: 126.33,
-						end: 126.59
+						start: 112.17,
+						end: 112.74
 					},
 					{
 						word: '我',
 						pinyin: 'wǒ',
 						en: '',
-						start: 126.59,
-						end: 126.85
-					},
-					{
-						word: '来',
-						pinyin: 'lái',
-						en: '',
-						start: 126.85,
-						end: 127.11
+						start: 112.74,
+						end: 113.02
 					},
 					{
 						word: '请客',
 						pinyin: 'qǐng kè',
 						en: 'to treat (someone)',
-						start: 127.11,
-						end: 127.63
-					},
-					{
-						word: '吧',
-						pinyin: 'ba',
-						en: '',
-						start: 127.63,
-						end: 127.89
+						start: 113.02,
+						end: 113.58
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 127.89,
-						end: 127.93
+						start: 113.58,
+						end: 113.62
 					},
 					{
 						word: '你',
 						pinyin: 'nǐ',
 						en: '',
-						start: 127.89,
-						end: 128.15
-					},
-					{
-						word: '平时',
-						pinyin: 'píng shí',
-						en: 'usually',
-						start: 128.15,
-						end: 128.66
+						start: 113.58,
+						end: 113.86
 					},
 					{
 						word: '经常',
 						pinyin: 'jīng cháng',
-						en: '',
-						start: 128.66,
-						end: 129.18
+						en: 'often',
+						start: 113.86,
+						end: 114.43
 					},
 					{
 						word: '帮',
 						pinyin: 'bāng',
 						en: '',
-						start: 129.18,
-						end: 129.44
+						start: 114.43,
+						end: 114.71
 					},
 					{
-						word: '我',
-						pinyin: 'wǒ',
+						word: '我学',
+						pinyin: 'wǒ xué',
 						en: '',
-						start: 129.44,
-						end: 129.7
-					},
-					{
-						word: '练习',
-						pinyin: 'liàn xí',
-						en: 'practice',
-						start: 129.7,
-						end: 130.22
+						start: 114.71,
+						end: 115.27
 					},
 					{
 						word: '中文',
 						pinyin: 'zhōng wén',
 						en: '',
-						start: 130.22,
-						end: 130.74
+						start: 115.27,
+						end: 115.83
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 130.74,
-						end: 130.78
+						start: 115.83,
+						end: 115.87
 					}
 				]
 			},
@@ -4178,123 +3913,95 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'minmin',
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
-				start: 131.19,
-				end: 137.21,
-				text: '哈哈，我已经扫过码付款啦！下次周末换你请客吧。',
-				pinyin: 'Hāhā, wǒ yǐjīng sǎo guò mǎ fùkuǎn la! Xià cì zhōumò huàn nǐ qǐngkè ba.',
-				en: "Haha, I've already scanned the code and paid! Next weekend it's your turn to treat.",
+				start: 116.28,
+				end: 120.94,
+				text: '哈哈，我已经付钱了！下次你请客吧。',
+				pinyin: 'Hāhā, wǒ yǐjīng fù qián le! Xià cì nǐ qǐngkè ba.',
+				en: "Haha, I already paid! Next time it's your turn to treat.",
 				words: [
 					{
 						word: '哈哈',
 						pinyin: 'hā hā',
 						en: '',
-						start: 131.19,
-						end: 131.79
+						start: 116.28,
+						end: 116.95
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 131.79,
-						end: 131.83
+						start: 116.95,
+						end: 116.99
 					},
 					{
 						word: '我',
 						pinyin: 'wǒ',
 						en: '',
-						start: 131.79,
-						end: 132.09
+						start: 116.95,
+						end: 117.28
 					},
 					{
 						word: '已经',
 						pinyin: 'yǐ jīng',
 						en: 'already',
-						start: 132.09,
-						end: 132.7
+						start: 117.28,
+						end: 117.94
 					},
 					{
-						word: '扫过',
-						pinyin: 'sǎo guò',
+						word: '付钱',
+						pinyin: 'fù qián',
 						en: '',
-						start: 132.7,
-						end: 133.3
+						start: 117.94,
+						end: 118.61
 					},
 					{
-						word: '码',
-						pinyin: 'mǎ',
+						word: '了',
+						pinyin: 'le',
 						en: '',
-						start: 133.3,
-						end: 133.6
-					},
-					{
-						word: '付款',
-						pinyin: 'fù kuǎn',
-						en: 'pay',
-						start: 133.6,
-						end: 134.2
-					},
-					{
-						word: '啦',
-						pinyin: 'la',
-						en: '',
-						start: 134.2,
-						end: 134.5
+						start: 118.61,
+						end: 118.94
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 134.5,
-						end: 134.54
+						start: 118.94,
+						end: 118.98
 					},
 					{
 						word: '下次',
 						pinyin: 'xià cì',
-						en: '',
-						start: 134.5,
-						end: 135.11
-					},
-					{
-						word: '周末',
-						pinyin: 'zhōu mò',
-						en: '',
-						start: 135.11,
-						end: 135.71
-					},
-					{
-						word: '换',
-						pinyin: 'huàn',
-						en: '',
-						start: 135.71,
-						end: 136.01
+						en: 'next time',
+						start: 118.94,
+						end: 119.61
 					},
 					{
 						word: '你',
 						pinyin: 'nǐ',
 						en: '',
-						start: 136.01,
-						end: 136.31
+						start: 119.61,
+						end: 119.94
 					},
 					{
 						word: '请客',
 						pinyin: 'qǐng kè',
 						en: 'to treat (someone)',
-						start: 136.31,
-						end: 136.91
+						start: 119.94,
+						end: 120.6
 					},
 					{
 						word: '吧',
 						pinyin: 'ba',
 						en: '',
-						start: 136.91,
-						end: 137.21
+						start: 120.6,
+						end: 120.94
 					},
 					{
 						word: '。',
 						pinyin: '',
 						en: '',
-						start: 137.21,
-						end: 137.25
+						start: 120.94,
+						end: 120.98
 					}
 				]
 			},
@@ -4303,131 +4010,123 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'dawei',
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
-				start: 137.66,
-				end: 143.85,
-				text: '没问题，一言为定！明天星期天，我们还去附近的公园散步吗？',
-				pinyin:
-					'Méi wèntí, yì yán wéi dìng! Míngtiān xīngqītiān, wǒmen hái qù fùjìn de gōngyuán sànbù ma?',
-				en: "No problem, that's a deal! Tomorrow is Sunday, are we still going for a walk in the nearby park?",
+				start: 121.39,
+				end: 126.74,
+				text: '好啊，没问题！明天是星期天，我们去公园散步吗？',
+				pinyin: 'Hǎo a, méi wèntí! Míngtiān shì xīngqītiān, wǒmen qù gōngyuán sànbù ma?',
+				en: 'Sure, no problem! Tomorrow is Sunday, shall we go to the park for a walk?',
 				words: [
+					{
+						word: '好',
+						pinyin: 'hǎo',
+						en: '',
+						start: 121.39,
+						end: 121.67
+					},
+					{
+						word: '啊',
+						pinyin: 'a',
+						en: '',
+						start: 121.67,
+						end: 121.95
+					},
+					{
+						word: '，',
+						pinyin: '',
+						en: '',
+						start: 121.95,
+						end: 121.99
+					},
 					{
 						word: '没',
 						pinyin: 'méi',
 						en: '',
-						start: 137.66,
-						end: 137.92
+						start: 121.95,
+						end: 122.24
 					},
 					{
 						word: '问题',
 						pinyin: 'wèn tí',
 						en: '',
-						start: 137.92,
-						end: 138.43
-					},
-					{
-						word: '，',
-						pinyin: '',
-						en: '',
-						start: 138.43,
-						end: 138.47
-					},
-					{
-						word: '一言为定',
-						pinyin: 'yī yán wéi dìng',
-						en: "it's a deal / settled",
-						start: 138.43,
-						end: 139.47
+						start: 122.24,
+						end: 122.8
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 139.47,
-						end: 139.51
+						start: 122.8,
+						end: 122.84
 					},
 					{
 						word: '明天',
 						pinyin: 'míng tiān',
 						en: '',
-						start: 139.47,
-						end: 139.98
+						start: 122.8,
+						end: 123.36
+					},
+					{
+						word: '是',
+						pinyin: 'shì',
+						en: '',
+						start: 123.36,
+						end: 123.64
 					},
 					{
 						word: '星期天',
 						pinyin: 'xīng qī tiān',
-						en: '',
-						start: 139.98,
-						end: 140.76
+						en: 'Sunday',
+						start: 123.64,
+						end: 124.49
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 140.76,
-						end: 140.8
+						start: 124.49,
+						end: 124.53
 					},
 					{
 						word: '我们',
 						pinyin: 'wǒ men',
 						en: '',
-						start: 140.76,
-						end: 141.27
-					},
-					{
-						word: '还',
-						pinyin: 'hái',
-						en: '',
-						start: 141.27,
-						end: 141.53
+						start: 124.49,
+						end: 125.05
 					},
 					{
 						word: '去',
 						pinyin: 'qù',
 						en: '',
-						start: 141.53,
-						end: 141.79
-					},
-					{
-						word: '附近',
-						pinyin: 'fù jìn',
-						en: 'nearby',
-						start: 141.79,
-						end: 142.3
-					},
-					{
-						word: '的',
-						pinyin: 'de',
-						en: '',
-						start: 142.3,
-						end: 142.56
+						start: 125.05,
+						end: 125.33
 					},
 					{
 						word: '公园',
 						pinyin: 'gōng yuán',
 						en: '',
-						start: 142.56,
-						end: 143.08
+						start: 125.33,
+						end: 125.9
 					},
 					{
 						word: '散步',
 						pinyin: 'sàn bù',
 						en: 'to take a walk',
-						start: 143.08,
-						end: 143.59
+						start: 125.9,
+						end: 126.46
 					},
 					{
 						word: '吗',
 						pinyin: 'ma',
 						en: '',
-						start: 143.59,
-						end: 143.85
+						start: 126.46,
+						end: 126.74
 					},
 					{
 						word: '？',
 						pinyin: '',
 						en: '',
-						start: 143.85,
-						end: 143.89
+						start: 126.74,
+						end: 126.78
 					}
 				]
 			},
@@ -4436,124 +4135,124 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'minmin',
 				speakerName: '敏敏',
 				speakerAvatar: '👧',
-				start: 144.3,
-				end: 150.78,
-				text: '当然去！明天天气很晴朗，我们早上九点在公园大门见！',
+				start: 127.19,
+				end: 133.45,
+				text: '当然去！明天天气很好，我们早上九点在公园门口见！',
 				pinyin:
-					'Dāngrán qù! Míngtiān tiānqì hěn qínglǎng, wǒmen zǎoshang jiǔ diǎn zài gōngyuán dàmén jiàn!',
-				en: "Of course! The weather tomorrow is sunny, let's meet at 9:00 AM at the park gate!",
+					'Dāngrán qù! Míngtiān tiānqì hěn hǎo, wǒmen zǎoshang jiǔ diǎn zài gōngyuán ménkǒu jiàn!',
+				en: "Of course! The weather tomorrow is great, let's meet at 9:00 AM at the park entrance!",
 				words: [
 					{
 						word: '当然',
 						pinyin: 'dāng rán',
-						en: '',
-						start: 144.3,
-						end: 144.89
+						en: 'of course',
+						start: 127.19,
+						end: 127.79
 					},
 					{
 						word: '去',
 						pinyin: 'qù',
 						en: '',
-						start: 144.89,
-						end: 145.18
+						start: 127.79,
+						end: 128.08
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 145.18,
-						end: 145.22
+						start: 128.08,
+						end: 128.12
 					},
 					{
 						word: '明天',
 						pinyin: 'míng tiān',
 						en: '',
-						start: 145.18,
-						end: 145.77
+						start: 128.08,
+						end: 128.68
 					},
 					{
 						word: '天气',
 						pinyin: 'tiān qì',
 						en: '',
-						start: 145.77,
-						end: 146.36
+						start: 128.68,
+						end: 129.28
 					},
 					{
 						word: '很',
 						pinyin: 'hěn',
 						en: '',
-						start: 146.36,
-						end: 146.66
+						start: 129.28,
+						end: 129.58
 					},
 					{
-						word: '晴朗',
-						pinyin: 'qíng lǎng',
-						en: 'sunny / clear',
-						start: 146.66,
-						end: 147.25
+						word: '好',
+						pinyin: 'hǎo',
+						en: '',
+						start: 129.58,
+						end: 129.87
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 147.25,
-						end: 147.29
+						start: 129.87,
+						end: 129.91
 					},
 					{
 						word: '我们',
 						pinyin: 'wǒ men',
 						en: '',
-						start: 147.25,
-						end: 147.83
+						start: 129.87,
+						end: 130.47
 					},
 					{
 						word: '早上',
 						pinyin: 'zǎo shàng',
 						en: '',
-						start: 147.83,
-						end: 148.42
+						start: 130.47,
+						end: 131.07
 					},
 					{
 						word: '九点',
 						pinyin: 'jiǔ diǎn',
-						en: "9 o'clock",
-						start: 148.42,
-						end: 149.01
+						en: '',
+						start: 131.07,
+						end: 131.66
 					},
 					{
 						word: '在',
 						pinyin: 'zài',
 						en: '',
-						start: 149.01,
-						end: 149.31
+						start: 131.66,
+						end: 131.96
 					},
 					{
 						word: '公园',
 						pinyin: 'gōng yuán',
 						en: '',
-						start: 149.31,
-						end: 149.9
+						start: 131.96,
+						end: 132.56
 					},
 					{
-						word: '大门',
-						pinyin: 'dà mén',
-						en: 'main gate',
-						start: 149.9,
-						end: 150.49
+						word: '门口',
+						pinyin: 'mén kǒu',
+						en: 'entrance / gate',
+						start: 132.56,
+						end: 133.16
 					},
 					{
 						word: '见',
 						pinyin: 'jiàn',
 						en: '',
-						start: 150.49,
-						end: 150.78
+						start: 133.16,
+						end: 133.45
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 150.78,
-						end: 150.82
+						start: 133.45,
+						end: 133.49
 					}
 				]
 			},
@@ -4562,88 +4261,74 @@ export const BUILTIN_PODCASTS: PodcastEpisode[] = [
 				speakerId: 'dawei',
 				speakerName: '大卫',
 				speakerAvatar: '🎒',
-				start: 151.23,
-				end: 155.67,
-				text: '太棒了！今晚走回家好好休息，明天见！',
-				pinyin: 'Tài bàng le! Jīnwǎn zǒu huí jiā hǎohāo xiūxi, míngtiān jiàn!',
-				en: "Awesome! Let's walk home and get a good rest tonight, see you tomorrow!",
+				start: 133.9,
+				end: 137.81,
+				text: '太好了！回家好好休息，明天见！',
+				pinyin: 'Tài hǎo le! Huí jiā hǎohāo xiūxi, míngtiān jiàn!',
+				en: 'Great! Go home and rest well, see you tomorrow!',
 				words: [
 					{
-						word: '太棒了',
-						pinyin: 'tài bàng le',
-						en: '',
-						start: 151.23,
-						end: 152.12
+						word: '太好了',
+						pinyin: 'tài hǎo le',
+						en: 'wonderful',
+						start: 133.9,
+						end: 134.88
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 152.12,
-						end: 152.16
-					},
-					{
-						word: '今晚',
-						pinyin: 'jīn wǎn',
-						en: '',
-						start: 152.12,
-						end: 152.71
-					},
-					{
-						word: '走',
-						pinyin: 'zǒu',
-						en: '',
-						start: 152.71,
-						end: 153.01
+						start: 134.88,
+						end: 134.92
 					},
 					{
 						word: '回家',
 						pinyin: 'huí jiā',
-						en: 'go home',
-						start: 153.01,
-						end: 153.6
+						en: '',
+						start: 134.88,
+						end: 135.53
 					},
 					{
 						word: '好好',
 						pinyin: 'hǎo hǎo',
 						en: '',
-						start: 153.6,
-						end: 154.19
+						start: 135.53,
+						end: 136.18
 					},
 					{
 						word: '休息',
 						pinyin: 'xiū xī',
-						en: '',
-						start: 154.19,
-						end: 154.78
+						en: 'rest',
+						start: 136.18,
+						end: 136.83
 					},
 					{
 						word: '，',
 						pinyin: '',
 						en: '',
-						start: 154.78,
-						end: 154.82
+						start: 136.83,
+						end: 136.87
 					},
 					{
 						word: '明天',
 						pinyin: 'míng tiān',
 						en: '',
-						start: 154.78,
-						end: 155.37
+						start: 136.83,
+						end: 137.49
 					},
 					{
 						word: '见',
 						pinyin: 'jiàn',
 						en: '',
-						start: 155.37,
-						end: 155.67
+						start: 137.49,
+						end: 137.81
 					},
 					{
 						word: '！',
 						pinyin: '',
 						en: '',
-						start: 155.67,
-						end: 155.71
+						start: 137.81,
+						end: 137.85
 					}
 				]
 			}

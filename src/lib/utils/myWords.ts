@@ -5,8 +5,70 @@ import { lookupExactChineseWord } from '$lib/utils/dictionary';
 
 export const MY_WORDS_DECK_ID = 'custom-my-words';
 export const MY_WORDS_DECK_NAME = 'My Words';
+export const ALL_WORDS_CATEGORY = 'All words';
+export const SEEDED_SUBCATEGORY = 'Week 1';
 
 const HANZI_REGEX = /[\u4e00-\u9fff]/;
+
+export interface MyWordsCategoryRow {
+	name: string;
+	count: number;
+	isAll: boolean;
+}
+
+/**
+ * Returns unique non-empty subcategory names from `words` in order of first appearance,
+ * always including the seeded "Week 1" subcategory.
+ */
+export function getMyWordsSubcategories(words: WordRecord[]): string[] {
+	const seen = new Set<string>([SEEDED_SUBCATEGORY.toLowerCase()]);
+	const result: string[] = [SEEDED_SUBCATEGORY];
+	for (const w of words) {
+		const cat = (w.category || '').trim();
+		const lower = cat.toLowerCase();
+		if (!cat || lower === ALL_WORDS_CATEGORY.toLowerCase()) continue;
+		if (!seen.has(lower)) {
+			seen.add(lower);
+			result.push(cat);
+		}
+	}
+	return result;
+}
+
+/**
+ * Returns the category rows for the Lite mode My Words listing.
+ * Includes "All words" (categorized + uncategorized) followed by "Week 1" and each subcategory.
+ */
+export function getMyWordsCategoryRows(words: WordRecord[]): MyWordsCategoryRow[] {
+	const subcategories = getMyWordsSubcategories(words);
+	const counts = new Map<string, number>();
+	for (const w of words) {
+		const cat = (w.category || '').trim().toLowerCase();
+		if (cat && cat !== ALL_WORDS_CATEGORY.toLowerCase()) {
+			counts.set(cat, (counts.get(cat) || 0) + 1);
+		}
+	}
+	return [
+		{ name: ALL_WORDS_CATEGORY, count: words.length, isAll: true },
+		...subcategories.map((name) => ({
+			name,
+			count: counts.get(name.toLowerCase()) || 0,
+			isAll: false
+		}))
+	];
+}
+
+/**
+ * Filters `words` for a given category.
+ * "All words" (or empty) returns all words (both categorized and uncategorized).
+ */
+export function filterWordsByCategory(words: WordRecord[], category?: string | null): WordRecord[] {
+	const trimmed = (category || '').trim().toLowerCase();
+	if (!trimmed || trimmed === ALL_WORDS_CATEGORY.toLowerCase()) {
+		return [...words];
+	}
+	return words.filter((w) => (w.category || '').trim().toLowerCase() === trimmed);
+}
 
 export interface MeaningCandidate {
 	meaning: string;
@@ -140,51 +202,80 @@ export interface MyWordInput {
 	pinyin: string;
 	meaning: string;
 	example: string;
+	category?: string;
 }
 
-export type MyWordField = keyof MyWordInput;
+export interface MyWordSaveOptions {
+	allowDuplicate?: boolean;
+}
+
+export type MyWordField = 'word' | 'pinyin' | 'meaning' | 'example' | 'category';
 export type MyWordErrors = Partial<Record<MyWordField, string>>;
 
 export const DUPLICATE_WORD_ERROR = 'This word is already in My Words';
+
+function normalizeCategory(category?: string): string | undefined {
+	const trimmed = (category || '').trim();
+	if (!trimmed || trimmed.toLowerCase() === ALL_WORDS_CATEGORY.toLowerCase()) {
+		return undefined;
+	}
+	return trimmed;
+}
 
 function trimInput(input: MyWordInput): MyWordInput {
 	return {
 		word: input.word.trim(),
 		pinyin: input.pinyin.trim(),
 		meaning: input.meaning.trim(),
-		example: input.example.trim()
+		example: input.example.trim(),
+		category: normalizeCategory(input.category)
 	};
+}
+
+/**
+ * Checks whether `word` already exists in the `My Words` deck (`existing`),
+ * excluding `editingNo` when updating an existing card.
+ */
+export function isDuplicateMyWord(
+	word: string,
+	existing: WordRecord[],
+	editingNo?: number
+): boolean {
+	const target = word.trim();
+	if (!target) return false;
+	return existing.some((w) => w.No !== editingNo && (w['Chinese Word'] || '').trim() === target);
 }
 
 /**
  * Validates a My Words form submission. Returns an empty object when valid.
  * `editingNo` exempts the word being edited from the duplicate check.
+ * `options.allowDuplicate` allows saving a duplicate word after user confirmation.
  */
 export function validateMyWord(
 	input: MyWordInput,
 	existing: WordRecord[],
-	editingNo?: number
+	editingNo?: number,
+	options?: MyWordSaveOptions
 ): MyWordErrors {
 	const t = trimInput(input);
 	const errors: MyWordErrors = {};
 	if (!t.word) errors.word = 'Please enter the Chinese word';
 	if (!t.pinyin) errors.pinyin = 'Please enter the pinyin';
 	if (!t.meaning) errors.meaning = 'Please enter the English meaning';
-	if (
-		t.word &&
-		existing.some((w) => w.No !== editingNo && (w['Chinese Word'] || '').trim() === t.word)
-	) {
+	if (!options?.allowDuplicate && isDuplicateMyWord(t.word, existing, editingNo)) {
 		errors.word = DUPLICATE_WORD_ERROR;
 	}
 	return errors;
 }
 
 export function toMyWordInput(word: WordRecord): MyWordInput {
+	const cat = normalizeCategory(word.category);
 	return {
 		word: word['Chinese Word'] || '',
 		pinyin: word.Pinyin || '',
 		meaning: word['English Meaning'] || '',
-		example: word['Example (Chinese + Pinyin)'] || ''
+		example: word['Example (Chinese + Pinyin)'] || '',
+		...(cat ? { category: cat } : {})
 	};
 }
 
@@ -196,42 +287,63 @@ function toWordRecord(no: number, input: MyWordInput): WordRecord {
 		Pinyin: t.pinyin,
 		'Part of Speech': '',
 		'English Meaning': t.meaning,
-		'Example (Chinese + Pinyin)': t.example || undefined
+		'Example (Chinese + Pinyin)': t.example || undefined,
+		category: t.category
 	};
 }
 
-function assertValid(input: MyWordInput, existing: WordRecord[], editingNo?: number): void {
-	const errors = validateMyWord(input, existing, editingNo);
+function assertValid(
+	input: MyWordInput,
+	existing: WordRecord[],
+	editingNo?: number,
+	options?: MyWordSaveOptions
+): void {
+	const errors = validateMyWord(input, existing, editingNo, options);
 	const first = Object.values(errors)[0];
 	if (first) throw new Error(first);
 }
 
 /** Pure: returns a new deck with the word appended. Word numbers are never reused. */
-export function buildDeckWithAddedWord(deck: CustomDeck | null, input: MyWordInput): CustomDeck {
+export function buildDeckWithAddedWord(
+	deck: CustomDeck | null,
+	input: MyWordInput,
+	options?: MyWordSaveOptions
+): CustomDeck {
+	const now = Date.now();
 	const base: CustomDeck = deck ?? {
 		id: MY_WORDS_DECK_ID,
 		name: MY_WORDS_DECK_NAME,
 		words: [],
 		language: 'chinese',
-		createdAt: Date.now()
+		createdAt: now
 	};
-	assertValid(input, base.words);
+	assertValid(input, base.words, undefined, options);
 	const nextNo = base.words.reduce((max, w) => Math.max(max, w.No), 0) + 1;
-	return { ...base, words: [...base.words, toWordRecord(nextNo, input)] };
+	return {
+		...base,
+		createdAt: Math.max(now, (base.createdAt || 0) + 1),
+		words: [...base.words, toWordRecord(nextNo, input)]
+	};
 }
 
 /** Pure: returns a new deck with the word replaced in place. Keeps `No` so SRS progress stays. */
 export function buildDeckWithUpdatedWord(
 	deck: CustomDeck,
 	no: number,
-	input: MyWordInput
+	input: MyWordInput,
+	options?: MyWordSaveOptions
 ): CustomDeck {
 	const index = deck.words.findIndex((w) => w.No === no);
 	if (index === -1) throw new Error('This word no longer exists in My Words');
-	assertValid(input, deck.words, no);
+	assertValid(input, deck.words, no, options);
 	const words = [...deck.words];
 	words[index] = { ...words[index], ...toWordRecord(no, input) };
-	return { ...deck, words };
+	const now = Date.now();
+	return {
+		...deck,
+		createdAt: Math.max(now, (deck.createdAt || 0) + 1),
+		words
+	};
 }
 
 /** Pure: returns a new deck without the word. Does not re-index. */
@@ -239,7 +351,12 @@ export function buildDeckWithoutWord(deck: CustomDeck, no: number): CustomDeck {
 	if (!deck.words.some((w) => w.No === no)) {
 		throw new Error('This word no longer exists in My Words');
 	}
-	return { ...deck, words: deck.words.filter((w) => w.No !== no) };
+	const now = Date.now();
+	return {
+		...deck,
+		createdAt: Math.max(now, (deck.createdAt || 0) + 1),
+		words: deck.words.filter((w) => w.No !== no)
+	};
 }
 
 export async function getMyWordsDeck(): Promise<CustomDeck | null> {
@@ -253,14 +370,21 @@ async function requireMyWordsDeck(): Promise<CustomDeck> {
 	return deck;
 }
 
-export async function addMyWord(input: MyWordInput): Promise<CustomDeck> {
-	const updated = buildDeckWithAddedWord(await getMyWordsDeck(), input);
+export async function addMyWord(
+	input: MyWordInput,
+	options?: MyWordSaveOptions
+): Promise<CustomDeck> {
+	const updated = buildDeckWithAddedWord(await getMyWordsDeck(), input, options);
 	await saveCustomDeck(updated);
 	return updated;
 }
 
-export async function updateMyWord(no: number, input: MyWordInput): Promise<CustomDeck> {
-	const updated = buildDeckWithUpdatedWord(await requireMyWordsDeck(), no, input);
+export async function updateMyWord(
+	no: number,
+	input: MyWordInput,
+	options?: MyWordSaveOptions
+): Promise<CustomDeck> {
+	const updated = buildDeckWithUpdatedWord(await requireMyWordsDeck(), no, input, options);
 	await saveCustomDeck(updated);
 	return updated;
 }

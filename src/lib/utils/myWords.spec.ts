@@ -1,13 +1,18 @@
 import { describe, it, expect } from 'vitest';
 import type { CustomDeck, WordRecord } from '$lib/types';
 import {
+	ALL_WORDS_CATEGORY,
 	MY_WORDS_DECK_ID,
 	DUPLICATE_WORD_ERROR,
 	validateMyWord,
+	isDuplicateMyWord,
 	toMyWordInput,
 	generateWordPinyin,
 	cleanMeaningCandidates,
 	findPackExamples,
+	getMyWordsSubcategories,
+	getMyWordsCategoryRows,
+	filterWordsByCategory,
 	buildDeckWithAddedWord,
 	buildDeckWithUpdatedWord,
 	buildDeckWithoutWord,
@@ -41,6 +46,58 @@ describe('validateMyWord', () => {
 	it('allows the edited word to keep its own text', () => {
 		const deck = buildDeckWithAddedWord(null, nihao);
 		expect(validateMyWord(nihao, deck.words, deck.words[0].No)).toEqual({});
+	});
+
+	it('allows a duplicate Chinese word when allowDuplicate is true', () => {
+		const deck = buildDeckWithAddedWord(null, nihao);
+		expect(isDuplicateMyWord('你好', deck.words)).toBe(true);
+		expect(validateMyWord(nihao, deck.words, undefined, { allowDuplicate: true })).toEqual({});
+	});
+});
+
+describe('subcategories and All words', () => {
+	it('places uncategorized and categorized words in All words, and lists subcategories', () => {
+		let deck = buildDeckWithAddedWord(null, nihao);
+		deck = buildDeckWithAddedWord(deck, { ...xiexie, category: 'Week 1' });
+		deck = buildDeckWithAddedWord(deck, {
+			word: '再见',
+			pinyin: 'zàijiàn',
+			meaning: 'goodbye',
+			example: '',
+			category: 'Week 2'
+		});
+
+		expect(getMyWordsSubcategories(deck.words)).toEqual(['Week 1', 'Week 2']);
+		expect(getMyWordsCategoryRows(deck.words)).toEqual([
+			{ name: ALL_WORDS_CATEGORY, count: 3, isAll: true },
+			{ name: 'Week 1', count: 1, isAll: false },
+			{ name: 'Week 2', count: 1, isAll: false }
+		]);
+
+		expect(filterWordsByCategory(deck.words, ALL_WORDS_CATEGORY).map((w) => w.No)).toEqual([
+			1, 2, 3
+		]);
+		expect(filterWordsByCategory(deck.words, '').map((w) => w.No)).toEqual([1, 2, 3]);
+		expect(filterWordsByCategory(deck.words, 'Week 1').map((w) => w['Chinese Word'])).toEqual([
+			'谢谢'
+		]);
+		expect(filterWordsByCategory(deck.words, 'Week 2').map((w) => w['Chinese Word'])).toEqual([
+			'再见'
+		]);
+	});
+
+	it('seeds "Week 1" and "All words" even when deck has no words', () => {
+		expect(getMyWordsSubcategories([])).toEqual(['Week 1']);
+		expect(getMyWordsCategoryRows([])).toEqual([
+			{ name: ALL_WORDS_CATEGORY, count: 0, isAll: true },
+			{ name: 'Week 1', count: 0, isAll: false }
+		]);
+	});
+
+	it('treats "All words" category input as uncategorized while keeping seeded Week 1', () => {
+		const deck = buildDeckWithAddedWord(null, { ...nihao, category: ALL_WORDS_CATEGORY });
+		expect(deck.words[0].category).toBeUndefined();
+		expect(getMyWordsSubcategories(deck.words)).toEqual(['Week 1']);
 	});
 });
 
@@ -77,9 +134,30 @@ describe('buildDeckWithAddedWord', () => {
 		expect(() => buildDeckWithAddedWord(null, { ...nihao, pinyin: '' })).toThrow();
 	});
 
-	it('throws on a duplicate word', () => {
+	it('throws on a duplicate word by default, and appends when allowDuplicate is true', () => {
 		const deck = buildDeckWithAddedWord(null, nihao);
 		expect(() => buildDeckWithAddedWord(deck, nihao)).toThrow(DUPLICATE_WORD_ERROR);
+		const withDup = buildDeckWithAddedWord(
+			deck,
+			{ ...nihao, category: 'Week 2' },
+			{ allowDuplicate: true }
+		);
+		expect(withDup.words).toHaveLength(2);
+		expect(withDup.words[1]).toMatchObject({
+			No: 2,
+			'Chinese Word': '你好',
+			category: 'Week 2'
+		});
+	});
+
+	it('advances createdAt timestamp on add, update, and delete for cloud sync', () => {
+		const deck1 = buildDeckWithAddedWord(null, nihao);
+		const deck2 = buildDeckWithAddedWord(deck1, xiexie);
+		expect((deck2.createdAt || 0) > (deck1.createdAt || 0)).toBe(true);
+		const deck3 = buildDeckWithUpdatedWord(deck2, 1, { ...nihao, category: 'Week 1' });
+		expect((deck3.createdAt || 0) > (deck2.createdAt || 0)).toBe(true);
+		const deck4 = buildDeckWithoutWord(deck3, 1);
+		expect((deck4.createdAt || 0) > (deck3.createdAt || 0)).toBe(true);
 	});
 });
 

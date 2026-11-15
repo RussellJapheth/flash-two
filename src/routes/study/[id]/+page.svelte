@@ -29,6 +29,8 @@
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { playSound, speakWord, stopSpeech } from '$lib/utils/audio';
 	import { calculateReviewXP, calculateSessionBonus, addXP } from '$lib/utils/xp';
+	import { ALL_WORDS_CATEGORY, MY_WORDS_DECK_ID, filterWordsByCategory } from '$lib/utils/myWords';
+	import { liteModeStore } from '$lib/utils/liteMode';
 	import type { WordRecord, WordProgress, StudyRating } from '$lib/types';
 	import {
 		X,
@@ -46,6 +48,7 @@
 	} from 'lucide-svelte';
 
 	let deckId = $derived(page.params.id || '');
+	let categoryParam = $derived(page.url.searchParams.get('category')?.trim() || '');
 	let studyMode = $derived(
 		(page.url.searchParams.get('mode') as 'srs' | 'all' | 'learning' | 'weak') || 'srs'
 	);
@@ -101,6 +104,14 @@
 
 	function exitToPreview() {
 		clearAutoplay();
+		if ($liteModeStore) {
+			if (deckId === MY_WORDS_DECK_ID && categoryParam) {
+				goto(resolve(`/decks?category=${encodeURIComponent(categoryParam)}` as '/decks'));
+			} else {
+				goto(resolve('/decks'));
+			}
+			return;
+		}
 		goto(resolve(`/deck/${deckId}/preview`));
 	}
 
@@ -170,8 +181,16 @@
 				(d) => d.id === deckId || (deckId === 'personal-dictionary' && d.isPersonalDictionary)
 			);
 			if (match) {
-				rawWords = match.words;
-				title = match.name;
+				rawWords =
+					deckId === MY_WORDS_DECK_ID && categoryParam
+						? filterWordsByCategory(match.words, categoryParam)
+						: match.words;
+				title =
+					deckId === MY_WORDS_DECK_ID &&
+					categoryParam &&
+					categoryParam.toLowerCase() !== ALL_WORDS_CATEGORY.toLowerCase()
+						? categoryParam
+						: match.name;
 				lang = match.language || 'chinese';
 			} else if (deckId === 'personal-dictionary') {
 				const { getPersonalDictionaryDeck } = await import('$lib/utils/dictionary');
@@ -497,7 +516,7 @@
 			handleFlipCard();
 		} else if (isFlipped) {
 			if (e.key === '1') handleRate('again');
-			else if (e.key === '2') handleRate('hard');
+			else if (e.key === '2') handleRate($liteModeStore ? 'good' : 'hard');
 			else if (e.key === '3') handleRate('good');
 			else if (e.key === '4') handleRate('easy');
 		}
@@ -558,42 +577,44 @@
 
 		<!-- Autoplay & Accuracy Controls -->
 		<div class="flex items-center gap-1.5">
-			<!-- Discreet Study Timer -->
-			<StudyTimer compact={true} />
+			{#if !$liteModeStore}
+				<!-- Discreet Study Timer -->
+				<StudyTimer compact={true} />
 
-			<!-- Shuffle Mode Toggle Button -->
-			<button
-				type="button"
-				onclick={toggleShuffle}
-				title={shouldShuffle
-					? 'Shuffle enabled (click for original deck order)'
-					: 'Sequential order (click to shuffle cards)'}
-				class="flex h-8 items-center gap-1 rounded-full px-2.5 font-headline text-xs font-bold transition-all active:scale-95 {shouldShuffle
-					? 'bg-indigo-600 text-white shadow-xs shadow-indigo-600/30'
-					: 'border border-slate-200/90 bg-slate-50 text-slate-700 hover:bg-slate-100'}"
-				aria-label={shouldShuffle ? 'Disable card shuffle' : 'Enable card shuffle'}
-			>
-				<Shuffle size={13} strokeWidth={2.25} />
-				<span class="xs:inline hidden sm:inline">{shouldShuffle ? 'Shuffle' : 'Order'}</span>
-			</button>
+				<!-- Shuffle Mode Toggle Button -->
+				<button
+					type="button"
+					onclick={toggleShuffle}
+					title={shouldShuffle
+						? 'Shuffle enabled (click for original deck order)'
+						: 'Sequential order (click to shuffle cards)'}
+					class="flex h-8 items-center gap-1 rounded-full px-2.5 font-headline text-xs font-bold transition-all active:scale-95 {shouldShuffle
+						? 'bg-indigo-600 text-white shadow-xs shadow-indigo-600/30'
+						: 'border border-slate-200/90 bg-slate-50 text-slate-700 hover:bg-slate-100'}"
+					aria-label={shouldShuffle ? 'Disable card shuffle' : 'Enable card shuffle'}
+				>
+					<Shuffle size={13} strokeWidth={2.25} />
+					<span class="xs:inline hidden sm:inline">{shouldShuffle ? 'Shuffle' : 'Order'}</span>
+				</button>
 
-			<!-- Autoplay Toggle Button -->
-			<button
-				type="button"
-				onclick={toggleAutoplay}
-				title={isAutoplay ? 'Pause hands-free autoplay' : 'Start hands-free autoplay'}
-				class="flex h-8 items-center gap-1.5 rounded-full px-2.5 font-headline text-xs font-bold transition-all active:scale-95 {isAutoplay
-					? 'bg-indigo-600 text-white shadow-xs shadow-indigo-600/30'
-					: 'border border-slate-200/90 bg-slate-50 text-slate-700 hover:bg-slate-100'}"
-			>
-				{#if isAutoplay}
-					<Pause size={13} strokeWidth={2.5} class="fill-current" />
-					<span>Auto</span>
-				{:else}
-					<Play size={13} strokeWidth={2.5} class="fill-current" />
-					<span>Auto</span>
-				{/if}
-			</button>
+				<!-- Autoplay Toggle Button -->
+				<button
+					type="button"
+					onclick={toggleAutoplay}
+					title={isAutoplay ? 'Pause hands-free autoplay' : 'Start hands-free autoplay'}
+					class="flex h-8 items-center gap-1.5 rounded-full px-2.5 font-headline text-xs font-bold transition-all active:scale-95 {isAutoplay
+						? 'bg-indigo-600 text-white shadow-xs shadow-indigo-600/30'
+						: 'border border-slate-200/90 bg-slate-50 text-slate-700 hover:bg-slate-100'}"
+				>
+					{#if isAutoplay}
+						<Pause size={13} strokeWidth={2.5} class="fill-current" />
+						<span>Auto</span>
+					{:else}
+						<Play size={13} strokeWidth={2.5} class="fill-current" />
+						<span>Auto</span>
+					{/if}
+				</button>
+			{/if}
 
 			<div
 				class="flex items-center gap-1 rounded-full border border-emerald-100 bg-emerald-50 px-2 py-1 font-headline text-xs font-bold text-emerald-700"
@@ -671,7 +692,7 @@
 					</button>
 					<button
 						type="button"
-						onclick={() => goto(resolve(`/deck/${deckId}/preview`))}
+						onclick={exitToPreview}
 						class="flex h-11 w-full cursor-pointer items-center justify-center rounded-2xl bg-slate-100 font-headline text-xs font-bold text-slate-600 hover:bg-slate-200 active:scale-95"
 					>
 						Back to Deck

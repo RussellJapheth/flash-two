@@ -349,8 +349,10 @@
 		</div>
 
 		<div class="flex items-center gap-1.5">
-			<!-- Discreet Study Timer -->
-			<StudyTimer compact={true} />
+			{#if !$liteModeStore}
+				<!-- Discreet Study Timer -->
+				<StudyTimer compact={true} />
+			{/if}
 
 			<div
 				class="flex items-center gap-1 rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-1 font-headline text-xs font-bold text-indigo-700"

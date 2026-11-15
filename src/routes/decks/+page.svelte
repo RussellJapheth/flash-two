@@ -4,6 +4,7 @@
 	import StoryCard from '$lib/components/StoryCard.svelte';
 	import DeckSpreadsheetModal from '$lib/components/DeckSpreadsheetModal.svelte';
 	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { openModal, closeModal } from '$lib/utils/backNav';
 	import { onMount } from 'svelte';
@@ -493,6 +494,9 @@
 	);
 
 	let filteredGuides = $derived(searchFieldGuides(searchQuery, guideCategory));
+	let liteCategory = $derived(
+		$liteModeStore ? page.url.searchParams.get('category')?.trim() || '' : ''
+	);
 
 	onMount(() => {
 		const tabParam = page.url.searchParams.get('tab');
@@ -528,10 +532,15 @@
 </script>
 
 <svelte:head>
-	<title>FlashCards — {$liteModeStore ? 'My Words' : 'My Decks'}</title>
+	<title>FlashCards — {$liteModeStore ? liteCategory || 'My Words' : 'My Decks'}</title>
 </svelte:head>
 
-<TopHeader title={$liteModeStore ? 'My Words' : 'My Decks'} streak={streakStats.currentStreak} />
+<TopHeader
+	title={$liteModeStore ? liteCategory || 'My Words' : 'My Decks'}
+	showBack={$liteModeStore && Boolean(liteCategory)}
+	onBack={() => goto(resolve('/decks'))}
+	streak={streakStats.currentStreak}
+/>
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<!-- Tab Switcher: Flashcards vs Stories vs Field Guides (Full mode only) -->
@@ -575,7 +584,7 @@
 
 	{#if $liteModeStore}
 		<!-- LITE MODE: My Words focus -->
-		<MyWordsHome />
+		<MyWordsHome category={liteCategory} />
 	{:else if activeTab === 'flashcards'}
 		<!-- FLASHCARDS TAB -->
 		<!-- Top Bar Actions -->

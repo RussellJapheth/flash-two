@@ -10,6 +10,7 @@
 	} from '$lib/utils/speech';
 	import { Bookmark, Volume2, Pointer, Mic, Check, RotateCcw, Clock } from 'lucide-svelte';
 	import { onMount, onDestroy } from 'svelte';
+	import { liteModeStore } from '$lib/utils/liteMode';
 
 	let {
 		word,
@@ -318,12 +319,23 @@
 			</div>
 
 			<!-- Front Footer Hint -->
-			<div
-				class="flex items-center justify-center gap-1.5 font-sans text-xs font-medium text-slate-400"
-			>
-				<Pointer size={15} strokeWidth={1.75} />
-				<span>Tap to flip</span>
-			</div>
+			{#if $liteModeStore}
+				<div class="flex items-center justify-center">
+					<div
+						class="inline-flex items-center justify-center gap-2 rounded-2xl border border-indigo-200 bg-indigo-50 px-5 py-2.5 font-headline text-sm font-bold text-indigo-700 shadow-xs"
+					>
+						<Pointer size={18} strokeWidth={2.25} />
+						<span>Tap to flip</span>
+					</div>
+				</div>
+			{:else}
+				<div
+					class="flex items-center justify-center gap-1.5 font-sans text-xs font-medium text-slate-400"
+				>
+					<Pointer size={15} strokeWidth={1.75} />
+					<span>Tap to flip</span>
+				</div>
+			{/if}
 		</div>
 
 		<!-- BACK FACE -->

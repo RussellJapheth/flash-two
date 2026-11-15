@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { Sparkles, RefreshCw } from 'lucide-svelte';
+	import { Sparkles, RefreshCw, Plus } from 'lucide-svelte';
 	import type { CustomDeck, WordRecord } from '$lib/types';
 	import {
+		ALL_WORDS_CATEGORY,
+		DUPLICATE_WORD_ERROR,
 		addMyWord,
 		updateMyWord,
 		deleteMyWord,
@@ -9,6 +11,7 @@
 		toMyWordInput,
 		generateWordPinyin,
 		lookupWordSuggestions,
+		getMyWordsSubcategories,
 		type MeaningCandidate,
 		type MyWordErrors,
 		type MyWordField,
@@ -21,21 +24,29 @@
 		/** Word being edited. `null` means Add mode. */
 		word: WordRecord | null;
 		existingWords: WordRecord[];
+		defaultCategory?: string;
 		onChanged: (deck: CustomDeck) => void;
 	}
 
-	let { open = $bindable(), word, existingWords, onChanged }: Props = $props();
+	let {
+		open = $bindable(),
+		word,
+		existingWords,
+		defaultCategory = '',
+		onChanged
+	}: Props = $props();
 
 	const uid = $props.id();
-	const ids = {
+	const ids: Record<MyWordField | 'title', string> = {
 		title: `${uid}-title`,
 		word: `${uid}-word`,
 		pinyin: `${uid}-pinyin`,
 		meaning: `${uid}-meaning`,
-		example: `${uid}-example`
+		example: `${uid}-example`,
+		category: `${uid}-category`
 	};
 
-	const emptyInput: MyWordInput = { word: '', pinyin: '', meaning: '', example: '' };
+	const emptyInput: MyWordInput = { word: '', pinyin: '', meaning: '', example: '', category: '' };
 
 	let dialog: HTMLDialogElement | undefined = $state();
 	let form = $state<MyWordInput>({ ...emptyInput });
@@ -43,6 +54,9 @@
 	let saveError = $state('');
 	let isSaving = $state(false);
 	let confirmingDelete = $state(false);
+	let duplicateWarningShown = $state(false);
+	let creatingCategory = $state(false);
+	let newCategoryName = $state('');
 	let pinyinManuallyEdited = $state(false);
 	let meaningManuallyEdited = $state(false);
 	let exampleManuallyEdited = $state(false);
@@ -55,8 +69,14 @@
 	let lookupSeq = 0;
 
 	let isEdit = $derived(word !== null);
+	let subcategories = $derived(getMyWordsSubcategories(existingWords));
 
-	const fields: { key: MyWordField; label: string; placeholder: string; optional: boolean }[] = [
+	const fields: {
+		key: Exclude<MyWordField, 'category'>;
+		label: string;
+		placeholder: string;
+		optional: boolean;
+	}[] = [
 		{ key: 'word', label: 'Chinese word', placeholder: 'e.g. 你好', optional: false },
 		{ key: 'pinyin', label: 'Pinyin', placeholder: 'e.g. nǐ hǎo', optional: false },
 		{ key: 'meaning', label: 'English meaning', placeholder: 'e.g. hello', optional: false },
@@ -68,13 +88,30 @@
 		}
 	];
 
+	function resolveInitialCategory(): string {
+		if (word) {
+			return (word.category || '').trim();
+		}
+		const trimmed = defaultCategory.trim();
+		if (!trimmed || trimmed.toLowerCase() === ALL_WORDS_CATEGORY.toLowerCase()) {
+			return '';
+		}
+		return trimmed;
+	}
+
 	$effect(() => {
 		if (!dialog) return;
 		if (open && !dialog.open) {
-			form = word ? toMyWordInput(word) : { ...emptyInput };
+			const initCat = resolveInitialCategory();
+			form = word
+				? { ...toMyWordInput(word), category: initCat }
+				: { ...emptyInput, category: initCat };
 			errors = {};
 			saveError = '';
 			confirmingDelete = false;
+			duplicateWarningShown = false;
+			creatingCategory = false;
+			newCategoryName = '';
 			pinyinManuallyEdited = Boolean(word?.Pinyin?.trim());
 			meaningManuallyEdited = Boolean(word?.['English Meaning']?.trim());
 			exampleManuallyEdited = Boolean(word?.['Example (Chinese + Pinyin)']?.trim());
@@ -164,6 +201,7 @@
 	function handleFieldInput(key: MyWordField) {
 		clearFieldError(key);
 		if (key === 'word') {
+			duplicateWarningShown = false;
 			if (isComposing) return;
 			if (!pinyinManuallyEdited) {
 				const auto = generateWordPinyin(form.word);
@@ -178,6 +216,21 @@
 		} else if (key === 'example') {
 			exampleManuallyEdited = form.example.trim().length > 0;
 		}
+	}
+
+	function selectCategory(cat: string) {
+		creatingCategory = false;
+		newCategoryName = '';
+		form.category = cat;
+		clearFieldError('category');
+	}
+
+	function startNewCategory() {
+		creatingCategory = true;
+		clearFieldError('category');
+		setTimeout(() => {
+			document.getElementById(ids.category)?.focus();
+		}, 0);
 	}
 
 	function selectMeaningCandidate(candidate: MeaningCandidate) {
@@ -211,19 +264,36 @@
 		}
 	}
 
-	async function handleSubmit(event: SubmitEvent) {
-		event.preventDefault();
+	async function saveWord(allowDuplicate: boolean) {
 		saveError = '';
-		const found = validateMyWord(form, existingWords, word?.No);
+		if (creatingCategory) {
+			const trimmedCat = newCategoryName.trim();
+			if (!trimmedCat) {
+				errors = { ...errors, category: 'Please enter a category name' };
+				document.getElementById(ids.category)?.focus();
+				return;
+			}
+			form.category = trimmedCat;
+		}
+
+		const found = validateMyWord(form, existingWords, word?.No, { allowDuplicate });
 		errors = found;
+		if (found.word === DUPLICATE_WORD_ERROR && !found.pinyin && !found.meaning) {
+			duplicateWarningShown = true;
+			return;
+		}
+
 		const firstInvalid = fields.find((f) => found[f.key]);
 		if (firstInvalid) {
 			document.getElementById(ids[firstInvalid.key])?.focus();
 			return;
 		}
+
 		isSaving = true;
 		try {
-			const deck = word ? await updateMyWord(word.No, form) : await addMyWord(form);
+			const deck = word
+				? await updateMyWord(word.No, form, { allowDuplicate })
+				: await addMyWord(form, { allowDuplicate });
 			scheduleDebouncedSync();
 			onChanged(deck);
 			open = false;
@@ -232,6 +302,11 @@
 		} finally {
 			isSaving = false;
 		}
+	}
+
+	async function handleSubmit(event: SubmitEvent) {
+		event.preventDefault();
+		await saveWord(false);
 	}
 
 	async function handleDelete() {
@@ -347,6 +422,75 @@
 			</div>
 		{/each}
 
+		<!-- Category Selector -->
+		<div class="space-y-1.5">
+			<label for={ids.category} class="block font-headline text-base font-bold text-slate-900">
+				Category
+				<span class="font-sans text-sm font-normal text-slate-600">(optional)</span>
+			</label>
+			<div class="flex flex-wrap gap-1.5" role="group" aria-label="Word category">
+				<button
+					type="button"
+					onclick={() => selectCategory('')}
+					aria-pressed={!creatingCategory && !form.category?.trim()}
+					class="min-h-11 cursor-pointer rounded-xl border px-3 py-1.5 font-sans text-sm font-semibold transition-colors {!creatingCategory &&
+					!form.category?.trim()
+						? 'border-indigo-200 bg-indigo-50 text-indigo-600'
+						: 'border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'}"
+				>
+					{ALL_WORDS_CATEGORY}
+				</button>
+
+				{#each subcategories as cat (cat)}
+					{@const isSelected = !creatingCategory && form.category?.trim() === cat}
+					<button
+						type="button"
+						onclick={() => selectCategory(cat)}
+						aria-pressed={isSelected}
+						class="min-h-11 cursor-pointer rounded-xl border px-3 py-1.5 font-sans text-sm font-semibold transition-colors {isSelected
+							? 'border-indigo-200 bg-indigo-50 text-indigo-600'
+							: 'border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'}"
+					>
+						{cat}
+					</button>
+				{/each}
+
+				<button
+					type="button"
+					onclick={startNewCategory}
+					aria-pressed={creatingCategory}
+					class="inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-xl border px-3 py-1.5 font-sans text-sm font-semibold transition-colors {creatingCategory
+						? 'border-indigo-200 bg-indigo-50 text-indigo-600'
+						: 'border-slate-200 bg-white text-indigo-600 hover:bg-indigo-50'}"
+				>
+					<Plus size={15} strokeWidth={2.5} aria-hidden="true" />
+					<span>New category</span>
+				</button>
+			</div>
+
+			{#if creatingCategory}
+				<input
+					id={ids.category}
+					type="text"
+					bind:value={newCategoryName}
+					oninput={() => clearFieldError('category')}
+					placeholder="e.g. Week 1"
+					autocomplete="off"
+					aria-invalid={errors.category ? 'true' : 'false'}
+					aria-describedby={errors.category ? `${ids.category}-error` : undefined}
+					class="mt-1.5 h-12 w-full rounded-2xl border bg-white px-4 font-sans text-base text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none {errors.category
+						? 'border-rose-600'
+						: 'border-slate-200'}"
+				/>
+			{/if}
+
+			{#if errors.category}
+				<p id="{ids.category}-error" class="font-sans text-sm font-semibold text-rose-600">
+					Error: {errors.category}
+				</p>
+			{/if}
+		</div>
+
 		{#if saveError}
 			<p
 				role="alert"
@@ -354,6 +498,25 @@
 			>
 				{saveError}
 			</p>
+		{/if}
+
+		{#if duplicateWarningShown}
+			<div
+				role="alert"
+				class="space-y-2 rounded-2xl border border-amber-200 bg-amber-50 p-3.5 text-slate-900"
+			>
+				<p class="font-sans text-sm font-semibold text-amber-900">
+					"{form.word.trim()}" is already in My Words. Do you want to add it again?
+				</p>
+				<button
+					type="button"
+					disabled={isSaving}
+					onclick={() => saveWord(true)}
+					class="h-11 w-full cursor-pointer rounded-xl bg-amber-600 font-headline text-sm font-bold text-white transition-colors hover:bg-amber-700 disabled:opacity-60"
+				>
+					{isSaving ? 'Saving…' : 'Add Word Anyway'}
+				</button>
+			</div>
 		{/if}
 
 		<div class="space-y-2 pt-1">

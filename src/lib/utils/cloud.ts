@@ -224,14 +224,17 @@ export async function pullAndMerge(username: string): Promise<boolean> {
 				if (!localDeck) {
 					await saveCustomDeck(remoteDeck);
 				} else {
-					// Keep newer version if remote has more words or is newer
+					// Keep newer version by timestamp; tie-break by word count only when timestamps match
 					const remoteCreated = remoteDeck.createdAt || 0;
 					const localCreated = localDeck.createdAt || 0;
-					if (remoteCreated > localCreated || remoteDeck.words.length > localDeck.words.length) {
+					if (
+						remoteCreated > localCreated ||
+						(remoteCreated === localCreated && remoteDeck.words.length > localDeck.words.length)
+					) {
 						await saveCustomDeck(remoteDeck);
 					} else if (
 						localCreated > remoteCreated ||
-						localDeck.words.length > remoteDeck.words.length
+						(localCreated === remoteCreated && localDeck.words.length > remoteDeck.words.length)
 					) {
 						localHadNewData = true;
 					}

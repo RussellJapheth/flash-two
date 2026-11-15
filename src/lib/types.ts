@@ -10,6 +10,7 @@ export interface WordRecord {
 	/** Other words that also complete this card's example sentence validly. */
 	'Acceptable Answers'?: string[];
 	customNote?: string;
+	category?: string;
 }
 
 export interface DictionaryEntry {

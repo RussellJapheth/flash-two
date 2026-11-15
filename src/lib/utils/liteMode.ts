@@ -43,20 +43,28 @@ export function resolveInitialLiteMode(url?: URL | Location): boolean {
 		}
 	}
 
-	const stored = getStoredLiteMode();
-
-	if (stored === null) {
-		// New user
-		if (param === 'off' || param === 'false' || param === '0') {
+	// 1. Explicit URL parameter takes immediate priority whenever present on any URL
+	if (param !== null) {
+		const lower = param.trim().toLowerCase();
+		if (lower === 'off' || lower === 'false' || lower === '0') {
 			setLiteMode(false);
 			return false;
 		}
+		if (lower === 'on' || lower === 'true' || lower === '1') {
+			setLiteMode(true);
+			return true;
+		}
+	}
+
+	// 2. If no URL parameter, use stored preference
+	const stored = getStoredLiteMode();
+	if (stored === null) {
 		// Default for new users: Lite Mode ON
 		setLiteMode(true);
 		return true;
 	}
 
-	// Existing user: stored preference takes priority unless explicitly toggled
+	// Existing user stored preference
 	liteModeStore.set(stored);
 	return stored;
 }
@@ -79,4 +87,3 @@ export function isFullFeaturePath(pathname: string): boolean {
 		(prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
 	);
 }
-

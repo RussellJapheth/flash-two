@@ -14,6 +14,14 @@
 
 	let { children } = $props();
 
+	// React to ?lite= query parameters on any URL navigation
+	$effect(() => {
+		const param = page.url.searchParams.get('lite');
+		if (param !== null) {
+			resolveInitialLiteMode(page.url);
+		}
+	});
+
 	// In Lite mode, '/' automatically redirects to '/decks'
 	$effect(() => {
 		if ($liteModeStore && page.url.pathname === '/') {

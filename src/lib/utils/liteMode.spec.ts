@@ -80,11 +80,35 @@ describe('liteMode', () => {
 		expect(getStoredLiteMode()).toBe(false);
 	});
 
-	it('preserves existing user preference when ?lite=off arrives', () => {
-		localStorage.setItem(LITE_MODE_KEY, 'true');
-		const enabled = resolveInitialLiteMode(new URL('https://flash.app/?lite=off'));
-		expect(enabled).toBe(true);
+	it('handles true representations: ?lite=on, ?lite=true, ?lite=1 on any URL', () => {
+		setLiteMode(false);
+		expect(getStoredLiteMode()).toBe(false);
+
+		const enabledOn = resolveInitialLiteMode(new URL('https://flash.app/textbook?lite=on'));
+		expect(enabledOn).toBe(true);
 		expect(getStoredLiteMode()).toBe(true);
+
+		setLiteMode(false);
+		resolveInitialLiteMode(new URL('https://flash.app/games?lite=true'));
+		expect(getStoredLiteMode()).toBe(true);
+
+		setLiteMode(false);
+		resolveInitialLiteMode(new URL('https://flash.app/decks?lite=1'));
+		expect(getStoredLiteMode()).toBe(true);
+	});
+
+	it('overrides existing user preference when explicit ?lite=off arrives', () => {
+		localStorage.setItem(LITE_MODE_KEY, 'true');
+		const enabled = resolveInitialLiteMode(new URL('https://flash.app/settings?lite=off'));
+		expect(enabled).toBe(false);
+		expect(getStoredLiteMode()).toBe(false);
+	});
+
+	it('preserves existing user preference when no ?lite param is present in URL', () => {
+		localStorage.setItem(LITE_MODE_KEY, 'false');
+		const enabled = resolveInitialLiteMode(new URL('https://flash.app/decks'));
+		expect(enabled).toBe(false);
+		expect(getStoredLiteMode()).toBe(false);
 	});
 
 	it('identifies full-only feature routes correctly', () => {

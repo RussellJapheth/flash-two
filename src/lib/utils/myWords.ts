@@ -1,11 +1,23 @@
 import type { CustomDeck, WordRecord } from '$lib/types';
 import { getAllCustomDecks, saveCustomDeck } from '$lib/utils/storage';
 import { generatePinyin } from '$lib/utils/notebookStorage';
+import { lookupExactChineseWord } from '$lib/utils/dictionary';
 
 export const MY_WORDS_DECK_ID = 'custom-my-words';
 export const MY_WORDS_DECK_NAME = 'My Words';
 
 const HANZI_REGEX = /[\u4e00-\u9fff]/;
+
+export interface MeaningCandidate {
+	meaning: string;
+	pinyin?: string;
+}
+
+export interface WordSuggestions {
+	pinyin: string;
+	meanings: MeaningCandidate[];
+	examples: string[];
+}
 
 /**
  * Generates tone-marked pinyin for a Chinese word when it contains Hanzi.
@@ -15,6 +27,112 @@ export function generateWordPinyin(chineseWord: string): string {
 	const trimmed = chineseWord.trim();
 	if (!trimmed || !HANZI_REGEX.test(trimmed)) return '';
 	return generatePinyin(trimmed);
+}
+
+function cleanGlossSegment(raw: string): string {
+	return raw
+		.replace(/\bCL:[^;/)]+/gi, '')
+		.replace(/\b(?:Taiwan|also)\s+pr\.\s*\[[^\]]*\]/gi, '')
+		.replace(/\([^)]*\)/g, ' ')
+		.replace(/\s+/g, ' ')
+		.replace(/^[,;:\-\s]+|[,;:\-\s]+$/g, '')
+		.trim();
+}
+
+function isCrossRefGloss(cleaned: string): boolean {
+	return /^(?:see\s|variant of\s|old variant of\s|erhua variant of\s|same as\s)/i.test(cleaned);
+}
+
+/**
+ * Extracts up to `maxCandidates` clean, deduplicated English meaning options from
+ * matched pack and dictionary entries (splitting on `;` and `/`).
+ */
+export function cleanMeaningCandidates(
+	entries: WordRecord[],
+	maxCandidates = 4
+): MeaningCandidate[] {
+	const shortList: MeaningCandidate[] = [];
+	const longList: MeaningCandidate[] = [];
+	const seen = new Set<string>();
+
+	for (const entry of entries) {
+		const rawMeaning = entry['English Meaning'] || '';
+		if (!rawMeaning.trim()) continue;
+		const py = entry.Pinyin?.trim() || undefined;
+		const segments = rawMeaning.split(/[;/]/);
+
+		for (const seg of segments) {
+			const cleaned = cleanGlossSegment(seg);
+			if (!cleaned || isCrossRefGloss(cleaned)) continue;
+			const key = cleaned.toLowerCase();
+			if (seen.has(key)) continue;
+			seen.add(key);
+
+			const item: MeaningCandidate = py ? { meaning: cleaned, pinyin: py } : { meaning: cleaned };
+			if (cleaned.length <= 45) {
+				shortList.push(item);
+			} else {
+				longList.push(item);
+			}
+		}
+	}
+
+	return [...shortList, ...longList].slice(0, maxCandidates);
+}
+
+/**
+ * Finds curated example sentences from built-in packs for a Chinese word.
+ * Priority 1: Exact word match in packs.
+ * Priority 2: Other pack cards whose example sentence contains the word.
+ */
+export function findPackExamples(
+	hanzi: string,
+	packWords: WordRecord[],
+	maxExamples = 5
+): string[] {
+	const target = hanzi.trim();
+	if (!target || !HANZI_REGEX.test(target)) return [];
+
+	const exact: string[] = [];
+	const containing: string[] = [];
+	const seen = new Set<string>();
+
+	for (const w of packWords) {
+		const ex = w['Example (Chinese + Pinyin)']?.trim();
+		if (!ex || seen.has(ex)) continue;
+		const wordZh = (w['Chinese Word'] || '').trim();
+		if (wordZh === target) {
+			seen.add(ex);
+			exact.push(ex);
+		} else if (ex.includes(target)) {
+			seen.add(ex);
+			containing.push(ex);
+		}
+	}
+
+	return [...exact, ...containing].slice(0, maxExamples);
+}
+
+/**
+ * Looks up Pinyin, selectable English meanings, and pack example sentences for a Chinese word.
+ */
+export async function lookupWordSuggestions(hanzi: string): Promise<WordSuggestions> {
+	const trimmed = hanzi.trim();
+	if (!trimmed || !HANZI_REGEX.test(trimmed)) {
+		return { pinyin: '', meanings: [], examples: [] };
+	}
+
+	const { packMatches, dictMatches, corpusWords } = await lookupExactChineseWord(trimmed);
+	const allMatches = [...packMatches, ...dictMatches];
+	const meanings = cleanMeaningCandidates(allMatches);
+	const examples = findPackExamples(trimmed, corpusWords);
+	const pinyin =
+		packMatches[0]?.Pinyin ||
+		meanings[0]?.pinyin ||
+		dictMatches[0]?.Pinyin ||
+		generateWordPinyin(trimmed);
+
+	return { pinyin, meanings, examples };
 }
 
 export interface MyWordInput {

@@ -1,11 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import type { CustomDeck } from '$lib/types';
+import type { CustomDeck, WordRecord } from '$lib/types';
 import {
 	MY_WORDS_DECK_ID,
 	DUPLICATE_WORD_ERROR,
 	validateMyWord,
 	toMyWordInput,
 	generateWordPinyin,
+	cleanMeaningCandidates,
+	findPackExamples,
 	buildDeckWithAddedWord,
 	buildDeckWithUpdatedWord,
 	buildDeckWithoutWord,
@@ -128,5 +130,86 @@ describe('generateWordPinyin', () => {
 		expect(generateWordPinyin('')).toBe('');
 		expect(generateWordPinyin('   ')).toBe('');
 		expect(generateWordPinyin('hello')).toBe('');
+	});
+});
+
+describe('cleanMeaningCandidates', () => {
+	it('splits on semicolons and slashes, strips dictionary jargon, and deduplicates', () => {
+		const entries: WordRecord[] = [
+			{
+				No: 1,
+				'Chinese Word': '打',
+				Pinyin: 'dǎ',
+				'Part of Speech': 'Verb',
+				'English Meaning':
+					'to hit / to strike; to fight; (in many expressions) a semantically light transitive verb used with various objects to form expressions with a wide range of meanings'
+			},
+			{
+				No: 2,
+				'Chinese Word': '打',
+				Pinyin: 'dá',
+				'Part of Speech': 'Measure',
+				'English Meaning': '(loanword) dozen; Taiwan pr. [da3]; to hit'
+			}
+		];
+
+		expect(cleanMeaningCandidates(entries)).toEqual([
+			{ meaning: 'to hit', pinyin: 'dǎ' },
+			{ meaning: 'to strike', pinyin: 'dǎ' },
+			{ meaning: 'to fight', pinyin: 'dǎ' },
+			{ meaning: 'dozen', pinyin: 'dá' }
+		]);
+	});
+
+	it('skips cross-reference glosses and caps at 4 candidates', () => {
+		const entries: WordRecord[] = [
+			{
+				No: 1,
+				'Chinese Word': '去',
+				Pinyin: 'qù',
+				'Part of Speech': 'Verb',
+				'English Meaning':
+					'variant of 去; to go; to leave; to remove; to send; to reduce; CL:個|个[ge4]'
+			}
+		];
+		expect(cleanMeaningCandidates(entries).map((c) => c.meaning)).toEqual([
+			'to go',
+			'to leave',
+			'to remove',
+			'to send'
+		]);
+	});
+});
+
+describe('findPackExamples', () => {
+	const packWords: WordRecord[] = [
+		{
+			No: 1,
+			'Chinese Word': '你好',
+			Pinyin: 'nǐ hǎo',
+			'Part of Speech': 'Interjection',
+			'English Meaning': 'hello',
+			'Example (Chinese + Pinyin)': '你好！很高兴认识你。(Nǐ hǎo! Hěn gāoxìng rènshí nǐ.)'
+		},
+		{
+			No: 2,
+			'Chinese Word': '认识',
+			Pinyin: 'rènshí',
+			'Part of Speech': 'Verb',
+			'English Meaning': 'to know',
+			'Example (Chinese + Pinyin)': '我认识他，他说你好。(Wǒ rènshí tā, tā shuō nǐ hǎo.)'
+		}
+	];
+
+	it('prioritizes exact pack word match first, then pack examples containing the word', () => {
+		expect(findPackExamples('你好', packWords)).toEqual([
+			'你好！很高兴认识你。(Nǐ hǎo! Hěn gāoxìng rènshí nǐ.)',
+			'我认识他，他说你好。(Wǒ rènshí tā, tā shuō nǐ hǎo.)'
+		]);
+	});
+
+	it('returns empty array when no pack contains the word', () => {
+		expect(findPackExamples('宇宙飞船', packWords)).toEqual([]);
+		expect(findPackExamples('', packWords)).toEqual([]);
 	});
 });

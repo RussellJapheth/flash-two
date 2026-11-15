@@ -1,5 +1,10 @@
 import type { WordRecord, CustomDeck } from '$lib/types';
-import { getAllCustomDecks, saveCustomDeck, getBuiltinPacks } from '$lib/utils/storage';
+import {
+	getAllCustomDecks,
+	saveCustomDeck,
+	getBuiltinPacks,
+	DRAMA_CUSTOM_DECK
+} from '$lib/utils/storage';
 
 export const PERSONAL_DICTIONARY_DECK_ID = 'personal-dictionary';
 
@@ -267,6 +272,7 @@ interface IndexedDictEntry {
 }
 
 let cachedIndexedDict: IndexedDictEntry[] | null = null;
+let cachedDictByZh: Map<string, RawDictEntry[]> | null = null;
 let dictFetchPromise: Promise<IndexedDictEntry[]> | null = null;
 
 async function getEmbeddedDict(): Promise<IndexedDictEntry[]> {
@@ -277,22 +283,77 @@ async function getEmbeddedDict(): Promise<IndexedDictEntry[]> {
 			.then((res) => (res.ok ? res.json() : []))
 			.then((data: RawDictEntry[]) => {
 				if (!Array.isArray(data)) return [];
+				const byZh = new Map<string, RawDictEntry[]>();
 				cachedIndexedDict = data.map((entry) => {
 					const zh = entry['Chinese Word'] || entry.simplified || entry.word || '';
 					const py = entry.Pinyin || entry.pinyin || '';
 					const eng = entry['English Meaning'] || entry.meaning || entry.definition || '';
+					const normZh = normalizeChinese(zh);
+					if (normZh) {
+						const bucket = byZh.get(normZh);
+						if (bucket) bucket.push(entry);
+						else byZh.set(normZh, [entry]);
+					}
 					return {
 						entry,
-						zh: normalizeChinese(zh),
+						zh: normZh,
 						normPy: normalizePinyin(py),
 						normEng: eng.toLowerCase()
 					};
 				});
+				cachedDictByZh = byZh;
 				return cachedIndexedDict;
 			})
 			.catch(() => []);
 	}
 	return dictFetchPromise;
+}
+
+export async function getChinesePackCorpus(): Promise<WordRecord[]> {
+	const builtin = await getCachedBuiltinPackWords();
+	return [...builtin, ...DRAMA_CUSTOM_DECK.words];
+}
+
+export interface ExactWordLookupResult {
+	packMatches: WordRecord[];
+	dictMatches: WordRecord[];
+	corpusWords: WordRecord[];
+}
+
+/**
+ * O(1) exact Chinese word lookup across built-in packs, Drama deck, and /dict.json.
+ */
+export async function lookupExactChineseWord(hanzi: string): Promise<ExactWordLookupResult> {
+	const normZh = normalizeChinese(hanzi);
+	if (!normZh) {
+		return { packMatches: [], dictMatches: [], corpusWords: [] };
+	}
+
+	const corpusWords = await getChinesePackCorpus();
+	const packMatches = corpusWords
+		.filter((w) => normalizeChinese(w['Chinese Word'] || '') === normZh)
+		.map((w) => {
+			const zh = w['Chinese Word'] || '';
+			return { ...w, Pinyin: formatPinyin(w.Pinyin || '', zh) };
+		});
+
+	await getEmbeddedDict();
+	const rawMatches = cachedDictByZh?.get(normZh) ?? [];
+	const dictMatches: WordRecord[] = rawMatches.map((entry, idx) => {
+		const zh = entry['Chinese Word'] || entry.simplified || entry.word || hanzi.trim();
+		const rawPy = entry.Pinyin || entry.pinyin || '';
+		return {
+			No: 900000 + idx,
+			'Chinese Word': zh,
+			Pinyin: formatPinyin(rawPy, zh),
+			'Part of Speech': entry['Part of Speech'] || entry.pos || 'Vocabulary',
+			'English Meaning': entry['English Meaning'] || entry.meaning || entry.definition || '',
+			'Example (Chinese + Pinyin)':
+				entry['Example (Chinese + Pinyin)'] || entry.example || undefined
+		};
+	});
+
+	return { packMatches, dictMatches, corpusWords };
 }
 
 /**

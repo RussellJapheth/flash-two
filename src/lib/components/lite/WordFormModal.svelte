@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Sparkles } from 'lucide-svelte';
+	import { Sparkles, RefreshCw } from 'lucide-svelte';
 	import type { CustomDeck, WordRecord } from '$lib/types';
 	import {
 		addMyWord,
@@ -8,6 +8,8 @@
 		validateMyWord,
 		toMyWordInput,
 		generateWordPinyin,
+		lookupWordSuggestions,
+		type MeaningCandidate,
 		type MyWordErrors,
 		type MyWordField,
 		type MyWordInput
@@ -42,6 +44,15 @@
 	let isSaving = $state(false);
 	let confirmingDelete = $state(false);
 	let pinyinManuallyEdited = $state(false);
+	let meaningManuallyEdited = $state(false);
+	let exampleManuallyEdited = $state(false);
+	let meaningCandidates = $state<MeaningCandidate[]>([]);
+	let exampleCandidates = $state<string[]>([]);
+	let exampleIndex = $state(0);
+	let isComposing = $state(false);
+
+	let lookupTimer: ReturnType<typeof setTimeout> | null = null;
+	let lookupSeq = 0;
 
 	let isEdit = $derived(word !== null);
 
@@ -65,13 +76,23 @@
 			saveError = '';
 			confirmingDelete = false;
 			pinyinManuallyEdited = Boolean(word?.Pinyin?.trim());
+			meaningManuallyEdited = Boolean(word?.['English Meaning']?.trim());
+			exampleManuallyEdited = Boolean(word?.['Example (Chinese + Pinyin)']?.trim());
+			meaningCandidates = [];
+			exampleCandidates = [];
+			exampleIndex = 0;
 			dialog.showModal();
+			if (word?.['Chinese Word']?.trim()) {
+				void runWordLookup(word['Chinese Word'], false);
+			}
 		} else if (!open && dialog.open) {
+			if (lookupTimer) clearTimeout(lookupTimer);
 			dialog.close();
 		}
 	});
 
 	function handleClose() {
+		if (lookupTimer) clearTimeout(lookupTimer);
 		open = false;
 	}
 
@@ -96,15 +117,84 @@
 		}
 	}
 
+	async function runWordLookup(rawWord: string, autoFill: boolean) {
+		const seq = ++lookupSeq;
+		const trimmed = rawWord.trim();
+		if (!trimmed) {
+			meaningCandidates = [];
+			exampleCandidates = [];
+			exampleIndex = 0;
+			if (autoFill) {
+				if (!pinyinManuallyEdited) form.pinyin = '';
+				if (!meaningManuallyEdited) form.meaning = '';
+				if (!exampleManuallyEdited) form.example = '';
+			}
+			return;
+		}
+
+		const suggestions = await lookupWordSuggestions(trimmed);
+		if (seq !== lookupSeq) return;
+
+		meaningCandidates = suggestions.meanings;
+		exampleCandidates = suggestions.examples;
+		exampleIndex = 0;
+
+		if (autoFill) {
+			if (!pinyinManuallyEdited && suggestions.pinyin) {
+				form.pinyin = suggestions.pinyin;
+				clearFieldError('pinyin');
+			}
+			if (!meaningManuallyEdited) {
+				form.meaning = suggestions.meanings[0]?.meaning ?? '';
+				if (form.meaning) clearFieldError('meaning');
+			}
+			if (!exampleManuallyEdited) {
+				form.example = suggestions.examples[0] ?? '';
+			}
+		}
+	}
+
+	function scheduleWordLookup(rawWord: string) {
+		if (lookupTimer) clearTimeout(lookupTimer);
+		lookupTimer = setTimeout(() => {
+			void runWordLookup(rawWord, true);
+		}, 150);
+	}
+
 	function handleFieldInput(key: MyWordField) {
 		clearFieldError(key);
-		if (key === 'word' && !pinyinManuallyEdited) {
-			const auto = generateWordPinyin(form.word);
-			form.pinyin = auto;
-			if (auto) clearFieldError('pinyin');
+		if (key === 'word') {
+			if (isComposing) return;
+			if (!pinyinManuallyEdited) {
+				const auto = generateWordPinyin(form.word);
+				form.pinyin = auto;
+				if (auto) clearFieldError('pinyin');
+			}
+			scheduleWordLookup(form.word);
 		} else if (key === 'pinyin') {
 			pinyinManuallyEdited = form.pinyin.trim().length > 0;
+		} else if (key === 'meaning') {
+			meaningManuallyEdited = form.meaning.trim().length > 0;
+		} else if (key === 'example') {
+			exampleManuallyEdited = form.example.trim().length > 0;
 		}
+	}
+
+	function selectMeaningCandidate(candidate: MeaningCandidate) {
+		form.meaning = candidate.meaning;
+		meaningManuallyEdited = true;
+		clearFieldError('meaning');
+		if (candidate.pinyin && !pinyinManuallyEdited) {
+			form.pinyin = candidate.pinyin;
+			clearFieldError('pinyin');
+		}
+	}
+
+	function handleNextExample() {
+		if (exampleCandidates.length === 0) return;
+		exampleIndex = (exampleIndex + 1) % exampleCandidates.length;
+		form.example = exampleCandidates[exampleIndex];
+		exampleManuallyEdited = false;
 	}
 
 	function handleAutoPinyin() {
@@ -197,12 +287,30 @@
 							<Sparkles size={16} aria-hidden="true" />
 							<span>Auto Pinyin</span>
 						</button>
+					{:else if field.key === 'example' && exampleCandidates.length > 1}
+						<button
+							type="button"
+							onclick={handleNextExample}
+							class="inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-xl px-2.5 font-headline text-sm font-bold text-indigo-600 transition-colors hover:bg-indigo-50"
+						>
+							<RefreshCw size={15} aria-hidden="true" />
+							<span>Next example</span>
+						</button>
 					{/if}
 				</div>
 				<input
 					id={ids[field.key]}
 					type="text"
 					bind:value={form[field.key]}
+					oncompositionstart={() => {
+						if (field.key === 'word') isComposing = true;
+					}}
+					oncompositionend={() => {
+						if (field.key === 'word') {
+							isComposing = false;
+							handleFieldInput('word');
+						}
+					}}
 					oninput={() => handleFieldInput(field.key)}
 					placeholder={field.placeholder}
 					required={!field.optional}
@@ -213,6 +321,24 @@
 						? 'border-rose-600'
 						: 'border-slate-200'}"
 				/>
+				{#if field.key === 'meaning' && meaningCandidates.length > 1}
+					<div class="flex flex-wrap gap-1.5 pt-1" role="group" aria-label="Suggested meanings">
+						{#each meaningCandidates as candidate (candidate.meaning)}
+							{@const selected =
+								form.meaning.trim().toLowerCase() === candidate.meaning.toLowerCase()}
+							<button
+								type="button"
+								onclick={() => selectMeaningCandidate(candidate)}
+								aria-pressed={selected}
+								class="min-h-11 cursor-pointer rounded-xl border px-3 py-1.5 font-sans text-sm font-semibold transition-colors {selected
+									? 'border-indigo-200 bg-indigo-50 text-indigo-600'
+									: 'border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'}"
+							>
+								{candidate.meaning}
+							</button>
+						{/each}
+					</div>
+				{/if}
 				{#if error}
 					<p id="{ids[field.key]}-error" class="font-sans text-sm font-semibold text-rose-600">
 						Error: {error}

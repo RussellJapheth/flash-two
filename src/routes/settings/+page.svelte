@@ -66,8 +66,10 @@
 		Smartphone,
 		Copy,
 		Check,
-		ExternalLink
+		ExternalLink,
+		Layers
 	} from 'lucide-svelte';
+	import { isLiteModeEnabled, setLiteMode } from '$lib/utils/liteMode';
 
 	let username = $state('');
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
@@ -79,6 +81,7 @@
 	let isDebugMode = $state(false);
 	let autoStartTimer = $state(true);
 	let webapkCopied = $state(false);
+	let isLite = $state(isLiteModeEnabled());
 
 	let streakStats = $state<StreakStats>({
 		currentStreak: 0,
@@ -112,8 +115,15 @@
 		leaderboardDisabled = isLeaderboardDisabled();
 		isDebugMode = isDebugModeEnabled();
 		autoStartTimer = isAutoStartTimerEnabled();
+		isLite = isLiteModeEnabled();
 		const progress = await getAllProgress();
 		streakStats = computeStreakStats(progress);
+	}
+
+	function handleToggleLiteMode() {
+		const next = !isLite;
+		isLite = next;
+		setLiteMode(next);
 	}
 
 	async function handleToggleLeaderboard() {
@@ -540,6 +550,53 @@
 	<section
 		class="shadow-card divide-y divide-slate-100 overflow-hidden rounded-3xl border border-slate-200/80 bg-white"
 	>
+		<!-- Lite Mode (Flashcards Only vs Full Experience) -->
+		<div
+			class="flex w-full items-center justify-between px-5 py-4 transition-colors hover:bg-slate-50/60"
+		>
+			<div class="flex items-center gap-3.5">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-indigo-600"
+				>
+					<Layers size={18} strokeWidth={2} />
+				</div>
+				<div class="text-left">
+					<div class="flex items-center gap-2">
+						<span class="block font-headline text-sm font-bold text-slate-900">Lite Mode</span>
+						<span
+							class="rounded-full px-2 py-0.5 font-headline text-[10px] font-bold {isLite
+								? 'bg-indigo-100 text-indigo-700'
+								: 'bg-slate-100 text-slate-600'}"
+						>
+							{isLite ? 'Flashcards Only' : 'Full Experience'}
+						</span>
+					</div>
+					<span class="block font-sans text-xs text-slate-500">
+						{isLite
+							? 'Minimalist app mode focusing solely on custom and built-in flashcard decks'
+							: 'All features active (textbooks, podcasts, arcade games, and stories)'}
+					</span>
+				</div>
+			</div>
+			<button
+				type="button"
+				id="settings-lite-mode-toggle"
+				role="switch"
+				aria-checked={isLite}
+				aria-label="Toggle Lite Mode"
+				onclick={handleToggleLiteMode}
+				class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {isLite
+					? 'bg-indigo-600'
+					: 'bg-slate-200'}"
+			>
+				<span
+					class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out {isLite
+						? 'translate-x-5'
+						: 'translate-x-0'}"
+				></span>
+			</button>
+		</div>
+
 		<!-- Language -->
 		<button
 			type="button"

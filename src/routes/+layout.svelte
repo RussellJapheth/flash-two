@@ -2,13 +2,24 @@
 	import './layout.css';
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import DictionaryModal from '$lib/components/DictionaryModal.svelte';
+	import FullModeBanner from '$lib/components/FullModeBanner.svelte';
 	import { onMount } from 'svelte';
 	import { page, updated } from '$app/state';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { initializeOfflinePacks, getSavedUsername, clearOfflineCache } from '$lib/utils/storage';
 	import { pullAndMerge } from '$lib/utils/cloud';
 	import { migrateLocalXP } from '$lib/utils/xp';
+	import { liteModeStore, resolveInitialLiteMode, isFullFeaturePath } from '$lib/utils/liteMode';
 
 	let { children } = $props();
+
+	// In Lite mode, '/' automatically redirects to '/decks'
+	$effect(() => {
+		if ($liteModeStore && page.url.pathname === '/') {
+			goto(resolve('/decks'), { replaceState: true });
+		}
+	});
 
 	// Hide bottom navigation during active study sessions for immersion
 	let isStudySession = $derived(
@@ -22,6 +33,9 @@
 	);
 
 	onMount(() => {
+		// Initialize lite mode from URL parameters or saved preference
+		resolveInitialLiteMode(page.url);
+
 		let interval: ReturnType<typeof setInterval>;
 
 		(async () => {
@@ -62,6 +76,9 @@
 	<div
 		class="relative flex min-h-screen w-full flex-col bg-white pb-[calc(env(safe-area-inset-bottom,0px)+5rem)] sm:max-w-md sm:border-x sm:border-slate-200/60 sm:shadow-sm"
 	>
+		{#if $liteModeStore && isFullFeaturePath(page.url.pathname)}
+			<FullModeBanner />
+		{/if}
 		{@render children()}
 	</div>
 

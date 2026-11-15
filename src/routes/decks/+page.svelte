@@ -48,8 +48,15 @@
 	import { downloadCsvTemplate } from '$lib/utils/csvTemplate';
 	import { searchFieldGuides } from '$lib/data/fieldGuides';
 	import { normalizePinyin } from '$lib/utils/dictionary';
+	import { liteModeStore } from '$lib/utils/liteMode';
 
 	let activeTab = $state<'flashcards' | 'stories' | 'guides'>('flashcards');
+
+	$effect(() => {
+		if ($liteModeStore && activeTab !== 'flashcards') {
+			activeTab = 'flashcards';
+		}
+	});
 
 	function switchTab(tab: 'flashcards' | 'stories' | 'guides') {
 		activeTab = tab;
@@ -526,42 +533,44 @@
 <TopHeader title="My Decks" streak={streakStats.currentStreak} />
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
-	<!-- Tab Switcher: Flashcards vs Stories vs Field Guides -->
-	<div class="grid grid-cols-3 rounded-2xl bg-slate-100 p-1">
-		<button
-			type="button"
-			onclick={() => switchTab('flashcards')}
-			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
-			'flashcards'
-				? 'bg-white text-slate-900 shadow-xs'
-				: 'text-slate-500 hover:text-slate-800'}"
-		>
-			<Layers size={14} strokeWidth={2.25} />
-			<span>Flashcards</span>
-		</button>
-		<button
-			type="button"
-			onclick={() => switchTab('stories')}
-			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
-			'stories'
-				? 'bg-white text-slate-900 shadow-xs'
-				: 'text-slate-500 hover:text-slate-800'}"
-		>
-			<BookOpen size={14} strokeWidth={2.25} />
-			<span>Stories</span>
-		</button>
-		<button
-			type="button"
-			onclick={() => switchTab('guides')}
-			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
-			'guides'
-				? 'bg-white text-slate-900 shadow-xs'
-				: 'text-slate-500 hover:text-slate-800'}"
-		>
-			<Compass size={14} strokeWidth={2.25} />
-			<span>Field Guides</span>
-		</button>
-	</div>
+	<!-- Tab Switcher: Flashcards vs Stories vs Field Guides (Full mode only) -->
+	{#if !$liteModeStore}
+		<div class="grid grid-cols-3 rounded-2xl bg-slate-100 p-1">
+			<button
+				type="button"
+				onclick={() => switchTab('flashcards')}
+				class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
+				'flashcards'
+					? 'bg-white text-slate-900 shadow-xs'
+					: 'text-slate-500 hover:text-slate-800'}"
+			>
+				<Layers size={14} strokeWidth={2.25} />
+				<span>Flashcards</span>
+			</button>
+			<button
+				type="button"
+				onclick={() => switchTab('stories')}
+				class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
+				'stories'
+					? 'bg-white text-slate-900 shadow-xs'
+					: 'text-slate-500 hover:text-slate-800'}"
+			>
+				<BookOpen size={14} strokeWidth={2.25} />
+				<span>Stories</span>
+			</button>
+			<button
+				type="button"
+				onclick={() => switchTab('guides')}
+				class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
+				'guides'
+					? 'bg-white text-slate-900 shadow-xs'
+					: 'text-slate-500 hover:text-slate-800'}"
+			>
+				<Compass size={14} strokeWidth={2.25} />
+				<span>Field Guides</span>
+			</button>
+		</div>
+	{/if}
 
 	{#if activeTab === 'flashcards'}
 		<!-- FLASHCARDS TAB -->

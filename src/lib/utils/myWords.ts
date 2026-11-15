@@ -1,8 +1,21 @@
 import type { CustomDeck, WordRecord } from '$lib/types';
 import { getAllCustomDecks, saveCustomDeck } from '$lib/utils/storage';
+import { generatePinyin } from '$lib/utils/notebookStorage';
 
 export const MY_WORDS_DECK_ID = 'custom-my-words';
 export const MY_WORDS_DECK_NAME = 'My Words';
+
+const HANZI_REGEX = /[\u4e00-\u9fff]/;
+
+/**
+ * Generates tone-marked pinyin for a Chinese word when it contains Hanzi.
+ * Returns an empty string for empty or non-Hanzi input.
+ */
+export function generateWordPinyin(chineseWord: string): string {
+	const trimmed = chineseWord.trim();
+	if (!trimmed || !HANZI_REGEX.test(trimmed)) return '';
+	return generatePinyin(trimmed);
+}
 
 export interface MyWordInput {
 	word: string;
@@ -139,4 +152,3 @@ export async function deleteMyWord(no: number): Promise<CustomDeck> {
 	await saveCustomDeck(updated);
 	return updated;
 }
-

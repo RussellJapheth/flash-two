@@ -8,7 +8,8 @@ import {
 	isFullFeaturePath,
 	liteModeStore,
 	getEffectiveLanguage,
-	filterLiteDecks
+	filterLiteDecks,
+	shouldIncludeInReview
 } from './liteMode';
 import { get } from 'svelte/store';
 
@@ -161,5 +162,55 @@ describe('filterLiteDecks', () => {
 			{ id: 'personal-dictionary', language: 'chinese' as const }
 		];
 		expect(filterLiteDecks(decks).map((d) => d.id)).toEqual(['chinese-week1', 'custom-no-lang']);
+	});
+});
+
+describe('shouldIncludeInReview', () => {
+	const now = Date.now();
+	const dueReviewed = {
+		weekId: 'hsk1',
+		wordNo: 1,
+		correct: 1,
+		wrong: 0,
+		lastReviewed: now - 10_000,
+		dueDate: now - 1_000
+	};
+	const notDueReviewed = {
+		weekId: 'hsk1',
+		wordNo: 2,
+		correct: 2,
+		wrong: 0,
+		lastReviewed: now,
+		dueDate: now + 60_000
+	};
+
+	it('in Lite mode includes unreviewed and due cards from My Words', () => {
+		expect(shouldIncludeInReview(true, 'custom-my-words', undefined)).toBe(true);
+		expect(shouldIncludeInReview(true, 'custom-my-words', dueReviewed)).toBe(true);
+		expect(shouldIncludeInReview(true, 'custom-my-words', notDueReviewed)).toBe(false);
+	});
+
+	it('in Lite mode excludes unreviewed cards from other decks', () => {
+		expect(shouldIncludeInReview(true, 'hsk1', undefined)).toBe(false);
+		expect(
+			shouldIncludeInReview(true, 'hsk1', {
+				weekId: 'hsk1',
+				wordNo: 1,
+				correct: 0,
+				wrong: 0,
+				lastReviewed: 0
+			})
+		).toBe(false);
+	});
+
+	it('in Lite mode includes already-reviewed due cards from other decks', () => {
+		expect(shouldIncludeInReview(true, 'hsk1', dueReviewed)).toBe(true);
+		expect(shouldIncludeInReview(true, 'hsk1', notDueReviewed)).toBe(false);
+	});
+
+	it('in full mode includes unreviewed cards from any deck', () => {
+		expect(shouldIncludeInReview(false, 'hsk1', undefined)).toBe(true);
+		expect(shouldIncludeInReview(false, 'hsk1', dueReviewed)).toBe(true);
+		expect(shouldIncludeInReview(false, 'hsk1', notDueReviewed)).toBe(false);
 	});
 });

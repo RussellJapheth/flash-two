@@ -5,6 +5,7 @@ import {
 	DUPLICATE_WORD_ERROR,
 	validateMyWord,
 	toMyWordInput,
+	generateWordPinyin,
 	buildDeckWithAddedWord,
 	buildDeckWithUpdatedWord,
 	buildDeckWithoutWord,
@@ -117,3 +118,15 @@ describe('toMyWordInput', () => {
 	});
 });
 
+describe('generateWordPinyin', () => {
+	it('generates tone-marked pinyin for Chinese words', () => {
+		expect(generateWordPinyin('你好')).toBe('nǐ hǎo');
+		expect(generateWordPinyin(' 谢谢 ')).toBe('xiè xiè');
+	});
+
+	it('returns empty string for blank or non-Chinese text', () => {
+		expect(generateWordPinyin('')).toBe('');
+		expect(generateWordPinyin('   ')).toBe('');
+		expect(generateWordPinyin('hello')).toBe('');
+	});
+});

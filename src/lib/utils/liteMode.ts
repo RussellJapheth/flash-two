@@ -1,4 +1,6 @@
 import { writable } from 'svelte/store';
+import type { WordProgress } from '$lib/types';
+import { isCardDue, isCardStudied } from '$lib/utils/srs';
 
 export const LITE_MODE_KEY = 'flashcards_lite_mode';
 
@@ -111,4 +113,24 @@ export function filterLiteDecks<T extends LiteDeckCandidate>(decks: T[]): T[] {
 	return decks.filter(
 		(d) => d.language !== 'french' && !d.isArchived && !LITE_EXCLUDED_DECK_IDS.has(d.id)
 	);
+}
+
+/**
+ * Determines whether a card belongs in the Review session.
+ * - Full mode: any card that is due (including unreviewed cards).
+ * - Lite mode: due cards from "My Words" (`custom-my-words`), or due cards from
+ *   other decks that the user has already reviewed at least once.
+ */
+export function shouldIncludeInReview(
+	isLite: boolean,
+	deckId: string,
+	progress?: WordProgress
+): boolean {
+	if (!isLite) {
+		return !progress || isCardDue(progress);
+	}
+	if (deckId === 'custom-my-words') {
+		return !progress || isCardDue(progress);
+	}
+	return isCardStudied(progress) && isCardDue(progress);
 }

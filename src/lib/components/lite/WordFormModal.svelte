@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Sparkles } from 'lucide-svelte';
 	import type { CustomDeck, WordRecord } from '$lib/types';
 	import {
 		addMyWord,
@@ -6,6 +7,7 @@
 		deleteMyWord,
 		validateMyWord,
 		toMyWordInput,
+		generateWordPinyin,
 		type MyWordErrors,
 		type MyWordField,
 		type MyWordInput
@@ -39,6 +41,7 @@
 	let saveError = $state('');
 	let isSaving = $state(false);
 	let confirmingDelete = $state(false);
+	let pinyinManuallyEdited = $state(false);
 
 	let isEdit = $derived(word !== null);
 
@@ -61,6 +64,7 @@
 			errors = {};
 			saveError = '';
 			confirmingDelete = false;
+			pinyinManuallyEdited = Boolean(word?.Pinyin?.trim());
 			dialog.showModal();
 		} else if (!open && dialog.open) {
 			dialog.close();
@@ -89,6 +93,31 @@
 			const next = { ...errors };
 			delete next[key];
 			errors = next;
+		}
+	}
+
+	function handleFieldInput(key: MyWordField) {
+		clearFieldError(key);
+		if (key === 'word' && !pinyinManuallyEdited) {
+			const auto = generateWordPinyin(form.word);
+			form.pinyin = auto;
+			if (auto) clearFieldError('pinyin');
+		} else if (key === 'pinyin') {
+			pinyinManuallyEdited = form.pinyin.trim().length > 0;
+		}
+	}
+
+	function handleAutoPinyin() {
+		if (!form.word.trim()) {
+			errors = { ...errors, word: 'Please enter the Chinese word' };
+			document.getElementById(ids.word)?.focus();
+			return;
+		}
+		const auto = generateWordPinyin(form.word);
+		if (auto) {
+			form.pinyin = auto;
+			pinyinManuallyEdited = false;
+			clearFieldError('pinyin');
 		}
 	}
 
@@ -149,17 +178,32 @@
 		{#each fields as field (field.key)}
 			{@const error = errors[field.key]}
 			<div class="space-y-1.5">
-				<label for={ids[field.key]} class="block font-headline text-base font-bold text-slate-900">
-					{field.label}
-					{#if field.optional}
-						<span class="font-sans text-sm font-normal text-slate-600">(optional)</span>
+				<div class="flex items-center justify-between gap-2">
+					<label
+						for={ids[field.key]}
+						class="block font-headline text-base font-bold text-slate-900"
+					>
+						{field.label}
+						{#if field.optional}
+							<span class="font-sans text-sm font-normal text-slate-600">(optional)</span>
+						{/if}
+					</label>
+					{#if field.key === 'pinyin'}
+						<button
+							type="button"
+							onclick={handleAutoPinyin}
+							class="inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-xl px-2.5 font-headline text-sm font-bold text-indigo-600 transition-colors hover:bg-indigo-50"
+						>
+							<Sparkles size={16} aria-hidden="true" />
+							<span>Auto Pinyin</span>
+						</button>
 					{/if}
-				</label>
+				</div>
 				<input
 					id={ids[field.key]}
 					type="text"
 					bind:value={form[field.key]}
-					oninput={() => clearFieldError(field.key)}
+					oninput={() => handleFieldInput(field.key)}
 					placeholder={field.placeholder}
 					required={!field.optional}
 					autocomplete="off"

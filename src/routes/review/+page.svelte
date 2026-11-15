@@ -10,7 +10,7 @@
 	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import { onMount, onDestroy } from 'svelte';
 	import { get } from 'svelte/store';
-	import { liteModeStore, getEffectiveLanguage } from '$lib/utils/liteMode';
+	import { liteModeStore, getEffectiveLanguage, shouldIncludeInReview } from '$lib/utils/liteMode';
 	import {
 		getAllProgress,
 		getWordProgress,
@@ -21,7 +21,7 @@
 		toggleSavedWord,
 		getSavedLanguage
 	} from '$lib/utils/storage';
-	import { calculateNextReview, isCardDue } from '$lib/utils/srs';
+	import { calculateNextReview } from '$lib/utils/srs';
 	import { scheduleDebouncedSync } from '$lib/utils/cloud';
 	import { playSound } from '$lib/utils/audio';
 	import { calculateReviewXP, calculateSessionBonus, addXP } from '$lib/utils/xp';
@@ -157,7 +157,8 @@
 
 	async function loadDueCards() {
 		stopSprintTimer();
-		activeLanguage = getEffectiveLanguage(get(liteModeStore), getSavedLanguage());
+		const isLite = get(liteModeStore);
+		activeLanguage = getEffectiveLanguage(isLite, getSavedLanguage());
 		const progress = await getAllProgress();
 		allProgress = progress;
 
@@ -171,7 +172,7 @@
 		for (const pack of packs) {
 			for (const word of pack.words) {
 				const p = getWordProgress(progress, pack.id, word.No, activeLanguage);
-				if (!p || isCardDue(p)) {
+				if (shouldIncludeInReview(isLite, pack.id, p)) {
 					dueItems.push({
 						packId: pack.id,
 						deckName: pack.title || `HSK ${pack.id}`,
@@ -186,7 +187,7 @@
 		for (const deck of matchingCustom) {
 			for (const word of deck.words) {
 				const p = getWordProgress(progress, deck.id, word.No, deck.language || activeLanguage);
-				if (!p || isCardDue(p)) {
+				if (shouldIncludeInReview(isLite, deck.id, p)) {
 					dueItems.push({
 						packId: deck.id,
 						deckName: deck.name || 'Custom Deck',
@@ -478,6 +479,23 @@
 						progress={currentProgress}
 					/>
 				</div>
+			</div>
+		{:else if $liteModeStore}
+			<div
+				class="shadow-card space-y-3 rounded-3xl border border-slate-200/90 bg-white p-6 text-center"
+			>
+				<CircleCheckBig size={44} strokeWidth={1.5} class="inline-block text-emerald-500" />
+				<h3 class="font-headline text-xl font-bold text-slate-900">There are no words to review</h3>
+				<p class="font-sans text-base text-slate-600">
+					Add words to My Words or practice a deck first.
+				</p>
+				<button
+					type="button"
+					onclick={() => goto(resolve('/decks'))}
+					class="flex h-12 w-full cursor-pointer items-center justify-center rounded-2xl bg-indigo-600 font-headline text-base font-bold text-white shadow-md shadow-indigo-600/20 transition-colors hover:bg-indigo-700 active:scale-[0.98]"
+				>
+					Go to My Words
+				</button>
 			</div>
 		{:else}
 			<div class="py-12 text-center text-slate-500">

@@ -69,7 +69,7 @@
 		ExternalLink,
 		Layers
 	} from 'lucide-svelte';
-	import { isLiteModeEnabled, setLiteMode } from '$lib/utils/liteMode';
+	import { isLiteModeEnabled, setLiteMode, getEffectiveLanguage } from '$lib/utils/liteMode';
 
 	let username = $state('');
 	let activeLanguage = $state<'chinese' | 'french'>('chinese');
@@ -410,7 +410,7 @@
 	}
 
 	function handleTestTTS() {
-		if (activeLanguage === 'chinese') {
+		if (getEffectiveLanguage(isLite, activeLanguage) === 'chinese') {
 			speakWord('你好，欢迎学习中文！', 'chinese');
 		} else {
 			speakWord('Bonjour, bienvenue pour apprendre le français !', 'french');
@@ -573,7 +573,7 @@
 					</div>
 					<span class="block font-sans text-xs text-slate-500">
 						{isLite
-							? 'Minimalist app mode focusing solely on custom and built-in flashcard decks'
+							? 'Simple mode: add your own words and practice them'
 							: 'All features active (textbooks, podcasts, arcade games, and stories)'}
 					</span>
 				</div>
@@ -597,56 +597,58 @@
 			</button>
 		</div>
 
-		<!-- Language -->
-		<button
-			type="button"
-			id="settings-language-toggle"
-			onclick={() => (isLanguageExpanded = !isLanguageExpanded)}
-			class="flex w-full cursor-pointer items-center justify-between px-5 py-4 text-left transition-colors hover:bg-slate-50"
-		>
-			<div class="flex items-center gap-3.5">
-				<div
-					class="flex h-9 w-9 items-center justify-center rounded-xl border border-rose-100 bg-rose-50 text-rose-600"
-				>
-					<Globe size={18} strokeWidth={2} />
+		<!-- Language (full mode only: Lite mode is Chinese-only) -->
+		{#if !isLite}
+			<button
+				type="button"
+				id="settings-language-toggle"
+				onclick={() => (isLanguageExpanded = !isLanguageExpanded)}
+				class="flex w-full cursor-pointer items-center justify-between px-5 py-4 text-left transition-colors hover:bg-slate-50"
+			>
+				<div class="flex items-center gap-3.5">
+					<div
+						class="flex h-9 w-9 items-center justify-center rounded-xl border border-rose-100 bg-rose-50 text-rose-600"
+					>
+						<Globe size={18} strokeWidth={2} />
+					</div>
+					<span class="font-headline text-sm font-bold text-slate-900">Active Language</span>
 				</div>
-				<span class="font-headline text-sm font-bold text-slate-900">Active Language</span>
-			</div>
-			<div class="flex items-center gap-2">
-				<span class="font-headline text-xs font-semibold text-slate-500">{languageLabel}</span>
-				<ChevronRight
-					size={18}
-					strokeWidth={2}
-					class="text-slate-400 transition-transform duration-200 {isLanguageExpanded
-						? 'rotate-90'
-						: ''}"
-				/>
-			</div>
-		</button>
+				<div class="flex items-center gap-2">
+					<span class="font-headline text-xs font-semibold text-slate-500">{languageLabel}</span>
+					<ChevronRight
+						size={18}
+						strokeWidth={2}
+						class="text-slate-400 transition-transform duration-200 {isLanguageExpanded
+							? 'rotate-90'
+							: ''}"
+					/>
+				</div>
+			</button>
 
-		{#if isLanguageExpanded}
-			<div class="flex gap-2 bg-slate-50 p-3">
-				<button
-					type="button"
-					onclick={() => handleLanguageChange('chinese')}
-					class="flex-1 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeLanguage ===
-					'chinese'
-						? 'bg-indigo-600 text-white shadow-xs'
-						: 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100'}"
-				>
-					Chinese
-				</button>
-				<button
-					type="button"
-					onclick={() => handleLanguageChange('french')}
-					class="flex-1 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeLanguage ===
-					'french'
-						? 'bg-indigo-600 text-white shadow-xs'
-						: 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100'}"
-				>
-					French
-				</button>
-			</div>
+			{#if isLanguageExpanded}
+				<div class="flex gap-2 bg-slate-50 p-3">
+					<button
+						type="button"
+						onclick={() => handleLanguageChange('chinese')}
+						class="flex-1 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeLanguage ===
+						'chinese'
+							? 'bg-indigo-600 text-white shadow-xs'
+							: 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100'}"
+					>
+						Chinese
+					</button>
+					<button
+						type="button"
+						onclick={() => handleLanguageChange('french')}
+						class="flex-1 rounded-xl py-2 font-headline text-xs font-bold transition-all {activeLanguage ===
+						'french'
+							? 'bg-indigo-600 text-white shadow-xs'
+							: 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100'}"
+					>
+						French
+					</button>
+				</div>
+			{/if}
 		{/if}
 
 		<!-- Notification (TTS test) -->

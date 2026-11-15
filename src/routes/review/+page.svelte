@@ -9,6 +9,8 @@
 	import SessionExitGuard from '$lib/components/SessionExitGuard.svelte';
 	import { triggerAutoStartStudyTimer, triggerAutoStopStudyTimer } from '$lib/utils/studyTimer';
 	import { onMount, onDestroy } from 'svelte';
+	import { get } from 'svelte/store';
+	import { liteModeStore, getEffectiveLanguage } from '$lib/utils/liteMode';
 	import {
 		getAllProgress,
 		getWordProgress,
@@ -155,7 +157,7 @@
 
 	async function loadDueCards() {
 		stopSprintTimer();
-		activeLanguage = getSavedLanguage();
+		activeLanguage = getEffectiveLanguage(get(liteModeStore), getSavedLanguage());
 		const progress = await getAllProgress();
 		allProgress = progress;
 

@@ -49,6 +49,7 @@
 	import { searchFieldGuides } from '$lib/data/fieldGuides';
 	import { normalizePinyin } from '$lib/utils/dictionary';
 	import { liteModeStore } from '$lib/utils/liteMode';
+	import MyWordsHome from '$lib/components/lite/MyWordsHome.svelte';
 
 	let activeTab = $state<'flashcards' | 'stories' | 'guides'>('flashcards');
 
@@ -527,10 +528,10 @@
 </script>
 
 <svelte:head>
-	<title>FlashCards — My Decks</title>
+	<title>FlashCards — {$liteModeStore ? 'My Words' : 'My Decks'}</title>
 </svelte:head>
 
-<TopHeader title="My Decks" streak={streakStats.currentStreak} />
+<TopHeader title={$liteModeStore ? 'My Words' : 'My Decks'} streak={streakStats.currentStreak} />
 
 <main class="flex-1 space-y-4 px-4 pt-3 pb-8">
 	<!-- Tab Switcher: Flashcards vs Stories vs Field Guides (Full mode only) -->
@@ -572,7 +573,10 @@
 		</div>
 	{/if}
 
-	{#if activeTab === 'flashcards'}
+	{#if $liteModeStore}
+		<!-- LITE MODE: My Words focus -->
+		<MyWordsHome />
+	{:else if activeTab === 'flashcards'}
 		<!-- FLASHCARDS TAB -->
 		<!-- Top Bar Actions -->
 		<div class="flex items-center justify-between">

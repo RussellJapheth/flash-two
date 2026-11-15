@@ -87,3 +87,28 @@ export function isFullFeaturePath(pathname: string): boolean {
 		(prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
 	);
 }
+
+export type LearningLanguage = 'chinese' | 'french';
+
+/** Lite mode is Chinese-only. Full mode uses the saved preference. */
+export function getEffectiveLanguage(isLite: boolean, saved: LearningLanguage): LearningLanguage {
+	return isLite ? 'chinese' : saved;
+}
+
+export interface LiteDeckCandidate {
+	id: string;
+	language?: LearningLanguage;
+	isArchived?: boolean;
+}
+
+const LITE_EXCLUDED_DECK_IDS: ReadonlySet<string> = new Set([
+	'custom-my-words',
+	'personal-dictionary'
+]);
+
+/** Decks listed under "More Decks" in Lite mode: Chinese, not archived, not My Words. */
+export function filterLiteDecks<T extends LiteDeckCandidate>(decks: T[]): T[] {
+	return decks.filter(
+		(d) => d.language !== 'french' && !d.isArchived && !LITE_EXCLUDED_DECK_IDS.has(d.id)
+	);
+}

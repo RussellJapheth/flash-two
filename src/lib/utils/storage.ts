@@ -698,23 +698,26 @@ export async function saveCustomDeck(deck: CustomDeck): Promise<void> {
 
 		deckStore.put(deck);
 
-		// Clean up any progress entries for word numbers exceeding current deck word count
+		// Word numbers still present in the deck (decks may have gaps after a word is deleted)
+		const liveWordNos = new Set(deck.words.map((w) => w.No));
+
+		// Clean up progress entries for word numbers no longer in the deck
 		const progReq = progStore.getAll();
 		progReq.onsuccess = () => {
 			const all = progReq.result || [];
 			for (const item of all) {
-				if (item.weekId === deck.id && item.wordNo > deck.words.length) {
+				if (item.weekId === deck.id && !liveWordNos.has(item.wordNo)) {
 					progStore.delete(item.key || `${item.weekId}:${item.wordNo}`);
 				}
 			}
 		};
 
-		// Clean up any saved word entries for word numbers exceeding current deck word count
+		// Clean up saved word entries for word numbers no longer in the deck
 		const savedReq = savedStore.getAll();
 		savedReq.onsuccess = () => {
 			const all = savedReq.result || [];
 			for (const item of all) {
-				if (item.weekId === deck.id && item.wordNo > deck.words.length) {
+				if (item.weekId === deck.id && !liveWordNos.has(item.wordNo)) {
 					savedStore.delete(item.key || `${item.weekId}:${item.wordNo}`);
 				}
 			}

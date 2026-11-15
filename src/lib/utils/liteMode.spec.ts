@@ -6,7 +6,9 @@ import {
 	setLiteMode,
 	resolveInitialLiteMode,
 	isFullFeaturePath,
-	liteModeStore
+	liteModeStore,
+	getEffectiveLanguage,
+	filterLiteDecks
 } from './liteMode';
 import { get } from 'svelte/store';
 
@@ -134,5 +136,30 @@ describe('liteMode', () => {
 		expect(isFullFeaturePath('/review')).toBe(false);
 		expect(isFullFeaturePath('/settings')).toBe(false);
 		expect(isFullFeaturePath('/')).toBe(false);
+	});
+});
+
+describe('getEffectiveLanguage', () => {
+	it('forces Chinese in Lite mode', () => {
+		expect(getEffectiveLanguage(true, 'french')).toBe('chinese');
+		expect(getEffectiveLanguage(true, 'chinese')).toBe('chinese');
+	});
+
+	it('keeps the saved language in full mode', () => {
+		expect(getEffectiveLanguage(false, 'french')).toBe('french');
+	});
+});
+
+describe('filterLiteDecks', () => {
+	it('keeps only active Chinese decks and excludes My Words and Personal Dictionary', () => {
+		const decks = [
+			{ id: 'chinese-week1', language: 'chinese' as const, isArchived: false },
+			{ id: 'french-week1', language: 'french' as const, isArchived: false },
+			{ id: 'custom-old', language: 'chinese' as const, isArchived: true },
+			{ id: 'custom-no-lang' },
+			{ id: 'custom-my-words', language: 'chinese' as const },
+			{ id: 'personal-dictionary', language: 'chinese' as const }
+		];
+		expect(filterLiteDecks(decks).map((d) => d.id)).toEqual(['chinese-week1', 'custom-no-lang']);
 	});
 });

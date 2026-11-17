@@ -8,7 +8,9 @@ import {
 	parseDictEntries,
 	cleanGlossSegment,
 	isCrossRefGloss,
-	healWordRecord
+	healWordRecord,
+	isReligiousGloss,
+	isReligiousText
 } from './generator';
 
 describe('generator', () => {
@@ -149,5 +151,35 @@ describe('generator', () => {
 		expect(card.pinyin).toBe('zhè lǐ');
 		expect(card.meaning).toBe('here');
 		expect(card.example).toContain('这里有很多中国人和外国人。');
+	});
+
+	it('identifies religious texts and definitions', () => {
+		expect(isReligiousText('《加拉太书》捍卫了福音真理与圣灵所结九样果子的生活。')).toBe(true);
+		expect(isReligiousText('《创世记》记载了上帝创造天地万物的故事。')).toBe(true);
+		expect(isReligiousText('每个人都有权利选择自己喜欢的生活方式。')).toBe(false);
+
+		expect(isReligiousGloss('(Christianity) gospel')).toBe(true);
+		expect(isReligiousGloss('theology / biblical scripture')).toBe(true);
+		expect(isReligiousGloss('life / activity / livelihood')).toBe(false);
+	});
+
+	it('biases card generation to prefer secular example sentences for words like 生活', async () => {
+		const card = await generateCardForWord('生活', 'Week 1');
+		expect(card.word).toBe('生活');
+		expect(card.pinyin).toBe('shēng huó');
+		expect(card.example).not.toContain('加拉太书');
+		expect(card.example).not.toContain('福音');
+		expect(card.example).toContain('生活方式');
+	});
+
+	it('prefers secular definitions over religious ones when parsing dictionary entries', () => {
+		const raw = [
+			{
+				'Chinese Word': '灵',
+				'English Meaning': '(Christianity) Holy Spirit; spiritual; soul; quick / sharp'
+			}
+		];
+		const parsed = parseDictEntries(raw);
+		expect(parsed.get('灵')).toBe('spiritual');
 	});
 });

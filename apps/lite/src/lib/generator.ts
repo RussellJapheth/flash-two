@@ -36,6 +36,24 @@ export function isLowPriorityGloss(cleaned: string): boolean {
 	return /^(?:abbr\. for|short for|surname\b)/i.test(cleaned);
 }
 
+export function isReligiousGloss(text: string): boolean {
+	return /\b(?:religion|religious|Christianity|Christian|Catholic|biblical|Bible|theology|theological|Scriptures?|Gospel|church|apostle|evangelical|monastery|Buddhism|Buddhist|Taoism|Taoist|deity|liturgy|Holy Spirit|divine|salvation|priest|pastor|mosque|temple|cleric)\b/i.test(
+		text
+	);
+}
+
+export function isReligiousText(text: string): boolean {
+	return (
+		/《(?:创世记|出埃及记|利未记|民数记|申命记|约书亚记|士师记|路得记|撒母耳记|列王纪|历代志|以斯拉记|尼希米记|以斯帖记|约伯记|诗篇|箴言|传道书|雅歌|以赛亚书|耶利米书|耶利米哀歌|以西结书|但以理书|何西阿书|约珥书|阿摩司书|俄巴底亚书|约拿书|弥迦书|那鸿书|哈巴库克书|西番雅书|哈该书|撒迦利亚书|玛拉基书|马太福音|马可福音|路加福音|约翰福音|使徒行传|罗马书|哥林多前书|哥林多后书|加拉太书|以弗所书|腓立比书|歌罗西书|帖撒罗尼迦前书|帖撒罗尼迦后书|提摩太前书|提摩太后书|提多书|腓利门书|希伯来书|雅各书|彼得前书|彼得后书|约翰一书|约翰二书|约翰三书|犹大书|启示录)》/.test(
+			text
+		) ||
+		/(?:上帝|耶和华|耶稣|圣灵|基督|福音|圣经|使徒|团契|救赎|受洗|洗礼)/.test(text) ||
+		/\b(?:Bible|biblical|Gospel|Genesis|Exodus|Leviticus|Deuteronomy|Galatians|Ephesians|Corinthians|Holy Spirit|apostle|Jesus|Christ|Scripture|theology)\b/i.test(
+			text
+		)
+	);
+}
+
 export interface RawDictEntry {
 	'Chinese Word'?: string;
 	simplified?: string;
@@ -51,6 +69,7 @@ const TARGET_CROSS_REF_REGEX =
 export function parseDictEntries(data: RawDictEntry[]): Map<string, string> {
 	const cleanMap = new Map<string, string>();
 	const lowPriMap = new Map<string, string>();
+	const religiousMap = new Map<string, string>();
 	const fallbackMap = new Map<string, string>();
 
 	for (const entry of data) {
@@ -68,6 +87,12 @@ export function parseDictEntries(data: RawDictEntry[]): Map<string, string> {
 		for (const seg of segments) {
 			const cleaned = cleanGlossSegment(seg);
 			if (!cleaned || isCrossRefGloss(cleaned)) continue;
+			if (isReligiousGloss(seg) || isReligiousGloss(cleaned)) {
+				if (!religiousMap.has(zh)) {
+					religiousMap.set(zh, cleaned);
+				}
+				continue;
+			}
 			if (isLowPriorityGloss(cleaned)) {
 				if (!lowPriMap.has(zh)) {
 					lowPriMap.set(zh, cleaned);
@@ -82,6 +107,12 @@ export function parseDictEntries(data: RawDictEntry[]): Map<string, string> {
 	for (const [zh, lowDef] of lowPriMap.entries()) {
 		if (!cleanMap.has(zh)) {
 			cleanMap.set(zh, lowDef);
+		}
+	}
+
+	for (const [zh, relDef] of religiousMap.entries()) {
+		if (!cleanMap.has(zh)) {
+			cleanMap.set(zh, relDef);
 		}
 	}
 
@@ -244,8 +275,19 @@ export async function generateCardForWord(
 	}
 
 	if (!meaning) {
-		// Look for corpus words that contain this word
-		const partial = corpus.find((c) => c.word.includes(trimmed) || trimmed.includes(c.word));
+		// Look for corpus words that contain this word (prefer secular)
+		const secularPartial = corpus.find(
+			(c) =>
+				(c.word.includes(trimmed) || trimmed.includes(c.word)) &&
+				!isReligiousText(c.word) &&
+				!isReligiousText(c.meaning) &&
+				!isCrossRefGloss(c.meaning)
+		);
+		const partial =
+			secularPartial ||
+			corpus.find(
+				(c) => (c.word.includes(trimmed) || trimmed.includes(c.word)) && !isCrossRefGloss(c.meaning)
+			);
 		if (partial && partial.meaning && !isCrossRefGloss(partial.meaning)) {
 			meaning = partial.meaning;
 		} else {
@@ -253,8 +295,16 @@ export async function generateCardForWord(
 		}
 	}
 
-	// 4. Example sentence lookup or synthesis
-	const containingCorpus = corpus.find((c) => c.example && c.example.includes(trimmed));
+	// 4. Example sentence lookup or synthesis (prefer secular everyday examples)
+	const secularExample = corpus.find(
+		(c) =>
+			c.example &&
+			c.example.includes(trimmed) &&
+			!isReligiousText(c.example) &&
+			!isReligiousText(c.meaning)
+	);
+	const containingCorpus =
+		secularExample || corpus.find((c) => c.example && c.example.includes(trimmed));
 	const example = containingCorpus?.example || synthesizeExample(trimmed, meaning);
 
 	return {

@@ -17,6 +17,7 @@ export default defineConfig({
 	test: {
 		expect: { requireAssertions: true },
 		environment: 'node',
+		env: { PUBLIC_API_BASE_URL: 'http://localhost.test' },
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	}
 });

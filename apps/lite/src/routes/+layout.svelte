@@ -1,13 +1,32 @@
 <script lang="ts">
 	import './layout.css';
+	import { onMount } from 'svelte';
 	import BottomNav from '$lib/components/BottomNav.svelte';
+	import UsernameModal from '$lib/components/UsernameModal.svelte';
+	import { getSavedUsername } from '$lib/storage';
+	import { pullAndMerge } from '$lib/cloud';
 	import { page } from '$app/state';
 
 	let { children } = $props();
 
+	let showUsernameModal = $state(false);
+
 	let isStudySession = $derived(
 		page.url.pathname.startsWith('/study/') || page.url.pathname === '/review'
 	);
+
+	onMount(() => {
+		const user = getSavedUsername();
+		if (!user) {
+			showUsernameModal = true;
+		} else {
+			pullAndMerge(user);
+		}
+	});
+
+	function handleUsernameSuccess() {
+		showUsernameModal = false;
+	}
 </script>
 
 <div
@@ -22,4 +41,6 @@
 	{#if !isStudySession}
 		<BottomNav />
 	{/if}
+
+	<UsernameModal isOpen={showUsernameModal} onSuccess={handleUsernameSuccess} />
 </div>

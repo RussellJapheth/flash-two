@@ -8,6 +8,7 @@ import {
 	type MyWordInput,
 	type WordProgress
 } from '@flash/shared';
+import { isValidUsername, getSavedUsername, setSavedUsername } from './storage';
 
 const testWord: MyWordInput = {
 	word: '苹果',
@@ -147,5 +148,44 @@ describe('Lite App Storage Core Logic', () => {
 		expect(batch[2].progress).toBeUndefined();
 		// Fourth should have earliest due date
 		expect(batch[3].id).toBe(4);
+	});
+
+	it('validates username format properly', () => {
+		expect(isValidUsername('a')).toBe(false); // too short
+		expect(isValidUsername('valid-user')).toBe(true);
+		expect(isValidUsername('user123')).toBe(true);
+		expect(isValidUsername('User_Name')).toBe(false); // uppercase / underscore
+		expect(isValidUsername('user name')).toBe(false); // space
+		expect(isValidUsername('a'.repeat(31))).toBe(false); // too long
+	});
+
+	it('persists and retrieves username in localStorage', () => {
+		class LocalStorageMock {
+			private store: Record<string, string> = {};
+			getItem(key: string): string | null {
+				return this.store[key] ?? null;
+			}
+			setItem(key: string, value: string): void {
+				this.store[key] = String(value);
+			}
+			removeItem(key: string): void {
+				delete this.store[key];
+			}
+			clear(): void {
+				this.store = {};
+			}
+		}
+
+		Object.defineProperty(globalThis, 'localStorage', {
+			value: new LocalStorageMock(),
+			writable: true
+		});
+
+		expect(getSavedUsername()).toBe('');
+		setSavedUsername('test-user');
+		expect(getSavedUsername()).toBe('test-user');
+
+		setSavedUsername('');
+		expect(getSavedUsername()).toBe('');
 	});
 });

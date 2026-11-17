@@ -13,6 +13,26 @@ const DB_NAME = 'flashcards_lite_db';
 const DB_VERSION = 1;
 
 let dbPromise: Promise<IDBDatabase> | null = null;
+let dataMutationListener: (() => void) | null = null;
+
+export function registerDataMutationListener(fn: () => void): () => void {
+	dataMutationListener = fn;
+	return () => {
+		if (dataMutationListener === fn) {
+			dataMutationListener = null;
+		}
+	};
+}
+
+function notifyMutation(): void {
+	if (dataMutationListener) {
+		try {
+			dataMutationListener();
+		} catch (err) {
+			console.error('Error in storage mutation listener:', err);
+		}
+	}
+}
 
 function getDB(): Promise<IDBDatabase> {
 	if (typeof window === 'undefined') {
@@ -68,7 +88,10 @@ export async function saveMyWordsDeck(deck: CustomDeck): Promise<void> {
 	return new Promise((resolve, reject) => {
 		const tx = db.transaction('decks', 'readwrite');
 		tx.objectStore('decks').put(deck);
-		tx.oncomplete = () => resolve();
+		tx.oncomplete = () => {
+			notifyMutation();
+			resolve();
+		};
 		tx.onerror = () => reject(tx.error);
 	});
 }
@@ -150,9 +173,53 @@ export async function saveWordProgress(key: string, progress: WordProgress): Pro
 	return new Promise((resolve, reject) => {
 		const tx = db.transaction('progress', 'readwrite');
 		tx.objectStore('progress').put(progress, key);
-		tx.oncomplete = () => resolve();
+		tx.oncomplete = () => {
+			notifyMutation();
+			resolve();
+		};
 		tx.onerror = () => reject(tx.error);
 	});
+}
+
+export async function saveBulkProgress(
+	records: Record<string, WordProgress>,
+	skipNotify = false
+): Promise<void> {
+	const db = await getDB();
+	return new Promise((resolve, reject) => {
+		const tx = db.transaction('progress', 'readwrite');
+		const store = tx.objectStore('progress');
+		for (const [key, val] of Object.entries(records)) {
+			store.put(val, key);
+		}
+		tx.oncomplete = () => {
+			if (!skipNotify) notifyMutation();
+			resolve();
+		};
+		tx.onerror = () => reject(tx.error);
+	});
+}
+
+const USER_STORAGE_KEY = 'flashcards_lite_user';
+
+export function isValidUsername(name: string): boolean {
+	const trimmed = name.trim().toLowerCase();
+	return trimmed.length >= 2 && trimmed.length <= 30 && /^[a-z0-9-]+$/.test(trimmed);
+}
+
+export function getSavedUsername(): string {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return '';
+	return localStorage.getItem(USER_STORAGE_KEY) || '';
+}
+
+export function setSavedUsername(name: string): void {
+	if (typeof window === 'undefined' && typeof localStorage === 'undefined') return;
+	const clean = name.trim().toLowerCase();
+	if (!clean) {
+		localStorage.removeItem(USER_STORAGE_KEY);
+	} else if (isValidUsername(clean)) {
+		localStorage.setItem(USER_STORAGE_KEY, clean);
+	}
 }
 
 export async function exportLiteBackup(): Promise<string> {

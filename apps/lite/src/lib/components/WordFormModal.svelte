@@ -27,7 +27,7 @@
 	let isEdit = $derived(word !== null);
 
 	// Tabs for add mode: 'single' | 'bulk'
-	let activeTab = $state<'single' | 'bulk'>('single');
+	let activeTab = $state<'single' | 'bulk'>('bulk');
 	let singleWord = $state('');
 	let bulkText = $state('');
 	let selectedWeek = $state('Week 1');
@@ -79,6 +79,7 @@
 			if (word) {
 				editForm = toMyWordInput(word);
 			} else {
+				activeTab = 'bulk';
 				singleWord = '';
 				bulkText = '';
 				selectedWeek = resolveInitialWeek();

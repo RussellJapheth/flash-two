@@ -5,8 +5,11 @@
 		importLiteBackup,
 		getMyWordsDeck,
 		getSavedUsername,
-		isValidUsername
+		isValidUsername,
+		getStreakStats,
+		type StreakStats
 	} from '$lib/storage';
+	import StreakCalendarModal from '$lib/components/StreakCalendarModal.svelte';
 	import {
 		pullAndMerge,
 		pushData,
@@ -29,11 +32,23 @@
 		Pencil,
 		AlertCircle,
 		UserCheck,
-		ShieldCheck
+		ShieldCheck,
+		Flame,
+		Calendar
 	} from 'lucide-svelte';
 	import { onDestroy, onMount } from 'svelte';
 
 	let wordCount = $state(0);
+	let streakStats = $state<StreakStats>({
+		currentStreak: 0,
+		longestStreak: 0,
+		freezeCount: 0,
+		tierName: 'Novice Explorer',
+		totalReviews: 0,
+		activeDates: [],
+		freezeDates: []
+	});
+	let showStreakModal = $state(false);
 	let message = $state('');
 	let isError = $state(false);
 
@@ -54,6 +69,7 @@
 	async function updateStats() {
 		const deck = await getMyWordsDeck();
 		wordCount = deck.words?.length ?? 0;
+		streakStats = await getStreakStats();
 	}
 
 	function showToast(msg: string, error = false) {
@@ -420,6 +436,47 @@
 		</div>
 	</section>
 
+	<!-- Study Streak Card -->
+	<section class="space-y-3">
+		<div class="flex items-center justify-between">
+			<h2 class="font-headline text-xs font-bold tracking-wider text-slate-400 uppercase">
+				Study Streak
+			</h2>
+			<span class="font-headline text-xs font-bold text-amber-700">{streakStats.tierName}</span>
+		</div>
+
+		<div class="rounded-3xl border border-slate-200/90 bg-white p-5 shadow-xs">
+			<div class="flex items-center justify-between">
+				<div class="flex items-center gap-3">
+					<div
+						class="flex h-10 w-10 items-center justify-center rounded-xl border border-amber-200/80 bg-amber-50 text-amber-600"
+					>
+						<Flame size={20} class="fill-amber-500 text-amber-500" />
+					</div>
+					<div>
+						<span class="block font-headline text-base font-extrabold text-slate-900">
+							{streakStats.currentStreak}
+							{streakStats.currentStreak === 1 ? 'Day' : 'Days'} Active
+						</span>
+						<span class="block font-sans text-xs text-slate-500">
+							Best: {streakStats.longestStreak}d • {streakStats.freezeCount} of 3 shields active
+						</span>
+					</div>
+				</div>
+
+				<button
+					type="button"
+					onclick={() => (showStreakModal = true)}
+					aria-label="View streak calendar"
+					class="flex h-9 cursor-pointer items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 font-headline text-xs font-bold text-slate-700 transition-colors hover:bg-slate-100 active:scale-95"
+				>
+					<Calendar size={14} />
+					<span>Calendar</span>
+				</button>
+			</div>
+		</div>
+	</section>
+
 	<!-- Stats Card -->
 	<section class="rounded-3xl border border-slate-200/90 bg-white p-5 shadow-xs">
 		<h2 class="font-headline text-sm font-bold text-slate-500 uppercase">Your Library</h2>
@@ -523,3 +580,13 @@
 		</a>
 	</section>
 </main>
+
+<StreakCalendarModal
+	isOpen={showStreakModal}
+	streak={streakStats.currentStreak}
+	longestStreak={streakStats.longestStreak}
+	freezeCount={streakStats.freezeCount}
+	activeDates={streakStats.activeDates}
+	freezeDates={streakStats.freezeDates}
+	onClose={() => (showStreakModal = false)}
+/>

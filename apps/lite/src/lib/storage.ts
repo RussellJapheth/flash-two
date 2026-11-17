@@ -1,14 +1,34 @@
-import type { CustomDeck, WordProgress, WordRecord } from '@flash/shared';
+import type {
+	CustomDeck,
+	WordProgress,
+	WordRecord,
+	StreakStats,
+	StreakFreezeData
+} from '@flash/shared';
 import {
 	MY_WORDS_DECK_ID,
 	MY_WORDS_DECK_NAME,
 	buildDeckWithAddedWord,
 	buildDeckWithUpdatedWord,
 	buildDeckWithoutWord,
+	computeStreakStats,
+	getStreakFreezeData,
+	saveStreakFreezeData,
+	getStreakTierName,
+	getOffsetIsoDate,
 	type MyWordInput,
 	type MyWordSaveOptions
 } from '@flash/shared';
 import { healWordRecord, healWordRecordWithDict, isCrossRefGloss } from './generator';
+
+export {
+	computeStreakStats,
+	getStreakFreezeData,
+	saveStreakFreezeData,
+	getStreakTierName,
+	getOffsetIsoDate
+};
+export type { StreakStats, StreakFreezeData };
 
 const DB_NAME = 'flashcards_lite_db';
 const DB_VERSION = 1;
@@ -36,7 +56,7 @@ function notifyMutation(): void {
 }
 
 function getDB(): Promise<IDBDatabase> {
-	if (typeof window === 'undefined') {
+	if (typeof window === 'undefined' || typeof indexedDB === 'undefined') {
 		return Promise.reject(new Error('IndexedDB is only available in browser'));
 	}
 	if (!dbPromise) {
@@ -59,7 +79,7 @@ function getDB(): Promise<IDBDatabase> {
 }
 
 export async function getMyWordsDeck(): Promise<CustomDeck> {
-	if (typeof window === 'undefined') {
+	if (typeof window === 'undefined' || typeof indexedDB === 'undefined') {
 		return { id: MY_WORDS_DECK_ID, name: MY_WORDS_DECK_NAME, words: [], language: 'chinese' };
 	}
 	const db = await getDB();
@@ -107,6 +127,7 @@ export async function getMyWordsDeck(): Promise<CustomDeck> {
 }
 
 export async function saveMyWordsDeck(deck: CustomDeck): Promise<void> {
+	if (typeof window === 'undefined' || typeof indexedDB === 'undefined') return;
 	const db = await getDB();
 	return new Promise((resolve, reject) => {
 		const tx = db.transaction('decks', 'readwrite');
@@ -160,7 +181,7 @@ export async function deleteMyWord(no: number): Promise<CustomDeck> {
 }
 
 export async function getAllProgress(): Promise<Record<string, WordProgress>> {
-	if (typeof window === 'undefined') return {};
+	if (typeof window === 'undefined' || typeof indexedDB === 'undefined') return {};
 	const db = await getDB();
 	return new Promise((resolve, reject) => {
 		const tx = db.transaction('progress', 'readonly');
@@ -181,7 +202,7 @@ export async function getAllProgress(): Promise<Record<string, WordProgress>> {
 }
 
 export async function getWordProgress(key: string): Promise<WordProgress | undefined> {
-	if (typeof window === 'undefined') return undefined;
+	if (typeof window === 'undefined' || typeof indexedDB === 'undefined') return undefined;
 	const db = await getDB();
 	return new Promise((resolve, reject) => {
 		const tx = db.transaction('progress', 'readonly');
@@ -192,6 +213,7 @@ export async function getWordProgress(key: string): Promise<WordProgress | undef
 }
 
 export async function saveWordProgress(key: string, progress: WordProgress): Promise<void> {
+	if (typeof window === 'undefined' || typeof indexedDB === 'undefined') return;
 	const db = await getDB();
 	return new Promise((resolve, reject) => {
 		const tx = db.transaction('progress', 'readwrite');
@@ -208,6 +230,7 @@ export async function saveBulkProgress(
 	records: Record<string, WordProgress>,
 	skipNotify = false
 ): Promise<void> {
+	if (typeof window === 'undefined' || typeof indexedDB === 'undefined') return;
 	const db = await getDB();
 	return new Promise((resolve, reject) => {
 		const tx = db.transaction('progress', 'readwrite');
@@ -245,16 +268,23 @@ export function setSavedUsername(name: string): void {
 	}
 }
 
+export async function getStreakStats(): Promise<StreakStats> {
+	const progress = await getAllProgress();
+	return computeStreakStats(progress);
+}
+
 export async function exportLiteBackup(): Promise<string> {
 	const deck = await getMyWordsDeck();
 	const progress = await getAllProgress();
+	const streakFreezeData = getStreakFreezeData();
 	return JSON.stringify(
 		{
 			version: 1,
 			app: 'flashcards-lite',
 			exportedAt: Date.now(),
 			customDecks: [deck],
-			progress
+			progress,
+			streakFreezeData
 		},
 		null,
 		2
@@ -301,5 +331,14 @@ export async function importLiteBackup(
 		});
 	}
 
+	if (parsed.streakFreezeData && Array.isArray(parsed.streakFreezeData.usedDates)) {
+		saveStreakFreezeData({
+			usedDates: parsed.streakFreezeData.usedDates.filter(
+				(d: unknown): d is string => typeof d === 'string'
+			)
+		});
+	}
+
+	notifyMutation();
 	return { success: true, wordsCount: words.length };
 }

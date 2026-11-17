@@ -5,7 +5,6 @@ const MIN_EASE_FACTOR = 1.3;
 const MAX_EASE_FACTOR = 3.2;
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
-const TEN_MINUTES_MS = 10 * 60 * 1000;
 
 export function calculateNextReview(
 	current: WordProgress | undefined,

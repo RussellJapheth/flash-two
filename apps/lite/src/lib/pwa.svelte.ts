@@ -78,4 +78,3 @@ class PwaState {
 }
 
 export const pwa = new PwaState();
-

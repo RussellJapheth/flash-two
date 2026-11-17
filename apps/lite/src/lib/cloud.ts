@@ -8,6 +8,8 @@ import {
 	saveMyWordsDeck,
 	getAllProgress,
 	saveBulkProgress,
+	getStreakFreezeData,
+	saveStreakFreezeData,
 	getSavedUsername,
 	setSavedUsername,
 	isValidUsername,
@@ -212,6 +214,26 @@ export async function pullAndMerge(username?: string): Promise<boolean> {
 
 		await saveBulkProgress(mergedProgress, true);
 
+		// 3. Merge Streak Freeze Data (Set Union of Used Dates)
+		const localFreeze = getStreakFreezeData();
+		if (remoteData.streakFreezeData && Array.isArray(remoteData.streakFreezeData.usedDates)) {
+			const remoteDates = remoteData.streakFreezeData.usedDates.filter(
+				(d: unknown): d is string => typeof d === 'string'
+			);
+			const mergedUsedDates = Array.from(
+				new Set([...localFreeze.usedDates, ...remoteDates])
+			).sort();
+
+			if (mergedUsedDates.length > localFreeze.usedDates.length) {
+				saveStreakFreezeData({ usedDates: mergedUsedDates });
+			}
+			if (remoteDates.length < mergedUsedDates.length) {
+				localHadNewData = true;
+			}
+		} else if (localFreeze.usedDates.length > 0) {
+			localHadNewData = true;
+		}
+
 		// If local had newer cards or progress, push merged back to cloud
 		if (localHadNewData) {
 			await pushData(user);
@@ -241,12 +263,14 @@ export async function pushData(username?: string): Promise<boolean> {
 	try {
 		const deck = await getMyWordsDeck();
 		const progress = await getAllProgress();
+		const streakFreezeData = getStreakFreezeData();
 
 		const payload: AppBackup = {
 			version: 1,
 			exportedAt: Date.now(),
 			customDecks: [deck],
 			progress,
+			streakFreezeData,
 			language: 'chinese',
 			username: user
 		};

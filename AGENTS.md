@@ -8,4 +8,3 @@
 - **XP Economy**: Centralized via `addXP()` in [xp.ts](file:///home/russell/projects/experiments/flash-two/apps/full/src/lib/utils/xp.ts) (`calculateReviewXP()`, `calculateSessionBonus()`, `calculateGameXP()`).
 - **Game Design**: Read [GAME-NOTES.md](GAME-NOTES.md) on demand only when editing games.
 - **Token Efficiency**: Terse, direct responses. Cut filler and pleasantries. Keep technical substance exact.
-

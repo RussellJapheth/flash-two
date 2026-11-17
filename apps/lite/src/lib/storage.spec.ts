@@ -8,7 +8,14 @@ import {
 	type MyWordInput,
 	type WordProgress
 } from '@flash/shared';
-import { isValidUsername, getSavedUsername, setSavedUsername } from './storage';
+import {
+	isValidUsername,
+	getSavedUsername,
+	setSavedUsername,
+	getStreakFreezeData,
+	saveStreakFreezeData,
+	computeStreakStats
+} from './storage';
 
 const testWord: MyWordInput = {
 	word: '苹果',
@@ -187,5 +194,39 @@ describe('Lite App Storage Core Logic', () => {
 
 		setSavedUsername('');
 		expect(getSavedUsername()).toBe('');
+	});
+
+	it('persists streak freeze data in localStorage', () => {
+		saveStreakFreezeData({ usedDates: ['2026-03-01', '2026-03-02'] });
+		const freeze = getStreakFreezeData();
+		expect(freeze.usedDates).toEqual(['2026-03-01', '2026-03-02']);
+	});
+
+	it('computes streak stats using identical streak rules', () => {
+		const now = Date.now();
+		const todayIso = new Date(now).toISOString().split('T')[0];
+		const yesterdayIso = new Date(now - 86400000).toISOString().split('T')[0];
+
+		const progress: Record<string, WordProgress> = {
+			'custom-my-words:1': {
+				weekId: 'custom',
+				wordNo: 1,
+				correct: 1,
+				wrong: 0,
+				lastReviewed: now - 86400000
+			},
+			'custom-my-words:2': {
+				weekId: 'custom',
+				wordNo: 2,
+				correct: 1,
+				wrong: 0,
+				lastReviewed: now
+			}
+		};
+
+		const stats = computeStreakStats(progress, { usedDates: [] });
+		expect(stats.currentStreak).toBe(2);
+		expect(stats.activeDates).toContain(todayIso);
+		expect(stats.activeDates).toContain(yesterdayIso);
 	});
 });

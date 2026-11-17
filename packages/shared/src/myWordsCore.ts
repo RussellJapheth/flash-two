@@ -34,7 +34,12 @@ export function getMyWordsSubcategories(words: WordRecord[]): string[] {
 	for (const w of words) {
 		const cat = (w.category || '').trim();
 		const lower = cat.toLowerCase();
-		if (!cat || lower === ALL_WORDS_CATEGORY.toLowerCase() || lower === ALL_WEEKS_LABEL.toLowerCase()) continue;
+		if (
+			!cat ||
+			lower === ALL_WORDS_CATEGORY.toLowerCase() ||
+			lower === ALL_WEEKS_LABEL.toLowerCase()
+		)
+			continue;
 		if (!seen.has(lower)) {
 			seen.add(lower);
 			rawList.push(cat);
@@ -64,7 +69,11 @@ export function getMyWordsCategoryRows(words: WordRecord[]): MyWordsCategoryRow[
 
 export function filterWordsByCategory(words: WordRecord[], category?: string | null): WordRecord[] {
 	const trimmed = (category || '').trim().toLowerCase();
-	if (!trimmed || trimmed === ALL_WORDS_CATEGORY.toLowerCase() || trimmed === ALL_WEEKS_LABEL.toLowerCase()) {
+	if (
+		!trimmed ||
+		trimmed === ALL_WORDS_CATEGORY.toLowerCase() ||
+		trimmed === ALL_WEEKS_LABEL.toLowerCase()
+	) {
 		return [...words];
 	}
 	return words.filter((w) => (w.category || '').trim().toLowerCase() === trimmed);

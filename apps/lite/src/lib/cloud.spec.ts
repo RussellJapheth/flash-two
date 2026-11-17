@@ -74,7 +74,7 @@ describe('Lite App Cloud Sync Layer', () => {
 		expect(resUnknown.exists).toBe(false);
 	});
 
-	it('pushes local deck and progress to cloud', async () => {
+	it('pushes local deck, progress, and streakFreezeData to cloud', async () => {
 		let putPayload: AppBackup | null = null;
 		let usersListUpdated = false;
 
@@ -98,7 +98,34 @@ describe('Lite App Cloud Sync Layer', () => {
 		expect(putPayload).toBeDefined();
 		const savedPayload = putPayload as AppBackup | null;
 		expect(savedPayload?.username).toBe('alice');
+		expect(savedPayload?.streakFreezeData).toBeDefined();
 		expect(usersListUpdated).toBe(true);
+	});
+
+	it('pullAndMerge merges remote streakFreezeData into user profile', async () => {
+		globalThis.fetch = vi.fn().mockImplementation((url: string) => {
+			if (url.includes('/users/alice')) {
+				const backup: AppBackup = {
+					version: 1,
+					username: 'alice',
+					progress: {},
+					customDecks: [],
+					streakFreezeData: {
+						usedDates: ['2026-03-10', '2026-03-12']
+					}
+				};
+				return Promise.resolve(new Response(JSON.stringify(backup), { status: 200 }));
+			}
+			return Promise.resolve(new Response('Not found', { status: 404 }));
+		});
+
+		const ok = await pullAndMerge('alice');
+		expect(ok).toBe(true);
+		const raw = localStorage.getItem('flashcards_streak_freezes');
+		expect(raw).toBeTruthy();
+		const parsed = JSON.parse(raw!);
+		expect(parsed.usedDates).toContain('2026-03-10');
+		expect(parsed.usedDates).toContain('2026-03-12');
 	});
 
 	it('pullAndMerge pushes local data if remote user is 404', async () => {

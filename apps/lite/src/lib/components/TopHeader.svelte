@@ -1,35 +1,91 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import { ArrowLeft, Layers, Settings, Cloud, CloudOff, CloudCheck, Loader2 } from 'lucide-svelte';
+	import {
+		ArrowLeft,
+		Layers,
+		Settings,
+		Cloud,
+		CloudOff,
+		CloudCheck,
+		Loader2,
+		Flame
+	} from 'lucide-svelte';
 	import { resolve } from '$app/paths';
 	import { subscribeSyncStatus, pullAndMerge } from '$lib/cloud';
+	import { getStreakStats, registerDataMutationListener, type StreakStats } from '$lib/storage';
 	import type { SyncStatus } from '@flash/shared';
+	import StreakCalendarModal from './StreakCalendarModal.svelte';
+
+	interface Props {
+		title?: string;
+		showBack?: boolean;
+		onBack?: () => void;
+		streak?: number;
+		onOpenStreak?: () => void;
+	}
 
 	let {
 		title = 'FlashCards Lite',
 		showBack = false,
-		onBack = () => history.back()
-	} = $props<{
-		title?: string;
-		showBack?: boolean;
-		onBack?: () => void;
-	}>();
+		onBack = () => history.back(),
+		streak,
+		onOpenStreak
+	}: Props = $props();
 
 	let syncStatus = $state<SyncStatus>('idle');
-	let unsubscribe: (() => void) | null = null;
+	let unsubscribeSync: (() => void) | null = null;
+	let unsubscribeMutation: (() => void) | null = null;
+
+	let streakStats = $state<StreakStats>({
+		currentStreak: 0,
+		longestStreak: 0,
+		freezeCount: 0,
+		tierName: 'Novice Explorer',
+		totalReviews: 0,
+		activeDates: [],
+		freezeDates: []
+	});
+
+	let showCalendar = $state(false);
+
+	let effectiveStreak = $derived(streak !== undefined ? streak : streakStats.currentStreak);
+
+	async function refreshStreak() {
+		try {
+			streakStats = await getStreakStats();
+		} catch {
+			// ignore
+		}
+	}
 
 	onMount(() => {
-		unsubscribe = subscribeSyncStatus((s) => {
+		refreshStreak();
+		unsubscribeSync = subscribeSyncStatus((s) => {
 			syncStatus = s;
+			if (s === 'ok') {
+				refreshStreak();
+			}
+		});
+		unsubscribeMutation = registerDataMutationListener(() => {
+			refreshStreak();
 		});
 	});
 
 	onDestroy(() => {
-		unsubscribe?.();
+		unsubscribeSync?.();
+		unsubscribeMutation?.();
 	});
 
 	function handleSyncClick() {
 		pullAndMerge();
+	}
+
+	function handleStreakClick() {
+		if (onOpenStreak) {
+			onOpenStreak();
+		} else {
+			showCalendar = true;
+		}
 	}
 </script>
 
@@ -60,7 +116,26 @@
 		</div>
 	</div>
 
-	<div class="flex items-center gap-1">
+	<div class="flex items-center gap-1.5">
+		<!-- Minimal Streak Indicator Pill -->
+		<button
+			type="button"
+			onclick={handleStreakClick}
+			title={`Current streak: ${effectiveStreak} days (${streakStats.tierName}). Tap for streak calendar.`}
+			aria-label={`Current streak: ${effectiveStreak} days. Open streak calendar`}
+			class="flex h-8 cursor-pointer items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold transition-all active:scale-95 {effectiveStreak >
+			0
+				? 'border border-amber-200/80 bg-amber-50 text-amber-900 shadow-xs hover:bg-amber-100'
+				: 'text-slate-400 hover:bg-slate-100 hover:text-slate-600'}"
+		>
+			<Flame
+				size={14}
+				strokeWidth={2.25}
+				class={effectiveStreak > 0 ? 'fill-amber-500 text-amber-500' : 'text-slate-400'}
+			/>
+			<span>{effectiveStreak}d</span>
+		</button>
+
 		<button
 			type="button"
 			onclick={handleSyncClick}
@@ -91,3 +166,15 @@
 		</a>
 	</div>
 </header>
+
+{#if !onOpenStreak}
+	<StreakCalendarModal
+		isOpen={showCalendar}
+		streak={streakStats.currentStreak}
+		longestStreak={streakStats.longestStreak}
+		freezeCount={streakStats.freezeCount}
+		activeDates={streakStats.activeDates}
+		freezeDates={streakStats.freezeDates}
+		onClose={() => (showCalendar = false)}
+	/>
+{/if}

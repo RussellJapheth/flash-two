@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import {
-	ALL_WORDS_CATEGORY,
 	ALL_WEEKS_LABEL,
 	DUPLICATE_WORD_ERROR,
 	validateMyWord,

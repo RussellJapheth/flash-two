@@ -1,0 +1,1015 @@
+<script lang="ts">
+	import TopHeader from '$lib/components/TopHeader.svelte';
+	import DeckCard from '$lib/components/DeckCard.svelte';
+	import StoryCard from '$lib/components/StoryCard.svelte';
+	import DeckSpreadsheetModal from '$lib/components/DeckSpreadsheetModal.svelte';
+	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
+	import { openModal, closeModal } from '$lib/utils/backNav';
+	import { onMount } from 'svelte';
+	import {
+		getAllProgress,
+		getWordProgress,
+		getBuiltinPacks,
+		getAllCustomDecks,
+		saveCustomDeck,
+		deleteCustomDeck,
+		computeStreakStats,
+		isDeckArchived,
+		setDeckArchived
+	} from '$lib/utils/storage';
+	import { BUILTIN_STORIES } from '$lib/data/stories';
+	import { getAllStoryProgress } from '$lib/utils/storyStorage';
+	import { isSpeechRecognitionSupported } from '$lib/utils/speech';
+	import { scheduleDebouncedSync, subscribeDataChanged } from '$lib/utils/cloud';
+	import { isCardDue, isCardMastered } from '$lib/utils/srs';
+	import type {
+		DeckSummary,
+		CustomDeck,
+		WordRecord,
+		StreakStats,
+		StoryCompletionRecord
+	} from '$lib/types';
+	import {
+		Plus,
+		FileUp,
+		Search,
+		FolderOpen,
+		X,
+		Download,
+		BookOpen,
+		Layers,
+		Compass,
+		Clock,
+		ArrowRight,
+		Headphones,
+		Archive
+	} from 'lucide-svelte';
+	import { downloadCsvTemplate } from '$lib/utils/csvTemplate';
+	import { searchFieldGuides } from '$lib/data/fieldGuides';
+	import { normalizePinyin } from '$lib/utils/dictionary';
+
+	let activeTab = $state<'flashcards' | 'stories' | 'guides'>('flashcards');
+
+	function switchTab(tab: 'flashcards' | 'stories' | 'guides') {
+		activeTab = tab;
+		try {
+			sessionStorage.setItem('flashcards_decks_active_tab', tab);
+			localStorage.setItem('flashcards_decks_active_tab', tab);
+			const url = new URL(window.location.href);
+			url.searchParams.set('tab', tab);
+			history.replaceState(history.state, '', url.toString());
+		} catch {
+			// Ignore storage/history errors
+		}
+	}
+	let storyFilterLang = $state<'all' | 'chinese' | 'french'>('all');
+	let storyProgressMap = $state<Record<string, StoryCompletionRecord>>({});
+	let isSpeechSupported = $state(false);
+	let guideCategory = $state<'all' | 'conversation' | 'survival' | 'pronunciation' | 'grammar'>(
+		'all'
+	);
+
+	let streakStats = $state<StreakStats>({
+		currentStreak: 0,
+		longestStreak: 0,
+		freezeCount: 0,
+		tierName: 'Novice Explorer',
+		totalReviews: 0,
+		activeDates: [],
+		freezeDates: []
+	});
+
+	let filterType = $state<'all' | 'chinese' | 'french' | 'custom' | 'archived'>('all');
+	let searchQuery = $state('');
+	let allDecks = $state<DeckSummary[]>([]);
+	let rawCustomDecks = $state<CustomDeck[]>([]);
+
+	// Spreadsheet Editor Modal state
+	let editingDeck = $state<CustomDeck | null>(null);
+
+	// Import Deck Form Modal state
+	let importDeckName = $state('');
+	let importDeckLang = $state<'chinese' | 'french'>('chinese');
+	let importRawText = $state('');
+	let importError = $state('');
+
+	async function loadDecks() {
+		const progress = await getAllProgress();
+		streakStats = computeStreakStats(progress);
+
+		const chinesePacks = await getBuiltinPacks('chinese');
+		const frenchPacks = await getBuiltinPacks('french');
+		const customDecks = await getAllCustomDecks();
+		rawCustomDecks = customDecks;
+
+		const summaries: DeckSummary[] = [];
+
+		// Chinese packs
+		for (const pack of chinesePacks) {
+			let mastered = 0;
+			let learning = 0;
+			let due = 0;
+			let correctSum = 0;
+			let totalAttempts = 0;
+
+			for (const word of pack.words) {
+				const p = getWordProgress(progress, pack.id, word.No, 'chinese');
+				if (p) {
+					if (isCardMastered(p)) mastered++;
+					else learning++;
+					if (isCardDue(p)) due++;
+					correctSum += p.correct || 0;
+					totalAttempts += (p.correct || 0) + (p.wrong || 0);
+				} else {
+					due++;
+				}
+			}
+
+			const accuracy = totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
+
+			summaries.push({
+				id: pack.id,
+				title: pack.title,
+				language: 'chinese',
+				totalCards: pack.words.length,
+				masteredCards: mastered,
+				learningCards: learning,
+				dueCards: due,
+				accuracy,
+				isCustom: false,
+				isArchived: isDeckArchived(pack.id),
+				indexedWords: pack.words.map((w) => ({
+					word: w['Chinese Word'] || '',
+					pinyin: w.Pinyin || '',
+					meaning: w['English Meaning'] || '',
+					acceptableAnswers: w['Acceptable Answers'] || []
+				}))
+			});
+		}
+
+		// French packs
+		for (const pack of frenchPacks) {
+			let mastered = 0;
+			let learning = 0;
+			let due = 0;
+			let correctSum = 0;
+			let totalAttempts = 0;
+
+			for (const word of pack.words) {
+				const p = getWordProgress(progress, pack.id, word.No, 'french');
+				if (p) {
+					if (isCardMastered(p)) mastered++;
+					else learning++;
+					if (isCardDue(p)) due++;
+					correctSum += p.correct || 0;
+					totalAttempts += (p.correct || 0) + (p.wrong || 0);
+				} else {
+					due++;
+				}
+			}
+
+			const accuracy = totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
+
+			summaries.push({
+				id: pack.id,
+				title: pack.title,
+				language: 'french',
+				totalCards: pack.words.length,
+				masteredCards: mastered,
+				learningCards: learning,
+				dueCards: due,
+				accuracy,
+				isCustom: false,
+				isArchived: isDeckArchived(pack.id),
+				indexedWords: pack.words.map((w) => ({
+					word: w['French Word'] || '',
+					pinyin: '',
+					meaning: w['English Meaning'] || '',
+					acceptableAnswers: w['Acceptable Answers'] || []
+				}))
+			});
+		}
+
+		// Custom Decks
+		for (const deck of customDecks) {
+			let mastered = 0;
+			let learning = 0;
+			let due = 0;
+			let correctSum = 0;
+			let totalAttempts = 0;
+
+			for (const word of deck.words) {
+				const p = getWordProgress(progress, deck.id, word.No, deck.language || 'chinese');
+				if (p) {
+					if (isCardMastered(p)) mastered++;
+					else learning++;
+					if (isCardDue(p)) due++;
+					correctSum += p.correct || 0;
+					totalAttempts += (p.correct || 0) + (p.wrong || 0);
+				} else {
+					due++;
+				}
+			}
+
+			const accuracy = totalAttempts > 0 ? Math.round((correctSum / totalAttempts) * 100) : 0;
+
+			summaries.push({
+				id: deck.id,
+				title: deck.name,
+				language: deck.language || 'chinese',
+				totalCards: deck.words.length,
+				masteredCards: mastered,
+				learningCards: learning,
+				dueCards: due,
+				accuracy,
+				isCustom: true,
+				isArchived: isDeckArchived(deck.id),
+				indexedWords: deck.words.map((w) => ({
+					word: w['Chinese Word'] || w['French Word'] || '',
+					pinyin: w.Pinyin || '',
+					meaning: w['English Meaning'] || '',
+					acceptableAnswers: w['Acceptable Answers'] || []
+				}))
+			});
+		}
+
+		allDecks = summaries;
+	}
+
+	let archivedDecksCount = $derived(allDecks.filter((d) => d.isArchived).length);
+
+	let filteredDecks = $derived(
+		allDecks
+			.filter((deck) => {
+				if (filterType === 'archived') {
+					if (!deck.isArchived) return false;
+				} else {
+					if (deck.isArchived) return false;
+					if (filterType === 'chinese' && (deck.language !== 'chinese' || deck.isCustom))
+						return false;
+					if (filterType === 'french' && (deck.language !== 'french' || deck.isCustom))
+						return false;
+					if (filterType === 'custom' && !deck.isCustom) return false;
+				}
+				return true;
+			})
+			.map((deck) => {
+				const q = searchQuery.trim().toLowerCase();
+				if (!q) {
+					return { ...deck, matchedSnippet: undefined };
+				}
+
+				if (deck.title.toLowerCase().includes(q)) {
+					return { ...deck, matchedSnippet: undefined };
+				}
+
+				const normQ = normalizePinyin(q);
+				const matchedWord = deck.indexedWords?.find((w) => {
+					if (w.word && w.word.toLowerCase().includes(q)) return true;
+					if (w.pinyin) {
+						if (w.pinyin.toLowerCase().includes(q)) return true;
+						if (normQ && normalizePinyin(w.pinyin).includes(normQ)) return true;
+					}
+					if (w.meaning && w.meaning.toLowerCase().includes(q)) return true;
+					if (w.acceptableAnswers && w.acceptableAnswers.some((a) => a.toLowerCase().includes(q)))
+						return true;
+					return false;
+				});
+
+				if (matchedWord) {
+					const snippet = matchedWord.pinyin
+						? `Matches: ${matchedWord.word} (${matchedWord.pinyin})`
+						: `Matches: ${matchedWord.word} — ${matchedWord.meaning}`;
+					return { ...deck, matchedSnippet: snippet };
+				}
+
+				return null;
+			})
+			.filter((deck): deck is DeckSummary => deck !== null)
+	);
+
+	function openCreateDeckModal() {
+		editingDeck = null;
+		openModal({ spreadsheetOpen: true });
+	}
+
+	function handleEditCustomDeck(deckSummary: DeckSummary) {
+		const target = rawCustomDecks.find((d) => d.id === deckSummary.id);
+		if (target) {
+			editingDeck = target;
+			openModal({ spreadsheetOpen: true });
+		}
+	}
+
+	async function handleSaveCustomDeck(deck: CustomDeck) {
+		await saveCustomDeck(deck);
+		scheduleDebouncedSync();
+		await loadDecks();
+	}
+
+	async function handleDeleteCustomDeck(id: string) {
+		if (confirm('Are you sure you want to delete this custom deck?')) {
+			await deleteCustomDeck(id);
+			setDeckArchived(id, false);
+			scheduleDebouncedSync();
+			await loadDecks();
+		}
+	}
+
+	async function handleArchiveDeck(deckSummary: DeckSummary) {
+		setDeckArchived(deckSummary.id, true);
+		scheduleDebouncedSync();
+		await loadDecks();
+	}
+
+	async function handleUnarchiveDeck(deckSummary: DeckSummary) {
+		setDeckArchived(deckSummary.id, false);
+		scheduleDebouncedSync();
+		await loadDecks();
+	}
+
+	async function handleImportDeck() {
+		importError = '';
+		if (!importDeckName.trim() || !importRawText.trim()) {
+			importError = 'Please provide both deck title and data.';
+			return;
+		}
+
+		try {
+			let words: WordRecord[] = [];
+			const trimmed = importRawText.trim();
+
+			if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
+				// Parse JSON format
+				const parsed = JSON.parse(trimmed);
+				const array = Array.isArray(parsed) ? parsed : parsed.words;
+				if (!Array.isArray(array)) throw new Error('JSON must contain an array of words');
+
+				words = array.map((item, idx) => ({
+					No: idx + 1,
+					'Chinese Word': item['Chinese Word'] || item.word || item.target,
+					'French Word':
+						item['French Word'] ||
+						item.french ||
+						(importDeckLang === 'french' ? item.word : undefined),
+					Pinyin: item.Pinyin || item.pinyin || item.phonetic,
+					'Part of Speech': item['Part of Speech'] || item.pos || 'noun',
+					'English Meaning': item['English Meaning'] || item.meaning || item.translation || '',
+					'Example (Chinese + Pinyin)': item['Example (Chinese + Pinyin)'] || item.example,
+					'Example (French)': item['Example (French)'] || item.example
+				}));
+			} else {
+				// Parse CSV (supports standard template: Word, Phonetic, English Meaning, Part of Speech, Example)
+				const rawLines = trimmed
+					.split(/\r?\n/)
+					.map((l) => l.trim())
+					.filter((l) => l.length > 0);
+
+				if (rawLines.length === 0) throw new Error('No valid rows found');
+
+				// Check if first line is a header row
+				const firstLineLower = rawLines[0].toLowerCase();
+				const isHeader =
+					firstLineLower.startsWith('word') ||
+					firstLineLower.startsWith('"word"') ||
+					firstLineLower.includes('phonetic') ||
+					firstLineLower.includes('pinyin') ||
+					firstLineLower.includes('meaning');
+
+				let headerCols: string[] = [];
+				let dataLines = rawLines;
+				if (isHeader) {
+					headerCols = rawLines[0].split(',').map((h) => h.trim().toLowerCase());
+					dataLines = rawLines.slice(1);
+				}
+
+				// Standard template column indices: Word (0), Phonetic (1), English Meaning (2), Part of Speech (3), Example (4)
+				let phoneticIdx = 1;
+				let meaningIdx = 2;
+				let posIdx = 3;
+				let exampleIdx = 4;
+
+				if (headerCols.length >= 2) {
+					const pIdx = headerCols.findIndex((c) => c.includes('phonetic') || c.includes('pinyin'));
+					const mIdx = headerCols.findIndex(
+						(c) => c.includes('meaning') || c.includes('translation') || c.includes('english')
+					);
+					const posColIdx = headerCols.findIndex(
+						(c) => c.includes('part of speech') || c.includes('pos')
+					);
+					const exColIdx = headerCols.findIndex((c) => c.includes('example'));
+
+					if (pIdx !== -1) phoneticIdx = pIdx;
+					if (mIdx !== -1) meaningIdx = mIdx;
+					if (posColIdx !== -1) posIdx = posColIdx;
+					if (exColIdx !== -1) exampleIdx = exColIdx;
+				}
+
+				words = dataLines.map((line, idx) => {
+					const parts = line.split(',').map((p) => p.trim());
+					const targetWord = parts[0] || '';
+					let phonetic = parts[phoneticIdx] || '';
+					let meaning = parts[meaningIdx] || '';
+					const pos = parts[posIdx] || 'noun';
+					const example = parts.slice(exampleIdx).join(', ') || parts[exampleIdx] || '';
+
+					// Auto-detect swapped phonetic and meaning when no explicit header
+					const toneRegex = /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/;
+					if (!isHeader && toneRegex.test(meaning) && !toneRegex.test(phonetic)) {
+						const temp = phonetic;
+						phonetic = meaning;
+						meaning = temp;
+					}
+
+					return {
+						No: idx + 1,
+						'Chinese Word': importDeckLang === 'chinese' ? targetWord : undefined,
+						'French Word': importDeckLang === 'french' ? targetWord : undefined,
+						Pinyin: phonetic || undefined,
+						'Part of Speech': pos,
+						'English Meaning': meaning,
+						'Example (Chinese + Pinyin)':
+							importDeckLang === 'chinese' ? example || undefined : undefined,
+						'Example (French)': importDeckLang === 'french' ? example || undefined : undefined
+					};
+				});
+			}
+
+			if (words.length === 0) {
+				importError = 'No valid words could be parsed.';
+				return;
+			}
+
+			const customDeck: CustomDeck = {
+				id: `custom-${Date.now()}`,
+				name: importDeckName.trim(),
+				words,
+				language: importDeckLang,
+				createdAt: Date.now()
+			};
+
+			await saveCustomDeck(customDeck);
+			scheduleDebouncedSync();
+
+			closeModal();
+			importDeckName = '';
+			importRawText = '';
+			await loadDecks();
+		} catch (e: unknown) {
+			importError = e instanceof Error ? e.message : 'Failed to parse deck data.';
+		}
+	}
+
+	let filteredStories = $derived(
+		BUILTIN_STORIES.filter((s) => {
+			if (storyFilterLang === 'chinese' && s.language !== 'chinese') return false;
+			if (storyFilterLang === 'french' && s.language !== 'french') return false;
+			if (searchQuery.trim()) {
+				const q = searchQuery.toLowerCase();
+				const matchesVocab = s.summaryVocabulary?.some(
+					(v) =>
+						v.word.toLowerCase().includes(q) ||
+						(v.pinyin && v.pinyin.toLowerCase().includes(q)) ||
+						v.meaning.toLowerCase().includes(q)
+				);
+				return (
+					s.title.toLowerCase().includes(q) ||
+					s.subtitle.toLowerCase().includes(q) ||
+					s.difficulty.toLowerCase().includes(q) ||
+					Boolean(matchesVocab)
+				);
+			}
+			return true;
+		})
+	);
+
+	let filteredGuides = $derived(searchFieldGuides(searchQuery, guideCategory));
+
+	onMount(() => {
+		const tabParam = page.url.searchParams.get('tab');
+		if (tabParam === 'guides' || tabParam === 'stories' || tabParam === 'flashcards') {
+			activeTab = tabParam;
+			try {
+				sessionStorage.setItem('flashcards_decks_active_tab', tabParam);
+				localStorage.setItem('flashcards_decks_active_tab', tabParam);
+			} catch {
+				// Ignore storage errors in restricted contexts
+			}
+		} else {
+			try {
+				const savedTab =
+					sessionStorage.getItem('flashcards_decks_active_tab') ||
+					localStorage.getItem('flashcards_decks_active_tab');
+				if (savedTab === 'guides' || savedTab === 'stories' || savedTab === 'flashcards') {
+					activeTab = savedTab;
+				}
+			} catch {
+				// Ignore storage errors in restricted contexts
+			}
+		}
+		loadDecks();
+		isSpeechSupported = isSpeechRecognitionSupported();
+		storyProgressMap = getAllStoryProgress();
+		const unsubscribe = subscribeDataChanged(() => {
+			loadDecks();
+			storyProgressMap = getAllStoryProgress();
+		});
+		return unsubscribe;
+	});
+</script>
+
+<svelte:head>
+	<title>FlashCards — My Decks</title>
+</svelte:head>
+
+<TopHeader title="My Decks" streak={streakStats.currentStreak} />
+
+<main class="flex-1 space-y-4 px-4 pt-3 pb-8">
+	<!-- Tab Switcher: Flashcards vs Stories vs Field Guides -->
+	<div class="grid grid-cols-3 rounded-2xl bg-slate-100 p-1">
+		<button
+			type="button"
+			onclick={() => switchTab('flashcards')}
+			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
+			'flashcards'
+				? 'bg-white text-slate-900 shadow-xs'
+				: 'text-slate-500 hover:text-slate-800'}"
+		>
+			<Layers size={14} strokeWidth={2.25} />
+			<span>Flashcards</span>
+		</button>
+		<button
+			type="button"
+			onclick={() => switchTab('stories')}
+			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
+			'stories'
+				? 'bg-white text-slate-900 shadow-xs'
+				: 'text-slate-500 hover:text-slate-800'}"
+		>
+			<BookOpen size={14} strokeWidth={2.25} />
+			<span>Stories</span>
+		</button>
+		<button
+			type="button"
+			onclick={() => switchTab('guides')}
+			class="flex cursor-pointer items-center justify-center gap-1 rounded-xl py-2 font-headline text-[11px] font-bold transition-all sm:text-xs {activeTab ===
+			'guides'
+				? 'bg-white text-slate-900 shadow-xs'
+				: 'text-slate-500 hover:text-slate-800'}"
+		>
+			<Compass size={14} strokeWidth={2.25} />
+			<span>Field Guides</span>
+		</button>
+	</div>
+
+	{#if activeTab === 'flashcards'}
+		<!-- FLASHCARDS TAB -->
+		<!-- Top Bar Actions -->
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-2">
+				<!-- Create New Deck Button -->
+				<button
+					type="button"
+					onclick={openCreateDeckModal}
+					class="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-indigo-600 px-3.5 py-1.5 font-headline text-xs font-bold text-white shadow-xs transition-all hover:bg-indigo-700 active:scale-95"
+				>
+					<Plus size={16} strokeWidth={2.5} />
+					<span>Create Deck</span>
+				</button>
+
+				<!-- Import Deck Button -->
+				<button
+					type="button"
+					onclick={() => openModal({ importOpen: true })}
+					class="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-slate-200/80 bg-white px-3 py-1.5 font-headline text-xs font-bold text-slate-700 shadow-xs transition-colors hover:bg-slate-50 active:scale-95"
+				>
+					<FileUp size={16} strokeWidth={2} />
+					<span>Import</span>
+				</button>
+			</div>
+
+			<span class="font-headline text-xs font-bold text-slate-500">
+				{filteredDecks.length} Decks
+			</span>
+		</div>
+
+		<!-- Search Input -->
+		<div class="relative">
+			<Search size={18} strokeWidth={2} class="absolute top-2.5 left-3.5 text-slate-400" />
+			<input
+				type="text"
+				placeholder="Search decks by title, word, pinyin, or meaning..."
+				bind:value={searchQuery}
+				class="w-full rounded-2xl border border-slate-200/80 bg-white py-2 pr-4 pl-10 font-sans text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none"
+			/>
+		</div>
+
+		<!-- Filter Chips (Segmented Pill Pattern) -->
+		<div class="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-1">
+			{#each ['all', 'chinese', 'french', 'custom', 'archived'] as f (f)}
+				<button
+					type="button"
+					onclick={() => (filterType = f as typeof filterType)}
+					class="cursor-pointer rounded-xl px-3.5 py-1.5 font-headline text-xs font-bold capitalize transition-all {filterType ===
+					f
+						? 'bg-indigo-600 text-white shadow-xs'
+						: 'border border-slate-200/60 bg-white text-slate-600 hover:bg-slate-50'}"
+				>
+					{#if f === 'archived'}
+						<span class="flex items-center gap-1">
+							<Archive size={13} />
+							<span>Archived ({archivedDecksCount})</span>
+						</span>
+					{:else}
+						{f}
+					{/if}
+				</button>
+			{/each}
+		</div>
+
+		<!-- Decks List -->
+		<div class="space-y-2.5 pt-1">
+			{#if filteredDecks.length === 0}
+				<div
+					class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 p-8 text-center text-slate-500"
+				>
+					<FolderOpen size={36} strokeWidth={1.5} class="mb-2 text-slate-400" />
+					<p class="font-headline text-sm font-bold text-slate-800">
+						{filterType === 'archived' ? 'No archived decks' : 'No decks found'}
+					</p>
+					<p class="mt-1 font-sans text-xs text-slate-400">
+						{filterType === 'archived'
+							? 'Archive decks to keep your active list clean.'
+							: 'Try searching by title, character, pinyin, or English translation.'}
+					</p>
+				</div>
+			{:else}
+				{#each filteredDecks as deck (deck.id)}
+					<DeckCard
+						{deck}
+						onEdit={deck.isCustom ? handleEditCustomDeck : undefined}
+						onDelete={deck.isCustom ? (d) => handleDeleteCustomDeck(d.id) : undefined}
+						onArchive={handleArchiveDeck}
+						onUnarchive={handleUnarchiveDeck}
+					/>
+				{/each}
+			{/if}
+		</div>
+	{:else if activeTab === 'stories'}
+		<!-- STORIES TAB -->
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-1.5">
+				<BookOpen size={18} strokeWidth={2.25} class="text-indigo-600" />
+				<h3 class="font-headline text-sm font-bold text-slate-900">Situational Quests</h3>
+			</div>
+
+			<span class="font-headline text-xs font-bold text-slate-500">
+				{filteredStories.length} Scenarios
+			</span>
+		</div>
+
+		<!-- Podcast Audio Immersion Banner -->
+		<a
+			href={resolve('/podcasts')}
+			class="flex items-center justify-between rounded-2xl border border-indigo-200 bg-linear-to-r from-indigo-50 to-amber-50/40 p-3.5 shadow-xs transition-transform hover:border-indigo-300 active:scale-[0.99]"
+		>
+			<div class="flex items-center gap-3">
+				<div
+					class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-xs"
+				>
+					<Headphones size={18} />
+				</div>
+				<div>
+					<div class="font-headline text-xs font-bold text-indigo-950">Graded Audio Podcasts</div>
+					<div class="text-[11px] text-indigo-700/80">
+						Listen with live synced transcripts & vocabulary popups
+					</div>
+				</div>
+			</div>
+			<ArrowRight size={16} class="text-indigo-600" />
+		</a>
+
+		<!-- Search Input -->
+		<div class="relative">
+			<Search size={18} strokeWidth={2} class="absolute top-2.5 left-3.5 text-slate-400" />
+			<input
+				type="text"
+				placeholder="Search stories by title, topic, or vocabulary..."
+				bind:value={searchQuery}
+				class="w-full rounded-2xl border border-slate-200/80 bg-white py-2 pr-4 pl-10 font-sans text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none"
+			/>
+		</div>
+
+		<!-- Filter Chips -->
+		<div class="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-1">
+			{#each ['all', 'chinese', 'french'] as f (f)}
+				<button
+					type="button"
+					onclick={() => (storyFilterLang = f as typeof storyFilterLang)}
+					class="cursor-pointer rounded-xl px-3.5 py-1.5 font-headline text-xs font-bold capitalize transition-all {storyFilterLang ===
+					f
+						? 'bg-indigo-600 text-white shadow-xs'
+						: 'border border-slate-200/60 bg-white text-slate-600 hover:bg-slate-50'}"
+				>
+					{f}
+				</button>
+			{/each}
+		</div>
+
+		<!-- Story Cards Grid -->
+		<div class="space-y-3.5 pt-1">
+			{#if filteredStories.length === 0}
+				<div
+					class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 p-8 text-center text-slate-500"
+				>
+					<BookOpen size={36} strokeWidth={1.5} class="mb-2 text-slate-400" />
+					<p class="font-headline text-sm font-bold text-slate-800">No stories found</p>
+					<p class="mt-1 font-sans text-xs text-slate-400">
+						Try selecting another language filter.
+					</p>
+				</div>
+			{:else}
+				{#each filteredStories as story (story.id)}
+					<StoryCard
+						{story}
+						progress={storyProgressMap[story.id]}
+						speechSupported={isSpeechSupported}
+					/>
+				{/each}
+			{/if}
+		</div>
+	{:else}
+		<!-- FIELD GUIDES TAB -->
+		<div class="flex items-center justify-between">
+			<div class="flex items-center gap-1.5">
+				<Compass size={18} strokeWidth={2.25} class="text-indigo-600" />
+				<h3 class="font-headline text-sm font-bold text-slate-900">Curriculum Field Guides</h3>
+			</div>
+
+			<span class="font-headline text-xs font-bold text-slate-500">
+				{filteredGuides.length} Guides
+			</span>
+		</div>
+
+		<!-- Textbook Course Promotion Banner -->
+		<a
+			href={resolve('/textbook')}
+			class="flex items-center justify-between rounded-2xl border border-indigo-200 bg-linear-to-r from-indigo-50 to-violet-50 p-3.5 shadow-xs transition-transform hover:border-indigo-300 active:scale-[0.99]"
+		>
+			<div class="flex items-center gap-3">
+				<div
+					class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-xs"
+				>
+					<BookOpen size={18} />
+				</div>
+				<div>
+					<div class="font-headline text-xs font-bold text-indigo-950">
+						The Ideal Mandarin Textbook
+					</div>
+					<div class="text-[11px] text-indigo-700/80">
+						36 Units from Zero to Conversational Fluency
+					</div>
+				</div>
+			</div>
+			<ArrowRight size={16} class="text-indigo-600" />
+		</a>
+
+		<!-- Search Input -->
+		<div class="relative">
+			<Search size={18} strokeWidth={2} class="absolute top-2.5 left-3.5 text-slate-400" />
+			<input
+				type="text"
+				placeholder="Search field guides, grammar, pinyin..."
+				bind:value={searchQuery}
+				class="w-full rounded-2xl border border-slate-200/80 bg-white py-2 pr-4 pl-10 font-sans text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none"
+			/>
+		</div>
+
+		<!-- Filter Chips -->
+		<div class="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-1">
+			{#each ['all', 'conversation', 'survival', 'pronunciation', 'grammar'] as cat (cat)}
+				<button
+					type="button"
+					onclick={() => (guideCategory = cat as typeof guideCategory)}
+					class="cursor-pointer rounded-xl px-3.5 py-1.5 font-headline text-xs font-bold capitalize transition-all {guideCategory ===
+					cat
+						? 'bg-indigo-600 text-white shadow-xs'
+						: 'border border-slate-200/60 bg-white text-slate-600 hover:bg-slate-50'}"
+				>
+					{cat}
+				</button>
+			{/each}
+		</div>
+
+		<!-- Field Guides List -->
+		<div class="space-y-3 pt-1">
+			{#if filteredGuides.length === 0}
+				<div
+					class="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-200 p-8 text-center text-slate-500"
+				>
+					<Compass size={36} strokeWidth={1.5} class="mb-2 text-slate-400" />
+					<p class="font-headline text-sm font-bold text-slate-800">No field guides found</p>
+					<p class="mt-1 font-sans text-xs text-slate-400">
+						Try clearing the search query or selecting another category.
+					</p>
+				</div>
+			{:else}
+				{#each filteredGuides as guide (guide.id)}
+					<div
+						class="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-4 shadow-xs transition-all hover:border-indigo-300 hover:shadow-md"
+					>
+						<!-- Top badge row -->
+						<div class="flex items-center justify-between">
+							<div class="flex items-center gap-2">
+								<span
+									class="rounded-full bg-slate-100 px-2.5 py-0.5 font-headline text-[11px] font-black text-slate-700"
+								>
+									#{guide.number.toString().padStart(2, '0')}
+								</span>
+								<span
+									class="rounded-full px-2.5 py-0.5 font-headline text-[10px] font-bold tracking-wider uppercase {guide.badgeBg} {guide.badgeText}"
+								>
+									{guide.category}
+								</span>
+							</div>
+
+							<span class="flex items-center gap-1 font-sans text-xs text-slate-500">
+								<Clock size={12} />
+								{guide.durationMinutes} min read
+							</span>
+						</div>
+
+						<!-- Title & Subtitle -->
+						<div class="mt-3">
+							<h4
+								class="font-headline text-base font-black tracking-tight text-slate-900 transition-colors group-hover:text-indigo-600"
+							>
+								{guide.title}
+							</h4>
+							<p class="mt-1 font-sans text-xs leading-relaxed text-slate-600">
+								{guide.subtitle}
+							</p>
+						</div>
+
+						<!-- Key Vocab Preview Chips -->
+						{#if guide.keyVocab && guide.keyVocab.length > 0}
+							<div class="mt-3 flex flex-wrap items-center gap-1.5">
+								<span class="text-[10px] font-bold tracking-wider text-slate-400 uppercase"
+									>Key Words:</span
+								>
+								{#each guide.keyVocab.slice(0, 4) as v (v.hanzi)}
+									<span
+										class="rounded-lg bg-slate-100 px-2 py-0.5 font-headline text-xs font-bold text-slate-700"
+									>
+										{v.hanzi}
+									</span>
+								{/each}
+							</div>
+						{/if}
+
+						<!-- Bottom action row -->
+						<div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+							<a
+								href={resolve(`/deck/${guide.packId}`)}
+								class="flex items-center gap-1 text-[11px] font-bold text-slate-500 transition hover:text-indigo-600"
+							>
+								<Layers size={13} />
+								<span>{guide.packTitle.split(':')[0]}</span>
+							</a>
+
+							<a
+								href={resolve(`/guide/${guide.id}`)}
+								class="inline-flex cursor-pointer items-center gap-1.5 rounded-2xl bg-indigo-600 px-3.5 py-1.5 font-headline text-xs font-bold text-white shadow-xs transition hover:bg-indigo-700 active:scale-95"
+							>
+								<span>Read Field Guide</span>
+								<ArrowRight size={13} />
+							</a>
+						</div>
+					</div>
+				{/each}
+			{/if}
+		</div>
+	{/if}
+</main>
+
+<!-- SPREADSHEET DECK EDITOR MODAL -->
+<DeckSpreadsheetModal
+	isOpen={page.state.spreadsheetOpen === true}
+	deckToEdit={editingDeck}
+	onClose={closeModal}
+	onSave={handleSaveCustomDeck}
+/>
+
+<!-- IMPORT DECK MODAL -->
+{#if page.state.importOpen === true}
+	<div
+		class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm"
+	>
+		<div class="shadow-sheet w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6">
+			<div class="flex items-center justify-between border-b border-slate-100 pb-3">
+				<h3 class="font-headline text-lg font-extrabold text-slate-900">
+					Import Deck (JSON or CSV)
+				</h3>
+				<button
+					type="button"
+					onclick={closeModal}
+					aria-label="Close"
+					class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+				>
+					<X size={18} strokeWidth={2} />
+				</button>
+			</div>
+
+			<div class="space-y-3 py-4">
+				<div>
+					<label for="import-deck-name" class="block font-headline text-xs font-bold text-slate-900"
+						>Deck Title</label
+					>
+					<input
+						id="import-deck-name"
+						type="text"
+						placeholder="e.g. HSK 2 Practice Set"
+						bind:value={importDeckName}
+						class="mt-1 w-full rounded-2xl border border-slate-200 px-3.5 py-2 font-sans text-sm text-slate-900 focus:border-indigo-600 focus:outline-none"
+					/>
+				</div>
+
+				<div>
+					<span class="block font-headline text-xs font-bold text-slate-900">Language</span>
+					<div class="mt-1 flex gap-2">
+						<button
+							type="button"
+							onclick={() => (importDeckLang = 'chinese')}
+							class="flex-1 cursor-pointer rounded-xl py-2 font-headline text-xs font-bold transition-all {importDeckLang ===
+							'chinese'
+								? 'bg-indigo-600 text-white shadow-xs'
+								: 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}"
+						>
+							Chinese
+						</button>
+						<button
+							type="button"
+							onclick={() => (importDeckLang = 'french')}
+							class="flex-1 cursor-pointer rounded-xl py-2 font-headline text-xs font-bold transition-all {importDeckLang ===
+							'french'
+								? 'bg-indigo-600 text-white shadow-xs'
+								: 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}"
+						>
+							French
+						</button>
+					</div>
+				</div>
+
+				<div>
+					<div class="flex items-center justify-between gap-2">
+						<label
+							for="import-raw-data"
+							class="block font-headline text-xs font-bold text-slate-900">Paste JSON or CSV</label
+						>
+						<button
+							type="button"
+							onclick={() => downloadCsvTemplate(importDeckLang)}
+							class="inline-flex cursor-pointer items-center gap-1 font-headline text-[11px] font-bold text-slate-400 transition-colors hover:text-indigo-600 active:scale-95"
+							title="Download CSV template"
+						>
+							<Download size={11} strokeWidth={2} />
+							<span>CSV Template</span>
+						</button>
+					</div>
+					<p class="text-[11px] text-slate-500">
+						CSV format: <code>Word, Meaning, Phonetic, PartOfSpeech, Example</code>
+					</p>
+					<textarea
+						id="import-raw-data"
+						rows="6"
+						placeholder="你好, Hello, nǐ hǎo, noun, 你好世界&#10;再见, Goodbye, zài jiàn, verb, 明天见"
+						bind:value={importRawText}
+						class="mt-1.5 w-full rounded-2xl border border-slate-200 p-3 font-mono text-xs text-slate-900 focus:border-indigo-600 focus:outline-none"
+					></textarea>
+				</div>
+
+				{#if importError}
+					<p class="font-headline text-xs font-bold text-rose-600">{importError}</p>
+				{/if}
+			</div>
+
+			<div class="flex gap-2 pt-2">
+				<button
+					type="button"
+					onclick={closeModal}
+					class="flex-1 cursor-pointer rounded-2xl bg-slate-100 py-2.5 font-headline text-xs font-bold text-slate-600 hover:bg-slate-200 active:scale-95"
+				>
+					Cancel
+				</button>
+				<button
+					type="button"
+					onclick={handleImportDeck}
+					class="flex-1 cursor-pointer rounded-2xl bg-indigo-600 py-2.5 font-headline text-xs font-bold text-white shadow-xs transition-colors hover:bg-indigo-700 active:scale-95"
+				>
+					Import Deck
+				</button>
+			</div>
+		</div>
+	</div>
+{/if}

@@ -5,9 +5,14 @@ yarn.lock
 bun.lock
 bun.lockb
 
+# Build outputs
+**/.svelte-kit/**
+**/build/**
+**/dist/**
+**/.netlify/**
+
 # Miscellaneous
-/static/
+**/static/**
 /.gemini/
 /ui/
 /backups/
-

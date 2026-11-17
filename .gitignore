@@ -5,8 +5,9 @@ node_modules
 .vercel
 .netlify
 .wrangler
-/.svelte-kit
-/build
+.svelte-kit
+build
+dist
 
 # OS
 .DS_Store
@@ -27,6 +28,7 @@ tmp/
 
 # Sprite bake output
 /scripts/bake/bake-bundle.js
+**/scripts/bake/bake-bundle.js
 
 /ui
 

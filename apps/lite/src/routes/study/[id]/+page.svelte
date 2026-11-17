@@ -6,6 +6,7 @@
 	import SRSButtons from '$lib/components/SRSButtons.svelte';
 	import { onMount } from 'svelte';
 	import { getMyWordsDeck, getWordProgress, saveWordProgress } from '$lib/storage';
+	import { playSound } from '$lib/audio';
 	import {
 		calculateNextReview,
 		filterWordsByCategory,
@@ -37,6 +38,7 @@
 	async function handleRate(rating: StudyRating) {
 		if (!currentWord || isAdvancing) return;
 		isAdvancing = true;
+		playSound(rating === 'good' ? 'correct' : 'wrong');
 
 		const key = `custom-my-words:${currentWord.No}`;
 		const currentProgress = await getWordProgress(key);
@@ -47,7 +49,7 @@
 			isFlipped = false;
 			currentIndex += 1;
 			isAdvancing = false;
-		}, 250);
+		}, 200);
 	}
 
 	function handleRestart() {
@@ -156,7 +158,7 @@
 				/>
 
 				<div class="pt-2">
-					<SRSButtons onRate={handleRate} disabled={!isFlipped || isAdvancing} />
+					<SRSButtons onRate={handleRate} disabled={isAdvancing} />
 				</div>
 			</div>
 		{/if}

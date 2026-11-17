@@ -19,35 +19,40 @@
 		onFlip?: () => void;
 	}>();
 
-	function handleFlip() {
+	let targetWord = $derived(
+		language === 'chinese' ? word['Chinese Word'] || '' : word['French Word'] || ''
+	);
+
+	function handleFlip(e?: MouseEvent | KeyboardEvent) {
+		if (e) {
+			const target = e.target as HTMLElement;
+			if (target.closest('button')) return;
+		}
 		playSound('flip');
 		onFlip();
 	}
 
 	function handleSpeak(e: MouseEvent) {
 		e.stopPropagation();
-		const text = word['Chinese Word'] || '';
-		speakWord(text, language);
+		speakWord(targetWord, language);
 	}
 </script>
 
 <!-- FlashCard Container -->
-<div
-	role="button"
-	tabindex="0"
-	aria-label="Flashcard, click to flip"
-	onclick={handleFlip}
-	onkeydown={(e) => {
-		if (e.key === ' ' || e.key === 'Enter') {
-			e.preventDefault();
-			handleFlip();
-		}
-	}}
-	class="perspective-1000 relative min-h-[380px] w-full cursor-pointer select-none"
->
+<div class="perspective-1000 w-full select-none">
 	<!-- Card 3D Rotator -->
 	<div
-		class="preserve-3d relative h-full w-full transition-transform duration-400 ease-out {isFlipped
+		role="button"
+		tabindex="0"
+		aria-label="Flashcard: {targetWord}. Click to flip."
+		onclick={handleFlip}
+		onkeydown={(e) => {
+			if (e.key === ' ' || e.key === 'Enter') {
+				e.preventDefault();
+				handleFlip(e);
+			}
+		}}
+		class="transform-style-3d relative min-h-[380px] w-full cursor-pointer rounded-3xl transition-transform duration-300 sm:min-h-[420px] {isFlipped
 			? 'rotate-y-180'
 			: ''}"
 	>
@@ -87,7 +92,7 @@
 				<h2
 					class="font-headline text-5xl font-black tracking-tight text-slate-900 transition-transform active:scale-95 sm:text-6xl"
 				>
-					{word['Chinese Word']}
+					{targetWord}
 				</h2>
 
 				{#if showPinyin && word.Pinyin}
@@ -145,10 +150,12 @@
 					{/if}
 				</div>
 
-				{#if word['Example (Chinese + Pinyin)']}
+				{#if language === 'chinese' ? word['Example (Chinese + Pinyin)'] : word['Example (French)']}
 					<div class="rounded-2xl bg-slate-50 p-4 text-left">
 						<p class="font-headline text-sm font-bold text-slate-800">
-							{word['Example (Chinese + Pinyin)']}
+							{language === 'chinese'
+								? word['Example (Chinese + Pinyin)']
+								: word['Example (French)']}
 						</p>
 					</div>
 				{/if}

@@ -16,6 +16,8 @@
 	let isStudySession = $derived(
 		page.url.pathname.startsWith('/study/') || page.url.pathname === '/review'
 	);
+	let isAdminRoute = $derived(page.url.pathname.startsWith('/settings/admin'));
+	let hideBottomBar = $derived(isStudySession || isAdminRoute);
 
 	onMount(() => {
 		pwa.init();
@@ -36,12 +38,15 @@
 	class="flex min-h-screen flex-col items-center bg-white font-sans text-slate-900 sm:bg-slate-100"
 >
 	<div
-		class="relative flex min-h-screen w-full flex-col bg-white pb-[calc(env(safe-area-inset-bottom,0px)+5rem)] sm:max-w-md sm:border-x sm:border-slate-200/60 sm:shadow-sm"
+		class={[
+			'relative flex min-h-screen w-full flex-col bg-white pb-[calc(env(safe-area-inset-bottom,0px)+5rem)] sm:border-x sm:border-slate-200/60 sm:shadow-sm',
+			isAdminRoute ? 'sm:max-w-4xl lg:max-w-6xl' : 'sm:max-w-md'
+		]}
 	>
 		{@render children()}
 	</div>
 
-	{#if !isStudySession}
+	{#if !hideBottomBar}
 		<InstallPrompt />
 		<BottomNav />
 	{/if}

@@ -16,6 +16,7 @@
 		type RemoteUserSummary
 	} from '$lib/cloud';
 	import { pwa } from '$lib/pwa.svelte';
+	import { resolve } from '$app/paths';
 	import type { SyncStatus } from '@flash/shared';
 	import {
 		Download,
@@ -27,7 +28,8 @@
 		RefreshCw,
 		Pencil,
 		AlertCircle,
-		UserCheck
+		UserCheck,
+		ShieldCheck
 	} from 'lucide-svelte';
 	import { onDestroy, onMount } from 'svelte';
 
@@ -508,5 +510,16 @@
 				<input type="file" accept=".json" onchange={handleImport} class="hidden" />
 			</label>
 		</div>
+	</section>
+
+	<!-- Discreet Admin Link -->
+	<section class="pt-6 pb-4 text-center">
+		<a
+			href={resolve('/settings/admin' as const)}
+			class="inline-flex cursor-pointer items-center gap-1.5 font-sans text-xs font-medium text-slate-400 transition-colors hover:text-slate-600 focus:underline focus:outline-none"
+		>
+			<ShieldCheck size={14} class="opacity-70" />
+			<span>admin</span>
+		</a>
 	</section>
 </main>

@@ -196,13 +196,17 @@
 				</div>
 
 				<div class="space-y-2 pt-2">
-					{#if !isPracticeMode && remainingDueCount > 0}
+					{#if !isPracticeMode && (remainingDueCount > 0 || sessionWrong > 0)}
 						<button
 							type="button"
 							onclick={loadDueCards}
 							class="flex h-12 w-full cursor-pointer items-center justify-center rounded-2xl bg-indigo-600 font-headline text-base font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700"
 						>
-							Review Next {Math.min(remainingDueCount, MAX_SESSION_CARDS)} Due
+							{#if remainingDueCount > 0}
+								Review Next {Math.min(remainingDueCount + sessionWrong, MAX_SESSION_CARDS)} Due
+							{:else}
+								Review Needs Practice ({sessionWrong})
+							{/if}
 						</button>
 					{:else}
 						<button

@@ -67,13 +67,14 @@ describe('Lite App Storage Core Logic', () => {
 		expect(p3.interval).toBe(8);
 		expect(p3.reps).toBe(3);
 
-		// Wrong rating -> interval resets to 0, due in 10 minutes
+		// Wrong rating -> interval resets to 0, due immediately
 		const pWrong = calculateNextReview(p3, 'again');
 		expect(pWrong.interval).toBe(0);
 		expect(pWrong.reps).toBe(0);
 		expect(pWrong.wrong).toBe(1);
 		expect(pWrong.lapses).toBe(1);
-		expect(pWrong.dueDate).toBeLessThanOrEqual(Date.now() + 10 * 60 * 1000 + 50);
+		expect(pWrong.dueDate).toBeLessThanOrEqual(Date.now());
+		expect(isCardDue(pWrong)).toBe(true);
 	});
 
 	it('sorts and caps review queue to 10 items prioritizing unreviewed and earliest due', () => {

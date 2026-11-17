@@ -40,7 +40,7 @@ export function calculateNextReview(
 		reps = 0;
 		interval = 0;
 		easeFactor = Math.max(MIN_EASE_FACTOR, +(easeFactor - 0.2).toFixed(2));
-		dueDate = now + TEN_MINUTES_MS;
+		dueDate = now;
 	} else if (rating === 'hard') {
 		base.correct += 1;
 		reps += 1;
@@ -95,6 +95,7 @@ export function calculateNextReview(
 
 export function isCardDue(progress?: WordProgress): boolean {
 	if (!progress || !progress.dueDate) return true;
+	if (progress.interval === 0 && (progress.wrong ?? 0) > 0) return true;
 	return progress.dueDate <= Date.now();
 }
 

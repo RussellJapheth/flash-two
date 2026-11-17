@@ -4,6 +4,7 @@ import { generatePinyin } from './pinyin.js';
 export const MY_WORDS_DECK_ID = 'custom-my-words';
 export const MY_WORDS_DECK_NAME = 'My Words';
 export const ALL_WORDS_CATEGORY = 'All words';
+export const ALL_WEEKS_LABEL = 'All Weeks';
 export const SEEDED_SUBCATEGORY = 'Week 1';
 
 const HANZI_REGEX = /[\u4e00-\u9fff]/;
@@ -14,19 +15,32 @@ export interface MyWordsCategoryRow {
 	isAll: boolean;
 }
 
+export function sortWeekCategories(categories: string[]): string[] {
+	return [...categories].sort((a, b) => {
+		const matchA = a.match(/^Week\s+(\d+)$/i);
+		const matchB = b.match(/^Week\s+(\d+)$/i);
+		if (matchA && matchB) {
+			return parseInt(matchA[1], 10) - parseInt(matchB[1], 10);
+		}
+		if (matchA) return -1;
+		if (matchB) return 1;
+		return a.localeCompare(b);
+	});
+}
+
 export function getMyWordsSubcategories(words: WordRecord[]): string[] {
 	const seen = new Set<string>([SEEDED_SUBCATEGORY.toLowerCase()]);
-	const result: string[] = [SEEDED_SUBCATEGORY];
+	const rawList: string[] = [SEEDED_SUBCATEGORY];
 	for (const w of words) {
 		const cat = (w.category || '').trim();
 		const lower = cat.toLowerCase();
-		if (!cat || lower === ALL_WORDS_CATEGORY.toLowerCase()) continue;
+		if (!cat || lower === ALL_WORDS_CATEGORY.toLowerCase() || lower === ALL_WEEKS_LABEL.toLowerCase()) continue;
 		if (!seen.has(lower)) {
 			seen.add(lower);
-			result.push(cat);
+			rawList.push(cat);
 		}
 	}
-	return result;
+	return sortWeekCategories(rawList);
 }
 
 export function getMyWordsCategoryRows(words: WordRecord[]): MyWordsCategoryRow[] {
@@ -34,12 +48,12 @@ export function getMyWordsCategoryRows(words: WordRecord[]): MyWordsCategoryRow[
 	const counts = new Map<string, number>();
 	for (const w of words) {
 		const cat = (w.category || '').trim().toLowerCase();
-		if (cat && cat !== ALL_WORDS_CATEGORY.toLowerCase()) {
+		if (cat && cat !== ALL_WORDS_CATEGORY.toLowerCase() && cat !== ALL_WEEKS_LABEL.toLowerCase()) {
 			counts.set(cat, (counts.get(cat) || 0) + 1);
 		}
 	}
 	return [
-		{ name: ALL_WORDS_CATEGORY, count: words.length, isAll: true },
+		{ name: ALL_WEEKS_LABEL, count: words.length, isAll: true },
 		...subcategories.map((name) => ({
 			name,
 			count: counts.get(name.toLowerCase()) || 0,
@@ -50,7 +64,7 @@ export function getMyWordsCategoryRows(words: WordRecord[]): MyWordsCategoryRow[
 
 export function filterWordsByCategory(words: WordRecord[], category?: string | null): WordRecord[] {
 	const trimmed = (category || '').trim().toLowerCase();
-	if (!trimmed || trimmed === ALL_WORDS_CATEGORY.toLowerCase()) {
+	if (!trimmed || trimmed === ALL_WORDS_CATEGORY.toLowerCase() || trimmed === ALL_WEEKS_LABEL.toLowerCase()) {
 		return [...words];
 	}
 	return words.filter((w) => (w.category || '').trim().toLowerCase() === trimmed);

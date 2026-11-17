@@ -1,11 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import {
 	ALL_WORDS_CATEGORY,
+	ALL_WEEKS_LABEL,
 	DUPLICATE_WORD_ERROR,
 	validateMyWord,
 	isDuplicateMyWord,
 	getMyWordsSubcategories,
 	getMyWordsCategoryRows,
+	sortWeekCategories,
 	filterWordsByCategory,
 	buildDeckWithAddedWord,
 	buildDeckWithUpdatedWord,
@@ -50,20 +52,27 @@ describe('validateMyWord', () => {
 });
 
 describe('subcategories and All words', () => {
-	it('places uncategorized and categorized words in All words, and lists subcategories', () => {
+	it('sorts week categories numerically', () => {
+		const sorted = sortWeekCategories(['Week 10', 'Week 2', 'Week 1', 'Greetings']);
+		expect(sorted).toEqual(['Week 1', 'Week 2', 'Week 10', 'Greetings']);
+	});
+
+	it('places uncategorized and categorized words in All Weeks, and lists subcategories', () => {
 		let deck = buildDeckWithAddedWord(null, nihao);
-		deck = buildDeckWithAddedWord(deck, { ...xiexie, category: 'Greetings' });
+		deck = buildDeckWithAddedWord(deck, { ...xiexie, category: 'Week 2' });
 
 		const subcategories = getMyWordsSubcategories(deck.words);
-		expect(subcategories).toContain('Week 1');
-		expect(subcategories).toContain('Greetings');
+		expect(subcategories).toEqual(['Week 1', 'Week 2']);
 
 		const rows = getMyWordsCategoryRows(deck.words);
-		expect(rows[0]).toEqual({ name: ALL_WORDS_CATEGORY, count: 2, isAll: true });
+		expect(rows[0]).toEqual({ name: ALL_WEEKS_LABEL, count: 2, isAll: true });
 
-		const filtered = filterWordsByCategory(deck.words, 'Greetings');
+		const filtered = filterWordsByCategory(deck.words, 'Week 2');
 		expect(filtered).toHaveLength(1);
 		expect(filtered[0]['Chinese Word']).toBe('谢谢');
+
+		const allFiltered = filterWordsByCategory(deck.words, ALL_WEEKS_LABEL);
+		expect(allFiltered).toHaveLength(2);
 	});
 });
 

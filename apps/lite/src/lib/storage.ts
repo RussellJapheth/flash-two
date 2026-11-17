@@ -83,6 +83,18 @@ export async function addMyWord(
 	return updated;
 }
 
+export async function addMyWordsBulk(
+	inputs: MyWordInput[],
+	options?: MyWordSaveOptions
+): Promise<CustomDeck> {
+	let current = await getMyWordsDeck();
+	for (const input of inputs) {
+		current = buildDeckWithAddedWord(current, input, options);
+	}
+	await saveMyWordsDeck(current);
+	return current;
+}
+
 export async function updateMyWord(
 	no: number,
 	input: MyWordInput,

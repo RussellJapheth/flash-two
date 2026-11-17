@@ -1,0 +1,5246 @@
+[
+	{
+		"word": "你好",
+		"pinyin": "nǐ hǎo",
+		"meaning": "hello / hi",
+		"example": "你好！很高兴认识你。(Nǐ hǎo! Hěn gāoxìng rènshí nǐ.) — Hello! Nice to meet you."
+	},
+	{
+		"word": "谢谢",
+		"pinyin": "xièxie",
+		"meaning": "thank you / thanks",
+		"example": "谢谢你的帮助！(Xièxie nǐ de bāngzhù!) — Thank you for your help!"
+	},
+	{
+		"word": "不客气",
+		"pinyin": "bù kèqì",
+		"meaning": "you're welcome",
+		"example": "不客气，这是我应该做的。(Bù kèqì, zhè shì wǒ yīnggāi zuò de.) — You're welcome, it's my pleasure."
+	},
+	{
+		"word": "再见",
+		"pinyin": "zàijiàn",
+		"meaning": "goodbye / see you again",
+		"example": "明天见，再见！(Míngtiān jiàn, zàijiàn!) — See you tomorrow, goodbye!"
+	},
+	{
+		"word": "对不起",
+		"pinyin": "duìbuqǐ",
+		"meaning": "sorry / excuse me",
+		"example": "对不起，我迟到了。(Duìbuqǐ, wǒ chídào le.) — I'm sorry, I am late."
+	},
+	{
+		"word": "没关系",
+		"pinyin": "méi guānxi",
+		"meaning": "it doesn't matter / no problem",
+		"example": "没关系，慢慢来。(Méi guānxi, mànman lái.) — No problem, take your time."
+	},
+	{
+		"word": "请",
+		"pinyin": "qǐng",
+		"meaning": "please / to invite",
+		"example": "请进，请坐！(Qǐng jìn, qǐng zuò!) — Please come in, please sit down!"
+	},
+	{
+		"word": "我",
+		"pinyin": "wǒ",
+		"meaning": "I / me",
+		"example": "我是语言学习者。(Wǒ shì yǔyán xuéxízhě.) — I am a language learner."
+	},
+	{
+		"word": "你",
+		"pinyin": "nǐ",
+		"meaning": "you (singular)",
+		"example": "你是哪国人？(Nǐ shì nǎ guó rén?) — Which country are you from?"
+	},
+	{
+		"word": "他",
+		"pinyin": "tā",
+		"meaning": "he / him",
+		"example": "他是我的好朋友。(Tā shì wǒ de hǎo péngyǒu.) — He is my good friend."
+	},
+	{
+		"word": "她",
+		"pinyin": "tā",
+		"meaning": "she / her",
+		"example": "她会说三种语言。(Tā huì shuō sān zhǒng yǔyán.) — She can speak three languages."
+	},
+	{
+		"word": "我们",
+		"pinyin": "wǒmen",
+		"meaning": "we / us",
+		"example": "我们一起学习中文。(Wǒmen yìqǐ xuéxí zhōngwén.) — We study Chinese together."
+	},
+	{
+		"word": "他们",
+		"pinyin": "tāmen",
+		"meaning": "they / them",
+		"example": "他们都是老师。(Tāmen dōu shì lǎoshī.) — They are all teachers."
+	},
+	{
+		"word": "是",
+		"pinyin": "shì",
+		"meaning": "to be (am / is / are)",
+		"example": "这是一本中文书。(Zhè shì yì běn zhōngwén shū.) — This is a Chinese book."
+	},
+	{
+		"word": "不",
+		"pinyin": "bù",
+		"meaning": "not / no",
+		"example": "我不是外国人。(Wǒ bú shì wàiguórén.) — I am not a foreigner."
+	},
+	{
+		"word": "有",
+		"pinyin": "yǒu",
+		"meaning": "to have / there is / there are",
+		"example": "你有没有问题？(Nǐ yǒu méiyǒu wèntí?) — Do you have any questions?"
+	},
+	{
+		"word": "没有",
+		"pinyin": "méiyǒu",
+		"meaning": "not have / there is not",
+		"example": "我今天没有课。(Wǒ jīntiān méiyǒu kè.) — I don't have classes today."
+	},
+	{
+		"word": "叫",
+		"pinyin": "jiào",
+		"meaning": "to be called / to call",
+		"example": "你叫什么名字？(Nǐ jiào shénme míngzì?) — What is your name?"
+	},
+	{
+		"word": "名字",
+		"pinyin": "míngzi",
+		"meaning": "name",
+		"example": "我的名字很好记。(Wǒ de míngzi hěn hǎojì.) — My name is easy to remember."
+	},
+	{
+		"word": "什么",
+		"pinyin": "shénme",
+		"meaning": "what",
+		"example": "这是什么东西？(Zhè shì shénme dōngxi?) — What is this thing?"
+	},
+	{
+		"word": "谁",
+		"pinyin": "shéi",
+		"meaning": "who / whom",
+		"example": "他是谁？(Tā shì shéi?) — Who is he?"
+	},
+	{
+		"word": "哪",
+		"pinyin": "nǎ",
+		"meaning": "which",
+		"example": "你想去哪个地方？(Nǐ xiǎng qù nǎ ge dìfāng?) — Which place do you want to go to?"
+	},
+	{
+		"word": "好",
+		"pinyin": "hǎo",
+		"meaning": "good / fine / well",
+		"example": "今天天气很好。(Jīntiān tiānqì hěn hǎo.) — The weather is very good today."
+	},
+	{
+		"word": "很高兴",
+		"pinyin": "hěn gāoxìng",
+		"meaning": "very glad / pleased",
+		"example": "认识你很高兴！(Rènshí nǐ hěn gāoxìng!) — Very glad to meet you!"
+	},
+	{
+		"word": "朋友",
+		"pinyin": "péngyou",
+		"meaning": "friend",
+		"example": "我们是好朋友。(Wǒmen shì hǎo péngyou.) — We are good friends."
+	},
+	{
+		"word": "现在",
+		"pinyin": "xiànzài",
+		"meaning": "now / currently",
+		"example": "现在几点了？(Xiànzài jǐ diǎn le?) — What time is it now?"
+	},
+	{
+		"word": "点",
+		"pinyin": "diǎn",
+		"meaning": "o'clock / point / dot",
+		"example": "现在是早上八点。(Xiànzài shì zǎoshang bā diǎn.) — It is eight o'clock in the morning now."
+	},
+	{
+		"word": "分钟",
+		"pinyin": "fēnzhōng",
+		"meaning": "minute",
+		"example": "请等我五分钟。(Qǐng děng wǒ wǔ fēnzhōng.) — Please wait five minutes for me."
+	},
+	{
+		"word": "半",
+		"pinyin": "bàn",
+		"meaning": "half",
+		"example": "我们三点半见面。(Wǒmen sān diǎn bàn jiànmiàn.) — We will meet at half past three."
+	},
+	{
+		"word": "今天",
+		"pinyin": "jīntiān",
+		"meaning": "today",
+		"example": "今天星期几？(Jīntiān xīngqī jǐ?) — What day of the week is it today?"
+	},
+	{
+		"word": "明天",
+		"pinyin": "míngtiān",
+		"meaning": "tomorrow",
+		"example": "明天你有时间吗？(Míngtiān nǐ yǒu shíjiān ma?) — Do you have time tomorrow?"
+	},
+	{
+		"word": "昨天",
+		"pinyin": "zuótiān",
+		"meaning": "yesterday",
+		"example": "昨天我买了一本书。(Zuótiān wǒ mǎi le yì běn shū.) — Yesterday I bought a book."
+	},
+	{
+		"word": "年",
+		"pinyin": "nián",
+		"meaning": "year",
+		"example": "我学中文一年了。(Wǒ xué zhōngwén yì nián le.) — I have been studying Chinese for a year."
+	},
+	{
+		"word": "月",
+		"pinyin": "yuè",
+		"meaning": "month / moon",
+		"example": "下个月我要去中国。(Xià ge yuè wǒ yào qù Zhōngguó.) — I am going to China next month."
+	},
+	{
+		"word": "日",
+		"pinyin": "rì",
+		"meaning": "day / date / sun",
+		"example": "今天是十月一日。(Jīntiān shì shí yuè yī rì.) — Today is October 1st."
+	},
+	{
+		"word": "号",
+		"pinyin": "hào",
+		"meaning": "day of month / number",
+		"example": "你的生日是几号？(Nǐ de shēngrì shì jǐ hào?) — What date is your birthday?"
+	},
+	{
+		"word": "星期",
+		"pinyin": "xīngqī",
+		"meaning": "week",
+		"example": "星期天我们去公园。(Xīngqītiān wǒmen qù gōngyuán.) — We go to the park on Sunday."
+	},
+	{
+		"word": "时间",
+		"pinyin": "shíjiān",
+		"meaning": "time",
+		"example": "我们没有很多时间。(Wǒmen méiyǒu hěn duō shíjiān.) — We don't have much time."
+	},
+	{
+		"word": "时候",
+		"pinyin": "shíhou",
+		"meaning": "time / moment / when",
+		"example": "你什么时候回家？(Nǐ shénme shíhou huí jiā?) — When are you going home?"
+	},
+	{
+		"word": "早上",
+		"pinyin": "zǎoshang",
+		"meaning": "early morning",
+		"example": "早上好！(Zǎoshang hǎo!) — Good morning!"
+	},
+	{
+		"word": "中午",
+		"pinyin": "zhōngwǔ",
+		"meaning": "noon / midday",
+		"example": "中午我们一起吃午饭。(Zhōngwǔ wǒmen yìqǐ chī wǔfàn.) — At noon we have lunch together."
+	},
+	{
+		"word": "下午",
+		"pinyin": "xiàwǔ",
+		"meaning": "afternoon",
+		"example": "下午两点开会。(Xiàwǔ liǎng diǎn kāihuì.) — The meeting starts at two in the afternoon."
+	},
+	{
+		"word": "晚上",
+		"pinyin": "wǎnshang",
+		"meaning": "evening / night",
+		"example": "晚上我想看电影。(Wǎnshang wǒ xiǎng kàn diànyǐng.) — I want to watch a movie tonight."
+	},
+	{
+		"word": "几",
+		"pinyin": "jǐ",
+		"meaning": "how many / how much (small numbers)",
+		"example": "你要买几个苹果？(Nǐ yào mǎi jǐ ge píngguǒ?) — How many apples do you want to buy?"
+	},
+	{
+		"word": "岁",
+		"pinyin": "suì",
+		"meaning": "years old (age)",
+		"example": "你今年多大岁数？(Nǐ jīnnián duō dà suìshu?) — How old are you this year?"
+	},
+	{
+		"word": "去年",
+		"pinyin": "qùnián",
+		"meaning": "last year",
+		"example": "去年我去了北京。(Qùnián wǒ qù le Běijīng.) — I went to Beijing last year."
+	},
+	{
+		"word": "明年",
+		"pinyin": "míngnián",
+		"meaning": "next year",
+		"example": "明年我打算去旅行。(Míngnián wǒ dǎsuàn qù lǚxíng.) — I plan to travel next year."
+	},
+	{
+		"word": "之前",
+		"pinyin": "zhīqián",
+		"meaning": "before / ago / previously",
+		"example": "我之前去过中国。(Wǒ zhīqián qù guò Zhōngguó.) — I have been to China before."
+	},
+	{
+		"word": "零",
+		"pinyin": "líng",
+		"meaning": "zero",
+		"example": "房间号码是二零八。(Fángjiān hàomǎ shì èr líng bā.) — The room number is 208."
+	},
+	{
+		"word": "百",
+		"pinyin": "bǎi",
+		"meaning": "hundred",
+		"example": "这本书一百块钱。(Zhè běn shū yì bǎi kuài qián.) — This book costs one hundred yuan."
+	},
+	{
+		"word": "家",
+		"pinyin": "jiā",
+		"meaning": "family / home",
+		"example": "我家有四口人。(Wǒ jiā yǒu sì kǒu rén.) — There are four people in my family."
+	},
+	{
+		"word": "人",
+		"pinyin": "rén",
+		"meaning": "person / people",
+		"example": "这里有很多中国人和外国人。(Zhèlǐ yǒu hěn duō Zhōngguórén hé wàiguórén.) — There are many Chinese and foreigners here."
+	},
+	{
+		"word": "爸爸",
+		"pinyin": "bàba",
+		"meaning": "father / dad",
+		"example": "我爸爸喜欢喝中国茶。(Wǒ bàba xǐhuan hē Zhōngguó chá.) — My dad likes drinking Chinese tea."
+	},
+	{
+		"word": "妈妈",
+		"pinyin": "māma",
+		"meaning": "mother / mom",
+		"example": "我妈妈做的菜非常好吃。(Wǒ māma zuò de cài fēicháng hǎochī.) — The food my mom makes is very delicious."
+	},
+	{
+		"word": "哥哥",
+		"pinyin": "gēge",
+		"meaning": "older brother",
+		"example": "我哥哥是一名大学生。(Wǒ gēge shì yì míng dàxuéshēng.) — My older brother is a university student."
+	},
+	{
+		"word": "弟弟",
+		"pinyin": "dìdi",
+		"meaning": "younger brother",
+		"example": "弟弟正在房间里玩游戏。(Dìdi zhèngzài fángjiān lǐ wán yóuxì.) — Younger brother is playing games in the room."
+	},
+	{
+		"word": "姐姐",
+		"pinyin": "jiějie",
+		"meaning": "older sister",
+		"example": "姐姐在一家医院工作。(Jiějie zài yì jiā yīyuàn gōngzuò.) — Older sister works at a hospital."
+	},
+	{
+		"word": "妹妹",
+		"pinyin": "mèimei",
+		"meaning": "younger sister",
+		"example": "妹妹喜欢画画和小动物。(Mèimei xǐhuan huàhuà hé xiǎo dòngwù.) — Younger sister likes drawing and small animals."
+	},
+	{
+		"word": "儿子",
+		"pinyin": "érzi",
+		"meaning": "son",
+		"example": "他儿子今年五岁。(Tā érzi jīnnián wǔ suì.) — His son is five years old this year."
+	},
+	{
+		"word": "女儿",
+		"pinyin": "nǚ'ér",
+		"meaning": "daughter",
+		"example": "他们有一个聪明可爱的女儿。(Tāmen yǒu yí gè cōngmíng kě'ài de nǚ'ér.) — They have a smart and cute daughter."
+	},
+	{
+		"word": "孩子",
+		"pinyin": "háizi",
+		"meaning": "child / children",
+		"example": "孩子们在操场上跑步。(Háizimen zài cāochǎng shang pǎobù.) — The children are running on the sports field."
+	},
+	{
+		"word": "老师",
+		"pinyin": "lǎoshī",
+		"meaning": "teacher",
+		"example": "王老师教我们汉字。(Wáng lǎoshī jiāo wǒmen hànzì.) — Teacher Wang teaches us Chinese characters."
+	},
+	{
+		"word": "学生",
+		"pinyin": "xuésheng",
+		"meaning": "student",
+		"example": "这个班有三十个学生。(Zhè gè bān yǒu sānshí gè xuésheng.) — There are thirty students in this class."
+	},
+	{
+		"word": "同学",
+		"pinyin": "tóngxué",
+		"meaning": "classmate / schoolmate",
+		"example": "我们是初中同学。(Wǒmen shì chūzhōng tóngxué.) — We are junior high school classmates."
+	},
+	{
+		"word": "医生",
+		"pinyin": "yīshēng",
+		"meaning": "doctor",
+		"example": "生病了要去看医生。(Shēngbìng le yào qù kàn yīshēng.) — When you get sick, you should go see a doctor."
+	},
+	{
+		"word": "护士",
+		"pinyin": "hùshi",
+		"meaning": "nurse",
+		"example": "护士在照顾病人。(Hùshi zài zhàogù bìngrén.) — The nurse is caring for patients."
+	},
+	{
+		"word": "先生",
+		"pinyin": "xiānsheng",
+		"meaning": "Mr. / gentleman / husband",
+		"example": "李先生今天不在办公室。(Lǐ xiānsheng jīntiān bú zài bàngōngshì.) — Mr. Li is not in the office today."
+	},
+	{
+		"word": "女士",
+		"pinyin": "nǚshì",
+		"meaning": "Ms. / lady / madam",
+		"example": "张女士是这家公司的经理。(Zhāng nǚshì shì zhè jiā gōngsī de jīnglǐ.) — Ms. Zhang is the manager of this company."
+	},
+	{
+		"word": "小姐",
+		"pinyin": "xiǎojie",
+		"meaning": "Miss / young lady",
+		"example": "服务员小姐，请问洗手间在哪里？(Fúwùyuán xiǎojie, qǐngwèn xǐshǒujiān zài nǎlǐ?) — Excuse me miss, where is the restroom?"
+	},
+	{
+		"word": "男",
+		"pinyin": "nán",
+		"meaning": "male / man",
+		"example": "他是我们部门唯一的男同事。(Tā shì wǒmen bùmén wéiyī de nán tóngshì.) — He is the only male colleague in our department."
+	},
+	{
+		"word": "女",
+		"pinyin": "nǚ",
+		"meaning": "female / woman",
+		"example": "女孩子穿这件裙子很漂亮。(Nǚ háizi chuān zhè jiàn qúnzi hěn piàoliang.) — The girl looks very pretty wearing this dress."
+	},
+	{
+		"word": "大家",
+		"pinyin": "dàjiā",
+		"meaning": "everyone / all",
+		"example": "请大家保持安静。(Qǐng dàjiā bǎochí ānjìng.) — Please everyone keep quiet."
+	},
+	{
+		"word": "工作",
+		"pinyin": "gōngzuò",
+		"meaning": "job / work / to work",
+		"example": "你喜欢你的工作吗？(Nǐ xǐhuan nǐ de gōngzuò ma?) — Do you like your job?"
+	},
+	{
+		"word": "服务员",
+		"pinyin": "fúwùyuán",
+		"meaning": "waiter / server / attendant",
+		"example": "服务员，请给我们一份菜单。(Fúwùyuán, qǐng gěi wǒmen yí fèn càidān.) — Waiter, please give us a menu."
+	},
+	{
+		"word": "师傅",
+		"pinyin": "shīfu",
+		"meaning": "master worker / driver / polite title",
+		"example": "师傅，请去火车站。(Shīfu, qǐng qù huǒchēzhàn.) — Driver, please go to the train station."
+	},
+	{
+		"word": "吃",
+		"pinyin": "chī",
+		"meaning": "to eat",
+		"example": "你想吃什么？(Nǐ xiǎng chī shénme?) — What would you like to eat?"
+	},
+	{
+		"word": "喝",
+		"pinyin": "hē",
+		"meaning": "to drink",
+		"example": "我想喝一杯冰水。(Wǒ xiǎng hē yì bēi bīngshuǐ.) — I want to drink a glass of ice water."
+	},
+	{
+		"word": "水",
+		"pinyin": "shuǐ",
+		"meaning": "water",
+		"example": "多喝水对身体好。(Duō hē shuǐ duì shēntǐ hǎo.) — Drinking more water is good for health."
+	},
+	{
+		"word": "茶",
+		"pinyin": "chá",
+		"meaning": "tea",
+		"example": "中国人很喜欢喝绿茶。(Zhōngguórén hěn xǐhuan hē lǜchá.) — Chinese people like drinking green tea."
+	},
+	{
+		"word": "咖啡",
+		"pinyin": "kāfēi",
+		"meaning": "coffee",
+		"example": "每天早上我都会喝咖啡。(Měitiān zǎoshang wǒ dōu huì hē kāfēi.) — Every morning I drink coffee."
+	},
+	{
+		"word": "米饭",
+		"pinyin": "mǐfàn",
+		"meaning": "cooked rice",
+		"example": "我要一碗米饭。(Wǒ yào yì wǎn mǐfàn.) — I want a bowl of rice."
+	},
+	{
+		"word": "面条",
+		"pinyin": "miàntiáo",
+		"meaning": "noodles",
+		"example": "这里的牛肉面条很有名。(Zhèlǐ de niúròu miàntiáo hěn yǒumíng.) — The beef noodles here are famous."
+	},
+	{
+		"word": "菜",
+		"pinyin": "cài",
+		"meaning": "dish / vegetable / cuisine",
+		"example": "四川菜味道很辣。(Sìchuān cài wèidao hěn là.) — Sichuan cuisine is very spicy."
+	},
+	{
+		"word": "水果",
+		"pinyin": "shuǐguǒ",
+		"meaning": "fruit",
+		"example": "每天吃水果对身体有益。(Měitiān chī shuǐguǒ duì shēntǐ yǒuyì.) — Eating fruit every day is good for health."
+	},
+	{
+		"word": "苹果",
+		"pinyin": "píngguǒ",
+		"meaning": "apple",
+		"example": "红苹果很甜。(Hóng píngguǒ hěn tián.) — Red apples are very sweet."
+	},
+	{
+		"word": "肉",
+		"pinyin": "ròu",
+		"meaning": "meat",
+		"example": "我不常吃肥肉。(Wǒ bù cháng chī féiròu.) — I don't often eat fatty meat."
+	},
+	{
+		"word": "鸡肉",
+		"pinyin": "jīròu",
+		"meaning": "chicken (meat)",
+		"example": "晚餐有鸡肉和米饭。(Wǎncān yǒu jīròu hé mǐfàn.) — Dinner has chicken and rice."
+	},
+	{
+		"word": "牛肉",
+		"pinyin": "niúròu",
+		"meaning": "beef",
+		"example": "这份牛肉很鲜嫩。(Zhè fèn niúròu hěn xiānnèn.) — This beef is very tender."
+	},
+	{
+		"word": "鱼",
+		"pinyin": "yú",
+		"meaning": "fish",
+		"example": "年夜饭通常会吃鱼。(Niányèfàn tōngcháng huì chī yú.) — Fish is usually eaten for New Year's Eve dinner."
+	},
+	{
+		"word": "鸡蛋",
+		"pinyin": "jīdàn",
+		"meaning": "egg",
+		"example": "西红柿炒鸡蛋做法简单。(Xīhóngshì chǎo jīdàn zuòfǎ jiǎndān.) — Tomato scrambled eggs is simple to make."
+	},
+	{
+		"word": "牛奶",
+		"pinyin": "niúnǎi",
+		"meaning": "milk",
+		"example": "睡前喝杯温牛奶有助于睡眠。(Shuìqián hē bēi wēn niúnǎi yǒuzhùyú shuìmián.) — Drinking warm milk before sleep aids rest."
+	},
+	{
+		"word": "饭馆",
+		"pinyin": "fànguǎn",
+		"meaning": "restaurant",
+		"example": "这家饭馆的菜肴很地道。(Zhè jiā fànguǎn de càiyáo hěn dìdào.) — The dishes at this restaurant are authentic."
+	},
+	{
+		"word": "好吃",
+		"pinyin": "hǎochī",
+		"meaning": "delicious / tasty (for food)",
+		"example": "这个饺子真好吃！(Zhè gè jiǎozi zhēn hǎochī!) — These dumplings are really delicious!"
+	},
+	{
+		"word": "好喝",
+		"pinyin": "hǎohē",
+		"meaning": "delicious / good to drink (for beverages)",
+		"example": "这碗热汤非常好喝。(Zhè wǎn rè tāng fēicháng hǎohē.) — This bowl of hot soup is delicious to drink."
+	},
+	{
+		"word": "点菜",
+		"pinyin": "diǎncài",
+		"meaning": "to order food (in restaurant)",
+		"example": "我们可以点菜了吗？(Wǒmen kěyǐ diǎncài le ma?) — May we order our food now?"
+	},
+	{
+		"word": "买单",
+		"pinyin": "mǎidān",
+		"meaning": "to pay the bill / bill please",
+		"example": "服务员，我们要买单。(Fúwùyuán, wǒmen yào mǎidān.) — Server, we would like to pay the bill."
+	},
+	{
+		"word": "筷子",
+		"pinyin": "kuàizi",
+		"meaning": "chopsticks",
+		"example": "你会用筷子吃饭吗？(Nǐ huì yòng kuàizi chīfàn ma?) — Do you know how to eat with chopsticks?"
+	},
+	{
+		"word": "碗",
+		"pinyin": "wǎn",
+		"meaning": "bowl",
+		"example": "请给我一个空碗。(Qǐng gěi wǒ yí gè kōng wǎn.) — Please give me an empty bowl."
+	},
+	{
+		"word": "杯子",
+		"pinyin": "bēizi",
+		"meaning": "cup / glass",
+		"example": "杯子里有热水。(Bēizi lǐ yǒu rè shuǐ.) — There is hot water in the cup."
+	},
+	{
+		"word": "包子",
+		"pinyin": "bāozi",
+		"meaning": "steamed stuffed bun",
+		"example": "早餐我吃了两个肉包子。(Zǎocān wǒ chī le liǎng gè ròubāozi.) — For breakfast I ate two meat steamed buns."
+	},
+	{
+		"word": "看",
+		"pinyin": "kàn",
+		"meaning": "to look / to watch / to read",
+		"example": "我看了一本很有意思的书。(Wǒ kàn le yì běn hěn yǒuyìsi de shū.) — I read an interesting book."
+	},
+	{
+		"word": "听",
+		"pinyin": "tīng",
+		"meaning": "to listen / to hear",
+		"example": "我喜欢听中国流行音乐。(Wǒ xǐhuan tīng Zhōngguó liúxíng yīnyuè.) — I like listening to Chinese pop music."
+	},
+	{
+		"word": "说",
+		"pinyin": "shuō",
+		"meaning": "to speak / to say",
+		"example": "请说得慢一点儿。(Qǐng shuō de màn yìdiǎnr.) — Please speak a little slower."
+	},
+	{
+		"word": "读",
+		"pinyin": "dú",
+		"meaning": "to read (aloud) / to study",
+		"example": "跟着录音大声读出来。(Gēnzhe lùyīn dàshēng dú chūlái.) — Read aloud following the recording."
+	},
+	{
+		"word": "写",
+		"pinyin": "xiě",
+		"meaning": "to write",
+		"example": "每天练习写五个生字。(Měitiān liànxí xiě wǔ gè shēngzì.) — Practice writing five new characters each day."
+	},
+	{
+		"word": "起床",
+		"pinyin": "qǐchuáng",
+		"meaning": "to get up (from bed)",
+		"example": "我每天早上七点起床。(Wǒ měitiān zǎoshang qī diǎn qǐchuáng.) — I get up at 7 AM every day."
+	},
+	{
+		"word": "睡觉",
+		"pinyin": "shuìjiào",
+		"meaning": "to sleep / to go to bed",
+		"example": "时间不早了，快去睡觉吧。(Shíjiān bù zǎo le, kuài qù shuìjiào ba.) — It's getting late, hurry and go to bed."
+	},
+	{
+		"word": "洗澡",
+		"pinyin": "xǐzǎo",
+		"meaning": "to take a bath / to shower",
+		"example": "晚上我想洗澡，然后再睡觉。(Wǎnshang wǒ xiǎng xǐzǎo, ránhòu zài shuìjiào.) — In the evening I want to take a shower, then go to sleep."
+	},
+	{
+		"word": "去",
+		"pinyin": "qù",
+		"meaning": "to go",
+		"example": "周末我们一起去图书馆吧。(Zhōumò wǒmen yìqǐ qù túshūguǎn ba.) — Let's go to the library together this weekend."
+	},
+	{
+		"word": "来",
+		"pinyin": "lái",
+		"meaning": "to come",
+		"example": "欢迎你来我家做客。(Huānyíng nǐ lái wǒ jiā zuòkè.) — Welcome to come over to my house as a guest."
+	},
+	{
+		"word": "回",
+		"pinyin": "huí",
+		"meaning": "to return / to go back",
+		"example": "天黑了，我们回家吧。(Tiān hēi le, wǒmen huí jiā ba.) — It's dark, let's go back home."
+	},
+	{
+		"word": "房间",
+		"pinyin": "fángjiān",
+		"meaning": "room",
+		"example": "我的房间非常干净整洁。(Wǒ de fángjiān fēicháng gānjìng zhěngjié.) — My room is very clean and tidy."
+	},
+	{
+		"word": "门",
+		"pinyin": "mén",
+		"meaning": "door / gate",
+		"example": "出门前请把门关好。(Chū mén qián qǐng bǎ mén guān hǎo.) — Please close the door before going out."
+	},
+	{
+		"word": "窗户",
+		"pinyin": "chuānghu",
+		"meaning": "window",
+		"example": "请打开窗户通通风。(Qǐng dǎkāi chuānghu tōngtōng fēng.) — Please open the window for fresh air."
+	},
+	{
+		"word": "桌子",
+		"pinyin": "zhuōzi",
+		"meaning": "table / desk",
+		"example": "桌子上有一台笔记本电脑。(Zhuōzi shang yǒu yì tái bǐjìběn diànnǎo.) — There is a laptop on the desk."
+	},
+	{
+		"word": "椅子",
+		"pinyin": "yǐzi",
+		"meaning": "chair",
+		"example": "这把木椅子坐着很舒服。(Zhè bǎ mù yǐzi zuò zhe hěn shūfu.) — This wooden chair is very comfortable to sit on."
+	},
+	{
+		"word": "手机",
+		"pinyin": "shǒujī",
+		"meaning": "cell phone / mobile phone",
+		"example": "我的手机快没电了。(Wǒ de shǒujī kuài méi diàn le.) — My phone is running out of battery."
+	},
+	{
+		"word": "电脑",
+		"pinyin": "diànnǎo",
+		"meaning": "computer",
+		"example": "我在电脑上查阅资料。(Wǒ zài diànnǎo shang cháyuè zīliào.) — I look up materials on the computer."
+	},
+	{
+		"word": "电视",
+		"pinyin": "diànshì",
+		"meaning": "television / TV",
+		"example": "爸爸正在看中文新闻电视节目。(Bàba zhèngzài kàn zhōngwén xīnwén diànshì jiémù.) — Dad is watching a Chinese TV news program."
+	},
+	{
+		"word": "书",
+		"pinyin": "shū",
+		"meaning": "book",
+		"example": "我喜欢在图书馆看书。(Wǒ xǐhuan zài túshūguǎn kàn shū.) — I like reading books in the library."
+	},
+	{
+		"word": "衣服",
+		"pinyin": "yīfu",
+		"meaning": "clothes / clothing",
+		"example": "今天很冷，多穿点衣服。(Jīntiān hěn lěng, duō chuān diǎn yīfu.) — It's very cold today, put on more clothes."
+	},
+	{
+		"word": "洗",
+		"pinyin": "xǐ",
+		"meaning": "to wash / to clean",
+		"example": "饭前一定要洗手。(Fàn qián yídìng yào xǐshǒu.) — Always wash your hands before eating."
+	},
+	{
+		"word": "做饭",
+		"pinyin": "zuòfàn",
+		"meaning": "to cook (a meal)",
+		"example": "周末我喜欢在家做饭。(Zhōumò wǒ xǐhuan zài jiā zuòfàn.) — I like cooking at home on weekends."
+	},
+	{
+		"word": "休息",
+		"pinyin": "xiūxi",
+		"meaning": "to rest / to take a break",
+		"example": "工作累了就休息十分钟。(Gōngzuò lèi le jiù xiūxi shí fēnzhōng.) — Take a 10-minute break when you are tired from work."
+	},
+	{
+		"word": "打电话",
+		"pinyin": "dǎ diànhuà",
+		"meaning": "to make a phone call",
+		"example": "我晚上给你打电话。(Wǒ wǎnshang gěi nǐ dǎ diànhuà.) — I will give you a call tonight."
+	},
+	{
+		"word": "买",
+		"pinyin": "mǎi",
+		"meaning": "to buy / to purchase",
+		"example": "我想买一瓶矿泉水。(Wǒ xiǎng mǎi yì píng kuàngquánshuǐ.) — I want to buy a bottle of mineral water."
+	},
+	{
+		"word": "卖",
+		"pinyin": "mài",
+		"meaning": "to sell",
+		"example": "这家店卖新鲜的水果。(Zhè jiā diàn mài xīnxiān de shuǐguǒ.) — This shop sells fresh fruit."
+	},
+	{
+		"word": "钱",
+		"pinyin": "qián",
+		"meaning": "money / currency",
+		"example": "我没有钱，不能买这本书。(Wǒ méiyǒu qián, bùnéng mǎi zhè běn shū.) — I have no money; I can't buy this book."
+	},
+	{
+		"word": "块",
+		"pinyin": "kuài",
+		"meaning": "yuan / buck (colloquial unit of money)",
+		"example": "这个西瓜二十块钱。(Zhè gè xīguā èrshí kuài qián.) — This watermelon is twenty yuan."
+	},
+	{
+		"word": "元",
+		"pinyin": "yuán",
+		"meaning": "yuan (formal unit of currency)",
+		"example": "总共是一百五十元。(Zǒnggòng shì yì bǎi wǔshí yuán.) — The total is one hundred fifty yuan."
+	},
+	{
+		"word": "多少",
+		"pinyin": "duōshao",
+		"meaning": "how much / how many",
+		"example": "这个书包多少钱？(Zhè gè shūbāo duōshao qián?) — How much is this backpack?"
+	},
+	{
+		"word": "贵",
+		"pinyin": "guì",
+		"meaning": "expensive / costly",
+		"example": "太贵了，可以便宜一点儿吗？(Tài guì le, kěyǐ piányi yìdiǎnr ma?) — Too expensive, can you make it a bit cheaper?"
+	},
+	{
+		"word": "便宜",
+		"pinyin": "piányi",
+		"meaning": "cheap / inexpensive",
+		"example": "网上的价格通常更便宜。(Wǎngshang de jiàgé tōngcháng gèng piányi.) — Online prices are usually cheaper."
+	},
+	{
+		"word": "东西",
+		"pinyin": "dōngxi",
+		"meaning": "thing / stuff / objects",
+		"example": "你在超市买了什么东西？(Nǐ zài chāoshì mǎi le shénme dōngxi?) — What things did you buy at the supermarket?"
+	},
+	{
+		"word": "商店",
+		"pinyin": "shāngdiàn",
+		"meaning": "store / shop",
+		"example": "学校附近有很多文具商店。(Xuéxiào fùjìn yǒu hěn duō wénjù shāngdiàn.) — There are many stationery shops near the school."
+	},
+	{
+		"word": "超市",
+		"pinyin": "chāoshì",
+		"meaning": "supermarket",
+		"example": "我们去超市买点日常用品。(Wǒmen qù chāoshì mǎi diǎn rìcháng yòngpǐn.) — Let's go to the supermarket to buy daily necessities."
+	},
+	{
+		"word": "颜色",
+		"pinyin": "yánsè",
+		"meaning": "color",
+		"example": "你最喜欢什么颜色？(Nǐ zuì xǐhuan shénme yánsè?) — What color do you like most?"
+	},
+	{
+		"word": "红色",
+		"pinyin": "hóngsè",
+		"meaning": "red (color)",
+		"example": "在中国文化中，红色代表吉利。(Zài Zhōngguó wénhuà zhōng, hóngsè dàibiǎo jílì.) — In Chinese culture, red represents good fortune."
+	},
+	{
+		"word": "白色",
+		"pinyin": "báisè",
+		"meaning": "white (color)",
+		"example": "他穿了一件白色的衬衫。(Tā chuān le yí jiàn báisè de chènshān.) — He wore a white shirt."
+	},
+	{
+		"word": "黑色",
+		"pinyin": "hēisè",
+		"meaning": "black (color)",
+		"example": "我买了一双黑色的运动鞋。(Wǒ mǎi le yì shuāng hēisè de yùndòngxié.) — I bought a pair of black sneakers."
+	},
+	{
+		"word": "蓝色",
+		"pinyin": "lánsè",
+		"meaning": "blue (color)",
+		"example": "今天的天空是深蓝色的。(Jīntiān de tiānkōng shì shēnlánsè de.) — Today's sky is deep blue."
+	},
+	{
+		"word": "黄色",
+		"pinyin": "huángsè",
+		"meaning": "yellow (color)",
+		"example": "秋天树叶变成了黄色。(Qiūtiān shùyè biàn chéng le huángsè.) — In autumn the tree leaves turn yellow."
+	},
+	{
+		"word": "绿色",
+		"pinyin": "lǜsè",
+		"meaning": "green (color)",
+		"example": "多看绿色植物对眼睛好。(Duō kàn lǜsè zhíwù duì yǎnjing hǎo.) — Looking at green plants is good for eyes."
+	},
+	{
+		"word": "大",
+		"pinyin": "dà",
+		"meaning": "big / large",
+		"example": "这双鞋子对我来说太大了。(Zhè shuāng xiézi duì wǒ láishuō tài dà le.) — These shoes are too big for me."
+	},
+	{
+		"word": "小",
+		"pinyin": "xiǎo",
+		"meaning": "small / little",
+		"example": "这件衣服有点小，有大号吗？(Zhè jiàn yīfu yǒudiǎn xiǎo, yǒu dà hào ma?) — This shirt is a bit small, do you have large size?"
+	},
+	{
+		"word": "多",
+		"pinyin": "duō",
+		"meaning": "many / much / more",
+		"example": "今天逛商场的人真多。(Jīntiān guàng shāngchǎng de rén zhēn duō.) — There are really so many people in the mall today."
+	},
+	{
+		"word": "少",
+		"pinyin": "shǎo",
+		"meaning": "few / little / less",
+		"example": "今天来上课的学生比较少。(Jīntiān lái shàngkè de xuésheng bǐjiào shǎo.) — Relatively few students came to class today."
+	},
+	{
+		"word": "件",
+		"pinyin": "jiàn",
+		"meaning": "measure word for clothing / matters",
+		"example": "我想试穿一下这件外套。(Wǒ xiǎng shìchuān yíxià zhè jiàn wàitào.) — I would like to try on this jacket."
+	},
+	{
+		"word": "条",
+		"pinyin": "tiáo",
+		"meaning": "measure word for long / thin objects (pants, fish, roads)",
+		"example": "这条裤子款式很流行。(Zhè tiáo kùzi kuǎnshì hěn liúxíng.) — These pants have a very trendy style."
+	},
+	{
+		"word": "试",
+		"pinyin": "shì",
+		"meaning": "to try / to test",
+		"example": "我可以试一试吗？(Wǒ kěyǐ shì yi shì ma?) — Can I try it on?"
+	},
+	{
+		"word": "在",
+		"pinyin": "zài",
+		"meaning": "at / in / on / to exist",
+		"example": "请问你在哪里？(Qǐngwèn nǐ zài nǎlǐ?) — Excuse me, where are you?"
+	},
+	{
+		"word": "中国",
+		"pinyin": "Zhōngguó",
+		"meaning": "China",
+		"example": "我想去中国旅游。(Wǒ xiǎng qù Zhōngguó lǚyóu.) — I want to travel to China."
+	},
+	{
+		"word": "北京",
+		"pinyin": "Běijīng",
+		"meaning": "Beijing",
+		"example": "北京是中国的首都。(Běijīng shì Zhōngguó de shǒudū.) — Beijing is the capital of China."
+	},
+	{
+		"word": "学校",
+		"pinyin": "xuéxiào",
+		"meaning": "school",
+		"example": "我们的学校环境很优美。(Wǒmen de xuéxiào huánjìng hěn yōuměi.) — Our school environment is very beautiful."
+	},
+	{
+		"word": "医院",
+		"pinyin": "yīyuàn",
+		"meaning": "hospital",
+		"example": "医院离这里只有五百米。(Yīyuàn lí zhèlǐ zhǐyǒu wǔbǎi mǐ.) — The hospital is only 500 meters away from here."
+	},
+	{
+		"word": "机场",
+		"pinyin": "jīchǎng",
+		"meaning": "airport",
+		"example": "下午我去机场接朋友。(Xiàwǔ wǒ qù jīchǎng jiē péngyou.) — I am going to the airport this afternoon to pick up a friend."
+	},
+	{
+		"word": "火车站",
+		"pinyin": "huǒchēzhàn",
+		"meaning": "train station",
+		"example": "我们在火车站门口集合。(Wǒmen zài huǒchēzhàn ménkǒu jíhé.) — We will meet at the train station entrance."
+	},
+	{
+		"word": "地铁",
+		"pinyin": "dìtiě",
+		"meaning": "subway / metro",
+		"example": "坐地铁比开车更快。(Zuò dìtiě bǐ kāichē gèng kuài.) — Taking the subway is faster than driving."
+	},
+	{
+		"word": "出租车",
+		"pinyin": "chūzūchē",
+		"meaning": "taxi / cab",
+		"example": "下雨天比较难打出租车。(Xiàyǔ tiān bǐjiào nán dǎ chūzūchē.) — It is harder to hail a taxi on rainy days."
+	},
+	{
+		"word": "公共汽车",
+		"pinyin": "gōnggòng qìchē",
+		"meaning": "bus / public transit bus",
+		"example": "你可以坐一路公共汽车去市中心。(Nǐ kěyǐ zuò yī lù gōnggòng qìchē qù shìzhōngxīn.) — You can take bus route 1 to downtown."
+	},
+	{
+		"word": "飞机",
+		"pinyin": "fēijī",
+		"meaning": "airplane / plane",
+		"example": "飞机两个小时后起飞。(Fēijī liǎng gè xiǎoshí hòu qǐfēi.) — The airplane takes off in two hours."
+	},
+	{
+		"word": "车",
+		"pinyin": "chē",
+		"meaning": "vehicle / car",
+		"example": "路上的车很多，交通有点堵。(Lù shang de chē hěn duō, jiāotōng yǒudiǎn dǔ.) — There are many cars on the road, traffic is a bit jammed."
+	},
+	{
+		"word": "坐",
+		"pinyin": "zuò",
+		"meaning": "to sit / to ride / to take (a vehicle)",
+		"example": "请坐，不要客气。(Qǐng zuò, bú yào kèqi.) — Please sit, don't stand on ceremony."
+	},
+	{
+		"word": "开",
+		"pinyin": "kāi",
+		"meaning": "to drive / to open / to start",
+		"example": "他每天开车去上班。(Tā měitiān kāichē qù shàngbān.) — He drives to work every day."
+	},
+	{
+		"word": "上",
+		"pinyin": "shàng",
+		"meaning": "up / above / on top / to get on",
+		"example": "书在桌子上。(Shū zài zhuōzi shang.) — The book is on the table."
+	},
+	{
+		"word": "下",
+		"pinyin": "xià",
+		"meaning": "down / below / under / to get off",
+		"example": "小猫藏在椅子下面。(Xiǎomāo cáng zài yǐzi xiàmian.) — The kitten is hiding under the chair."
+	},
+	{
+		"word": "前",
+		"pinyin": "qián",
+		"meaning": "front / forward / ahead / before",
+		"example": "学校前面有一家书店。(Xuéxiào qiánmian yǒu yì jiā shūdiàn.) — There is a bookstore in front of the school."
+	},
+	{
+		"word": "后",
+		"pinyin": "hòu",
+		"meaning": "back / behind / after",
+		"example": "医院后面是一个大花园。(Yīyuàn hòumian shì yí gè dà huāyuán.) — Behind the hospital is a large garden."
+	},
+	{
+		"word": "左",
+		"pinyin": "zuǒ",
+		"meaning": "left (direction)",
+		"example": "向左拐就是地铁站。(Xiàng zuǒ guǎi jiù shì dìtiězhàn.) — Turn left and that's the subway station."
+	},
+	{
+		"word": "右",
+		"pinyin": "yòu",
+		"meaning": "right (direction)",
+		"example": "你的右边是谁？(Nǐ de yòubian shì shéi?) — Who is on your right side?"
+	},
+	{
+		"word": "里",
+		"pinyin": "lǐ",
+		"meaning": "inside / in",
+		"example": "包里有两支笔和一本笔记本。(Bāo lǐ yǒu liǎng zhī bǐ hé yì běn bǐjìběn.) — There are two pens and a notebook inside the bag."
+	},
+	{
+		"word": "路",
+		"pinyin": "lù",
+		"meaning": "road / path / way",
+		"example": "请问去博物馆这条路怎么走？(Qǐngwèn qù bówùguǎn zhè tiáo lù zěnme zǒu?) — Excuse me, how do I get to the museum along this road?"
+	},
+	{
+		"word": "远",
+		"pinyin": "yuǎn",
+		"meaning": "far / distant",
+		"example": "从我家到公司不算太远。(Cóng wǒ jiā dào gōngsī bú suàn tài yuǎn.) — From my home to the company is not too far."
+	},
+	{
+		"word": "近",
+		"pinyin": "jìn",
+		"meaning": "near / close",
+		"example": "这家咖啡馆离学校很近。(Zhè jiā kāfēiguǎn lí xuéxiào hěn jìn.) — This café is very close to school."
+	},
+	{
+		"word": "怎么走",
+		"pinyin": "zěnme zǒu",
+		"meaning": "how to get to (directions)",
+		"example": "请问到天安门广场怎么走？(Qǐngwèn dào Tiān'ānmén Guǎngchǎng zěnme zǒu?) — Excuse me, how do I get to Tiananmen Square?"
+	},
+	{
+		"word": "天气",
+		"pinyin": "tiānqì",
+		"meaning": "weather",
+		"example": "今天天气真好，晴空万里。(Jīntiān tiānqì zhēn hǎo, qíngkōng wànlǐ.) — The weather today is really great, completely clear skies."
+	},
+	{
+		"word": "怎么样",
+		"pinyin": "zěnmeyàng",
+		"meaning": "how is it / how about",
+		"example": "你觉得这家餐馆怎么样？(Nǐ juéde zhè jiā cānguǎn zěnmeyàng?) — How do you like this restaurant?"
+	},
+	{
+		"word": "热",
+		"pinyin": "rè",
+		"meaning": "hot (temperature)",
+		"example": "夏天这里非常热。(Xiàtiān zhèlǐ fēicháng rè.) — In summer it is very hot here."
+	},
+	{
+		"word": "冷",
+		"pinyin": "lěng",
+		"meaning": "cold (temperature)",
+		"example": "今天刮风，有点儿冷。(Jīntiān guāfēng, yǒudiǎnr lěng.) — It's windy today and a bit cold."
+	},
+	{
+		"word": "暖和",
+		"pinyin": "nuǎnhuo",
+		"meaning": "warm (weather / climate)",
+		"example": "春天的下午很暖和。(Chūntiān de xiàwǔ hěn nuǎnhuo.) — Spring afternoons are warm and pleasant."
+	},
+	{
+		"word": "凉快",
+		"pinyin": "liángkuai",
+		"meaning": "cool / pleasantly cold",
+		"example": "下过雨后天气很凉快。(Xià guò yǔ hòu tiānqì hěn liángkuai.) — After the rain the weather is pleasantly cool."
+	},
+	{
+		"word": "下雨",
+		"pinyin": "xiàyǔ",
+		"meaning": "to rain",
+		"example": "出门记得带伞，外面要下雨了。(Chūmén jìde dài sǎn, wàimiàn yào xiàyǔ le.) — Remember to bring an umbrella, it is going to rain outside."
+	},
+	{
+		"word": "下雪",
+		"pinyin": "xiàxuě",
+		"meaning": "to snow",
+		"example": "冬天北方经常下雪。(Dōngtiān běifāng jīngcháng xiàxuě.) — It often snows in the north during winter."
+	},
+	{
+		"word": "晴天",
+		"pinyin": "qíngtiān",
+		"meaning": "sunny day / clear day",
+		"example": "明天是个晴天，适合去郊游。(Míngtiān shì gè qíngtiān, shìhé qù jiāoyóu.) — Tomorrow will be a sunny day, perfect for an outing."
+	},
+	{
+		"word": "阴天",
+		"pinyin": "yīntiān",
+		"meaning": "overcast day / cloudy day",
+		"example": "今天一直是阴天，没有出太阳。(Jīntiān yìzhí shì yīntiān, méiyǒu chū tàiyáng.) — Today has been overcast all day, no sun came out."
+	},
+	{
+		"word": "刮风",
+		"pinyin": "guāfēng",
+		"meaning": "windy / wind blowing",
+		"example": "外面正在刮风，天气很凉。(Wàimiàn zhèngzài guāfēng, tiānqì hěn liáng.) — The wind is blowing outside; the weather is cool."
+	},
+	{
+		"word": "太阳",
+		"pinyin": "tàiyáng",
+		"meaning": "sun",
+		"example": "太阳从东边升起来了。(Tàiyáng cóng dōngbian shēng qǐlái le.) — The sun rose from the east."
+	},
+	{
+		"word": "月亮",
+		"pinyin": "yuèliang",
+		"meaning": "moon",
+		"example": "中秋节的月亮又圆又亮。(Zhōngqiūjié de yuèliang yòu yuán yòu liàng.) — The Mid-Autumn moon is both round and bright."
+	},
+	{
+		"word": "星星",
+		"pinyin": "xīngxing",
+		"meaning": "star",
+		"example": "夜空中闪烁着无数的星星。(Yèkōng zhōng shǎnshuò zhe wúshù de xīngxing.) — Countless stars twinkle in the night sky."
+	},
+	{
+		"word": "春天",
+		"pinyin": "chūntiān",
+		"meaning": "spring (season)",
+		"example": "春天百花盛开，景色非常美。(Chūntiān bǎihuā shèngkāi, jǐngsè fēicháng měi.) — In spring all flowers bloom and scenery is beautiful."
+	},
+	{
+		"word": "夏天",
+		"pinyin": "xiàtiān",
+		"meaning": "summer (season)",
+		"example": "夏天大家喜欢去海边游泳。(Xiàtiān dàjiā xǐhuan qù hǎibiān yóuyǒng.) — In summer everyone likes going to the beach to swim."
+	},
+	{
+		"word": "秋天",
+		"pinyin": "qiūtiān",
+		"meaning": "autumn / fall (season)",
+		"example": "北京的秋天是一年中最美的季节。(Běijīng de qiūtiān shì yì nián zhōng zuì měi de jìjié.) — Beijing's autumn is the prettiest season of the year."
+	},
+	{
+		"word": "冬天",
+		"pinyin": "dōngtiān",
+		"meaning": "winter (season)",
+		"example": "冬天出门要戴帽子和围巾。(Dōngtiān chūmén yào dài màozi hé wéijīn.) — Wear a hat and scarf when going out in winter."
+	},
+	{
+		"word": "山",
+		"pinyin": "shān",
+		"meaning": "mountain / hill",
+		"example": "周末我们一起去爬山吧。(Zhōumò wǒmen yìqǐ qù pá shān ba.) — Let's go climb mountains together this weekend."
+	},
+	{
+		"word": "树",
+		"pinyin": "shù",
+		"meaning": "tree",
+		"example": "院子里种着两棵大树。(Yuànzi lǐ zhòng zhe liǎng kē dà shù.) — Two large trees are planted in the courtyard."
+	},
+	{
+		"word": "花",
+		"pinyin": "huā",
+		"meaning": "flower / blossom",
+		"example": "公园里的红花开得真鲜艳。(Gōngyuán lǐ de hóng huā kāi de zhēn xiānyàn.) — The red flowers in the park bloom vividly."
+	},
+	{
+		"word": "草",
+		"pinyin": "cǎo",
+		"meaning": "grass / lawn",
+		"example": "请不要踩踏草坪。(Qǐng bú yào cǎità cǎopíng.) — Please do not trample on the grass."
+	},
+	{
+		"word": "河",
+		"pinyin": "hé",
+		"meaning": "river",
+		"example": "一条清清的小河穿过村庄。(Yì tiáo qīngqīng de xiǎo hé chuānguò cūnzhuāng.) — A clear small river flows through the village."
+	},
+	{
+		"word": "海",
+		"pinyin": "hǎi",
+		"meaning": "sea / ocean",
+		"example": "海边的日落景色非常迷人。(Hǎibiān de rìluò jǐngsè fēicháng mírén.) — The sunset view by the seaside is charming."
+	},
+	{
+		"word": "想",
+		"pinyin": "xiǎng",
+		"meaning": "to want / to miss / to think",
+		"example": "我想学习流利的普通话。(Wǒ xiǎng xuéxí liúlì de pǔtōnghuà.) — I want to learn fluent Mandarin."
+	},
+	{
+		"word": "要",
+		"pinyin": "yào",
+		"meaning": "to want / must / going to",
+		"example": "明天我要参加一场考试。(Míngtiān wǒ yào cānjiā yì chǎng kǎoshì.) — Tomorrow I need to take an exam."
+	},
+	{
+		"word": "会",
+		"pinyin": "huì",
+		"meaning": "can / to know how to / will",
+		"example": "你会说中文和法语吗？(Nǐ huì shuō zhōngwén hé fǎyǔ ma?) — Can you speak Chinese and French?"
+	},
+	{
+		"word": "能",
+		"pinyin": "néng",
+		"meaning": "can / to be able to / may",
+		"example": "你能帮我拿一下行李吗？(Nǐ néng bāng wǒ ná yíxià xíngli ma?) — Can you help me carry the luggage?"
+	},
+	{
+		"word": "可以",
+		"pinyin": "kěyǐ",
+		"meaning": "can / may / acceptable",
+		"example": "请问我可以坐这里吗？(Qǐngwèn wǒ kěyǐ zuò zhèlǐ ma?) — Excuse me, may I sit here?"
+	},
+	{
+		"word": "喜欢",
+		"pinyin": "xǐhuan",
+		"meaning": "to like / to be fond of",
+		"example": "我非常喜欢看书和跑步。(Wǒ fēicháng xǐhuan kànshū hé pǎobù.) — I like reading and running very much."
+	},
+	{
+		"word": "爱",
+		"pinyin": "ài",
+		"meaning": "to love / love",
+		"example": "我们深爱着我们的家人。(Wǒmen shēn'ài zhe wǒmen de jiārén.) — We deeply love our family."
+	},
+	{
+		"word": "觉得",
+		"pinyin": "juéde",
+		"meaning": "to feel / to think / to consider",
+		"example": "我觉得这套卡片很有帮助。(Wǒ juéde zhè tào kǎpiàn hěn yǒu bāngzhù.) — I think this flashcard set is very helpful."
+	},
+	{
+		"word": "高兴",
+		"pinyin": "gāoxìng",
+		"meaning": "happy / glad / joyful",
+		"example": "听到这个好消息大家都很高兴。(Tīngdào zhè gè hǎo xiāoxi dàjiā dōu hěn gāoxìng.) — Everyone is happy hearing this good news."
+	},
+	{
+		"word": "快乐",
+		"pinyin": "kuàilè",
+		"meaning": "happy / cheerful / joyful",
+		"example": "祝大家新年快乐，万事如意！(Zhù dàjiā xīnnián kuàilè, wànshì rúyì!) — Wish everyone a Happy New Year and all the best!"
+	},
+	{
+		"word": "累",
+		"pinyin": "lèi",
+		"meaning": "tired / exhausted",
+		"example": "今天工作了一整天，感觉很累。(Jīntiān gōngzuò le yì zhěng tiān, gǎnjué hěn lèi.) — Worked all day today, feeling very tired."
+	},
+	{
+		"word": "饿",
+		"pinyin": "è",
+		"meaning": "hungry",
+		"example": "我肚子有点饿了，去吃点东西吧。(Wǒ dùzi yǒudiǎn è le, qù chī diǎn dōngxi ba.) — I'm feeling a bit hungry, let's go eat something."
+	},
+	{
+		"word": "渴",
+		"pinyin": "kě",
+		"meaning": "thirsty",
+		"example": "打完球以后大家都很渴。(Dǎ wán qiú yǐhòu dàjiā dōu hěn kě.) — After playing ball, everyone was very thirsty."
+	},
+	{
+		"word": "舒服",
+		"pinyin": "shūfu",
+		"meaning": "comfortable / feeling well",
+		"example": "今天天气凉爽，感觉很舒服。(Jīntiān tiānqì liángshuǎng, gǎnjué hěn shūfu.) — Cool weather today, feels very comfortable."
+	},
+	{
+		"word": "生病",
+		"pinyin": "shēngbìng",
+		"meaning": "to fall ill / to get sick",
+		"example": "天气变冷要注意保暖，别生病了。(Tiānqì biàn lěng yào zhùyì bǎonuǎn, bié shēngbìng le.) — Keep warm as weather turns cold, don't get sick."
+	},
+	{
+		"word": "疼",
+		"pinyin": "téng",
+		"meaning": "painful / ache / sore",
+		"example": "我嗓子有点疼。(Wǒ sǎngzi yǒudiǎn téng.) — My throat is a little sore."
+	},
+	{
+		"word": "感冒",
+		"pinyin": "gǎnmào",
+		"meaning": "cold / flu / to catch a cold",
+		"example": "他感冒了，需要多喝热水。(Tā gǎnmào le, xūyào duō hē rè shuǐ.) — He caught a cold and needs to drink more hot water."
+	},
+	{
+		"word": "帮助",
+		"pinyin": "bāngzhù",
+		"meaning": "to help / assistance / help",
+		"example": "谢谢你耐心的帮助。(Xièxie nǐ nàixīn de bāngzhù.) — Thank you for your patient help."
+	},
+	{
+		"word": "懂",
+		"pinyin": "dǒng",
+		"meaning": "to understand / to comprehend",
+		"example": "这句话我听懂了。(Zhè jù huà wǒ tīng dǒng le.) — I understood this sentence."
+	},
+	{
+		"word": "明白",
+		"pinyin": "míngbai",
+		"meaning": "to understand / clear",
+		"example": "你明白这个语法规则了吗？(Nǐ míngbai zhè gè yǔfǎ guīzé le ma?) — Do you understand this grammar rule?"
+	},
+	{
+		"word": "知道",
+		"pinyin": "zhīdào",
+		"meaning": "to know / to realize",
+		"example": "你知道去机场的路怎么走吗？(Nǐ zhīdào qù jīchǎng de lù zěnme zǒu ma?) — Do you know the route to the airport?"
+	},
+	{
+		"word": "认识",
+		"pinyin": "rènshi",
+		"meaning": "to recognize / to know (a person)",
+		"example": "你在中国认识很多新朋友吗？(Nǐ zài Zhōngguó rènshi hěn duō xīn péngyou ma?) — Did you get to know many new friends in China?"
+	},
+	{
+		"word": "学习",
+		"pinyin": "xuéxí",
+		"meaning": "to study / to learn",
+		"example": "坚持每天学习中文。(Jiānchí měitiān xuéxí zhōngwén.) — Persevere in studying Chinese every day."
+	},
+	{
+		"word": "希望",
+		"pinyin": "xīwàng",
+		"meaning": "to hope / wish",
+		"example": "希望你学习进步，一切顺利！(Xīwàng nǐ xuéxí jìnbù, yíqiè shùnlì!) — Hope you make good study progress and all goes smoothly!"
+	},
+	{
+		"word": "祝",
+		"pinyin": "zhù",
+		"meaning": "to wish / to express good wishes",
+		"example": "祝你旅途愉快！(Zhù nǐ lǚtú yúkuài!) — Wish you a pleasant journey!"
+	},
+	{
+		"word": "创世记",
+		"pinyin": "Chuàngshìjì",
+		"meaning": "Genesis",
+		"example": "《创世记》记载了上帝创造天地万物的故事。(《Chuàngshìjì》 jìzǎi le Shàngdì chuàngzào tiāndì wànwù de gùshì.) — Genesis records the story of God creating heaven, earth, and all things."
+	},
+	{
+		"word": "出埃及记",
+		"pinyin": "Chū'āijíjì",
+		"meaning": "Exodus",
+		"example": "《出埃及记》讲述了摩西带领以色列人出埃及的历史。(《Chū'āijíjì》 jiǎngshù le Mōxī dàilǐng Yǐsèliè rén chū Āijí de lìshǐ.) — Exodus recounts the history of Moses leading the Israelites out of Egypt."
+	},
+	{
+		"word": "利未记",
+		"pinyin": "Lìwèijì",
+		"meaning": "Leviticus",
+		"example": "《利未记》阐述了律法、圣洁与敬拜礼仪。(《Lìwèijì》 chǎnshù le lǜfǎ, shèngjié yǔ jìngbài lǐyí.) — Leviticus expounds on the law, holiness, and worship rituals."
+	},
+	{
+		"word": "民数记",
+		"pinyin": "Mínshùjì",
+		"meaning": "Numbers",
+		"example": "《民数记》记载了在旷野中的人口普查与行军历程。(《Mínshùjì》 jìzǎi le zài kuàngyě zhōng de rénkǒu pǔchá yǔ xíngjūn lìchéng.) — Numbers records the census in the wilderness and the marching journey."
+	},
+	{
+		"word": "申命记",
+		"pinyin": "Shēnmìngjì",
+		"meaning": "Deuteronomy",
+		"example": "《申命记》重申了上帝的诫命与摩西临终前的嘱托。(《Shēnmìngjì》 chóngshēn le Shàngdì de jièmìng yǔ Mōxī línzhōng qián de zhǔtuō.) — Deuteronomy reiterates God's commandments and Moses' final exhortations."
+	},
+	{
+		"word": "约书亚记",
+		"pinyin": "Yuēshūyàjì",
+		"meaning": "Joshua",
+		"example": "《约书亚记》讲述了以色列人进入应许之地的征程。(《Yuēshūyàjì》 jiǎngshù le Yǐsèliè rén jìnrù yīngxǔ zhī dì de zhēngchéng.) — Joshua tells the journey of the Israelites entering the Promised Land."
+	},
+	{
+		"word": "士师记",
+		"pinyin": "Shìshījì",
+		"meaning": "Judges",
+		"example": "《士师记》记载了士师时代的信实与拯救。(《Shìshījì》 jìzǎi le shìshī shídài de xìnshí yǔ zhěngjiù.) — Judges records faithfulness and deliverance during the era of judges."
+	},
+	{
+		"word": "路得记",
+		"pinyin": "Lùdéjì",
+		"meaning": "Ruth",
+		"example": "《路得记》展现了一段关于爱与忠诚的动人故事。(《Lùdéjì》 zhǎnxiàn le yí duàn guānyú ài yǔ zhōngchéng de dòngrén gùshì.) — Ruth presents a touching story about love, loyalty, and redemption."
+	},
+	{
+		"word": "撒母耳记上",
+		"pinyin": "Sāmǔ'ěrjì Shàng",
+		"meaning": "1 Samuel",
+		"example": "《撒母耳记上》记载了先知撒母耳、扫罗与大卫的生平。(《Sāmǔ'ěrjì Shàng》 jìzǎi le xiānzhī Sāmǔ'ěr, Sǎoluó yǔ Dàwèi de shēngpíng.) — 1 Samuel records the lives of Prophet Samuel, Saul, and David."
+	},
+	{
+		"word": "撒母耳记下",
+		"pinyin": "Sāmǔ'ěrjì Xià",
+		"meaning": "2 Samuel",
+		"example": "《撒母耳记下》主要记录了大卫作为以色列君王的统治。(《Sāmǔ'ěrjì Xià》 zhǔyào jìlù le Dàwèi zuòwéi Yǐsèliè jūnwáng de tǒngzhì.) — 2 Samuel primarily records David's reign as king of Israel."
+	},
+	{
+		"word": "列王纪上",
+		"pinyin": "Lièwángjì Shàng",
+		"meaning": "1 Kings",
+		"example": "《列王纪上》记载了所罗门的智慧与圣殿的建造。(《Lièwángjì Shàng》 jìzǎi le Suǒluóméng de zhìhuì yǔ Shèngdiàn de jiànzào.) — 1 Kings records Solomon's wisdom and the construction of the Temple."
+	},
+	{
+		"word": "列王纪下",
+		"pinyin": "Lièwángjì Xià",
+		"meaning": "2 Kings",
+		"example": "《列王纪下》记录了南北两国的历史与先知先见的事迹。(《Lièwángjì Xià》 jìlù le nánběi liǎng guó de lìshǐ yǔ xiānzhī xiānjiàn de shìjì.) — 2 Kings records the history of the two kingdoms and the deeds of prophets."
+	},
+	{
+		"word": "历代志上",
+		"pinyin": "Lìdàizhì Shàng",
+		"meaning": "1 Chronicles",
+		"example": "《历代志上》详尽记录了家谱谱系与大卫的敬拜赞美安排。(《Lìdàizhì Shàng》 xiángjìn jìlù le jiāpǔ pǔxì yǔ Dàwèi de jìngbài zànměi ānpái.) — 1 Chronicles details genealogies and David's arrangements for worship."
+	},
+	{
+		"word": "历代志下",
+		"pinyin": "Lìdàizhì Xià",
+		"meaning": "2 Chronicles",
+		"example": "《历代志下》回顾了历代君王对圣殿的看重与属灵复兴。(《Lìdàizhì Xià》 huígù le lìdài jūnwáng duì Shèngdiàn de kànzhòng yǔ shǔlíng fùxīng.) — 2 Chronicles reviews the kings' devotion to the Temple and spiritual revivals."
+	},
+	{
+		"word": "以斯拉记",
+		"pinyin": "Yǐsīlājì",
+		"meaning": "Ezra",
+		"example": "《以斯拉记》记载了被掳归回与重建圣殿的历史。(《Yǐsīlājì》 jìzǎi le bèilǔ guīhuí yǔ zhòngjiàn Shèngdiàn de lìshǐ.) — Ezra records the return from exile and the rebuilding of the Temple."
+	},
+	{
+		"word": "尼希米记",
+		"pinyin": "Níxīmǐjì",
+		"meaning": "Nehemiah",
+		"example": "《尼希米记》展现了同心合意重建耶路撒冷城墙的见证。(《Níxīmǐjì》 zhǎnxiàn le tóngxīn héyì zhòngjiàn Yēlùsǎlěng chéngqiáng de jiànzhèng.) — Nehemiah shows the unified effort to rebuild the walls of Jerusalem."
+	},
+	{
+		"word": "以斯帖记",
+		"pinyin": "Yǐsītiějì",
+		"meaning": "Esther",
+		"example": "《以斯帖记》讲述了以斯帖王后勇敢拯救同胞的故事。(《Yǐsītiějì》 jiǎngshù le Yǐsītiě wánghòu yǒnggǎn zhěngjiù tóngbāo de gùshì.) — Esther tells the story of Queen Esther bravely saving her people."
+	},
+	{
+		"word": "约伯记",
+		"pinyin": "Yuēbójì",
+		"meaning": "Job",
+		"example": "《约伯记》深刻探讨了苦难的意义与坚定不移的信心。(《Yuēbójì》 shēnkè tàntǎo le kǔnàn de yìyì yǔ jiāndìng bù yí de xìnxīn.) — Job profoundly explores the meaning of suffering and unwavering faith."
+	},
+	{
+		"word": "诗篇",
+		"pinyin": "Shīpiān",
+		"meaning": "Psalms",
+		"example": "《诗篇》汇集了向神倾心吐意的优美赞美与祷告诗歌。(《Shīpiān》 huìjí le xiàng Shén qīngxīn tǔyì de yōuměi zànměi yǔ dǎogào shīgē.) — Psalms compiles beautiful hymns of praise and heartfelt prayers to God."
+	},
+	{
+		"word": "箴言",
+		"pinyin": "Zhēnyán",
+		"meaning": "Proverbs",
+		"example": "《箴言》蕴含了敬畏耶和华与为人处世的宝贵智慧。(《Zhēnyán》 yùnhán le jìngwèi Yēhéhuá yǔ wéirén chǔshì de bǎoguì zhìhuì.) — Proverbs contains precious wisdom on fearing the Lord and living well."
+	},
+	{
+		"word": "传道书",
+		"pinyin": "Chuándàoshū",
+		"meaning": "Ecclesiastes",
+		"example": "《传道书》探索了日光之下生命的真正意义与归宿。(《Chuándàoshū》 tànsuǒ le rìguāng zhīxià shēngmìng de zhēnzhèng yìyì yǔ guīsù.) — Ecclesiastes explores the true meaning and destination of life under the sun."
+	},
+	{
+		"word": "雅歌",
+		"pinyin": "Yǎgē",
+		"meaning": "Song of Songs",
+		"example": "《雅歌》用诗意赞美了纯洁美好的真爱与盟约。(《Yǎgē》 yòng shīyì zànměi le chúnjié měihǎo de zhēn’ài yǔ méngyuē.) — Song of Songs poetically praises pure love and sacred covenant."
+	},
+	{
+		"word": "以赛亚书",
+		"pinyin": "Yǐsàiyǎshū",
+		"meaning": "Isaiah",
+		"example": "《以赛亚书》包含了关于弥赛亚降生与救赎的伟大预言。(《Yǐsàiyǎshū》 bāohán le guānyú Mísǎiyà jiàngshēng yǔ jiùshú de wěidà yùyán.) — Isaiah contains grand prophecies of the Messiah's birth and redemption."
+	},
+	{
+		"word": "耶利米书",
+		"pinyin": "Yēlìmǐshū",
+		"meaning": "Jeremiah",
+		"example": "《耶利米书》记载了先知充满爱与警戒的忠心宣讲。(《Yēlìmǐshū》 jìzǎi le xiānzhī chōngmǎn ài yǔ jǐngjiè de zhōngxīn xuānjiǎng.) — Jeremiah records the prophet's faithful proclamation filled with love and warnings."
+	},
+	{
+		"word": "耶利米哀歌",
+		"pinyin": "Yēlìmǐ'āigē",
+		"meaning": "Lamentations",
+		"example": "《耶利米哀歌》表达了对圣城的哀伤以及对神怜悯的盼望。(《Yēlìmǐ'āigē》 biǎodá le duì shèngchéng de āishāng yǐjí duì Shén liánmǐn de pànwàng.) — Lamentations expresses grief for the holy city and hope in God's mercies."
+	},
+	{
+		"word": "以西结书",
+		"pinyin": "Yǐxījiéshū",
+		"meaning": "Ezekiel",
+		"example": "《以西结书》记载了枯骨复活等异象与荣耀重建的应许。(《Yǐxījiéshū》 jìzǎi le kūgǔ fùhuó děng yìxiàng yǔ róngyào zhòngjiàn de yīngxǔ.) — Ezekiel records visions like the valley of dry bones and promises of glorious restoration."
+	},
+	{
+		"word": "但以理书",
+		"pinyin": "Dànyǐlǐshū",
+		"meaning": "Daniel",
+		"example": "《但以理书》展现了在异国他乡坚守信仰与狮子坑中的蒙拯救。(《Dànyǐlǐshū》 zhǎnxiàn le zài yìguó tāxiāng jiānshǒu xìnyǎng yǔ shīzǐkēng zhōng de méng zhěngjiù.) — Daniel shows faithful devotion in exile and miraculous deliverance from the lions' den."
+	},
+	{
+		"word": "何西阿书",
+		"pinyin": "Héxī'āshū",
+		"meaning": "Hosea",
+		"example": "《何西阿书》以婚姻比喻展现神对百姓不离不弃的慈爱。(《Héxī'āshū》 yǐ hūnyīn bǐyù zhǎnxiàn Shén duì bǎixìng bùlí-bùqì de cí'ài.) — Hosea uses marriage as a metaphor for God's relentless, steadfast love."
+	},
+	{
+		"word": "约珥书",
+		"pinyin": "Yuē'ěrshū",
+		"meaning": "Joel",
+		"example": "《约珥书》预言了耶和华的日子与圣灵浇灌的应许。(《Yuē'ěrshū》 yùyán le Yēhéhuá de rìzi yǔ Shènglíng jiāoguàn de yīngxǔ.) — Joel prophesies the Day of the Lord and the promise of the outpouring of the Holy Spirit."
+	},
+	{
+		"word": "阿摩司书",
+		"pinyin": "Āmósīshū",
+		"meaning": "Amos",
+		"example": "《阿摩司书》强调了公义如江河滚滚流淌的真理。(《Āmósīshū》 qiángdiào le gōngyì rú jiānghé gǔngǔn liútǎng de zhēnlǐ.) — Amos emphasizes letting justice roll down like waters and righteousness like a stream."
+	},
+	{
+		"word": "俄巴底亚书",
+		"pinyin": "Ébǎdǐyàshū",
+		"meaning": "Obadiah",
+		"example": "《俄巴底亚书》宣告了对骄傲与不义的审判及国度归神的盼望。(《Ébǎdǐyàshū》 xuāngào le duì jiāo'ào yǔ búyì de shěnpàn jí guódù guī Shén de pànwàng.) — Obadiah proclaims judgment upon pride and hope that the kingdom shall be the Lord's."
+	},
+	{
+		"word": "约拿书",
+		"pinyin": "Yuēnáshū",
+		"meaning": "Jonah",
+		"example": "《约拿书》启示了上帝向尼尼微全城展现的宽广恩典与怜悯。(《Yuēnáshū》 qǐshì le Shàngdì xiàng Níníwēi quánchéng zhǎnxiàn de kuānguǎng ēndiǎn yǔ liánmǐn.) — Jonah reveals God's wide grace and mercy extended toward Nineveh."
+	},
+	{
+		"word": "弥迦书",
+		"pinyin": "Míjiāshū",
+		"meaning": "Micah",
+		"example": "《弥迦书》教导人行公义、好怜悯、存谦卑的心与神同行。(《Míjiāshū》 jiàodǎo rén xíng gōngyì, hào liánmǐn, cún qiānbēi de xīn yǔ Shén tóngxíng.) — Micah teaches to act justly, love mercy, and walk humbly with your God."
+	},
+	{
+		"word": "那鸿书",
+		"pinyin": "Nàhóngshū",
+		"meaning": "Nahum",
+		"example": "《那鸿书》宣告了公义的主是患难中的坚固避难所。(《Nàhóngshū》 xuāngào le gōngyì de Zhǔ shì huànnàn zhōng de jiāngù bìnànsuǒ.) — Nahum proclaims that the Lord is good, a refuge in times of trouble."
+	},
+	{
+		"word": "哈巴谷书",
+		"pinyin": "Hābǎgǔshū",
+		"meaning": "Habakkuk",
+		"example": "《哈巴谷书》阐明了惟义人必因信得生的永恒原则。(《Hābǎgǔshū》 chǎnmíng le wéi yìrén bì yīn xìn dé shēng de yǒnghéng yuánzé.) — Habakkuk clarifies that the righteous person shall live by his faith."
+	},
+	{
+		"word": "西番雅书",
+		"pinyin": "Xīfānyǎshū",
+		"meaning": "Zephaniah",
+		"example": "《西番雅书》宣告了默然爱你并在你中间欢呼喜乐的应许。(《Xīfānyǎshū》 xuāngào le mòrán ài nǐ bìng zài nǐ zhōngjiān huānhū xǐlè de yīngxǔ.) — Zephaniah declares God will rejoice over you with gladness and rest in His love."
+	},
+	{
+		"word": "哈该书",
+		"pinyin": "Hāgāishū",
+		"meaning": "Haggai",
+		"example": "《哈该书》劝勉百姓省察自己的行为并专心建造圣殿。(《Hāgāishū》 quànmiǎn bǎixìng xǐngchá zìjǐ de xíngwéi bìng zhuānxīn jiànzào Shèngdiàn.) — Haggai encourages people to consider their ways and rebuild the Temple."
+	},
+	{
+		"word": "撒迦利亚书",
+		"pinyin": "Sājiālìyǎshū",
+		"meaning": "Zechariah",
+		"example": "《撒迦利亚书》宣告不是倚靠势力，乃是倚靠神的灵方能成事。(《Sājiālìyǎshū》 xuāngào bú shì yǐkào shìlì, nǎi shì yǐkào Shén de Líng fāng néng chéng shì.) — Zechariah proclaims: Not by might nor by power, but by My Spirit."
+	},
+	{
+		"word": "玛拉基书",
+		"pinyin": "Mǎlājīshū",
+		"meaning": "Malachi",
+		"example": "《玛拉基书》作为旧约最后一卷书呼吁百姓悔改回归神。(《Mǎlājīshū》 zuòwéi Jiùyuē zuìhòu yì juàn shū hūyù bǎixìng huǐgǎi huíguī Shén.) — As the final Old Testament book, Malachi calls people to repentance and return to God."
+	},
+	{
+		"word": "马太福音",
+		"pinyin": "Mǎtài Fúyīn",
+		"meaning": "Matthew",
+		"example": "《马太福音》见证耶稣是旧约应许的弥赛亚与君王。(《Mǎtài Fúyīn》 jiànzhèng Yēsū shì Jiùyuē yīngxǔ de Mísǎiyà yǔ jūnwáng.) — Matthew testifies that Jesus is the promised Messiah and King."
+	},
+	{
+		"word": "马可福音",
+		"pinyin": "Mǎkě Fúyīn",
+		"meaning": "Mark",
+		"example": "《马可福音》生动展现了耶稣作为仆人服事人并舍命作赎价。(《Mǎkě Fúyīn》 shēngdòng zhǎnxiàn le Yēsū zuòwéi púrén fúshì rén bìng shěmìng zuò shújià.) — Mark vividly presents Jesus serving others and giving His life as a ransom."
+	},
+	{
+		"word": "路加福音",
+		"pinyin": "Lùjiā Fúyīn",
+		"meaning": "Luke",
+		"example": "《路加福音》详尽记述了人子耶稣寻找拯救失丧之人的慈爱。(《Lùjiā Fúyīn》 xiángjìn jìshù le Rénzǐ Yēsū xúnzhǎo zhěngjiù shīsàng zhī rén de cí'ài.) — Luke details Jesus coming to seek and save the lost."
+	},
+	{
+		"word": "约翰福音",
+		"pinyin": "Yuēhàn Fúyīn",
+		"meaning": "John",
+		"example": "《约翰福音》启示了道成肉身的神子以及神爱世人的真理。(《Yuēhàn Fúyīn》 qǐshì le Dào chéng ròushēn de Shénzǐ yǐjí Shén ài shìrén de zhēnlǐ.) — John reveals the Word made flesh and the truth that God so loved the world."
+	},
+	{
+		"word": "使徒行传",
+		"pinyin": "Shǐtú Xíngzhuàn",
+		"meaning": "Acts",
+		"example": "《使徒行传》记录了初期教会建立与福音广传的圣灵作为。(《Shǐtú Xíngzhuàn》 jìlù le chūqī jiàohuì jiànlì yǔ fúyīn guǎngchuán de Shènglíng zuòwéi.) — Acts records the early church and the Holy Spirit’s work in spreading the gospel."
+	},
+	{
+		"word": "罗马书",
+		"pinyin": "Luómǎshū",
+		"meaning": "Romans",
+		"example": "《罗马书》系统阐明了因信称义、救恩恩典与基督里的新生命。(《Luómǎshū》 xìtǒng chǎnmíng le yīn xìn chēngyì, jiù'ēn ēndiǎn yǔ Jīdū lǐ de xīn shēngmìng.) — Romans systematically expounds justification by faith, grace, and new life in Christ."
+	},
+	{
+		"word": "哥林多前书",
+		"pinyin": "Gēlīnduō Qiánshū",
+		"meaning": "1 Corinthians",
+		"example": "《哥林多前书》第十三章详述了爱的真谛与永不止息。(《Gēlīnduō Qiánshū》 dì shísān zhāng xiángshù le ài de zhēndì yǔ yǒng bù zhǐxī.) — 1 Corinthians 13 describes the true essence and unending nature of love."
+	},
+	{
+		"word": "哥林多后书",
+		"pinyin": "Gēlīnduō Hòushū",
+		"meaning": "2 Corinthians",
+		"example": "《哥林多后书》阐述了神的恩典在人的软弱上显得完全。(《Gēlīnduō Hòushū》 chǎnshù le Shén de ēndiǎn zài rén de ruǎnruò shang xiǎnde wánquán.) — 2 Corinthians expounds that God's grace is made perfect in weakness."
+	},
+	{
+		"word": "加拉太书",
+		"pinyin": "Jiālātàishū",
+		"meaning": "Galatians",
+		"example": "《加拉太书》捍卫了福音真理与圣灵所结九样果子的生活。(《Jiālātàishū》 hànwèi le fúyīn zhēnlǐ yǔ Shènglíng suǒ jié jiǔ yàng guǒzi de shēnghuó.) — Galatians defends gospel truth and living by the fruit of the Spirit."
+	},
+	{
+		"word": "以弗所书",
+		"pinyin": "Yǐfúsuǒshū",
+		"meaning": "Ephesians",
+		"example": "《以弗所书》阐明了教会荣耀的奥秘与穿戴神所赐的全副军装。(《Yǐfúsuǒshū》 chǎnmíng le jiàohuì róngyào de àomì yǔ chuāndài Shén suǒ cì de quánfù jūnzhuāng.) — Ephesians expounds the mystery of the Church and putting on the armor of God."
+	},
+	{
+		"word": "腓立比书",
+		"pinyin": "Féilìbǐshū",
+		"meaning": "Philippians",
+		"example": "《腓立比书》充满了在主里常常喜乐与靠着爱我们的凡事都能作。(《Féilìbǐshū》 chōngmǎn le zài Zhǔ lǐ chángcháng xǐlè yǔ kàozhe ài wǒmen de fánshì dōu néng zuò.) — Philippians is filled with joy in the Lord and doing all things through Christ who strengthens us."
+	},
+	{
+		"word": "歌罗西书",
+		"pinyin": "Gēluóxīshū",
+		"meaning": "Colossians",
+		"example": "《歌罗西书》高举基督在万有中居首位与至高的荣耀。(《Gēluóxīshū》 gāojǔ Jīdū zài wànyǒu zhōng jū shǒuwèi yǔ zhìgāo de róngyào.) — Colossians exalts Christ as supreme in all creation and holding first place."
+	},
+	{
+		"word": "帖撒罗尼迦前书",
+		"pinyin": "Tiēsǎluóníjiā Qiánshū",
+		"meaning": "1 Thessalonians",
+		"example": "《帖撒罗尼迦前书》劝勉信徒常常喜乐、不住祷告、凡事谢恩。(《Tiēsǎluóníjiā Qiánshū》 quànmiǎn xìntú chángcháng xǐlè, búzhù dǎogào, fánshì xiè'ēn.) — 1 Thessalonians encourages believers to rejoice always, pray continually, give thanks in all circumstances."
+	},
+	{
+		"word": "帖撒罗尼迦后书",
+		"pinyin": "Tiēsǎluóníjiā Hòushū",
+		"meaning": "2 Thessalonians",
+		"example": "《帖撒罗尼迦后书》坚固信徒在等候主再来时专心作正经事。(《Tiēsǎluóníjiā Hòushū》 jiāngù xìntú zài děnghòu Zhǔ zàilái shí zhuānxīn zuò zhèngjīng shì.) — 2 Thessalonians strengthens believers to stand firm while awaiting the Lord’s return."
+	},
+	{
+		"word": "提摩太前书",
+		"pinyin": "Tímótài Qiánshū",
+		"meaning": "1 Timothy",
+		"example": "《提摩太前书》教导年轻传道人如何治理教会与持守纯正信仰。(《Tímótài Qiánshū》 jiàodǎo niánqīng chuándàorén rúhé zhìlǐ jiàohuì yǔ chíshǒu chúnzhèng xìnyǎng.) — 1 Timothy instructs young ministers on church leadership and guarding pure faith."
+	},
+	{
+		"word": "提摩太后书",
+		"pinyin": "Tímótài Hòushū",
+		"meaning": "2 Timothy",
+		"example": "《提摩太后书》勉励奔跑当跑的路、打美好的仗并持守真道。(《Tímótài Hòushū》 miǎnlì bēnpǎo dāng pǎo de lù, dǎ měihǎo de zhàng bìng chíshǒu zhēndào.) — 2 Timothy encourages fighting the good fight, finishing the race, and keeping the faith."
+	},
+	{
+		"word": "提多书",
+		"pinyin": "Tíduōshū",
+		"meaning": "Titus",
+		"example": "《提多书》指导在各地教会设立称职长老与热心行善。(《Tíduōshū》 zhǐdǎo zài gèdì jiàohuì shèlì chènzhí zhǎnglǎo yǔ rèxīn xíngshàn.) — Titus guides appointing godly elders in churches and being zealous for good works."
+	},
+	{
+		"word": "腓利门书",
+		"pinyin": "Féilìménshū",
+		"meaning": "Philemon",
+		"example": "《腓利门书》展现了在基督里饶恕接纳与兄弟之爱的榜样。(《Féilìménshū》 zhǎnxiàn le zài Jīdū lǐ ráoshù jiēnà yǔ xiōngdì zhī ài de bǎngyàng.) — Philemon presents an example of forgiveness, reconciliation, and brotherly love in Christ."
+	},
+	{
+		"word": "希伯来书",
+		"pinyin": "Xībóláishū",
+		"meaning": "Hebrews",
+		"example": "《希伯来书》阐明了耶稣是大祭司以及信是所望之事的实底。(《Xībóláishū》 chǎnmíng le Yēsū shì Dà Jìsī yǐjí xìn shì suǒ wàng zhī shì de shídǐ.) — Hebrews expounds Jesus as High Priest and faith as confidence in what we hope for."
+	},
+	{
+		"word": "雅各书",
+		"pinyin": "Yǎgèshū",
+		"meaning": "James",
+		"example": "《雅各书》强调信心与行为并重，听道且要行道。(《Yǎgèshū》 qiángdiào xìnxīn yǔ xíngwéi bìngzhòng, tīng dào qiě yào xíng dào.) — James emphasizes faith in action—not just listening to the word, but doing what it says."
+	},
+	{
+		"word": "彼得前书",
+		"pinyin": "Bǐdé Qiánshū",
+		"meaning": "1 Peter",
+		"example": "《彼得前书》勉励信徒在受苦中存活泼的盼望与圣洁的生活。(《Bǐdé Qiánshū》 miǎnlì xìntú zài shòukǔ zhōng cún huópo de pànwàng yǔ shèngjié de shēnghuó.) — 1 Peter encourages living hope and holiness amid trials and suffering."
+	},
+	{
+		"word": "彼得后书",
+		"pinyin": "Bǐdé Hòushū",
+		"meaning": "2 Peter",
+		"example": "《彼得后书》提醒防备假师傅并在恩典和知识上持续长进。(《Bǐdé Hòushū》 tíxǐng fángbèi jiǎ shīfu bìng zài ēndiǎn hé zhīshi shang chíxù zhǎngjìn.) — 2 Peter warns against false teachers and exhorts growing in grace and knowledge."
+	},
+	{
+		"word": "约翰一书",
+		"pinyin": "Yuēhàn Yīshū",
+		"meaning": "1 John",
+		"example": "《约翰一书》见证神就是爱，住在爱里面的就是住在神里面。(《Yuēhàn Yīshū》 jiànzhèng Shén jiù shì ài, zhù zài ài lǐmiàn de jiù shì zhù zài Shén lǐmiàn.) — 1 John testifies that God is love, and whoever lives in love lives in God."
+	},
+	{
+		"word": "约翰二书",
+		"pinyin": "Yuēhàn Èrshū",
+		"meaning": "2 John",
+		"example": "《约翰二书》勉励信徒要在真理与爱心之中行事为人。(《Yuēhàn Èrshū》 miǎnlì xìntú yào zài zhēnlǐ yǔ àixīn zhīzhōng xíngshì wéirén.) — 2 John encourages believers to walk in truth and love."
+	},
+	{
+		"word": "约翰三书",
+		"pinyin": "Yuēhàn Sānshū",
+		"meaning": "3 John",
+		"example": "《约翰三书》祝愿凡事兴盛身体健壮正如灵魂兴盛一样。(《Yuēhàn Sānshū》 zhùyuàn fánshì xīngshèng shēntǐ jiànzhuàng zhèngrú línghún xīngshèng yíyàng.) — 3 John prays that you may enjoy good health and all go well with you, even as your soul prospers."
+	},
+	{
+		"word": "犹大书",
+		"pinyin": "Yóudàshū",
+		"meaning": "Jude",
+		"example": "《犹大书》劝勉大家在至圣的真道上造就自己并在圣灵里祷告。(《Yóudàshū》 quànmiǎn dàjiā zài zhì shèng de zhēndào shang zàojiù zìjǐ bìng zài Shènglíng lǐ dǎogào.) — Jude exhorts building yourselves up in your most holy faith and praying in the Holy Spirit."
+	},
+	{
+		"word": "启示录",
+		"pinyin": "Qǐshìlù",
+		"meaning": "Revelation",
+		"example": "《启示录》揭示了新天新地的荣耀异象与基督最后的得胜作王。(《Qǐshìlù》 jiēshì le xīn tiān xīn dì de róngyào yìxiàng yǔ Jīdū zuìhòu de déshèng zuò wáng.) — Revelation reveals the glorious vision of new heavens, new earth, and Christ’s ultimate triumph."
+	},
+	{
+		"word": "运动",
+		"pinyin": "yùndòng",
+		"meaning": "exercise / sports / to work out",
+		"example": "我每天早上都做半个小时运动。(Wǒ měitiān zǎoshang dōu zuò bàn gè xiǎoshí yùndòng.) — I exercise for half an hour every morning."
+	},
+	{
+		"word": "跑步",
+		"pinyin": "pǎobù",
+		"meaning": "to run / to jog",
+		"example": "他喜欢在公园里跑步。(Tā xǐhuan zài gōngyuán lǐ pǎobù.) — He likes jogging in the park."
+	},
+	{
+		"word": "散步",
+		"pinyin": "sànbù",
+		"meaning": "to take a walk / to stroll",
+		"example": "晚饭后我们一起去散步吧。(Wǎnfàn hòu wǒmen yìqǐ qù sànbù ba.) — Let's go for a walk together after dinner."
+	},
+	{
+		"word": "游泳",
+		"pinyin": "yóuyǒng",
+		"meaning": "to swim",
+		"example": "夏天很多人喜欢去海边游泳。(Xiàtiān hěn duō rén xǐhuan qù hǎibiān yóuyǒng.) — In summer many people like to go swimming at the beach."
+	},
+	{
+		"word": "唱歌",
+		"pinyin": "chànggē",
+		"meaning": "to sing songs / karaoke",
+		"example": "周末我们常去KTV唱歌。(Zhōumò wǒmen cháng qù KTV chànggē.) — We often go singing at KTV on weekends."
+	},
+	{
+		"word": "跳舞",
+		"pinyin": "tiàowǔ",
+		"meaning": "to dance",
+		"example": "她在广场上跟着音乐跳舞。(Tā zài guǎngchǎng shang gēnzhe yīnyuè tiàowǔ.) — She dances along to the music in the square."
+	},
+	{
+		"word": "旅游",
+		"pinyin": "lǚyóu",
+		"meaning": "to travel / tourism",
+		"example": "今年假期你打算去哪里旅游？(Jīnnián jiàqī nǐ dǎsuàn qù nǎlǐ lǚyóu?) — Where do you plan to travel for holiday this year?"
+	},
+	{
+		"word": "拍照",
+		"pinyin": "pāizhào",
+		"meaning": "to take photos / to snap pictures",
+		"example": "这里的风景太美了，快拍照！(Zhèlǐ de fēngjǐng tài měi le, kuài pāizhào!) — The scenery here is gorgeous, hurry take a photo!"
+	},
+	{
+		"word": "电影",
+		"pinyin": "diànyǐng",
+		"meaning": "movie / film",
+		"example": "今晚你想看什么电影？(Jīnwǎn nǐ xiǎng kàn shénme diànyǐng?) — What movie do you want to watch tonight?"
+	},
+	{
+		"word": "玩",
+		"pinyin": "wán",
+		"meaning": "to play / to hang out / to have fun",
+		"example": "周末欢迎来我家玩！(Zhōumò huānyíng lái wǒ jiā wán!) — Welcome to come over to my place to hang out this weekend!"
+	},
+	{
+		"word": "上网",
+		"pinyin": "shàngwǎng",
+		"meaning": "to go online / surf the internet",
+		"example": "他在上网查学习资料。(Tā zài shàngwǎng chá xuéxí zīliào.) — He is going online to look up study materials."
+	},
+	{
+		"word": "聊天",
+		"pinyin": "liáotiān",
+		"meaning": "to chat / to converse",
+		"example": "我们一边喝咖啡一边聊天。(Wǒmen yìbiān hē kāfēi yìbiān liáotiān.) — We drank coffee while chatting."
+	},
+	{
+		"word": "音乐",
+		"pinyin": "yīnyuè",
+		"meaning": "music",
+		"example": "我做家务时喜欢听轻音乐。(Wǒ zuò jiāwù shí xǐhuan tīng qīng yīnyuè.) — I like listening to light music when doing chores."
+	},
+	{
+		"word": "锻炼",
+		"pinyin": "duànliàn",
+		"meaning": "to exercise / to train body",
+		"example": "经常锻炼身体对健康有好处。(Jīngcháng duànliàn shēntǐ duì jiànkāng yǒu hǎochu.) — Regular exercise is good for health."
+	},
+	{
+		"word": "逛街",
+		"pinyin": "guàngjiē",
+		"meaning": "to go window shopping / stroll the streets",
+		"example": "星期六我和朋友去市中心逛街。(Xīngqīliù wǒ hé péngyou qù shìzhōngxīn guàngjiē.) — On Saturday I went window shopping downtown with friends."
+	},
+	{
+		"word": "聚会",
+		"pinyin": "jùhuì",
+		"meaning": "gathering / party / get-together",
+		"example": "今晚我们有一个老同学聚会。(Jīnwǎn wǒmen yǒu yí gè lǎo tóngxué jùhuì.) — We have a reunion party with old classmates tonight."
+	},
+	{
+		"word": "打球",
+		"pinyin": "dǎqiú",
+		"meaning": "to play ball (basketball, tennis, badminton)",
+		"example": "下午我们去体育馆打球吧。(Xiàwǔ wǒmen qù tǐyùguǎn dǎqiú ba.) — Let's go play ball at the gymnasium this afternoon."
+	},
+	{
+		"word": "骑车",
+		"pinyin": "qíchē",
+		"meaning": "to ride a bicycle / bike",
+		"example": "天气好时我喜欢骑车上班。(Tiānqì hǎo shí wǒ xǐhuan qíchē shàngbān.) — When the weather is nice I like riding a bike to work."
+	},
+	{
+		"word": "爬山",
+		"pinyin": "páshān",
+		"meaning": "to climb a mountain / to hike",
+		"example": "秋天是去郊外爬山的好季节。(Qiūtiān shì qù jiāowài páshān de hǎo jìjié.) — Autumn is a great season to hike in the countryside."
+	},
+	{
+		"word": "爱好",
+		"pinyin": "àihào",
+		"meaning": "hobby / interest",
+		"example": "你的主要业余爱好是什么？(Nǐ de zhǔyào yèyú àihào shì shénme?) — What is your main hobby in your spare time?"
+	},
+	{
+		"word": "放松",
+		"pinyin": "fàngsōng",
+		"meaning": "to relax / to loosen up",
+		"example": "听音乐能帮我放松心情。(Tīng yīnyuè néng bāng wǒ fàngsōng xīnqíng.) — Listening to music helps me relax."
+	},
+	{
+		"word": "习惯",
+		"pinyin": "xíguàn",
+		"meaning": "habit / to be accustomed to",
+		"example": "早睡早起是一个好习惯。(Zǎoshuì zǎoqǐ shì yí gè hǎo xíguàn.) — Sleeping early and getting up early is a good habit."
+	},
+	{
+		"word": "周末",
+		"pinyin": "zhōumò",
+		"meaning": "weekend",
+		"example": "祝你周末过得愉快！(Zhù nǐ zhōumò guò de yúkuài!) — Wish you a pleasant weekend!"
+	},
+	{
+		"word": "打算",
+		"pinyin": "dǎsuan",
+		"meaning": "to plan / intention",
+		"example": "毕业后你有什么打算？(Bìyè hòu nǐ yǒu shénme dǎsuan?) — What are your plans after graduation?"
+	},
+	{
+		"word": "经常",
+		"pinyin": "jīngcháng",
+		"meaning": "often / frequently",
+		"example": "他经常去图书馆借书。(Tā jīngcháng qù túshūguǎn jiè shū.) — He often goes to the library to borrow books."
+	},
+	{
+		"word": "房子",
+		"pinyin": "fángzi",
+		"meaning": "house / apartment / building",
+		"example": "他们在市中心买了一套新房子。(Tāmen zài shìzhōngxīn mǎi le yí tào xīn fángzi.) — They bought a new apartment downtown."
+	},
+	{
+		"word": "租",
+		"pinyin": "zū",
+		"meaning": "to rent / to lease",
+		"example": "我想在公司附近租一间公寓。(Wǒ xiǎng zài gōngsī fùjìn zū yì jiān gōngyù.) — I want to rent an apartment near the company."
+	},
+	{
+		"word": "房租",
+		"pinyin": "fángzū",
+		"meaning": "rent money",
+		"example": "每个月五号必须交房租。(Měi gè yuè wǔ hào bìxū jiāo fángzū.) — Rent must be paid on the 5th of each month."
+	},
+	{
+		"word": "厨房",
+		"pinyin": "chúfáng",
+		"meaning": "kitchen",
+		"example": "厨房里有很多新鲜蔬菜。(Chúfáng lǐ yǒu hěn duō xīnxiān shūcài.) — There are lots of fresh vegetables in the kitchen."
+	},
+	{
+		"word": "卫生间",
+		"pinyin": "wèishēngjiān",
+		"meaning": "bathroom / restroom / toilet",
+		"example": "请问，卫生间在哪里？(Qǐngwèn, wèishēngjiān zài nǎlǐ?) — Excuse me, where is the restroom?"
+	},
+	{
+		"word": "客厅",
+		"pinyin": "kètīng",
+		"meaning": "living room",
+		"example": "客人正在客厅里喝茶聊天。(Kèrén zhèngzài kètīng lǐ hē chá liáotiān.) — The guests are drinking tea and chatting in the living room."
+	},
+	{
+		"word": "卧室",
+		"pinyin": "wòshì",
+		"meaning": "bedroom",
+		"example": "我的卧室朝南，采光很好。(Wǒ de wòshì cháo nán, cǎiguāng hěn hǎo.) — My bedroom faces south, so it gets great natural light."
+	},
+	{
+		"word": "阳台",
+		"pinyin": "yángtái",
+		"meaning": "balcony",
+		"example": "阳台上种满了漂亮的花草。(Yángtái shang zhòng mǎn le piàoliang de huācǎo.) — The balcony is filled with beautiful flowers and plants."
+	},
+	{
+		"word": "钥匙",
+		"pinyin": "yàoshi",
+		"meaning": "key",
+		"example": "出门前别忘了带门钥匙。(Chūmén qián bié wàng le dài mén yàoshi.) — Don't forget to take the door key before going out."
+	},
+	{
+		"word": "锁",
+		"pinyin": "suǒ",
+		"meaning": "lock / to lock",
+		"example": "你锁好大门了吗？(Nǐ suǒ hǎo dàmén le ma?) — Did you lock the front door?"
+	},
+	{
+		"word": "灯",
+		"pinyin": "dēng",
+		"meaning": "lamp / light",
+		"example": "离开房间请随手关灯。(Líkāi fángjiān qǐng suíshǒu guān dēng.) — Please turn off the light when leaving the room."
+	},
+	{
+		"word": "空调",
+		"pinyin": "kōngtiáo",
+		"meaning": "air conditioner",
+		"example": "天气太热了，把空调打开吧。(Tiānqì tài rè le, bǎ kōngtiáo dǎkāi ba.) — It's too hot, let's turn on the air conditioner."
+	},
+	{
+		"word": "冰箱",
+		"pinyin": "bīngxiāng",
+		"meaning": "refrigerator / fridge",
+		"example": "冰箱里有冰水和新鲜水果。(Bīngxiāng lǐ yǒu bīngshuǐ hé xīnxiān shuǐguǒ.) — There is ice water and fresh fruit in the fridge."
+	},
+	{
+		"word": "洗衣机",
+		"pinyin": "xǐyījī",
+		"meaning": "washing machine",
+		"example": "脏衣服已经放进洗衣机了。(Zāng yīfu yǐjīng fàng jìn xǐyījī le.) — The dirty clothes have been put in the washing machine."
+	},
+	{
+		"word": "热水器",
+		"pinyin": "rèshuǐqì",
+		"meaning": "water heater",
+		"example": "洗澡前先开一下热水器。(Xǐzǎo qián xiān kāi yíxià rèshuǐqì.) — Turn on the water heater before taking a shower."
+	},
+	{
+		"word": "垃圾",
+		"pinyin": "lājī",
+		"meaning": "trash / garbage",
+		"example": "下楼的时候顺便把垃圾扔了。(Xiàlóu de shíhou shùnbiàn bǎ lājī rēng le.) — Take out the trash when you go downstairs."
+	},
+	{
+		"word": "垃圾桶",
+		"pinyin": "lājītǒng",
+		"meaning": "trash can / bin",
+		"example": "书桌旁边有一个小垃圾桶。(Shūzhuō pángbiān yǒu yí gè xiǎo lājītǒng.) — There is a small trash bin next to the desk."
+	},
+	{
+		"word": "打扫",
+		"pinyin": "dǎsǎo",
+		"meaning": "to clean / to sweep",
+		"example": "我们每个周末都打扫房间。(Wǒmen měi gè zhōumò dōu dǎsǎo fángjiān.) — We clean the apartment every weekend."
+	},
+	{
+		"word": "搬家",
+		"pinyin": "bānjiā",
+		"meaning": "to move house",
+		"example": "我下个月搬家到新小区。(Wǒ xià gè yuè bānjiā dào xīn xiǎoqū.) — I'm moving to a new residential community next month."
+	},
+	{
+		"word": "邻居",
+		"pinyin": "línjū",
+		"meaning": "neighbor",
+		"example": "隔壁邻居为人非常热情友好。(Gébì línjū wéirén fēicháng rèqíng yǒuhǎo.) — The next-door neighbor is very warm and friendly."
+	},
+	{
+		"word": "电梯",
+		"pinyin": "diàntī",
+		"meaning": "elevator / lift",
+		"example": "我们坐电梯上八楼。(Wǒmen zuò diàntī shàng bā lóu.) — Let's take the elevator up to the 8th floor."
+	},
+	{
+		"word": "楼梯",
+		"pinyin": "lóutī",
+		"meaning": "stairs / staircase",
+		"example": "走楼梯对身体锻炼很有帮助。(Zǒu lóutī duì shēntǐ duànliàn hěn yǒu bāngzhù.) — Taking the stairs is great exercise for the body."
+	},
+	{
+		"word": "坏了",
+		"pinyin": "huài le",
+		"meaning": "broken / out of order / spoiled",
+		"example": "浴室的水龙头坏了，正在漏水。(Yùshì de shuǐlóngtóu huài le, zhèngzài lòushuǐ.) — The bathroom faucet is broken and leaking."
+	},
+	{
+		"word": "修",
+		"pinyin": "xiū",
+		"meaning": "to repair / to fix",
+		"example": "请师傅今天下午来修空调。(Qǐng shīfu jīntiān xiàwǔ lái xiū kōngtiáo.) — Please have the technician come fix the air conditioner this afternoon."
+	},
+	{
+		"word": "安静",
+		"pinyin": "ānjìng",
+		"meaning": "quiet / peaceful",
+		"example": "这个小区环境非常安静舒适。(Zhè ge xiǎoqū huánjìng fēicháng ānjìng shūshì.) — This neighborhood environment is very quiet and comfortable."
+	},
+	{
+		"word": "上班",
+		"pinyin": "shàngbān",
+		"meaning": "to go to work / on duty",
+		"example": "我每天早上八点半准时上班。(Wǒ měitiān zǎoshang bā diǎn bàn zhǔnshí shàngbān.) — I go to work punctually at 8:30 every morning."
+	},
+	{
+		"word": "下班",
+		"pinyin": "xiàbān",
+		"meaning": "to get off work / off duty",
+		"example": "今天下班后你有空一起吃饭吗？(Jīntiān xiàbān hòu nǐ yǒu kòng yìqǐ chīfàn ma?) — Do you have time to eat together after work today?"
+	},
+	{
+		"word": "加班",
+		"pinyin": "jiābān",
+		"meaning": "to work overtime",
+		"example": "为了赶进度，我们今晚需要加班。(Wèile gǎn jìndù, wǒmen jīnwǎn xūyào jiābān.) — To catch up on progress, we need to work overtime tonight."
+	},
+	{
+		"word": "开会",
+		"pinyin": "kāihuì",
+		"meaning": "to hold a meeting / to attend a meeting",
+		"example": "下午两点全体员工在大会议室开会。(Xiàwǔ liǎng diǎn quántǐ yuángōng zài dà huìyìshì kāihuì.) — All staff will meet in the main conference room at 2 PM."
+	},
+	{
+		"word": "经理",
+		"pinyin": "jīnglǐ",
+		"meaning": "manager",
+		"example": "张经理正在和新客户谈合作。(Zhāng jīnglǐ zhèngzài hé xīn kèhù tán hézuò.) — Manager Zhang is discussing cooperation with a new client."
+	},
+	{
+		"word": "同事",
+		"pinyin": "tóngshì",
+		"meaning": "colleague / co-worker",
+		"example": "我和同事们相处得非常融洽。(Wǒ hé tóngshìmen xiāngchǔ de fēicháng róngqià.) — I get along very well with my colleagues."
+	},
+	{
+		"word": "老板",
+		"pinyin": "lǎobǎn",
+		"meaning": "boss / proprietor",
+		"example": "老板同意了我们提出的新方案。(Lǎobǎn tóngyì le wǒmen tíchū de xīn fāng'àn.) — The boss approved our new proposal."
+	},
+	{
+		"word": "办公室",
+		"pinyin": "bàngōngshì",
+		"meaning": "office",
+		"example": "李总在三楼的办公室等你。(Lǐ zǒng zài sān lóu de bàngōngshì děng nǐ.) — Director Li is waiting for you in the office on the 3rd floor."
+	},
+	{
+		"word": "发邮件",
+		"pinyin": "fā yóujiàn",
+		"meaning": "to send an email",
+		"example": "我已经给你发邮件了，请查收项目合同。(Wǒ yǐjīng gěi nǐ fā yóujiàn le, qǐng cháshōu xiàngmù hétong.) — I have already sent you an email, please check the project contract."
+	},
+	{
+		"word": "打印",
+		"pinyin": "dǎyìn",
+		"meaning": "to print",
+		"example": "请帮我打印三份开会材料。(Qǐng bāng wǒ dǎyìn sān fèn kāihuì cáiliào.) — Please help me print three copies of the meeting materials."
+	},
+	{
+		"word": "准备",
+		"pinyin": "zhǔnbèi",
+		"meaning": "to prepare / preparation",
+		"example": "大家都在认真准备明天的演讲。(Dàjiā dōu zài rènzhēn zhǔnbèi míngtiān de yǎnjiǎng.) — Everyone is diligently preparing for tomorrow's presentation."
+	},
+	{
+		"word": "完成",
+		"pinyin": "wánchéng",
+		"meaning": "to complete / to finish / accomplish",
+		"example": "这项任务必须在周五前完成。(Zhè xiàng rènwu bìxū zài zhōuwǔ qián wánchéng.) — This task must be completed before Friday."
+	},
+	{
+		"word": "负责",
+		"pinyin": "fùzé",
+		"meaning": "to be responsible for / conscientious",
+		"example": "他负责市场部的产品推广。(Tā fùzé shìchǎngbù de chǎnpǐn tuīguǎng.) — He is in charge of product promotion in marketing."
+	},
+	{
+		"word": "项目",
+		"pinyin": "xiàngmù",
+		"meaning": "project / item",
+		"example": "我们团队正在做一个新软件项目。(Wǒmen tuánduì zhèngzài zuò yí gè xīn ruǎnjiàn xiàngmù.) — Our team is working on a new software project."
+	},
+	{
+		"word": "报告",
+		"pinyin": "bàogào",
+		"meaning": "report / to report",
+		"example": "我已经写好了上个月的财务报告。(Wǒ yǐjīng xiě hǎo le shàng gè yuè de cáiwù bàogào.) — I have finished writing last month's financial report."
+	},
+	{
+		"word": "请假",
+		"pinyin": "qǐngjià",
+		"meaning": "to ask for leave / time off",
+		"example": "我需要请假，因为我生病了。(Wǒ xūyào qǐngjià, yīnwèi wǒ shēngbìng le.) — I need to ask for leave because I'm sick."
+	},
+	{
+		"word": "迟到",
+		"pinyin": "chídào",
+		"meaning": "to be late / arrive late",
+		"example": "因为堵车，今天早上我迟到了。(Yīnwèi dǔchē, jīntiān zǎoshang wǒ chídào le.) — Because of traffic, I arrived late this morning."
+	},
+	{
+		"word": "工资",
+		"pinyin": "gōngzī",
+		"meaning": "salary / wages",
+		"example": "公司每个月十号发工资。(Gōngsī měi gè yuè shí hào fā gōngzī.) — The company pays salaries on the 10th of every month."
+	},
+	{
+		"word": "面试",
+		"pinyin": "miànshì",
+		"meaning": "job interview / to interview",
+		"example": "他明天下午有一场重要面试。(Tā míngtiān xiàwǔ yǒu yì chǎng zhòngyào miànshì.) — He has an important interview tomorrow afternoon."
+	},
+	{
+		"word": "问题",
+		"pinyin": "wèntí",
+		"meaning": "question / problem / issue",
+		"example": "大家对这个方案还有什么问题吗？(Dàjiā duì zhè ge fāng'àn hái yǒu shénme wèntí ma?) — Does anyone have any questions about this plan?"
+	},
+	{
+		"word": "解决",
+		"pinyin": "jiějué",
+		"meaning": "to resolve / to settle / to solve",
+		"example": "技术团队很快解决了系统故障。(Jìshù tuánduì hěn kuài jiějué le xìtǒng gùzhàng.) — The tech team resolved the system fault very quickly."
+	},
+	{
+		"word": "合作",
+		"pinyin": "hézuò",
+		"meaning": "to cooperate / collaboration",
+		"example": "非常高兴能与贵公司合作！(Fēicháng gāoxìng néng yǔ guì gōngsī hézuò!) — Very glad to cooperate with your esteemed company!"
+	},
+	{
+		"word": "讨论",
+		"pinyin": "tǎolùn",
+		"meaning": "to discuss / discussion",
+		"example": "我们下周再仔细讨论这个细节。(Wǒmen xià zhōu zài zǐxì tǎolùn zhè ge xìjié.) — Let's discuss this detail carefully next week."
+	},
+	{
+		"word": "同意",
+		"pinyin": "tóngyì",
+		"meaning": "to agree / to consent",
+		"example": "我和大家的意见一致，完全同意。(Wǒ hé dàjiā de yìjiàn yízhì, wánquán tóngyì.) — My opinion matches everyone's, I completely agree."
+	},
+	{
+		"word": "经验",
+		"pinyin": "jīngyàn",
+		"meaning": "experience",
+		"example": "他在国际贸易方面有丰富经验。(Tā zài guójì màoyì fāngmiàn yǒu fēngfù jīngyàn.) — He has rich experience in international trade."
+	},
+	{
+		"word": "菜单",
+		"pinyin": "càidān",
+		"meaning": "menu",
+		"example": "服务员，请给我们一份菜单。(Fúwùyuán, qǐng gěi wǒmen yí fèn càidān.) — Waiter, please give us a menu."
+	},
+	{
+		"word": "服务",
+		"pinyin": "fúwù",
+		"meaning": "service / to serve",
+		"example": "这家餐厅的服务态度非常好。(Zhè jiā cāntīng de fúwù tàidu fēicháng hǎo.) — The service attitude at this restaurant is very good."
+	},
+	{
+		"word": "推荐",
+		"pinyin": "tuījiàn",
+		"meaning": "to recommend / recommendation",
+		"example": "请问你们店有什么特色菜推荐吗？(Qǐngwèn nǐmen diàn yǒu shénme tèsè cài tuījiàn ma?) — Could you recommend your restaurant's specialty dishes?"
+	},
+	{
+		"word": "味道",
+		"pinyin": "wèidao",
+		"meaning": "flavor / taste / smell",
+		"example": "这道麻婆豆腐的味道很正宗。(Zhè dào mápó dòufu de wèidao hěn zhèngzōng.) — The flavor of this Mapo Tofu is very authentic."
+	},
+	{
+		"word": "辣",
+		"pinyin": "là",
+		"meaning": "spicy / hot",
+		"example": "我不太能吃辣，请少放辣椒。(Wǒ bú tài néng chī là, qǐng shǎo fàng làjiāo.) — I can't eat very spicy food, please put less chili."
+	},
+	{
+		"word": "甜",
+		"pinyin": "tián",
+		"meaning": "sweet",
+		"example": "这个西瓜又大又甜。(Zhè ge xīguā yòu dà yòu tián.) — This watermelon is both big and sweet."
+	},
+	{
+		"word": "酸",
+		"pinyin": "suān",
+		"meaning": "sour / tart",
+		"example": "酸辣汤酸酸辣辣的，很好喝。(Suānlàtāng suānsuān làlà de, hěn hǎohē.) — The hot and sour soup is pleasantly tangy and spicy, very tasty."
+	},
+	{
+		"word": "苦",
+		"pinyin": "kǔ",
+		"meaning": "bitter",
+		"example": "良药苦口利于病。(Liáng yào kǔ kǒu lì yú bìng.) — Good medicine tastes bitter but benefits health."
+	},
+	{
+		"word": "咸",
+		"pinyin": "xián",
+		"meaning": "salty",
+		"example": "这个菜稍微有点咸，少放点盐吧。(Zhè ge cài shāowēi yǒudiǎn xián, shǎo fàng diǎn yán ba.) — This dish is slightly salty, put a bit less salt."
+	},
+	{
+		"word": "清淡",
+		"pinyin": "qīngdàn",
+		"meaning": "light / mild in flavor / non-greasy",
+		"example": "生病时饮食最好清淡一点。(Shēngbìng shí yǐnshí zuìhǎo qīngdàn yìdiǎn.) — When sick, it's best to eat lighter, milder food."
+	},
+	{
+		"word": "油腻",
+		"pinyin": "yóunì",
+		"meaning": "oily / greasy",
+		"example": "炸鸡吃多了会觉得油腻。(Zhájī chī duō le huì juéde yóunì.) — Eating too much fried chicken feels greasy."
+	},
+	{
+		"word": "煮",
+		"pinyin": "zhǔ",
+		"meaning": "to boil / to cook in water",
+		"example": "水开了，可以煮水饺了。(Shuǐ kāi le, kěyǐ zhǔ shuǐjiǎo le.) — The water is boiling, we can cook the dumplings now."
+	},
+	{
+		"word": "炒",
+		"pinyin": "chǎo",
+		"meaning": "to stir-fry / to sauté",
+		"example": "西红柿炒鸡蛋是经典中国菜。(Xīhóngshì chǎo jīdàn shì jīngdiǎn Zhōngguó cài.) — Tomato scrambled eggs is a classic Chinese dish."
+	},
+	{
+		"word": "烤",
+		"pinyin": "kǎo",
+		"meaning": "to roast / to bake / to barbecue",
+		"example": "北京烤鸭在全世界都很出名。(Běijīng kǎoyā zài quán shìjiè dōu hěn chūmíng.) — Beijing roast duck is famous worldwide."
+	},
+	{
+		"word": "炸",
+		"pinyin": "zhá",
+		"meaning": "to deep-fry",
+		"example": "刚炸好的油条外脆内软。(Gāng zhá hǎo de yóutiáo wài cuì nèi ruǎn.) — Freshly fried dough sticks are crispy outside and soft inside."
+	},
+	{
+		"word": "切",
+		"pinyin": "qiē",
+		"meaning": "to cut / to slice / to chop",
+		"example": "请把牛肉切成细丝。(Qǐng bǎ niúròu qiē chéng xì sī.) — Please slice the beef into thin shreds."
+	},
+	{
+		"word": "汤",
+		"pinyin": "tāng",
+		"meaning": "soup / broth",
+		"example": "饭前喝一碗热汤对胃好。(Fàn qián hē yì wǎn rè tāng duì wèi hǎo.) — Having a bowl of hot soup before meals is good for digestion."
+	},
+	{
+		"word": "盐",
+		"pinyin": "yán",
+		"meaning": "salt",
+		"example": "炒青菜时放一点点盐就够了。(Chǎo qīngcài shí fàng yìdiǎndiǎn yán jiù gòu le.) — Adding just a little salt is enough when stir-frying greens."
+	},
+	{
+		"word": "糖",
+		"pinyin": "táng",
+		"meaning": "sugar / candy",
+		"example": "喝咖啡你习惯加糖和牛奶吗？(Hē kāfēi nǐ xíguàn jiā táng hé niúnǎi ma?) — Do you usually add sugar and milk to your coffee?"
+	},
+	{
+		"word": "醋",
+		"pinyin": "cù",
+		"meaning": "vinegar",
+		"example": "吃饺子蘸点香醋特别香。(Chī jiǎozi zhàn diǎn xiāngcù tèbié xiāng.) — Dipping dumplings in aromatic vinegar is especially delicious."
+	},
+	{
+		"word": "酱油",
+		"pinyin": "jiàngyóu",
+		"meaning": "soy sauce",
+		"example": "红烧肉需要加入生抽和老抽酱油。(Hóngshāoròu xūyào jiārù shēngchōu hé lǎochōu jiàngyóu.) — Braised pork requires light and dark soy sauce."
+	},
+	{
+		"word": "打包",
+		"pinyin": "dǎbāo",
+		"meaning": "takeout / to pack food to go",
+		"example": "服务员，剩下的菜请帮我们打包。(Fúwùyuán, shèngxià de cài qǐng bāng wǒmen dǎbāo.) — Waiter, please help us pack the remaining food to go."
+	},
+	{
+		"word": "新鲜",
+		"pinyin": "xīnxiān",
+		"meaning": "fresh",
+		"example": "这家海鲜店的鱼虾都很新鲜。(Zhè jiā hǎixiān diàn de yú xiā dōu hěn xīnxiān.) — The fish and shrimp at this seafood shop are very fresh."
+	},
+	{
+		"word": "饱",
+		"pinyin": "bǎo",
+		"meaning": "full (after eating) / satiated",
+		"example": "今天吃得太饱了，吃不下了。(Jīntiān chī de tài bǎo le, chī bú xià le.) — I am so full today, I can't eat any more."
+	},
+	{
+		"word": "请客",
+		"pinyin": "qǐngkè",
+		"meaning": "to treat someone (to a meal) / my treat",
+		"example": "今天我发奖金，我请客！(Jīntiān wǒ fā jiǎngjīn, wǒ qǐngkè!) — I got my bonus today, it's my treat!"
+	},
+	{
+		"word": "附近",
+		"pinyin": "fùjìn",
+		"meaning": "nearby / vicinity",
+		"example": "这附近有便利店或者超市吗？(Zhè fùjìn yǒu biànlìdiàn huòzhě chāoshì ma?) — Is there a convenience store or supermarket nearby?"
+	},
+	{
+		"word": "旁边",
+		"pinyin": "pángbiān",
+		"meaning": "beside / next to / side",
+		"example": "银行就在那家咖啡馆旁边。(Yínháng jiù zài nà jiā kāfēiguǎn pángbiān.) — The bank is right beside that cafe."
+	},
+	{
+		"word": "对面",
+		"pinyin": "duìmiàn",
+		"meaning": "opposite / across the street",
+		"example": "马路对面有一座大商场。(Mǎlù duìmiàn yǒu yí zuò dà shāngchǎng.) — Across the street there is a large shopping mall."
+	},
+	{
+		"word": "中间",
+		"pinyin": "zhōngjiān",
+		"meaning": "middle / between",
+		"example": "书店位于邮局和银行中间。(Shūdiàn wèiyú yóujú hé yínháng zhōngjiān.) — The bookstore is situated between the post office and the bank."
+	},
+	{
+		"word": "十字路口",
+		"pinyin": "shízì lùkǒu",
+		"meaning": "crossroad / four-way intersection",
+		"example": "在前面的十字路口向左拐。(Zài qiánmiàn de shízì lùkǒu xiàng zuǒ guǎi.) — Turn left at the intersection ahead."
+	},
+	{
+		"word": "红绿灯",
+		"pinyin": "hónglǜdēng",
+		"meaning": "traffic light",
+		"example": "过马路一定要看红绿灯。(Guò mǎlù yídìng yào kàn hónglǜdēng.) — Always watch the traffic light when crossing the road."
+	},
+	{
+		"word": "拐弯",
+		"pinyin": "guǎiwān",
+		"meaning": "to turn a corner / make a turn",
+		"example": "走到路口右拐弯就到了。(Zǒu dào lùkǒu yòu guǎiwān jiù dào le.) — Walk to the intersection, turn right, and you're there."
+	},
+	{
+		"word": "直走",
+		"pinyin": "zhí zǒu",
+		"meaning": "to go straight / walk straight ahead",
+		"example": "一直往前直走两百米。(Yìzhí wǎng qián zhí zǒu liǎng bǎi mǐ.) — Keep walking straight ahead for 200 meters."
+	},
+	{
+		"word": "停",
+		"pinyin": "tíng",
+		"meaning": "to stop / to park (vehicle)",
+		"example": "师傅，请在前面的路口停一下。(Shīfu, qǐng zài qiánmiàn de lùkǒu tíng yíxià.) — Driver, please pull over at the intersection ahead."
+	},
+	{
+		"word": "停车场",
+		"pinyin": "tíngchēchǎng",
+		"meaning": "parking lot / car park",
+		"example": "地下二层有大型收费停车场。(Dìxià èr céng yǒu dàxíng shòufèi tíngchēchǎng.) — There is a large paid parking lot on basement level 2."
+	},
+	{
+		"word": "地图",
+		"pinyin": "dìtú",
+		"meaning": "map",
+		"example": "我打开电子地图查一下路线。(Wǒ dǎkāi diànzǐ dìtú chá yíxià lùxiàn.) — I'll open the electronic map to check the route."
+	},
+	{
+		"word": "导航",
+		"pinyin": "dǎoháng",
+		"meaning": "GPS navigation / to navigate",
+		"example": "跟着手机导航走就不会迷路。(Gēnzhe shǒujī dǎoháng zǒu jiù bú huì mílù.) — Follow the phone GPS and you won't get lost."
+	},
+	{
+		"word": "迷路",
+		"pinyin": "mílù",
+		"meaning": "to get lost / lose one's way",
+		"example": "我在这个陌生的城市迷路了。(Wǒ zài zhè ge mòshēng de chéngshì mílù le.) — I got lost in this unfamiliar city."
+	},
+	{
+		"word": "公园",
+		"pinyin": "gōngyuán",
+		"meaning": "park / public gardens",
+		"example": "老人们在公园里打太极拳。(Lǎorénmen zài gōngyuán lǐ dǎ tàijíquán.) — The seniors are practicing Tai Chi in the park."
+	},
+	{
+		"word": "银行",
+		"pinyin": "yínháng",
+		"meaning": "bank",
+		"example": "我想去中国银行换一点外币。(Wǒ xiǎng qù Zhōngguó Yínháng huàn yìdiǎn wàibì.) — I want to go to Bank of China to exchange some foreign currency."
+	},
+	{
+		"word": "邮局",
+		"pinyin": "yóujú",
+		"meaning": "post office",
+		"example": "邮局就在马路拐角处。(Yóujú jiù zài mǎlù guǎijiǎo chù.) — The post office is right at the street corner."
+	},
+	{
+		"word": "药店",
+		"pinyin": "yàodiàn",
+		"meaning": "pharmacy / drugstore",
+		"example": "去药店买一盒止痛药。(Qù yàodiàn mǎi yì hé zhǐtòngyào.) — Go to the pharmacy to buy a box of painkillers."
+	},
+	{
+		"word": "加油站",
+		"pinyin": "jiāyóuzhàn",
+		"meaning": "gas station / petrol station",
+		"example": "车快没油了，找个加油站吧。(Chē kuài méi yóu le, zhǎo gè jiāyóuzhàn ba.) — The car is running low on gas, let's find a gas station."
+	},
+	{
+		"word": "桥",
+		"pinyin": "qiáo",
+		"meaning": "bridge",
+		"example": "过了这座大桥就是火车站。(Guò le zhè zuò dàqiáo jiù shì huǒchēzhàn.) — After crossing this big bridge is the train station."
+	},
+	{
+		"word": "距离",
+		"pinyin": "jùlí",
+		"meaning": "distance",
+		"example": "从这里到机场的距离大概三十公里。(Cóng zhèlǐ dào jīchǎng de jùlí dàgài sānshí gōnglǐ.) — The distance from here to the airport is about 30 km."
+	},
+	{
+		"word": "方便",
+		"pinyin": "fāngbiàn",
+		"meaning": "convenient",
+		"example": "住在这里坐地铁非常方便。(Zhù zài zhèlǐ zuò dìtiě fēicháng fāngbiàn.) — Living here makes taking the subway very convenient."
+	},
+	{
+		"word": "堵车",
+		"pinyin": "dǔchē",
+		"meaning": "traffic jam / congested",
+		"example": "下班高峰期路上很容易堵车。(Xiàbān gāofēngqī lùshang hěn róngyì dǔchē.) — During the evening rush hour it gets traffic jammed easily."
+	},
+	{
+		"word": "出口",
+		"pinyin": "chūkǒu",
+		"meaning": "exit / export",
+		"example": "我们在地铁站C出口见面吧。(Wǒmen zài dìtiězhàn C chūkǒu jiànmiàn ba.) — Let's meet at subway station Exit C."
+	},
+	{
+		"word": "入口",
+		"pinyin": "rùkǒu",
+		"meaning": "entrance / entry",
+		"example": "商场主入口在东侧街道。(Shāngchǎng zhǔ rùkǒu zài dōng cè jiēdào.) — The mall's main entrance is on the east street."
+	},
+	{
+		"word": "道路",
+		"pinyin": "dàolù",
+		"meaning": "road / path / way",
+		"example": "这条道路正在进行维修施工。(Zhè tiáo dàolù zhèngzài jìnxíng wéixiū shīgōng.) — This road is currently undergoing repair work."
+	},
+	{
+		"word": "扫码",
+		"pinyin": "sǎomǎ",
+		"meaning": "to scan a QR code",
+		"example": "请扫码点餐和付款。(Qǐng sǎomǎ diǎncān hé fùkuǎn.) — Please scan the QR code to order and pay."
+	},
+	{
+		"word": "二维码",
+		"pinyin": "èrwéimǎ",
+		"meaning": "QR code",
+		"example": "请出示您的付款二维码。(Qǐng chūshì nín de fùkuǎn èrwéimǎ.) — Please show your payment QR code."
+	},
+	{
+		"word": "支付",
+		"pinyin": "zhīfù",
+		"meaning": "to pay / payment",
+		"example": "在中国移动支付非常普及。(Zài Zhōngguó yídòng zhīfù fēicháng pǔjí.) — In China mobile payment is extremely widespread."
+	},
+	{
+		"word": "微信",
+		"pinyin": "Wēixìn",
+		"meaning": "WeChat",
+		"example": "我们加一下微信，方便以后联系。(Wǒmen jiā yíxià Wēixìn, fāngbiàn yǐhòu liánxì.) — Let's add each other on WeChat for easy contact."
+	},
+	{
+		"word": "刷卡",
+		"pinyin": "shuākǎ",
+		"meaning": "to swipe a card / pay by card",
+		"example": "这里可以刷卡付款吗？(Zhèlǐ kěyǐ shuākǎ fùkuǎn ma?) — Can I pay by card here?"
+	},
+	{
+		"word": "充值",
+		"pinyin": "chōngzhí",
+		"meaning": "to recharge / top up balance",
+		"example": "我的交通卡没钱了，需要去充值。(Wǒ de jiāotōng kǎ méi qián le, xūyào qù chōngzhí.) — My transit card is out of money, I need to top it up."
+	},
+	{
+		"word": "账号",
+		"pinyin": "zhànghào",
+		"meaning": "account number / username",
+		"example": "请输入您的登录账号和密码。(Qǐng shūrù nín de dēnglù zhànghào hé mìmǎ.) — Please enter your login account and password."
+	},
+	{
+		"word": "密码",
+		"pinyin": "mìmǎ",
+		"meaning": "password / PIN",
+		"example": "请不要把银行卡密码告诉别人。(Qǐng bú yào bǎ yínhángkǎ mìmǎ gàosu biérén.) — Please do not disclose your bank card password to others."
+	},
+	{
+		"word": "下载",
+		"pinyin": "xiàzài",
+		"meaning": "to download",
+		"example": "你可以在应用商店免费下载这个软件。(Nǐ kěyǐ zài yìngyòng shāngdiàn miǎnfèi xiàzài zhè ge ruǎnjiàn.) — You can download this app for free in the app store."
+	},
+	{
+		"word": "发送",
+		"pinyin": "fāsòng",
+		"meaning": "to send / to transmit",
+		"example": "消息已经成功发送出去了。(Xiāoxi yǐjīng chénggōng fāsòng chūqu le.) — The message has been sent successfully."
+	},
+	{
+		"word": "接收",
+		"pinyin": "jiēshōu",
+		"meaning": "to receive / accept",
+		"example": "手机正在接收最新的系统更新。(Shǒujī zhèngzài jiēshōu zuìxīn de xìtǒng gēngxīn.) — The phone is receiving the latest system update."
+	},
+	{
+		"word": "软件",
+		"pinyin": "ruǎnjiàn",
+		"meaning": "software / app",
+		"example": "这个学中文的软件很好用。(Zhè ge xué Zhōngwén de ruǎnjiàn hěn hǎoyòng.) — This Chinese learning app is very useful."
+	},
+	{
+		"word": "信号",
+		"pinyin": "xìnhào",
+		"meaning": "signal (cellular/WiFi)",
+		"example": "电梯里面手机一点信号都没有。(Diàntī lǐmiàn shǒujī yìdiǎn xìnhào dōu méiyǒu.) — There is no phone signal at all inside the elevator."
+	},
+	{
+		"word": "网络",
+		"pinyin": "wǎngluò",
+		"meaning": "network / internet",
+		"example": "这里的网络连接速度非常快。(Zhèlǐ de wǎngluò liánjiē sùdù fēicháng kuài.) — The internet connection speed here is very fast."
+	},
+	{
+		"word": "电池",
+		"pinyin": "diànchí",
+		"meaning": "battery",
+		"example": "手机电池只剩百分之十了。(Shǒujī diànchí zhǐ shèng bǎifēnzhī shí le.) — The phone battery only has 10% left."
+	},
+	{
+		"word": "充电",
+		"pinyin": "chōngdiàn",
+		"meaning": "to charge (battery / phone)",
+		"example": "我得给手机充电了。(Wǒ děi gěi shǒujī chōngdiàn le.) — I need to charge my phone."
+	},
+	{
+		"word": "充电宝",
+		"pinyin": "chōngdiànbǎo",
+		"meaning": "power bank / portable charger",
+		"example": "饭馆门口可以租借共享充电宝。(Fànguǎn ménkǒu kěyǐ zūjiè gòngxiǎng chōngdiànbǎo.) — You can rent a shared power bank at the restaurant entrance."
+	},
+	{
+		"word": "屏幕",
+		"pinyin": "píngmù",
+		"meaning": "screen / display",
+		"example": "这台平板电脑的屏幕很清晰。(Zhè tái píngbǎn diànnǎo de píngmù hěn qīngxī.) — The screen of this tablet is very clear."
+	},
+	{
+		"word": "视频",
+		"pinyin": "shìpín",
+		"meaning": "video / video call",
+		"example": "今晚我们和父母视频通话吧。(Jīnwǎn wǒmen hé fùmǔ shìpín tōnghuà ba.) — Let's do a video call with our parents tonight."
+	},
+	{
+		"word": "语音",
+		"pinyin": "yǔyīn",
+		"meaning": "voice / voice message",
+		"example": "打字不方便的时候可以发语音。(Dǎzì bù fāngbiàn de shíhou kěyǐ fā yǔyīn.) — You can send voice messages when typing is inconvenient."
+	},
+	{
+		"word": "验证码",
+		"pinyin": "yànzhèngmǎ",
+		"meaning": "verification code / OTP",
+		"example": "系统刚给你的手机发了验证码。(Xìtǒng gāng gěi nǐ de shǒujī fā le yànzhèngmǎ.) — The system just sent a verification code to your phone."
+	},
+	{
+		"word": "消息",
+		"pinyin": "xiāoxi",
+		"meaning": "message / news / information",
+		"example": "看到消息后请尽快给我回复。(Kàndào xiāoxi hòu qǐng jǐnkuài gěi wǒ huífù.) — Please reply to me as soon as you see the message."
+	},
+	{
+		"word": "关注",
+		"pinyin": "guānzhù",
+		"meaning": "to follow (social media) / pay attention to",
+		"example": "欢迎关注我们的官方公众号！(Huānyíng guānzhù wǒmen de guānfāng gōngzhònghào!) — Welcome to follow our official public account!"
+	},
+	{
+		"word": "搜索",
+		"pinyin": "sōusuǒ",
+		"meaning": "to search (online / data)",
+		"example": "你在搜索引擎上查查这篇论文。(Nǐ zài sōusuǒ yǐnqíng shang chácha zhè piān lùnwén.) — Search for this paper on the search engine."
+	},
+	{
+		"word": "网购",
+		"pinyin": "wǎnggòu",
+		"meaning": "online shopping / to buy online",
+		"example": "现代人越来越喜欢在家里网购。(Xiàndàirén yuèláiyuè xǐhuan zài jiālǐ wǎnggòu.) — Modern people increasingly like shopping online from home."
+	},
+	{
+		"word": "真的吗",
+		"pinyin": "zhēn de ma",
+		"meaning": "really? / is that so?",
+		"example": "真的吗？太令人惊喜了！(Zhēn de ma? Tài lìngrén jīngxǐ le!) — Really? That is so wonderful and surprising!"
+	},
+	{
+		"word": "当然",
+		"pinyin": "dāngrán",
+		"meaning": "of course / certainly",
+		"example": "当然可以，随时欢迎你来！(Dāngrán kěyǐ, suíshí huānyíng nǐ lái!) — Of course, you are welcome to come anytime!"
+	},
+	{
+		"word": "没问题",
+		"pinyin": "méi wèntí",
+		"meaning": "no problem / sure thing",
+		"example": "包在我身上，没问题！(Bāo zài wǒ shēnshang, méi wèntí!) — Leave it to me, no problem!"
+	},
+	{
+		"word": "算了吧",
+		"pinyin": "suàn le ba",
+		"meaning": "forget it / let it go / drop it",
+		"example": "既然下雨了，算了吧，改天再去。(Jìrán xiàyǔ le, suàn le ba, gǎitiān zài qù.) — Since it's raining, let it go, we'll go another day."
+	},
+	{
+		"word": "随便",
+		"pinyin": "suíbiàn",
+		"meaning": "as you like / whatever / casual",
+		"example": "中午吃什么？我都行，随便你。(Zhōngwǔ chī shénme? Wǒ dōu xíng, suíbiàn nǐ.) — What to eat for lunch? I'm good with anything, up to you."
+	},
+	{
+		"word": "麻烦",
+		"pinyin": "máfan",
+		"meaning": "troublesome / to trouble someone / please",
+		"example": "麻烦您帮我递一下那本书。(Máfan nín bāng wǒ dì yíxià nà běn shū.) — Trouble you to pass me that book, please."
+	},
+	{
+		"word": "不好意思",
+		"pinyin": "bù hǎoyìsi",
+		"meaning": "excuse me / sorry to bother / embarrassed",
+		"example": "不好意思，借过一下。(Bù hǎoyìsi, jièguò yíxià.) — Excuse me, pardon me coming through."
+	},
+	{
+		"word": "放心",
+		"pinyin": "fàngxīn",
+		"meaning": "rest assured / don't worry",
+		"example": "你放心，我一定会按时把事情办好。(Nǐ fàngxīn, wǒ yídìng huì ànshí bǎ shìqing bàn hǎo.) — Rest assured, I will definitely get it done on time."
+	},
+	{
+		"word": "加油",
+		"pinyin": "jiāyóu",
+		"meaning": "keep it up! / cheer on! / go for it!",
+		"example": "考试别紧张，加油！(Kǎoshì bié jǐnzhāng, jiāyóu!) — Don't be nervous about the exam, cheer up and do your best!"
+	},
+	{
+		"word": "恭喜",
+		"pinyin": "gōngxǐ",
+		"meaning": "to congratulate / congratulations",
+		"example": "恭喜你顺利通过了汉语水平考试！(Gōngxǐ nǐ shùnlì tōngguò le Hànyǔ Shuǐpíng Kǎoshì!) — Congratulations on successfully passing the HSK exam!"
+	},
+	{
+		"word": "辛苦了",
+		"pinyin": "xīnkǔ le",
+		"meaning": "thank you for your hard work / you've worked hard",
+		"example": "今天大家辛苦了，早点回家休息吧。(Jīntiān dàjiā xīnkǔ le, zǎodiǎn huíjiā xiūxi ba.) — Thank you everyone for your hard work today, go home early and rest."
+	},
+	{
+		"word": "慢慢来",
+		"pinyin": "mànman lái",
+		"meaning": "take your time / no rush",
+		"example": "学中文不用着急，慢慢来。(Xué Zhōngwén bú yòng zháojí, mànman lái.) — No need to rush learning Chinese, take your time."
+	},
+	{
+		"word": "怎么了",
+		"pinyin": "zěnme le",
+		"meaning": "what's wrong? / what happened?",
+		"example": "你脸色不太好，怎么了？(Nǐ liǎnsè bú tài hǎo, zěnme le?) — You don't look well, what's the matter?"
+	},
+	{
+		"word": "开玩笑",
+		"pinyin": "kāiwánxiào",
+		"meaning": "to joke / to make fun of / just kidding",
+		"example": "别当真，我只是跟你开玩笑。(Bié dàngzhēn, wǒ zhǐshì gēn nǐ kāiwánxiào.) — Don't take it seriously, I was just kidding with you."
+	},
+	{
+		"word": "厉害",
+		"pinyin": "lìhai",
+		"meaning": "awesome / impressive / formidable",
+		"example": "你的中文说得太厉害了！(Nǐ de Zhōngwén shuō de tài lìhai le!) — Your spoken Chinese is truly impressive!"
+	},
+	{
+		"word": "确实",
+		"pinyin": "quèshí",
+		"meaning": "indeed / really / truly",
+		"example": "这部电影拍得确实非常感人。(Zhè bù diànyǐng pāi de quèshí fēicháng gǎnrén.) — This movie was indeed filmed very touchingly."
+	},
+	{
+		"word": "差不多",
+		"pinyin": "chàbuduō",
+		"meaning": "almost / about the same / nearly",
+		"example": "我的工作差不多全部做完了。(Wǒ de gōngzuò chàbuduō quánbù zuò wán le.) — My work is almost completely done."
+	},
+	{
+		"word": "原来",
+		"pinyin": "yuánlái",
+		"meaning": "so it turns out / original",
+		"example": "原来是你啊，我还以为是谁呢！(Yuánlái shì nǐ a, wǒ hái yǐwéi shì shéi ne!) — So it was you! I was wondering who it was!"
+	},
+	{
+		"word": "其实",
+		"pinyin": "qíshí",
+		"meaning": "actually / in fact",
+		"example": "其实学汉字并没有想象中那么难。(Qíshí xué hànzì bìng méiyǒu xiǎngxiàng zhōng nàme nán.) — Actually learning characters isn't as hard as imagined."
+	},
+	{
+		"word": "另外",
+		"pinyin": "lìngwài",
+		"meaning": "in addition / furthermore / the other",
+		"example": "另外，请记得明天带上护照复印件。(Lìngwài, qǐng jìde míngtiān dài shàng hùzhào fùyìnjiàn.) — In addition, please remember to bring a passport copy tomorrow."
+	},
+	{
+		"word": "突然",
+		"pinyin": "tūrán",
+		"meaning": "sudden / unexpectedly",
+		"example": "外面突然下起了大雨。(Wàimiàn tūrán xià qǐ le dàyǔ.) — Suddenly it started pouring rain outside."
+	},
+	{
+		"word": "终于",
+		"pinyin": "zhōngyú",
+		"meaning": "at last / finally",
+		"example": "经过努力，我们终于完成了任务。(Jīngguò nǔlì, wǒmen zhōngyú wánchéng le rènwu.) — Through hard work, we finally accomplished the mission."
+	},
+	{
+		"word": "顺便",
+		"pinyin": "shùnbiàn",
+		"meaning": "conveniently / in passing / by the way",
+		"example": "你去超市时顺便帮我买瓶牛奶吧。(Nǐ qù chāoshì shí shùnbiàn bāng wǒ mǎi píng niúnǎi ba.) — When you go to the store, grab me a bottle of milk while you're at it."
+	},
+	{
+		"word": "无论如何",
+		"pinyin": "wúlùn rúhé",
+		"meaning": "no matter what / in any case",
+		"example": "无论如何，我们都要试一试。(Wúlùn rúhé, wǒmen dōu yào shì yí shì.) — No matter what, we must give it a try."
+	},
+	{
+		"word": "随便坐",
+		"pinyin": "suíbiàn zuò",
+		"meaning": "make yourself at home / sit wherever you like",
+		"example": "快请进，家里有点乱，随便坐！(Kuài qǐng jìn, jiālǐ yǒudiǎn luàn, suíbiàn zuò!) — Please come in, house is a bit messy, have a seat anywhere!"
+	},
+	{
+		"word": "护照",
+		"pinyin": "hùzhào",
+		"meaning": "passport",
+		"example": "请出示您的护照和登机牌。(Qǐng chūshì nín de hùzhào hé dēngjīpái.) — Please show your passport and boarding pass."
+	},
+	{
+		"word": "签证",
+		"pinyin": "qiānzhèng",
+		"meaning": "visa",
+		"example": "去国外旅游需要提前办理签证。(Qù guówài lǚyóu xūyào tíqián bànlǐ qiānzhèng.) — Traveling abroad requires applying for a visa in advance."
+	},
+	{
+		"word": "行李",
+		"pinyin": "xíngli",
+		"meaning": "luggage / baggage",
+		"example": "先生，请问您有几件托运行李？(Xiānsheng, qǐngwèn nín yǒu jǐ jiàn tuōyùn xíngli?) — Sir, how many pieces of checked luggage do you have?"
+	},
+	{
+		"word": "箱子",
+		"pinyin": "xiāngzi",
+		"meaning": "suitcase / trunk / box",
+		"example": "我的行李箱子装得满满的。(Wǒ de xíngli xiāngzi zhuāng de mǎnmǎn de.) — My suitcase is packed full."
+	},
+	{
+		"word": "预订",
+		"pinyin": "yùdìng",
+		"meaning": "to book / to reserve",
+		"example": "我已经网上预订了三晚的酒店。(Wǒ yǐjīng wǎngshang yùdìng le sān wǎn de jiǔdiàn.) — I've already booked three nights at the hotel online."
+	},
+	{
+		"word": "酒店",
+		"pinyin": "jiǔdiàn",
+		"meaning": "hotel",
+		"example": "这家五星级酒店环境很优雅。(Zhè jiā wǔxīngjí jiǔdiàn huánjìng hěn yōuyǎ.) — The environment of this five-star hotel is very elegant."
+	},
+	{
+		"word": "入住",
+		"pinyin": "rùzhù",
+		"meaning": "to check in (hotel)",
+		"example": "你好，我来办理入住手续。(Nǐ hǎo, wǒ lái bànlǐ rùzhù shǒuxù.) — Hello, I am here to process my check-in."
+	},
+	{
+		"word": "退房",
+		"pinyin": "tuìfáng",
+		"meaning": "to check out (hotel)",
+		"example": "酒店规定中午十二点前退房。(Jiǔdiàn guīdìng zhōngwǔ shí'èr diǎn qián tuìfáng.) — The hotel policy requires checking out before 12:00 noon."
+	},
+	{
+		"word": "单人房",
+		"pinyin": "dānrénfáng",
+		"meaning": "single room",
+		"example": "我想订一间安静的单人房。(Wǒ xiǎng dìng yì jiān ānjìng de dānrénfáng.) — I'd like to reserve a quiet single room."
+	},
+	{
+		"word": "双人房",
+		"pinyin": "shuāngrénfáng",
+		"meaning": "double room / twin room",
+		"example": "我们两个人要一间双人房。(Wǒmen liǎng gè rén yào yì jiān shuāngrénfáng.) — The two of us want a double room."
+	},
+	{
+		"word": "门票",
+		"pinyin": "ménpiào",
+		"meaning": "entrance ticket / admission ticket",
+		"example": "故宫博物院的门票需要提前预约。(Gùgōng Bówùyuàn de ménpiào xūyào tíqián yùyuē.) — Palace Museum tickets require advance reservation."
+	},
+	{
+		"word": "景点",
+		"pinyin": "jǐngdiǎn",
+		"meaning": "scenic spot / tourist attraction",
+		"example": "长城是北京最著名的旅游景点。(Chángchéng shì Běijīng zuì zhùmíng de lǚyóu jǐngdiǎn.) — The Great Wall is Beijing's most famous attraction."
+	},
+	{
+		"word": "导游",
+		"pinyin": "dǎoyóu",
+		"meaning": "tour guide",
+		"example": "导游正在给游客讲解古建筑历史。(Dǎoyóu zhèngzài gěi yóukè jiǎngjiě gǔ jiànzhù lìshǐ.) — The tour guide is explaining the ancient architecture history."
+	},
+	{
+		"word": "纪念品",
+		"pinyin": "jìniànpǐn",
+		"meaning": "souvenir",
+		"example": "我买了很有中国特色的小纪念品。(Wǒ mǎi le hěn yǒu Zhōngguó tèsè de xiǎo jìniànpǐn.) — I bought some souvenirs with Chinese characteristics."
+	},
+	{
+		"word": "航班",
+		"pinyin": "hángbān",
+		"meaning": "scheduled flight",
+		"example": "飞往上海的航班将于半小时后起飞。(Fēiwǎng Shànghǎi de hángbān jiāng yú bàn xiǎoshí hòu qǐfēi.) — The flight to Shanghai will depart in half an hour."
+	},
+	{
+		"word": "登机牌",
+		"pinyin": "dēngjīpái",
+		"meaning": "boarding pass",
+		"example": "请在自助机器上打印您的登机牌。(Qǐng zài zìzhù jīqì shang dǎyìn nín de dēngjīpái.) — Please print your boarding pass at the self-service kiosk."
+	},
+	{
+		"word": "安检",
+		"pinyin": "ānjiǎn",
+		"meaning": "security check",
+		"example": "过安检时请把电脑和液体拿出来。(Guò ānjiǎn shí qǐng bǎ diànnǎo hé yètǐ ná chūlái.) — When passing security, please take out laptops and liquids."
+	},
+	{
+		"word": "延误",
+		"pinyin": "yánwù",
+		"meaning": "to delay / delayed",
+		"example": "由于天气原因，列车延误了半小时。(Yóuyú tiānqì yuányīn, lièchē yánwù le bàn xiǎoshí.) — Due to weather conditions, the train is delayed 30 minutes."
+	},
+	{
+		"word": "准时",
+		"pinyin": "zhǔnshí",
+		"meaning": "on time / punctual",
+		"example": "飞机非常准时地降落在北京机场。(Fēijī fēicháng zhǔnshí de jiàngluò zài Běijīng jīchǎng.) — The airplane landed punctually at Beijing airport."
+	},
+	{
+		"word": "风景",
+		"pinyin": "fēngjǐng",
+		"meaning": "scenery / landscape / view",
+		"example": "山顶上的自然风景美丽极了。(Shāndǐng shang de zìrán fēngjǐng měilì jí le.) — The natural scenery at the mountain top is magnificent."
+	},
+	{
+		"word": "咨询",
+		"pinyin": "zīxún",
+		"meaning": "to consult / to inquire / consultation",
+		"example": "您可以去游客咨询中心询问路线。(Nín kěyǐ qù yóukè zīxún zhōngxīn xúnwèn lùxiàn.) — You can inquire about routes at the tourist information center."
+	},
+	{
+		"word": "建议",
+		"pinyin": "jiànyì",
+		"meaning": "suggestion / advice / to suggest",
+		"example": "导游建议我们早上八点出发。(Dǎoyóu jiànyì wǒmen zǎoshang bā diǎn chūfā.) — The tour guide suggested we depart at 8:00 AM."
+	},
+	{
+		"word": "愉快",
+		"pinyin": "yúkuài",
+		"meaning": "pleasant / delightful / happy",
+		"example": "祝您在中国度过一段愉快的时光！(Zhù nín zài Zhōngguó dùguò yí duàn yúkuài de shíguāng!) — Wish you a wonderful time in China!"
+	},
+	{
+		"word": "出发",
+		"pinyin": "chūfā",
+		"meaning": "to set off / to depart",
+		"example": "收拾好行李，我们准备出发了。(Shōushi hǎo xíngli, wǒmen zhǔnbèi chūfā le.) — Packed up our luggage, we're ready to set off."
+	},
+	{
+		"word": "到达",
+		"pinyin": "dàodá",
+		"meaning": "to arrive / to reach",
+		"example": "预计高铁将在中午十二点到达上海。(Yùjì gāotiě jiāng zài zhōngwǔ shí'èr diǎn dàodá Shànghǎi.) — The high-speed rail is estimated to arrive in Shanghai at 12:00 noon."
+	},
+	{
+		"word": "救命",
+		"pinyin": "jiùmìng",
+		"meaning": "help! / save life!",
+		"example": "救命啊！有人掉进水里了！(Jiùmìng a! Yǒu rén diào jìn shuǐ lǐ le!) — Help! Someone fell into the water!"
+	},
+	{
+		"word": "报警",
+		"pinyin": "bàojǐng",
+		"meaning": "to report to the police / call 110",
+		"example": "遇到紧急危险情况请立即报警。(Yùdào jǐnjí wēixiǎn qíngkuàng qǐng lìjí bàojǐng.) — In an emergency or danger, please call the police immediately."
+	},
+	{
+		"word": "警察",
+		"pinyin": "jǐngchá",
+		"meaning": "police officer",
+		"example": "警察很快赶到了现场处理事故。(Jǐngchá hěn kuài gǎndào le xiànchǎng chǔlǐ shìgù.) — Police arrived quickly at the scene to handle the accident."
+	},
+	{
+		"word": "危险",
+		"pinyin": "wēixiǎn",
+		"meaning": "dangerous / danger",
+		"example": "雷雨天气站在大树下非常危险。(Léiyǔ tiānqì zhàn zài dàshù xià fēicháng wēixiǎn.) — Standing under large trees in a thunderstorm is very dangerous."
+	},
+	{
+		"word": "安全",
+		"pinyin": "ānquán",
+		"meaning": "safe / safety / secure",
+		"example": "出门在外一定要注意人身安全。(Chūmén zàiwài yídìng yào zhùyì rénshēn ānquán.) — Always pay attention to personal safety when traveling."
+	},
+	{
+		"word": "丢了",
+		"pinyin": "diū le",
+		"meaning": "lost / misplaced",
+		"example": "不好了，我的钱包和证件丢了。(Bù hǎo le, wǒ de qiánbāo hé zhèngjiàn diū le.) — Oh no, my wallet and ID cards are lost."
+	},
+	{
+		"word": "急诊",
+		"pinyin": "jízhěn",
+		"meaning": "emergency medical treatment / ER",
+		"example": "他突然肚子剧痛，赶紧送急诊。(Tā tūrán dùzi jùtòng, gǎnjǐn sòng jízhěn.) — He suddenly had severe abdominal pain, rush him to the ER."
+	},
+	{
+		"word": "挂号",
+		"pinyin": "guàhào",
+		"meaning": "to register (at a hospital) / get a queue number",
+		"example": "去医院看病先在一楼窗口挂号。(Qù yīyuàn kànbìng xiān zài yī lóu chuāngkǒu guàhào.) — When seeing a doctor at the hospital, register first at the 1st-floor counter."
+	},
+	{
+		"word": "看病",
+		"pinyin": "kànbìng",
+		"meaning": "to see a doctor / to examine a patient",
+		"example": "如果持续发烧，最好去医院看病。(Rúguǒ chíxù fāshāo, zuìhǎo qù yīyuàn kànbìng.) — If the fever persists, it's best to see a doctor at the hospital."
+	},
+	{
+		"word": "药",
+		"pinyin": "yào",
+		"meaning": "medicine / medication",
+		"example": "医生给你开了三天的感冒药。(Yīshēng gěi nǐ kāi le sān tiān de gǎnmàoyào.) — The doctor prescribed three days of cold medicine for you."
+	},
+	{
+		"word": "吃药",
+		"pinyin": "chīyào",
+		"meaning": "to take medicine",
+		"example": "这个药需要饭后半小时吃药。(Zhè ge yào xūyào fànhòu bàn xiǎoshí chīyào.) — This medicine should be taken half an hour after meals."
+	},
+	{
+		"word": "发烧",
+		"pinyin": "fāshāo",
+		"meaning": "to have a fever",
+		"example": "他量了体温，发烧到三十八度五。(Tā liáng le tǐwēn, fāshāo dào sānshíbā dù wǔ.) — He took his temperature and had a fever of 38.5°C."
+	},
+	{
+		"word": "咳嗽",
+		"pinyin": "késou",
+		"meaning": "to cough / cough",
+		"example": "他最近几天喉咙痒，一直咳嗽。(Tā zuìjìn jǐ tiān hóulóng yǎng, yìzhí késou.) — His throat has been itchy and he's been coughing continuously."
+	},
+	{
+		"word": "头疼",
+		"pinyin": "tóuténg",
+		"meaning": "headache / to have a headache",
+		"example": "昨晚没睡好，今天早上头疼得厉害。(Zuówǎn méi shuì hǎo, jīntiān zǎoshang tóuténg de lìhai.) — I didn't sleep well last night, so I have a bad headache this morning."
+	},
+	{
+		"word": "肚子疼",
+		"pinyin": "dùzi téng",
+		"meaning": "stomachache / belly pain",
+		"example": "可能吃了不干净的东西，我肚子疼。(Kěnéng chī le bù gānjìng de dōngxi, wǒ dùzi téng.) — Maybe I ate something unclean, my stomach hurts."
+	},
+	{
+		"word": "流鼻涕",
+		"pinyin": "liú bítì",
+		"meaning": "to have a runny nose",
+		"example": "吹了冷风后他就开始打喷嚏流鼻涕。(Chuī le lěngfēng hòu tā jiù kāishǐ dǎpēntì liú bítì.) — After catching cold wind he started sneezing and having a runny nose."
+	},
+	{
+		"word": "过敏",
+		"pinyin": "guòmǐn",
+		"meaning": "to be allergic / allergy",
+		"example": "我对花生严重过敏，菜里不能放。(Wǒ duì huāshēng yánzhòng guòmǐn, cài lǐ bù néng fàng.) — I am severely allergic to peanuts, none in the food please."
+	},
+	{
+		"word": "检查",
+		"pinyin": "jiǎnchá",
+		"meaning": "to check / to examine / medical examination",
+		"example": "医生建议做一次全面的身体检查。(Yīshēng jiànyì zuò yí cì quánmiàn de shēntǐ jiǎnchá.) — The doctor recommended having a comprehensive physical checkup."
+	},
+	{
+		"word": "打针",
+		"pinyin": "dǎzhēn",
+		"meaning": "to give/get an injection / shot",
+		"example": "护士打针手法很轻，一点都不疼。(Hùshi dǎzhēn shǒufǎ hěn qīng, yìdiǎn dōu bù téng.) — The nurse gave the injection very gently, it didn't hurt at all."
+	},
+	{
+		"word": "严重",
+		"pinyin": "yánzhòng",
+		"meaning": "serious / severe / grave",
+		"example": "幸好只是普通感冒，并不严重。(Xìnghǎo zhǐ shì pǔtōng gǎnmào, bìng bù yánzhòng.) — Fortunately it's just a common cold, not serious."
+	},
+	{
+		"word": "难受",
+		"pinyin": "nánshòu",
+		"meaning": "uncomfortable / feeling unwell / grieved",
+		"example": "发高烧全身无力，感觉很难受。(Fā gāoshāo quánshēn wúlì, gǎnjué hěn nánshòu.) — With a high fever and weakness all over, I feel very uncomfortable."
+	},
+	{
+		"word": "康复",
+		"pinyin": "kāngfù",
+		"meaning": "to recover health / rehabilitation",
+		"example": "祝你早日康复，重返工作岗位！(Zhù nǐ zǎorì kāngfù, chóngfǎn gōngzuò gǎngwèi!) — Wish you a speedy recovery and return to work!"
+	},
+	{
+		"word": "小心",
+		"pinyin": "xiǎoxīn",
+		"meaning": "careful / to be careful / watch out",
+		"example": "地上有水很滑，请小心行走。(Dìshang yǒu shuǐ hěn huá, qǐng xiǎoxīn xíngzǒu.) — The floor is wet and slippery, please walk carefully."
+	},
+	{
+		"word": "摔倒",
+		"pinyin": "shuāidǎo",
+		"meaning": "to fall down / to trip and fall",
+		"example": "下雪天路滑，老人走路要防止摔倒。(Xiàxuětiān lù huá, lǎorén zǒulù yào fángzhǐ shuāidǎo.) — Snowy roads are slick, seniors should be careful not to fall."
+	},
+	{
+		"word": "流血",
+		"pinyin": "liúxuè",
+		"meaning": "to bleed / hemorrhage",
+		"example": "切菜不小心划伤了手指，正在流血。(Qiēcài bù xiǎoxīn huàshāng le shǒuzhǐ, zhèngzài liúxuè.) — Accidentally cut a finger while slicing food, it's bleeding."
+	},
+	{
+		"word": "认为",
+		"pinyin": "rènwéi",
+		"meaning": "to think / to believe / to consider",
+		"example": "我认为多和母语者交流是学语言最好的方法。(Wǒ rènwéi duō hé mǔyǔzhě jiāoliú shì xué yǔyán zuì hǎo de fāngfǎ.) — I believe conversing more with native speakers is the best way to learn languages."
+	},
+	{
+		"word": "反对",
+		"pinyin": "fǎnduì",
+		"meaning": "to oppose / to disagree / objection",
+		"example": "对于这个决定，没有人提出反对意见。(Duìyú zhè ge juédìng, méiyǒu rén tíchū fǎnduì yìjiàn.) — Regarding this decision, no one voiced any objection."
+	},
+	{
+		"word": "比如",
+		"pinyin": "bǐrú",
+		"meaning": "for example / such as",
+		"example": "很多水果富含维生素，比如橙子和苹果。(Hěn duō shuǐguǒ fùhán wéishēngsù, bǐrú chéngzi hé píngguǒ.) — Many fruits are rich in vitamins, for example oranges and apples."
+	},
+	{
+		"word": "因为",
+		"pinyin": "yīnwèi",
+		"meaning": "because / owing to",
+		"example": "因为喜欢中国文化，所以我开始学中文。(Yīnwèi xǐhuan Zhōngguó wénhuà, suǒyǐ wǒ kāishǐ xué Zhōngwén.) — Because I like Chinese culture, I began learning Chinese."
+	},
+	{
+		"word": "所以",
+		"pinyin": "suǒyǐ",
+		"meaning": "so / therefore / as a result",
+		"example": "今天下大雨，所以我们留在家中看书。(Jīntiān xià dàyǔ, suǒyǐ wǒmen liú zài jiā zhōng kànshū.) — It's raining heavily today, so we stayed home reading."
+	},
+	{
+		"word": "虽然",
+		"pinyin": "suīrán",
+		"meaning": "although / even though",
+		"example": "虽然学中文很难，但是很有趣。(Suīrán xué Zhōngwén hěn nán, dànshì hěn yǒuqù.) — Although learning Chinese is challenging, it is very interesting."
+	},
+	{
+		"word": "但是",
+		"pinyin": "dànshì",
+		"meaning": "but / however / yet",
+		"example": "虽然工作很忙，但是他每天都坚持锻炼。(Suīrán gōngzuò hěn máng, dànshì tā měitiān dōu jiānchí duànliàn.) — Although work is busy, he still exercises daily."
+	},
+	{
+		"word": "如果",
+		"pinyin": "rúguǒ",
+		"meaning": "if / in case",
+		"example": "如果明天天气晴朗，我们就去郊游。(Rúguǒ míngtiān tiānqì qínglǎng, wǒmen jiù qù jiāoyóu.) — If tomorrow is sunny, we'll go for an outing."
+	},
+	{
+		"word": "只要",
+		"pinyin": "zhǐyào",
+		"meaning": "as long as / provided that",
+		"example": "只要坚持练习，你的发音就会越来越好。(Zhǐyào jiānchí liànxí, nǐ de fāyīn jiù huì yuèláiyuè hǎo.) — As long as you practice persistently, your pronunciation will improve."
+	},
+	{
+		"word": "只有",
+		"pinyin": "zhǐyǒu",
+		"meaning": "only if / only when",
+		"example": "只有努力学习，才能取得好成绩。(Zhǐyǒu nǔlì xuéxí, cái néng qǔdé hǎo chéngjì.) — Only by studying hard can one achieve good grades."
+	},
+	{
+		"word": "不但",
+		"pinyin": "búdàn",
+		"meaning": "not only",
+		"example": "他不但是我的老师，而且是我的好朋友。(Tā búdàn shì wǒ de lǎoshī, érqiě shì wǒ de hǎo péngyou.) — He is not only my teacher, but also my good friend."
+	},
+	{
+		"word": "而且",
+		"pinyin": "érqiě",
+		"meaning": "but also / furthermore",
+		"example": "这件衣服不但质量好，而且价格便宜。(Zhè jiàn yīfu búdàn zhìliàng hǎo, érqiě jiàgé piányi.) — This clothing item is not only good quality, but also affordable."
+	},
+	{
+		"word": "比较",
+		"pinyin": "bǐjiào",
+		"meaning": "comparatively / relatively / to compare",
+		"example": "我认为坐高铁比较舒适和准时。(Wǒ rènwéi zuò gāotiě bǐjiào shūshì hé zhǔnshí.) — I think taking high-speed rail is relatively comfortable and punctual."
+	},
+	{
+		"word": "特别",
+		"pinyin": "tèbié",
+		"meaning": "especially / particularly / special",
+		"example": "今天外面的风特别大，多穿点衣服。(Jīntiān wàimiàn de fēng tèbié dà, duō chuān diǎn yīfu.) — The wind outside today is especially strong, dress warmly."
+	},
+	{
+		"word": "越来越",
+		"pinyin": "yuèláiyuè",
+		"meaning": "more and more",
+		"example": "随着春天的到来，天气越来越暖和了。(Suízhe chūntiān de dàolái, tiānqì yuèláiyuè nuǎnhuo le.) — With the coming of spring, the weather is getting warmer and warmer."
+	},
+	{
+		"word": "一定",
+		"pinyin": "yídìng",
+		"meaning": "definitely / certainly / must",
+		"example": "有空一定来我家做客！(Yǒu kòng yídìng lái wǒ jiā zuòkè!) — When you're free you definitely must come visit my home!"
+	},
+	{
+		"word": "可能",
+		"pinyin": "kěnéng",
+		"meaning": "maybe / perhaps / possibility",
+		"example": "明天可能会降温，出门记得带外套。(Míngtiān kěnéng huì jiàngwēn, chūmén jìde dài wàitào.) — It might cool down tomorrow, remember to bring a coat."
+	},
+	{
+		"word": "必须",
+		"pinyin": "bìxū",
+		"meaning": "must / have to / obligatory",
+		"example": "进入施工现场必须戴安全帽。(Jìnrù shīgōng xiànchǎng bìxū dài ānquánmào.) — Entering construction sites requires wearing a safety helmet."
+	},
+	{
+		"word": "应该",
+		"pinyin": "yīnggāi",
+		"meaning": "should / ought to",
+		"example": "遇到不懂的问题应该主动请教他人。(Yùdào bù dǒng de wèntí yīnggāi zhǔdòng qǐngjiào tārén.) — When encountering unfamiliar questions, one should consult others."
+	},
+	{
+		"word": "决定",
+		"pinyin": "juédìng",
+		"meaning": "to decide / decision",
+		"example": "我们最后决定下个月去北京旅游。(Wǒmen zuìhòu juédìng xià gè yuè qù Běijīng lǚyóu.) — We finally decided to travel to Beijing next month."
+	},
+	{
+		"word": "发生",
+		"pinyin": "fāshēng",
+		"meaning": "to happen / to occur / to take place",
+		"example": "刚才这里发生了一起小车祸。(Gāngcái zhèlǐ fāshēng le yì qǐ xiǎo chēhuò.) — A minor car accident just happened here."
+	},
+	{
+		"word": "结果",
+		"pinyin": "jiéguǒ",
+		"meaning": "result / outcome / as a result",
+		"example": "经过三轮面试，他终于拿到了录用结果。(Jīngguò sān lún miànshì, tā zhōngyú nádào le lùyòng jiéguǒ.) — After three rounds of interviews, he finally received the offer outcome."
+	},
+	{
+		"word": "影响",
+		"pinyin": "yǐngxiǎng",
+		"meaning": "influence / effect / to affect",
+		"example": "良好的家庭氛围对孩子的成长有深远影响。(Liánghǎo de jiātíng fēnwéi duì háizi de chéngzhǎng yǒu shēnyuǎn yǐngxiǎng.) — A healthy family atmosphere has a profound influence on children."
+	},
+	{
+		"word": "选择",
+		"pinyin": "xuǎnzé",
+		"meaning": "to choose / to select / choice",
+		"example": "每个人都有权利选择自己喜欢的生活方式。(Měi gè rén dōu yǒu quánlì xuǎnzé zìjǐ xǐhuan de shēnghuó fāngshì.) — Everyone has the right to choose their preferred lifestyle."
+	},
+	{
+		"word": "无论",
+		"pinyin": "wúlùn",
+		"meaning": "regardless of / no matter whether",
+		"example": "无论刮风下雨，他每天都坚持早起晨跑。(Wúlùn guāfēng xiàyǔ, tā měitiān dōu jiānchí zǎoqǐ chénpǎo.) — Regardless of wind or rain, he insists on getting up early to run."
+	},
+	{
+		"word": "去过",
+		"pinyin": "qùguo",
+		"meaning": "to have been to / have visited",
+		"example": "我去过中国两次，非常喜欢那里的文化。(Wǒ qùguo Zhōngguó liǎng cì, fēicháng xǐhuan nàli de wénhuà.) — I have been to China twice and really like the culture there."
+	},
+	{
+		"word": "想一想",
+		"pinyin": "xiǎng yi xiǎng",
+		"meaning": "to think over / to ponder / let me see",
+		"example": "这件事情很重要，让我想一想再回答你。(Zhè jiàn shìqing hěn zhòngyào, ràng wǒ xiǎng yi xiǎng zài huídá nǐ.) — This matter is very important, let me think it over before answering you."
+	},
+	{
+		"word": "说话算话",
+		"pinyin": "shuōhuà suàn huà",
+		"meaning": "to keep one's word / to honor promises",
+		"example": "我们说话算话，答应你的事情一定会办到。(Wǒmen shuōhuà suàn huà, dāying nǐ de shìqing yídìng huì bàndào.) — We keep our word; what we promised you will definitely be done."
+	},
+	{
+		"word": "天空",
+		"pinyin": "tiānkōng",
+		"meaning": "sky / heaven",
+		"example": "夜晚的天空非常晴朗，能看见许多星星。(Yèwǎn de tiānkōng fēicháng qínglǎng, néng kànjiàn xǔduō xīngxing.) — The night sky is very clear, and many stars can be seen."
+	},
+	{
+		"word": "年轻人",
+		"pinyin": "niánqīngrén",
+		"meaning": "young people / the youth",
+		"example": "现在的年轻人充满创造力和活力。(Xiànzài de niánqīngrén chōngmǎn chuàngzàolì hé huólì.) — Young people today are full of creativity and vitality."
+	},
+	{
+		"word": "问",
+		"pinyin": "wèn",
+		"meaning": "to ask / to inquire",
+		"example": "如果你有任何问题，可以随时问老师。(Rúguǒ nǐ yǒu rènhé wèntí, kěyǐ suíshí wèn lǎoshī.) — If you have any questions, you can ask the teacher anytime."
+	},
+	{
+		"word": "孩子们",
+		"pinyin": "háizimen",
+		"meaning": "children / kids",
+		"example": "周末公园里有很多孩子们在草地上奔跑。(Zhōumò gōngyuán li yǒu hěn duō háizimen zài cǎodì shang bēnpǎo.) — On weekends, there are many children running on the grass in the park."
+	},
+	{
+		"word": "国家",
+		"pinyin": "guójiā",
+		"meaning": "country / state / nation",
+		"example": "他去过世界上很多不同的国家旅行。(Tā qùguo shìjiè shang hěn duō bùtóng de guójiā lǚxíng.) — He has traveled to many different countries in the world."
+	},
+	{
+		"word": "糟糕",
+		"pinyin": "zāogāo",
+		"meaning": "terrible / bad / disastrous / what bad luck",
+		"example": "太糟糕了，突然下大雨而我没带伞。(Tài zāogāo le, tūrán xià dàyǔ ér wǒ méi dài sǎn.) — How terrible, it suddenly rained hard and I didn't bring an umbrella."
+	},
+	{
+		"word": "好事",
+		"pinyin": "hǎoshì",
+		"meaning": "good thing / good deed",
+		"example": "多做善事和好事会让内心感到充实。(Duō zuò shànshì hé hǎoshì huì ràng nèixīn gǎndào chōngshí.) — Doing more charity and good deeds makes one feel fulfilled inside."
+	},
+	{
+		"word": "坏事",
+		"pinyin": "huàishì",
+		"meaning": "bad thing / evil deed / misdeed",
+		"example": "有时候坏事也能变成吸取教训的好机会。(Yǒushíhou huàishì yě néng biànchéng xīqǔ jiàoxun de hǎo jīhuì.) — Sometimes a bad thing can also turn into a good opportunity to learn a lesson."
+	},
+	{
+		"word": "一些",
+		"pinyin": "yìxiē",
+		"meaning": "some / a few / a little",
+		"example": "超市里买了一些新鲜水果和蔬菜。(Chāoshì li mǎi le yìxiē xīnxiān shuǐguǒ hé shūcài.) — I bought some fresh fruit and vegetables at the supermarket."
+	},
+	{
+		"word": "从",
+		"pinyin": "cóng",
+		"meaning": "from / since / starting from",
+		"example": "我们从第一页开始认真复习。(Wǒmen cóng dì-yī yè kāishǐ rènzhēn fùxí.) — We start reviewing diligently from page one."
+	},
+	{
+		"word": "死亡",
+		"pinyin": "sǐwáng",
+		"meaning": "death / decease / demise",
+		"example": "医生们全力以赴减少疾病造成的死亡风险。(Yīshēngmen quánlì yǐ fù jiǎnshǎo jíbìng zàochéng de sǐwáng fēngxiǎn.) — Doctors go all out to reduce the risk of death caused by illness."
+	},
+	{
+		"word": "开始",
+		"pinyin": "kāishǐ",
+		"meaning": "to begin / to start / beginning",
+		"example": "电影马上就要开始了，请大家安静。(Diànyǐng mǎshàng jiù yào kāishǐ le, qǐng dàjiā ānjìng.) — The movie is about to begin, please everyone be quiet."
+	},
+	{
+		"word": "小时候",
+		"pinyin": "xiǎoshíhou",
+		"meaning": "childhood / when one was young",
+		"example": "我小时候最喜欢在夏天的晚上看星星。(Wǒ xiǎoshíhou zuì xǐhuan zài xiàtiān de wǎnshang kàn xīngxing.) — When I was a child, I liked looking at the stars on summer nights most."
+	},
+	{
+		"word": "从小",
+		"pinyin": "cóngxiǎo",
+		"meaning": "from childhood / since young",
+		"example": "父母教导他从小就要诚实善良。(Fùmǔ jiàodǎo tā cóngxiǎo jiù yào chéngshí shànliáng.) — His parents taught him to be honest and kind since childhood."
+	},
+	{
+		"word": "可是",
+		"pinyin": "kěshì",
+		"meaning": "but / however / yet",
+		"example": "我很想去参加聚会，可是身体不太舒服。(Wǒ hěn xiǎng qù cānjiā jùhuì, kěshì shēntǐ bú tài shūfu.) — I want to go to the party, but I don't feel very well."
+	},
+	{
+		"word": "没事",
+		"pinyin": "méishì",
+		"meaning": "it's okay / no problem / nothing wrong",
+		"example": "虽然不小心摔倒了，但他笑着说没事。(Suīrán bù xiǎoxīn shuāidǎo le, dàn tā xiàozhe shuō méishì.) — Although he accidentally fell, he smiled and said it was okay."
+	},
+	{
+		"word": "还要",
+		"pinyin": "hái yào",
+		"meaning": "still want / also need / need more",
+		"example": "服务员，我们这桌还要一壶热水。(Fúwùyuán, wǒmen zhè zhuō hái yào yì hú rèshuǐ.) — Waiter, our table still needs another pot of hot water."
+	},
+	{
+		"word": "怎么办",
+		"pinyin": "zěnme bàn",
+		"meaning": "what should we do? / how to handle this?",
+		"example": "赶不上末班车了，我们现在该怎么办？(Gǎnbushàng mòbānchē le, wǒmen xiànzài gāi zěnme bàn?) — We can't catch the last bus, what should we do now?"
+	},
+	{
+		"word": "还可以",
+		"pinyin": "hái kěyǐ",
+		"meaning": "passable / not bad / so-so / can still",
+		"example": "这部新电影情节还可以，值得一看。(Zhè bù xīn diànyǐng qíngjié hái kěyǐ, zhídé yí kàn.) — The plot of this new movie is pretty decent, worth watching."
+	},
+	{
+		"word": "安排",
+		"pinyin": "ānpái",
+		"meaning": "to arrange / to plan / schedule",
+		"example": "周末我已经安排了和朋友一起去郊游。(Zhōumò wǒ yǐjīng ānpái le hé péngyou yìqǐ qù jiāoyóu.) — I have already arranged an outing with friends for the weekend."
+	},
+	{
+		"word": "还是",
+		"pinyin": "háishi",
+		"meaning": "still / yet / had better / or (in questions)",
+		"example": "外面天色已晚，你还是早点回家吧。(Wàimiàn tiānsè yǐ wǎn, nǐ háishi zǎodiǎn huíjiā ba.) — It is already late outside, you had better head home early."
+	},
+	{
+		"word": "刚刚到家",
+		"pinyin": "gānggāng dào jiā",
+		"meaning": "just got home / arrived home just now",
+		"example": "我刚刚到家，准备洗个热水澡休息。(Wǒ gānggāng dào jiā, zhǔnbèi xǐ ge rèshuǐzǎo xiūxi.) — I just got home and am ready to take a hot bath to rest."
+	},
+	{
+		"word": "耶和华",
+		"pinyin": "Yēhéhuá",
+		"meaning": "Jehovah",
+		"example": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+	},
+	{
+		"word": "的",
+		"pinyin": "de",
+		"meaning": "possessive particle ('s)",
+		"example": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+	},
+	{
+		"word": "仆人",
+		"pinyin": "púrén",
+		"meaning": "servant",
+		"example": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+	},
+	{
+		"word": "不会",
+		"pinyin": "bù huì",
+		"meaning": "will not / cannot",
+		"example": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+	},
+	{
+		"word": "实际",
+		"pinyin": "shíjì",
+		"meaning": "actually / in reality",
+		"example": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+	},
+	{
+		"word": "参与",
+		"pinyin": "cānyù",
+		"meaning": "participate in / take part in",
+		"example": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+	},
+	{
+		"word": "战争",
+		"pinyin": "zhànzhēng",
+		"meaning": "war / warfare",
+		"example": "耶和华的仆人不会实际参与战争。(Yēhéhuá de púrén bù huì shíjì cānyù zhànzhēng.) — Jehovah's servants do not actually participate in warfare."
+	},
+	{
+		"word": "但",
+		"pinyin": "dàn",
+		"meaning": "but / yet",
+		"example": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+	},
+	{
+		"word": "圣经",
+		"pinyin": "Shèngjīng",
+		"meaning": "the Bible / Holy Scriptures",
+		"example": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+	},
+	{
+		"word": "一场",
+		"pinyin": "yì chǎng",
+		"meaning": "a / one (fight, contest)",
+		"example": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+	},
+	{
+		"word": "搏斗",
+		"pinyin": "bódòu",
+		"meaning": "fight / struggle / wrestling",
+		"example": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+	},
+	{
+		"word": "就是",
+		"pinyin": "jiù shì",
+		"meaning": "that is / namely",
+		"example": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+	},
+	{
+		"word": "对抗",
+		"pinyin": "duìkàng",
+		"meaning": "fight against / resist / confront",
+		"example": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+	},
+	{
+		"word": "撒但",
+		"pinyin": "Sādàn",
+		"meaning": "Satan",
+		"example": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+	},
+	{
+		"word": "和",
+		"pinyin": "hé",
+		"meaning": "and / with",
+		"example": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+	},
+	{
+		"word": "邪灵",
+		"pinyin": "xiélíng",
+		"meaning": "wicked spirits / demons",
+		"example": "但圣经说我们有一场搏斗，就是要对抗撒但和邪灵。(Dàn Shèngjīng shuō wǒmen yǒu yì chǎng bódòu, jiù shì yào duìkàng Sādàn hé xiélíng.) — But the Bible says we have a fight, which is to fight against Satan and the wicked spirits."
+	},
+	{
+		"word": "面对",
+		"pinyin": "miànduì",
+		"meaning": "face / confront",
+		"example": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+	},
+	{
+		"word": "这么",
+		"pinyin": "zhème",
+		"meaning": "so / such / this",
+		"example": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+	},
+	{
+		"word": "强大",
+		"pinyin": "qiángdà",
+		"meaning": "powerful / formidable",
+		"example": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+	},
+	{
+		"word": "敌人",
+		"pinyin": "dírén",
+		"meaning": "enemy / foe",
+		"example": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+	},
+	{
+		"word": "真的",
+		"pinyin": "zhēnde",
+		"meaning": "really / truly",
+		"example": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+	},
+	{
+		"word": "胜算",
+		"pinyin": "shèngsuàn",
+		"meaning": "chance of winning / odds of victory",
+		"example": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+	},
+	{
+		"word": "吗",
+		"pinyin": "ma",
+		"meaning": "question particle",
+		"example": "面对这么强大的敌人，我们真的有胜算吗？有。(Miànduì zhème qiángdà de dírén, wǒmen zhēnde yǒu shèngsuàn ma? Yǒu.) — Facing such a powerful enemy, do we really have a chance of winning? Yes."
+	},
+	{
+		"word": "首先",
+		"pinyin": "shǒuxiān",
+		"meaning": "first / first of all",
+		"example": "首先，我们必须依靠耶和华。(Shǒuxiān, wǒmen bìxū yīkào Yēhéhuá.) — First, we must rely on Jehovah."
+	},
+	{
+		"word": "依靠",
+		"pinyin": "yīkào",
+		"meaning": "rely on / depend on",
+		"example": "首先，我们必须依靠耶和华。(Shǒuxiān, wǒmen bìxū yīkào Yēhéhuá.) — First, we must rely on Jehovah."
+	},
+	{
+		"word": "其次",
+		"pinyin": "qícì",
+		"meaning": "secondly / next",
+		"example": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+	},
+	{
+		"word": "用",
+		"pinyin": "yòng",
+		"meaning": "use / employ",
+		"example": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+	},
+	{
+		"word": "哪些",
+		"pinyin": "nǎxiē",
+		"meaning": "which / what",
+		"example": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+	},
+	{
+		"word": "阴谋诡计",
+		"pinyin": "yīnmóu guǐjì",
+		"meaning": "crafty acts / plots and tricks / schemes",
+		"example": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+	},
+	{
+		"word": "攻击",
+		"pinyin": "gōngjī",
+		"meaning": "attack / assault",
+		"example": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+	},
+	{
+		"word": "弟兄姐妹",
+		"pinyin": "dìxiōng jiěmèi",
+		"meaning": "brothers and sisters",
+		"example": "其次，我们还要知道撒但会用哪些阴谋诡计来攻击我们和弟兄姐妹。(Qícì, wǒmen hái yào zhīdào Sādàn huì yòng nǎxiē yīnmóu guǐjì lái gōngjī wǒmen hé dìxiōng jiěmèi.) — Secondly, we also need to know what crafty acts Satan will use to attack us and our brothers and sisters."
+	},
+	{
+		"word": "女人",
+		"pinyin": "nǚrén",
+		"meaning": "woman / female",
+		"example": "那位女人正在图书馆安静地看书。(Nà wèi nǚrén zhèngzài túshūguǎn ānjìng de kànshū.) — That woman is quietly reading a book in the library."
+	},
+	{
+		"word": "女性",
+		"pinyin": "nǚxìng",
+		"meaning": "female / woman",
+		"example": "现代社会非常重视女性的权利。(Xiàndài shèhuì fēicháng zhòngshì nǚxìng de quánlì.) — Modern society attaches great importance to women's rights."
+	},
+	{
+		"word": "女朋友",
+		"pinyin": "nǚpéngyou",
+		"meaning": "girlfriend",
+		"example": "他打算在周末陪女朋友看电影。(Tā dǎsuàn zài zhōumò péi nǚpéngyou kàn diànyǐng.) — He plans to accompany his girlfriend to watch a movie this weekend."
+	},
+	{
+		"word": "虐待",
+		"pinyin": "nüèdài",
+		"meaning": "mistreat / abuse",
+		"example": "我们坚决反对任何虐待动物的行为。(Wǒmen jiānjué fǎnduì rènhé nüèdài dòngwù de xíngwéi.) — We firmly oppose any act of abusing animals."
+	},
+	{
+		"word": "律师",
+		"pinyin": "lǜshī",
+		"meaning": "lawyer / attorney",
+		"example": "如果你有法律疑问，可以咨询专业律师。(Rúguǒ nǐ yǒu fǎlǜ yíwèn, kěyǐ zīxún zhuānyè lǜshī.) — If you have legal questions, you can consult a professional lawyer."
+	},
+	{
+		"word": "旅客",
+		"pinyin": "lǚkè",
+		"meaning": "traveler / passenger",
+		"example": "火车站里有很多准备出发的旅客。(Huǒchēzhàn li yǒu hěn duō zhǔnbèi chūfā de lǚkè.) — There are many passengers ready to depart at the train station."
+	},
+	{
+		"word": "策略",
+		"pinyin": "cèlüè",
+		"meaning": "strategy / tactic",
+		"example": "制定合理的学习策略能够提高效率。(Zhìdìng hélǐ de xuéxí cèlüè nénggòu tígāo xiàolǜ.) — Formulating a reasonable study strategy can improve efficiency."
+	},
+	{
+		"word": "句子",
+		"pinyin": "jùzi",
+		"meaning": "sentence",
+		"example": "请用这个生词造一个完整的句子。(Qǐng yòng zhè ge shēngcí zào yí ge wánzhěng de jùzi.) — Please make a complete sentence using this new word."
+	},
+	{
+		"word": "举行",
+		"pinyin": "jǔxíng",
+		"meaning": "hold (an event, meeting)",
+		"example": "学校将在下周举行运动会。(Xuéxiào jiāng zài xià zhōu jǔxíng yùndònghuì.) — The school will hold a sports meet next week."
+	},
+	{
+		"word": "军队",
+		"pinyin": "jūnduì",
+		"meaning": "army / military",
+		"example": "这支军队驻扎在边境地区保护安全。(Zhè zhī jūnduì zhùzhā zài biānjìng dìqū bǎohù ānquán.) — This army is stationed in the border region to safeguard security."
+	},
+	{
+		"word": "全部",
+		"pinyin": "quánbù",
+		"meaning": "whole / entire / all",
+		"example": "他已经把今天的作业全部完成了。(Tā yǐjīng bǎ jīntiān de zuòyè quánbù wánchéng le.) — He has already completed all of today's homework."
+	},
+	{
+		"word": "裙子",
+		"pinyin": "qúnzi",
+		"meaning": "skirt / dress",
+		"example": "这条蓝色的裙子非常漂亮。(Zhè tiáo lánsè de qúnzi fēicháng piàoliang.) — This blue skirt is very pretty."
+	},
+	{
+		"word": "取消",
+		"pinyin": "qǔxiāo",
+		"meaning": "cancel / call off",
+		"example": "因为下大雨，明天的野餐活动取消了。(Yīnwèi xià dàyǔ, míngtiān de yěcān huódòng qǔxiāo le.) — Because of heavy rain, tomorrow's picnic activity has been cancelled."
+	},
+	{
+		"word": "需要",
+		"pinyin": "xūyào",
+		"meaning": "need / require",
+		"example": "学好一门语言需要坚持不懈的练习。(Xuéhǎo yì mén yǔyán xūyào jiānchí-búxiè de liànxí.) — Mastering a language requires persistent practice."
+	},
+	{
+		"word": "训练",
+		"pinyin": "xùnliàn",
+		"meaning": "train / training",
+		"example": "运动员每天都要接受高强度的体能训练。(Yùndòngyuán měitiān dōu yào jiēshòu gāo qiángdù de tǐnéng xùnliàn.) — The athletes undergo high-intensity physical training every day."
+	},
+	{
+		"word": "来自",
+		"pinyin": "láizì",
+		"meaning": "to come from",
+		"example": "我来自伦敦。(Wǒ láizì Lúndūn.) — I come from London."
+	},
+	{
+		"word": "哪国人",
+		"pinyin": "nǎ guó rén",
+		"meaning": "which country / nationality",
+		"example": "你是哪国人？(Nǐ shì nǎ guó rén?) — What is your nationality?"
+	},
+	{
+		"word": "大卫",
+		"pinyin": "Dàwèi",
+		"meaning": "David",
+		"example": "我叫大卫，很高兴认识你。(Wǒ jiào Dàwèi, hěn gāoxìng rènshí nǐ.) — My name is David, nice to meet you."
+	},
+	{
+		"word": "李明",
+		"pinyin": "Lǐ Míng",
+		"meaning": "Li Ming",
+		"example": "李明是我的中文老师。(Lǐ Míng shì wǒ de zhōngwén lǎoshī.) — Li Ming is my Chinese teacher."
+	},
+	{
+		"word": "大学生",
+		"pinyin": "dàxuéshēng",
+		"meaning": "university student / college student",
+		"example": "我是大学生，我学中文。(Wǒ shì dàxuéshēng, wǒ xué zhōngwén.) — I am a university student, I study Chinese."
+	},
+	{
+		"word": "公司",
+		"pinyin": "gōngsī",
+		"meaning": "company / firm",
+		"example": "我在一家国际公司工作。(Wǒ zài yì jiā guójì gōngsī gōngzuò.) — I work at an international company."
+	},
+	{
+		"word": "听音乐",
+		"pinyin": "tīng yīnyuè",
+		"meaning": "to listen to music",
+		"example": "周末我喜欢在家听音乐。(Zhōumò wǒ xǐhuan zài jiā tīng yīnyuè.) — On weekends I like listening to music at home."
+	},
+	{
+		"word": "三十多岁",
+		"pinyin": "sānshí duō suì",
+		"meaning": "in one's thirties / thirty-something",
+		"example": "他三十多岁，是一名医生。(Tā sānshí duō suì, shì yì míng yīshēng.) — He is in his thirties and is a doctor."
+	},
+	{
+		"word": "结婚",
+		"pinyin": "jiéhūn",
+		"meaning": "to marry / to get married",
+		"example": "你结婚了吗？— 还没有。(Nǐ jiéhūn le ma? — Hái méiyǒu.) — Are you married? — Not yet."
+	},
+	{
+		"word": "还在想",
+		"pinyin": "hái zài xiǎng",
+		"meaning": "still thinking / still deciding",
+		"example": "你为什么学中文？— 我还在想。(Nǐ wèishénme xué zhōngwén? — Wǒ hái zài xiǎng.) — Why are you learning Chinese? — I'm still thinking about it."
+	},
+	{
+		"word": "聊点别的",
+		"pinyin": "liáo diǎnr bié de",
+		"meaning": "talk about something else",
+		"example": "我们聊点别的吧，今天天气真好。(Wǒmen liáo diǎnr bié de ba, jīntiān tiānqì zhēn hǎo.) — Let's talk about something else, the weather today is really nice."
+	},
+	{
+		"word": "不太想说",
+		"pinyin": "bú tài xiǎng shuō",
+		"meaning": "prefer not to say / rather not say",
+		"example": "这个我不太想说，不好意思。(Zhège wǒ bú tài xiǎng shuō, bù hǎoyìsi.) — I'd rather not say this, sorry."
+	},
+	{
+		"word": "语言",
+		"pinyin": "yǔyán",
+		"meaning": "language",
+		"example": "你会说什么语言？(Nǐ huì shuō shénme yǔyán?) — What languages can you speak?"
+	},
+	{
+		"word": "英语",
+		"pinyin": "yīngyǔ",
+		"meaning": "English language",
+		"example": "我会说英语和一点中文。(Wǒ huì shuō yīngyǔ hé yìdiǎnr zhōngwén.) — I can speak English and a little Chinese."
+	},
+	{
+		"word": "日语",
+		"pinyin": "rìyǔ",
+		"meaning": "Japanese language",
+		"example": "她也会说一点日语。(Tā yě huì shuō yìdiǎnr rìyǔ.) — She can also speak a little Japanese."
+	},
+	{
+		"word": "汉语",
+		"pinyin": "hànyǔ",
+		"meaning": "Mandarin / Chinese language",
+		"example": "我们班都在学汉语。(Wǒmen bān dōu zài xué hànyǔ.) — Our class is all studying Mandarin."
+	},
+	{
+		"word": "英国人",
+		"pinyin": "yīngguó rén",
+		"meaning": "British person",
+		"example": "我是英国人，来自伦敦。(Wǒ shì yīngguó rén, láizì Lúndūn.) — I am British, from London."
+	},
+	{
+		"word": "加拿大人",
+		"pinyin": "jiānádà rén",
+		"meaning": "Canadian person",
+		"example": "他是加拿大人，在上海工作。(Tā shì jiānádà rén, zài Shànghǎi gōngzuò.) — He is Canadian, working in Shanghai."
+	},
+	{
+		"word": "新加坡人",
+		"pinyin": "xīnjiāpō rén",
+		"meaning": "Singaporean person",
+		"example": "她是新加坡人，英语很好。(Tā shì xīnjiāpō rén, yīngyǔ hěn hǎo.) — She is Singaporean, her English is great."
+	},
+	{
+		"word": "多大",
+		"pinyin": "duō dà",
+		"meaning": "how old",
+		"example": "请问你多大了？(Qǐngwèn nǐ duō dà le?) — May I ask how old you are?"
+	},
+	{
+		"word": "专业",
+		"pinyin": "zhuānyè",
+		"meaning": "major / specialty",
+		"example": "你的大学专业是什么？(Nǐ de dàxué zhuānyè shì shénme?) — What is your college major?"
+	},
+	{
+		"word": "年级",
+		"pinyin": "niánjí",
+		"meaning": "grade level / school year",
+		"example": "你现在读几年级？(Nǐ xiànzài dú jǐ niánjí?) — What school year are you in right now?"
+	},
+	{
+		"word": "室友",
+		"pinyin": "shìyǒu",
+		"meaning": "roommate",
+		"example": "我和室友一起租房。(Wǒ hé shìyǒu yìqǐ zūfáng.) — I rent an apartment with my roommate."
+	},
+	{
+		"word": "同行",
+		"pinyin": "tóngháng",
+		"meaning": "person of same trade / peer",
+		"example": "很高兴在会上遇到同行。(Hěn gāoxìng zài huì shang yùdào tóngháng.) — Glad to meet peers in the industry at the conference."
+	},
+	{
+		"word": "一杯",
+		"pinyin": "yì bēi",
+		"meaning": "a cup of / a glass of",
+		"example": "我想要一杯热茶。(Wǒ xiǎng yào yì bēi rè chá.) — I'd like a cup of hot tea."
+	},
+	{
+		"word": "一碗",
+		"pinyin": "yì wǎn",
+		"meaning": "a bowl of",
+		"example": "请给我来一碗牛肉面。(Qǐng gěi wǒ lái yì wǎn niúròu miàn.) — Please bring me a bowl of beef noodles."
+	},
+	{
+		"word": "一份",
+		"pinyin": "yí fèn",
+		"meaning": "a portion of / an order of",
+		"example": "我们要一份煎饺。(Wǒmen yào yí fèn jiānjiǎo.) — We want an order of pan-fried dumplings."
+	},
+	{
+		"word": "一瓶",
+		"pinyin": "yì píng",
+		"meaning": "a bottle of",
+		"example": "我想要一瓶矿泉水。(Wǒ xiǎng yào yì píng kuàngquán shuǐ.) — I'd like a bottle of mineral water."
+	},
+	{
+		"word": "我想要",
+		"pinyin": "wǒ xiǎng yào",
+		"meaning": "I would like (polite request)",
+		"example": "我想要一份菜单，谢谢。(Wǒ xiǎng yào yí fèn càidān, xièxie.) — I would like a menu, thank you."
+	},
+	{
+		"word": "不要辣",
+		"pinyin": "bú yào là",
+		"meaning": "no spicy / not spicy",
+		"example": "这碗面请不要辣。(Zhè wǎn miàn qǐng bú yào là.) — Please make this bowl of noodles not spicy."
+	},
+	{
+		"word": "微辣",
+		"pinyin": "wēi là",
+		"meaning": "mildly spicy / a little spicy",
+		"example": "我们点微辣的汤底。(Wǒmen diǎn wēi là de tāngdǐ.) — We order the mildly spicy soup base."
+	},
+	{
+		"word": "少冰",
+		"pinyin": "shǎo bīng",
+		"meaning": "less ice",
+		"example": "这杯奶茶请少冰。(Zhè bēi nǎichá qǐng shǎo bīng.) — Less ice for this milk tea, please."
+	},
+	{
+		"word": "去冰",
+		"pinyin": "qù bīng",
+		"meaning": "no ice",
+		"example": "请帮我做一杯去冰的红茶。(Qǐng bāng wǒ zuò yì bēi qù bīng de hóngchá.) — Please make me a cup of black tea with no ice."
+	},
+	{
+		"word": "常温",
+		"pinyin": "chángwēn",
+		"meaning": "room temperature",
+		"example": "水要常温的，谢谢。(Shuǐ yào chángwēn de, xièxie.) — I'd like room temperature water, thanks."
+	},
+	{
+		"word": "热的",
+		"pinyin": "rè de",
+		"meaning": "hot one",
+		"example": "我要一杯热的拿铁咖啡。(Wǒ yào yì bēi rè de nátiě kāfēi.) — I want a hot latte."
+	},
+	{
+		"word": "外带",
+		"pinyin": "wàidài",
+		"meaning": "takeout / to take away",
+		"example": "请问是堂食还是外带？(Qǐngwèn shì tángshí háishì wàidài?) — Excuse me, is it dine-in or takeout?"
+	},
+	{
+		"word": "在这里吃",
+		"pinyin": "zài zhèlǐ chī",
+		"meaning": "dine in / eat here",
+		"example": "我们在这里吃。(Wǒmen zài zhèlǐ chī.) — We are eating here."
+	},
+	{
+		"word": "稍等",
+		"pinyin": "shāoděng",
+		"meaning": "wait a moment",
+		"example": "请稍等，菜马上就来。(Qǐng shāoděng, cài mǎshàng jiù lái.) — Please wait a moment, the dishes will arrive shortly."
+	},
+	{
+		"word": "忌口",
+		"pinyin": "jìkǒu",
+		"meaning": "dietary restrictions / avoid foods",
+		"example": "请问你们有什么忌口吗？(Qǐngwèn nǐmen yǒu shénme jìkǒu ma?) — Do you have any dietary restrictions?"
+	},
+	{
+		"word": "够了",
+		"pinyin": "gòu le",
+		"meaning": "that's enough",
+		"example": "先点这些，够了，谢谢。(Xiān diǎn zhèxiē, gòu le, xièxie.) — That's enough for now, thanks."
+	},
+	{
+		"word": "还要别的吗",
+		"pinyin": "hái yào bié de ma",
+		"meaning": "anything else?",
+		"example": "您好，还要别的吗？— 不要了。(Nín hǎo, hái yào bié de ma? — Bú yào le.) — Anything else? — Nothing else, thanks."
+	},
+	{
+		"word": "甜度",
+		"pinyin": "tiándù",
+		"meaning": "sweetness level",
+		"example": "请问饮品需要什么甜度？(Qǐngwèn yǐnpǐn xūyào shénme tiándù?) — What sweetness level would you like for your beverage?"
+	},
+	{
+		"word": "半糖",
+		"pinyin": "bàn táng",
+		"meaning": "half sugar",
+		"example": "绿茶一杯，半糖少冰。(Lǜchá yì bēi, bàn táng shǎo bīng.) — One green tea, half sugar and less ice."
+	},
+	{
+		"word": "纸巾",
+		"pinyin": "zhǐjīn",
+		"meaning": "napkin / tissue",
+		"example": "麻烦给我们几张纸巾。(Máfan gěi wǒmen jǐ zhāng zhǐjīn.) — Could you please give us some napkins?"
+	},
+	{
+		"word": "不加香菜",
+		"pinyin": "bù jiā xiāngcài",
+		"meaning": "no cilantro / coriander",
+		"example": "这碗牛肉粉请不加香菜。(Zhè wǎn niúrǒufěn qǐng bù jiā xiāngcài.) — Please do not add cilantro to this beef noodle soup."
+	},
+	{
+		"word": "加汤",
+		"pinyin": "jiā tāng",
+		"meaning": "refill soup",
+		"example": "服务员，麻烦帮我们加汤。(Fúwùyuán, máfan bāng wǒmen jiā tāng.) — Waiter, could you please refill our soup?"
+	},
+	{
+		"word": "免葱",
+		"pinyin": "miǎn cōng",
+		"meaning": "omit green onions",
+		"example": "面里免葱，谢谢师傅。(Miàn lǐ miǎn cōng, xièxie shīfu.) — Omit scallions in the noodles, thanks chef."
+	},
+	{
+		"word": "结账",
+		"pinyin": "jiézhàng",
+		"meaning": "settle the bill",
+		"example": "你好，请问在哪里结账？(Nǐ hǎo, qǐngwèn zài nǎlǐ jiézhàng?) — Hello, where do I settle the bill?"
+	},
+	{
+		"word": "分单",
+		"pinyin": "fēndān",
+		"meaning": "split the bill",
+		"example": "请问可以分单付款吗？(Qǐngwèn kěyǐ fēndān fùkuǎn ma?) — Can we split the bill to pay?"
+	},
+	{
+		"word": "衬衫",
+		"pinyin": "chènshān",
+		"meaning": "shirt / button-up shirt",
+		"example": "我想要试一下这件白衬衫。(Wǒ xiǎng yào shì yíxià zhè jiàn bái chènshān.) — I'd like to try on this white shirt."
+	},
+	{
+		"word": "外套",
+		"pinyin": "wàitào",
+		"meaning": "coat / jacket",
+		"example": "有中号的蓝色外套吗？(Yǒu zhōnghào de lánsè wàitào ma?) — Do you have this blue jacket in medium?"
+	},
+	{
+		"word": "裤子",
+		"pinyin": "kùzi",
+		"meaning": "pants / trousers",
+		"example": "这条裤子有点长。(Zhè tiáo kùzi yǒudiǎnr cháng.) — These pants are a bit long."
+	},
+	{
+		"word": "大号",
+		"pinyin": "dàhào",
+		"meaning": "large size (L)",
+		"example": "请问这件衣服有大号吗？(Qǐngwèn zhè jiàn yīfu yǒu dàhào ma?) — Do you have a large in this garment?"
+	},
+	{
+		"word": "中号",
+		"pinyin": "zhōnghào",
+		"meaning": "medium size (M)",
+		"example": "我觉得中号最合身。(Wǒ juéde zhōnghào zuì héshēn.) — I think medium fits the best."
+	},
+	{
+		"word": "小号",
+		"pinyin": "xiǎohào",
+		"meaning": "small size (S)",
+		"example": "这个款式有小号吗？(Zhè ge kuǎnshì yǒu xiǎohào ma?) — Does this style come in small?"
+	},
+	{
+		"word": "试穿",
+		"pinyin": "shìchuān",
+		"meaning": "to try on (clothes)",
+		"example": "我可以试穿一下这双鞋吗？(Wǒ kěyǐ shìchuān yíxià zhè shuāng xié ma?) — May I try on this pair of shoes?"
+	},
+	{
+		"word": "试衣间",
+		"pinyin": "shìyījiān",
+		"meaning": "fitting room / dressing room",
+		"example": "请问试衣间在哪里？(Qǐngwèn shìyījiān zài nǎlǐ?) — Where is the fitting room?"
+	},
+	{
+		"word": "合身",
+		"pinyin": "héshēn",
+		"meaning": "well-fitting / fits well",
+		"example": "大小正合适，非常合身。(Dàxiǎo zhèng héshì, fēicháng héshēn.) — The size is just right, it fits very well."
+	},
+	{
+		"word": "打折",
+		"pinyin": "dǎzhé",
+		"meaning": "to give a discount",
+		"example": "请问这件外套今天打折吗？(Qǐngwèn zhè jiàn wàitào jīntiān dǎzhé ma?) — Is this jacket on discount today?"
+	},
+	{
+		"word": "便宜一点",
+		"pinyin": "piányi yìdiǎnr",
+		"meaning": "a little cheaper",
+		"example": "老板，能不能便宜一点？(Lǎobǎn, néng bu néng piányi yìdiǎnr?) — Boss, can you make it a bit cheaper?"
+	},
+	{
+		"word": "现金",
+		"pinyin": "xiànjīn",
+		"meaning": "cash",
+		"example": "请问这里可以付现金吗？(Qǐngwèn zhèlǐ kěyǐ fù xiànjīn ma?) — May I pay with cash here?"
+	},
+	{
+		"word": "换一件",
+		"pinyin": "huàn yí jiàn",
+		"meaning": "exchange for another piece",
+		"example": "这件有点脏，能换一件吗？(Zhè jiàn yǒudiǎnr zāng, néng huàn yí jiàn ma?) — This one has a smudge, could I swap it for another?"
+	},
+	{
+		"word": "宽松",
+		"pinyin": "kuānsōng",
+		"meaning": "loose / roomy",
+		"example": "我喜欢宽松一点的版型。(Wǒ xǐhuan kuānsōng yìdiǎnr de bǎnxíng.) — I prefer a looser cut."
+	},
+	{
+		"word": "紧",
+		"pinyin": "jǐn",
+		"meaning": "tight",
+		"example": "腰部感觉稍微有一点紧。(Yāobù gǎnjué shāowēi yǒu yìdiǎnr jǐn.) — The waist feels a little bit tight."
+	},
+	{
+		"word": "纯棉",
+		"pinyin": "chúnmián",
+		"meaning": "100% cotton / pure cotton",
+		"example": "这件T恤是纯棉的，很舒服。(Zhè jiàn T-xù shì chúnmián de, hěn shūfu.) — This T-shirt is 100% cotton, very comfortable."
+	},
+	{
+		"word": "一双鞋",
+		"pinyin": "yì shuāng xié",
+		"meaning": "a pair of shoes",
+		"example": "我想买一双鞋。(Wǒ xiǎng mǎi yì shuāng xié.) — I want to buy a pair of shoes."
+	},
+	{
+		"word": "收银台",
+		"pinyin": "shōuyíntái",
+		"meaning": "checkout counter / cashier",
+		"example": "收银台在靠近门口的地方。(Shōuyíntái zài kàojìn ménkǒu de dìfang.) — The cash register is near the exit."
+	},
+	{
+		"word": "发票",
+		"pinyin": "fāpiào",
+		"meaning": "official receipt / tax invoice",
+		"example": "请帮我开一张发票。(Qǐng bāng wǒ kāi yì zhāng fāpiào.) — Please provide an official invoice for me."
+	},
+	{
+		"word": "退换",
+		"pinyin": "tuìhuàn",
+		"meaning": "return or exchange",
+		"example": "七天之内可以凭小票退换。(Qī tiān zhīnèi kěyǐ píng xiǎopiào tuìhuàn.) — You can return or exchange within 7 days with receipt."
+	},
+	{
+		"word": "合适",
+		"pinyin": "héshì",
+		"meaning": "suitable / fitting",
+		"example": "你觉得这条裙子合适吗？(Nǐ juéde zhè tiáo qúnzi héshì ma?) — Do you think this skirt is suitable?"
+	},
+	{
+		"word": "标价",
+		"pinyin": "biāojià",
+		"meaning": "marked price / tag price",
+		"example": "请看领子后面的标价。(Qǐng kàn lǐngzi hòumian de biāojià.) — Please look at the tag price behind the collar."
+	},
+	{
+		"word": "特大号",
+		"pinyin": "tèdàhào",
+		"meaning": "extra large (XL)",
+		"example": "这件外套有特大号的吗？(Zhè jiàn wàitào yǒu tèdàhào de ma?) — Is this coat available in extra large?"
+	},
+	{
+		"word": "保修",
+		"pinyin": "bǎoxiū",
+		"meaning": "warranty / guarantee",
+		"example": "电子手表全国联保，保修一年。(Diànzǐ shǒubiǎo quánguó liánbǎo, bǎoxiū yì nián.) — Electronic watch has nationwide coverage with a one-year warranty."
+	},
+	{
+		"word": "吧",
+		"pinyin": "ba",
+		"meaning": "suggestion / softening particle",
+		"example": "我们先吃饭吧。(Wǒmen xiān chīfàn ba.) — Let's eat first."
+	},
+	{
+		"word": "呢",
+		"pinyin": "ne",
+		"meaning": "bounce-back / continuing topic particle",
+		"example": "我很好，你呢？(Wǒ hěn hǎo, nǐ ne?) — I'm good, and you?"
+	},
+	{
+		"word": "啊",
+		"pinyin": "a",
+		"meaning": "enthusiasm / confirmation particle",
+		"example": "好啊，我们一起去！(Hǎo a, wǒmen yìqǐ qù!) — Great, let's go together!"
+	},
+	{
+		"word": "先坐吧",
+		"pinyin": "xiān zuò ba",
+		"meaning": "have a seat first",
+		"example": "请进，你先坐吧。(Qǐng jìn, nǐ xiān zuò ba.) — Please come in, have a seat first."
+	},
+	{
+		"word": "我们走吧",
+		"pinyin": "wǒmen zǒu ba",
+		"meaning": "let's get going / let's leave",
+		"example": "时间到了，我们走吧。(Shíjiān dào le, wǒmen zǒu ba.) — It's time, let's go."
+	},
+	{
+		"word": "对吧",
+		"pinyin": "duì ba",
+		"meaning": "right? / isn't that so?",
+		"example": "你是明天下午到，对吧？(Nǐ shì míngtiān xiàwǔ dào, duì ba?) — You arrive tomorrow afternoon, right?"
+	},
+	{
+		"word": "是吧",
+		"pinyin": "shì ba",
+		"meaning": "yeah? / is that right?",
+		"example": "这家餐厅挺好吃的，是吧？(Zhè jiā cāntīng tǐng hǎochī de, shì ba?) — This restaurant is quite tasty, right?"
+	},
+	{
+		"word": "行吧",
+		"pinyin": "xíng ba",
+		"meaning": "alright then / fair enough",
+		"example": "行吧，那就按你说的办。(Xíng ba, nà jiù àn nǐ shuō de bàn.) — Alright then, let's do it your way."
+	},
+	{
+		"word": "太好了",
+		"pinyin": "tài hǎo le",
+		"meaning": "wonderful! / that's great!",
+		"example": "你明天能来？太好了！(Nǐ míngtiān néng lái? Tài hǎo le!) — You can come tomorrow? Fantastic!"
+	},
+	{
+		"word": "看情况吧",
+		"pinyin": "kàn qíngkuàng ba",
+		"meaning": "we'll see / depends on situation",
+		"example": "周末去不去爬山？— 看情况吧。(Zhōumò qù bu qù páshān? — Kàn qíngkuàng ba.) — Hiking this weekend? — We'll see how it goes."
+	},
+	{
+		"word": "这样啊",
+		"pinyin": "zhèyàng a",
+		"meaning": "I see / so that's how it is",
+		"example": "原来是这样啊，我明白了。(Yuánlái shì zhèyàng a, wǒ míngbai le.) — Oh so that's how it is, I understand now."
+	},
+	{
+		"word": "没事啊",
+		"pinyin": "méishì a",
+		"meaning": "no problem at all / don't worry",
+		"example": "没事啊，不用客气。(Méishì a, bú yòng kèqi.) — No problem at all, don't mention it."
+	},
+	{
+		"word": "快点吧",
+		"pinyin": "kuài diǎnr ba",
+		"meaning": "hurry up a bit",
+		"example": "快点吧，电影要开始了。(Kuài diǎnr ba, diànyǐng yào kāishǐ le.) — Hurry up a bit, the movie is starting."
+	},
+	{
+		"word": "知道了",
+		"pinyin": "zhīdào le",
+		"meaning": "got it / understood",
+		"example": "妈妈提醒的事情我都知道了。(Māma tíxǐng de shìqing wǒ dōu zhīdào le.) — I got everything mom reminded me of."
+	},
+	{
+		"word": "行啊",
+		"pinyin": "xíng a",
+		"meaning": "sounds good / sure thing",
+		"example": "明晚一起吃饭？— 行啊！(Míngwǎn yìqǐ chīfàn? — Xíng a!) — Dinner tomorrow night? — Sure thing!"
+	},
+	{
+		"word": "好吧",
+		"pinyin": "hǎo ba",
+		"meaning": "okay then / fine",
+		"example": "好吧，那我先回去了。(Hǎo ba, nà wǒ xiān huíqù le.) — Okay then, I'll head back first."
+	},
+	{
+		"word": "去哪儿呢",
+		"pinyin": "qù nǎr ne",
+		"meaning": "where are you headed? / where to go?",
+		"example": "放假大家都在商量去哪儿呢。(Fàngjià dàjiā dōu zài shāngliang qù nǎr ne.) — Everyone is discussing where to go during break."
+	},
+	{
+		"word": "怎么说呢",
+		"pinyin": "zěnme shuō ne",
+		"meaning": "how should I put it...",
+		"example": "怎么说呢，感觉还行吧。(Zěnme shuō ne, gǎnjué hái xíng ba.) — How should I put it, felt just okay."
+	},
+	{
+		"word": "谁说的啊",
+		"pinyin": "shéi shuō de a",
+		"meaning": "who said that?!",
+		"example": "谁说的啊，根本没有这回事。(Shéi shuō de a, gēnběn méiyǒu zhè huí shì.) — Who said that?! That's not the case at all."
+	},
+	{
+		"word": "差不多吧",
+		"pinyin": "chàbuduō ba",
+		"meaning": "pretty much / about right",
+		"example": "准备工作做得怎么样了？— 差不多吧。(Zhǔnbèi gōngzuò zuò de zěnmeyàng le? — Chàbuduō ba.) — How is the preparation work coming along? — Pretty much done."
+	},
+	{
+		"word": "再说吧",
+		"pinyin": "zàishuō ba",
+		"meaning": "let's talk later / decide later",
+		"example": "这件事我们明天开会再说吧。(Zhè jiàn shì wǒmen míngtiān kāihuì zàishuō ba.) — Let's discuss this matter in tomorrow's meeting."
+	},
+	{
+		"word": "真香啊",
+		"pinyin": "zhēn xiāng a",
+		"meaning": "smells so good!",
+		"example": "这盘红烧肉真香啊！(Zhè pán hóngshāoròu zhēn xiāng a!) — This braised pork smells so good!"
+	},
+	{
+		"word": "想什么呢",
+		"pinyin": "xiǎng shénme ne",
+		"meaning": "what are you daydreaming about?",
+		"example": "你一个人坐在这里想什么呢？(Nǐ yí ge rén zuò zài zhèlǐ xiǎng shénme ne?) — Sitting here alone, what are you thinking about?"
+	},
+	{
+		"word": "算了",
+		"pinyin": "suàn le",
+		"meaning": "forget it / drop it",
+		"example": "既然买不到票，那就算了吧。(Jìrán mǎi bú dào piào, nà jiù suàn le ba.) — Since tickets are sold out, let's forget it."
+	},
+	{
+		"word": "没听懂",
+		"pinyin": "méi tīngdǒng",
+		"meaning": "did not understand / didn't catch that",
+		"example": "不好意思，我刚才没听懂。(Bù hǎoyìsi, wǒ gāngcái méi tīngdǒng.) — Sorry, I didn't understand just now."
+	},
+	{
+		"word": "请再说一遍",
+		"pinyin": "qǐng zài shuō yí biàn",
+		"meaning": "please say it once more",
+		"example": "信号不太好，请再说一遍。(Xìnhào bú tài hǎo, qǐng zài shuō yí biàn.) — Bad signal, please say that one more time."
+	},
+	{
+		"word": "说慢一点",
+		"pinyin": "shuō màn yìdiǎnr",
+		"meaning": "speak a bit slower",
+		"example": "我的中文不太好，请说慢一点。(Wǒ de zhōngwén bú tài hǎo, qǐng shuō màn yìdiǎnr.) — My Chinese isn't great, please speak slower."
+	},
+	{
+		"word": "怎么说",
+		"pinyin": "zěnme shuō",
+		"meaning": "how do you say...",
+		"example": "请问这个用中文怎么说？(Qǐngwèn zhè ge yòng zhōngwén zěnme shuō?) — Excuse me, how do you say this in Chinese?"
+	},
+	{
+		"word": "写下来",
+		"pinyin": "xiě xiàlái",
+		"meaning": "to write it down",
+		"example": "可以麻烦您帮我写下来吗？(Kěyǐ máfan nín bāng wǒ xiě xiàlái ma?) — Could you please write that down for me?"
+	},
+	{
+		"word": "打字",
+		"pinyin": "dǎzì",
+		"meaning": "to type characters",
+		"example": "可以打字给我看一下吗？(Kěyǐ dǎzì gěi wǒ kàn yíxià ma?) — Could you type it on your phone so I can see?"
+	},
+	{
+		"word": "你的意思是",
+		"pinyin": "nǐ de yìsi shì",
+		"meaning": "do you mean... / your meaning is",
+		"example": "你的意思是明天不上课，对吗？(Nǐ de yìsi shì míngtiān bú shàngkè, duì ma?) — Your meaning is there's no class tomorrow, right?"
+	},
+	{
+		"word": "不知道怎么说",
+		"pinyin": "bù zhīdào zěnme shuō",
+		"meaning": "don't know how to explain",
+		"example": "我想表达，但不知道怎么说。(Wǒ xiǎng biǎodá, dàn bù zhīdào zěnme shuō.) — I want to express it, but don't know how to say it."
+	},
+	{
+		"word": "一句一句地说",
+		"pinyin": "yí jù yí jù de shuō",
+		"meaning": "speak sentence by sentence",
+		"example": "可以一句一句地说吗？(Kěyǐ yí jù yí jù de shuō ma?) — Could you go sentence by sentence?"
+	},
+	{
+		"word": "怎么拼",
+		"pinyin": "zěnme pīn",
+		"meaning": "how do you spell it (in pinyin)?",
+		"example": "请问这个字怎么拼？(Qǐngwèn zhè ge zì zěnme pīn?) — Excuse me, how is this character spelled?"
+	},
+	{
+		"word": "什么意思",
+		"pinyin": "shénme yìsi",
+		"meaning": "what does it mean?",
+		"example": "请问这个词是什么意思？(Qǐngwèn zhè ge cí shì shénme yìsi?) — What does this vocabulary word mean?"
+	},
+	{
+		"word": "听清楚",
+		"pinyin": "tīng qīngchu",
+		"meaning": "hear clearly",
+		"example": "环境有点吵，我没听清楚。(Huánjìng yǒudiǎnr chǎo, wǒ méi tīng qīngchu.) — It's noisy here, I didn't hear clearly."
+	},
+	{
+		"word": "懂了",
+		"pinyin": "dǒng le",
+		"meaning": "understood / got it now",
+		"example": "谢谢你的耐心解释，我现在懂了。(Xièxie nǐ de nàixīn jiěshì, wǒ xiànzài dǒng le.) — Thanks for your patient explanation, I get it now."
+	},
+	{
+		"word": "对吗",
+		"pinyin": "duì ma",
+		"meaning": "is that correct? / right?",
+		"example": "你是说九点半在大门见，对吗？(Nǐ shì shuō jiǔ diǎn bàn zài dàmén jiàn, duì ma?) — You said meet at 9:30 at the gate, right?"
+	},
+	{
+		"word": "等等我",
+		"pinyin": "děngděng wǒ",
+		"meaning": "wait for me",
+		"example": "走得太快了，等等我！(Zǒu de tài kuài le, děngděng wǒ!) — You're walking too fast, wait for me!"
+	},
+	{
+		"word": "稍等一下",
+		"pinyin": "shāoděng yíxià",
+		"meaning": "just a brief moment",
+		"example": "请稍等一下，我查一下地图。(Qǐng shāoděng yíxià, wǒ chá yíxià dìtú.) — Just a moment, let me check the map."
+	},
+	{
+		"word": "手势",
+		"pinyin": "shǒushì",
+		"meaning": "gesture / hand signal",
+		"example": "听不懂的时候可以用手势比划。(Tīng bù dǒng de shíhou kěyǐ yòng shǒushì bǐhua.) — When you don't understand, you can gesture."
+	},
+	{
+		"word": "指一下",
+		"pinyin": "zhǐ yíxià",
+		"meaning": "point at it",
+		"example": "请在菜单上指一下你想要的菜。(Qǐng zài càidān shang zhǐ yíxià nǐ xiǎng yào de cài.) — Please point to the dish you want on the menu."
+	},
+	{
+		"word": "发音",
+		"pinyin": "fāyīn",
+		"meaning": "pronunciation / to pronounce",
+		"example": "我的发音对不对？(Wǒ de fāyīn duì bu duì?) — Is my pronunciation correct?"
+	},
+	{
+		"word": "再说一次",
+		"pinyin": "zài shuō yí cì",
+		"meaning": "say it once again",
+		"example": "不好意思，麻烦再说一次。(Bù hǎoyìsi, máfan zài shuō yí cì.) — Excuse me, please say it one more time."
+	},
+	{
+		"word": "听力",
+		"pinyin": "tīnglì",
+		"meaning": "listening ability / comprehension",
+		"example": "每天听中文播客可以提高听力。(Měitiān tīng zhōngwén bōkè kěyǐ tígāo tīnglì.) — Listening to Chinese podcasts daily improves listening skills."
+	},
+	{
+		"word": "重复",
+		"pinyin": "chóngfù",
+		"meaning": "to repeat",
+		"example": "老师把刚才的重点重复了一遍。(Lǎoshī bǎ gāngcái de zhòngdiǎn chóngfù le yí biàn.) — The teacher repeated the key point just mentioned."
+	},
+	{
+		"word": "清楚",
+		"pinyin": "qīngchu",
+		"meaning": "clear / distinct",
+		"example": "现在声音非常清楚了。(Xiànzài shēngyīn fēicháng qīngchu le.) — The audio is very clear now."
+	},
+	{
+		"word": "两块",
+		"pinyin": "liǎng kuài",
+		"meaning": "two yuan (colloquial)",
+		"example": "这瓶水两块钱。(Zhè píng shuǐ liǎng kuài qián.) — This bottle of water is two yuan."
+	},
+	{
+		"word": "毛",
+		"pinyin": "máo",
+		"meaning": "10 cents (0.1 yuan, dime)",
+		"example": "一共五块五毛钱。(Yígòng wǔ kuài wǔ máo qián.) — In total five yuan and fifty cents."
+	},
+	{
+		"word": "角",
+		"pinyin": "jiǎo",
+		"meaning": "dime / 0.1 yuan (formal)",
+		"example": "一元等于十角。(Yì yuán děngyú shí jiǎo.) — One yuan equals ten jiao."
+	},
+	{
+		"word": "一共",
+		"pinyin": "yígòng",
+		"meaning": "altogether / in total",
+		"example": "两样东西一共多少钱？(Liǎng yàng dōngxi yígòng duōshao qián?) — How much are these two items in total?"
+	},
+	{
+		"word": "微信支付",
+		"pinyin": "wēixìn zhīfù",
+		"meaning": "WeChat Pay",
+		"example": "这里支持微信支付吗？(Zhèlǐ zhīchí wēixìn zhīfù ma?) — Do you accept WeChat Pay here?"
+	},
+	{
+		"word": "支付宝",
+		"pinyin": "zhīfùbǎo",
+		"meaning": "Alipay",
+		"example": "我可以用支付宝付钱吗？(Wǒ kěyǐ yòng zhīfùbǎo fù qián ma?) — Can I pay with Alipay?"
+	},
+	{
+		"word": "找钱",
+		"pinyin": "zhǎoqián",
+		"meaning": "to give change",
+		"example": "请稍等，我找钱给你。(Qǐng shāoděng, wǒ zhǎoqián gěi nǐ.) — Please wait a moment, I will give you your change."
+	},
+	{
+		"word": "电话号码",
+		"pinyin": "diànhuà hàomǎ",
+		"meaning": "telephone number",
+		"example": "请留一下您的电话号码。(Qǐng liú yíxià nín de diànhuà hàomǎ.) — Please leave your phone number."
+	},
+	{
+		"word": "零钱",
+		"pinyin": "língqián",
+		"meaning": "small change / pocket money",
+		"example": "不好意思，我没有零钱。(Bù hǎoyìsi, wǒ méiyǒu língqián.) — Sorry, I don't have small change."
+	},
+	{
+		"word": "打八折",
+		"pinyin": "dǎ bā zhé",
+		"meaning": "20% off (pay 80%)",
+		"example": "全场衣服今天打八折。(Quánchǎng yīfu jīntiān dǎ bā zhé.) — All clothes are 20% off today."
+	},
+	{
+		"word": "一百零八",
+		"pinyin": "yì bǎi líng bā",
+		"meaning": "108",
+		"example": "这件衬衫售价一百零八块。(Zhè jiàn chènshān shòujià yì bǎi líng bā kuài.) — This shirt sells for 108 yuan."
+	},
+	{
+		"word": "两千",
+		"pinyin": "liǎng qiān",
+		"meaning": "two thousand",
+		"example": "这台电脑售价两千块。(Zhè tái diànnǎo shòujià liǎng qiān kuài.) — This computer costs two thousand yuan."
+	},
+	{
+		"word": "一万",
+		"pinyin": "yí wàn",
+		"meaning": "ten thousand (10,000)",
+		"example": "这个月预算是一万块。(Zhè ge yuè yùsuàn shì yí wàn kuài.) — This month's budget is 10,000 yuan."
+	},
+	{
+		"word": "分",
+		"pinyin": "fēn",
+		"meaning": "cent / penny / minute",
+		"example": "两块零五分。(Liǎng kuài líng wǔ fēn.) — Two yuan and five cents."
+	},
+	{
+		"word": "半价",
+		"pinyin": "bànjià",
+		"meaning": "half price",
+		"example": "第二件饮品半价。(Dì èr jiàn yǐnpǐn bànjià.) — Second drink is half price."
+	},
+	{
+		"word": "收费",
+		"pinyin": "shōufèi",
+		"meaning": "to charge a fee / fee",
+		"example": "请问这个停车场怎么收费？(Qǐngwèn zhè ge tíngchēchǎng zěnme shōufèi?) — How does this parking lot charge?"
+	},
+	{
+		"word": "免费",
+		"pinyin": "miǎnfèi",
+		"meaning": "free of charge",
+		"example": "店里的茶水是免费的。(Diàn lǐ de cháshuǐ shì miǎnfèi de.) — The tea in the store is free of charge."
+	},
+	{
+		"word": "买一送一",
+		"pinyin": "mǎi yī sòng yī",
+		"meaning": "buy one get one free",
+		"example": "今天咖啡买一送一！(Jīntiān kāfēi mǎi yī sòng yī!) — Coffee is buy-one-get-one-free today!"
+	},
+	{
+		"word": "价格",
+		"pinyin": "jiàgé",
+		"meaning": "price",
+		"example": "这个合理的价格吸引了很多人。(Zhè ge hélǐ de jiàgé xīyǐn le hěn duō rén.) — This reasonable price attracted many people."
+	},
+	{
+		"word": "特价",
+		"pinyin": "tèjià",
+		"meaning": "special offer / sale price",
+		"example": "新鲜草莓今天特价只要十块钱。(Xīnxiān cǎoméi jīntiān tèjià zhǐ yào shí kuài qián.) — Fresh strawberries are on sale for just 10 yuan today."
+	},
+	{
+		"word": "转账",
+		"pinyin": "zhuǎnzhàng",
+		"meaning": "transfer money (bank/app)",
+		"example": "我把餐费转账给你了。(Wǒ bǎ cānfèi zhuǎnzhàng gěi nǐ le.) — I transferred the meal cost to you."
+	},
+	{
+		"word": "计算器",
+		"pinyin": "jìsuànqì",
+		"meaning": "calculator",
+		"example": "请用计算器算一下总数。(Qǐng yòng jìsuànqì suàn yíxià zǒngshù.) — Please calculate the total with a calculator."
+	},
+	{
+		"word": "小票",
+		"pinyin": "xiǎopiào",
+		"meaning": "receipt / shopping docket",
+		"example": "这是您的小票，请拿好。(Zhè shì nín de xiǎopiào, qǐng ná hǎo.) — Here is your receipt, please hold onto it."
+	},
+	{
+		"word": "前天",
+		"pinyin": "qiántiān",
+		"meaning": "the day before yesterday",
+		"example": "我是前天晚上到北京的。(Wǒ shì qiántiān wǎnshang dào Běijīng de.) — I arrived in Beijing the night before yesterday."
+	},
+	{
+		"word": "后天",
+		"pinyin": "hòutiān",
+		"meaning": "the day after tomorrow",
+		"example": "后天上午我们有一场考试。(Hòutiān shàngwǔ wǒmen yǒu yì chǎng kǎoshì.) — We have an exam the morning after tomorrow."
+	},
+	{
+		"word": "上个星期",
+		"pinyin": "shàng ge xīngqī",
+		"meaning": "last week",
+		"example": "上个星期我去了上海出差。(Shàng ge xīngqī wǒ qù le Shànghǎi chūchāi.) — Last week I went on a business trip to Shanghai."
+	},
+	{
+		"word": "下个星期",
+		"pinyin": "xià ge xīngqī",
+		"meaning": "next week",
+		"example": "下个星期我们去看电影吧。(Xià ge xīngqī wǒmen qù kàn diànyǐng ba.) — Let's go watch a movie next week."
+	},
+	{
+		"word": "上个月",
+		"pinyin": "shàng ge yuè",
+		"meaning": "last month",
+		"example": "上个月天气特别热。(Shàng ge yuè tiānqì tèbié rè.) — Last month the weather was especially hot."
+	},
+	{
+		"word": "下个月",
+		"pinyin": "xià ge yuè",
+		"meaning": "next month",
+		"example": "下个月姐姐要来北京看我。(Xià ge yuè jiějie yào lái Běijīng kàn wǒ.) — Next month my elder sister will visit me in Beijing."
+	},
+	{
+		"word": "前年",
+		"pinyin": "qiánnián",
+		"meaning": "the year before last",
+		"example": "我是前年开始学中文的。(Wǒ shì qiánnián kāishǐ xué zhōngwén de.) — I started learning Chinese the year before last."
+	},
+	{
+		"word": "后年",
+		"pinyin": "hòunián",
+		"meaning": "the year after next",
+		"example": "他打算后年大学毕业。(Tā dǎsuàn hòunián dàxué bìyè.) — He plans to graduate from university the year after next."
+	},
+	{
+		"word": "平时",
+		"pinyin": "píngshí",
+		"meaning": "normally / usually / weekdays",
+		"example": "你平时几点下班？(Nǐ píngshí jǐ diǎn xiàbān?) — What time do you normally get off work?"
+	},
+	{
+		"word": "以前",
+		"pinyin": "yǐqián",
+		"meaning": "before / previously",
+		"example": "我以前在伦敦住过两年。(Wǒ yǐqián zài Lúndūn zhù guo liǎng nián.) — I lived in London for two years previously."
+	},
+	{
+		"word": "以后",
+		"pinyin": "yǐhòu",
+		"meaning": "after / in the future",
+		"example": "吃完饭以后我们去散步。(Chī wán fàn yǐhòu wǒmen qù sànbù.) — After finishing the meal we'll go for a walk."
+	},
+	{
+		"word": "有时候",
+		"pinyin": "yǒu shíhou",
+		"meaning": "sometimes",
+		"example": "我平时做饭，有时候点外卖。(Wǒ píngshí zuòfàn, yǒu shíhou diǎn wàimài.) — I usually cook, sometimes order takeout."
+	},
+	{
+		"word": "有空",
+		"pinyin": "yǒu kòng",
+		"meaning": "to have free time / available",
+		"example": "你今天晚上有空吗？(Nǐ jīntiān wǎnshang yǒu kòng ma?) — Are you free tonight?"
+	},
+	{
+		"word": "没空",
+		"pinyin": "méi kòng",
+		"meaning": "not available / no free time",
+		"example": "真不好意思，我明天一整天都没空。(Zhēn bù hǎoyìsi, wǒ míngtiān yì zhěng tiān dōu méi kòng.) — Really sorry, I have no free time all day tomorrow."
+	},
+	{
+		"word": "改天",
+		"pinyin": "gǎitiān",
+		"meaning": "another day / some other time",
+		"example": "今天太匆忙了，改天再聚吧！(Jīntiān tài cōngmáng le, gǎitiān zài jù ba!) — Today is too rushed, let's meet another day!"
+	},
+	{
+		"word": "提前",
+		"pinyin": "tíqián",
+		"meaning": "in advance / ahead of schedule",
+		"example": "我们需要提前半小时到达车站。(Wǒmen xūyào tíqián bàn xiǎoshí dàodá chēzhàn.) — We need to arrive at the station half an hour early."
+	},
+	{
+		"word": "推迟",
+		"pinyin": "tuīchí",
+		"meaning": "to postpone / delay",
+		"example": "因为下雨，活动推迟到下周。(Yīnwèi xiàyǔ, huódòng tuīchí dào xià zhōu.) — Due to rain, the event is postponed until next week."
+	},
+	{
+		"word": "马上",
+		"pinyin": "mǎshàng",
+		"meaning": "right away / immediately",
+		"example": "我马上就到楼下了。(Wǒ mǎshàng jiù dào lóuxià le.) — I'll be downstairs immediately."
+	},
+	{
+		"word": "刚",
+		"pinyin": "gāng",
+		"meaning": "just now / just",
+		"example": "我刚从超市买菜回来。(Wǒ gāng cóng chāoshì mǎi cài huílái.) — I just returned from grocery shopping at the supermarket."
+	},
+	{
+		"word": "已经",
+		"pinyin": "yǐjīng",
+		"meaning": "already",
+		"example": "火车已经进站了。(Huǒchē yǐjīng jìnzhàn le.) — The train has already entered the station."
+	},
+	{
+		"word": "一会儿",
+		"pinyin": "yíhuìr",
+		"meaning": "a short while / in a moment",
+		"example": "我休息一会儿就继续写作业。(Wǒ xiūxi yíhuìr jiù jìxù xiě zuòyè.) — I'll rest a moment then continue homework."
+	},
+	{
+		"word": "稍后",
+		"pinyin": "shāohòu",
+		"meaning": "a little later / shortly",
+		"example": "我稍后给您回电话。(Wǒ shāohòu gěi nín huí diànhuà.) — I will call you back shortly."
+	},
+	{
+		"word": "定期",
+		"pinyin": "dìngqī",
+		"meaning": "regularly / at regular intervals",
+		"example": "汽车需要定期保养。(Qìchē xūyào dìngqī bǎoyǎng.) — Cars need regular maintenance."
+	},
+	{
+		"word": "吃饱了",
+		"pinyin": "chī bǎo le",
+		"meaning": "full / ate until full",
+		"example": "我已经吃饱了，谢谢。(Wǒ yǐjīng chī bǎo le, xièxie.) — I am already full, thank you."
+	},
+	{
+		"word": "关灯",
+		"pinyin": "guān dēng",
+		"meaning": "to turn off the light",
+		"example": "睡觉前别忘了关灯。(Shuìjiào qián bié wàng le guān dēng.) — Don't forget to turn off the light before sleeping."
+	},
+	{
+		"word": "开门",
+		"pinyin": "kāi mén",
+		"meaning": "to open the door",
+		"example": "请去开门。(Qǐng qù kāi mén.) — Please go open the door."
+	},
+	{
+		"word": "沙发",
+		"pinyin": "shāfā",
+		"meaning": "sofa / couch",
+		"example": "躺在舒服的沙发上休息。(Tǎng zài shūfu de shāfā shang xiūxi.) — Lying on the comfortable couch resting."
+	},
+	{
+		"word": "拖鞋",
+		"pinyin": "tuōxié",
+		"meaning": "slippers",
+		"example": "进屋请换上干净的拖鞋。(Jìn wū qǐng huàn shang gānjìng de tuōxié.) — Please switch into clean slippers upon entering."
+	},
+	{
+		"word": "毛巾",
+		"pinyin": "máojīn",
+		"meaning": "towel",
+		"example": "这条新毛巾吸水性特别好。(Zhè tiáo xīn máojīn xīshuǐ xìng tèbié hǎo.) — This new towel is very absorbent."
+	},
+	{
+		"word": "倒水",
+		"pinyin": "dào shuǐ",
+		"meaning": "to pour water",
+		"example": "请帮客人倒水。(Qǐng bāng kèrén dào shuǐ.) — Please pour water for the guest."
+	},
+	{
+		"word": "洗手",
+		"pinyin": "xǐ shǒu",
+		"meaning": "to wash hands",
+		"example": "饭前一定要先洗手。(Fàn qián yídìng yào xiān xǐ shǒu.) — Be sure to wash hands before meals."
+	},
+	{
+		"word": "微波炉",
+		"pinyin": "wēibōlú",
+		"meaning": "microwave oven",
+		"example": "把冷饭放进微波炉热两分钟。(Bǎ lěng fàn fàng jìn wēibōlú rè liǎng fēnzhōng.) — Heat cold rice in the microwave for two minutes."
+	},
+	{
+		"word": "出门",
+		"pinyin": "chūmén",
+		"meaning": "to go out / leave home",
+		"example": "出门记得带钥匙和手机。(Chūmén jìde dài yàoshi hé shǒujī.) — Remember to take your keys and phone when going out."
+	},
+	{
+		"word": "衣柜",
+		"pinyin": "yīguì",
+		"meaning": "wardrobe / clothes closet",
+		"example": "洗干净的外套挂在衣柜里。(Xǐ gānjìng de wàitào guà zài yīguì lǐ.) — Hang clean jackets in the wardrobe."
+	},
+	{
+		"word": "鞋架",
+		"pinyin": "xiéjià",
+		"meaning": "shoe rack",
+		"example": "进门把鞋子整齐地放在鞋架上。(Jìnmén bǎ xiézi zhěngqí de fàng zài xiéjià shang.) — Place shoes neatly on the shoe rack upon entering."
+	},
+	{
+		"word": "被子",
+		"pinyin": "bèizi",
+		"meaning": "quilt / blanket",
+		"example": "冬天睡觉盖厚一点的被子。(Dōngtiān shuìjiào gài hòu yìdiǎnr de bèizi.) — Sleep under a thicker quilt in winter."
+	},
+	{
+		"word": "枕头",
+		"pinyin": "zhěntou",
+		"meaning": "pillow",
+		"example": "这个记忆棉枕头很舒服。(Zhè ge jìyìmián zhěntou hěn shūfu.) — This memory foam pillow is very comfortable."
+	},
+	{
+		"word": "镜子",
+		"pinyin": "jìngzi",
+		"meaning": "mirror",
+		"example": "出门前在镜子前整理一下衣服。(Chūmén qián zài jìngzi qián zhěnglǐ yíxià yīfu.) — Tidy up clothes in front of the mirror before heading out."
+	},
+	{
+		"word": "扫地",
+		"pinyin": "sǎo dì",
+		"meaning": "sweep the floor",
+		"example": "吃完晚饭后弟弟负责扫地。(Chī wán wǎnfàn hòu dìdi fùzé sǎo dì.) — Younger brother sweeps the floor after dinner."
+	},
+	{
+		"word": "拖地",
+		"pinyin": "tuō dì",
+		"meaning": "mop the floor",
+		"example": "地板弄脏了，我来拖地。(Dìbǎn nòng zāng le, wǒ lái tuō dì.) — The floor got dirty, I will mop it."
+	},
+	{
+		"word": "倒垃圾",
+		"pinyin": "dào lājī",
+		"meaning": "take out the trash",
+		"example": "下楼顺便倒垃圾。(Xià lóu shùnbiàn dào lājī.) — Take out the trash on your way downstairs."
+	},
+	{
+		"word": "晾衣服",
+		"pinyin": "liàng yīfu",
+		"meaning": "hang clothes to dry",
+		"example": "衣服洗好了，拿到阳台去晾衣服。(Yīfu xǐ hǎo le, ná dào yángtái qù liàng yīfu.) — Clothes are washed, bring them to the balcony to dry."
+	},
+	{
+		"word": "开水壶",
+		"pinyin": "kāishuǐhú",
+		"meaning": "electric kettle / water boiler",
+		"example": "用电开水壶烧一壶热水。(Yòng diàn kāishuǐhú shāo yì hú rèshuǐ.) — Boil a pot of hot water with the electric kettle."
+	},
+	{
+		"word": "请问",
+		"pinyin": "qǐngwèn",
+		"meaning": "excuse me / may I ask",
+		"example": "请问洗手间在哪儿？(Qǐngwèn xǐshǒujiān zài nǎr?) — Excuse me, where is the restroom?"
+	},
+	{
+		"word": "是吗",
+		"pinyin": "shì ma",
+		"meaning": "is that so?",
+		"example": "明天会降温？是吗，那我多穿点。(Míngtiān huì jiàngwēn? Shì ma, nà wǒ duō chuān diǎnr.) — Temperature dropping tomorrow? Is that so, I'll bundle up."
+	},
+	{
+		"word": "不用了",
+		"pinyin": "bú yòng le",
+		"meaning": "no need / no thank you",
+		"example": "要喝水吗？— 不用了，谢谢。(Yào hē shuǐ ma? — Bú yòng le, xièxie.) — Want water? — No thank you."
+	},
+	{
+		"word": "我想一下",
+		"pinyin": "wǒ xiǎng yíxià",
+		"meaning": "let me think / let me consider",
+		"example": "这个提议很好，让我想一下。(Zhè ge tíyì hěn hǎo, ràng wǒ xiǎng yíxià.) — Good suggestion, let me think about it."
+	},
+	{
+		"word": "麻烦你",
+		"pinyin": "máfan nǐ",
+		"meaning": "could you please / bother you to",
+		"example": "麻烦你帮我递一下那本书。(Máfan nǐ bāng wǒ dì yíxià nà běn shū.) — Could you bother to pass me that book?"
+	},
+	{
+		"word": "借过",
+		"pinyin": "jièguò",
+		"meaning": "excuse me (passing by in crowd)",
+		"example": "借过借过，请大家让一让。(Jièguò jièguò, qǐng dàjiā ràng yí ràng.) — Excuse me passing through, please let me pass."
+	},
+	{
+		"word": "干杯",
+		"pinyin": "gānbēi",
+		"meaning": "cheers! / bottoms up",
+		"example": "为了我们的友谊，干杯！(Wèile wǒmen de yǒuyì, gānbēi!) — Cheers to our friendship!"
+	},
+	{
+		"word": "哪里哪里",
+		"pinyin": "nǎlǐ nǎlǐ",
+		"meaning": "not at all / humble deflection",
+		"example": "您的中文讲得真好！— 哪里哪里，还在学。(Nín de zhōngwén jiǎng de zhēn hǎo! — Nǎlǐ nǎlǐ, hái zài xué.) — Your Chinese is great! — Not at all, still learning."
+	},
+	{
+		"word": "打扰了",
+		"pinyin": "dǎrǎo le",
+		"meaning": "sorry to disturb you",
+		"example": "不好意思打扰了，我想问个路。(Bù hǎoyìsi dǎrǎo le, wǒ xiǎng wèn ge lù.) — Sorry to disturb you, I wanted to ask for directions."
+	},
+	{
+		"word": "祝贺",
+		"pinyin": "zhùhè",
+		"meaning": "to congratulate",
+		"example": "祝贺你顺利通过了考试！(Zhùhè nǐ shùnlì tōngguò le kǎoshì!) — Congratulations on passing your exam smoothly!"
+	},
+	{
+		"word": "保重",
+		"pinyin": "bǎozhòng",
+		"meaning": "take care of yourself",
+		"example": "天气变冷了，多保重身体。(Tiānqì biàn lěng le, duō bǎozhòng shēntǐ.) — Weather is getting colder, take care of your health."
+	},
+	{
+		"word": "慢走",
+		"pinyin": "màn zǒu",
+		"meaning": "take care on your way out (host to guest)",
+		"example": "吃好喝好了，您慢走，常来啊！(Chī hǎo hē hǎo le, nín màn zǒu, cháng lái a!) — Hope you enjoyed it, take care, come again!"
+	},
+	{
+		"word": "请慢用",
+		"pinyin": "qǐng màn yòng",
+		"meaning": "please enjoy your meal",
+		"example": "您的菜齐了，请慢用。(Nín de cài qí le, qǐng màn yòng.) — All your dishes are here, please enjoy your meal."
+	},
+	{
+		"word": "抱歉",
+		"pinyin": "bàoqiàn",
+		"meaning": "apologetic / sorry",
+		"example": "非常抱歉让您久等了。(Fēicháng bàoqiàn ràng nín jiǔděng le.) — Very sorry to have kept you waiting so long."
+	},
+	{
+		"word": "客气",
+		"pinyin": "kèqi",
+		"meaning": "polite / courteous",
+		"example": "都是老朋友了，别那么客气。(Dōu shì lǎo péngyou le, bié nàme kèqi.) — We're old friends, don't be so formal."
+	},
+	{
+		"word": "一路顺风",
+		"pinyin": "yílù shùnfēng",
+		"meaning": "have a pleasant journey / bon voyage",
+		"example": "明天坐飞机回国？祝你一路顺风！(Míngtiān zuò fēijī huíguó? Zhù nǐ yílù shùnfēng!) — Flying home tomorrow? Bon voyage!"
+	},
+	{
+		"word": "欢迎光临",
+		"pinyin": "huānyíng guānglín",
+		"meaning": "welcome to our store!",
+		"example": "欢迎光临，请问几位？(Huānyíng guānglín, qǐngwèn jǐ wèi?) — Welcome, table for how many?"
+	},
+	{
+		"word": "请多指教",
+		"pinyin": "qǐng duō zhǐjiào",
+		"meaning": "please give me guidance",
+		"example": "我是新来的实习生，请多指教。(Wǒ shì xīn lái de shíxíshēng, qǐng duō zhǐjiào.) — I am a new intern, please give me your guidance."
+	},
+	{
+		"word": "随时效劳",
+		"pinyin": "suíshí xiàoláo",
+		"meaning": "at your service anytime",
+		"example": "有什么需要帮忙的，随时效劳。(Yǒu shénme xūyào bāngmáng de, suíshí xiàoláo.) — Whatever help you need, at your service anytime."
+	},
+	{
+		"word": "多谢",
+		"pinyin": "duōxiè",
+		"meaning": "many thanks",
+		"example": "谢谢你及时提醒，多谢多谢！(Xièxie nǐ jíshí tíxǐng, duōxiè duōxiè!) — Thank you for the timely reminder, many thanks!"
+	},
+	{
+		"word": "地址",
+		"pinyin": "dìzhǐ",
+		"meaning": "address",
+		"example": "这是我要去的具体地址。(Zhè shì wǒ yào qù de jùtǐ dìzhǐ.) — This is the specific address I want to go to."
+	},
+	{
+		"word": "多长时间",
+		"pinyin": "duō cháng shíjiān",
+		"meaning": "how long (duration)",
+		"example": "开车到机场大概要多长时间？(Kāichē dào jīchǎng dàgài yào duō cháng shíjiān?) — About how long does driving to the airport take?"
+	},
+	{
+		"word": "房卡",
+		"pinyin": "fángkǎ",
+		"meaning": "room keycard",
+		"example": "这是您的房卡，电梯需要刷卡。(Zhè shì nín de fángkǎ, diàntī xūyào shuākǎ.) — Here is your room card, elevator requires tapping."
+	},
+	{
+		"word": "押金",
+		"pinyin": "yājīn",
+		"meaning": "security deposit",
+		"example": "入住需要交两百块押金。(Rùzhù xūyào jiāo liǎng bǎi kuài yājīn.) — Checking in requires a 200 yuan deposit."
+	},
+	{
+		"word": "早餐",
+		"pinyin": "zǎocān",
+		"meaning": "breakfast",
+		"example": "请问明天的早餐几点开始？(Qǐngwèn míngtiān de zǎocān jǐ diǎn kāishǐ?) — What time does breakfast start tomorrow?"
+	},
+	{
+		"word": "往左拐",
+		"pinyin": "wǎng zuǒ guǎi",
+		"meaning": "turn left",
+		"example": "走到十字路口往左拐。(Zǒu dào shízì lùkǒu wǎng zuǒ guǎi.) — Walk to the intersection and turn left."
+	},
+	{
+		"word": "往右拐",
+		"pinyin": "wǎng yòu guǎi",
+		"meaning": "turn right",
+		"example": "穿过马路然后往右拐。(Chuānguò mǎlù ránhòu wǎng yòu guǎi.) — Cross the street then turn right."
+	},
+	{
+		"word": "一直往前走",
+		"pinyin": "yìzhí wǎng qián zǒu",
+		"meaning": "go straight ahead",
+		"example": "沿着这条街一直往前走五百米。(Yánzhe zhè tiáo jiē yìzhí wǎng qián zǒu wǔ bǎi mǐ.) — Walk straight ahead along this street for 500 meters."
+	},
+	{
+		"word": "到了",
+		"pinyin": "dào le",
+		"meaning": "arrived / here we are",
+		"example": "师傅，就在前面路口停一下，到了。(Shīfu, jiù zài qiánmian lùkǒu tíng yíxià, dào le.) — Driver, please stop at the front intersection, we're here."
+	},
+	{
+		"word": "寄存",
+		"pinyin": "jìcún",
+		"meaning": "to store / check luggage",
+		"example": "车站有寄存大件行李的地方吗？(Chēzhàn yǒu jìcún dàjiàn xíngli de dìfang ma?) — Is there a luggage storage area at the station?"
+	},
+	{
+		"word": "问路",
+		"pinyin": "wèn lù",
+		"meaning": "to ask for directions",
+		"example": "路不熟的时候找警察问路最安全。(Lù bù shú de shíhou zhǎo jǐngchá wèn lù zuì ānquán.) — When unfamiliar with the route, asking police for directions is safest."
+	},
+	{
+		"word": "登机口",
+		"pinyin": "dēngjīkǒu",
+		"meaning": "boarding gate",
+		"example": "您的航班在十六号登机口登机。(Nín de hángbān zài shíliù hào dēngjīkǒu dēngjī.) — Your flight is boarding at gate 16."
+	},
+	{
+		"word": "高铁",
+		"pinyin": "gāotiě",
+		"meaning": "high-speed rail (bullet train)",
+		"example": "从北京坐高铁到上海只要四个多小时。(Cóng Běijīng zuò gāotiě dào Shànghǎi zhǐ yào sì ge duō xiǎoshí.) — High-speed rail from Beijing to Shanghai takes only 4+ hours."
+	},
+	{
+		"word": "一卡通",
+		"pinyin": "yīkǎtōng",
+		"meaning": "transit smart card (metro card)",
+		"example": "刷交通一卡通坐地铁非常方便。(Shuā jiāotōng yīkǎtōng zuò dìtiě fēicháng fāngbiàn.) — Tapping the transit metro card is very convenient."
+	},
+	{
+		"word": "应急",
+		"pinyin": "yìngjí",
+		"meaning": "emergency / contingency",
+		"example": "出门旅行随身带上应急药品。(Chūmén lǚxíng suíshēn dài shang yìngjí yàopǐn.) — Carry contingency medicines when traveling."
+	},
+	{
+		"word": "检票口",
+		"pinyin": "jiǎnpiàokǒu",
+		"meaning": "ticket check gate",
+		"example": "发车前十五分钟开始在三号检票口检票。(Fāchē qián shíwǔ fēnzhōng kāishǐ zài sān hào jiǎnpiàokǒu jiǎnpiào.) — Ticket checking starts 15 minutes before departure at gate 3."
+	},
+	{
+		"word": "换乘",
+		"pinyin": "huànchéng",
+		"meaning": "transfer / change train or bus",
+		"example": "在下一站换乘地铁二号线。(Zài xià yí zhàn huànchéng dìtiě èr hào xiàn.) — Transfer to Metro Line 2 at the next station."
+	},
+	{
+		"word": "出站口",
+		"pinyin": "chūzhànkǒu",
+		"meaning": "station exit gate",
+		"example": "我们在火车站南出站口碰头。(Wǒmen zài huǒchēzhàn nán chūzhànkǒu pèngtóu.) — We'll meet at the south exit gate of the train station."
+	},
+	{
+		"word": "问询处",
+		"pinyin": "wènxúnchù",
+		"meaning": "information / inquiry desk",
+		"example": "如有遗失物品请去大厅问询处。(Rú yǒu yíshī wùpǐn qǐng qù dàtīng wènxúnchù.) — For lost items, please visit the hall information desk."
+	},
+	{
+		"word": "欢迎",
+		"pinyin": "huānyíng",
+		"meaning": "to welcome (Tone 1-2 pair)",
+		"example": "热烈欢迎新同学加入！(Rèliè huānyíng xīn tóngxué jiārù!) — Warmly welcome new classmates joining!"
+	},
+	{
+		"word": "面包",
+		"pinyin": "miànbāo",
+		"meaning": "bread (Tone 4-1 pair)",
+		"example": "早餐吃一片烤面包和鸡蛋。(Zǎocān chī yí piàn kǎo miànbāo hé jīdàn.) — Eat a slice of toast and an egg for breakfast."
+	},
+	{
+		"word": "首都",
+		"pinyin": "shǒudū",
+		"meaning": "capital city (Tone 3-1 pair)",
+		"example": "北京是中国的首都。(Běijīng shì Zhōngguó de shǒudū.) — Beijing is the capital of China."
+	},
+	{
+		"word": "简单",
+		"pinyin": "jiǎndān",
+		"meaning": "simple / uncomplicated (Tone 3-1 pair)",
+		"example": "这个句子其实非常简单。(Zhè ge jùzi qíshí fēicháng jiǎndān.) — This sentence is actually very simple."
+	},
+	{
+		"word": "语法",
+		"pinyin": "yǔfǎ",
+		"meaning": "grammar (Tone 3-3 pair, sandhi to 2-3)",
+		"example": "掌握基础的汉语语法规则。(Zhǎngwò jīchǔ de hànyǔ yǔfǎ guīzé.) — Master fundamental Chinese grammar rules."
+	},
+	{
+		"word": "汉字",
+		"pinyin": "hànzì",
+		"meaning": "Chinese characters (Tone 4-4 pair)",
+		"example": "学习书写常用汉字很实用。(Xuéxí shūxiě chángyòng hànzì hěn shíyòng.) — Learning to write common Chinese characters is very practical."
+	},
+	{
+		"word": "一样",
+		"pinyin": "yí yàng",
+		"meaning": "same / alike (一 Tone 2 sandhi)",
+		"example": "这两件衣服的质量完全一样。(Zhè liǎng jiàn yīfu de zhìliàng wánquán yí yàng.) — The quality of these two garments is completely identical."
+	},
+	{
+		"word": "不是",
+		"pinyin": "bú shì",
+		"meaning": "is not (不 Tone 2 sandhi)",
+		"example": "他不是本地人，是从南方来的。(Tā bú shì běndì rén, shì cóng nánfāng lái de.) — He is not a local, he came from the south."
+	},
+	{
+		"word": "不要",
+		"pinyin": "bú yào",
+		"meaning": "do not / don't want (不 Tone 2 sandhi)",
+		"example": "过马路时千万不要看手机。(Guò mǎlù shí qiānwàn bú yào kàn shǒujī.) — Definitely do not look at your phone when crossing the street."
+	},
+	{
+		"word": "一起",
+		"pinyin": "yìqǐ",
+		"meaning": "together (一 Tone 4 sandhi)",
+		"example": "周末大家一起去公园散步。(Zhōumò dàjiā yìqǐ qù gōngyuán sànbù.) — On weekends everyone goes walking in the park together."
+	},
+	{
+		"word": "一块儿",
+		"pinyin": "yíkuàir",
+		"meaning": "together (colloquial)",
+		"example": "走吧，我们一块儿去食堂。(Zǒu ba, wǒmen yíkuàir qù shítáng.) — Let's go, we'll head to the cafeteria together."
+	},
+	{
+		"word": "声调",
+		"pinyin": "shēngdiào",
+		"meaning": "tone (phonetics)",
+		"example": "掌握四个声调对汉语听力很重要。(Zhǎngwò sì ge shēngdiào duì hànyǔ tīnglì hěn zhòngyào.) — Mastering the four tones is essential for Chinese listening."
+	},
+	{
+		"word": "轻声",
+		"pinyin": "qīngshēng",
+		"meaning": "neutral tone / light tone",
+		"example": "汉语中很多词的第二个字念轻声。(Hànyǔ zhōng hěn duō cí de dì èr ge zì niàn qīngshēng.) — In Chinese many words' second character is read in neutral tone."
+	},
+	{
+		"word": "变调",
+		"pinyin": "biàndiào",
+		"meaning": "tone sandhi / tone change",
+		"example": "第三声连续出现时会发生变调。(Dì sān shēng liánxù chūxiàn shí huì fāshēng biàndiào.) — When third tones appear consecutively, tone sandhi occurs."
+	},
+	{
+		"word": "黑板",
+		"pinyin": "hēibǎn",
+		"meaning": "blackboard (Tone 1-3 pair)",
+		"example": "老师在黑板上写了生词。(Lǎoshī zài hēibǎn shang xiě le shēngcí.) — The teacher wrote new words on the blackboard."
+	},
+	{
+		"word": "啤酒",
+		"pinyin": "píjiǔ",
+		"meaning": "beer (Tone 2-3 pair)",
+		"example": "来一瓶冰镇啤酒。(Lái yì píng bīngzhèn píjiǔ.) — Bring a bottle of iced beer."
+	},
+	{
+		"word": "许多",
+		"pinyin": "xǔduō",
+		"meaning": "many / plenty (Tone 3-1 pair)",
+		"example": "公园里有许多人在散步。(Gōngyuán lǐ yǒu xǔduō rén zài sànbù.) — There are many people walking in the park."
+	},
+	{
+		"word": "努力",
+		"pinyin": "nǔlì",
+		"meaning": "hard-working / strive (Tone 3-4 pair)",
+		"example": "只要努力就能学好中文。(Zhǐyào nǔlì jiù néng xué hǎo zhōngwén.) — As long as you work hard you can master Chinese."
+	},
+	{
+		"word": "拼音输入法",
+		"pinyin": "pīnyīn shūrùfǎ",
+		"meaning": "Pinyin Input Method (IME)",
+		"example": "在手机上切换到拼音输入法。(Zài shǒujī shang qiēhuàn dào pīnyīn shūrùfǎ.) — Switch to the Pinyin input method on your phone."
+	},
+	{
+		"word": "候选词",
+		"pinyin": "hòuxuǎncí",
+		"meaning": "candidate word",
+		"example": "从候选词列表里挑选正确的汉字。(Cóng hòuxuǎncí lièbiǎo lǐ tiāoxuǎn zhèngquè de hànzì.) — Pick the correct Chinese character from the candidate list."
+	},
+	{
+		"word": "翻页",
+		"pinyin": "fānyè",
+		"meaning": "page down / next candidate page",
+		"example": "按加号键或者等号键翻页选字。(Àn jiāhào jiàn huòzhě děnghào jiàn fānyè xuǎnzì.) — Press plus or equals key to page through candidate characters."
+	},
+	{
+		"word": "标点符号",
+		"pinyin": "biāodiǎn fúhào",
+		"meaning": "punctuation marks",
+		"example": "中文标点符号占一个完整的汉字空格。(Zhōngwén biāodiǎn fúhào zhàn yí ge wánzhěng de hànzì kònggé.) — Chinese punctuation marks take up a full character width."
+	},
+	{
+		"word": "逗号",
+		"pinyin": "dòuhào",
+		"meaning": "comma (，)",
+		"example": "在句子短暂停顿处输入中文逗号。(Zài jùzi duǎnzàn tíngdùn chù shūrù zhōngwén dòuhào.) — Enter a Chinese comma at brief pauses in a sentence."
+	},
+	{
+		"word": "句号",
+		"pinyin": "jùhào",
+		"meaning": "full stop / period (。)",
+		"example": "每句话写完整后记得打上句号。(Měi jù huà xiě wánzhěng hòu jìde dǎ shang jùhào.) — Remember to put a period after completing each sentence."
+	},
+	{
+		"word": "问号",
+		"pinyin": "wènhào",
+		"meaning": "question mark (？)",
+		"example": "疑问句结尾要使用中文问号。(Yíwènjù jiéwěi yào shǐyòng zhōngwén wènhào.) — Use a Chinese question mark at the end of interrogative sentences."
+	},
+	{
+		"word": "叹号",
+		"pinyin": "tànhào",
+		"meaning": "exclamation mark (！)",
+		"example": "感叹情绪强烈的句子用叹号结尾。(Gǎntàn qíngxù qiángliè de jùzi yòng tànhào jiéwěi.) — Use exclamation marks at the end of strong emotive sentences."
+	},
+	{
+		"word": "空格键",
+		"pinyin": "kònggéjiàn",
+		"meaning": "spacebar",
+		"example": "按空格键直接确认第一个候选词。(Àn kònggéjiàn zhíjiē quèrèn dì yī ge hòuxuǎncí.) — Press the spacebar to confirm the first candidate word directly."
+	},
+	{
+		"word": "回车键",
+		"pinyin": "huíchējiàn",
+		"meaning": "enter / return key",
+		"example": "按回车键可以直接输出英文字母。(Àn huíchējiàn kěyǐ zhíjiē shūchū yīngwén zìmǔ.) — Press enter key to output English letters directly."
+	},
+	{
+		"word": "字母",
+		"pinyin": "zìmǔ",
+		"meaning": "letters / alphabet",
+		"example": "拼音由英文字母组成。(Pīnyīn yóu yīngwén zìmǔ zǔchéng.) — Pinyin is composed of English letters."
+	},
+	{
+		"word": "声母",
+		"pinyin": "shēngmǔ",
+		"meaning": "initials (consonants)",
+		"example": "普通话拼音一共有二十一个声母。(Pǔtōnghuà pīnyīn yígòng yǒu èrshíyī ge shēngmǔ.) — Standard Mandarin pinyin has 21 initials in total."
+	},
+	{
+		"word": "韵母",
+		"pinyin": "yùnmǔ",
+		"meaning": "finals (vowels)",
+		"example": "练习好单韵母和复韵母的发音。(Liànxí hǎo dān yùnmǔ hé fù yùnmǔ de fāyīn.) — Practice pronunciation of simple and compound finals well."
+	},
+	{
+		"word": "整词输入",
+		"pinyin": "zhěngcí shūrù",
+		"meaning": "whole-word typing",
+		"example": "采用整词输入可以大大提高打字准确率。(Cǎiyòng zhěngcí shūrù kěyǐ dàdà tígāo dǎzì zhǔnquèlǜ.) — Typing whole words greatly improves character recognition accuracy."
+	},
+	{
+		"word": "隔音符号",
+		"pinyin": "géyīn fúhào",
+		"meaning": "apostrophe syllable separator",
+		"example": "输入西安时在两个音节中间加上隔音符号。(Shūrù Xī'ān shí zài liǎng ge yīnjié zhōngjiān jiā shang géyīn fúhào.) — Add an apostrophe delimiter between syllables when typing Xi'an."
+	},
+	{
+		"word": "错别字",
+		"pinyin": "cuòbiézì",
+		"meaning": "typo / miswritten character",
+		"example": "发信息前多检查一遍避免错别字。(Fā xìnxī qián duō jiǎnchá yí biàn bìmiǎn cuòbiézì.) — Proofread before sending messages to avoid typos."
+	},
+	{
+		"word": "单字",
+		"pinyin": "dānzì",
+		"meaning": "single character",
+		"example": "初学打字不要只打单字。(Chūxué dǎzì bú yào zhǐ dǎ dānzì.) — Beginners should avoid typing single characters only."
+	},
+	{
+		"word": "联想词",
+		"pinyin": "liánxiǎngcí",
+		"meaning": "predictive text / associative phrase",
+		"example": "输入法会自动提供常用的联想词。(Shūrùfǎ huì zìdòng tígōng chángyòng de liánxiǎngcí.) — The input method automatically offers common predictive phrases."
+	},
+	{
+		"word": "语音输入",
+		"pinyin": "yǔyīn shūrù",
+		"meaning": "voice input / speech-to-text",
+		"example": "手忙的时候可以用语音输入发消息。(Shǒu máng de shíhou kěyǐ yòng yǔyīn shūrù fā xiāoxi.) — When hands are busy you can use voice input to send messages."
+	},
+	{
+		"word": "简拼",
+		"pinyin": "jiǎnpīn",
+		"meaning": "abbreviated pinyin initials",
+		"example": "输入每个字的声母简拼即可出词。(Shūrù měi ge zì de shēngmǔ jiǎnpīn jíkě chū cí.) — Typing just the initials of each word will suggest the phrase."
+	}
+]

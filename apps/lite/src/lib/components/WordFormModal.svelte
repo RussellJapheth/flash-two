@@ -1,19 +1,10 @@
 <script lang="ts">
-	import { Wand2, RefreshCw, Plus } from 'lucide-svelte';
-	import type { CustomDeck, WordRecord } from '@flash/shared';
-	import {
-		ALL_WORDS_CATEGORY,
-		DUPLICATE_WORD_ERROR,
-		validateMyWord,
-		toMyWordInput,
-		generateWordPinyin,
-		getMyWordsSubcategories,
-		type MeaningCandidate,
-		type MyWordErrors,
-		type MyWordField,
-		type MyWordInput
-	} from '@flash/shared';
-	import { addMyWord, updateMyWord, deleteMyWord } from '$lib/storage';
+	import { Plus, Layers, Check, Trash2, X, Loader2, AlertCircle } from 'lucide-svelte';
+	import type { CustomDeck, WordRecord, MyWordInput } from '@flash/shared';
+	import { ALL_WORDS_CATEGORY, ALL_WEEKS_LABEL, toMyWordInput } from '@flash/shared';
+	import { addMyWordsBulk, updateMyWord, deleteMyWord } from '$lib/storage';
+	import { countBulkWords, generateCardForWord, generateCardsInBulk } from '$lib/generator';
+	import { getUnlockedWeeks, getCurrentWeekLabel } from '$lib/weeks';
 
 	interface Props {
 		open: boolean;
@@ -32,104 +23,77 @@
 		onChanged
 	}: Props = $props();
 
-	const uid = $props.id();
-	const ids: Record<MyWordField | 'title', string> = {
-		title: `${uid}-title`,
-		word: `${uid}-word`,
-		pinyin: `${uid}-pinyin`,
-		meaning: `${uid}-meaning`,
-		example: `${uid}-example`,
-		category: `${uid}-category`
-	};
-
-	const emptyInput: MyWordInput = { word: '', pinyin: '', meaning: '', example: '', category: '' };
-
 	let dialog: HTMLDialogElement | undefined = $state();
-	let form = $state<MyWordInput>({ ...emptyInput });
-	let errors = $state<MyWordErrors>({});
-	let saveError = $state('');
-	let isSaving = $state(false);
-	let confirmingDelete = $state(false);
-	let duplicateWarningShown = $state(false);
-	let creatingCategory = $state(false);
-	let newCategoryName = $state('');
-	let pinyinManuallyEdited = $state(false);
-	let meaningManuallyEdited = $state(false);
-	let exampleManuallyEdited = $state(false);
-	let meaningCandidates = $state<MeaningCandidate[]>([]);
-	let exampleCandidates = $state<string[]>([]);
-	let exampleIndex = $state(0);
-	let isComposing = $state(false);
-
-	let lookupTimer: ReturnType<typeof setTimeout> | null = null;
-	let lookupSeq = 0;
-
 	let isEdit = $derived(word !== null);
-	let subcategories = $derived(getMyWordsSubcategories(existingWords));
 
-	const fields: {
-		key: Exclude<MyWordField, 'category'>;
-		label: string;
-		placeholder: string;
-		optional: boolean;
-	}[] = [
-		{ key: 'word', label: 'Chinese word', placeholder: 'e.g. 你好', optional: false },
-		{ key: 'pinyin', label: 'Pinyin', placeholder: 'e.g. nǐ hǎo', optional: false },
-		{ key: 'meaning', label: 'English meaning', placeholder: 'e.g. hello', optional: false },
-		{
-			key: 'example',
-			label: 'Example sentence',
-			placeholder: 'e.g. 你好，我叫小明。',
-			optional: true
-		}
-	];
+	// Tabs for add mode: 'single' | 'bulk'
+	let activeTab = $state<'single' | 'bulk'>('single');
+	let singleWord = $state('');
+	let bulkText = $state('');
+	let selectedWeek = $state('Week 1');
 
-	function resolveInitialCategory(): string {
-		if (word) {
-			return (word.category || '').trim();
+	// Generation state: 'input' | 'generating' | 'preview'
+	let step = $state<'input' | 'generating' | 'preview'>('input');
+	let progressCurrent = $state(0);
+	let progressTotal = $state(0);
+	let generatedCards = $state<MyWordInput[]>([]);
+	let errorMessage = $state('');
+	let isSaving = $state(false);
+
+	// Edit mode state
+	let editForm = $state<MyWordInput>({
+		word: '',
+		pinyin: '',
+		meaning: '',
+		example: '',
+		category: ''
+	});
+	let confirmingDelete = $state(false);
+
+	let bulkWordCount = $derived(countBulkWords(bulkText));
+	let unlockedWeeks = $derived(getUnlockedWeeks(existingWords));
+
+	function resolveInitialWeek(): string {
+		const def = defaultCategory.trim();
+		if (
+			def &&
+			def.toLowerCase() !== ALL_WORDS_CATEGORY.toLowerCase() &&
+			def.toLowerCase() !== ALL_WEEKS_LABEL.toLowerCase()
+		) {
+			return def;
 		}
-		const trimmed = defaultCategory.trim();
-		if (!trimmed || trimmed.toLowerCase() === ALL_WORDS_CATEGORY.toLowerCase()) {
-			return '';
-		}
-		return trimmed;
+		return getCurrentWeekLabel();
 	}
 
 	$effect(() => {
 		if (!dialog) return;
 		if (open && !dialog.open) {
-			const initCat = resolveInitialCategory();
-			form = word
-				? { ...toMyWordInput(word), category: initCat }
-				: { ...emptyInput, category: initCat };
-			errors = {};
-			saveError = '';
+			errorMessage = '';
+			isSaving = false;
 			confirmingDelete = false;
-			duplicateWarningShown = false;
-			creatingCategory = false;
-			newCategoryName = '';
-			pinyinManuallyEdited = Boolean(word?.Pinyin?.trim());
-			meaningManuallyEdited = Boolean(word?.['English Meaning']?.trim());
-			exampleManuallyEdited = Boolean(word?.['Example (Chinese + Pinyin)']?.trim());
-			meaningCandidates = [];
-			exampleCandidates = [];
-			exampleIndex = 0;
-			dialog.showModal();
-			if (word?.['Chinese Word']?.trim()) {
-				void runWordLookup(word['Chinese Word'], false);
+			step = 'input';
+			progressCurrent = 0;
+			progressTotal = 0;
+			generatedCards = [];
+
+			if (word) {
+				editForm = toMyWordInput(word);
+			} else {
+				singleWord = '';
+				bulkText = '';
+				selectedWeek = resolveInitialWeek();
 			}
+			dialog.showModal();
 		} else if (!open && dialog.open) {
-			if (lookupTimer) clearTimeout(lookupTimer);
 			dialog.close();
 		}
 	});
 
 	function handleClose() {
-		if (lookupTimer) clearTimeout(lookupTimer);
 		open = false;
 	}
 
-	// Light-dismiss fallback for browsers without `closedby` support (Safari).
+	// Light-dismiss fallback
 	function handleDialogClick(event: MouseEvent) {
 		if (!dialog || 'closedBy' in HTMLDialogElement.prototype) return;
 		if (event.target !== dialog) return;
@@ -142,169 +106,100 @@
 		if (!inside) dialog.close();
 	}
 
-	function clearFieldError(key: MyWordField) {
-		if (errors[key]) {
-			const next = { ...errors };
-			delete next[key];
-			errors = next;
-		}
-	}
-
-	async function runWordLookup(rawWord: string, autoFill: boolean) {
-		const seq = ++lookupSeq;
-		const trimmed = rawWord.trim();
+	async function handleGenerateSingle() {
+		errorMessage = '';
+		const trimmed = singleWord.trim();
 		if (!trimmed) {
-			meaningCandidates = [];
-			exampleCandidates = [];
-			exampleIndex = 0;
-			if (autoFill) {
-				if (!pinyinManuallyEdited) form.pinyin = '';
-				if (!meaningManuallyEdited) form.meaning = '';
-				if (!exampleManuallyEdited) form.example = '';
-			}
+			errorMessage = 'Please enter a Chinese word or characters.';
 			return;
 		}
 
-		if (seq !== lookupSeq) return;
+		step = 'generating';
+		progressCurrent = 1;
+		progressTotal = 1;
 
-		if (autoFill) {
-			const autoPinyin = generateWordPinyin(trimmed);
-			if (!pinyinManuallyEdited && autoPinyin) {
-				form.pinyin = autoPinyin;
-				clearFieldError('pinyin');
-			}
-		}
-	}
-
-	function scheduleWordLookup(rawWord: string) {
-		if (lookupTimer) clearTimeout(lookupTimer);
-		lookupTimer = setTimeout(() => {
-			void runWordLookup(rawWord, true);
-		}, 150);
-	}
-
-	function handleFieldInput(key: MyWordField) {
-		clearFieldError(key);
-		if (key === 'word') {
-			duplicateWarningShown = false;
-			if (isComposing) return;
-			if (!pinyinManuallyEdited) {
-				const auto = generateWordPinyin(form.word);
-				form.pinyin = auto;
-				if (auto) clearFieldError('pinyin');
-			}
-			scheduleWordLookup(form.word);
-		} else if (key === 'pinyin') {
-			pinyinManuallyEdited = form.pinyin.trim().length > 0;
-		} else if (key === 'meaning') {
-			meaningManuallyEdited = form.meaning.trim().length > 0;
-		} else if (key === 'example') {
-			exampleManuallyEdited = form.example.trim().length > 0;
-		}
-	}
-
-	function selectCategory(cat: string) {
-		creatingCategory = false;
-		newCategoryName = '';
-		form.category = cat;
-		clearFieldError('category');
-	}
-
-	function startNewCategory() {
-		creatingCategory = true;
-		clearFieldError('category');
-		setTimeout(() => {
-			document.getElementById(ids.category)?.focus();
-		}, 0);
-	}
-
-	function selectMeaningCandidate(candidate: MeaningCandidate) {
-		form.meaning = candidate.meaning;
-		meaningManuallyEdited = true;
-		clearFieldError('meaning');
-		if (candidate.pinyin && !pinyinManuallyEdited) {
-			form.pinyin = candidate.pinyin;
-			clearFieldError('pinyin');
-		}
-	}
-
-	function handleNextExample() {
-		if (exampleCandidates.length === 0) return;
-		exampleIndex = (exampleIndex + 1) % exampleCandidates.length;
-		form.example = exampleCandidates[exampleIndex];
-		exampleManuallyEdited = false;
-	}
-
-	function handleAutoPinyin() {
-		if (!form.word.trim()) {
-			errors = { ...errors, word: 'Please enter the Chinese word' };
-			document.getElementById(ids.word)?.focus();
-			return;
-		}
-		const auto = generateWordPinyin(form.word);
-		if (auto) {
-			form.pinyin = auto;
-			pinyinManuallyEdited = false;
-			clearFieldError('pinyin');
-		}
-	}
-
-	async function saveWord(allowDuplicate: boolean) {
-		saveError = '';
-		if (creatingCategory) {
-			const trimmedCat = newCategoryName.trim();
-			if (!trimmedCat) {
-				errors = { ...errors, category: 'Please enter a category name' };
-				document.getElementById(ids.category)?.focus();
-				return;
-			}
-			form.category = trimmedCat;
-		}
-
-		const found = validateMyWord(form, existingWords, word?.No, { allowDuplicate });
-		errors = found;
-		if (found.word === DUPLICATE_WORD_ERROR && !found.pinyin && !found.meaning) {
-			duplicateWarningShown = true;
-			return;
-		}
-
-		const firstInvalid = fields.find((f) => found[f.key]);
-		if (firstInvalid) {
-			document.getElementById(ids[firstInvalid.key])?.focus();
-			return;
-		}
-
-		isSaving = true;
 		try {
-			const deck = word
-				? await updateMyWord(word.No, form, { allowDuplicate })
-				: await addMyWord(form, { allowDuplicate });
-			onChanged(deck);
-			open = false;
+			const card = await generateCardForWord(trimmed, selectedWeek);
+			generatedCards = [card];
+			step = 'preview';
 		} catch (e: unknown) {
-			saveError = e instanceof Error ? e.message : 'The word could not be saved. Please try again.';
-		} finally {
+			errorMessage = e instanceof Error ? e.message : 'Failed to generate card.';
+			step = 'input';
+		}
+	}
+
+	async function handleGenerateBulk() {
+		errorMessage = '';
+		if (bulkWordCount === 0) {
+			errorMessage = 'Please enter at least one Chinese word.';
+			return;
+		}
+
+		step = 'generating';
+		progressCurrent = 0;
+		progressTotal = bulkWordCount;
+
+		try {
+			const cards = await generateCardsInBulk(bulkText, selectedWeek, (curr, total) => {
+				progressCurrent = curr;
+				progressTotal = total;
+			});
+			generatedCards = cards;
+			step = 'preview';
+		} catch (e: unknown) {
+			errorMessage = e instanceof Error ? e.message : 'Failed to generate cards.';
+			step = 'input';
+		}
+	}
+
+	function removeGeneratedCard(index: number) {
+		generatedCards = generatedCards.filter((_, i) => i !== index);
+		if (generatedCards.length === 0) {
+			step = 'input';
+		}
+	}
+
+	async function handleSaveAll() {
+		if (generatedCards.length === 0 || isSaving) return;
+		isSaving = true;
+		errorMessage = '';
+
+		try {
+			const updatedDeck = await addMyWordsBulk(generatedCards, { allowDuplicate: true });
+			onChanged(updatedDeck);
+			handleClose();
+		} catch (e: unknown) {
+			errorMessage = e instanceof Error ? e.message : 'Failed to save cards.';
 			isSaving = false;
 		}
 	}
 
-	async function handleSubmit(event: SubmitEvent) {
-		event.preventDefault();
-		await saveWord(false);
+	async function handleSaveEdit() {
+		if (!word || isSaving) return;
+		isSaving = true;
+		errorMessage = '';
+
+		try {
+			const updatedDeck = await updateMyWord(word.No, editForm, { allowDuplicate: true });
+			onChanged(updatedDeck);
+			handleClose();
+		} catch (e: unknown) {
+			errorMessage = e instanceof Error ? e.message : 'Failed to update word.';
+			isSaving = false;
+		}
 	}
 
 	async function handleDelete() {
-		if (!word) return;
-		saveError = '';
+		if (!word || isSaving) return;
 		isSaving = true;
+		errorMessage = '';
+
 		try {
-			const deck = await deleteMyWord(word.No);
-			onChanged(deck);
-			open = false;
+			const updatedDeck = await deleteMyWord(word.No);
+			onChanged(updatedDeck);
+			handleClose();
 		} catch (e: unknown) {
-			saveError =
-				e instanceof Error ? e.message : 'The word could not be deleted. Please try again.';
-		} finally {
+			errorMessage = e instanceof Error ? e.message : 'Failed to delete word.';
 			isSaving = false;
 		}
 	}
@@ -312,258 +207,437 @@
 
 <dialog
 	bind:this={dialog}
-	{...{ closedby: 'any' }}
-	aria-labelledby={ids.title}
 	onclose={handleClose}
 	onclick={handleDialogClick}
-	class="shadow-card-hover m-auto rounded-3xl border border-slate-200/90 bg-white p-0 text-slate-900 backdrop:bg-slate-900/50"
+	class="fixed inset-0 z-50 m-auto w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-0 shadow-2xl backdrop:bg-slate-900/50 backdrop:backdrop-blur-xs"
 >
-	<form novalidate onsubmit={handleSubmit} class="space-y-4 p-5">
-		<h2 id={ids.title} class="font-headline text-xl font-bold text-slate-900">
-			{isEdit ? 'Edit Word' : 'Add Word'}
-		</h2>
+	<div class="flex max-h-[90vh] flex-col overflow-hidden">
+		<!-- Modal Header -->
+		<div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+			<div>
+				<h2 class="font-headline text-xl font-bold text-slate-900">
+					{#if isEdit}
+						Edit Word
+					{:else if step === 'preview'}
+						Review Cards ({generatedCards.length})
+					{:else}
+						Add to {selectedWeek}
+					{/if}
+				</h2>
+				<p class="font-sans text-xs text-slate-500">
+					{#if isEdit}
+						Adjust characters, pinyin, or meaning
+					{:else if step === 'preview'}
+						Pinyin and examples automatically generated
+					{:else}
+						Only enter Chinese characters — system handles the rest
+					{/if}
+				</p>
+			</div>
 
-		{#each fields as field (field.key)}
-			{@const error = errors[field.key]}
-			<div class="space-y-1.5">
-				<div class="flex items-center justify-between gap-2">
-					<label
-						for={ids[field.key]}
-						class="block font-headline text-base font-bold text-slate-900"
+			<button
+				type="button"
+				onclick={handleClose}
+				aria-label="Close dialog"
+				class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-2xl bg-slate-100 text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800"
+			>
+				<X size={20} strokeWidth={2.5} />
+			</button>
+		</div>
+
+		<!-- Error Banner -->
+		{#if errorMessage}
+			<div
+				class="mx-6 mt-4 flex items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 p-3.5 text-rose-800"
+			>
+				<AlertCircle size={18} class="shrink-0 text-rose-600" />
+				<span class="font-sans text-xs font-semibold">{errorMessage}</span>
+			</div>
+		{/if}
+
+		<!-- Modal Body -->
+		<div class="flex-1 overflow-y-auto px-6 py-4">
+			{#if isEdit}
+				<!-- EDIT FORM -->
+				<div class="space-y-4">
+					<div>
+						<label
+							for="edit-word"
+							class="mb-1 block font-headline text-xs font-bold text-slate-700"
+						>
+							Chinese Word
+						</label>
+						<input
+							id="edit-word"
+							type="text"
+							bind:value={editForm.word}
+							class="w-full rounded-2xl border border-slate-200 px-4 py-3 font-headline text-lg font-bold text-slate-900 focus:border-indigo-600 focus:outline-hidden"
+						/>
+					</div>
+
+					<div>
+						<label
+							for="edit-pinyin"
+							class="mb-1 block font-headline text-xs font-bold text-slate-700"
+						>
+							Pinyin
+						</label>
+						<input
+							id="edit-pinyin"
+							type="text"
+							bind:value={editForm.pinyin}
+							class="w-full rounded-2xl border border-slate-200 px-4 py-2.5 font-sans text-sm text-slate-800 focus:border-indigo-600 focus:outline-hidden"
+						/>
+					</div>
+
+					<div>
+						<label
+							for="edit-meaning"
+							class="mb-1 block font-headline text-xs font-bold text-slate-700"
+						>
+							English Meaning
+						</label>
+						<input
+							id="edit-meaning"
+							type="text"
+							bind:value={editForm.meaning}
+							class="w-full rounded-2xl border border-slate-200 px-4 py-2.5 font-sans text-sm text-slate-800 focus:border-indigo-600 focus:outline-hidden"
+						/>
+					</div>
+
+					<div>
+						<label
+							for="edit-example"
+							class="mb-1 block font-headline text-xs font-bold text-slate-700"
+						>
+							Example Sentence
+						</label>
+						<textarea
+							id="edit-example"
+							rows={2}
+							bind:value={editForm.example}
+							class="w-full rounded-2xl border border-slate-200 px-4 py-2.5 font-sans text-xs text-slate-800 focus:border-indigo-600 focus:outline-hidden"
+						></textarea>
+					</div>
+
+					<div>
+						<label
+							for="edit-category"
+							class="mb-1 block font-headline text-xs font-bold text-slate-700"
+						>
+							Week / Category
+						</label>
+						<select
+							id="edit-category"
+							bind:value={editForm.category}
+							class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 font-headline text-sm font-semibold text-slate-800 focus:border-indigo-600 focus:outline-hidden"
+						>
+							{#each unlockedWeeks as week (week)}
+								<option value={week}>{week}</option>
+							{/each}
+						</select>
+					</div>
+				</div>
+			{:else if step === 'generating'}
+				<!-- GENERATING PROGRESS STATE -->
+				<div class="flex flex-col items-center justify-center py-12 text-center">
+					<div
+						class="flex h-16 w-16 items-center justify-center rounded-3xl bg-indigo-50 text-indigo-600"
 					>
-						{field.label}
-						{#if field.optional}
-							<span class="font-sans text-sm font-normal text-slate-600">(optional)</span>
-						{/if}
-					</label>
-					{#if field.key === 'pinyin'}
+						<Loader2 size={32} class="animate-spin" />
+					</div>
+					<h3 class="mt-4 font-headline text-lg font-bold text-slate-900">
+						Generating your flashcards...
+					</h3>
+					<p class="mt-1 font-sans text-sm text-slate-500">
+						Adding Pinyin, English definitions, and example sentences
+					</p>
+					{#if progressTotal > 0}
+						<div class="mt-4 w-48 rounded-full bg-slate-100 p-1">
+							<div
+								class="h-2 rounded-full bg-indigo-600 transition-all duration-300"
+								style="width: {(progressCurrent / progressTotal) * 100}%"
+							></div>
+						</div>
+						<span class="mt-2 font-headline text-xs font-semibold text-slate-600">
+							{progressCurrent} of {progressTotal} words
+						</span>
+					{/if}
+				</div>
+			{:else if step === 'preview'}
+				<!-- PREVIEW STEP -->
+				<div class="space-y-3">
+					<div class="flex items-center justify-between pb-1">
+						<span class="font-headline text-xs font-bold tracking-wider text-slate-500 uppercase">
+							Target: {selectedWeek}
+						</span>
 						<button
 							type="button"
-							onclick={handleAutoPinyin}
-							class="inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-xl px-2.5 font-headline text-sm font-bold text-indigo-600 transition-colors hover:bg-indigo-50"
+							onclick={() => (step = 'input')}
+							class="font-headline text-xs font-bold text-indigo-600 hover:underline"
 						>
-							<Wand2 size={16} aria-hidden="true" />
-							<span>Auto Pinyin</span>
+							+ Add More Words
 						</button>
-					{:else if field.key === 'example' && exampleCandidates.length > 1}
+					</div>
+
+					{#each generatedCards as card, i (i)}
+						<div class="relative rounded-2xl border border-slate-200 bg-slate-50/70 p-4 shadow-2xs">
+							<button
+								type="button"
+								onclick={() => removeGeneratedCard(i)}
+								aria-label="Remove word"
+								class="absolute top-3 right-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-slate-400 hover:bg-rose-50 hover:text-rose-600"
+							>
+								<Trash2 size={16} />
+							</button>
+
+							<div class="pr-8">
+								<div class="flex items-baseline gap-2">
+									<span class="font-headline text-xl font-extrabold text-slate-900">
+										{card.word}
+									</span>
+									<span class="font-sans text-xs font-bold text-indigo-600">
+										{card.pinyin}
+									</span>
+								</div>
+								<p class="mt-1 font-sans text-sm font-semibold text-slate-800">
+									{card.meaning}
+								</p>
+								{#if card.example}
+									<p class="mt-1.5 font-sans text-xs text-slate-500 italic">
+										{card.example}
+									</p>
+								{/if}
+							</div>
+						</div>
+					{/each}
+				</div>
+			{:else}
+				<!-- ADD INPUT STEP -->
+				<div class="space-y-4">
+					<!-- Target Week Picker -->
+					<div>
+						<label
+							for="target-week"
+							class="mb-1 block font-headline text-xs font-bold text-slate-700"
+						>
+							Save to Week
+						</label>
+						<select
+							id="target-week"
+							bind:value={selectedWeek}
+							class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 font-headline text-sm font-semibold text-slate-800 focus:border-indigo-600 focus:outline-hidden"
+						>
+							{#each unlockedWeeks as week (week)}
+								<option value={week}>{week}</option>
+							{/each}
+						</select>
+					</div>
+
+					<!-- Single vs Bulk Tabs -->
+					<div class="grid grid-cols-2 rounded-2xl bg-slate-100 p-1">
 						<button
 							type="button"
-							onclick={handleNextExample}
-							class="inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-xl px-2.5 font-headline text-sm font-bold text-indigo-600 transition-colors hover:bg-indigo-50"
+							onclick={() => (activeTab = 'single')}
+							class="min-h-10 cursor-pointer rounded-xl font-headline text-xs font-bold transition-all {activeTab ===
+							'single'
+								? 'bg-white text-indigo-600 shadow-xs'
+								: 'text-slate-600 hover:text-slate-900'}"
 						>
-							<RefreshCw size={15} aria-hidden="true" />
-							<span>Next example</span>
+							Single Word
+						</button>
+						<button
+							type="button"
+							onclick={() => (activeTab = 'bulk')}
+							class="min-h-10 cursor-pointer rounded-xl font-headline text-xs font-bold transition-all {activeTab ===
+							'bulk'
+								? 'bg-white text-indigo-600 shadow-xs'
+								: 'text-slate-600 hover:text-slate-900'}"
+						>
+							Multiple Words (Bulk)
+						</button>
+					</div>
+
+					{#if activeTab === 'single'}
+						<!-- SINGLE WORD INPUT -->
+						<div class="space-y-3">
+							<div>
+								<label
+									for="single-word-input"
+									class="mb-1 block font-headline text-xs font-bold text-slate-700"
+								>
+									Enter Chinese Word
+								</label>
+								<input
+									id="single-word-input"
+									type="text"
+									placeholder="e.g. 朋友"
+									bind:value={singleWord}
+									onkeydown={(e) => e.key === 'Enter' && handleGenerateSingle()}
+									class="w-full rounded-2xl border border-slate-200 px-4 py-3.5 font-headline text-2xl font-bold text-slate-900 placeholder:text-slate-300 focus:border-indigo-600 focus:outline-hidden"
+								/>
+							</div>
+
+							<div class="flex items-center gap-2">
+								<span class="font-sans text-xs text-slate-400">Quick try:</span>
+								{#each ['苹果', '朋友', '谢谢'] as sample (sample)}
+									<button
+										type="button"
+										onclick={() => (singleWord = sample)}
+										class="cursor-pointer rounded-lg bg-slate-100 px-2 py-1 font-headline text-xs font-bold text-slate-700 hover:bg-slate-200"
+									>
+										{sample}
+									</button>
+								{/each}
+							</div>
+						</div>
+					{:else}
+						<!-- BULK WORD INPUT -->
+						<div class="space-y-2">
+							<div class="flex items-center justify-between">
+								<label
+									for="bulk-words-input"
+									class="font-headline text-xs font-bold text-slate-700"
+								>
+									Enter Words (one per line)
+								</label>
+								<span class="font-headline text-xs font-bold text-indigo-600">
+									{bulkWordCount}
+									{bulkWordCount === 1 ? 'word' : 'words'} entered
+								</span>
+							</div>
+
+							<textarea
+								id="bulk-words-input"
+								rows={6}
+								placeholder="苹果&#10;香蕉&#10;西瓜&#10;猫"
+								bind:value={bulkText}
+								class="w-full rounded-2xl border border-slate-200 p-4 font-headline text-lg leading-relaxed font-bold text-slate-900 placeholder:text-slate-300 focus:border-indigo-600 focus:outline-hidden"
+							></textarea>
+
+							<div class="flex items-center justify-between text-xs text-slate-400">
+								<span>Blank lines and extra spaces are ignored.</span>
+								<div class="flex items-center gap-1.5">
+									<span>Sample:</span>
+									<button
+										type="button"
+										onclick={() => (bulkText = '苹果\n香蕉\n西瓜')}
+										class="cursor-pointer font-bold text-indigo-600 hover:underline"
+									>
+										Fruits
+									</button>
+								</div>
+							</div>
+						</div>
+					{/if}
+				</div>
+			{/if}
+		</div>
+
+		<!-- Modal Footer Actions -->
+		<div class="border-t border-slate-100 bg-slate-50/50 px-6 py-4">
+			{#if isEdit}
+				<div class="flex items-center justify-between gap-3">
+					{#if confirmingDelete}
+						<div class="flex flex-1 items-center justify-between">
+							<span class="font-sans text-xs font-bold text-rose-700">Delete this word?</span>
+							<div class="flex gap-2">
+								<button
+									type="button"
+									onclick={() => (confirmingDelete = false)}
+									class="min-h-10 cursor-pointer rounded-xl bg-slate-200 px-3 font-headline text-xs font-bold text-slate-700"
+								>
+									Cancel
+								</button>
+								<button
+									type="button"
+									onclick={handleDelete}
+									disabled={isSaving}
+									class="min-h-10 cursor-pointer rounded-xl bg-rose-600 px-3 font-headline text-xs font-bold text-white hover:bg-rose-700"
+								>
+									Yes, Delete
+								</button>
+							</div>
+						</div>
+					{:else}
+						<button
+							type="button"
+							onclick={() => (confirmingDelete = true)}
+							class="flex min-h-11 cursor-pointer items-center gap-1.5 rounded-2xl border border-rose-200 bg-white px-3 font-headline text-xs font-bold text-rose-600 hover:bg-rose-50"
+						>
+							<Trash2 size={16} />
+							<span>Delete</span>
+						</button>
+
+						<button
+							type="button"
+							onclick={handleSaveEdit}
+							disabled={isSaving || !editForm.word.trim()}
+							class="flex min-h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-2xl bg-indigo-600 px-4 font-headline text-sm font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 disabled:opacity-50"
+						>
+							{#if isSaving}
+								<Loader2 size={18} class="animate-spin" />
+								<span>Saving...</span>
+							{:else}
+								<Check size={18} strokeWidth={2.5} />
+								<span>Save Changes</span>
+							{/if}
 						</button>
 					{/if}
 				</div>
-				<input
-					id={ids[field.key]}
-					type="text"
-					bind:value={form[field.key]}
-					oncompositionstart={() => {
-						if (field.key === 'word') isComposing = true;
-					}}
-					oncompositionend={() => {
-						if (field.key === 'word') {
-							isComposing = false;
-							handleFieldInput('word');
-						}
-					}}
-					oninput={() => handleFieldInput(field.key)}
-					placeholder={field.placeholder}
-					required={!field.optional}
-					autocomplete="off"
-					aria-invalid={error ? 'true' : 'false'}
-					aria-describedby={error ? `${ids[field.key]}-error` : undefined}
-					class="h-12 w-full rounded-2xl border bg-white px-4 font-sans text-base text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none {error
-						? 'border-rose-600'
-						: 'border-slate-200'}"
-				/>
-				{#if field.key === 'meaning' && meaningCandidates.length > 1}
-					<div class="flex flex-wrap gap-1.5 pt-1" role="group" aria-label="Suggested meanings">
-						{#each meaningCandidates as candidate (candidate.meaning)}
-							{@const selected =
-								form.meaning.trim().toLowerCase() === candidate.meaning.toLowerCase()}
-							<button
-								type="button"
-								onclick={() => selectMeaningCandidate(candidate)}
-								aria-pressed={selected}
-								class="min-h-11 cursor-pointer rounded-xl border px-3 py-1.5 font-sans text-sm font-semibold transition-colors {selected
-									? 'border-indigo-200 bg-indigo-50 text-indigo-600'
-									: 'border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'}"
+			{:else if step === 'preview'}
+				<div class="flex items-center gap-3">
+					<button
+						type="button"
+						onclick={() => (step = 'input')}
+						class="min-h-12 cursor-pointer rounded-2xl border border-slate-200 bg-white px-4 font-headline text-sm font-bold text-slate-700 hover:bg-slate-50"
+					>
+						Back
+					</button>
+
+					<button
+						type="button"
+						onclick={handleSaveAll}
+						disabled={isSaving || generatedCards.length === 0}
+						class="flex min-h-12 flex-1 cursor-pointer items-center justify-center gap-2 rounded-2xl bg-indigo-600 px-5 font-headline text-base font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 active:scale-98 disabled:opacity-50"
+					>
+						{#if isSaving}
+							<Loader2 size={20} class="animate-spin" />
+							<span>Saving to {selectedWeek}...</span>
+						{:else}
+							<Check size={20} strokeWidth={2.5} />
+							<span
+								>Save {generatedCards.length}
+								{generatedCards.length === 1 ? 'Card' : 'Cards'} to {selectedWeek}</span
 							>
-								{candidate.meaning}
-							</button>
-						{/each}
-					</div>
-				{/if}
-				{#if error}
-					<p id="{ids[field.key]}-error" class="font-sans text-sm font-semibold text-rose-600">
-						Error: {error}
-					</p>
-				{/if}
-			</div>
-		{/each}
-
-		<!-- Category Selector -->
-		<div class="space-y-1.5">
-			<label for={ids.category} class="block font-headline text-base font-bold text-slate-900">
-				Category
-				<span class="font-sans text-sm font-normal text-slate-600">(optional)</span>
-			</label>
-			<div class="flex flex-wrap gap-1.5" role="group" aria-label="Word category">
-				<button
-					type="button"
-					onclick={() => selectCategory('')}
-					aria-pressed={!creatingCategory && !form.category?.trim()}
-					class="min-h-11 cursor-pointer rounded-xl border px-3 py-1.5 font-sans text-sm font-semibold transition-colors {!creatingCategory &&
-					!form.category?.trim()
-						? 'border-indigo-200 bg-indigo-50 text-indigo-600'
-						: 'border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'}"
-				>
-					{ALL_WORDS_CATEGORY}
-				</button>
-
-				{#each subcategories as cat (cat)}
-					{@const isSelected = !creatingCategory && form.category?.trim() === cat}
-					<button
-						type="button"
-						onclick={() => selectCategory(cat)}
-						aria-pressed={isSelected}
-						class="min-h-11 cursor-pointer rounded-xl border px-3 py-1.5 font-sans text-sm font-semibold transition-colors {isSelected
-							? 'border-indigo-200 bg-indigo-50 text-indigo-600'
-							: 'border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'}"
-					>
-						{cat}
+						{/if}
 					</button>
-				{/each}
-
+				</div>
+			{:else if activeTab === 'single'}
 				<button
 					type="button"
-					onclick={startNewCategory}
-					aria-pressed={creatingCategory}
-					class="inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-xl border px-3 py-1.5 font-sans text-sm font-semibold transition-colors {creatingCategory
-						? 'border-indigo-200 bg-indigo-50 text-indigo-600'
-						: 'border-slate-200 bg-white text-indigo-600 hover:bg-indigo-50'}"
+					onclick={handleGenerateSingle}
+					disabled={!singleWord.trim()}
+					class="flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-indigo-600 font-headline text-base font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 active:scale-98 disabled:opacity-50"
 				>
-					<Plus size={15} strokeWidth={2.5} aria-hidden="true" />
-					<span>New category</span>
+					<Plus size={20} strokeWidth={2.5} />
+					<span>Add Word to {selectedWeek}</span>
 				</button>
-			</div>
-
-			{#if creatingCategory}
-				<input
-					id={ids.category}
-					type="text"
-					bind:value={newCategoryName}
-					oninput={() => clearFieldError('category')}
-					placeholder="e.g. Week 1"
-					autocomplete="off"
-					aria-invalid={errors.category ? 'true' : 'false'}
-					aria-describedby={errors.category ? `${ids.category}-error` : undefined}
-					class="mt-1.5 h-12 w-full rounded-2xl border bg-white px-4 font-sans text-base text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none {errors.category
-						? 'border-rose-600'
-						: 'border-slate-200'}"
-				/>
-			{/if}
-
-			{#if errors.category}
-				<p id="{ids.category}-error" class="font-sans text-sm font-semibold text-rose-600">
-					Error: {errors.category}
-				</p>
+			{:else}
+				<button
+					type="button"
+					onclick={handleGenerateBulk}
+					disabled={bulkWordCount === 0}
+					class="flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-indigo-600 font-headline text-base font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 active:scale-98 disabled:opacity-50"
+				>
+					<Layers size={20} strokeWidth={2.5} />
+					<span>
+						{bulkWordCount > 0
+							? `Generate ${bulkWordCount} ${bulkWordCount === 1 ? 'Card' : 'Cards'} for ${selectedWeek}`
+							: 'Enter Words to Generate'}
+					</span>
+				</button>
 			{/if}
 		</div>
-
-		{#if saveError}
-			<p
-				role="alert"
-				class="rounded-2xl bg-rose-50 p-3 font-sans text-sm font-semibold text-rose-600"
-			>
-				{saveError}
-			</p>
-		{/if}
-
-		{#if duplicateWarningShown}
-			<div
-				role="alert"
-				class="space-y-2 rounded-2xl border border-amber-200 bg-amber-50 p-3.5 text-slate-900"
-			>
-				<p class="font-sans text-sm font-semibold text-amber-900">
-					"{form.word.trim()}" is already in My Words. Do you want to add it again?
-				</p>
-				<button
-					type="button"
-					disabled={isSaving}
-					onclick={() => saveWord(true)}
-					class="h-11 w-full cursor-pointer rounded-xl bg-amber-600 font-headline text-sm font-bold text-white transition-colors hover:bg-amber-700 disabled:opacity-60"
-				>
-					{isSaving ? 'Saving…' : 'Add Word Anyway'}
-				</button>
-			</div>
-		{/if}
-
-		<div class="space-y-2 pt-1">
-			<button
-				type="submit"
-				disabled={isSaving}
-				class="h-12 w-full cursor-pointer rounded-2xl bg-indigo-600 font-headline text-base font-bold text-white shadow-md shadow-indigo-600/20 transition-colors hover:bg-indigo-700 active:scale-[0.98] disabled:opacity-60"
-			>
-				{isSaving ? 'Saving…' : 'Save Word'}
-			</button>
-			<button
-				type="button"
-				onclick={() => (open = false)}
-				class="h-12 w-full cursor-pointer rounded-2xl font-headline text-base font-bold text-slate-600 transition-colors hover:bg-slate-100"
-			>
-				Cancel
-			</button>
-		</div>
-
-		{#if isEdit}
-			<div class="border-t border-slate-200 pt-3 text-center">
-				{#if confirmingDelete}
-					<p class="mb-2 font-sans text-base text-slate-900">Delete this word from My Words?</p>
-					<div class="flex gap-2">
-						<button
-							type="button"
-							onclick={() => (confirmingDelete = false)}
-							class="h-12 flex-1 cursor-pointer rounded-2xl border border-slate-200 font-headline text-base font-bold text-slate-600 hover:bg-slate-100"
-						>
-							Keep it
-						</button>
-						<button
-							type="button"
-							disabled={isSaving}
-							onclick={handleDelete}
-							class="h-12 flex-1 cursor-pointer rounded-2xl bg-rose-600 font-headline text-base font-bold text-white disabled:opacity-60"
-						>
-							Yes, delete
-						</button>
-					</div>
-				{:else}
-					<button
-						type="button"
-						onclick={() => (confirmingDelete = true)}
-						class="min-h-11 cursor-pointer px-3 font-sans text-sm font-semibold text-rose-600 underline-offset-2 hover:underline"
-					>
-						Delete word
-					</button>
-				{/if}
-			</div>
-		{/if}
-	</form>
+	</div>
 </dialog>
-
-<style>
-	dialog {
-		width: min(28rem, 100% - 2rem);
-		max-height: calc(100dvh - 2rem);
-	}
-	dialog:modal {
-		overscroll-behavior: contain;
-	}
-	dialog::backdrop {
-		overflow: hidden;
-		overscroll-behavior: contain;
-	}
-</style>

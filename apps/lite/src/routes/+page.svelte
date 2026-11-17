@@ -9,11 +9,11 @@
 </script>
 
 <svelte:head>
-	<title>FlashCards Lite — {category || 'My Words'}</title>
+	<title>FlashCards Lite — {category || 'All Weeks'}</title>
 </svelte:head>
 
 <TopHeader
-	title={category || 'My Words'}
+	title={category || 'All Weeks'}
 	showBack={Boolean(category)}
 	onBack={() => goto(resolve('/'))}
 />

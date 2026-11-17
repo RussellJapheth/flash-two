@@ -25,6 +25,23 @@ describe('Lite App Storage Core Logic', () => {
 		expect(deck.words[0].No).toBe(1);
 	});
 
+	it('adds multiple words in bulk into deck structure sequentially', () => {
+		const words: MyWordInput[] = [
+			testWord,
+			{ word: '西瓜', pinyin: 'xīguā', meaning: 'watermelon', example: '' },
+			{ word: '葡萄', pinyin: 'pútao', meaning: 'grape', example: '' }
+		];
+		let deck = buildDeckWithAddedWord(null, words[0]);
+		for (let i = 1; i < words.length; i++) {
+			deck = buildDeckWithAddedWord(deck, words[i]);
+		}
+		expect(deck.words).toHaveLength(3);
+		expect(deck.words[0].No).toBe(1);
+		expect(deck.words[1].No).toBe(2);
+		expect(deck.words[2].No).toBe(3);
+		expect(deck.words[2]['Chinese Word']).toBe('葡萄');
+	});
+
 	it('updates word in place preserving card No', () => {
 		const deck = buildDeckWithAddedWord(null, testWord);
 		const updated = buildDeckWithUpdatedWord(deck, 1, {

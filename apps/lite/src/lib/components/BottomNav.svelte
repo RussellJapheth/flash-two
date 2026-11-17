@@ -4,7 +4,7 @@
 	import { Layers, RotateCw, Settings } from 'lucide-svelte';
 
 	const navItems = [
-		{ href: '/', icon: Layers, label: 'My Words' },
+		{ href: '/', icon: Layers, label: 'All Weeks' },
 		{ href: '/review', icon: RotateCw, label: 'Review' },
 		{ href: '/settings', icon: Settings, label: 'Settings' }
 	] as const;

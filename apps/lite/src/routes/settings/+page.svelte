@@ -15,6 +15,7 @@
 		subscribeSyncStatus,
 		type RemoteUserSummary
 	} from '$lib/cloud';
+	import { pwa } from '$lib/pwa.svelte';
 	import type { SyncStatus } from '@flash/shared';
 	import {
 		Download,
@@ -423,6 +424,41 @@
 		<p class="mt-2 font-headline text-3xl font-black text-slate-900">{wordCount}</p>
 		<p class="font-sans text-xs text-slate-500">Custom vocabulary words in My Words</p>
 	</section>
+
+	<!-- PWA Install Option if installable -->
+	{#if pwa.isInstallable}
+		<section class="space-y-3">
+			<h2 class="font-headline text-xs font-bold tracking-wider text-slate-400 uppercase">
+				Application
+			</h2>
+			<div class="rounded-3xl border border-slate-200/90 bg-white p-5 shadow-xs">
+				<div class="flex items-center justify-between">
+					<div class="flex items-center gap-3">
+						<div
+							class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600"
+						>
+							<Download size={20} />
+						</div>
+						<div>
+							<span class="block font-headline text-sm font-bold text-slate-900">
+								Install App
+							</span>
+							<span class="block font-sans text-xs text-slate-500">
+								Add FlashCards Lite to your home screen
+							</span>
+						</div>
+					</div>
+					<button
+						type="button"
+						onclick={() => pwa.promptInstall()}
+						class="flex h-9 cursor-pointer items-center justify-center rounded-xl bg-indigo-600 px-3.5 font-headline text-xs font-bold text-white shadow-xs transition-transform hover:bg-indigo-700 active:scale-95"
+					>
+						Install
+					</button>
+				</div>
+			</div>
+		</section>
+	{/if}
 
 	<!-- Data Backup & Migration -->
 	<section class="space-y-3">

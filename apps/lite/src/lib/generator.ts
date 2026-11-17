@@ -46,7 +46,7 @@ export interface RawDictEntry {
 }
 
 const TARGET_CROSS_REF_REGEX =
-	/(?:variant of|old variant of|erhua variant of|see|same as|also written)\s+(?:([^\|\[\]\s;/]+)\|)?([^\|\[\]\s;/]+)/i;
+	/(?:variant of|old variant of|erhua variant of|see|same as|also written)\s+(?:([^|[\]\s;/]+)\|)?([^|[\]\s;/]+)/i;
 
 export function parseDictEntries(data: RawDictEntry[]): Map<string, string> {
 	const cleanMap = new Map<string, string>();

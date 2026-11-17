@@ -2,9 +2,11 @@
 	import './layout.css';
 	import { onMount } from 'svelte';
 	import BottomNav from '$lib/components/BottomNav.svelte';
+	import InstallPrompt from '$lib/components/InstallPrompt.svelte';
 	import UsernameModal from '$lib/components/UsernameModal.svelte';
 	import { getSavedUsername } from '$lib/storage';
 	import { pullAndMerge } from '$lib/cloud';
+	import { pwa } from '$lib/pwa.svelte';
 	import { page } from '$app/state';
 
 	let { children } = $props();
@@ -16,6 +18,7 @@
 	);
 
 	onMount(() => {
+		pwa.init();
 		const user = getSavedUsername();
 		if (!user) {
 			showUsernameModal = true;
@@ -39,6 +42,7 @@
 	</div>
 
 	{#if !isStudySession}
+		<InstallPrompt />
 		<BottomNav />
 	{/if}
 

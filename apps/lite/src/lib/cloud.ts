@@ -410,4 +410,3 @@ if (typeof window !== 'undefined') {
 		}
 	});
 }
-

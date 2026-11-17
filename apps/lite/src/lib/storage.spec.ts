@@ -3,7 +3,10 @@ import {
 	buildDeckWithAddedWord,
 	buildDeckWithUpdatedWord,
 	buildDeckWithoutWord,
-	type MyWordInput
+	calculateNextReview,
+	isCardDue,
+	type MyWordInput,
+	type WordProgress
 } from '@flash/shared';
 
 const testWord: MyWordInput = {
@@ -45,5 +48,86 @@ describe('Lite App Storage Core Logic', () => {
 		const afterDelete = buildDeckWithoutWord(deck, 1);
 		expect(afterDelete.words).toHaveLength(1);
 		expect(afterDelete.words[0]['Chinese Word']).toBe('香蕉');
+	});
+
+	it('handles spaced repetition intervals correctly', () => {
+		// First correct rating
+		const p1 = calculateNextReview(undefined, 'good');
+		expect(p1.interval).toBe(1);
+		expect(p1.reps).toBe(1);
+		expect(p1.wrong).toBe(0);
+
+		// Second correct rating
+		const p2 = calculateNextReview(p1, 'good');
+		expect(p2.interval).toBe(3);
+		expect(p2.reps).toBe(2);
+
+		// Third correct rating -> 3 * 2.5 = 8 days
+		const p3 = calculateNextReview(p2, 'good');
+		expect(p3.interval).toBe(8);
+		expect(p3.reps).toBe(3);
+
+		// Wrong rating -> interval resets to 0, due in 10 minutes
+		const pWrong = calculateNextReview(p3, 'again');
+		expect(pWrong.interval).toBe(0);
+		expect(pWrong.reps).toBe(0);
+		expect(pWrong.wrong).toBe(1);
+		expect(pWrong.lapses).toBe(1);
+		expect(pWrong.dueDate).toBeLessThanOrEqual(Date.now() + 10 * 60 * 1000 + 50);
+	});
+
+	it('sorts and caps review queue to 10 items prioritizing unreviewed and earliest due', () => {
+		const now = Date.now();
+		const items: Array<{ id: number; progress?: WordProgress }> = [];
+
+		// Create 15 items with various progress
+		for (let i = 1; i <= 15; i++) {
+			if (i <= 3) {
+				// Unreviewed
+				items.push({ id: i, progress: undefined });
+			} else {
+				// Reviewed with varying due dates
+				items.push({
+					id: i,
+					progress: {
+						weekId: '',
+						wordNo: i,
+						correct: 1,
+						wrong: 0,
+						lastReviewed: now - 86400000,
+						dueDate: now - (15 - i) * 10000,
+						interval: 1,
+						easeFactor: 2.5,
+						reps: 1,
+						lapses: 0
+					}
+				});
+			}
+		}
+
+		// Filter due cards
+		const due = items.filter((item) => isCardDue(item.progress));
+		expect(due).toHaveLength(15);
+
+		// Sort: unreviewed first, then earliest due date
+		due.sort((a, b) => {
+			const aReviewed = Boolean(a.progress?.lastReviewed);
+			const bReviewed = Boolean(b.progress?.lastReviewed);
+			if (!aReviewed && bReviewed) return -1;
+			if (aReviewed && !bReviewed) return 1;
+
+			const aDue = a.progress?.dueDate ?? 0;
+			const bDue = b.progress?.dueDate ?? 0;
+			return aDue - bDue;
+		});
+
+		const batch = due.slice(0, 10);
+		expect(batch).toHaveLength(10);
+		// First 3 should be unreviewed
+		expect(batch[0].progress).toBeUndefined();
+		expect(batch[1].progress).toBeUndefined();
+		expect(batch[2].progress).toBeUndefined();
+		// Fourth should have earliest due date
+		expect(batch[3].id).toBe(4);
 	});
 });

@@ -8,48 +8,168 @@ export interface CorpusWord {
 	example: string;
 }
 
-const corpus: CorpusWord[] = corpusData as CorpusWord[];
-const corpusMap = new Map<string, CorpusWord>();
+export const corpus: CorpusWord[] = corpusData as CorpusWord[];
+export const corpusMap = new Map<string, CorpusWord>();
 for (const item of corpus) {
 	if (item.word) {
 		corpusMap.set(item.word.trim(), item);
 	}
 }
 
+export function cleanGlossSegment(raw: string): string {
+	return raw
+		.replace(/\bCL:[^;/)]+/gi, '')
+		.replace(/\b(?:Taiwan|also)\s+pr\.\s*\[[^\]]*\]/gi, '')
+		.replace(/\([^)]*\)/g, ' ')
+		.replace(/\s+/g, ' ')
+		.replace(/^[,;:\-\s]+|[,;:\-\s]+$/g, '')
+		.trim();
+}
+
+export function isCrossRefGloss(cleaned: string): boolean {
+	return /^(?:see\s|variant of\s|old variant of\s|erhua variant of\s|same as\s|also written\s)/i.test(
+		cleaned
+	);
+}
+
+export function isLowPriorityGloss(cleaned: string): boolean {
+	return /^(?:abbr\. for|short for|surname\b)/i.test(cleaned);
+}
+
+export interface RawDictEntry {
+	'Chinese Word'?: string;
+	simplified?: string;
+	word?: string;
+	'English Meaning'?: string;
+	meaning?: string;
+	definition?: string;
+}
+
+const TARGET_CROSS_REF_REGEX =
+	/(?:variant of|old variant of|erhua variant of|see|same as|also written)\s+(?:([^\|\[\]\s;/]+)\|)?([^\|\[\]\s;/]+)/i;
+
+export function parseDictEntries(data: RawDictEntry[]): Map<string, string> {
+	const cleanMap = new Map<string, string>();
+	const lowPriMap = new Map<string, string>();
+	const fallbackMap = new Map<string, string>();
+
+	for (const entry of data) {
+		const zh = entry['Chinese Word'] || entry.simplified || entry.word || '';
+		const def = entry['English Meaning'] || entry.meaning || entry.definition || '';
+		if (!zh || !def) continue;
+
+		if (!fallbackMap.has(zh)) {
+			fallbackMap.set(zh, def);
+		}
+
+		if (cleanMap.has(zh)) continue;
+
+		const segments = def.split(/[;/]/);
+		for (const seg of segments) {
+			const cleaned = cleanGlossSegment(seg);
+			if (!cleaned || isCrossRefGloss(cleaned)) continue;
+			if (isLowPriorityGloss(cleaned)) {
+				if (!lowPriMap.has(zh)) {
+					lowPriMap.set(zh, cleaned);
+				}
+				continue;
+			}
+			cleanMap.set(zh, cleaned);
+			break;
+		}
+	}
+
+	for (const [zh, lowDef] of lowPriMap.entries()) {
+		if (!cleanMap.has(zh)) {
+			cleanMap.set(zh, lowDef);
+		}
+	}
+
+	for (const [zh, fallbackDef] of fallbackMap.entries()) {
+		if (cleanMap.has(zh)) continue;
+
+		const match = TARGET_CROSS_REF_REGEX.exec(fallbackDef);
+		let resolved: string | undefined;
+		if (match) {
+			const target = (match[2] || match[1] || '').trim();
+			if (target && target !== zh && cleanMap.has(target)) {
+				resolved = cleanMap.get(target);
+			} else if (target && target !== zh && fallbackMap.has(target)) {
+				const targetDef = fallbackMap.get(target)!;
+				resolved = cleanGlossSegment(targetDef.split(/[;/]/)[0]) || targetDef;
+			}
+		}
+
+		cleanMap.set(zh, resolved || cleanGlossSegment(fallbackDef.split(/[;/]/)[0]) || fallbackDef);
+	}
+
+	return cleanMap;
+}
+
 let dictCachePromise: Promise<Map<string, string>> | null = null;
 
-async function getDictDefinitions(): Promise<Map<string, string>> {
+export async function getDictDefinitions(): Promise<Map<string, string>> {
 	if (typeof window === 'undefined') return new Map();
 	if (!dictCachePromise) {
 		dictCachePromise = (async () => {
-			const map = new Map<string, string>();
 			try {
 				const res = await fetch('/dict.json');
 				if (res.ok) {
 					const data = await res.json();
 					if (Array.isArray(data)) {
-						for (const entry of data) {
-							const zh = entry['Chinese Word'] || entry.simplified || entry.word || '';
-							const def = entry['English Meaning'] || entry.meaning || entry.definition || '';
-							if (zh && def && !map.has(zh)) {
-								// Clean first segment of definition
-								const firstGloss =
-									def
-										.split(/[;/]/)[0]
-										?.replace(/\bCL:[^;/)]+/gi, '')
-										.trim() || def;
-								map.set(zh, firstGloss);
-							}
-						}
+						return parseDictEntries(data);
 					}
 				}
 			} catch {
 				// Silently fall back to corpus and synthesis if offline
 			}
-			return map;
+			return new Map<string, string>();
 		})();
 	}
 	return dictCachePromise;
+}
+
+export function healWordRecord(word: {
+	'Chinese Word'?: string;
+	'English Meaning'?: string;
+}): boolean {
+	const currentMeaning = word['English Meaning'] || '';
+	if (!isCrossRefGloss(currentMeaning)) return false;
+
+	const zh = word['Chinese Word']?.trim();
+	if (!zh) return false;
+
+	const corpusMatch = corpusMap.get(zh);
+	if (corpusMatch && corpusMatch.meaning && !isCrossRefGloss(corpusMatch.meaning)) {
+		word['English Meaning'] = corpusMatch.meaning;
+		return true;
+	}
+
+	return false;
+}
+
+export async function healWordRecordWithDict(word: {
+	'Chinese Word'?: string;
+	'English Meaning'?: string;
+}): Promise<boolean> {
+	if (healWordRecord(word)) return true;
+
+	const currentMeaning = word['English Meaning'] || '';
+	if (!isCrossRefGloss(currentMeaning)) return false;
+
+	const zh = word['Chinese Word']?.trim();
+	if (!zh) return false;
+
+	const dict = await getDictDefinitions();
+	if (dict.has(zh)) {
+		const clean = dict.get(zh)!;
+		if (clean && !isCrossRefGloss(clean)) {
+			word['English Meaning'] = clean;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /**
@@ -126,7 +246,7 @@ export async function generateCardForWord(
 	if (!meaning) {
 		// Look for corpus words that contain this word
 		const partial = corpus.find((c) => c.word.includes(trimmed) || trimmed.includes(c.word));
-		if (partial && partial.meaning) {
+		if (partial && partial.meaning && !isCrossRefGloss(partial.meaning)) {
 			meaning = partial.meaning;
 		} else {
 			meaning = trimmed;

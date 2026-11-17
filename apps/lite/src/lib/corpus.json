@@ -132,6 +132,60 @@
 		"example": "你想去哪个地方？(Nǐ xiǎng qù nǎ ge dìfāng?) — Which place do you want to go to?"
 	},
 	{
+		"word": "这里",
+		"pinyin": "zhè lǐ",
+		"meaning": "here",
+		"example": "这里有很多中国人和外国人。(Zhèlǐ yǒu hěn duō Zhōngguórén hé wàiguórén.) — There are many Chinese and foreigners here."
+	},
+	{
+		"word": "这儿",
+		"pinyin": "zhèr",
+		"meaning": "here",
+		"example": "请问这儿可以坐吗？(Qǐngwèn zhèr kěyǐ zuò ma?) — Excuse me, can I sit here?"
+	},
+	{
+		"word": "那里",
+		"pinyin": "nà lǐ",
+		"meaning": "there / that place",
+		"example": "我们去那里看看吧。(Wǒmen qù nàlǐ kànkan ba.) — Let's go over there and take a look."
+	},
+	{
+		"word": "那儿",
+		"pinyin": "nàr",
+		"meaning": "there / that place",
+		"example": "我的手机在桌子那儿。(Wǒ de shǒujī zài zhuōzi nàr.) — My phone is over there on the table."
+	},
+	{
+		"word": "哪里",
+		"pinyin": "nǎ lǐ",
+		"meaning": "where / nowhere (humble deflection)",
+		"example": "你想去哪里旅游？(Nǐ xiǎng qù nǎlǐ lǚyóu?) — Where do you want to travel to?"
+	},
+	{
+		"word": "哪儿",
+		"pinyin": "nǎr",
+		"meaning": "where",
+		"example": "你现在在哪儿？(Nǐ xiànzài zài nǎr?) — Where are you now?"
+	},
+	{
+		"word": "这个",
+		"pinyin": "zhè ge",
+		"meaning": "this / this one",
+		"example": "这个汉字怎么读？(Zhè ge hànzì zěnme dú?) — How do you read this Chinese character?"
+	},
+	{
+		"word": "那个",
+		"pinyin": "nà ge",
+		"meaning": "that / that one",
+		"example": "请帮我拿一下那个杯子。(Qǐng bāng wǒ ná yíxià nà ge bēizi.) — Please help me get that cup."
+	},
+	{
+		"word": "哪个",
+		"pinyin": "nǎ ge",
+		"meaning": "which / which one",
+		"example": "你喜欢哪本书？(Nǐ xǐhuan nǎ běn shū?) — Which book do you like?"
+	},
+	{
 		"word": "好",
 		"pinyin": "hǎo",
 		"meaning": "good / fine / well",

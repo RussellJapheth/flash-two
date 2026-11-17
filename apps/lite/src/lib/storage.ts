@@ -8,6 +8,7 @@ import {
 	type MyWordInput,
 	type MyWordSaveOptions
 } from '@flash/shared';
+import { healWordRecord, healWordRecordWithDict, isCrossRefGloss } from './generator';
 
 const DB_NAME = 'flashcards_lite_db';
 const DB_VERSION = 1;
@@ -67,7 +68,29 @@ export async function getMyWordsDeck(): Promise<CustomDeck> {
 		const req = tx.objectStore('decks').get(MY_WORDS_DECK_ID);
 		req.onsuccess = () => {
 			if (req.result) {
-				resolve(req.result);
+				const deck: CustomDeck = req.result;
+				let healed = false;
+				if (Array.isArray(deck.words)) {
+					for (const word of deck.words) {
+						if (healWordRecord(word)) {
+							healed = true;
+						}
+					}
+					if (healed) {
+						saveMyWordsDeck(deck).catch(() => {});
+					}
+					const hasUnhealed = deck.words.some((w) => isCrossRefGloss(w['English Meaning'] || ''));
+					if (hasUnhealed) {
+						Promise.all(deck.words.map((w) => healWordRecordWithDict(w)))
+							.then((results) => {
+								if (results.some(Boolean)) {
+									saveMyWordsDeck(deck).catch(() => {});
+								}
+							})
+							.catch(() => {});
+					}
+				}
+				resolve(deck);
 			} else {
 				const defaultDeck: CustomDeck = {
 					id: MY_WORDS_DECK_ID,

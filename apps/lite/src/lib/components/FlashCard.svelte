@@ -2,6 +2,7 @@
 	import type { WordRecord } from '@flash/shared';
 	import { speakWord, playSound } from '$lib/audio';
 	import { Volume2, Pointer } from 'lucide-svelte';
+	import { corpusMap, isCrossRefGloss } from '$lib/generator';
 
 	let {
 		word,
@@ -22,6 +23,17 @@
 	let targetWord = $derived(
 		language === 'chinese' ? word['Chinese Word'] || '' : word['French Word'] || ''
 	);
+
+	let displayMeaning = $derived.by(() => {
+		const raw = word['English Meaning'] || '';
+		if (isCrossRefGloss(raw)) {
+			const zh = word['Chinese Word']?.trim();
+			if (zh && corpusMap.has(zh)) {
+				return corpusMap.get(zh)!.meaning;
+			}
+		}
+		return raw;
+	});
 
 	function handleFlip(e?: MouseEvent | KeyboardEvent) {
 		if (e) {
@@ -141,7 +153,7 @@
 			<div class="my-auto space-y-4 text-center">
 				<div>
 					<h3 class="font-headline text-2xl font-black text-slate-900 sm:text-3xl">
-						{word['English Meaning']}
+						{displayMeaning}
 					</h3>
 					{#if word.Pinyin}
 						<p class="mt-1 font-headline text-sm font-semibold text-indigo-600">

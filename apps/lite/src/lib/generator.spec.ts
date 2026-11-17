@@ -33,12 +33,34 @@ describe('generator', () => {
 		expect(countBulkWords('  \n  ')).toBe(0);
 	});
 
-	it('synthesizes an example sentence with Pinyin and English', () => {
-		const example = synthesizeExample('茶', 'tea');
-		expect(example).toContain('我喜欢茶。');
-		expect(example).toContain('Wǒ');
-		expect(example).toContain('chá');
-		expect(example).toContain('— I like tea.');
+	it('synthesizes natural example sentences with Pinyin and English based on word type', () => {
+		const nounExample = synthesizeExample('茶', 'tea');
+		expect(nounExample).toContain('这是茶。');
+		expect(nounExample).toContain('Zhè shì chá');
+		expect(nounExample).toContain('— This is tea.');
+
+		const verbExample = synthesizeExample('走', 'to walk');
+		expect(verbExample).toContain('我想走。');
+		expect(verbExample).toContain('Wǒ xiǎng zǒu');
+		expect(verbExample).toContain('— I want to walk.');
+
+		const adjExample = synthesizeExample('大', 'big');
+		expect(adjExample).toContain('这个很大。');
+		expect(adjExample).toContain('Zhè ge hěn dà');
+		expect(adjExample).toContain('— This is very big.');
+
+		const suggestionExample = synthesizeExample('来把', 'come');
+		expect(suggestionExample).toContain('快来吧！');
+		expect(suggestionExample).toContain('Kuài lái ba');
+		expect(suggestionExample).toContain('— Come on!');
+	});
+
+	it('generates natural card for modal particle phrases like 来把', async () => {
+		const card = await generateCardForWord('来把', 'Week 1');
+		expect(card.word).toBe('来把');
+		expect(card.meaning).toContain('come on');
+		expect(card.example).toContain('快来吧');
+		expect(card.example).not.toContain('I like come');
 	});
 
 	it('generates card from corpus for known word', async () => {

@@ -223,19 +223,87 @@ export function countBulkWords(text: string): number {
 }
 
 /**
- * Synthesizes a natural, clear example sentence with tone-marked Pinyin.
+ * Synthesizes a natural, grammatically correct example sentence with tone-marked Pinyin.
+ * Uses part-of-speech and semantic templates instead of naive 'I like ...' for all words.
  */
 export function synthesizeExample(word: string, meaning: string): string {
 	const trimmed = word.trim();
-	const sentenceZh = `我喜欢${trimmed}。`;
+	const firstGloss = meaning.split(/[;/]/)[0].trim();
+	const cleanMeaning = firstGloss.replace(/^to\s+/i, '').trim() || trimmed;
+
+	let sentenceZh: string;
+	let translation: string;
+
+	// 1. Particle / Suggestion expressions (e.g. 来吧, 来把, 走吧)
+	if (trimmed === '来把' || trimmed === '来吧') {
+		sentenceZh = '快来吧！';
+		translation = 'Come on! / Come over quickly!';
+	} else if (/^[一二三四五六七八九十百千万0-9]+$/.test(trimmed)) {
+		// Numbers
+		sentenceZh = `这里有${trimmed}个。`;
+		translation = `There are ${cleanMeaning} here.`;
+	} else if (
+		trimmed.endsWith('吧') ||
+		trimmed.endsWith('把') ||
+		/\b(?:suggestion|particle|modal)\b/i.test(meaning)
+	) {
+		const action = trimmed.replace(/[吧把]$/, '');
+		sentenceZh = action ? `我们${trimmed}！` : `走${trimmed}！`;
+		translation = `Let's ${action ? cleanMeaning : 'go'}!`;
+	} else if (trimmed === '吗' || /\bquestion particle\b/i.test(meaning)) {
+		sentenceZh = '你好吗？';
+		translation = 'How are you?';
+	} else if (trimmed === '呢') {
+		sentenceZh = '你呢？';
+		translation = 'What about you?';
+	} else if (/^(?:我|你|他|她|它|我们|你们|他们)$/.test(trimmed)) {
+		sentenceZh = `这是${trimmed}的朋友。`;
+		translation = `This is ${cleanMeaning}'s friend.`;
+	} else if (
+		/^to\s+/i.test(firstGloss) ||
+		/\b(?:verb|action)\b/i.test(meaning) ||
+		/^(?:吃|喝|看|听|说|读|写|去|走|买|卖|学|想|做|要|找|等|跑|飞|坐|住|教)$/.test(trimmed)
+	) {
+		// Verbs: "我想 [verb] 。" -> "I want to [verb]."
+		sentenceZh = `我想${trimmed}。`;
+		translation = `I want to ${cleanMeaning}.`;
+	} else if (
+		/\b(?:adjective|adj|very|good|bad|big|small|fast|slow|hot|cold|expensive|cheap|beautiful|happy|tall|short|new|old)\b/i.test(
+			meaning
+		) ||
+		/^(?:好|大|小|多|少|快|慢|高|矮|胖|瘦|新|旧|贵|便宜|漂亮|冷|热|累|忙|难|容易|远|近|对|错)$/.test(
+			trimmed
+		)
+	) {
+		// Adjectives: "这个很 [adj] 。" -> "This is very [adj]."
+		sentenceZh = `这个很${trimmed}。`;
+		translation = `This is very ${cleanMeaning}.`;
+	} else if (
+		/^(?:不|没|没有|很|非常|常常|总是|特别|太|真|已经|正在)$/.test(trimmed) ||
+		/\b(?:adverb)\b/i.test(meaning)
+	) {
+		// Adverbs / Negation
+		if (trimmed === '不' || trimmed === '没' || trimmed === '没有') {
+			sentenceZh = `我${trimmed}知道。`;
+			translation = `I do not know.`;
+		} else {
+			sentenceZh = `我${trimmed}高兴。`;
+			translation = `I am ${cleanMeaning} happy.`;
+		}
+	} else {
+		// Nouns / Things: "这是 [noun] 。" -> "This is [noun]."
+		sentenceZh = `这是${trimmed}。`;
+		translation = `This is ${cleanMeaning}.`;
+	}
+
 	let rawPy = generatePinyin(sentenceZh)
-		.replace(/\s+([。，！？,.!?])/g, '')
+		.replace(/\s+([。，！？,.!?])/g, '$1')
 		.trim();
 	if (rawPy.length > 0) {
 		rawPy = rawPy[0].toUpperCase() + rawPy.slice(1);
 	}
-	const cleanMeaning = meaning.replace(/^to\s+/i, '');
-	return `${sentenceZh} (${rawPy}) — I like ${cleanMeaning}.`;
+
+	return `${sentenceZh} (${rawPy}) — ${translation}`;
 }
 
 /**
@@ -293,6 +361,10 @@ export async function generateCardForWord(
 		} else {
 			meaning = trimmed;
 		}
+	}
+
+	if (trimmed === '来把' || trimmed === '来吧') {
+		meaning = 'come on / come over';
 	}
 
 	// 4. Example sentence lookup or synthesis (prefer secular everyday examples)

@@ -4,7 +4,7 @@
 	import { Plus, Pencil, Play, Volume2, ChevronRight } from 'lucide-svelte';
 	import type { CustomDeck, WordRecord } from '@flash/shared';
 	import { MY_WORDS_DECK_ID, filterWordsByCategory, ALL_WEEKS_LABEL } from '@flash/shared';
-	import { getMyWordsDeck } from '$lib/storage';
+	import { getMyWordsDeck, registerDataMutationListener } from '$lib/storage';
 	import { speakWord } from '$lib/audio';
 	import { getUnlockedWeeks, getCurrentWeekLabel, unlockNextWeek } from '$lib/weeks';
 	import WordFormModal from './WordFormModal.svelte';
@@ -75,6 +75,10 @@
 
 	onMount(() => {
 		load();
+		const unsubscribe = registerDataMutationListener(() => {
+			load();
+		});
+		return unsubscribe;
 	});
 </script>
 
@@ -235,10 +239,13 @@
 				{#each unlockedWeeks as week (week)}
 					{@const count = getWeekWordCount(week)}
 					{@const isCurrent = week === currentWeekLabel}
+					{@const isUnassigned = week.toLowerCase() === 'unassigned'}
 					<div
 						class="flex items-center justify-between rounded-2xl border bg-white p-4 shadow-xs transition-colors hover:border-indigo-300 {isCurrent
 							? 'border-indigo-300 ring-1 ring-indigo-200'
-							: 'border-slate-200/90'}"
+							: isUnassigned
+								? 'border-amber-200 bg-amber-50/20'
+								: 'border-slate-200/90'}"
 					>
 						<a href={resolve(`/?category=${encodeURIComponent(week)}` as '/')} class="flex-1">
 							<div class="flex items-center justify-between pr-3">
@@ -250,6 +257,12 @@
 												class="rounded-full bg-indigo-100 px-2 py-0.5 font-headline text-[10px] font-bold text-indigo-700"
 											>
 												This Week
+											</span>
+										{:else if isUnassigned}
+											<span
+												class="rounded-full bg-amber-100 px-2 py-0.5 font-headline text-[10px] font-bold text-amber-800"
+											>
+												Unassigned
 											</span>
 										{/if}
 									</div>

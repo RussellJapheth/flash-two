@@ -141,15 +141,23 @@ export function getUnlockedWeeks(
 
 	// Also append other non-week custom categories if any exist
 	const nonWeekCats = new Set<string>();
+	let hasUnassigned = false;
 	for (const w of words) {
 		const cat = (w.category || '').trim();
-		if (!cat) continue;
+		if (!cat || cat.toLowerCase() === 'unassigned') {
+			hasUnassigned = true;
+			continue;
+		}
 		if (/^Week\s+\d+$/i.test(cat)) continue;
 		if (cat.toLowerCase() === 'all words' || cat.toLowerCase() === 'all weeks') continue;
 		nonWeekCats.add(cat);
 	}
 
-	return [...weeks, ...Array.from(nonWeekCats).sort()];
+	const result = [...weeks, ...Array.from(nonWeekCats).sort()];
+	if (hasUnassigned) {
+		result.push('Unassigned');
+	}
+	return result;
 }
 
 /**

@@ -11,9 +11,11 @@ class PwaState {
 	#deferredPrompt = $state<BeforeInstallPromptEvent | null>(null);
 	#isInstalled = $state(false);
 	#isDismissed = $state(false);
+	#isIOS = $state(false);
 
 	get isInstallable(): boolean {
-		return this.#deferredPrompt !== null && !this.#isInstalled;
+		if (this.#isInstalled || this.#isDismissed) return false;
+		return this.#deferredPrompt !== null || this.#isIOS;
 	}
 
 	get isInstalled(): boolean {
@@ -24,21 +26,40 @@ class PwaState {
 		return this.#isDismissed;
 	}
 
+	get isIOS(): boolean {
+		return this.#isIOS;
+	}
+
 	init() {
 		if (typeof window === 'undefined') return;
 
 		const isStandalone =
 			window.matchMedia('(display-mode: standalone)').matches ||
+			window.matchMedia('(display-mode: minimal-ui)').matches ||
+			window.matchMedia('(display-mode: fullscreen)').matches ||
 			// @ts-expect-error iOS Safari navigator.standalone check
-			window.navigator.standalone === true;
+			window.navigator.standalone === true ||
+			localStorage.getItem('pwa_installed') === 'true';
 
 		if (isStandalone) {
 			this.#isInstalled = true;
 			return;
 		}
 
-		if (sessionStorage.getItem('pwa_install_dismissed') === 'true') {
+		if (
+			sessionStorage.getItem('pwa_install_dismissed') === 'true' ||
+			sessionStorage.getItem('pwa_session_installed') === 'true'
+		) {
 			this.#isDismissed = true;
+		}
+
+		// Detect iOS Safari compatibility
+		const ua = window.navigator.userAgent;
+		const isIOSDevice =
+			/iPad|iPhone|iPod/.test(ua) && !(window as unknown as { MSStream?: unknown }).MSStream;
+		const isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS/.test(ua);
+		if (isIOSDevice && isSafari && !isStandalone) {
+			this.#isIOS = true;
 		}
 
 		window.addEventListener('beforeinstallprompt', (event) => {
@@ -49,6 +70,12 @@ class PwaState {
 		window.addEventListener('appinstalled', () => {
 			this.#deferredPrompt = null;
 			this.#isInstalled = true;
+			try {
+				localStorage.setItem('pwa_installed', 'true');
+				sessionStorage.setItem('pwa_session_installed', 'true');
+			} catch {
+				// Ignore storage errors
+			}
 		});
 	}
 
@@ -62,6 +89,12 @@ class PwaState {
 		if (choice.outcome === 'accepted') {
 			this.#deferredPrompt = null;
 			this.#isInstalled = true;
+			try {
+				localStorage.setItem('pwa_installed', 'true');
+				sessionStorage.setItem('pwa_session_installed', 'true');
+			} catch {
+				// Ignore storage errors
+			}
 		} else {
 			this.dismiss();
 		}
@@ -72,7 +105,11 @@ class PwaState {
 	dismiss() {
 		this.#isDismissed = true;
 		if (typeof window !== 'undefined') {
-			sessionStorage.setItem('pwa_install_dismissed', 'true');
+			try {
+				sessionStorage.setItem('pwa_install_dismissed', 'true');
+			} catch {
+				// Ignore storage errors
+			}
 		}
 	}
 }

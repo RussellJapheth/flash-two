@@ -72,6 +72,19 @@ describe('subcategories and All words', () => {
 
 		const allFiltered = filterWordsByCategory(deck.words, ALL_WEEKS_LABEL);
 		expect(allFiltered).toHaveLength(2);
+
+		const unassignedWord: WordRecord = {
+			No: 3,
+			'Chinese Word': '再见',
+			Pinyin: 'zàijiàn',
+			'English Meaning': 'goodbye'
+			// no category
+		};
+		const wordsWithUnassigned = [...deck.words, unassignedWord];
+		const unassignedFiltered = filterWordsByCategory(wordsWithUnassigned, 'Unassigned');
+		// nihao has no category and unassignedWord has no category -> both are Unassigned
+		expect(unassignedFiltered).toHaveLength(2);
+		expect(unassignedFiltered.map((w) => w['Chinese Word'])).toEqual(['你好', '再见']);
 	});
 });
 

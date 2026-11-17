@@ -76,6 +76,12 @@ export function filterWordsByCategory(words: WordRecord[], category?: string | n
 	) {
 		return [...words];
 	}
+	if (trimmed === 'unassigned') {
+		return words.filter((w) => {
+			const cat = (w.category || '').trim().toLowerCase();
+			return !cat || cat === 'unassigned';
+		});
+	}
 	return words.filter((w) => (w.category || '').trim().toLowerCase() === trimmed);
 }
 

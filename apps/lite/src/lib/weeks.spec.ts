@@ -85,4 +85,31 @@ describe('weeks utility', () => {
 		);
 		expect(next).toBe('Week 3');
 	});
+
+	it('appends Unassigned category when words without category exist', () => {
+		const mockWords: WordRecord[] = [
+			{
+				No: 1,
+				'Chinese Word': '你好',
+				Pinyin: 'nǐ hǎo',
+				'Part of Speech': '',
+				'English Meaning': 'hello'
+				// no category
+			},
+			{
+				No: 2,
+				'Chinese Word': '再见',
+				Pinyin: 'zàijiàn',
+				'Part of Speech': '',
+				'English Meaning': 'goodbye',
+				category: 'Week 1'
+			}
+		];
+		const unlocked = getUnlockedWeeks(
+			mockWords,
+			new Date('2026-11-18T10:00:00Z'),
+			new Date('2026-11-18T10:00:00Z')
+		);
+		expect(unlocked).toContain('Unassigned');
+	});
 });

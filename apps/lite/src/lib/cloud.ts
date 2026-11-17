@@ -19,8 +19,33 @@ import { API_BASE_URL } from './apiBase';
 
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 let lastPullTime = 0;
+let isPulling = false;
 let currentSyncStatus: SyncStatus = 'idle';
 const statusListeners = new Set<(status: SyncStatus) => void>();
+
+const syncChannel =
+	typeof window !== 'undefined' && 'BroadcastChannel' in window
+		? new BroadcastChannel('flashcards_lite_sync')
+		: null;
+
+if (syncChannel) {
+	syncChannel.onmessage = (event) => {
+		if (event.data?.type === 'sync_complete') {
+			const user = getSavedUsername();
+			if (user && Date.now() - lastPullTime > 2000) {
+				pullAndMerge(user);
+			}
+		}
+	};
+}
+
+function broadcastSync() {
+	try {
+		syncChannel?.postMessage({ type: 'sync_complete', timestamp: Date.now() });
+	} catch {
+		// Ignore broadcast errors
+	}
+}
 
 export function getSyncStatus(): SyncStatus {
 	return currentSyncStatus;
@@ -124,6 +149,8 @@ export async function pullAndMerge(username?: string): Promise<boolean> {
 		return false;
 	}
 
+	if (isPulling) return false;
+	isPulling = true;
 	updateStatus('syncing');
 	lastPullTime = Date.now();
 
@@ -147,27 +174,59 @@ export async function pullAndMerge(username?: string): Promise<boolean> {
 		const remoteData: AppBackup = await res.json();
 		let localHadNewData = false;
 
-		// 1. Merge words deck
+		// 1. Merge words deck (Timestamp-Aware Conflict Resolution)
 		const localDeck = await getMyWordsDeck();
 		const remoteDeck =
 			remoteData.customDecks?.find((d) => d.id === MY_WORDS_DECK_ID) || remoteData.customDecks?.[0];
 		const remoteWords = remoteDeck?.words ?? [];
 		const localWords = localDeck.words ?? [];
+		const localCreated = localDeck.createdAt || 0;
+		const remoteCreated = remoteDeck?.createdAt || 0;
 
-		if (remoteWords.length > 0) {
-			const mergedWords = mergeWordLists(localWords, remoteWords);
-			if (mergedWords.length > remoteWords.length) {
+		if (remoteDeck && remoteWords.length > 0) {
+			if (remoteCreated > localCreated) {
+				// Remote deck is strictly newer -> adopt remote deck (preserves deletions/edits from other devices)
+				const updatedDeck: CustomDeck = {
+					...remoteDeck,
+					id: MY_WORDS_DECK_ID,
+					name: MY_WORDS_DECK_NAME,
+					language: 'chinese',
+					createdAt: remoteCreated
+				};
+				await saveMyWordsDeck(updatedDeck);
+			} else if (localCreated > remoteCreated) {
+				// Local deck is strictly newer -> keep local deck and flag for push
+				localHadNewData = true;
+			} else {
+				// Same timestamp: merge deterministic
+				const mergedWords = mergeWordLists(localWords, remoteWords);
+				if (mergedWords.length > remoteWords.length) {
+					localHadNewData = true;
+				}
+				const mergedDeck: CustomDeck = {
+					...localDeck,
+					id: MY_WORDS_DECK_ID,
+					name: MY_WORDS_DECK_NAME,
+					words: mergedWords,
+					language: 'chinese',
+					createdAt: Math.max(localCreated, remoteCreated, Date.now())
+				};
+				await saveMyWordsDeck(mergedDeck);
+			}
+		} else if (remoteDeck && remoteWords.length === 0 && localWords.length > 0) {
+			if (remoteCreated > localCreated) {
+				// Remote deleted all words
+				await saveMyWordsDeck({
+					...remoteDeck,
+					id: MY_WORDS_DECK_ID,
+					name: MY_WORDS_DECK_NAME,
+					words: [],
+					language: 'chinese',
+					createdAt: remoteCreated
+				});
+			} else {
 				localHadNewData = true;
 			}
-			const mergedDeck: CustomDeck = {
-				...localDeck,
-				id: MY_WORDS_DECK_ID,
-				name: MY_WORDS_DECK_NAME,
-				words: mergedWords,
-				language: 'chinese',
-				createdAt: localDeck.createdAt || Date.now()
-			};
-			await saveMyWordsDeck(mergedDeck);
 		} else if (localWords.length > 0) {
 			localHadNewData = true;
 		}
@@ -240,11 +299,14 @@ export async function pullAndMerge(username?: string): Promise<boolean> {
 		}
 
 		updateStatus('ok');
+		broadcastSync();
 		return true;
 	} catch (err) {
 		console.error('Error during pullAndMerge:', err);
 		updateStatus('error');
 		return false;
+	} finally {
+		isPulling = false;
 	}
 }
 
@@ -262,8 +324,16 @@ export async function pushData(username?: string): Promise<boolean> {
 
 	try {
 		const deck = await getMyWordsDeck();
-		const progress = await getAllProgress();
+		const rawProgress = await getAllProgress();
 		const streakFreezeData = getStreakFreezeData();
+
+		// Keep only custom words progress in lite app payloads
+		const progress: Record<string, WordProgress> = {};
+		for (const [key, val] of Object.entries(rawProgress)) {
+			if (key.startsWith('custom-')) {
+				progress[key] = val;
+			}
+		}
 
 		const payload: AppBackup = {
 			version: 1,
@@ -307,6 +377,7 @@ export async function pushData(username?: string): Promise<boolean> {
 		}
 
 		updateStatus('ok');
+		broadcastSync();
 		return true;
 	} catch (err) {
 		console.error('Push data error:', err);
@@ -410,10 +481,11 @@ export function scheduleDebouncedSync(delayMs = 3000): void {
 
 // Auto-register data mutation listener to schedule sync
 registerDataMutationListener(() => {
+	if (isPulling) return;
 	scheduleDebouncedSync();
 });
 
-// Auto pull/sync on focus/online
+// Auto pull/sync on focus/online/heartbeat
 if (typeof window !== 'undefined') {
 	window.addEventListener('online', () => {
 		const user = getSavedUsername();
@@ -425,12 +497,33 @@ if (typeof window !== 'undefined') {
 		}
 	});
 
+	window.addEventListener('focus', () => {
+		const user = getSavedUsername();
+		if (user && Date.now() - lastPullTime > 5000) {
+			pullAndMerge(user);
+		}
+	});
+
 	window.addEventListener('visibilitychange', () => {
 		if (document.visibilityState === 'visible') {
 			const user = getSavedUsername();
-			if (user && Date.now() - lastPullTime > 10000) {
+			if (user && Date.now() - lastPullTime > 5000) {
 				pullAndMerge(user);
 			}
 		}
 	});
+
+	setInterval(() => {
+		if (
+			typeof document !== 'undefined' &&
+			document.visibilityState === 'visible' &&
+			typeof navigator !== 'undefined' &&
+			navigator.onLine
+		) {
+			const user = getSavedUsername();
+			if (user && Date.now() - lastPullTime > 25000) {
+				pullAndMerge(user);
+			}
+		}
+	}, 30000);
 }

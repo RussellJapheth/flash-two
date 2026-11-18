@@ -34,7 +34,8 @@
 		ArrowUpDown,
 		ChevronDown,
 		ChevronLeft,
-		ChevronRight
+		ChevronRight,
+		Flame
 	} from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { SvelteSet } from 'svelte/reactivity';
@@ -55,7 +56,9 @@
 	let selectedStudentUsername = $state('');
 	let studentWeekFilter = $state('all');
 	let studentSearchQuery = $state('');
-	let studentSortBy = $state<'name' | 'practices' | 'words' | 'active' | 'accuracy'>('name');
+	let studentSortBy = $state<'name' | 'practices' | 'words' | 'active' | 'accuracy' | 'streak'>(
+		'name'
+	);
 	let isMobileRosterOpen = $state(false);
 
 	// Master curriculum controls
@@ -142,6 +145,10 @@
 		} else if (studentSortBy === 'accuracy') {
 			sorted.sort(
 				(a, b) => a.overallAccuracy - b.overallAccuracy || b.totalPractices - a.totalPractices
+			);
+		} else if (studentSortBy === 'streak') {
+			sorted.sort(
+				(a, b) => b.currentStreak - a.currentStreak || a.username.localeCompare(b.username)
 			);
 		} else {
 			sorted.sort((a, b) => a.username.localeCompare(b.username));
@@ -490,6 +497,11 @@
 								{#if selectedStudent}
 									<span class="block font-sans text-[10px] text-slate-500">
 										{selectedStudent.totalWords} words • {selectedStudent.totalPractices} reps
+										{#if selectedStudent.currentStreak > 0}
+											• <span class="font-bold text-amber-600"
+												>🔥 {selectedStudent.currentStreak}d</span
+											>
+										{/if}
 									</span>
 								{/if}
 							</div>
@@ -546,6 +558,7 @@
 								class="rounded-xl border border-slate-200 bg-slate-50 px-2 py-1 font-headline text-[11px] font-bold text-slate-700 focus:outline-none"
 							>
 								<option value="name">A–Z</option>
+								<option value="streak">Highest Streak</option>
 								<option value="practices">Most Practices</option>
 								<option value="words">Most Words</option>
 								<option value="active">Recently Active</option>
@@ -593,18 +606,29 @@
 										</div>
 									</div>
 
-									<span
-										class="shrink-0 rounded-md px-1.5 py-0.5 font-headline text-[10px] font-bold {student.overallAccuracy >=
-										80
-											? 'bg-emerald-100 text-emerald-800'
-											: student.overallAccuracy >= 60
-												? 'bg-indigo-100 text-indigo-800'
-												: student.totalPractices === 0
-													? 'bg-slate-100 text-slate-500'
-													: 'bg-amber-100 text-amber-800'}"
-									>
-										{student.overallAccuracy}%
-									</span>
+									<div class="flex shrink-0 items-center gap-1.5">
+										{#if student.currentStreak > 0}
+											<span
+												class="inline-flex items-center gap-0.5 rounded-md border border-amber-200/80 bg-amber-50 px-1.5 py-0.5 font-headline text-[10px] font-bold text-amber-700"
+												title="{student.currentStreak}-day streak ({student.streakStats.tierName})"
+											>
+												<Flame size={10} class="fill-amber-500 text-amber-500" />
+												{student.currentStreak}d
+											</span>
+										{/if}
+										<span
+											class="rounded-md px-1.5 py-0.5 font-headline text-[10px] font-bold {student.overallAccuracy >=
+											80
+												? 'bg-emerald-100 text-emerald-800'
+												: student.overallAccuracy >= 60
+													? 'bg-indigo-100 text-indigo-800'
+													: student.totalPractices === 0
+														? 'bg-slate-100 text-slate-500'
+														: 'bg-amber-100 text-amber-800'}"
+										>
+											{student.overallAccuracy}%
+										</span>
+									</div>
 								</button>
 							{/each}
 
@@ -626,7 +650,7 @@
 								class="flex flex-col gap-4 border-b border-slate-100 pb-4 sm:flex-row sm:items-center sm:justify-between"
 							>
 								<div>
-									<div class="flex items-center gap-2">
+									<div class="flex flex-wrap items-center gap-2">
 										<h3 class="font-headline text-xl font-black text-slate-900">
 											{selectedStudent.username}
 										</h3>
@@ -637,6 +661,15 @@
 												? 'week'
 												: 'weeks'}
 										</span>
+										{#if selectedStudent.currentStreak > 0}
+											<span
+												class="inline-flex items-center gap-1 rounded-md border border-amber-200/80 bg-amber-50 px-2 py-0.5 font-headline text-[11px] font-bold text-amber-700"
+											>
+												<Flame size={12} class="fill-amber-500 text-amber-500" />
+												{selectedStudent.currentStreak} Day Streak ({selectedStudent.streakStats
+													.tierName})
+											</span>
+										{/if}
 									</div>
 									<p class="mt-0.5 flex items-center gap-1 font-sans text-xs text-slate-500">
 										<Clock size={12} />
@@ -645,7 +678,7 @@
 								</div>
 
 								<!-- Summary KPIs -->
-								<div class="flex items-center gap-3">
+								<div class="grid grid-cols-2 gap-2 sm:flex sm:items-center sm:gap-3">
 									<div
 										class="rounded-2xl border border-slate-100 bg-slate-50 px-3 py-2 text-center"
 									>
@@ -680,6 +713,21 @@
 											class="block font-sans text-[10px] font-semibold text-slate-500 uppercase"
 										>
 											Accuracy
+										</span>
+									</div>
+									<div
+										class="rounded-2xl border border-amber-100 bg-amber-50/50 px-3 py-2 text-center"
+									>
+										<span
+											class="flex items-center justify-center gap-1 font-headline text-lg font-black text-amber-600"
+										>
+											<Flame size={18} class="fill-amber-500 text-amber-500" />
+											{selectedStudent.currentStreak}
+										</span>
+										<span
+											class="block font-sans text-[10px] font-semibold text-amber-700 uppercase"
+										>
+											Streak
 										</span>
 									</div>
 								</div>

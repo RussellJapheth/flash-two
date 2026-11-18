@@ -1,5 +1,5 @@
-import type { AppBackup, WordProgress, WordRecord } from '@flash/shared';
-import { MY_WORDS_DECK_ID } from '@flash/shared';
+import type { AppBackup, WordProgress, WordRecord, StreakStats } from '@flash/shared';
+import { MY_WORDS_DECK_ID, computeStreakStats } from '@flash/shared';
 import { API_BASE_URL } from './apiBase';
 import { sortWeekLabels, migrateWeekCategory } from './weeks';
 
@@ -64,6 +64,8 @@ export interface StudentProfile {
 	totalPractices: number;
 	overallAccuracy: number;
 	lastActive?: number;
+	currentStreak: number;
+	streakStats: StreakStats;
 	weeks: StudentWeekBreakdown[];
 	rawBackup: AppBackup;
 }
@@ -229,12 +231,20 @@ export function processStudentProfile(username: string, backup: AppBackup): Stud
 	const overallAccuracy =
 		totalPractices > 0 ? Math.round((totalCorrect / totalPractices) * 100) : 0;
 
+	const streakStats = computeStreakStats(
+		backup.progress ?? {},
+		backup.streakFreezeData,
+		backup.xpData?.dailyXP
+	);
+
 	return {
 		username,
 		totalWords: words.length,
 		totalPractices,
 		overallAccuracy,
 		lastActive,
+		currentStreak: streakStats.currentStreak,
+		streakStats,
 		weeks,
 		rawBackup: backup
 	};

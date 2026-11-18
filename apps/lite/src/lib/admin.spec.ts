@@ -109,6 +109,8 @@ describe('Admin Service', () => {
 		expect(profile.totalPractices).toBe(15); // 8+2 + 1+4 = 15
 		expect(profile.overallAccuracy).toBe(60); // 9 / 15 = 60%
 		expect(profile.weeks.length).toBe(2);
+		expect(typeof profile.currentStreak).toBe('number');
+		expect(profile.streakStats).toBeDefined();
 
 		const expectedWeek1 = formatWeekSundayLabel(new Date());
 		const expectedWeek2 = formatWeekSundayLabel(addWeeks(new Date(), 1));
@@ -129,6 +131,54 @@ describe('Admin Service', () => {
 		expect(week2?.words.length).toBe(1);
 		expect(week2?.words[0].practiceCount).toBe(0);
 		expect(week2?.words[0].status).toBe('unpracticed');
+	});
+
+	it('computes student streak stats including dailyXP and freeze data', () => {
+		const todayIso = new Date().toISOString().split('T')[0];
+		const yesterdayIso = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+
+		const backup: AppBackup = {
+			version: 1,
+			exportedAt: Date.now(),
+			customDecks: [
+				{
+					id: 'custom-my-words',
+					name: 'My Words',
+					words: [
+						{
+							No: 1,
+							'Chinese Word': '测试',
+							Pinyin: 'cèshì',
+							'Part of Speech': 'Noun',
+							'English Meaning': 'test',
+							category: 'Week 1'
+						}
+					]
+				}
+			],
+			progress: {
+				'custom-history-1': {
+					weekId: 'custom-my-words',
+					wordNo: 1,
+					lastReviewed: new Date(todayIso).getTime() + 1000,
+					correct: 5,
+					wrong: 0,
+					reps: 1
+				}
+			},
+			xpData: {
+				totalXP: 100,
+				lastUpdated: Date.now(),
+				dailyXP: {
+					[todayIso]: 50,
+					[yesterdayIso]: 50
+				}
+			}
+		};
+
+		const profile = processStudentProfile('bob', backup);
+		expect(profile.currentStreak).toBeGreaterThanOrEqual(2);
+		expect(profile.streakStats.tierName).toBeDefined();
 	});
 
 	it('builds deduplicated master curriculum by Hanzi alone', () => {

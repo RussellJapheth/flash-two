@@ -214,7 +214,8 @@ describe('Admin Service', () => {
 
 			const profile = processStudentProfile('new_student', {
 				version: 1,
-				customDecks: []
+				customDecks: [],
+				progress: {}
 			});
 
 			expect(profile.currentStreak).toBe(0);

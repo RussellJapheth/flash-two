@@ -14,7 +14,9 @@ import {
 	setSavedUsername,
 	getStreakFreezeData,
 	saveStreakFreezeData,
-	computeStreakStats
+	computeStreakStats,
+	registerDataMutationListener,
+	notifyMutation
 } from './storage';
 
 const testWord: MyWordInput = {
@@ -244,5 +246,30 @@ describe('Lite App Storage Core Logic', () => {
 			category: w.category === 'Week 1' ? 'Sun 22, Nov 2026' : w.category || undefined
 		}));
 		expect(migratedWords[0].category).toBe('Sun 22, Nov 2026');
+	});
+
+	it('notifies all registered mutation listeners without overwriting', () => {
+		let called1 = 0;
+		let called2 = 0;
+		const unsub1 = registerDataMutationListener(() => {
+			called1++;
+		});
+		const unsub2 = registerDataMutationListener(() => {
+			called2++;
+		});
+
+		notifyMutation();
+		expect(called1).toBe(1);
+		expect(called2).toBe(1);
+
+		unsub1();
+		notifyMutation();
+		expect(called1).toBe(1);
+		expect(called2).toBe(2);
+
+		unsub2();
+		notifyMutation();
+		expect(called1).toBe(1);
+		expect(called2).toBe(2);
 	});
 });

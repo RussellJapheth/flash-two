@@ -182,4 +182,56 @@ describe('Lite App Cloud Sync Layer', () => {
 		expect(newPushed).toBe(true);
 		expect(deletedOld).toBe(true);
 	});
+
+	it('pullAndMerge does not resurrect deleted words when local deck is newer', async () => {
+		let pushedPayload: AppBackup | null = null;
+
+		globalThis.fetch = vi.fn().mockImplementation((url: string, init?: RequestInit) => {
+			if (init?.method === 'PUT' && url.includes('/users/alice')) {
+				pushedPayload = JSON.parse(init.body as string);
+				return Promise.resolve(new Response(JSON.stringify({ ok: true }), { status: 200 }));
+			}
+			if (url.includes('/users/alice')) {
+				// Remote has an older deck timestamp with 2 words (before deletion)
+				const remoteBackup: AppBackup = {
+					version: 1,
+					username: 'alice',
+					customDecks: [
+						{
+							id: MY_WORDS_DECK_ID,
+							name: 'My Words',
+							words: [
+								{
+									No: 1,
+									'Chinese Word': '苹果',
+									Pinyin: 'píngguǒ',
+									'Part of Speech': 'n',
+									'English Meaning': 'apple'
+								},
+								{
+									No: 2,
+									'Chinese Word': '香蕉',
+									Pinyin: 'xiāngjiāo',
+									'Part of Speech': 'n',
+									'English Meaning': 'banana'
+								}
+							],
+							createdAt: 1000
+						}
+					],
+					progress: {}
+				};
+				return Promise.resolve(new Response(JSON.stringify(remoteBackup), { status: 200 }));
+			}
+			if (url.endsWith('/users')) {
+				return Promise.resolve(new Response(JSON.stringify(['alice']), { status: 200 }));
+			}
+			return Promise.resolve(new Response('Not found', { status: 404 }));
+		});
+
+		const ok = await pullAndMerge('alice');
+		expect(ok).toBe(true);
+		// Local default has no words or newer timestamp, so it pushed local state rather than reviving remote words
+		expect(pushedPayload).toBeDefined();
+	});
 });

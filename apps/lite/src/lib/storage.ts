@@ -36,21 +36,19 @@ const DB_NAME = 'flashcards_lite_db';
 const DB_VERSION = 1;
 
 let dbPromise: Promise<IDBDatabase> | null = null;
-let dataMutationListener: (() => void) | null = null;
+const dataMutationListeners = new Set<() => void>();
 
 export function registerDataMutationListener(fn: () => void): () => void {
-	dataMutationListener = fn;
+	dataMutationListeners.add(fn);
 	return () => {
-		if (dataMutationListener === fn) {
-			dataMutationListener = null;
-		}
+		dataMutationListeners.delete(fn);
 	};
 }
 
-function notifyMutation(): void {
-	if (dataMutationListener) {
+export function notifyMutation(): void {
+	for (const fn of dataMutationListeners) {
 		try {
-			dataMutationListener();
+			fn();
 		} catch (err) {
 			console.error('Error in storage mutation listener:', err);
 		}

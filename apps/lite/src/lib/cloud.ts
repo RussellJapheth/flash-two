@@ -211,15 +211,7 @@ export async function pullAndMerge(username?: string): Promise<boolean> {
 				};
 				await saveMyWordsDeck(updatedDeck);
 			} else if (localCreated > remoteCreated) {
-				// Merge remote words that do not exist locally to prevent accidental loss
-				const mergedWords = mergeWordLists(localWords, remoteWords);
-				if (mergedWords.length !== localWords.length) {
-					await saveMyWordsDeck({
-						...localDeck,
-						words: mergedWords,
-						createdAt: localCreated
-					});
-				}
+				// Local deck is strictly newer -> keep local deck as source of truth (preserves local deletions/edits)
 				localHadNewData = true;
 			} else {
 				// Same timestamp: merge deterministic

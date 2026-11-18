@@ -63,6 +63,24 @@ async function main() {
 	const jMergedProgress = { ...jBackup.progress };
 	const jMergedDailyXP = { ...(jBackup.xpData?.dailyXP || {}) };
 
+	// Ensure every practice date has a custom-history progress entry so it survives any key filtering
+	const jPracticeDates = new Set();
+	for (const p of Object.values(jBackup.progress || {})) {
+		if (p.lastReviewed) jPracticeDates.add(new Date(p.lastReviewed).toISOString().split('T')[0]);
+	}
+	for (const d of Object.keys(jBackup.xpData?.dailyXP || {})) {
+		jPracticeDates.add(d);
+	}
+	for (const d of jPracticeDates) {
+		jMergedProgress[`custom-history-${d}`] = {
+			weekId: 'custom',
+			wordNo: 1,
+			correct: 1,
+			wrong: 0,
+			lastReviewed: new Date(`${d}T12:00:00.000Z`).getTime()
+		};
+	}
+
 	// Freeze dates covering gap to reach 71-day streak through Nov 17
 	const jFreezeDates = [
 		...new Set([
@@ -109,6 +127,27 @@ async function main() {
 			const iso = new Date(p.lastReviewed).toISOString().split('T')[0];
 			rMergedDailyXP[iso] = (rMergedDailyXP[iso] || 0) + 10;
 		}
+	}
+
+	// Ensure every practice date has a custom-history progress entry so it survives any key filtering
+	const rPracticeDates = new Set();
+	for (const p of Object.values(rOld.progress || {})) {
+		if (p.lastReviewed) rPracticeDates.add(new Date(p.lastReviewed).toISOString().split('T')[0]);
+	}
+	for (const p of Object.values(rNov.progress || {})) {
+		if (p.lastReviewed) rPracticeDates.add(new Date(p.lastReviewed).toISOString().split('T')[0]);
+	}
+	for (const d of Object.keys(rOld.xpData?.dailyXP || {})) {
+		rPracticeDates.add(d);
+	}
+	for (const d of rPracticeDates) {
+		rMergedProgress[`custom-history-${d}`] = {
+			weekId: 'custom',
+			wordNo: 1,
+			correct: 1,
+			wrong: 0,
+			lastReviewed: new Date(`${d}T12:00:00.000Z`).getTime()
+		};
 	}
 
 	const rFreezeDates = [

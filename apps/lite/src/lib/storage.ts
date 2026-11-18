@@ -3,7 +3,8 @@ import type {
 	WordProgress,
 	WordRecord,
 	StreakStats,
-	StreakFreezeData
+	StreakFreezeData,
+	UserXPData
 } from '@flash/shared';
 import {
 	MY_WORDS_DECK_ID,
@@ -274,15 +275,39 @@ export function setSavedUsername(name: string): void {
 	}
 }
 
+export const FLASHCARDS_USER_XP_KEY = 'flashcards_user_xp';
+
+export function getUserXPData(): UserXPData | null {
+	if (typeof localStorage === 'undefined') return null;
+	try {
+		const raw = localStorage.getItem(FLASHCARDS_USER_XP_KEY);
+		if (raw) return JSON.parse(raw);
+	} catch {
+		// ignore
+	}
+	return null;
+}
+
+export function saveUserXPData(data: UserXPData): void {
+	if (typeof localStorage === 'undefined') return;
+	try {
+		localStorage.setItem(FLASHCARDS_USER_XP_KEY, JSON.stringify(data));
+	} catch {
+		// ignore
+	}
+}
+
 export async function getStreakStats(): Promise<StreakStats> {
 	const progress = await getAllProgress();
-	return computeStreakStats(progress);
+	const xpData = getUserXPData();
+	return computeStreakStats(progress, getStreakFreezeData(), xpData?.dailyXP);
 }
 
 export async function exportLiteBackup(): Promise<string> {
 	const deck = await getMyWordsDeck();
 	const progress = await getAllProgress();
 	const streakFreezeData = getStreakFreezeData();
+	const xpData = getUserXPData();
 	return JSON.stringify(
 		{
 			version: 1,
@@ -290,7 +315,8 @@ export async function exportLiteBackup(): Promise<string> {
 			exportedAt: Date.now(),
 			customDecks: [deck],
 			progress,
-			streakFreezeData
+			streakFreezeData,
+			xpData: xpData || undefined
 		},
 		null,
 		2
@@ -346,6 +372,10 @@ export async function importLiteBackup(
 				(d: unknown): d is string => typeof d === 'string'
 			)
 		});
+	}
+
+	if (parsed.xpData && typeof parsed.xpData === 'object') {
+		saveUserXPData(parsed.xpData);
 	}
 
 	notifyMutation();

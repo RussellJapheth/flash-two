@@ -1,7 +1,14 @@
 /**
  * Cloud sync layer for FlashCards Lite.
  */
-import type { AppBackup, CustomDeck, SyncStatus, WordProgress, WordRecord } from '@flash/shared';
+import type {
+	AppBackup,
+	CustomDeck,
+	SyncStatus,
+	WordProgress,
+	WordRecord,
+	UserXPData
+} from '@flash/shared';
 import { MY_WORDS_DECK_ID, MY_WORDS_DECK_NAME } from '@flash/shared';
 import {
 	getMyWordsDeck,
@@ -10,6 +17,8 @@ import {
 	saveBulkProgress,
 	getStreakFreezeData,
 	saveStreakFreezeData,
+	getUserXPData,
+	saveUserXPData,
 	getSavedUsername,
 	setSavedUsername,
 	isValidUsername,
@@ -202,7 +211,15 @@ export async function pullAndMerge(username?: string): Promise<boolean> {
 				};
 				await saveMyWordsDeck(updatedDeck);
 			} else if (localCreated > remoteCreated) {
-				// Local deck is strictly newer -> keep local deck and flag for push
+				// Merge remote words that do not exist locally to prevent accidental loss
+				const mergedWords = mergeWordLists(localWords, remoteWords);
+				if (mergedWords.length !== localWords.length) {
+					await saveMyWordsDeck({
+						...localDeck,
+						words: mergedWords,
+						createdAt: localCreated
+					});
+				}
 				localHadNewData = true;
 			} else {
 				// Same timestamp: merge deterministic
@@ -300,6 +317,26 @@ export async function pullAndMerge(username?: string): Promise<boolean> {
 			localHadNewData = true;
 		}
 
+		// 4. Merge Streak Daily XP Data
+		if (remoteData.xpData && typeof remoteData.xpData === 'object') {
+			const localXP = getUserXPData();
+			const mergedDailyXP = {
+				...(localXP?.dailyXP || {}),
+				...(remoteData.xpData.dailyXP || {})
+			};
+			const mergedXP: UserXPData = {
+				totalXP: Math.max(localXP?.totalXP || 0, remoteData.xpData.totalXP || 0),
+				dailyXP: mergedDailyXP,
+				lastUpdated: Math.max(
+					localXP?.lastUpdated || 0,
+					remoteData.xpData.lastUpdated || Date.now()
+				),
+				migratedFromProgress: remoteData.xpData.migratedFromProgress,
+				xpVersion: remoteData.xpData.xpVersion
+			};
+			saveUserXPData(mergedXP);
+		}
+
 		// If local had newer cards or progress, push merged back to cloud
 		if (localHadNewData) {
 			await pushData(user);
@@ -333,21 +370,15 @@ export async function pushData(username?: string): Promise<boolean> {
 		const deck = await getMyWordsDeck();
 		const rawProgress = await getAllProgress();
 		const streakFreezeData = getStreakFreezeData();
-
-		// Keep only custom words progress in lite app payloads
-		const progress: Record<string, WordProgress> = {};
-		for (const [key, val] of Object.entries(rawProgress)) {
-			if (key.startsWith('custom-')) {
-				progress[key] = val;
-			}
-		}
+		const xpData = getUserXPData();
 
 		const payload: AppBackup = {
 			version: 1,
 			exportedAt: Date.now(),
 			customDecks: [deck],
-			progress,
+			progress: rawProgress,
 			streakFreezeData,
+			xpData: xpData || undefined,
 			language: 'chinese',
 			username: user
 		};

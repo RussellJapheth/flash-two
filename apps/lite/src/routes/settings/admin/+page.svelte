@@ -4,6 +4,7 @@
 	import TopHeader from '$lib/components/TopHeader.svelte';
 	import { speakWord } from '$lib/audio';
 	import { addMyWord } from '$lib/storage';
+	import { sortWeekLabels, getCurrentWeekLabel } from '$lib/weeks';
 	import {
 		checkAdminPassword,
 		isAdminUnlocked,
@@ -191,14 +192,7 @@
 				weekSet.add(wk);
 			}
 		}
-		const sorted = Array.from(weekSet).sort((a, b) => {
-			const matchA = a.match(/^Week\s+(\d+)$/i);
-			const matchB = b.match(/^Week\s+(\d+)$/i);
-			if (matchA && matchB) return parseInt(matchA[1], 10) - parseInt(matchB[1], 10);
-			if (matchA) return -1;
-			if (matchB) return 1;
-			return a.localeCompare(b);
-		});
+		const sorted = sortWeekLabels(Array.from(weekSet));
 		return ['all', ...sorted];
 	});
 
@@ -273,7 +267,7 @@
 				pinyin: word.pinyin,
 				meaning: word.english,
 				example: word.example || '',
-				category: word.weeks[0] || 'Week 1'
+				category: word.weeks[0] || getCurrentWeekLabel()
 			});
 			addedWordKey = word.hanzi;
 			showToast(`Added "${word.hanzi}" to your local My Words deck!`);

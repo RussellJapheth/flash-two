@@ -70,6 +70,7 @@
 	>
 		<!-- FRONT FACE -->
 		<div
+			aria-hidden={isFlipped}
 			class="shadow-card absolute inset-0 flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-6 backface-hidden"
 		>
 			<!-- Front Header -->
@@ -127,6 +128,7 @@
 
 		<!-- BACK FACE -->
 		<div
+			aria-hidden={!isFlipped}
 			class="shadow-card absolute inset-0 flex rotate-y-180 flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-6 backface-hidden"
 		>
 			<!-- Back Header -->

@@ -10,6 +10,7 @@ import {
 	filterMasterWordsByWeek,
 	exportMasterToTSV
 } from './admin';
+import { formatWeekSundayLabel, addWeeks } from './weeks';
 import type { AppBackup, WordRecord } from '@flash/shared';
 
 describe('Admin Service', () => {
@@ -109,7 +110,10 @@ describe('Admin Service', () => {
 		expect(profile.overallAccuracy).toBe(60); // 9 / 15 = 60%
 		expect(profile.weeks.length).toBe(2);
 
-		const week1 = profile.weeks.find((w) => w.week === 'Week 1');
+		const expectedWeek1 = formatWeekSundayLabel(new Date());
+		const expectedWeek2 = formatWeekSundayLabel(addWeeks(new Date(), 1));
+
+		const week1 = profile.weeks.find((w) => w.week === expectedWeek1);
 		expect(week1).toBeDefined();
 		expect(week1?.words.length).toBe(2);
 		expect(week1?.totalPractices).toBe(15);
@@ -120,7 +124,7 @@ describe('Admin Service', () => {
 		expect(week1?.words[1].practiceCount).toBe(5);
 		expect(week1?.words[1].status).toBe('struggling');
 
-		const week2 = profile.weeks.find((w) => w.week === 'Week 2');
+		const week2 = profile.weeks.find((w) => w.week === expectedWeek2);
 		expect(week2).toBeDefined();
 		expect(week2?.words.length).toBe(1);
 		expect(week2?.words[0].practiceCount).toBe(0);
@@ -203,6 +207,7 @@ describe('Admin Service', () => {
 		});
 
 		const master = buildMasterCurriculum([student1, student2]);
+		const expectedWeek1 = formatWeekSundayLabel(new Date());
 		// Should have 3 unique words: 你好, 水, 火
 		expect(master.length).toBe(3);
 
@@ -214,12 +219,14 @@ describe('Admin Service', () => {
 		expect(nihao?.accuracyPercent).toBe(80); // 8/10
 		expect(nihao?.studentPracticeMap).toEqual({ alice: 6, bob: 4 });
 
-		const filteredWeek1 = filterMasterWordsByWeek(master, 'Week 1');
+		const filteredWeek1 = filterMasterWordsByWeek(master, expectedWeek1);
 		expect(filteredWeek1.length).toBe(1);
 		expect(filteredWeek1[0].hanzi).toBe('你好');
 
 		const tsv = exportMasterToTSV(master);
 		expect(tsv).toContain('Chinese Word\tPinyin\tPart of Speech');
-		expect(tsv).toContain('你好\tnǐ hǎo\tInterjection\thello\tWeek 1\t2\talice, bob\t10\t80%');
+		expect(tsv).toContain(
+			`你好\tnǐ hǎo\tInterjection\thello\t${expectedWeek1}\t2\talice, bob\t10\t80%`
+		);
 	});
 });

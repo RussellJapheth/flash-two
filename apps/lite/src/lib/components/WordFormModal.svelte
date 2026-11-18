@@ -30,7 +30,7 @@
 	let activeTab = $state<'single' | 'bulk'>('bulk');
 	let singleWord = $state('');
 	let bulkText = $state('');
-	let selectedWeek = $state('Week 1');
+	let selectedWeek = $state(getCurrentWeekLabel());
 
 	// Generation state: 'input' | 'generating' | 'preview'
 	let step = $state<'input' | 'generating' | 'preview'>('input');

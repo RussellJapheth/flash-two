@@ -1,11 +1,14 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import {
-	getCalendarMonday,
-	getCurrentWeekNumber,
+	getCalendarSunday,
+	formatWeekSundayLabel,
+	parseWeekSundayLabel,
+	getCurrentWeekLabel,
 	getUnlockedWeeks,
-	getMaxWeekFromWords,
 	unlockNextWeek,
-	setManualMaxWeek,
+	migrateWeekCategory,
+	sortWeekLabels,
+	setManualMaxSunday,
 	clearWeeksMemoryStore
 } from './weeks';
 import type { WordRecord } from '@flash/shared';
@@ -15,45 +18,69 @@ describe('weeks utility', () => {
 		clearWeeksMemoryStore();
 	});
 
-	it('computes calendar Monday for various days of the week in UTC', () => {
-		// 2026-11-18 is Wednesday -> Monday was 2026-11-16
+	it('computes calendar Sunday for various days of the week in UTC', () => {
+		// 2026-11-18 is Wednesday -> Sunday is 2026-11-22
 		const wed = new Date('2026-11-18T10:00:00Z');
-		const mondayFromWed = getCalendarMonday(wed);
-		expect(mondayFromWed.getUTCDay()).toBe(1);
-		expect(mondayFromWed.toISOString().slice(0, 10)).toBe('2026-11-16');
+		const sundayFromWed = getCalendarSunday(wed);
+		expect(sundayFromWed.getUTCDay()).toBe(0);
+		expect(sundayFromWed.toISOString().slice(0, 10)).toBe('2026-11-22');
 
-		// 2026-11-22 is Sunday -> Monday was 2026-11-16
+		// 2026-11-22 is Sunday -> Sunday is 2026-11-22
 		const sun = new Date('2026-11-22T23:59:59Z');
-		const mondayFromSun = getCalendarMonday(sun);
-		expect(mondayFromSun.getUTCDay()).toBe(1);
-		expect(mondayFromSun.toISOString().slice(0, 10)).toBe('2026-11-16');
+		const sundayFromSun = getCalendarSunday(sun);
+		expect(sundayFromSun.getUTCDay()).toBe(0);
+		expect(sundayFromSun.toISOString().slice(0, 10)).toBe('2026-11-22');
 
-		// 2026-11-23 is next Monday -> Monday is 2026-11-23
+		// 2026-11-23 is Monday -> Sunday is 2026-11-29
 		const mon = new Date('2026-11-23T00:01:00Z');
-		const mondayFromMon = getCalendarMonday(mon);
-		expect(mondayFromMon.getUTCDay()).toBe(1);
-		expect(mondayFromMon.toISOString().slice(0, 10)).toBe('2026-11-23');
+		const sundayFromMon = getCalendarSunday(mon);
+		expect(sundayFromMon.getUTCDay()).toBe(0);
+		expect(sundayFromMon.toISOString().slice(0, 10)).toBe('2026-11-29');
+
+		// 2026-11-16 is previous Monday -> Sunday is 2026-11-22
+		const prevMon = new Date('2026-11-16T08:00:00Z');
+		expect(getCalendarSunday(prevMon).toISOString().slice(0, 10)).toBe('2026-11-22');
 	});
 
-	it('advances week on calendar Monday', () => {
-		// User starts on Wednesday 2026-11-18
-		const startDate = new Date('2026-11-18T10:00:00Z');
+	it('formats and parses Sunday week labels accurately', () => {
+		const date = new Date('2026-11-22T00:00:00Z');
+		const label = formatWeekSundayLabel(date);
+		expect(label).toBe('Sun 22, Nov 2026');
 
-		// Same week Thursday: Week 1
-		expect(getCurrentWeekNumber(new Date('2026-11-19T10:00:00Z'), startDate)).toBe(1);
-		// Same week Sunday: Week 1
-		expect(getCurrentWeekNumber(new Date('2026-11-22T23:59:00Z'), startDate)).toBe(1);
-		// Next Monday: Week 2 automatically!
-		expect(getCurrentWeekNumber(new Date('2026-11-23T00:01:00Z'), startDate)).toBe(2);
-		// Two Mondays later: Week 3 automatically!
-		expect(getCurrentWeekNumber(new Date('2026-11-30T00:01:00Z'), startDate)).toBe(3);
+		const parsed = parseWeekSundayLabel(label);
+		expect(parsed).not.toBeNull();
+		expect(parsed?.toISOString()).toBe('2026-11-22T00:00:00.000Z');
 	});
 
-	it('returns all unlocked weeks sequentially', () => {
-		const startDate = new Date('2026-11-18T10:00:00Z');
-		const now = new Date('2026-11-30T12:00:00Z'); // Week 3
+	it('returns current week Sunday label', () => {
+		// Wednesday Nov 18, 2026
+		const wed = new Date('2026-11-18T12:00:00Z');
+		expect(getCurrentWeekLabel(wed)).toBe('Sun 22, Nov 2026');
+
+		// Rollover to next Monday Nov 23, 2026
+		const nextMon = new Date('2026-11-23T01:00:00Z');
+		expect(getCurrentWeekLabel(nextMon)).toBe('Sun 29, Nov 2026');
+	});
+
+	it('migrates legacy Week N categories to Sunday dates', () => {
+		const baseSunday = new Date('2026-11-22T00:00:00Z');
+
+		expect(migrateWeekCategory('Week 1', baseSunday)).toBe('Sun 22, Nov 2026');
+		expect(migrateWeekCategory('Week 2', baseSunday)).toBe('Sun 29, Nov 2026');
+		expect(migrateWeekCategory('Week 3', baseSunday)).toBe('Sun 6, Dec 2026');
+
+		// Preserves non-numeric categories
+		expect(migrateWeekCategory('Unassigned', baseSunday)).toBe('Unassigned');
+		expect(migrateWeekCategory('Custom Topic', baseSunday)).toBe('Custom Topic');
+		expect(migrateWeekCategory('', baseSunday)).toBe('');
+		expect(migrateWeekCategory(undefined, baseSunday)).toBeUndefined();
+	});
+
+	it('returns all unlocked weeks sequentially by Sunday date', () => {
+		const startDate = new Date('2026-11-22T00:00:00Z');
+		const now = new Date('2026-12-06T12:00:00Z'); // 2 weeks later
 		const weeks = getUnlockedWeeks([], now, startDate);
-		expect(weeks).toEqual(['Week 1', 'Week 2', 'Week 3']);
+		expect(weeks).toEqual(['Sun 22, Nov 2026', 'Sun 29, Nov 2026', 'Sun 6, Dec 2026']);
 	});
 
 	it('includes weeks from existing words even if ahead of calendar', () => {
@@ -64,26 +91,27 @@ describe('weeks utility', () => {
 				Pinyin: 'nǐ hǎo',
 				'Part of Speech': '',
 				'English Meaning': 'hello',
-				category: 'Week 4'
+				category: 'Sun 13, Dec 2026'
 			}
 		];
-		expect(getMaxWeekFromWords(mockWords)).toBe(4);
 		const unlocked = getUnlockedWeeks(
 			mockWords,
 			new Date('2026-11-18T10:00:00Z'),
-			new Date('2026-11-18T10:00:00Z')
+			new Date('2026-11-22T00:00:00Z')
 		);
-		expect(unlocked).toEqual(['Week 1', 'Week 2', 'Week 3', 'Week 4']);
+		expect(unlocked).toEqual([
+			'Sun 22, Nov 2026',
+			'Sun 29, Nov 2026',
+			'Sun 6, Dec 2026',
+			'Sun 13, Dec 2026'
+		]);
 	});
 
 	it('allows unlocking next week manually', () => {
-		setManualMaxWeek(2);
-		const next = unlockNextWeek(
-			[],
-			new Date('2026-11-18T10:00:00Z'),
-			new Date('2026-11-18T10:00:00Z')
-		);
-		expect(next).toBe('Week 3');
+		const baseSunday = new Date('2026-11-22T00:00:00Z');
+		setManualMaxSunday(new Date('2026-11-29T00:00:00Z'));
+		const next = unlockNextWeek([], baseSunday, baseSunday);
+		expect(next).toBe('Sun 6, Dec 2026');
 	});
 
 	it('appends Unassigned category when words without category exist', () => {
@@ -102,14 +130,34 @@ describe('weeks utility', () => {
 				Pinyin: 'zàijiàn',
 				'Part of Speech': '',
 				'English Meaning': 'goodbye',
-				category: 'Week 1'
+				category: 'Sun 22, Nov 2026'
 			}
 		];
 		const unlocked = getUnlockedWeeks(
 			mockWords,
 			new Date('2026-11-18T10:00:00Z'),
-			new Date('2026-11-18T10:00:00Z')
+			new Date('2026-11-22T00:00:00Z')
 		);
 		expect(unlocked).toContain('Unassigned');
+	});
+
+	it('sorts week labels chronologically with custom and Unassigned at end', () => {
+		const unsorted = [
+			'Unassigned',
+			'Sun 6, Dec 2026',
+			'Z-Custom',
+			'Sun 22, Nov 2026',
+			'A-Custom',
+			'Sun 29, Nov 2026'
+		];
+		const sorted = sortWeekLabels(unsorted);
+		expect(sorted).toEqual([
+			'Sun 22, Nov 2026',
+			'Sun 29, Nov 2026',
+			'Sun 6, Dec 2026',
+			'A-Custom',
+			'Z-Custom',
+			'Unassigned'
+		]);
 	});
 });

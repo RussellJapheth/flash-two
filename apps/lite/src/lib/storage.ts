@@ -20,6 +20,7 @@ import {
 	type MyWordSaveOptions
 } from '@flash/shared';
 import { healWordRecord, healWordRecordWithDict, isCrossRefGloss } from './generator';
+import { migrateWeekCategory } from './weeks';
 
 export {
 	computeStreakStats,
@@ -93,6 +94,11 @@ export async function getMyWordsDeck(): Promise<CustomDeck> {
 				if (Array.isArray(deck.words)) {
 					for (const word of deck.words) {
 						if (healWordRecord(word)) {
+							healed = true;
+						}
+						const migratedCat = migrateWeekCategory(word.category);
+						if (migratedCat !== word.category) {
+							word.category = migratedCat;
 							healed = true;
 						}
 					}
@@ -309,6 +315,9 @@ export async function importLiteBackup(
 	}
 
 	if (words.length > 0) {
+		for (const w of words) {
+			w.category = migrateWeekCategory(w.category);
+		}
 		const current = await getMyWordsDeck();
 		const merged = {
 			...current,

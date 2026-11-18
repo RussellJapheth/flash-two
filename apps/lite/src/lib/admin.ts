@@ -1,6 +1,7 @@
 import type { AppBackup, WordProgress, WordRecord } from '@flash/shared';
 import { MY_WORDS_DECK_ID } from '@flash/shared';
 import { API_BASE_URL } from './apiBase';
+import { sortWeekLabels, migrateWeekCategory } from './weeks';
 
 export const ADMIN_PASSWORD = 'sangisha';
 export const ADMIN_STORAGE_KEY = 'flashcards_lite_admin_unlocked';
@@ -193,26 +194,16 @@ export function processStudentProfile(username: string, backup: AppBackup): Stud
 			status
 		};
 
-		const cat = (word.category || '').trim();
+		const rawCat = (word.category || '').trim();
+		const cat = migrateWeekCategory(rawCat);
 		const weekLabel = cat || 'Unassigned';
 		const list = weekMap.get(weekLabel) || [];
 		list.push(detail);
 		weekMap.set(weekLabel, list);
 	}
 
-	// Sort week labels: Week 1, Week 2... then custom names... then Unassigned
-	const sortedLabels = Array.from(weekMap.keys()).sort((a, b) => {
-		const matchA = a.match(/^Week\s+(\d+)$/i);
-		const matchB = b.match(/^Week\s+(\d+)$/i);
-		if (matchA && matchB) {
-			return parseInt(matchA[1], 10) - parseInt(matchB[1], 10);
-		}
-		if (matchA) return -1;
-		if (matchB) return 1;
-		if (a === 'Unassigned') return 1;
-		if (b === 'Unassigned') return -1;
-		return a.localeCompare(b);
-	});
+	// Sort week labels: Sunday dates, then custom names, then Unassigned
+	const sortedLabels = sortWeekLabels(Array.from(weekMap.keys()));
 
 	const weeks: StudentWeekBreakdown[] = sortedLabels.map((week) => {
 		const weekWords = weekMap.get(week) || [];
@@ -316,12 +307,7 @@ export function buildMasterCurriculum(students: StudentProfile[]): MasterWordRec
 		item.accuracyPercent =
 			item.totalPractices > 0 ? Math.round((item.totalCorrect / item.totalPractices) * 100) : 0;
 		// Sort week names cleanly
-		item.weeks.sort((a, b) => {
-			const matchA = a.match(/^Week\s+(\d+)$/i);
-			const matchB = b.match(/^Week\s+(\d+)$/i);
-			if (matchA && matchB) return parseInt(matchA[1], 10) - parseInt(matchB[1], 10);
-			return a.localeCompare(b);
-		});
+		item.weeks = sortWeekLabels(item.weeks);
 		item.students.sort();
 	}
 

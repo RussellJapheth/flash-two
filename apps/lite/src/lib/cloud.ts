@@ -15,6 +15,7 @@ import {
 	isValidUsername,
 	registerDataMutationListener
 } from './storage';
+import { migrateWeekCategory } from './weeks';
 import { API_BASE_URL } from './apiBase';
 
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
@@ -110,7 +111,10 @@ function mergeWordLists(localWords: WordRecord[], remoteWords: WordRecord[]): Wo
 	// Add local words first
 	for (const w of localWords) {
 		const key = (w['Chinese Word'] || String(w.No)).trim();
-		wordMap.set(key, w);
+		wordMap.set(key, {
+			...w,
+			category: migrateWeekCategory(w.category)
+		});
 	}
 
 	// Merge remote words
@@ -118,14 +122,17 @@ function mergeWordLists(localWords: WordRecord[], remoteWords: WordRecord[]): Wo
 		const key = (rw['Chinese Word'] || String(rw.No)).trim();
 		const existing = wordMap.get(key);
 		if (!existing) {
-			wordMap.set(key, rw);
+			wordMap.set(key, {
+				...rw,
+				category: migrateWeekCategory(rw.category)
+			});
 		} else {
 			// Merge properties, preferring custom notes or categories if present
 			wordMap.set(key, {
 				...rw,
 				...existing,
 				customNote: existing.customNote || rw.customNote,
-				category: existing.category || rw.category,
+				category: migrateWeekCategory(existing.category || rw.category),
 				'Acceptable Answers': existing['Acceptable Answers'] || rw['Acceptable Answers']
 			});
 		}

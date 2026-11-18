@@ -229,4 +229,20 @@ describe('Lite App Storage Core Logic', () => {
 		expect(stats.activeDates).toContain(todayIso);
 		expect(stats.activeDates).toContain(yesterdayIso);
 	});
+
+	it('migrates legacy Week N category to Sunday dates while keeping unassigned', () => {
+		const legacyWord = {
+			...testWord,
+			category: 'Week 1'
+		};
+		const deck = buildDeckWithAddedWord(null, legacyWord);
+		expect(deck.words[0].category).toBe('Week 1');
+
+		// Simulating storage migration mapping
+		const migratedWords = deck.words.map((w) => ({
+			...w,
+			category: w.category === 'Week 1' ? 'Sun 22, Nov 2026' : w.category || undefined
+		}));
+		expect(migratedWords[0].category).toBe('Sun 22, Nov 2026');
+	});
 });

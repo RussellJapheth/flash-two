@@ -265,13 +265,17 @@
 		{:else if currentWord}
 			<!-- Active Review Card -->
 			<div class="space-y-6">
-				<FlashCard
-					word={currentWord}
-					language="chinese"
-					{isFlipped}
-					deckName={isPracticeMode ? 'Practice All' : 'Review'}
-					onFlip={() => (isFlipped = !isFlipped)}
-				/>
+				{#key currentIndex}
+					<FlashCard
+						word={currentWord}
+						language="chinese"
+						{isFlipped}
+						deckName={isPracticeMode ? 'Practice All' : 'Review'}
+						onFlip={() => {
+							if (!isAdvancing) isFlipped = !isFlipped;
+						}}
+					/>
+				{/key}
 
 				<div class="pt-2">
 					<SRSButtons onRate={handleRate} disabled={isAdvancing} />

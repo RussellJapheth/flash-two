@@ -233,8 +233,8 @@ export function processStudentProfile(username: string, backup: AppBackup): Stud
 
 	const streakStats = computeStreakStats(
 		backup.progress ?? {},
-		backup.streakFreezeData,
-		backup.xpData?.dailyXP
+		backup.streakFreezeData ?? { usedDates: [] },
+		backup.xpData?.dailyXP ?? {}
 	);
 
 	return {

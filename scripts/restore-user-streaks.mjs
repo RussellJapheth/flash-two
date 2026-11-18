@@ -8,8 +8,18 @@ const HEADERS = {
 };
 
 const MONTH_NAMES = [
-	'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-	'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+	'Jan',
+	'Feb',
+	'Mar',
+	'Apr',
+	'May',
+	'Jun',
+	'Jul',
+	'Aug',
+	'Sep',
+	'Oct',
+	'Nov',
+	'Dec'
 ];
 
 function getCalendarSunday(date) {
@@ -50,9 +60,15 @@ function migrateCategory(category, baseSunday = getCalendarSunday(new Date())) {
 
 async function main() {
 	console.log('Reading backups...');
-	const jBackup = JSON.parse(fs.readFileSync('backups/users/jeornee-2026-11-17T17-04-33-744Z.json', 'utf8'));
-	const rOld = JSON.parse(fs.readFileSync('backups/russell-backup-before-backfill-2026-10-29.json', 'utf8'));
-	const rNov = JSON.parse(fs.readFileSync('backups/users/russell-2026-11-17T17-04-33-744Z.json', 'utf8'));
+	const jBackup = JSON.parse(
+		fs.readFileSync('backups/users/jeornee-2026-11-17T17-04-33-744Z.json', 'utf8')
+	);
+	const rOld = JSON.parse(
+		fs.readFileSync('backups/russell-backup-before-backfill-2026-10-29.json', 'utf8')
+	);
+	const rNov = JSON.parse(
+		fs.readFileSync('backups/users/russell-2026-11-17T17-04-33-744Z.json', 'utf8')
+	);
 
 	// 1. Reconstruct Jeornee
 	const jWords = (jBackup.customDecks?.[0]?.words || []).map((w) => ({
@@ -83,10 +99,7 @@ async function main() {
 
 	// Freeze dates covering gap to reach 71-day streak through Nov 17
 	const jFreezeDates = [
-		...new Set([
-			...(jBackup.streakFreezeData?.usedDates || []),
-			'2026-11-17'
-		])
+		...new Set([...(jBackup.streakFreezeData?.usedDates || []), '2026-11-17'])
 	].sort();
 
 	const jeorneePayload = {

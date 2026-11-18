@@ -181,6 +181,52 @@ describe('Admin Service', () => {
 		expect(profile.streakStats.tierName).toBeDefined();
 	});
 
+	it('does not leak admin localStorage streak data into student profile', () => {
+		const originalLocalStorage = globalThis.localStorage;
+		try {
+			const fakeStorage: Record<string, string> = {
+				flashcards_user_xp: JSON.stringify({
+					dailyXP: {
+						'2026-11-18': 100,
+						'2026-11-17': 100,
+						'2026-11-16': 100
+					}
+				}),
+				flashcards_streak_freezes: JSON.stringify({
+					usedDates: ['2026-11-15']
+				})
+			};
+
+			Object.defineProperty(globalThis, 'localStorage', {
+				value: {
+					getItem: (key: string) => fakeStorage[key] || null,
+					setItem: (key: string, val: string) => {
+						fakeStorage[key] = val;
+					},
+					removeItem: (key: string) => {
+						delete fakeStorage[key];
+					},
+					clear: () => {}
+				},
+				configurable: true,
+				writable: true
+			});
+
+			const profile = processStudentProfile('new_student', {
+				version: 1,
+				customDecks: []
+			});
+
+			expect(profile.currentStreak).toBe(0);
+		} finally {
+			Object.defineProperty(globalThis, 'localStorage', {
+				value: originalLocalStorage,
+				configurable: true,
+				writable: true
+			});
+		}
+	});
+
 	it('builds deduplicated master curriculum by Hanzi alone', () => {
 		const student1 = processStudentProfile('alice', {
 			version: 1,
